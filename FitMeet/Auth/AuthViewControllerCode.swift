@@ -37,7 +37,7 @@ final class AuthViewControllerCode: UIView {
         textField.attributedPlaceholder =
             NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(15)
-        textField.textColor = 
+        textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
