@@ -9,19 +9,29 @@
 /* Begin PBXBuildFile section */
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
-		B4D9D72326257D8D007CFB71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* ViewController.swift */; };
+		B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
 		B4D9D72826257D8E007CFB71 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D9D72726257D8E007CFB71 /* Assets.xcassets */; };
 		B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */; };
+		B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */; };
+		B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */; };
+		B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7462625C2D7007CFB71 /* OneLineView.swift */; };
+		B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */; };
+		B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B4D9D71B26257D8C007CFB71 /* FitMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B4D9D72226257D8D007CFB71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B4D9D72226257D8D007CFB71 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 		B4D9D72726257D8E007CFB71 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4D9D72A26257D8F007CFB71 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B4D9D72C26257D8F007CFB71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerCode.swift; sourceTree = "<group>"; };
+		B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensions+UIView.swift"; sourceTree = "<group>"; };
+		B4D9D7462625C2D7007CFB71 /* OneLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineView.swift; sourceTree = "<group>"; };
+		B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extentsions+ UIColor.swift"; sourceTree = "<group>"; };
+		B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extesions+ UITextField.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +66,33 @@
 			children = (
 				B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */,
 				B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */,
-				B4D9D72226257D8D007CFB71 /* ViewController.swift */,
+				B4D9D7392625BF8B007CFB71 /* Auth */,
+				B4D9D7412625C097007CFB71 /* Extensions */,
 				B4D9D72726257D8E007CFB71 /* Assets.xcassets */,
 				B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */,
 				B4D9D72C26257D8F007CFB71 /* Info.plist */,
 			);
 			path = FitMeet;
+			sourceTree = "<group>";
+		};
+		B4D9D7392625BF8B007CFB71 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D72226257D8D007CFB71 /* AuthViewController.swift */,
+				B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */,
+				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B4D9D7412625C097007CFB71 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */,
+				B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */,
+				B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -133,9 +164,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4D9D72326257D8D007CFB71 /* ViewController.swift in Sources */,
+				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
+				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
+				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
+				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
+				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
