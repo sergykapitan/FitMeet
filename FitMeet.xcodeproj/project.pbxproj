@@ -18,6 +18,8 @@
 		B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */; };
 		B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */; };
 		B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */; };
+		B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */; };
+		B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extentsions+ UIColor.swift"; sourceTree = "<group>"; };
 		B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extesions+ UITextField.swift"; sourceTree = "<group>"; };
 		B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensins+String.swift"; sourceTree = "<group>"; };
+		B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewControllerCode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +84,8 @@
 		B4D9D7392625BF8B007CFB71 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				B4D9D72226257D8D007CFB71 /* AuthViewController.swift */,
-				B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */,
-				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
+				B4D9D7522625FEF7007CFB71 /* AuthViewScreen */,
+				B4D9D7572625FF3B007CFB71 /* SignUpScreen */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -96,6 +99,25 @@
 				B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		B4D9D7522625FEF7007CFB71 /* AuthViewScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D72226257D8D007CFB71 /* AuthViewController.swift */,
+				B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */,
+				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
+			);
+			path = AuthViewScreen;
+			sourceTree = "<group>";
+		};
+		B4D9D7572625FF3B007CFB71 /* SignUpScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */,
+				B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */,
+			);
+			path = SignUpScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -167,10 +189,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
