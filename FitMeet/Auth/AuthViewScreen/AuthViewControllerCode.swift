@@ -27,12 +27,12 @@ final class AuthViewControllerCode: UIView {
         let button = UIButton()
         button.backgroundColor = UIColor(hexString: "0099AE")
         button.setTitle("Sign up with Social Network", for: .normal)
-        button.layer.cornerRadius = 28
+        button.layer.cornerRadius = 19
         return button
     }()
     let textFieldLogin: UITextField = {
         let textField = UITextField()
-        textField.layer.cornerRadius = 28
+        textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
             NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
@@ -45,7 +45,7 @@ final class AuthViewControllerCode: UIView {
     let buttonContinue: UIButton = {
         let button = UIButton()
         button.setTitle("Continue", for: .normal)
-        button.layer.cornerRadius = 28
+        button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
         return button
     }()
@@ -79,22 +79,22 @@ final class AuthViewControllerCode: UIView {
         buttonSocialNetwork.anchor(top: labelSignUp.bottomAnchor,
                                    left: cardView.leftAnchor,
                                    right: cardView.rightAnchor,
-                                   paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 55)
+                                   paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 39)
         cardView.addSubview(oneLine)
         oneLine.anchor(top: buttonSocialNetwork.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 15, paddingLeft: 10, paddingRight: 10, height: 55)
+                       paddingTop: 15, paddingLeft: 10, paddingRight: 10, height: 39)
         cardView.addSubview(textFieldLogin)
         textFieldLogin.anchor(top: oneLine.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         cardView.addSubview(buttonContinue)
         buttonContinue.anchor(top: textFieldLogin.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         
         

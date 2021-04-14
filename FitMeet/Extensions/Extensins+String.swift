@@ -6,21 +6,24 @@
 //
 
 import Foundation
+ 
 extension String {
-      func isValidEmail() -> Bool {
-          // here, `try!` will always succeed because the pattern is valid
-          let regex = try! NSRegularExpression(pattern: "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,3})$", options: .caseInsensitive)
-        let valid = regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
-        print("Email validation \(valid)")
-          return valid
-      }
-
-      // vrify Valid PhoneNumber or Not
-      func isValidPhone() -> Bool {
-
-        let regex = try! NSRegularExpression(pattern: "^[0-9]\\d{9}$", options: .caseInsensitive)
-        let valid = regex.firstMatch(in: self, options: [], range: NSRange(location: 0, length: count)) != nil
-        print("Mobile validation \(valid)")
-          return valid
-      }
-  }
+   func isValidEmailN() -> Bool {
+      let regularExpressionForEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+      let testEmail = NSPredicate(format:"SELF MATCHES %@", regularExpressionForEmail)
+      return testEmail.evaluate(with: self)
+   }
+   func isValidPhoneM() -> Bool {
+      let regularExpressionForPhone = "^[0-9+]{0,1}+[0-9]{9,11}$"
+      let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
+      return testPhone.evaluate(with: self)
+   }
+    func validate(value: String) -> Bool {
+        if value == "0"||value == "1"||value == "2"||value == "3"||value == "4"||value == "5"||value == "6"||value == "7"||value == "8"||value == "9" {
+            return true
+        } else {
+            return false
+            
+        }
+    }
+}

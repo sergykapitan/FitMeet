@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,6 +21,14 @@
 		B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */; };
 		B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */; };
 		B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */; };
+		B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7632626D2D5007CFB71 /* FitMeetApi.swift */; };
+		B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D76A2626D438007CFB71 /* DataExtensions.swift */; };
+		B4D9D76F2626D511007CFB71 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D76E2626D511007CFB71 /* User.swift */; };
+		B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7722626D593007CFB71 /* AuthorizationRequest.swift */; };
+		B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7752626D78C007CFB71 /* AuthResponce.swift */; };
+		B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7792626D9BF007CFB71 /* Constant.swift */; };
+		B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D77E2626DD3D007CFB71 /* Dependencies.swift */; };
+		B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +49,14 @@
 		B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensins+String.swift"; sourceTree = "<group>"; };
 		B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewControllerCode.swift; sourceTree = "<group>"; };
+		B4D9D7632626D2D5007CFB71 /* FitMeetApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetApi.swift; sourceTree = "<group>"; };
+		B4D9D76A2626D438007CFB71 /* DataExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExtensions.swift; sourceTree = "<group>"; };
+		B4D9D76E2626D511007CFB71 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B4D9D7722626D593007CFB71 /* AuthorizationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequest.swift; sourceTree = "<group>"; };
+		B4D9D7752626D78C007CFB71 /* AuthResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthResponce.swift; sourceTree = "<group>"; };
+		B4D9D7792626D9BF007CFB71 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B4D9D77E2626DD3D007CFB71 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
+		B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpViewModel.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,7 +78,6 @@
 				B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */,
 				8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -87,10 +102,15 @@
 		B4D9D71D26257D8C007CFB71 /* FitMeet */ = {
 			isa = PBXGroup;
 			children = (
+				B4D9D78326270789007CFB71 /* ViewModel */,
+				B4D9D77D2626DD24007CFB71 /* DI */,
 				B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */,
 				B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */,
+				B4D9D7622626D2A1007CFB71 /* NetworkService */,
+				B4D9D76D2626D4D3007CFB71 /* Model */,
 				B4D9D7392625BF8B007CFB71 /* Auth */,
 				B4D9D7412625C097007CFB71 /* Extensions */,
+				B4D9D7782626D99C007CFB71 /* Constant */,
 				B4D9D72726257D8E007CFB71 /* Assets.xcassets */,
 				B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */,
 				B4D9D72C26257D8F007CFB71 /* Info.plist */,
@@ -114,6 +134,7 @@
 				B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */,
 				B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */,
 				B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */,
+				B4D9D76A2626D438007CFB71 /* DataExtensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -135,6 +156,48 @@
 				B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */,
 			);
 			path = SignUpScreen;
+			sourceTree = "<group>";
+		};
+		B4D9D7622626D2A1007CFB71 /* NetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7632626D2D5007CFB71 /* FitMeetApi.swift */,
+			);
+			path = NetworkService;
+			sourceTree = "<group>";
+		};
+		B4D9D76D2626D4D3007CFB71 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D76E2626D511007CFB71 /* User.swift */,
+				B4D9D7722626D593007CFB71 /* AuthorizationRequest.swift */,
+				B4D9D7752626D78C007CFB71 /* AuthResponce.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		B4D9D7782626D99C007CFB71 /* Constant */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7792626D9BF007CFB71 /* Constant.swift */,
+			);
+			path = Constant;
+			sourceTree = "<group>";
+		};
+		B4D9D77D2626DD24007CFB71 /* DI */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D77E2626DD3D007CFB71 /* Dependencies.swift */,
+			);
+			path = DI;
+			sourceTree = "<group>";
+		};
+		B4D9D78326270789007CFB71 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
@@ -259,16 +322,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
+				B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
+				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
+				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,
+				B4D9D76F2626D511007CFB71 /* User.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
+				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
+				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
+				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
+				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
