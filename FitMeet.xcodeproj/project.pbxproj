@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
 		B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
@@ -23,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitMeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* FitMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Extensins+String.swift"; sourceTree = "<group>"; };
 		B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		B4D9D7582625FFC3007CFB71 /* SignUpViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewControllerCode.swift; sourceTree = "<group>"; };
+		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,17 +49,30 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7A73FD9EA921833CA615049F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */,
+				8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		B4D9D71226257D8C007CFB71 = {
 			isa = PBXGroup;
 			children = (
 				B4D9D71D26257D8C007CFB71 /* FitMeet */,
 				B4D9D71C26257D8C007CFB71 /* Products */,
+				7A73FD9EA921833CA615049F /* Pods */,
+				E42F6DC95E2BF9C44AEFD569 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -120,6 +137,14 @@
 			path = SignUpScreen;
 			sourceTree = "<group>";
 		};
+		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -127,9 +152,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4D9D72F26257D8F007CFB71 /* Build configuration list for PBXNativeTarget "FitMeet" */;
 			buildPhases = (
+				2D24C01237C1F7D5A1BC0ECA /* [CP] Check Pods Manifest.lock */,
 				B4D9D71726257D8C007CFB71 /* Sources */,
 				B4D9D71826257D8C007CFB71 /* Frameworks */,
 				B4D9D71926257D8C007CFB71 /* Resources */,
+				A88BAF6B5745BDF6DE340537 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -183,6 +210,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2D24C01237C1F7D5A1BC0ECA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-FitMeet-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A88BAF6B5745BDF6DE340537 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B4D9D71726257D8C007CFB71 /* Sources */ = {
@@ -335,6 +404,7 @@
 		};
 		B4D9D73026257D8F007CFB71 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -354,6 +424,7 @@
 		};
 		B4D9D73126257D8F007CFB71 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
