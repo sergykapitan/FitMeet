@@ -10,9 +10,8 @@ import UIKit
 class AuthViewController: UIViewController {
     
     let authView = AuthViewControllerCode()
-    
-    private let maximumNumber = 64
-    private let regex = try! NSRegularExpression(pattern: "[\\+\\s-\\(\\)]", options: .caseInsensitive)
+   // private let maximumNumber = 64
+  //  private let regex = try! NSRegularExpression(pattern: "[\\+\\s-\\(\\)]", options: .caseInsensitive)
     override func loadView() {
         super.loadView()
         view = authView
@@ -25,55 +24,37 @@ class AuthViewController: UIViewController {
     }
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+        authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
     }
     @objc func actionSignUp() {
+        let userPhoneOreMail = authView.textFieldLogin.text
         let signUpVC = SignUpViewController()
+        signUpVC.userPhoneOreEmail = userPhoneOreMail
         self.present(signUpVC, animated: true, completion: nil)
     }
-    private func format(phoneNumber:String,shouldRemoveLastDigt: Bool) -> String {
-        
-        guard !(shouldRemoveLastDigt && phoneNumber.count <= 2) else { return ""}
-        
-        let range = NSString(string: phoneNumber).range(of: phoneNumber)
-        var number  = regex.stringByReplacingMatches(in: phoneNumber, options: [], range: range, withTemplate: "")
-        
-        if number.count > maximumNumber {
-            let maxIndex = number.index(number.startIndex, offsetBy: maximumNumber)
-            number = String(number[number.startIndex..<maxIndex])
-        }
-        if shouldRemoveLastDigt {
-            let maxIndex = number.index(number.startIndex, offsetBy: number.count - 1)
-            number = String(number[number.startIndex..<maxIndex])
-        }
-        let maxIndex = number.index(number.startIndex,offsetBy: number.count)
-        let regRange = number.startIndex..<maxIndex
-        
-        if number.count < 7 {
-            let pattern = "(\\d)(\\d{3})(\\d+)"
-            number = number.replacingOccurrences(of: pattern, with: "+$1 ($2) $3", options: .regularExpression, range: regRange)
-        } else {
-            let pattern = "(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d+)"
-            number = number.replacingOccurrences(of: pattern, with: "+$1 ($2) $3-$4-$5", options: .regularExpression, range: regRange)
-        }
-       return number
+    @objc func actionSignIn() {
+        let signUpVC = SignInViewController()
+        self.present(signUpVC, animated: true, completion: nil)
     }
+
 }
 extension AuthViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-        textField.text = format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+        let string = "formate"
+        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
             authView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
-        } else if  fullString.isValidPhoneM() || fullString.isValidEmailN() {
+        } else if  fullString.isValidPhone() || fullString.isValidEmail() {
             authView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
             authView.buttonContinue.isUserInteractionEnabled = true
         } else {
             authView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
         }
-        
+
         return false
     }
     

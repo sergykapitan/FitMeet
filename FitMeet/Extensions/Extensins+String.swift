@@ -8,22 +8,47 @@
 import Foundation
  
 extension String {
-   func isValidEmailN() -> Bool {
+   func isValidEmail() -> Bool {
       let regularExpressionForEmail = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
       let testEmail = NSPredicate(format:"SELF MATCHES %@", regularExpressionForEmail)
       return testEmail.evaluate(with: self)
    }
-   func isValidPhoneM() -> Bool {
-      let regularExpressionForPhone = "^[0-9+]{0,1}+[0-9]{9,11}$"
+   func isValidPhone() -> Bool {
+      let regularExpressionForPhone = "^[0-9+]{0,1}+[0-9]{11,13}$"
       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
       return testPhone.evaluate(with: self)
    }
-    func validate(value: String) -> Bool {
-        if value == "0"||value == "1"||value == "2"||value == "3"||value == "4"||value == "5"||value == "6"||value == "7"||value == "8"||value == "9" {
-            return true
-        } else {
-            return false
-            
+   func format(phoneNumber:String,shouldRemoveLastDigt: Bool) -> String {
+        let maximumNumber = 64
+        let regex = try! NSRegularExpression(pattern: "[\\+\\s-\\(\\)]", options: .caseInsensitive)
+        guard !(shouldRemoveLastDigt && phoneNumber.count <= 2) else { return ""}
+        
+        let range = NSString(string: phoneNumber).range(of: phoneNumber)
+        var number  = regex.stringByReplacingMatches(in: phoneNumber, options: [], range: range, withTemplate: "")
+        
+        if number.count > maximumNumber {
+            let maxIndex = number.index(number.startIndex, offsetBy: maximumNumber)
+            number = String(number[number.startIndex..<maxIndex])
         }
+        if shouldRemoveLastDigt {
+            let maxIndex = number.index(number.startIndex, offsetBy: number.count - 1)
+            number = String(number[number.startIndex..<maxIndex])
+        }
+        let maxIndex = number.index(number.startIndex,offsetBy: number.count)
+        let regRange = number.startIndex..<maxIndex
+    
+        if number.count < 3{
+              print("*****")
+              let pattern = "(\\d)(\\d+)"
+              number = number.replacingOccurrences(of: pattern, with: "+$1$2", options: .regularExpression, range: regRange)
+          }
+        if number.count < 7 {
+            let pattern = "(\\d)(\\d{3})(\\d+)"
+            number = number.replacingOccurrences(of: pattern, with: "+$1$2$3", options: .regularExpression, range: regRange)
+        } else {
+            let pattern = "(\\d)(\\d{3})(\\d{3})(\\d{2})(\\d+)"
+            number = number.replacingOccurrences(of: pattern, with: "+$1$2$3$4$5", options: .regularExpression, range: regRange)
+        }
+       return number
     }
 }

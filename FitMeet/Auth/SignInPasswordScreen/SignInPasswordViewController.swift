@@ -1,18 +1,18 @@
 //
-//  SignUpViewController.swift
+//  SignInPasswordViewController.swift
 //  FitMeet
 //
-//  Created by novotorica on 13.04.2021.
+//  Created by novotorica on 15.04.2021.
 //
 
 import Foundation
 import UIKit
 import Combine
 
-class SignUpViewController: UIViewController {
+class SignInPasswordViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
-    let signUpView = SignUpViewControllerCode()
+    let signUpView = SignInPasswordViewControllerCode()
     private var userSubscriber: AnyCancellable?
     var userPhoneOreEmail: String?
     

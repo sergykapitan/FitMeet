@@ -26,11 +26,11 @@ final class SignUpViewControllerCode: UIView {
     }()
     let textFieldName: UITextField = {
         let textField = UITextField()
-        textField.layer.cornerRadius = 28
+        textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(15)
+            NSAttributedString(string: "Full Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
@@ -38,11 +38,11 @@ final class SignUpViewControllerCode: UIView {
     }()
     let textFieldUserName: UITextField = {
         let textField = UITextField()
-        textField.layer.cornerRadius = 28
+        textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(15)
+            NSAttributedString(string: "Username", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
@@ -50,11 +50,11 @@ final class SignUpViewControllerCode: UIView {
     }()
     let textFieldPassword: UITextField = {
         let textField = UITextField()
-        textField.layer.cornerRadius = 28
+        textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(15)
+            NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
@@ -63,8 +63,8 @@ final class SignUpViewControllerCode: UIView {
     let buttonContinue: UIButton = {
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
-        button.layer.cornerRadius = 28
-        button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+        button.layer.cornerRadius = 19
+        button.backgroundColor = UIColor(hexString: "0099AE")
         return button
     }()
     // MARK: - Init
@@ -93,25 +93,25 @@ final class SignUpViewControllerCode: UIView {
         textFieldName.anchor(top: labelSignUp.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         cardView.addSubview(textFieldUserName)
         textFieldUserName.anchor(top: textFieldName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         cardView.addSubview(textFieldPassword)
         textFieldPassword.anchor(top: textFieldUserName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
 
         cardView.addSubview(buttonContinue)
         buttonContinue.anchor(top: textFieldPassword.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 55)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
 
 
         

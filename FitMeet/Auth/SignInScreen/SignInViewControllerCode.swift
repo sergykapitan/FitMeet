@@ -1,13 +1,15 @@
 //
-//  AuthViewControllerCode.swift
+//  SignInViewControllerCode.swift
 //  FitMeet
 //
-//  Created by novotorica on 13.04.2021.
+//  Created by novotorica on 15.04.2021.
 //
 
+import Foundation
 import UIKit
 
-final class AuthViewControllerCode: UIView {
+final class SignInViewControllerCode: UIView {
+    
     
     //MARK: - UI
     let cardView: UIView = {
@@ -18,7 +20,7 @@ final class AuthViewControllerCode: UIView {
     }()
     let labelSignUp: UILabel = {
         let label = UILabel()
-        label.text = "Sign Up"
+        label.text = "Sign In"
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
@@ -36,7 +38,7 @@ final class AuthViewControllerCode: UIView {
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
             NSAttributedString(string: "Phone number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
+        textField.setLeftPaddingPoints(15)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
@@ -55,17 +57,17 @@ final class AuthViewControllerCode: UIView {
     }()
     let labelAccount: UILabel = {
         let label = UILabel()
-        label.text = "Have an account?"
+        label.text = "Don’t have an account?"
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 14)
         label.textAlignment = .right
         return label
     }()
-    let buttonSignIn: UIButton = {
+    let buttonSignUp: UIButton = {
         let button = UIButton()
         button.setTitleColor(UIColor(hexString: "0099AE"), for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
-        button.setAttributedTitle(NSAttributedString(string: "Sign In", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+        button.setAttributedTitle(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button
     }()
     let viewSignIn: UIView = {
@@ -124,8 +126,8 @@ final class AuthViewControllerCode: UIView {
         labelAccount.anchor(top: viewSignIn.topAnchor,
                             left: viewSignIn.leftAnchor,
                             paddingTop: 10, paddingLeft: 10, height: 14)
-        cardView.addSubview(buttonSignIn)
-        buttonSignIn.anchor(top: viewSignIn.topAnchor,
+        cardView.addSubview(buttonSignUp)
+        buttonSignUp.anchor(top: viewSignIn.topAnchor,
                             left: labelAccount.rightAnchor,
                             right: viewSignIn.rightAnchor,
                             paddingTop: 10, paddingLeft: 4, paddingRight: 10, height: 14)

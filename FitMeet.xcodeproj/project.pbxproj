@@ -29,6 +29,12 @@
 		B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7792626D9BF007CFB71 /* Constant.swift */; };
 		B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D77E2626DD3D007CFB71 /* Dependencies.swift */; };
 		B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */; };
+		B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D78A26282703007CFB71 /* SignInViewController.swift */; };
+		B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D78D26282719007CFB71 /* SignInViewControllerCode.swift */; };
+		B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D791262848F1007CFB71 /* SignInPasswordViewController.swift */; };
+		B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79526284900007CFB71 /* SignInPasswordViewControllerCode.swift */; };
+		B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79A262850F4007CFB71 /* FoggotPasswordViewController.swift */; };
+		B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +63,12 @@
 		B4D9D7792626D9BF007CFB71 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B4D9D77E2626DD3D007CFB71 /* Dependencies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dependencies.swift; sourceTree = "<group>"; };
 		B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingUpViewModel.swift; sourceTree = "<group>"; };
+		B4D9D78A26282703007CFB71 /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
+		B4D9D78D26282719007CFB71 /* SignInViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewControllerCode.swift; sourceTree = "<group>"; };
+		B4D9D791262848F1007CFB71 /* SignInPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPasswordViewController.swift; sourceTree = "<group>"; };
+		B4D9D79526284900007CFB71 /* SignInPasswordViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPasswordViewControllerCode.swift; sourceTree = "<group>"; };
+		B4D9D79A262850F4007CFB71 /* FoggotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggotPasswordViewController.swift; sourceTree = "<group>"; };
+		B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggotPasswordViewControllerCode.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -109,6 +121,7 @@
 				B4D9D7622626D2A1007CFB71 /* NetworkService */,
 				B4D9D76D2626D4D3007CFB71 /* Model */,
 				B4D9D7392625BF8B007CFB71 /* Auth */,
+				B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */,
 				B4D9D7412625C097007CFB71 /* Extensions */,
 				B4D9D7782626D99C007CFB71 /* Constant */,
 				B4D9D72726257D8E007CFB71 /* Assets.xcassets */,
@@ -123,6 +136,8 @@
 			children = (
 				B4D9D7522625FEF7007CFB71 /* AuthViewScreen */,
 				B4D9D7572625FF3B007CFB71 /* SignUpScreen */,
+				B4D9D789262826C8007CFB71 /* SignInScreen */,
+				B4D9D790262848C3007CFB71 /* SignInPasswordScreen */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -198,6 +213,33 @@
 				B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		B4D9D789262826C8007CFB71 /* SignInScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D78A26282703007CFB71 /* SignInViewController.swift */,
+				B4D9D78D26282719007CFB71 /* SignInViewControllerCode.swift */,
+			);
+			path = SignInScreen;
+			sourceTree = "<group>";
+		};
+		B4D9D790262848C3007CFB71 /* SignInPasswordScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D791262848F1007CFB71 /* SignInPasswordViewController.swift */,
+				B4D9D79526284900007CFB71 /* SignInPasswordViewControllerCode.swift */,
+			);
+			path = SignInPasswordScreen;
+			sourceTree = "<group>";
+		};
+		B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D79A262850F4007CFB71 /* FoggotPasswordViewController.swift */,
+				B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */,
+			);
+			path = FoggotPasswordScreen;
 			sourceTree = "<group>";
 		};
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
@@ -328,14 +370,20 @@
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
+				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
+				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
+				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
 				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,
 				B4D9D76F2626D511007CFB71 /* User.swift in Sources */,
+				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
+				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,

@@ -59,17 +59,19 @@ class FitMeetApi {
         }
         .publishDecodable(type: AuthResponce.self) 
         return publich.value()
+        
     }
     
-
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    enum DifferentError: Error {
+        case alamofire(wrapped: AFError)
+        case malformedURL
+    }
+    public func requestSomeStuff(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: AuthResponce.self)
+                 .value()
+            .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+  
 }
