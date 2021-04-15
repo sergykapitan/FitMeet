@@ -35,6 +35,8 @@
 		B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79526284900007CFB71 /* SignInPasswordViewControllerCode.swift */; };
 		B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79A262850F4007CFB71 /* FoggotPasswordViewController.swift */; };
 		B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */; };
+		B4D9D7A326286554007CFB71 /* Phone.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7A226286554007CFB71 /* Phone.swift */; };
+		B4D9D7A726287581007CFB71 /* SecurityCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7A626287581007CFB71 /* SecurityCode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +71,8 @@
 		B4D9D79526284900007CFB71 /* SignInPasswordViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPasswordViewControllerCode.swift; sourceTree = "<group>"; };
 		B4D9D79A262850F4007CFB71 /* FoggotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggotPasswordViewController.swift; sourceTree = "<group>"; };
 		B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoggotPasswordViewControllerCode.swift; sourceTree = "<group>"; };
+		B4D9D7A226286554007CFB71 /* Phone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Phone.swift; sourceTree = "<group>"; };
+		B4D9D7A626287581007CFB71 /* SecurityCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCode.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +142,7 @@
 				B4D9D789262826C8007CFB71 /* SignInScreen */,
 				B4D9D790262848C3007CFB71 /* SignInPasswordScreen */,
 				B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */,
+				B4D9D7A52628752F007CFB71 /* SecurityCodeScreen */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -187,6 +192,7 @@
 				B4D9D76E2626D511007CFB71 /* User.swift */,
 				B4D9D7722626D593007CFB71 /* AuthorizationRequest.swift */,
 				B4D9D7752626D78C007CFB71 /* AuthResponce.swift */,
+				B4D9D7A226286554007CFB71 /* Phone.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +246,14 @@
 				B4D9D79E26285104007CFB71 /* FoggotPasswordViewControllerCode.swift */,
 			);
 			path = FoggotPasswordScreen;
+			sourceTree = "<group>";
+		};
+		B4D9D7A52628752F007CFB71 /* SecurityCodeScreen */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7A626287581007CFB71 /* SecurityCode.swift */,
+			);
+			path = SecurityCodeScreen;
 			sourceTree = "<group>";
 		};
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
@@ -370,6 +384,7 @@
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				B4D9D7A726287581007CFB71 /* SecurityCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
@@ -381,6 +396,7 @@
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
+				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,

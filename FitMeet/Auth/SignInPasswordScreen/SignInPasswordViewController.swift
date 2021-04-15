@@ -14,21 +14,30 @@ class SignInPasswordViewController: UIViewController {
     @Inject var fitMeetApi: FitMeetApi
     let signUpView = SignInPasswordViewControllerCode()
     private var userSubscriber: AnyCancellable?
-    var userPhoneOreEmail: String?
+  
     
     override func loadView() {
         super.loadView()
         view = signUpView
-        
+        actionButtonContinue()
     }
-        
+    func actionButtonContinue() {
+        signUpView.buttonSignIn.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
+        signUpView.buttonFoggotPassword.addTarget(self, action: #selector(actionFoggotPassword), for: .touchUpInside)
+    }
+    @objc func actionContinue() {
+       
+    }
+    @objc func actionFoggotPassword() {
+        let passwordVC = FoggotPasswordViewController()
+        passwordVC.modalPresentationStyle = .fullScreen
+        self.present(passwordVC, animated: true, completion: nil)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchUser()
+        
     }
     private func fetchUser(){
-        guard let fff = userPhoneOreEmail else { return }
-        print("JJJJJJJJJ=====\(fff)")
        // userSubscriber = fitMeetApi.requestSomeStuff(authRequest: <#T##AuthorizationRequest#>)
     }
 }

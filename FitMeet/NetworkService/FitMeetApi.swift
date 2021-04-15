@@ -10,68 +10,77 @@ import Combine
 
 class FitMeetApi {
     
-    public func signupPasswordNew(authRequest: AuthorizationRequest) {
-        
-            AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
-                do {
-                    guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
-                        print("Error: Cannot convert data to JSON object")
-                        return
-                    }
-                    guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-                        print("Error: Cannot convert JSON object to Pretty JSON data")
-                        return
-                    }
-                    guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-                        print("Error: Could print JSON in String")
-                        return
-                    }
-                    
-                    print(prettyPrintedJson)
-                } catch {
-                    print("Error: Trying to convert JSON data to string")
-                    return
-                }
-        }
-    }
-
-    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce,AFError> {
-        
-       let publich = AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
-            do {
-                guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
-                    print("Error: Cannot convert data to JSON object")
-                    return
-                }
-                guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-                    print("Error: Cannot convert JSON object to Pretty JSON data")
-                    return
-                }
-                guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-                    print("Error: Could print JSON in String")
-                    return
-                }
-                print(prettyPrintedJson)
-            } catch {
-                print("Error: Trying to convert JSON data to string")
-                return
-            }
-        }
-        .publishDecodable(type: AuthResponce.self) 
-        return publich.value()
-        
-    }
     
     enum DifferentError: Error {
         case alamofire(wrapped: AFError)
         case malformedURL
     }
-    public func requestSomeStuff(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: AuthResponce.self)
                  .value()
-            .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+
+    public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: Bool.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
   
+    
 }
+//public func signupPasswordNew(authRequest: AuthorizationRequest) {
+//    
+//    AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
+//        do {
+//            guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
+//                print("Error: Cannot convert data to JSON object")
+//                return
+//            }
+//            guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
+//                print("Error: Cannot convert JSON object to Pretty JSON data")
+//                return
+//            }
+//            guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
+//                print("Error: Could print JSON in String")
+//                return
+//            }
+//            
+//            print(prettyPrintedJson)
+//        } catch {
+//            print("Error: Trying to convert JSON data to string")
+//            return
+//        }
+//    }
+//}
+//
+//public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce,AFError> {
+//    
+//    let publich = AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
+//        do {
+//            guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
+//                print("Error: Cannot convert data to JSON object")
+//                return
+//            }
+//            guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
+//                print("Error: Cannot convert JSON object to Pretty JSON data")
+//                return
+//            }
+//            guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
+//                print("Error: Could print JSON in String")
+//                return
+//            }
+//            print(prettyPrintedJson)
+//        } catch {
+//            print("Error: Trying to convert JSON data to string")
+//            return
+//        }
+//    }
+//    .publishDecodable(type: AuthResponce.self)
+//    return publich.value()
+//    
+//}

@@ -34,7 +34,7 @@ class SignInViewController: UIViewController {
     @objc func actionContinue() {
         let userPhoneOreMail = signUpView.textFieldLogin.text
         let signInVC = SignInPasswordViewController()
-        signInVC.userPhoneOreEmail = userPhoneOreMail
+       // signInVC.userPhoneOreEmail = userPhoneOreMail
         self.present(signInVC, animated: true, completion: nil)
     }
     @objc func actionSignUp() {
