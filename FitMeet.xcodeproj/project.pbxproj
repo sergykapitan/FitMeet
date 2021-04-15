@@ -121,7 +121,6 @@
 				B4D9D7622626D2A1007CFB71 /* NetworkService */,
 				B4D9D76D2626D4D3007CFB71 /* Model */,
 				B4D9D7392625BF8B007CFB71 /* Auth */,
-				B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */,
 				B4D9D7412625C097007CFB71 /* Extensions */,
 				B4D9D7782626D99C007CFB71 /* Constant */,
 				B4D9D72726257D8E007CFB71 /* Assets.xcassets */,
@@ -138,6 +137,7 @@
 				B4D9D7572625FF3B007CFB71 /* SignUpScreen */,
 				B4D9D789262826C8007CFB71 /* SignInScreen */,
 				B4D9D790262848C3007CFB71 /* SignInPasswordScreen */,
+				B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
