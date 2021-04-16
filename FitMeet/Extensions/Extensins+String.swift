@@ -18,6 +18,11 @@ extension String {
       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
       return testPhone.evaluate(with: self)
    }
+   func isValidCode() -> Bool {
+       let regularExpressionForPhone = "^[0-9]{0,10}$"
+       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
+       return testPhone.evaluate(with: self)
+    }
    func format(phoneNumber:String,shouldRemoveLastDigt: Bool) -> String {
         let maximumNumber = 64
         let regex = try! NSRegularExpression(pattern: "[\\+\\s-\\(\\)]", options: .caseInsensitive)

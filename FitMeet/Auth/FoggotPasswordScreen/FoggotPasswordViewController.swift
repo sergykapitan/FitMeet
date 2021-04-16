@@ -30,38 +30,31 @@ class FoggotPasswordViewController: UIViewController {
     }
     func actionButtonContinue() {
         passwordView.buttonContinue.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
-        passwordView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
+        passwordView.buttonSignUp.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
     }
     @objc func actionContinue() {
-        
-        let securityCode = SecurityCode()
-        let hostVC = UIHostingController(rootView: securityCode)
-        hostVC.modalPresentationStyle = .fullScreen
-        self.present(hostVC, animated: true, completion: nil)
-        fetchSicurityCode()
+       fetchSicurityCode()
+
     }
     @objc func actionSignIn() {
-        
-        let securityCode = SecurityCode()
-        let hostVC = UIHostingController(rootView: securityCode)
-        hostVC.modalPresentationStyle = .fullScreen
-        self.present(hostVC, animated: true, completion: nil)
-  
+
     }
-    private func fetchSicurityCode(){
+    private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
-        
-        print("PHONNNEEEE ===== \(phone)")
-        
-      //  fitMeetApi.requestSecurityCodeNN(phone: Phone(phone: phone))
-        
+
         userSubscriber = fitMeetApi.requestSecurityCode(phone: Phone(phone: phone  ))
             .mapError({ (error) -> Error in
                 print(error)
                 return error
             })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("GGGGGGGGGGGGGGGGGG = \(response)")
+                print(response)
+                if response {
+                    let securityCode = SecurityCodeVC()
+                    securityCode.userPhoneOreEmail = phone
+                    self.present(securityCode, animated: true, completion: nil)
+
+                }
         })
     }
 }

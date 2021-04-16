@@ -15,13 +15,13 @@ class FitMeetApi {
         case alamofire(wrapped: AFError)
         case malformedURL
     }
-    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .publishDecodable(type: AuthResponce.self)
-                 .value()
-                 .mapError { DifferentError.alamofire(wrapped: $0) }
-                 .eraseToAnyPublisher()
-           }
+//    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
+//        return AF.request(Constants.apiEndpoint + "/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+//                 .publishDecodable(type: AuthResponce.self)
+//                 .value()
+//                 .mapError { DifferentError.alamofire(wrapped: $0) }
+//                 .eraseToAnyPublisher()
+//           }
 
     public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
@@ -30,7 +30,14 @@ class FitMeetApi {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-  
+    public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/sessions/loginPhone", method: .post, parameters: phoneCode.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+            .publishDecodable(type: ResponceLogin.self)
+            .value()
+            .print("requestLogin")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     
 }
 //public func signupPasswordNew(authRequest: AuthorizationRequest) {

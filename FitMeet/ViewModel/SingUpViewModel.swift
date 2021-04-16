@@ -12,7 +12,7 @@ import Combine
 class SingUpViewModel: ObservableObject {
     
     @Inject var fitMeetApi: FitMeetApi
-    @Published var responce: AuthResponce?
+   // @Published var responce: AuthResponce?
     var cancellation: AnyCancellable?
     
 //    init() {
