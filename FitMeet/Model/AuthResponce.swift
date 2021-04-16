@@ -7,19 +7,13 @@
 
 import Foundation
 
-// MARK: - AuthResponce
-//struct AuthResponce : Codable{
+ //MARK: - AuthResponce
+struct AuthResponce : Codable{
 //    let user: User?
 //    let token: Token
-//}
-//
-//// MARK: - Token
-//struct Token: Codable {
-//    let expiresIn: Int
-//    let token: String
-//}
-//
-//// MARK: - User
+}
+
+// MARK: - User
 //struct User: Codable {
 //    let id: Int
 //    let deleted, fullName, username: String
@@ -30,8 +24,8 @@ import Foundation
 //    let createdAt, birthDate, nameLastUpdateDate, usernameLastUpdateDate: String
 //    let birthDateUpdateDate: String
 //}
-//
-//// MARK: - Gender
+
+// MARK: - Gender
 //struct Gender: Codable{
 //    let male, female, undefined: String
 //}

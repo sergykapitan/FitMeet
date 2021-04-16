@@ -9,27 +9,42 @@ import Alamofire
 import Combine
 
 class FitMeetApi {
-    
-    
+ 
     enum DifferentError: Error {
         case alamofire(wrapped: AFError)
         case malformedURL
     }
-//    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce, DifferentError> {
-//        return AF.request(Constants.apiEndpoint + "/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-//                 .publishDecodable(type: AuthResponce.self)
-//                 .value()
-//                 .mapError { DifferentError.alamofire(wrapped: $0) }
-//                 .eraseToAnyPublisher()
-//           }
+    //MARK: - signupPassword
+    public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
+        print(authRequest)
+        return AF.request(Constants.apiEndpoint + "/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: ResponceLogin.self)
+                 .value()
+                 .print("signupPassword")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    
+    //MARK: - loginPassword
+    public func loginPassword(login: LoginPassword) -> AnyPublisher<AuthResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/sessions/loginPassword", method: .post, parameters: login.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: AuthResponce.self)
+                 .value()
+                 .print("loginPassword")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
 
+    //MARK: - requestSecurityCode
     public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: Bool.self)
                  .value()
+                 .print("requestSecurityCode")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    //MARK: - requestLogin
     public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/loginPhone", method: .post, parameters: phoneCode.asDictionary(), encoding: JSONEncoding.default, headers: nil)
             .publishDecodable(type: ResponceLogin.self)
@@ -38,56 +53,13 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-    
+    //MARK: - Change Password
+    public func changePassword(password: Password) -> AnyPublisher<Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/sessions/password", method: .put, parameters: password.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+            .publishDecodable(type: Bool.self)
+            .value()
+            .print("changePassword")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }
-//public func signupPasswordNew(authRequest: AuthorizationRequest) {
-//    
-//    AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
-//        do {
-//            guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
-//                print("Error: Cannot convert data to JSON object")
-//                return
-//            }
-//            guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-//                print("Error: Cannot convert JSON object to Pretty JSON data")
-//                return
-//            }
-//            guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-//                print("Error: Could print JSON in String")
-//                return
-//            }
-//            
-//            print(prettyPrintedJson)
-//        } catch {
-//            print("Error: Trying to convert JSON data to string")
-//            return
-//        }
-//    }
-//}
-//
-//public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<AuthResponce,AFError> {
-//    
-//    let publich = AF.request(Constants.apiEndpoint, method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil).validate(statusCode: 200 ..< 299).responseJSON { AFdata in
-//        do {
-//            guard let jsonObject = try JSONSerialization.jsonObject(with: AFdata.data!) as? [String: Any] else {
-//                print("Error: Cannot convert data to JSON object")
-//                return
-//            }
-//            guard let prettyJsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted) else {
-//                print("Error: Cannot convert JSON object to Pretty JSON data")
-//                return
-//            }
-//            guard let prettyPrintedJson = String(data: prettyJsonData, encoding: .utf8) else {
-//                print("Error: Could print JSON in String")
-//                return
-//            }
-//            print(prettyPrintedJson)
-//        } catch {
-//            print("Error: Trying to convert JSON data to string")
-//            return
-//        }
-//    }
-//    .publishDecodable(type: AuthResponce.self)
-//    return publich.value()
-//    
-//}

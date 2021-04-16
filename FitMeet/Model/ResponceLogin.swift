@@ -24,13 +24,8 @@ struct ResponceLogin: Codable {
     let token: Token?
 }
 
-// MARK: - Token
-struct Token: Codable {
-    let expiresIn: Int?
-    let token: String?
-}
 
-// MARK: - User
+ //MARK: - User
 struct User: Codable {
     let id: Int?
     let deleted: String?
@@ -40,6 +35,11 @@ struct User: Codable {
     let phoneVerify: Bool?
     let createdAt: String?
     let birthDate, nameLastUpdateDate, usernameLastUpdateDate: JSONNull?
+}
+// MARK: - Token
+struct Token: Codable {
+    let expiresIn: Int?
+    let token: String?
 }
 
 // MARK: - Encode/decode helpers

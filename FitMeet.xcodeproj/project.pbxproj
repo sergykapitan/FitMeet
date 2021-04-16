@@ -41,6 +41,9 @@
 		B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7AC262965FB007CFB71 /* SecurityCodeVCCode.swift */; };
 		B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7AF262973F4007CFB71 /* PhoneCode.swift */; };
 		B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7B226297D21007CFB71 /* ResponceLogin.swift */; };
+		B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7B62629A98B007CFB71 /* Token.swift */; };
+		B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7B92629ABB5007CFB71 /* Password.swift */; };
+		B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -81,6 +84,9 @@
 		B4D9D7AC262965FB007CFB71 /* SecurityCodeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecurityCodeVCCode.swift; sourceTree = "<group>"; };
 		B4D9D7AF262973F4007CFB71 /* PhoneCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneCode.swift; sourceTree = "<group>"; };
 		B4D9D7B226297D21007CFB71 /* ResponceLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponceLogin.swift; sourceTree = "<group>"; };
+		B4D9D7B62629A98B007CFB71 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
+		B4D9D7B92629ABB5007CFB71 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
+		B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPassword.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -204,6 +210,9 @@
 				B4D9D7A226286554007CFB71 /* Phone.swift */,
 				B4D9D7AF262973F4007CFB71 /* PhoneCode.swift */,
 				B4D9D7B226297D21007CFB71 /* ResponceLogin.swift */,
+				B4D9D7B62629A98B007CFB71 /* Token.swift */,
+				B4D9D7B92629ABB5007CFB71 /* Password.swift */,
+				B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -404,6 +413,7 @@
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4D9D7A726287581007CFB71 /* SecurityCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
@@ -423,8 +433,10 @@
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
+				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
+				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
