@@ -26,9 +26,9 @@ class FitMeetApi {
            }
     
     //MARK: - loginPassword
-    public func loginPassword(login: LoginPassword) -> AnyPublisher<AuthResponce, DifferentError> {
+    public func loginPassword(login: LoginPassword) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/loginPassword", method: .post, parameters: login.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .publishDecodable(type: AuthResponce.self)
+                 .publishDecodable(type: ResponceLogin.self)
                  .value()
                  .print("loginPassword")
                  .mapError { DifferentError.alamofire(wrapped: $0) }

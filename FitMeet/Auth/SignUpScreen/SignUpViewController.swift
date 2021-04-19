@@ -49,10 +49,12 @@ class SignUpViewController: UIViewController {
                                                     phone: phone,
                                                     password: password))
             .mapError({ (error) -> Error in
-                print(error)
-                return error })
+                        print(error)
+                        return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print(response)  })
+                UserDefaults.standard.set(response.token, forKey: Constants.accessTokenKeyUserDefaults)
+                self.openMainViewController()
+            })
             
     }
     private func checkValidation(password: String) {
@@ -62,6 +64,11 @@ class SignUpViewController: UIViewController {
         } else {
             print("NotValidate")
         }
+    }
+    private func openMainViewController() {
+          let mainVC = MainTabBarViewController()
+          mainVC.modalPresentationStyle = .fullScreen
+          self.present(mainVC, animated: true, completion: nil)
     }
 }
 extension SignUpViewController: UITextFieldDelegate {
@@ -92,4 +99,5 @@ extension SignUpViewController: UITextFieldDelegate {
         
         return true
     }
+  
 }

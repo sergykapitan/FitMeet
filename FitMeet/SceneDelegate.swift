@@ -14,10 +14,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        window = UIWindow(frame: windowScene.coordinateSpace.bounds)
-        window?.windowScene = windowScene
-        window?.rootViewController = AuthViewController()
-        window?.makeKeyAndVisible()
+        if UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults) != nil {
+           openRootViewController(viewController: MainTabBarViewController(), windowScene: windowScene)
+        } else {
+            openRootViewController(viewController: AuthViewController(),windowScene: windowScene)
+        }
+
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -47,7 +49,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
-
+    func openRootViewController(viewController: UIViewController,windowScene: UIWindowScene) {
+        self.window = UIWindow(frame: windowScene.coordinateSpace.bounds)
+        self.window?.windowScene = windowScene
+        self.window?.rootViewController = viewController
+        self.window?.makeKeyAndVisible()
+    }
 
 }
 

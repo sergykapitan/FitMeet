@@ -5,16 +5,6 @@
 //  Created by novotorica on 16.04.2021.
 //
 
-import Foundation
-
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let responceLogin = try? newJSONDecoder().decode(ResponceLogin.self, from: jsonData)
-// This file was generated from JSON Schema using quicktype, do not modify it directly.
-// To parse the JSON, add this file to your project and do:
-//
-//   let responceLogin = try? newJSONDecoder().decode(ResponceLogin.self, from: jsonData)
 
 import Foundation
 
