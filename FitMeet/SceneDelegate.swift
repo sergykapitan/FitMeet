@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -19,7 +20,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         } else {
             openRootViewController(viewController: AuthViewController(),windowScene: windowScene)
         }
-
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient,
+                                                         mode: AVAudioSession.Mode.moviePlayback,
+                                                         options: [.mixWithOthers])
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

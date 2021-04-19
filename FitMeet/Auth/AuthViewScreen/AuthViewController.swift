@@ -10,6 +10,13 @@ import UIKit
 class AuthViewController: UIViewController {
     
     let authView = AuthViewControllerCode()
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
+        } else {
+            return .all
+        }
+    }
    // private let maximumNumber = 64
   //  private let regex = try! NSRegularExpression(pattern: "[\\+\\s-\\(\\)]", options: .caseInsensitive)
     override func loadView() {
