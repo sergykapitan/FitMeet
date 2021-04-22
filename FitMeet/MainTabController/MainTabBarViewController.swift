@@ -13,6 +13,7 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(token)
+        //HomeUI
         var home = HomeUI()
         home.videos = Video.allVideos()
         let hostVC = UIHostingController(rootView: home)
@@ -23,15 +24,17 @@ class MainTabBarViewController: UITabBarController {
         let categoryVC = UIHostingController(rootView: category)
         categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
         categoryVC.tabBarItem.title = "Category"
-        
-        
+        //newList
+        var homeNew = NoSpaceList()
+        homeNew.videos = Video.allVideos()
+        let hostNewVC = UIHostingController(rootView: homeNew)
+        hostNewVC.tabBarItem.image = #imageLiteral(resourceName: "Search")
+        hostNewVC.tabBarItem.title = "Search"
         viewControllers = [
-           // generateViewController(rootViewController: feed, image: #imageLiteral(resourceName: "Home") , title: "Home"),
-            hostVC,
-            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
+            hostVC,hostNewVC,
+           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
             generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
             categoryVC,
-           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Category"), title: "Category"),
             generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")
         ]
     }

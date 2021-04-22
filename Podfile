@@ -5,6 +5,9 @@ target 'FitMeet' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Alamofire', '~> 5.2'
+  pod 'HaishinKit', '~> 1.1.4'
+  pod 'Hue', '~> 5.0.0'
+  pod 'Loaf
   # Pods for FitMeet
 
 end

@@ -9,19 +9,19 @@ import SwiftUI
 
 struct CategoryUI: View {
     @ObservedObject var viewModel = CategoryViewModel()
-    
+
         var body: some View {
             NavigationView {
-               // guard let data = viewModel.category?.data else { return }
-                List((viewModel.category.data)! ,id: \.self) {
+          
+                List((viewModel.category.data!) ,id: \.self) {
                     CategoryCell(cell: $0)
                 }.navigationBarTitle("Category")
                 .onAppear {
                            self.viewModel.fetchBreweries()
                    }
+                }
             }
         }
-}
 struct CategoryCell: View {
     var cell: Datum
     var body: some View {

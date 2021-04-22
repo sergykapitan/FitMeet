@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
-		B48D828F262DAD3600F5A0D9 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D828E262DAD3600F5A0D9 /* CategoryVC.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
 		B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */; };
 		B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */; };
-		B48D82A2262DAE0400F5A0D9 /* CategoryVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82A1262DAE0400F5A0D9 /* CategoryVCCode.swift */; };
 		B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */; };
 		B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82B6262DC12700F5A0D9 /* Video.swift */; };
 		B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */; };
@@ -26,6 +24,10 @@
 		B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */; };
 		B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */; };
 		B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6262631B54E000E00DE /* CategoryRequest.swift */; };
+		B4A9F6322631CE90000E00DE /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6312631CE90000E00DE /* CameraController.swift */; };
+		B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F63926320AA3000E00DE /* HomeCustomList.swift */; };
+		B4A9F63F263217A6000E00DE /* LiveStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */; };
+		B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
 		B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
@@ -73,11 +75,9 @@
 		37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitMeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
-		B48D828E262DAD3600F5A0D9 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCode.swift; sourceTree = "<group>"; };
-		B48D82A1262DAE0400F5A0D9 /* CategoryVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVCCode.swift; sourceTree = "<group>"; };
 		B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCCode.swift; sourceTree = "<group>"; };
 		B48D82B6262DC12700F5A0D9 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClip.swift; sourceTree = "<group>"; };
@@ -98,6 +98,10 @@
 		B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponce.swift; sourceTree = "<group>"; };
 		B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		B4A9F6262631B54E000E00DE /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
+		B4A9F6312631CE90000E00DE /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		B4A9F63926320AA3000E00DE /* HomeCustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCustomList.swift; sourceTree = "<group>"; };
+		B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamVC.swift; sourceTree = "<group>"; };
+		B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamVCCode.swift; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* FitMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,6 +212,33 @@
 			path = TravelVidsClips;
 			sourceTree = "<group>";
 		};
+		B4A9F6292631B842000E00DE /* CategoryModel */ = {
+			isa = PBXGroup;
+			children = (
+				B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */,
+				B4A9F6262631B54E000E00DE /* CategoryRequest.swift */,
+			);
+			path = CategoryModel;
+			sourceTree = "<group>";
+		};
+		B4A9F62D2631C256000E00DE /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				B48D82B6262DC12700F5A0D9 /* Video.swift */,
+				B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		B4A9F63C26321789000E00DE /* First */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */,
+				B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */,
+			);
+			path = First;
+			sourceTree = "<group>";
+		};
 		B4D9D71226257D8C007CFB71 = {
 			isa = PBXGroup;
 			children = (
@@ -315,10 +346,8 @@
 				B4D9D7B62629A98B007CFB71 /* Token.swift */,
 				B4D9D7B92629ABB5007CFB71 /* Password.swift */,
 				B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */,
-				B48D82B6262DC12700F5A0D9 /* Video.swift */,
-				B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */,
-				B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */,
-				B4A9F6262631B54E000E00DE /* CategoryRequest.swift */,
+				B4A9F62D2631C256000E00DE /* Video */,
+				B4A9F6292631B842000E00DE /* CategoryModel */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -409,6 +438,7 @@
 			isa = PBXGroup;
 			children = (
 				B481862C26300DB9009B715A /* HomeUI.swift */,
+				B4A9F63926320AA3000E00DE /* HomeCustomList.swift */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -425,8 +455,10 @@
 		B4D9D7D6262DA7D5007CFB71 /* StreamScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */,
-				B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */,
+				B4A9F63C26321789000E00DE /* First */,
+				B4A9F6312631CE90000E00DE /* CameraController.swift */,
+				B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */,
+				B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */,
 			);
 			path = StreamScreen;
 			sourceTree = "<group>";
@@ -434,8 +466,6 @@
 		B4D9D7D7262DA7EA007CFB71 /* CategoryScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B48D828E262DAD3600F5A0D9 /* CategoryVC.swift */,
-				B48D82A1262DAE0400F5A0D9 /* CategoryVCCode.swift */,
 				B4A9F61C2631A787000E00DE /* CategoryUI.swift */,
 			);
 			path = CategoryScreen;
@@ -581,7 +611,6 @@
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
-				B48D828F262DAD3600F5A0D9 /* CategoryVC.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
@@ -590,6 +619,7 @@
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4D9D7A726287581007CFB71 /* SecurityCode.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
+				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
@@ -599,7 +629,6 @@
 				B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
-				B48D82A2262DAE0400F5A0D9 /* CategoryVCCode.swift in Sources */,
 				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,
 				B4D9D76F2626D511007CFB71 /* User.swift in Sources */,
 				B4D9D7AA262965E8007CFB71 /* SecurityCodeVC.swift in Sources */,
@@ -610,6 +639,7 @@
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
+				B4A9F63F263217A6000E00DE /* LiveStreamVC.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
@@ -627,7 +657,9 @@
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
+				B4A9F6322631CE90000E00DE /* CameraController.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
+				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

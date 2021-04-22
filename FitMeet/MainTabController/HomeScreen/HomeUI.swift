@@ -13,11 +13,10 @@ struct HomeUI: View {
     
     var videos: [Video] = []
     @State private var favoriteColor = "Trending"
-
-    
     @State var selected = 0
     
     var body: some View {
+        GeometryReader { g in
         NavigationView {
             VStack() {
                
@@ -31,15 +30,13 @@ struct HomeUI: View {
                 }
                 
                 List(videos) { video in
-                   // NavigationLink(destination: VideoPlayerContainerView(url: video.url))
                     NavigationLink(destination: MyImagePicker(url: video.url))
-                    {
+                      {
                     LibraryCell(cell: video)
-                  }
-                    
+                      }
                 }
                 .listStyle(GroupedListStyle())
-                .padding(.leading,-20)
+                //.padding(.leading,-20)
                 .padding(.trailing,-20)
                 
             }
@@ -50,6 +47,7 @@ struct HomeUI: View {
                                         Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
                                             .padding(6)
                                     })
+             }
         }
     }
 }
@@ -72,8 +70,6 @@ struct MyImagePicker: UIViewControllerRepresentable {
 struct LibraryCell: View {
     var cell: Video
     var body: some View {
-       
-        HStack(alignment: .center) {
             VStack(alignment: .center) {
                 
                 Image("Preview")
@@ -83,7 +79,8 @@ struct LibraryCell: View {
                     .cornerRadius(2)
                     .padding(.leading,-20)
                     .padding(.trailing,-20)
-                    .scaledToFit()
+                    .scaledToFill()
+                Spacer()
                 HStack{
                     Text("\(cell.title)")
                     Spacer()
@@ -91,10 +88,10 @@ struct LibraryCell: View {
                     Button(action: { print("8888888")}) { Image("More")}.accentColor(.red)
                         .padding(.trailing,20)
                 }
+                Spacer()
              }
-         }
-    }
-}
+          }
+       }
 struct ImageOverlay: View {
     var body: some View {
         ZStack{
@@ -132,6 +129,7 @@ struct CustomSegmentedPickerView: View {
         Spacer()
     }
 }
+
 
 struct Library_Previews: PreviewProvider {
     static var previews: some View {

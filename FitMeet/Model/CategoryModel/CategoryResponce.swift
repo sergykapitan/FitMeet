@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - CategoryResponce
 struct CategoryResponce: Codable ,Hashable{
-    let data: [Datum]?
+    var data: [Datum]?
     //let meta: Meta?
 }
 
