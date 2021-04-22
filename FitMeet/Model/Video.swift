@@ -6,8 +6,11 @@
 //
 
 import UIKit
-
-class Video: NSObject {
+//import SwiftUI
+//
+class Video: NSObject,Identifiable {
+    
+  var id = UUID()
   let url: URL
   let thumbURL: URL
   let title: String

@@ -6,18 +6,32 @@
 //
 
 import UIKit
+import SwiftUI
 
 class MainTabBarViewController: UITabBarController {
-
+   let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     override func viewDidLoad() {
         super.viewDidLoad()
-        let feed = HomeVC()
-        feed.videos = Video.allVideos()
+        print(token)
+        var home = HomeUI()
+        home.videos = Video.allVideos()
+        let hostVC = UIHostingController(rootView: home)
+        hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
+        hostVC.tabBarItem.title = "Home"
+        //CategoryUI
+        let category = CategoryUI()
+        let categoryVC = UIHostingController(rootView: category)
+        categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
+        categoryVC.tabBarItem.title = "Category"
+        
+        
         viewControllers = [
-            generateViewController(rootViewController: feed, image: #imageLiteral(resourceName: "Home") , title: "Home"),
+           // generateViewController(rootViewController: feed, image: #imageLiteral(resourceName: "Home") , title: "Home"),
+            hostVC,
             generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
             generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
-            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Category"), title: "Category"),
+            categoryVC,
+           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Category"), title: "Category"),
             generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")
         ]
     }

@@ -10,10 +10,10 @@ import Foundation
 class Constants {
     #if DEBUG
     ///URL Address of testing api server
-    static let apiEndpoint = "https://dev.fitliga.com/api/v0/auth"
+    static let apiEndpoint = "https://dev.fitliga.com/api/v0"
     #else
     ///URL Address of production api server
-    static let apiEndpoint = "https://dev.fitliga.com/api/v0/auth"
+    static let apiEndpoint = "https://dev.fitliga.com/api/v0"
     #endif
     
     /// Citizen API User access token

@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         super.init()
         let appDependencies = Dependencies{
             Module { FitMeetApi() }
+            Module { FitMeetStream() }
         }
         appDependencies.build()      
     }
