@@ -1,16 +1,32 @@
 PODS:
   - Alamofire (5.4.1)
+  - HaishinKit (1.1.4):
+    - Logboard (~> 2.2.1)
+  - Hue (5.0.0)
+  - Loaf (0.7.0)
+  - Logboard (2.2.2)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
+  - HaishinKit (~> 1.1.4)
+  - Hue (~> 5.0.0)
+  - Loaf
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - HaishinKit
+    - Hue
+    - Loaf
+    - Logboard
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
+  Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
+  Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
+  Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
 
-PODFILE CHECKSUM: 7016202670d3b785869778a9182902f97dd53706
+PODFILE CHECKSUM: eb7b69670f403b56faf8af8ad510e152cec762e1
 
 COCOAPODS: 1.10.1
