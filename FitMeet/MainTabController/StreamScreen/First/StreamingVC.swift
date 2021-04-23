@@ -32,6 +32,7 @@ class StreamingVC: UIViewController {
     
     @objc func nextView() {
         let signUpVC = LiveStreamVC()
+        signUpVC.preset = LiveStreamVC.Preset.sd_540p_30fps_2mbps
         self.present(signUpVC, animated: true, completion: nil)
     }
     

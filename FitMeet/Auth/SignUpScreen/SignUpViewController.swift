@@ -52,7 +52,7 @@ class SignUpViewController: UIViewController {
                         print(error)
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                UserDefaults.standard.set(response.token, forKey: Constants.accessTokenKeyUserDefaults)
+                UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
                 self.openMainViewController()
             })
             

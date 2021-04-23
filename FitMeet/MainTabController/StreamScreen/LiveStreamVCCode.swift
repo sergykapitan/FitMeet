@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import HaishinKit
 
 final class LiveStreamVCCode: UIView {
     
@@ -55,6 +56,10 @@ final class LiveStreamVCCode: UIView {
         button.setTitle("NextView", for: .normal)
         return button
     }()
+    var previewView: MTHKView = {
+        let view = MTHKView(frame: .zero)
+        return view
+    }()
 
     // MARK: - Init
     init() {
@@ -73,6 +78,14 @@ final class LiveStreamVCCode: UIView {
     }
     private func initLayout() {
         capturePreviewView.fillSuperview()
+        capturePreviewView.addSubview(previewView)
+        previewView.anchor(top: capturePreviewView.topAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingTop: 30, paddingLeft: 30, paddingRight: 30, paddingBottom: 30)
+        
+        
+        
+        
+        
+        
         capturePreviewView.addSubview(labelSignUp)
         
         
