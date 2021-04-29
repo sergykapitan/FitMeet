@@ -14,7 +14,7 @@ final class LiveStreamVCCode: UIView {
     let capturePreviewView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.clipsToBounds = true
         return view
     }()
     let buttonStartStream: UIButton = {
@@ -57,13 +57,13 @@ final class LiveStreamVCCode: UIView {
         return button
     }()
     var previewView: MTHKView = {
-            let view = MTHKView(frame: .zero)
-            return view
-        }()
+        let view = MTHKView(frame: .zero)
+       return view
+    }()
 
     // MARK: - Init
     init() {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         initUI()
         initLayout()
         
@@ -77,26 +77,25 @@ final class LiveStreamVCCode: UIView {
  
     }
     private func initLayout() {
-        capturePreviewView.fillSuperview()
-        capturePreviewView.addSubview(previewView)
-        previewView.anchor(top: capturePreviewView.topAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingTop: 30, paddingLeft: 30, paddingRight: 30, paddingBottom: 30)
-        
-        
-        
-        
-        
-        
+     
+    capturePreviewView.heightAnchor.constraint(equalTo: capturePreviewView.superview!.heightAnchor).isActive = true
+    capturePreviewView.widthAnchor.constraint(equalTo: capturePreviewView.superview!.widthAnchor).isActive = true
+    capturePreviewView.centerXAnchor.constraint(equalTo: capturePreviewView.superview!.centerXAnchor).isActive = true
+    capturePreviewView.centerYAnchor.constraint(equalTo: capturePreviewView.superview!.centerYAnchor).isActive = true
+    capturePreviewView.addSubview(previewView)
+
+        previewView.anchor(top: capturePreviewView.topAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom:  0)
+
         capturePreviewView.addSubview(labelSignUp)
-        
-        
-        
         labelSignUp.anchor(top: capturePreviewView.topAnchor,
                            paddingTop: 46, height: 40)
         labelSignUp.centerX(inView: capturePreviewView)
+        
         capturePreviewView.addSubview(toggleFlashButton)
         toggleFlashButton.anchor(top: capturePreviewView.topAnchor, right: capturePreviewView.rightAnchor,paddingTop: 40,  paddingRight: 40)
         capturePreviewView.addSubview(toggleCameraButton)
         toggleCameraButton.anchor(top: capturePreviewView.topAnchor, right: capturePreviewView.rightAnchor,paddingTop: 80,  paddingRight: 40)
+        
         capturePreviewView.addSubview(photoModeButton)
         photoModeButton.anchor(left: capturePreviewView.leftAnchor, bottom:capturePreviewView.bottomAnchor,paddingRight: 40, paddingBottom: 80)
         
@@ -106,7 +105,7 @@ final class LiveStreamVCCode: UIView {
         
         capturePreviewView.addSubview(buttonStartStream)
         buttonStartStream.centerX(inView: capturePreviewView)
-        buttonStartStream.anchor( width: 50, height: 50)
+        buttonStartStream.anchor( width: 250, height: 50)
 
         
         

@@ -13,14 +13,11 @@ struct ListChannell: View {
     @ObservedObject var viewModel = ChanellListViewModel()
 
         var body: some View {
+            
             NavigationView {
-                //((viewModel.channels.data)!) ,id: \.self
-                List(viewModel.channels.data!) { channel in
-                    
+                List(viewModel.channels.data) { channel in
                     NavigationLink(destination: StreamCell(id: channel.id ?? 0))
-                    {
-                        ChannellCell(cell: channel)
-                    }
+                    { ChannellCell(cell: channel) }
                 }
                 .navigationBarTitle("List Channel")
                 .onAppear {
@@ -29,6 +26,7 @@ struct ListChannell: View {
                 }
             }
          }
+
 struct ChannellCell: View {
     var cell: ChannelResponce
     var body: some View {
@@ -47,15 +45,20 @@ struct StreamCell: View {
     var id: Int
     @State var idStream: Int?
     var body: some View {
+                     
                     MyPlayewView()
-                    Text("\(id)")
-                    TextMy(url: viewModel.broadcast?.id)
-                    Text("\(viewModel.stream?.url ?? "wert")")
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+                        .edgesIgnoringSafeArea(.all)
+                        .frame(alignment: .center)
+                 //   Text("\(id)")
+                   // TextMy(url: viewModel.broadcast?.id)
+                 //   Text("\(viewModel.stream?.url ?? "wert")")
                         .onAppear {
-                            self.viewModel.startStreamId(id: 4)
-                            self.viewModel.fetchBreweries(id: id, name: "BroadcastNameSert")
-                            
+                         //   self.viewModel.startStreamId(id: 4)
+                          //  self.viewModel.fetchBreweries(id: id, name: "BroadcastNameSert")
+
                 }
+             //   Spacer()
             }
         }
 
@@ -80,8 +83,9 @@ struct MyPlayewView: UIViewControllerRepresentable {
               UIViewControllerRepresentableContext<MyPlayewView>) ->
     UIViewController {
        // let videoURL = url
-        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
+        let nextViewController = LiveStreamViewController()
         return nextViewController
     }
     func updateUIViewController(_ uiViewController:

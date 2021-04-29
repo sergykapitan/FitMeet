@@ -22,11 +22,7 @@ struct HomeUI: View {
     @State private var favoriteColor = "Trending"
     @State var selected = 0
     @State var presentSheet = false
-
-
-
     var body: some View {
-
         GeometryReader { g in
         NavigationView {
             VStack() {
@@ -34,25 +30,27 @@ struct HomeUI: View {
                 CustomSegmentedPickerView(selected: self.$selected)
 
                 if self.selected == 0 {
-
+                    List(videos) { video in
+                          NavigationLink(destination: MyImagePicker(url: video.url))
+                           { LibraryCell(cell: video) }
+                       }
+                    .listStyle(GroupedListStyle())
+                //  .padding(.leading,-20)
+                    .padding(.trailing,-20)
+                } else if self.selected == 1{
+                    
+                    List(videos) { video in
+                          NavigationLink(destination: MyImagePicker(url: video.url))
+                           { TrendingCell(cell: video) }
+                       }
+                    .listStyle(GroupedListStyle())
+                //  .padding(.leading,-20)
+                    .padding(.trailing,-20)
+                    
 
                 } else {
-
+                    
                 }
-
-                List(videos) { video in
-
-                    NavigationLink(destination: MyImagePicker(url: video.url))
-                    {
-
-                    LibraryCell(cell: video)
-                        //videoMy = video
-                     }
-                }
-
-                  .listStyle(GroupedListStyle())
-                //  .padding(.leading,-20)
-                  .padding(.trailing,-20)
 
             }
 
@@ -63,62 +61,12 @@ struct HomeUI: View {
                                         Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
                                             .padding(6)
                                     })
-//            .sheet(item: $videoMy) { (video)  in
-//                MyImagePicker(url: video.url)
-//            }
+
       }
     }
   }
 }
-//struct HomeUIMY: View {
-//
-//     var videos: [Video] = []
-//    @State var videoMy: Video?
-//    @State private var favoriteColor = "Trending"
-//    @State var selected = 0
-//    @State var presentSheet = false
-//
-//
-//
-//    var body: some View {
-//
-//        GeometryReader { g in
-//        NavigationView {
-//            VStack() {
-//
-//                CustomSegmentedPickerView(selected: self.$selected)
-//
-//                if self.selected == 0 {
-//
-//
-//                } else {
-//
-//                }
-//
-//                List(videos) { video in
-//
-//                    LibraryCell(cell: video)
-//                        //videoMy = video
-//
-//            }
-//
-//            .listStyle(GroupedListStyle())
-//            .navigationBarTitle(Text("Home"))
-//            .navigationBarItems(trailing:
-//                                    HStack{
-//                                        Button(action: {print("123") }) { Image("Time")}.accentColor(.red)
-//                                        Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
-//                                            .padding(6)
-//                                    })
-//               .sheet(item: $videoMy) { (video)  in
-//                   MyImagePicker(url: video.url)
-//            }
-//      }
-//    }
-//  }
-//}
-    
-    
+
 struct MyImagePicker: UIViewControllerRepresentable {
     var url: URL
     func makeUIViewController(context:
@@ -141,6 +89,32 @@ struct LibraryCell: View {
             VStack(alignment: .center) {
                 
                 Image("Preview")
+                    .resizable()
+                    .scaledToFit()
+                    .overlay(ImageOverlay(),alignment: .topLeading)
+                    .cornerRadius(2)
+                    .padding(.leading,-20)
+                    .padding(.trailing,-20)
+                    .scaledToFill()
+                Spacer()
+                HStack{
+                    Text("\(cell.title)")
+                    Spacer()
+                    Button(action: {print("777777") }) { Image("Like")}.accentColor(.red)
+                    Button(action: { print("8888888")}) { Image("More")}.accentColor(.red)
+                        .padding(.trailing,20)
+                }
+                Spacer()
+             }
+          }
+       }
+
+struct TrendingCell: View {
+    var cell: Video
+    var body: some View {
+            VStack(alignment: .center) {
+                
+                Image("Preview1")
                     .resizable()
                     .scaledToFit()
                     .overlay(ImageOverlay(),alignment: .topLeading)

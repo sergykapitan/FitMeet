@@ -34,10 +34,11 @@ class Video: NSObject,Identifiable {
                      "Have you ever seen a robot shark try to eat another robot?"]
     
     for (index, name) in names.enumerated() {
-      let urlPath = Bundle.main.path(forResource: "bulletTrain", ofType: "mp4")!
-      let url = URL(fileURLWithPath: urlPath)
-      let thumbURLPath = Bundle.main.path(forResource: "bulletTrain", ofType: "png")!
-      let thumbURL = URL(fileURLWithPath: thumbURLPath)
+       let videoURLString = "https://wolverine.raywenderlich.com/content/ios/tutorials/video_streaming/foxVillage.m3u8"
+      let urlPath = URL(string: videoURLString)!
+      let url = urlPath
+     // let thumbURLPath = Bundle.main.path(forResource: "Preview", ofType: "png")!
+      let thumbURL = URL(fileURLWithPath: "")
       
       let video = Video(url: url, thumbURL: thumbURL, title: titles[index], subtitle: subtitles[index])
       videos.append(video)
@@ -51,9 +52,9 @@ class Video: NSObject,Identifiable {
     // Add one remote video
     let videoURLString = "https://wolverine.raywenderlich.com/content/ios/tutorials/video_streaming/foxVillage.m3u8"
     if let url = URL(string: videoURLString) {
-      let thumbURLPath = Bundle.main.path(forResource: "bulletTrain", ofType: "png")!
-      let thumbURL = URL(fileURLWithPath: thumbURLPath)
-      let remoteVideo = Video(url: url, thumbURL: thumbURL, title: "キツネ村", subtitle: "Will we be mauled by vicious foxes? Tune in to find out!")
+    //  let thumbURLPath = Bundle.main.path(forResource: "bulletTrain", ofType: "png")!
+      let thumbURL = URL(fileURLWithPath: "")
+      let remoteVideo = Video(url: url, thumbURL: thumbURL, title: "Bring balance and focus to your life by joining this yoga class", subtitle: "Will we be mauled by vicious foxes? Tune in to find out!")
       videos.append(remoteVideo)
     }
     

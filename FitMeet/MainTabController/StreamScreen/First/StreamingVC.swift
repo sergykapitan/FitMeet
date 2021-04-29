@@ -15,6 +15,7 @@ class StreamingVC: UIViewController {
     let streamView = StreamingVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
+    
     let date = Date()
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
@@ -43,7 +44,6 @@ class StreamingVC: UIViewController {
         streamView.videoModeButton.addTarget(self, action: #selector(nextView), for: .touchUpInside)
     }
     func createNavBar() {
-        //create the uibutton
         let button = UIButton(type: .custom) as? UIButton
         button?.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
         button?.addTarget(self, action:#selector(addStream), for:.touchUpInside)

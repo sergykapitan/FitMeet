@@ -7,5 +7,5 @@
 
 import Foundation
 struct ChannelModel: Codable,Hashable {
-    let data: [ChannelResponce]?
+    let data: [ChannelResponce]
 }
