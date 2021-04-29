@@ -13,11 +13,14 @@ import Alamofire
 class SignUpViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
+    @Inject var fitMeetChannel: FitMeetChannels
     
     let signUpView = SignUpViewControllerCode()
     private var userSubscriber: AnyCancellable?
+    private var takeChannel: AnyCancellable?
     
     var userPhoneOreEmail: String?
+    
     private let minLeght = 8
     private var regex = "^[\\d!#$%&*@^-]*$"
     override  var shouldAutorotate: Bool {
@@ -49,48 +52,70 @@ class SignUpViewController: UIViewController {
         fetchUser()
     }
     private func openProfileViewController() {
-        print("123")
-       // let sceneDelegate = self.view.window
-      //  let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = MainTabBarViewController()
         viewController.selectedIndex = 4
-       // self.dismiss(animated: true, completion: nil)
-       // sceneDelegate.window!.rootViewController = viewController
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
-       // sceneDelegate.window!.rootViewController = viewController
-       // sceneDelegate.window!.makeKeyAndVisible()
     }
+ 
     private func fetchUser(){
         guard let phone = userPhoneOreEmail , let name = signUpView.textFieldName.text, let usr = signUpView.textFieldUserName.text, let password = signUpView.textFieldPassword.text else { return }
+        
+        if phone.isValidPhone() {
+            
+        
+        
         userSubscriber = fitMeetApi.signupPassword(authRequest: AuthorizationRequest(
-                                                    fullName: "string",//name,
-                                                    username: "test",//usr,
-                                                    email: "mail@mail3456.ru",
-                                                    phone: "+79123456009",//phone,
-                                                    password: "Password1!"//password
+                                                    fullName: name,
+                                                    username: usr,
+                                                    phone: phone,
+                                                    password: password
         ))
             .mapError({ (error) -> Error in
-                        print("ERROR +++++++ \(error.self)")
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-            if var token = response.token?.token {
+                if let token = response.token?.token {
                 UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
-                self.openProfileViewController()
-            } else if response.message == "error.user.phoneExist"{
+                UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+                UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+                guard let userName = response.user?.fullName else { return }
+                self.fetchChannel(name: userName, title: userName, description: userName)
+                } else if response.message?.first == "error.user.phoneExist"{
                 print("такой email уже существует")
-            } else if response.message == "error.user.emailExist" {
+                } else if response.message?.first == "error.user.emailExist" {
                 print("такой телефон уже существует")
-            }else if response.message == "error.user.usernameExist"{
+                }else if response.message?.first == "error.user.usernameExist"{
                 print("такое имя пользователя уже существует")
             }
-                
-                
-                
-                
-        })
+          })
             
-    }
+        } else {
+            
+            userSubscriber = fitMeetApi.signupPassword(authRequest: AuthorizationRequest(
+                                                        fullName: name,
+                                                        username: usr,
+                                                        email: phone,
+                                                        password: password
+            ))
+                .mapError({ (error) -> Error in
+                            return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if let token = response.token?.token {
+                    UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
+                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+                    guard let userName = response.user?.username else { return }
+                    self.fetchChannel(name: userName, title: userName, description: userName)
+                    } else if response.message?.first == "error.user.phoneExist"{
+                    print("такой email уже существует")
+                    } else if response.message?.first == "error.user.emailExist" {
+                    print("такой телефон уже существует")
+                    }else if response.message?.first == "error.user.usernameExist"{
+                    print("такое имя пользователя уже существует")
+                }
+              })
+           }
+        }
     private func checkValidation(password: String) {
         guard password.count >= minLeght else { return }
         if password.matches(regex) {
@@ -103,6 +128,18 @@ class SignUpViewController: UIViewController {
           let mainVC = MainTabBarViewController()
           mainVC.modalPresentationStyle = .fullScreen
           self.present(mainVC, animated: true, completion: nil)
+    }
+   func fetchChannel(name: String,title: String,description: String) {
+        takeChannel = fitMeetChannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+            .mapError({ (error) -> Error in
+                        return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if var idChanell = response.id {
+                    print("Create Chanell")
+                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                    self.openProfileViewController()
+              }
+        })
     }
 }
 extension SignUpViewController: UITextFieldDelegate {

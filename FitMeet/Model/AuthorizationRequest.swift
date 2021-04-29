@@ -8,11 +8,12 @@
 import Foundation
 import Foundation
 
-struct AuthorizationRequest: Codable {
+struct AuthorizationRequest: Codable  {
     
     let fullName: String
     let username: String
-    let email: String
-    let phone: String
+    @NullCodable var email: String? = nil
+    @NullCodable var phone: String?
     let password: String
 }
+

@@ -9,11 +9,11 @@ import Foundation
 
 struct StartStream: Codable {
     let name: String
-    let userID, broadcastID: Int
+    let userId, broadcastId: Int
 
     enum CodingKeys: String, CodingKey {
         case name
-        case userID
-        case broadcastID
+        case userId
+        case broadcastId
     }
 }

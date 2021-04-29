@@ -20,8 +20,8 @@ class FitMeetChannels {
     //MARK: - create channel
     public func createChannel(channel: ChannelRequest) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels", method: .post, parameters: channel.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                 .validate(statusCode: 200..<300)
-                 .validate(contentType: ["application/json"])
+                // .validate(statusCode: 200..<300)
+                // .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
                  .print("createChannel")

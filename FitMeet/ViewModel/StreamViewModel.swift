@@ -15,28 +15,27 @@ class StreamViewModel: ObservableObject {
     
     @Published var broadcast: BroadcastResponce?
     @Published var stream: StreamResponce?
-    
-   //
-    func fetchBreweries(id:Int,name: String) {
-        task = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: id, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false,categoryIDS: [1], scheduledStartDate: "2021-04-28T15:32:57.135Z"))
-            .mapError({ (error) -> Error in
-                  print(error)
-                   return error })
-                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    self.broadcast = response
-                    print(response)
-            })
-           }
+    @Published var url: String = ""
+    let userID = UserDefaults.standard.string(forKey: Constants.userID)
+
     func fetchStream(id:Int,name: String) {
-        task = fitMeetStream.startStream(stream: StartStream(name: name, userID: 29, broadcastID: id))
+        guard let userid = userID else { return }
+        let userId = Int(userid)
+        guard let user = userId else { return }
+
+        task = fitMeetStream.startStream(stream: StartStream(name: name, userId: user, broadcastId: id))
             .mapError({ (error) -> Error in
                   print(error)
                    return error })
                  .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     self.stream = response
+                    guard let url = response.url else { return }
+                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
+                    self.url = url
                     print(response)
             })
            }
+    
     func startStreamId(id:Int) {
         task = fitMeetStream.startStremId(id: id)
             .mapError({ (error) -> Error in

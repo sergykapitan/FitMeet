@@ -7,21 +7,32 @@
 
 
 import SwiftUI
+//var broadcastID = UserDefaults.standard.string(forKey: Constants.broadcastID)
 
 struct ListChannell: View {
     
     @ObservedObject var viewModel = ChanellListViewModel()
-
+    @State var selection: Int? = nil
+   // @ObservedObject var userSettings = UserSettings()
+    
         var body: some View {
             
             NavigationView {
-                List(viewModel.channels.data) { channel in
-                    NavigationLink(destination: StreamCell(id: channel.id ?? 0))
-                    { ChannellCell(cell: channel) }
-                }
+              
+             //   OptionalView(viewModel.broadcast?.id) { ID in
+                    VStack {
+                    
+                        NavigationLink(destination: StreamCell(id: viewModel.idBroadcast),tag: 1, selection: $selection) {
+                                        Button("Press me") {
+                                            self.selection = 1
+                                        }
+                                    }
+                                }
+              //  }
+ 
                 .navigationBarTitle("List Channel")
                 .onAppear {
-                     self.viewModel.fetchBreweries()
+                        self.viewModel.fetchBreweries()
                    }
                 }
             }
@@ -43,57 +54,50 @@ struct ChannellCell: View {
 struct StreamCell: View {
     @ObservedObject var viewModel = StreamViewModel()
     var id: Int
-    @State var idStream: Int?
     var body: some View {
-                     
-                    MyPlayewView()
+        
+                        MyPlayewView()
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
                         .edgesIgnoringSafeArea(.all)
                         .frame(alignment: .center)
-                 //   Text("\(id)")
-                   // TextMy(url: viewModel.broadcast?.id)
-                 //   Text("\(viewModel.stream?.url ?? "wert")")
                         .onAppear {
-                         //   self.viewModel.startStreamId(id: 4)
-                          //  self.viewModel.fetchBreweries(id: id, name: "BroadcastNameSert")
+                            self.viewModel.fetchStream(id: id, name: "Name Stream")
+              
+                        }
+              }
+         }
 
-                }
-             //   Spacer()
-            }
-        }
-
-    struct TextMy: View {
-        @ObservedObject var viewModel = StreamViewModel()
-        var url: Int?
-
-        var body: some View {
-            guard let u = url else {
-                return AnyView(Text("Loading..."))
-            }
-           // self.viewModel.fetchStream(id: u, name: "StreamName")
-            return AnyView(Text("\(u)"))
-        }
-    }
-
+//    struct TextMy: View {
+//        @ObservedObject var viewModel = StreamViewModel()
+//        var url: Int?
+//
+//        var body: some View {
+//            guard let u = url else {
+//                return AnyView(Text("Loading..."))
+//            }
+//           // self.viewModel.fetchStream(id: u, name: "StreamName")
+//            return AnyView(Text("\(u)"))
+//        }
+//    }
+//
 
 struct MyPlayewView: UIViewControllerRepresentable {
     
-   // var url: URL
+   // var url: String
+    
     func makeUIViewController(context:
               UIViewControllerRepresentableContext<MyPlayewView>) ->
     UIViewController {
-       // let videoURL = url
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
         let nextViewController = LiveStreamViewController()
+        let d = UserDefaults.standard.string(forKey: Constants.urlStream)
+        print("HHHHHHHHHHH=======\(d)")
+        nextViewController.url = d
         return nextViewController
     }
     func updateUIViewController(_ uiViewController:
                                     UIViewController, context:
               UIViewControllerRepresentableContext<MyPlayewView>) {
           }}
-
-
 
 
 

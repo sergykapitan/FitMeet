@@ -18,6 +18,12 @@ class Constants {
     
     /// Citizen API User access token
     static let accessTokenKeyUserDefaults = "ActiveCitizenApiAccessToken"
+    static let userID = "userID"
+    static let chanellID = "chanellID"
+    static let userFullName = "userFullName"
+    static let broadcastID = "broadcastID"
+    static let urlStream = "urlStream"
+    
     static let userNameKeyUserDefaults = "AuthorizedUserName"
     static let dateLastActivityUploadUserDefaults = "DateLastActivityUpload"
     static let hasUserEnteredQuizData = "HasUserEnteredQuizDataUserDefault"

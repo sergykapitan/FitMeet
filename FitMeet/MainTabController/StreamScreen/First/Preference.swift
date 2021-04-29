@@ -9,6 +9,7 @@ import Foundation
 struct Preference {
     static var defaultInstance = Preference()
 //rtmp://vp-push-cloud-ed.gvideo.co/in/68628?551f45c93b0d12adc6c471d27ddc4753
-    var uri: String? = "rtmp://vp-push-cloud-ed.gvideo.co/in"
+    //UserDefaults.standard.string(forKey: Constants.urlStream)
+    var uri: String? = UserDefaults.standard.string(forKey: Constants.urlStream)
     var streamName: String? = "68628?551f45c93b0d12adc6c471d27ddc4753"
 }

@@ -42,18 +42,7 @@ class AuthViewController: UIViewController {
         let signUpVC = SignInViewController()
         self.present(signUpVC, animated: true, completion: nil)
     }
-//    override func shouldAutorotate() -> Bool {
-//        // Return an array of ViewControllers that are children of the parent
-//        let childViewControllersArray = self.children
-//        if childViewControllersArray.count > 0 {
-//            // Assume childVC is the ViewController you are interested in NOT allowing to rotate
-//            let childVC = childViewControllersArray.first
-//            if childVC is ChildViewController {
-//            return false
-//            }
-//        }
-//        return true
-//    }
+
 }
 extension AuthViewController: UITextFieldDelegate {
     
@@ -81,18 +70,4 @@ extension AuthViewController: UITextFieldDelegate {
         }
         return true
     }  
-}
-
-extension UINavigationController {
-//    public override func shouldAutorotate() -> Bool {
-//        if visibleViewController is AuthViewController {
-//            return true   // rotation
-//        } else {
-//            return false  // no rotation
-//        }
-//    }
-//
-//    public override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
-//        return (visibleViewController?.supportedInterfaceOrientations)!
-//    }
 }

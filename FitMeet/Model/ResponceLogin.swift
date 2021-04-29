@@ -13,7 +13,8 @@ struct ResponceLogin: Codable {
     let user: User?
     let token: Token?
     let statusCode: Int?
-    let message, error: String?
+    let message: [String]?
+    let error: String?
 }
 
 

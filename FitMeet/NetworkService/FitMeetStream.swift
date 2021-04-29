@@ -131,8 +131,6 @@ class FitMeetStream {
     public func startStream(stream:StartStream) -> AnyPublisher<StreamResponce, DifferentError> {
         print(stream.asDictionary())
         return AF.request(Constants.apiEndpoint + "/stream/streams", method: .post, parameters: stream.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            //.validate(statusCode: 200..<300)
-            //.validate(contentType: ["application/json"])
             .publishDecodable(type: StreamResponce.self)
             .value()
             .print("startStream")

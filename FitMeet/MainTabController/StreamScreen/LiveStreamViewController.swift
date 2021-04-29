@@ -10,13 +10,18 @@ import AVFoundation
 import HaishinKit
 import Photos
 import VideoToolbox
+import Foundation
 
 class LiveStreamViewController: UITabBarController {
     
     let streamView = LiveStreamVCCode()
     @Inject var fitMeetStream: FitMeetStream
     private static let maxRetryCount: Int = 5
+    var url: String?
+    var myuri: String = ""
+    var myPublish: String = ""
     
+    //UserDefaults.standard.string(forKey: Constants.urlStream)
     
     private var rtmpConnection = RTMPConnection()
     private var rtmpStream: RTMPStream!
@@ -51,7 +56,17 @@ class LiveStreamViewController: UITabBarController {
         view.addGestureRecognizer(tap)
        // videoBitrateSlider?.value = Float(RTMPStream.defaultVideoBitrate) / 1000
        // audioBitrateSlider?.value = Float(RTMPStream.defaultAudioBitrate) / 1000
-
+        let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
+        print("URL =============\(urls)")
+       // var fullName = "First Last"
+       // let fullNameArr = urls.componentsSeparatedByString("/")
+        let fullNameArr = urls?.components(separatedBy: "/")
+        print(fullNameArr)
+        if let str = fullNameArr {
+        myuri = str[0] + "//" + str[2] + "/" + str[3]
+        myPublish = str[4]
+            print("myuri ========\(myuri)\n ffffffff=====\(myPublish)")
+        }
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -59,6 +74,7 @@ class LiveStreamViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
+        
         tabBarController?.tabBar.isHidden = true
         rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
             logger.warn(error.description)
@@ -119,14 +135,16 @@ class LiveStreamViewController: UITabBarController {
         switch code {
         case RTMPConnection.Code.connectSuccess.rawValue:
             retryCount = 0
-            rtmpStream!.publish(Preference.defaultInstance.streamName!)
+            rtmpStream!.publish(myPublish)
+            print("fffffffjjjjj === \(myPublish)")
             // sharedObject!.connect(rtmpConnection)
         case RTMPConnection.Code.connectFailed.rawValue, RTMPConnection.Code.connectClosed.rawValue:
             guard retryCount <= LiveStreamViewController.maxRetryCount else {
                 return
             }
             Thread.sleep(forTimeInterval: pow(2.0, Double(retryCount)))
-            rtmpConnection.connect(Preference.defaultInstance.uri!)
+            rtmpConnection.connect(myuri)
+            print("fffffff === \(myuri)")
             retryCount += 1
         default:
             break

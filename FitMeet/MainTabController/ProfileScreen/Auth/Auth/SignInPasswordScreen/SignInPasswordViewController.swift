@@ -12,8 +12,12 @@ import Combine
 class SignInPasswordViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
+    @Inject var fitMeetchannel: FitMeetChannels
+    
     let signUpView = SignInPasswordViewControllerCode()
     private var userSubscriber: AnyCancellable?
+    private var takeChannel: AnyCancellable?
+    
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
         return false
@@ -56,7 +60,13 @@ class SignInPasswordViewController: UIViewController {
                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
-                self.openMainViewController()
+                let chanellId = UserDefaults.standard.string(forKey: Constants.chanellID)
+                if chanellId == nil {
+                    self.fetchChannel(name: phone, title: phone, description: phone)
+                } else {
+                  self.openMainViewController()
+                }
+                
          })
     }
     private func openMainViewController() {
@@ -64,6 +74,18 @@ class SignInPasswordViewController: UIViewController {
         viewController.selectedIndex = 4
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
+    }
+    func fetchChannel(name: String,title: String,description: String) {
+         takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+             .mapError({ (error) -> Error in
+                         return error })
+             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let idChanell = response.id {
+                     print("Create Chanell")
+                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                     self.openMainViewController()
+               }
+         })
     }
 }
 extension SignInPasswordViewController: UITextFieldDelegate {
