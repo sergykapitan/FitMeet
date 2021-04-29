@@ -12,28 +12,34 @@ class FitMeetApi {
  
     enum DifferentError: Error {
         case alamofire(wrapped: AFError)
-        case malformedURL
+        case malformedURL(wrapped: ErrorMy)
+        case error(error:String)
+    }
+    struct ErrorMy: Codable {
+        let statusCode: Int?
+        let message: String?
+        let error: String?
     }
     //MARK: - signupPassword
     public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
         print(authRequest)
         return AF.request(Constants.apiEndpoint + "/auth/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .validate(statusCode: 200..<300)
+                // .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ResponceLogin.self)
                  .value()
                  .print("signupPassword")
-                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .mapError{ DifferentError.alamofire(wrapped: $0)}
                  .eraseToAnyPublisher()
            }
     
     //MARK: - loginPassword
-    public func loginPassword(login: LoginPassword) -> AnyPublisher<ResponceLogin, DifferentError> {
+    public func loginPassword(login: LoginPassword) -> AnyPublisher<ResponcePassword, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/loginPassword", method: .post, parameters: login.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .publishDecodable(type: ResponceLogin.self)
+                 .publishDecodable(type: ResponcePassword.self)
                  .value()
                  .print("loginPassword")
-                 .mapError { DifferentError.alamofire(wrapped: $0) }
+            .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
 

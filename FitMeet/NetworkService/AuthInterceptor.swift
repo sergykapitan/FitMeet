@@ -7,7 +7,7 @@
 
 import Alamofire
 
-struct AuthInterceptor: RequestInterceptor {
+struct AuthInterceptor: Alamofire.RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Swift.Result<URLRequest, Error>) -> Void) {
         var adaptedRequest = urlRequest
@@ -15,14 +15,14 @@ struct AuthInterceptor: RequestInterceptor {
             completion(.success(adaptedRequest))
             return
         }
-        adaptedRequest.setValue(token, forHTTPHeaderField: "token")
+        adaptedRequest.setValue("Bearer " + token, forHTTPHeaderField: "Authorization")
         completion(.success(adaptedRequest))
     }
     
 //    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
 //        if let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 {
 //            // Handle logout
-//            NotificationCenter.default.post(name: .didLogout, object: nil)
+//           // NotificationCenter.default.post(name: .didLogout, object: nil)
 //            completion(.doNotRetry)
 //        }
 //    }

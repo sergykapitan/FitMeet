@@ -14,7 +14,7 @@ final class StreamingVCCode: UIView {
     let capturePreviewView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        
+        view.backgroundColor = .black
         return view
     }()
     let buttonStartStream: UIButton = {
@@ -53,7 +53,7 @@ final class StreamingVCCode: UIView {
     let videoModeButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .darkGray
-        button.setTitle("NextView", for: .normal)
+        button.setTitle("Create Stream", for: .normal)
         return button
     }()
 
@@ -76,7 +76,7 @@ final class StreamingVCCode: UIView {
         
         capturePreviewView.fillSuperview()
         capturePreviewView.addSubview(videoModeButton)
-        videoModeButton.anchor( bottom:capturePreviewView.bottomAnchor, paddingBottom: 40,width: 50, height: 50)
+        videoModeButton.anchor( bottom:capturePreviewView.bottomAnchor, paddingBottom: 40,width: 150, height: 50)
         videoModeButton.centerX(inView: capturePreviewView)
          
     }

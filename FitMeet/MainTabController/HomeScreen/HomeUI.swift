@@ -9,37 +9,53 @@ import SwiftUI
 import UIKit
 import AVKit
 
+class HostVC<T>: UIHostingController<T> where T: View {
+    override var shouldAutorotate: Bool {
+        return false
+    }
+}
+
 struct HomeUI: View {
-    
-    var videos: [Video] = []
+
+     var videos: [Video] = []
+    @State var videoMy: Video?
     @State private var favoriteColor = "Trending"
     @State var selected = 0
-    
+    @State var presentSheet = false
+
+
+
     var body: some View {
+
         GeometryReader { g in
         NavigationView {
             VStack() {
-               
+
                 CustomSegmentedPickerView(selected: self.$selected)
-                
+
                 if self.selected == 0 {
-                    
-                    
+
+
                 } else {
-                    
+
                 }
-                
+
                 List(videos) { video in
+
                     NavigationLink(destination: MyImagePicker(url: video.url))
-                      {
+                    {
+
                     LibraryCell(cell: video)
-                      }
+                        //videoMy = video
+                     }
                 }
-                .listStyle(GroupedListStyle())
-                //.padding(.leading,-20)
-                .padding(.trailing,-20)
-                
+
+                  .listStyle(GroupedListStyle())
+                //  .padding(.leading,-20)
+                  .padding(.trailing,-20)
+
             }
+
             .navigationBarTitle(Text("Home"))
             .navigationBarItems(trailing:
                                     HStack{
@@ -47,10 +63,62 @@ struct HomeUI: View {
                                         Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
                                             .padding(6)
                                     })
-             }
-        }
+//            .sheet(item: $videoMy) { (video)  in
+//                MyImagePicker(url: video.url)
+//            }
+      }
     }
+  }
 }
+//struct HomeUIMY: View {
+//
+//     var videos: [Video] = []
+//    @State var videoMy: Video?
+//    @State private var favoriteColor = "Trending"
+//    @State var selected = 0
+//    @State var presentSheet = false
+//
+//
+//
+//    var body: some View {
+//
+//        GeometryReader { g in
+//        NavigationView {
+//            VStack() {
+//
+//                CustomSegmentedPickerView(selected: self.$selected)
+//
+//                if self.selected == 0 {
+//
+//
+//                } else {
+//
+//                }
+//
+//                List(videos) { video in
+//
+//                    LibraryCell(cell: video)
+//                        //videoMy = video
+//
+//            }
+//
+//            .listStyle(GroupedListStyle())
+//            .navigationBarTitle(Text("Home"))
+//            .navigationBarItems(trailing:
+//                                    HStack{
+//                                        Button(action: {print("123") }) { Image("Time")}.accentColor(.red)
+//                                        Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
+//                                            .padding(6)
+//                                    })
+//               .sheet(item: $videoMy) { (video)  in
+//                   MyImagePicker(url: video.url)
+//            }
+//      }
+//    }
+//  }
+//}
+    
+    
 struct MyImagePicker: UIViewControllerRepresentable {
     var url: URL
     func makeUIViewController(context:

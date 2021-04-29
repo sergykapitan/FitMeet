@@ -15,14 +15,14 @@ class FitMeetStream {
         case alamofire(wrapped: AFError)
         case malformedURL(statusCode: Int)
     }
+ 
     //MARK: - createBroadcast//POST//AUTH
-    public func createBroadcas() -> AnyPublisher<ResponceLogin, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts", method: .post, parameters: [:], encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                 .validate(statusCode: 200..<300)
-                 .validate(contentType: ["application/json"])
-                 .publishDecodable(type: ResponceLogin.self)
+    public func createBroadcas(broadcast: BroadcastRequest) -> AnyPublisher<BroadcastResponce, DifferentError> {
+        print(broadcast.asDictionary())
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts", method: .post, parameters: broadcast.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .publishDecodable(type: BroadcastResponce.self)
                  .value()
-                 .print("signupPassword")
+                 .print("createBroadcas")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -128,24 +128,25 @@ class FitMeetStream {
             .eraseToAnyPublisher()
     }
     //MARK: - Start Stream//POST//AUTH
-    public func startStream() -> AnyPublisher<Bool, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/streams", method: .post, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-            .publishDecodable(type: Bool.self)
+    public func startStream(stream:StartStream) -> AnyPublisher<StreamResponce, DifferentError> {
+        print(stream.asDictionary())
+        return AF.request(Constants.apiEndpoint + "/stream/streams", method: .post, parameters: stream.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            //.validate(statusCode: 200..<300)
+            //.validate(contentType: ["application/json"])
+            .publishDecodable(type: StreamResponce.self)
             .value()
-            .print("changePassword")
+            .print("startStream")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+
     //MARK: - Start Stream Id//PUT//AUTH
-    public func startStremId(id: Int) -> AnyPublisher<Bool, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/streams/\(id)/start", method:.put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
-            .publishDecodable(type: Bool.self)
+    public func startStremId(id: Int) -> AnyPublisher<StreamResponce, DifferentError> {
+        
+        return AF.request(Constants.apiEndpoint + "/stream/streams/4/start", method:.put,encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .publishDecodable(type: StreamResponce.self)
             .value()
-            .print("changePassword")
+            .print("startStreamid")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

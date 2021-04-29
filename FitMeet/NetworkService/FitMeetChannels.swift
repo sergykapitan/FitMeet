@@ -9,46 +9,39 @@ import Alamofire
 import Combine
 
 class FitMeetChannels {
- 
+    
+   // let token =
+
     enum DifferentError: Error {
         case alamofire(wrapped: AFError)
         case malformedURL
     }
-    //api/v0/channel/channels
-//    {
-//      "name": "string",
-//      "title": "string",
-//      "description": "string",
-//      "backgroundUrl": "https://static.fitliga.com/jyyRD5yf2tuv",
-//      "facebookLink": "https://facebook.com/jyyRD5yf2tuv",
-//      "instagramLink": "https://instagram.com/jyyRD5yf2tuv",
-//      "twitterLink": "https://twitter.com/jyyRD5yf2tuv"
-//    }
+   
     //MARK: - create channel
-    public func createChannel(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "channel/channels", method: .post, parameters: authRequest.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .publishDecodable(type: ResponceLogin.self)
+    public func createChannel(channel: ChannelRequest) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels", method: .post, parameters: channel.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: ChannelResponce.self)
                  .value()
                  .print("createChannel")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    
-    
-    
-    //api/v0/channel/channels
-    //order string ASC
-    //page   integer  Default value : 1
-    //take   integer  Default value : 10
-   // sort   string  Available values : id, name, userId, subscribersCount, followersCount, status, lastBroadcastDate
-    //status [String] BANNED, ACTIVE
-    // titleLike string
     //MARK: - List Channels
-    public func listChannels(login: LoginPassword) -> AnyPublisher<ResponceLogin, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "channel/channels", method: .post, parameters: login.asDictionary(), encoding: JSONEncoding.default, headers: nil)
-                 .publishDecodable(type: ResponceLogin.self)
+    //let token =
+    
+    let headers: HTTPHeaders = [.authorization(bearerToken:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VySWQiOjI5LCJzZXJ2aWNlTmFtZSI6IkFVVEhfQVBQIiwiaWF0IjoxNjE4ODMzMDMzfQ.eua7IRpSa3mC7ETTgT0lUYF83sXzfKmhhSJ_OMpzpqg" )]
+    
+
+
+    
+    
+    public func listChannels() -> AnyPublisher<ChannelModel, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/my", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .publishDecodable(type: ChannelModel.self)
                  .value()
-                 .print("loginPassword")
+                 .print("listChannels")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }

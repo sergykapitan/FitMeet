@@ -12,6 +12,8 @@ import Foundation
 struct ResponceLogin: Codable {
     let user: User?
     let token: Token?
+    let statusCode: Int?
+    let message, error: String?
 }
 
 

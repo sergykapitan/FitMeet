@@ -9,10 +9,13 @@ import UIKit
 import SwiftUI
 
 class MainTabBarViewController: UITabBarController {
-   let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    
+    
+   
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(token)
+        
         //HomeUI
         var home = HomeUI()
         home.videos = Video.allVideos()
@@ -25,18 +28,49 @@ class MainTabBarViewController: UITabBarController {
         categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
         categoryVC.tabBarItem.title = "Category"
         //newList
-        var homeNew = NoSpaceList()
-        homeNew.videos = Video.allVideos()
-        let hostNewVC = UIHostingController(rootView: homeNew)
-        hostNewVC.tabBarItem.image = #imageLiteral(resourceName: "Search")
-        hostNewVC.tabBarItem.title = "Search"
+        let listChannel = ListChannell()
+        let channelVC = UIHostingController(rootView: listChannel)
+        channelVC.tabBarItem.image = #imageLiteral(resourceName: "Stream")
+        channelVC.tabBarItem.title = "Stream"
+        
+        
+//        var searchVC = SearchVC()
+//        let hostNewVC = UIHostingController(rootView: searchVC)
+//        hostNewVC.tabBarItem.image = #imageLiteral(resourceName: "Search")
+//        hostNewVC.tabBarItem.title = "Search"
+        //
+//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
+//        
+        var profile: UIViewController?
+        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+        print(token)
+        if token != nil {
+            profile = ProfileVC()
+        } else {
+            profile = AuthViewController()
+          }
+
+        
+        
         viewControllers = [
-            hostVC,hostNewVC,
-           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
-            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
+            hostVC,
+            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
+            channelVC,
+           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
             categoryVC,
-            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")
+            generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")                        
         ]
+        
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+       
+
+        
     }
     
     private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {

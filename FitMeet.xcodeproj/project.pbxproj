@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
+		B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */; };
+		B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA52637EEA5005473C1 /* VisualEffect.swift */; };
+		B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */; };
+		B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */; };
+		B47D8FC62638098F005473C1 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FC52638098F005473C1 /* LiveViewController.swift */; };
+		B47D8FC92638099C005473C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B47D8FC82638099C005473C1 /* Main.storyboard */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
 		B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */; };
@@ -19,15 +25,28 @@
 		B48D82DB262DC9A800F5A0D9 /* bulletTrain.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B48D82DA262DC9A800F5A0D9 /* bulletTrain.mp4 */; };
 		B48D82E1262DC9C000F5A0D9 /* bulletTrain-clip.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = B48D82E0262DC9C000F5A0D9 /* bulletTrain-clip.mp4 */; };
 		B48D82E9262DCC7A00F5A0D9 /* bulletTrain.png in Resources */ = {isa = PBXBuildFile; fileRef = B48D82E8262DCC7A00F5A0D9 /* bulletTrain.png */; };
+		B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376892638622700D38EC3 /* ResponcePassword.swift */; };
+		B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493768C2638796600D38EC3 /* ParentViewController.swift */; };
+		B49376902639445B00D38EC3 /* RequestAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493768F2639445B00D38EC3 /* RequestAuth.swift */; };
+		B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769226394A5000D38EC3 /* StreamResponce.swift */; };
+		B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376952639625900D38EC3 /* BroadcastRequest.swift */; };
+		B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769B2639631500D38EC3 /* BroadcastResponce.swift */; };
+		B49376A0263994E600D38EC3 /* ListChannell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769F263994E600D38EC3 /* ListChannell.swift */; };
+		B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A62639956600D38EC3 /* ChanellListViewModel.swift */; };
+		B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A92639968600D38EC3 /* ChannelModel.swift */; };
 		B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6192631A388000E00DE /* AuthInterceptor.swift */; };
 		B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F61C2631A787000E00DE /* CategoryUI.swift */; };
 		B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */; };
 		B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */; };
 		B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6262631B54E000E00DE /* CategoryRequest.swift */; };
-		B4A9F6322631CE90000E00DE /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6312631CE90000E00DE /* CameraController.swift */; };
 		B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F63926320AA3000E00DE /* HomeCustomList.swift */; };
-		B4A9F63F263217A6000E00DE /* LiveStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */; };
 		B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */; };
+		B4A9F6612632B200000E00DE /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6602632B200000E00DE /* Preference.swift */; };
+		B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A22632C944000E00DE /* ChannelRequest.swift */; };
+		B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */; };
+		B4BAAD582639B0E500D2D6AE /* StreameUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD572639B0E500D2D6AE /* StreameUI.swift */; };
+		B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */; };
+		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
 		B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
@@ -74,6 +93,12 @@
 /* Begin PBXFileReference section */
 		37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitMeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
+		B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceViewController.swift; sourceTree = "<group>"; };
+		B47D8FA52637EEA5005473C1 /* VisualEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
+		B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
+		B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackContainerViewController.swift; sourceTree = "<group>"; };
+		B47D8FC52638098F005473C1 /* LiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
+		B47D8FC82638099C005473C1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -93,15 +118,28 @@
 		B48D82E4262DC9C800F5A0D9 /* newYorkFlip-clip.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "newYorkFlip-clip.mp4"; sourceTree = "<group>"; };
 		B48D82E5262DC9CC00F5A0D9 /* shark-clip.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "shark-clip.mp4"; sourceTree = "<group>"; };
 		B48D82E8262DCC7A00F5A0D9 /* bulletTrain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bulletTrain.png; sourceTree = "<group>"; };
+		B49376892638622700D38EC3 /* ResponcePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponcePassword.swift; sourceTree = "<group>"; };
+		B493768C2638796600D38EC3 /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
+		B493768F2639445B00D38EC3 /* RequestAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAuth.swift; sourceTree = "<group>"; };
+		B493769226394A5000D38EC3 /* StreamResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamResponce.swift; sourceTree = "<group>"; };
+		B49376952639625900D38EC3 /* BroadcastRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastRequest.swift; sourceTree = "<group>"; };
+		B493769B2639631500D38EC3 /* BroadcastResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastResponce.swift; sourceTree = "<group>"; };
+		B493769F263994E600D38EC3 /* ListChannell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListChannell.swift; sourceTree = "<group>"; };
+		B49376A62639956600D38EC3 /* ChanellListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellListViewModel.swift; sourceTree = "<group>"; };
+		B49376A92639968600D38EC3 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		B4A9F6192631A388000E00DE /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		B4A9F61C2631A787000E00DE /* CategoryUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryUI.swift; sourceTree = "<group>"; };
 		B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponce.swift; sourceTree = "<group>"; };
 		B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		B4A9F6262631B54E000E00DE /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
-		B4A9F6312631CE90000E00DE /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
 		B4A9F63926320AA3000E00DE /* HomeCustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCustomList.swift; sourceTree = "<group>"; };
-		B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamVC.swift; sourceTree = "<group>"; };
 		B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamVCCode.swift; sourceTree = "<group>"; };
+		B4A9F6602632B200000E00DE /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
+		B4A9F6A22632C944000E00DE /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
+		B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponce.swift; sourceTree = "<group>"; };
+		B4BAAD572639B0E500D2D6AE /* StreameUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreameUI.swift; sourceTree = "<group>"; };
+		B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamViewModel.swift; sourceTree = "<group>"; };
+		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* FitMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -169,6 +207,33 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B47D8F9A2637DDC3005473C1 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */,
+				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		B47D8F9B2637DDD8005473C1 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7392625BF8B007CFB71 /* Auth */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		B47D8F9C2637DE12005473C1 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				B4A9F6A22632C944000E00DE /* ChannelRequest.swift */,
+				B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */,
+				B49376A92639968600D38EC3 /* ChannelModel.swift */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 		B48D82C8262DC6F200F5A0D9 /* LocalVideos */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +277,24 @@
 			path = TravelVidsClips;
 			sourceTree = "<group>";
 		};
+		B4937698263962A200D38EC3 /* Broadcast */ = {
+			isa = PBXGroup;
+			children = (
+				B49376952639625900D38EC3 /* BroadcastRequest.swift */,
+				B493769B2639631500D38EC3 /* BroadcastResponce.swift */,
+			);
+			name = Broadcast;
+			sourceTree = "<group>";
+		};
+		B4937699263962B900D38EC3 /* Stream */ = {
+			isa = PBXGroup;
+			children = (
+				B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */,
+				B493769226394A5000D38EC3 /* StreamResponce.swift */,
+			);
+			path = Stream;
+			sourceTree = "<group>";
+		};
 		B4A9F6292631B842000E00DE /* CategoryModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +318,15 @@
 			children = (
 				B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */,
 				B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */,
+				B4A9F6602632B200000E00DE /* Preference.swift */,
+				B47D8FC52638098F005473C1 /* LiveViewController.swift */,
+				B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */,
+				B47D8FC82638099C005473C1 /* Main.storyboard */,
+				B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */,
+				B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */,
+				B47D8FA52637EEA5005473C1 /* VisualEffect.swift */,
+				B493769F263994E600D38EC3 /* ListChannell.swift */,
+				B4BAAD572639B0E500D2D6AE /* StreameUI.swift */,
 			);
 			path = First;
 			sourceTree = "<group>";
@@ -267,7 +359,6 @@
 				B4D9D7622626D2A1007CFB71 /* NetworkService */,
 				B4D9D78326270789007CFB71 /* ViewModel */,
 				B4D9D76D2626D4D3007CFB71 /* Model */,
-				B4D9D7392625BF8B007CFB71 /* Auth */,
 				B4D9D7C6262D8AA7007CFB71 /* MainTabController */,
 				B4D9D7412625C097007CFB71 /* Extensions */,
 				B4D9D7782626D99C007CFB71 /* Constant */,
@@ -300,6 +391,7 @@
 				B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */,
 				B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */,
 				B4D9D76A2626D438007CFB71 /* DataExtensions.swift */,
+				B493768C2638796600D38EC3 /* ParentViewController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -330,6 +422,7 @@
 				B4F580652631531A000095BB /* FitMeetChannels.swift */,
 				B4F58068263156CC000095BB /* FitMeetStream.swift */,
 				B4A9F6192631A388000E00DE /* AuthInterceptor.swift */,
+				B493768F2639445B00D38EC3 /* RequestAuth.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -343,11 +436,15 @@
 				B4D9D7A226286554007CFB71 /* Phone.swift */,
 				B4D9D7AF262973F4007CFB71 /* PhoneCode.swift */,
 				B4D9D7B226297D21007CFB71 /* ResponceLogin.swift */,
+				B49376892638622700D38EC3 /* ResponcePassword.swift */,
 				B4D9D7B62629A98B007CFB71 /* Token.swift */,
 				B4D9D7B92629ABB5007CFB71 /* Password.swift */,
 				B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */,
 				B4A9F62D2631C256000E00DE /* Video */,
 				B4A9F6292631B842000E00DE /* CategoryModel */,
+				B47D8F9C2637DE12005473C1 /* Channel */,
+				B4937699263962B900D38EC3 /* Stream */,
+				B4937698263962A200D38EC3 /* Broadcast */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -372,7 +469,9 @@
 			isa = PBXGroup;
 			children = (
 				B4D9D784262707B0007CFB71 /* SingUpViewModel.swift */,
+				B49376A62639956600D38EC3 /* ChanellListViewModel.swift */,
 				B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */,
+				B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -456,8 +555,6 @@
 			isa = PBXGroup;
 			children = (
 				B4A9F63C26321789000E00DE /* First */,
-				B4A9F6312631CE90000E00DE /* CameraController.swift */,
-				B4A9F63E263217A6000E00DE /* LiveStreamVC.swift */,
 				B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */,
 			);
 			path = StreamScreen;
@@ -474,8 +571,8 @@
 		B4D9D7D8262DA807007CFB71 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */,
-				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
+				B47D8F9A2637DDC3005473C1 /* Profile */,
+				B47D8F9B2637DDD8005473C1 /* Auth */,
 			);
 			path = ProfileScreen;
 			sourceTree = "<group>";
@@ -547,6 +644,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B47D8FC92638099C005473C1 /* Main.storyboard in Resources */,
 				B48D82D8262DC99400F5A0D9 /* monkey.png in Resources */,
 				B48D82E1262DC9C000F5A0D9 /* bulletTrain-clip.mp4 in Resources */,
 				B48D82DB262DC9A800F5A0D9 /* bulletTrain.mp4 in Resources */,
@@ -611,20 +709,29 @@
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
+				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
+				B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
+				B47D8FC62638098F005473C1 /* LiveViewController.swift in Sources */,
+				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4D9D7A726287581007CFB71 /* SecurityCode.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
+				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
+				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
+				B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
+				B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
+				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
@@ -637,27 +744,36 @@
 				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
+				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
+				B49376902639445B00D38EC3 /* RequestAuth.swift in Sources */,
+				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
+				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
-				B4A9F63F263217A6000E00DE /* LiveStreamVC.swift in Sources */,
+				B4BAAD582639B0E500D2D6AE /* StreameUI.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
 				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,
+				B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
+				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
+				B49376A0263994E600D38EC3 /* ListChannell.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
+				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
-				B4A9F6322631CE90000E00DE /* CameraController.swift in Sources */,
+				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
+				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 			);

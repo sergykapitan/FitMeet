@@ -5,13 +5,25 @@
 //  Created by novotorica on 19.04.2021.
 //
 
-import Foundation
+
 import UIKit
-import AVFoundation
-import Photos
+import Alamofire
+import Combine
 
 class StreamingVC: UIViewController {
+    
     let streamView = StreamingVCCode()
+    @Inject var fitMeetStream: FitMeetStream
+    @Inject var fitMeetChanell: FitMeetChannels
+    let date = Date()
+    private var take: AnyCancellable?
+    private var takeChannel: AnyCancellable?
+    private var takeBroadcast: AnyCancellable?
+    
+    private var streamName: String?
+    private var titleStream: String?
+    private var descriptionStream: String?
+    
     
     override func loadView() {
         super.loadView()
@@ -19,100 +31,118 @@ class StreamingVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        navigationController?.navigationBar.isHidden = true
+      //  navigationController?.navigationBar.isHidden = true
     }
     override func viewDidLoad() {
         super.viewDidLoad()
             actionButton()
+            createNavBar()
     }
     
     func actionButton() {
         streamView.videoModeButton.addTarget(self, action: #selector(nextView), for: .touchUpInside)
     }
-    
-    @objc func nextView() {
-        let signUpVC = LiveStreamVC()
-        signUpVC.preset = LiveStreamVC.Preset.sd_540p_30fps_2mbps
-        self.present(signUpVC, animated: true, completion: nil)
+    func createNavBar() {
+        //create the uibutton
+        let button = UIButton(type: .custom) as? UIButton
+        button?.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
+        button?.addTarget(self, action:#selector(addStream), for:.touchUpInside)
+        button?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
+        let barButton = UIBarButtonItem(customView: button!)
+        self.navigationItem.rightBarButtonItem = barButton
     }
     
+    @objc func addStream() {
+        let alertController = UIAlertController(title: "Stream", message: nil, preferredStyle: .alert)
+        
+        let addAction = UIAlertAction(title: "Add", style: .default) {_ in
+            
+            guard let name = alertController.textFields?.first?.text else { return }
+            guard let title = alertController.textFields?[1].text else { return }
+            guard let description = alertController.textFields?[2].text else { return }
+            
+            self.streamName = name
+            self.titleStream = title
+            self.descriptionStream = description
+            
+        }
+        
+        addAction.isEnabled = false
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter Stream name..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter Title name..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter  Description..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+        
+        alertController.addAction(addAction);
+        alertController.addAction(cancelAction);
+        
+        present(alertController, animated: true, completion: nil)
+    }
+            @objc private func handleTextChanged(_ sender: UITextField) {
+                
+                guard let alertController = presentedViewController as? UIAlertController,
+                      let addAction = alertController.actions.first,
+                      let text = sender.text
+                else { return }
+                
+                addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+            }
+            
+
+            
+            
     
-    
-    
-    
+    @objc func nextView() {
+        guard let name = streamName, let title = titleStream, let description = descriptionStream else { return }
+        takeChannel = fitMeetChanell.createChannel(channel: ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let id = response.id  {
+                    guard let name = self.streamName else { return }
+//                    self.takeBroadcast = self.fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: 4, name: "testBar2", type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1], scheduledStartDate: "2021-04-28T09:22:13.082Z"))
+//                        .mapError({ (error) -> Error in
+//                                    print("ERROR +++++++ \(error.self)")
+//                                    return error })
+//                        .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                            print(response)
+//
+//                            
+//                    })
+                }
+                
+                
+        })
+        
+        take = fitMeetStream.startStremId(id: 4)
+
+        .mapError({ (error) -> Error in
+                    print("ERROR +++++++ \(error.self)")
+                    return error })
+        .sink(receiveCompletion: { _ in }, receiveValue: { response in
+            print(response.token)
+            if response.url != nil {
+                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
+                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
+                self.present(nextViewController, animated:true, completion:nil)
+            }
+
+    })
+        
+        
+        
+        
+        
+    }
+   
 }
-//extension StreamingVC {
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        func configureCameraController() {
-//            cameraController.prepare {(error) in
-//                if let error = error {
-//                    print(error)
-//                }
-//
-//                try? self.cameraController.displayPreview(on: self.streamView.capturePreviewView)
-//            }
-//        }
-//
-//        func styleCaptureButton() {
-//            streamView.captureButton.layer.borderColor = UIColor.black.cgColor
-//            streamView.captureButton.layer.borderWidth = 2
-//
-//            streamView.captureButton.layer.cornerRadius = min(streamView.captureButton.frame.width, streamView.captureButton.frame.height) / 2
-//        }
-//
-//        styleCaptureButton()
-//        configureCameraController()
-//
-//    }
-//}
-//
-//extension StreamingVC {
-//    @IBAction func toggleFlash(_ sender: UIButton) {
-//        if cameraController.flashMode == .on {
-//            cameraController.flashMode = .off
-//            streamView.toggleFlashButton.setImage(#imageLiteral(resourceName: "Flash Off Icon"), for: .normal)
-//        }
-//
-//        else {
-//            cameraController.flashMode = .on
-//            streamView.toggleFlashButton.setImage(#imageLiteral(resourceName: "Flash On Icon"), for: .normal)
-//        }
-//    }
-//
-//    @IBAction func switchCameras(_ sender: UIButton) {
-//        do {
-//            try cameraController.switchCameras()
-//        }
-//
-//        catch {
-//            print(error)
-//        }
-//
-//        switch cameraController.currentCameraPosition {
-//        case .some(.front):
-//            streamView.toggleCameraButton.setImage(#imageLiteral(resourceName: "Front Camera Icon"), for: .normal)
-//
-//        case .some(.rear):
-//            streamView.toggleCameraButton.setImage(#imageLiteral(resourceName: "Rear Camera Icon"), for: .normal)
-//
-//        case .none:
-//            return
-//        }
-//    }
-//
-//    @IBAction func captureImage(_ sender: UIButton) {
-//        cameraController.captureImage {(image, error) in
-//            guard let image = image else {
-//                print(error ?? "Image capture error")
-//                return
-//            }
-//
-//            try? PHPhotoLibrary.shared().performChangesAndWait {
-//                PHAssetChangeRequest.creationRequestForAsset(from: image)
-//            }
-//        }
-//    }
-//
-//}
-//

@@ -57,9 +57,9 @@ final class LiveStreamVCCode: UIView {
         return button
     }()
     var previewView: MTHKView = {
-        let view = MTHKView(frame: .zero)
-        return view
-    }()
+            let view = MTHKView(frame: .zero)
+            return view
+        }()
 
     // MARK: - Init
     init() {
@@ -104,9 +104,9 @@ final class LiveStreamVCCode: UIView {
         videoModeButton.anchor( bottom:capturePreviewView.bottomAnchor, paddingBottom: 40,width: 50, height: 50)
         videoModeButton.centerX(inView: capturePreviewView)
         
-        capturePreviewView.addSubview(captureButton)
-        captureButton.centerX(inView: capturePreviewView)
-        captureButton.anchor( width: 50, height: 50)
+        capturePreviewView.addSubview(buttonStartStream)
+        buttonStartStream.centerX(inView: capturePreviewView)
+        buttonStartStream.anchor( width: 50, height: 50)
 
         
         

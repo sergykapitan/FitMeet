@@ -15,15 +15,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
-        if UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults) != nil {
+      //  if UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults) != nil {
            openRootViewController(viewController: MainTabBarViewController(), windowScene: windowScene)
-        } else {
-            openRootViewController(viewController: AuthViewController(),windowScene: windowScene)
-        }
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient,
-                                                         mode: AVAudioSession.Mode.moviePlayback,
-                                                         options: [.mixWithOthers])
-        
+//        } else {
+//            openRootViewController(viewController: AuthViewController(),windowScene: windowScene)
+//        }
+//        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.ambient,
+//                                                         mode: AVAudioSession.Mode.moviePlayback,
+//                                                         options: [.mixWithOthers])
+//
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

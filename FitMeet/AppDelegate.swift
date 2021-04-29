@@ -7,6 +7,9 @@
 
 import UIKit
 import AVFoundation
+import Logboard
+
+let logger = Logboard.with("FitMeet.iOS")
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appDependencies = Dependencies{
             Module { FitMeetApi() }
             Module { FitMeetStream() }
+            Module {FitMeetChannels() }
         }
         appDependencies.build()      
     }
@@ -37,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             try session.setActive(true)
         } catch {
-            print(error)
+            logger.error(error)
         }
         return true
     }

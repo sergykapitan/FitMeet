@@ -26,9 +26,7 @@
 		<true/>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>For taking photos</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>For saving photos</string>
+	<string>Allowing access to the camera lets you view and record.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allowing access to the microphone lets you hear and record sounds.</string>
 	<key>UIApplicationSceneManifest</key>
