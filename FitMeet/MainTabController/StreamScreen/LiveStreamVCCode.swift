@@ -17,43 +17,32 @@ final class LiveStreamVCCode: UIView {
         view.clipsToBounds = true
         return view
     }()
-    let buttonStartStream: UIButton = {
-        let button = UIButton()
-        button.setTitle("StartStream", for: .normal)
-        return button
-    }()
-    let labelSignUp: UILabel = {
+    let labelFPS: UILabel = {
         let label = UILabel()
-        label.text = "Sign Up"
+        label.text = "FPS"
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
-
-    let captureButton: UIButton = {
+    let cameraModeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Capthure", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "refresh"), for: .normal)
         return button
     }()
-    let photoModeButton: UIButton = {
+    let settingButton: UIButton = {
         let button = UIButton()
-        button.setTitle("PhotoMode", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
         return button
     }()
-    let toggleCameraButton: UIButton = {
+    let chatButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Toggle", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Message"), for: .normal)
         return button
     }()
-    let toggleFlashButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Flash", for: .normal)
-        return button
-    }()
-    let videoModeButton: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .darkGray
-        button.setTitle("NextView", for: .normal)
+    let StartStreamButton: HueButton = {
+        let button = HueButton()
+        button.layer.cornerRadius = 6
+        button.setTitle("Start Live Stream", for: .normal)
         return button
     }()
     var previewView: MTHKView = {
@@ -84,29 +73,30 @@ final class LiveStreamVCCode: UIView {
     capturePreviewView.centerYAnchor.constraint(equalTo: capturePreviewView.superview!.centerYAnchor).isActive = true
     capturePreviewView.addSubview(previewView)
 
-        previewView.anchor(top: capturePreviewView.topAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom:  0)
+    previewView.anchor(top: capturePreviewView.topAnchor,
+                       left: capturePreviewView.leftAnchor,
+                       right: capturePreviewView.rightAnchor,
+                       bottom: capturePreviewView.bottomAnchor,
+                       paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom:  0)
 
-        capturePreviewView.addSubview(labelSignUp)
-        labelSignUp.anchor(top: capturePreviewView.topAnchor,
-                           paddingTop: 46, height: 40)
-        labelSignUp.centerX(inView: capturePreviewView)
+    capturePreviewView.addSubview(labelFPS)
+        labelFPS.anchor(top: capturePreviewView.topAnchor,
+                        paddingTop: 60,height: 40)
+        labelFPS.centerX(inView: previewView)
+                
+    capturePreviewView.addSubview(StartStreamButton)
+        StartStreamButton.anchor( left:capturePreviewView.leftAnchor,
+                                bottom:capturePreviewView.bottomAnchor,
+                                paddingLeft: 16,
+                                paddingBottom: 32, height: 40)
+        StartStreamButton.centerX(inView: capturePreviewView)
         
-        capturePreviewView.addSubview(toggleFlashButton)
-        toggleFlashButton.anchor(top: capturePreviewView.topAnchor, right: capturePreviewView.rightAnchor,paddingTop: 40,  paddingRight: 40)
-        capturePreviewView.addSubview(toggleCameraButton)
-        toggleCameraButton.anchor(top: capturePreviewView.topAnchor, right: capturePreviewView.rightAnchor,paddingTop: 80,  paddingRight: 40)
+    capturePreviewView.addSubview(cameraModeButton)
+        cameraModeButton.anchor(right: capturePreviewView.rightAnchor,
+                                paddingRight: 22)
+        cameraModeButton.centerY(inView: StartStreamButton)
         
-        capturePreviewView.addSubview(photoModeButton)
-        photoModeButton.anchor(left: capturePreviewView.leftAnchor, bottom:capturePreviewView.bottomAnchor,paddingRight: 40, paddingBottom: 80)
         
-        capturePreviewView.addSubview(videoModeButton)
-        videoModeButton.anchor( bottom:capturePreviewView.bottomAnchor, paddingBottom: 40,width: 50, height: 50)
-        videoModeButton.centerX(inView: capturePreviewView)
-        
-        capturePreviewView.addSubview(buttonStartStream)
-        buttonStartStream.centerX(inView: capturePreviewView)
-        buttonStartStream.anchor( width: 250, height: 50)
-
         
         
     }

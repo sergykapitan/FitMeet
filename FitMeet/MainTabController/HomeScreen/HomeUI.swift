@@ -26,16 +26,20 @@ struct HomeUI: View {
         GeometryReader { g in
         NavigationView {
             VStack() {
-
-                CustomSegmentedPickerView(selected: self.$selected)
-
+                CustomSegmentedPickerView(selected: self.$selected).background(Color.white)
+                    .frame( height: 20)
+                Spacer()
                 if self.selected == 0 {
                     List(videos) { video in
                           NavigationLink(destination: MyImagePicker(url: video.url))
-                           { LibraryCell(cell: video) }
+                            { LibraryCell(cell: video) }.background(Color.white)
                        }
+                   // .foregroundColor(Color.red)
+                   // .background(Color.white)
                     .listStyle(GroupedListStyle())
                 //  .padding(.leading,-20)
+                    .frame(alignment: .top)
+                    .padding(.top ,0)
                     .padding(.trailing,-20)
                 } else if self.selected == 1{
                     
@@ -52,7 +56,7 @@ struct HomeUI: View {
                     
                 }
 
-            }
+            }.background(Color.white)
 
             .navigationBarTitle(Text("Home"))
             .navigationBarItems(trailing:
@@ -62,8 +66,8 @@ struct HomeUI: View {
                                             .padding(6)
                                     })
 
-      }
-    }
+      }.background(Color.white)
+        }.background(Color.white)
   }
 }
 
@@ -87,7 +91,9 @@ struct LibraryCell: View {
     var cell: Video
     var body: some View {
             VStack(alignment: .center) {
-                
+                Spacer()
+                Text("").frame( height: 15)
+                Spacer()
                 Image("Preview")
                     .resizable()
                     .scaledToFit()
@@ -105,7 +111,7 @@ struct LibraryCell: View {
                         .padding(.trailing,20)
                 }
                 Spacer()
-             }
+             }.background(Color.white)
           }
        }
 

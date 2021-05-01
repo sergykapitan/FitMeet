@@ -16,6 +16,11 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.tabBar.isTranslucent = false
+        self.tabBar.tintColor = UIColor(hexString: "#0099AE")
+        self.tabBar.barTintColor = .white
+        
+        
         //HomeUI
         var home = HomeUI()
         home.videos = Video.allVideos()
@@ -51,26 +56,18 @@ class MainTabBarViewController: UITabBarController {
             profile = AuthViewController()
           }
 
-        
-        
         viewControllers = [
             hostVC,
             generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
-            channelVC,
-           // generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
+            //channelVC,
+            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
             categoryVC,
             generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")                        
         ]
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-       
-
-        
     }
     
     private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {

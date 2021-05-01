@@ -4,11 +4,9 @@
 //
 //  Created by novotorica on 16.04.2021.
 //
+import Foundation
 
 struct LoginPassword: Codable {
-    
-    let email: String
-    let username: String
-    let phone: String
+    var phone: String
     let password: String
 }

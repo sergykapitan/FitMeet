@@ -13,7 +13,7 @@ struct AuthorizationRequest: Codable  {
     let fullName: String
     let username: String
     @NullCodable var email: String? = nil
-    @NullCodable var phone: String?
+    @NullCodable var phone: String? = nil
     let password: String
 }
 

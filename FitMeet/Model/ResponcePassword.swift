@@ -12,8 +12,8 @@ import Foundation
 struct ResponcePassword: Codable {
     let user: Users?
     let token: Tokens?
-    //let statusCode: Int?
-   // let message, error: String?
+    let statusCode: Int?
+    let message, error: String?
 }
 
 

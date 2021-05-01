@@ -32,16 +32,22 @@ class StreamingVC: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-      //  navigationController?.navigationBar.isHidden = true
+       // tabBarController?.tabBar.backgroundColor = .white
     }
     override func viewDidLoad() {
         super.viewDidLoad()
             actionButton()
             createNavBar()
+           makeTableView()
     }
     
     func actionButton() {
-        streamView.videoModeButton.addTarget(self, action: #selector(nextView), for: .touchUpInside)
+      
+    }
+    private func makeTableView() {
+        streamView.tableView.dataSource = self
+        streamView.tableView.delegate = self
+        streamView.tableView.register(StreamingViewCell.self, forCellReuseIdentifier: StreamingViewCell.reuseID)
     }
     func createNavBar() {
         let button = UIButton(type: .custom) as? UIButton
@@ -98,11 +104,7 @@ class StreamingVC: UIViewController {
                 
                 addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
             }
-            
 
-            
-            
-    
     @objc func nextView() {
         guard let name = streamName, let title = titleStream, let description = descriptionStream else { return }
         takeChannel = fitMeetChanell.createChannel(channel: ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
@@ -110,39 +112,17 @@ class StreamingVC: UIViewController {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
                     guard let name = self.streamName else { return }
-//                    self.takeBroadcast = self.fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: 4, name: "testBar2", type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1], scheduledStartDate: "2021-04-28T09:22:13.082Z"))
-//                        .mapError({ (error) -> Error in
-//                                    print("ERROR +++++++ \(error.self)")
-//                                    return error })
-//                        .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                            print(response)
-//
-//                            
-//                    })
                 }
-                
-                
         })
-        
         take = fitMeetStream.startStremId(id: 4)
-
         .mapError({ (error) -> Error in
                     print("ERROR +++++++ \(error.self)")
                     return error })
         .sink(receiveCompletion: { _ in }, receiveValue: { response in
             print(response.token)
             if response.url != nil {
-                let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-                let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
-                self.present(nextViewController, animated:true, completion:nil)
             }
-
-    })
-        
-        
-        
-        
-        
-    }
+          })
+       }
    
 }

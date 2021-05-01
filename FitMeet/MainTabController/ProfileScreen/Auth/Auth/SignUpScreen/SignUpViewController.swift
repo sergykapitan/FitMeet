@@ -42,6 +42,7 @@ class SignUpViewController: UIViewController {
         signUpView.textFieldUserName.delegate = self
         signUpView.textFieldPassword.delegate = self
         signUpView.textFieldPassword.textContentType = .password
+        self.signUpView.textFieldPassword.isSecureTextEntry = true
         buttonSignUp()
   
     }
@@ -79,7 +80,8 @@ class SignUpViewController: UIViewController {
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                 guard let userName = response.user?.fullName else { return }
-                self.fetchChannel(name: userName, title: userName, description: userName)
+                    self.openProfileViewController()
+               // self.fetchChannel(name: userName, title: userName, description: userName)
                 } else if response.message?.first == "error.user.phoneExist"{
                 print("такой email уже существует")
                 } else if response.message?.first == "error.user.emailExist" {
@@ -105,7 +107,8 @@ class SignUpViewController: UIViewController {
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                     guard let userName = response.user?.username else { return }
-                    self.fetchChannel(name: userName, title: userName, description: userName)
+                        self.openProfileViewController()
+                 //   self.fetchChannel(name: userName, title: userName, description: userName)
                     } else if response.message?.first == "error.user.phoneExist"{
                     print("такой email уже существует")
                     } else if response.message?.first == "error.user.emailExist" {
@@ -134,7 +137,7 @@ class SignUpViewController: UIViewController {
             .mapError({ (error) -> Error in
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if var idChanell = response.id {
+                if let idChanell = response.id {
                     print("Create Chanell")
                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
                     self.openProfileViewController()
@@ -148,16 +151,7 @@ extension SignUpViewController: UITextFieldDelegate {
         
     if textField == signUpView.textFieldPassword {
         let fullString = (textField.text ?? "") + string
-        let res: String
-        
-        if range.length == 1{
-            let end  = fullString.index(fullString.startIndex, offsetBy: fullString.count - 1)
-            res = String(fullString[fullString.startIndex..<end])
-        } else {
-            res = fullString
-        }
-        checkValidation(password: res)
-        textField.text = res
+
         }
         return true
     }

@@ -13,7 +13,6 @@
 		B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */; };
 		B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */; };
 		B47D8FC62638098F005473C1 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FC52638098F005473C1 /* LiveViewController.swift */; };
-		B47D8FC92638099C005473C1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B47D8FC82638099C005473C1 /* Main.storyboard */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -42,6 +41,11 @@
 		B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A22632C944000E00DE /* ChannelRequest.swift */; };
 		B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */; };
 		B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADB263B42A20033F78F /* UserSetting.swift */; };
+		B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADF263D4D740033F78F /* HueButton.swift */; };
+		B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AE2263D61D40033F78F /* PopUpView.swift */; };
+		B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */; };
+		B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */; };
+		B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF3263D794E0033F78F /* EXDelegate.swift */; };
 		B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */; };
 		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
 		B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */; };
@@ -99,7 +103,6 @@
 		B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
 		B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackContainerViewController.swift; sourceTree = "<group>"; };
 		B47D8FC52638098F005473C1 /* LiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
-		B47D8FC82638099C005473C1 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -128,6 +131,11 @@
 		B4A9F6A22632C944000E00DE /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
 		B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponce.swift; sourceTree = "<group>"; };
 		B4AE7ADB263B42A20033F78F /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
+		B4AE7ADF263D4D740033F78F /* HueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueButton.swift; sourceTree = "<group>"; };
+		B4AE7AE2263D61D40033F78F /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
+		B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDataSourse.swift; sourceTree = "<group>"; };
+		B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingViewCell.swift; sourceTree = "<group>"; };
+		B4AE7AF3263D794E0033F78F /* EXDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDelegate.swift; sourceTree = "<group>"; };
 		B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamViewModel.swift; sourceTree = "<group>"; };
 		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
 		B4C4996C263ADB9600BFD1EE /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -267,18 +275,44 @@
 		B4A9F63C26321789000E00DE /* First */ = {
 			isa = PBXGroup;
 			children = (
+				B4AE7AE6263D780A0033F78F /* Stream */,
+				B4AE7AE7263D782A0033F78F /* Old */,
+			);
+			path = First;
+			sourceTree = "<group>";
+		};
+		B4AE7AE6263D780A0033F78F /* Stream */ = {
+			isa = PBXGroup;
+			children = (
 				B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */,
 				B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */,
+				B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */,
+				B4AE7AEB263D789E0033F78F /* EXStreamingVC */,
+			);
+			path = Stream;
+			sourceTree = "<group>";
+		};
+		B4AE7AE7263D782A0033F78F /* Old */ = {
+			isa = PBXGroup;
+			children = (
 				B4A9F6602632B200000E00DE /* Preference.swift */,
 				B47D8FC52638098F005473C1 /* LiveViewController.swift */,
 				B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */,
-				B47D8FC82638099C005473C1 /* Main.storyboard */,
 				B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */,
 				B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */,
 				B47D8FA52637EEA5005473C1 /* VisualEffect.swift */,
 				B493769F263994E600D38EC3 /* ListChannell.swift */,
 			);
-			path = First;
+			path = Old;
+			sourceTree = "<group>";
+		};
+		B4AE7AEB263D789E0033F78F /* EXStreamingVC */ = {
+			isa = PBXGroup;
+			children = (
+				B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */,
+				B4AE7AF3263D794E0033F78F /* EXDelegate.swift */,
+			);
+			path = EXStreamingVC;
 			sourceTree = "<group>";
 		};
 		B4C4996A263ADB6A00BFD1EE /* CoreData */ = {
@@ -361,6 +395,8 @@
 				B4CBB869263B19BD00015380 /* NullEncodable.swift */,
 				B4CBB86D263B2B8300015380 /* OptionalView.swift */,
 				B4AE7ADB263B42A20033F78F /* UserSetting.swift */,
+				B4AE7ADF263D4D740033F78F /* HueButton.swift */,
+				B4AE7AE2263D61D40033F78F /* PopUpView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -615,7 +651,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B47D8FC92638099C005473C1 /* Main.storyboard in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
 				B4D9D72826257D8E007CFB71 /* Assets.xcassets in Resources */,
 			);
@@ -676,6 +711,7 @@
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
+				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
@@ -691,10 +727,12 @@
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
+				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
+				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
@@ -733,6 +771,7 @@
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
+				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B49376A0263994E600D38EC3 /* ListChannell.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
@@ -747,6 +786,7 @@
 				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
 				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
+				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

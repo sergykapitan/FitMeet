@@ -34,6 +34,8 @@ class SignInPasswordViewController: UIViewController {
         super.viewDidLoad()        
         actionButtonContinue()
         signUpView.textFieldLogin.delegate = self
+        signUpView.textFieldLogin.textContentType = .password
+        signUpView.textFieldLogin.isSecureTextEntry = true
     }
     func actionButtonContinue() {
         signUpView.buttonSignIn.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
@@ -50,24 +52,40 @@ class SignInPasswordViewController: UIViewController {
  
     private func fetchUser(){
         guard let phone = userPhoneOreEmail,let password = signUpView.textFieldLogin.text else { return }
-        userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(
-                                                    email: "developersergy@gmail.com",
-                                                    username: "Kapitan",
-                                                    phone: phone,
-                                                    password: password))
+        
+        if phone.isValidPhone() {
+        
+            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(phone: phone, password: password))
             .mapError({ (error) -> Error in
                    print(error)
                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print(response)
                 UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
-                let chanellId = UserDefaults.standard.string(forKey: Constants.chanellID)
-                if chanellId == nil {
-                    self.fetchChannel(name: phone, title: phone, description: phone)
-                } else {
-                  self.openMainViewController()
-                }
+                UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+                UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+                
+                
+                
+                self.openMainViewController()
+                
                 
          })
+        } else {
+            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(
+                                                        phone: phone,
+                                                        password: password))
+                .mapError({ (error) -> Error in
+                       print(error)
+                   return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    print(response)
+                    UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
+                    self.openMainViewController()
+                    
+                    
+             })
+        }
     }
     private func openMainViewController() {
         let viewController = MainTabBarViewController()
