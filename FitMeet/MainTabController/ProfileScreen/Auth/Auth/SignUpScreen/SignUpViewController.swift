@@ -79,17 +79,19 @@ class SignUpViewController: UIViewController {
                 UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                guard let userName = response.user?.fullName else { return }
-                    self.openProfileViewController()
-               // self.fetchChannel(name: userName, title: userName, description: userName)
-                } else if response.message?.first == "error.user.phoneExist"{
-                print("такой email уже существует")
-                } else if response.message?.first == "error.user.emailExist" {
-                print("такой телефон уже существует")
-                }else if response.message?.first == "error.user.usernameExist"{
-                print("такое имя пользователя уже существует")
-            }
-          })
+                guard let userName = response.user?.username else { return }
+                self.fetchChannel(name: userName, title: userName, description: userName)
+                } else if response.message == "error.user.phoneExist"{
+                    self.alertControl(message: "\(String(describing: response.message))")
+                } else if response.message == "error.user.emailExist" {
+                    self.alertControl(message: "\(String(describing: response.message))")
+                }else if response.message == "error.user.usernameExist"{
+                    self.alertControl(message: "\(String(describing: response.message))")
+                }else if response.message != nil {
+                    self.alertControl(message: "\(String(describing: response.message))")
+                }
+            
+           })
             
         } else {
             
@@ -106,16 +108,17 @@ class SignUpViewController: UIViewController {
                     UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                    guard let userName = response.user?.username else { return }
-                        self.openProfileViewController()
-                 //   self.fetchChannel(name: userName, title: userName, description: userName)
-                    } else if response.message?.first == "error.user.phoneExist"{
-                    print("такой email уже существует")
-                    } else if response.message?.first == "error.user.emailExist" {
-                    print("такой телефон уже существует")
-                    }else if response.message?.first == "error.user.usernameExist"{
-                    print("такое имя пользователя уже существует")
-                }
+                        guard let username = response.user?.username else { return }
+                    self.fetchChannel(name: username, title: username, description: username)
+                    } else if response.message == "error.user.phoneExist"{
+                        self.alertControl(message: "\(String(describing: response.message))")
+                    } else if response.message == "error.user.emailExist" {
+                        self.alertControl(message: "\(String(describing: response.message))")
+                    }else if response.message == "error.user.usernameExist"{
+                        self.alertControl(message: "\(String(describing: response.message))")
+                    } else if response.message != nil {
+                        self.alertControl(message: "\(String(describing: response.message))")
+                    }
               })
            }
         }
@@ -126,6 +129,14 @@ class SignUpViewController: UIViewController {
         } else {
             print("NotValidate")
         }
+    }
+    private func alertControl(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+         
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+       // alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: nil))
+         
+        self.present(alert, animated: true)
     }
     private func openMainViewController() {
           let mainVC = MainTabBarViewController()
@@ -138,7 +149,6 @@ class SignUpViewController: UIViewController {
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let idChanell = response.id {
-                    print("Create Chanell")
                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
                     self.openProfileViewController()
               }
@@ -149,9 +159,11 @@ extension SignUpViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         
-    if textField == signUpView.textFieldPassword {
+        if textField == signUpView.textFieldPassword {
         let fullString = (textField.text ?? "") + string
-
+            if fullString.isValidPassword() {
+                return true
+            }
         }
         return true
     }

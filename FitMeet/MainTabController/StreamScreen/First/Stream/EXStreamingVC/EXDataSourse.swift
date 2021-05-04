@@ -13,14 +13,18 @@ import UIKit
 extension StreamingVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        // return viewModel.shared().count
-        return 8
+        return listBroadcast.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "StreamingViewCell", for: indexPath) as! StreamingViewCell
-       // let text = viewModel.shared()[indexPath.row].searchText
-        cell.titleLabel.text = "NameBroadcast"
+        let text = listBroadcast[indexPath.row].name
+        guard let textGuard = text else { return  cell}
+        cell.layer.cornerRadius = 8
+        cell.layer.borderWidth = 0.8
+        cell.backgroundColor = .white
+        cell.titleLabel.text = "\(textGuard)"
         return cell
     }
 }

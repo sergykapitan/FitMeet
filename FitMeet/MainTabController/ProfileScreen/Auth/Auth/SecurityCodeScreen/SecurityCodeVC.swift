@@ -13,8 +13,14 @@ import Alamofire
 class SecurityCodeVC: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
+    @Inject var fitMeetchannel: FitMeetChannels
+    
     let securityView = SecurityCodeVCCode()
+    
     private var userSubscriber: AnyCancellable?
+    private var takeListChannel: AnyCancellable?
+    private var takeChannel: AnyCancellable?
+    
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
         return false
@@ -55,13 +61,39 @@ class SecurityCodeVC: UIViewController {
                 return error
             })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("VALUE=======\(response)")
                 if let token = response.token?.token {
                     UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
+                    guard let userName = response.user?.username else { return }
+                    self.fetchListChannel(userName: userName)
+             }
+        })
+    }
+    private func fetchListChannel(userName: String) {
+        takeListChannel = fitMeetchannel.listChannels()
+            .mapError({ (error) -> Error in
+                        return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let idChanell = response.data.last?.id {
+                    print("Take id Chanell")
+                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
                     self.openProfileViewController()
-                }
-               })
+                } else {
+                    self.fetchChannel(name: userName, title: userName, description: userName)
             }
+        })
+    }
+   private func fetchChannel(name: String,title: String,description: String) {
+         takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+             .mapError({ (error) -> Error in
+                         return error })
+             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let idChanell = response.id {
+                     print("Create Chanell")
+                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                     self.openProfileViewController()
+               }
+         })
+    }
 }
 extension SecurityCodeVC: UITextFieldDelegate {
     

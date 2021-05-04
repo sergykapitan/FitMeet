@@ -8,7 +8,7 @@
 import Foundation
 struct StreamResponce: Codable {
     
-    let message: [String]?
+    let message: String?
     let error: String?
     let createdAt: String?
     let id: Int?

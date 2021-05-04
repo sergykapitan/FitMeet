@@ -45,6 +45,11 @@ final class LiveStreamVCCode: UIView {
         button.setTitle("Start Live Stream", for: .normal)
         return button
     }()
+    let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        return button
+    }()
     var previewView: MTHKView = {
         let view = MTHKView(frame: .zero)
        return view
@@ -96,8 +101,16 @@ final class LiveStreamVCCode: UIView {
                                 paddingRight: 22)
         cameraModeButton.centerY(inView: StartStreamButton)
         
+    capturePreviewView.addSubview(backButton)
+        backButton.anchor(top: capturePreviewView.topAnchor,
+                          left: capturePreviewView.leftAnchor,
+                          paddingTop: 60, paddingLeft: 30)
         
-        
-        
+    capturePreviewView.addSubview(settingButton)
+        settingButton.anchor(right: capturePreviewView.rightAnchor,paddingRight: 20)
+        settingButton.centerY(inView: backButton)
+    capturePreviewView.addSubview(chatButton)
+        chatButton.anchor(right: settingButton.leftAnchor, paddingRight: 10)
+        chatButton.centerY(inView: settingButton)
     }
 }

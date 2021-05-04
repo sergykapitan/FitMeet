@@ -14,6 +14,9 @@ final class StreamingVCCode: UIView {
     let capturePreviewView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        
+        
         return view
     }()
     var tableView: UITableView = {

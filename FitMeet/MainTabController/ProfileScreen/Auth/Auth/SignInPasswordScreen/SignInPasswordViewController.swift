@@ -17,6 +17,7 @@ class SignInPasswordViewController: UIViewController {
     let signUpView = SignInPasswordViewControllerCode()
     private var userSubscriber: AnyCancellable?
     private var takeChannel: AnyCancellable?
+    private var takeListChannel: AnyCancellable?
     
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
@@ -64,10 +65,8 @@ class SignInPasswordViewController: UIViewController {
                 UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                
-                
-                
-                self.openMainViewController()
+                guard let userName = response.user?.username else { return }
+                self.fetchListChannel(userName: userName)
                 
                 
          })
@@ -81,9 +80,10 @@ class SignInPasswordViewController: UIViewController {
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     print(response)
                     UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
-                    self.openMainViewController()
+                    guard let userName = response.user?.username else { return }
+                    self.fetchListChannel(userName: userName)
                     
-                    
+               
              })
         }
     }
@@ -104,6 +104,20 @@ class SignInPasswordViewController: UIViewController {
                      self.openMainViewController()
                }
          })
+    }
+    private func fetchListChannel(userName: String) {
+        takeListChannel = fitMeetchannel.listChannels()
+            .mapError({ (error) -> Error in
+                        return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let idChanell = response.data.last?.id {
+                    print("Take id Chanell")
+                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                    self.openMainViewController()
+                } else {
+                    self.fetchChannel(name: userName, title: userName, description: userName)
+                }
+        })
     }
 }
 extension SignInPasswordViewController: UITextFieldDelegate {

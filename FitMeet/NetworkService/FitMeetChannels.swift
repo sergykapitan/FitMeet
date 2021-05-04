@@ -19,6 +19,7 @@ class FitMeetChannels {
    
     //MARK: - create channel
     public func createChannel(channel: ChannelRequest) -> AnyPublisher<ChannelResponce, DifferentError> {
+        print(channel.asDictionary())
         return AF.request(Constants.apiEndpoint + "/channel/channels", method: .post, parameters: channel.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                 // .validate(statusCode: 200..<300)
                 // .validate(contentType: ["application/json"])
@@ -29,14 +30,6 @@ class FitMeetChannels {
                  .eraseToAnyPublisher()
            }
     //MARK: - List Channels
-    //let token =
-    
-    let headers: HTTPHeaders = [.authorization(bearerToken:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTY3LCJ1c2VySWQiOjI5LCJzZXJ2aWNlTmFtZSI6IkFVVEhfQVBQIiwiaWF0IjoxNjE4ODMzMDMzfQ.eua7IRpSa3mC7ETTgT0lUYF83sXzfKmhhSJ_OMpzpqg" )]
-    
-
-
-    
-    
     public func listChannels() -> AnyPublisher<ChannelModel, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/my", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .publishDecodable(type: ChannelModel.self)

@@ -16,7 +16,7 @@ class MainTabBarViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.tabBar.isTranslucent = false
+      //  self.tabBar.isTranslucent = false
         self.tabBar.tintColor = UIColor(hexString: "#0099AE")
         self.tabBar.barTintColor = .white
         
@@ -26,43 +26,36 @@ class MainTabBarViewController: UITabBarController {
         home.videos = Video.allVideos()
         let hostVC = UIHostingController(rootView: home)
         hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
-        hostVC.tabBarItem.title = "Home"
+        hostVC.tabBarItem.title = ""
         //CategoryUI
         let category = CategoryUI()
         let categoryVC = UIHostingController(rootView: category)
         categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
-        categoryVC.tabBarItem.title = "Category"
+        categoryVC.tabBarItem.title = ""
         //newList
         let listChannel = ListChannell()
         let channelVC = UIHostingController(rootView: listChannel)
         channelVC.tabBarItem.image = #imageLiteral(resourceName: "Stream")
-        channelVC.tabBarItem.title = "Stream"
-        
-        
-//        var searchVC = SearchVC()
-//        let hostNewVC = UIHostingController(rootView: searchVC)
-//        hostNewVC.tabBarItem.image = #imageLiteral(resourceName: "Search")
-//        hostNewVC.tabBarItem.title = "Search"
-        //
-//        let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
-//        let nextViewController = storyBoard.instantiateViewController(withIdentifier: "PopUpLive") as! LiveViewController
-//        
+        channelVC.tabBarItem.title = ""
+            
         var profile: UIViewController?
+        var streamView : UIViewController?
+        
         let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
-        print(token)
         if token != nil {
             profile = ProfileVC()
+            streamView = StreamingVC()
         } else {
             profile = AuthViewController()
+            streamView = NotTokenView()
           }
 
         viewControllers = [
             hostVC,
-            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Profile"), title: "Search"),
-            //channelVC,
-            generateViewController(rootViewController: StreamingVC(), image: #imageLiteral(resourceName: "Stream") , title: "Stream"),
+            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Profile"), title: ""),
+            generateViewController(rootViewController: streamView ?? SearchVC(), image: #imageLiteral(resourceName: "Stream") , title: ""),
             categoryVC,
-            generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "Profile")                        
+            generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "")
         ]
     }
     

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - Welcome8
 struct ChannelResponce: Codable,Hashable,Identifiable{
     let statusCode: Int?
-    let message: [String]?
+    let message: String?
     let error: String?
     let createdAt: String?
     let id: Int?

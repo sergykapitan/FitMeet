@@ -23,13 +23,46 @@ final class ProfileVCCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
+    let imageUserProfile: UIImageView = {
+        let image = UIImage(named: "avatar")
+        let imageUserProfile = UIImageView()
+        imageUserProfile.maskCircle(anyImage: image!)
+        imageUserProfile.image = image
+        imageUserProfile.layer.borderWidth = 1.0
+        imageUserProfile.layer.masksToBounds = false
+        imageUserProfile.layer.borderColor = UIColor.white.cgColor
+     //   imageUserProfile.layer.cornerRadius = image.
+        imageUserProfile.clipsToBounds = true
+        return imageUserProfile
+    }()
     let buttonLogOut: UIButton = {
         let button = UIButton()
-        button.backgroundColor = .red
+        button.backgroundColor = .gray
+        button.setTitle("Log out", for: .normal)
         return button
         
     }()
-    
+    let userName: UILabel = {
+        let label = UILabel()
+        label.text = "UserName"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 19)
+        return label
+    }()
+    let userFullName: UILabel = {
+        let label = UILabel()
+        label.text = "FullName: "
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 19)
+        return label
+    }()
+    let userId: UILabel = {
+        let label = UILabel()
+        label.text = "id"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 19)
+        return label
+    }()
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -56,6 +89,14 @@ final class ProfileVCCode: UIView {
         cardView.addSubview(buttonLogOut)
         buttonLogOut.centerX(inView: cardView)
         buttonLogOut.anchor(bottom: cardView.bottomAnchor,
-                           paddingBottom: 50, width: 50,height: 40)
+                           paddingBottom: 50, width: 300,height: 40)
+        cardView.addSubview(imageUserProfile)
+        imageUserProfile.centerX(inView: cardView)
+        imageUserProfile.anchor(top: labelSignUp.bottomAnchor,
+                                paddingTop: 20)
+        cardView.addSubview(userName)
+        userName.anchor(top: imageUserProfile.bottomAnchor,
+                        paddingTop: 20)
+        userName.centerX(inView: cardView)
     }
 }

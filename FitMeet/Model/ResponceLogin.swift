@@ -9,17 +9,18 @@
 import Foundation
 
 // MARK: - ResponceLogin
-struct ResponceLogin: Codable {
+struct ResponceLogin: Codable,Identifiable {
+    var id: UUID?
     let user: User?
     let token: Token?
     let statusCode: Int?
-    let message: [String]?
+    let message: String?
     let error: String?
 }
 
 
  //MARK: - User
-struct User: Codable {
+struct User: Codable,Identifiable {
     let id: Int?
     let deleted: String?
     let avatarPath: JSONNull?
@@ -30,7 +31,8 @@ struct User: Codable {
     let birthDate, nameLastUpdateDate, usernameLastUpdateDate: JSONNull?
 }
 // MARK: - Token
-struct Token: Codable {
+struct Token: Codable,Identifiable {
+    var id: UUID?
     let expiresIn: Int?
     let token: String?
 }

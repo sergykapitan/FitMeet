@@ -16,14 +16,19 @@ class HostVC<T>: UIHostingController<T> where T: View {
 }
 
 struct HomeUI: View {
-
+    init(){
+        UITableView.appearance().backgroundColor = UIColor(named: "backgroundLight")
+        UITableView.appearance().tableFooterView = UIView()
+        UITableView.appearance().separatorStyle = .none
+       // UITabBar.appearance().isTranslucent = true
+          }
      var videos: [Video] = []
     @State var videoMy: Video?
     @State private var favoriteColor = "Trending"
     @State var selected = 0
     @State var presentSheet = false
     var body: some View {
-        GeometryReader { g in
+      //  GeometryReader { g in
         NavigationView {
             VStack() {
                 CustomSegmentedPickerView(selected: self.$selected).background(Color.white)
@@ -32,43 +37,27 @@ struct HomeUI: View {
                 if self.selected == 0 {
                     List(videos) { video in
                           NavigationLink(destination: MyImagePicker(url: video.url))
-                            { LibraryCell(cell: video) }.background(Color.white)
-                       }
-                   // .foregroundColor(Color.red)
-                   // .background(Color.white)
-                    .listStyle(GroupedListStyle())
-                //  .padding(.leading,-20)
-                    .frame(alignment: .top)
-                    .padding(.top ,0)
-                    .padding(.trailing,-20)
+                            { LibraryCell(cell: video) }
+                    }
                 } else if self.selected == 1{
-                    
                     List(videos) { video in
                           NavigationLink(destination: MyImagePicker(url: video.url))
                            { TrendingCell(cell: video) }
-                       }
-                    .listStyle(GroupedListStyle())
-                //  .padding(.leading,-20)
-                    .padding(.trailing,-20)
-                    
-
+                    }
                 } else {
                     
                 }
-
-            }.background(Color.white)
-
+            }
             .navigationBarTitle(Text("Home"))
             .navigationBarItems(trailing:
-                                    HStack{
-                                        Button(action: {print("123") }) { Image("Time")}.accentColor(.red)
-                                        Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
-                                            .padding(6)
-                                    })
+            HStack{
+             Button(action: {print("123") }){Image("Time")}.accentColor(.red)
+             Button(action: { print("345")}) { Image("Note")}.accentColor(.red)
+             .padding(6)
+              })
 
-      }.background(Color.white)
-        }.background(Color.white)
-  }
+         }.navigationViewStyle(StackNavigationViewStyle())
+    }
 }
 
 struct MyImagePicker: UIViewControllerRepresentable {
@@ -90,43 +79,59 @@ struct MyImagePicker: UIViewControllerRepresentable {
 struct LibraryCell: View {
     var cell: Video
     var body: some View {
-            VStack(alignment: .center) {
-                Spacer()
+        VStack() {
                 Text("").frame( height: 15)
-                Spacer()
                 Image("Preview")
                     .resizable()
-                    .scaledToFit()
+                    .scaledToFill()
+                    .aspectRatio( contentMode: .fit)
                     .overlay(ImageOverlay(),alignment: .topLeading)
                     .cornerRadius(2)
+                    .clipped()
                     .padding(.leading,-20)
-                    .padding(.trailing,-20)
-                    .scaledToFill()
+                    .padding(.trailing, -40)
                 Spacer()
                 HStack{
-                    Text("\(cell.title)")
+                    Image("avatar").mask(Circle()).overlay(
+                        Circle().stroke(Color.red, lineWidth: 2))
+                    Text("\(cell.title)").foregroundColor(.gray)
+                        .font(.custom("SFProDisplay-Regular", size: 16))
                     Spacer()
-                    Button(action: {print("777777") }) { Image("Like")}.accentColor(.red)
-                    Button(action: { print("8888888")}) { Image("More")}.accentColor(.red)
-                        .padding(.trailing,20)
+                    Button(action: {print("Like") }) { Image("Like")}.accentColor(.red)
+                    Button(action: { print("More")}) { Image("More")}.accentColor(.red)
+                        .padding(.trailing,0)
                 }
+            Spacer()
+            Text("Bring balance and focus to your life by joining this yoga class").padding(.leading,55).font(.headline).padding(.top,-20)
+            Spacer()
+            HStack(){
+                Text("Yoga")
+                    .foregroundColor(.lightGray)
+                    .font(.custom("SFProDisplay-Regular", size: 14))
+                Text("•")
+                    .foregroundColor(.lightGray)
+                    .font(.custom("SFProDisplay-Regular", size: 14))
+                Text("Beginner")
+                    .foregroundColor(.lightGray)
+                    .font(.custom("SFProDisplay-Regular", size: 14))
                 Spacer()
-             }.background(Color.white)
+            }.padding(.leading,60).animation(.default)
+                Spacer()
+             }.buttonStyle(PlainButtonStyle())
+             
           }
        }
 
 struct TrendingCell: View {
     var cell: Video
     var body: some View {
-            VStack(alignment: .center) {
+            VStack() {
                 
                 Image("Preview1")
                     .resizable()
-                    .scaledToFit()
+                    .aspectRatio(contentMode: .fill)
                     .overlay(ImageOverlay(),alignment: .topLeading)
                     .cornerRadius(2)
-                    .padding(.leading,-20)
-                    .padding(.trailing,-20)
                     .scaledToFill()
                 Spacer()
                 HStack{
@@ -137,6 +142,7 @@ struct TrendingCell: View {
                         .padding(.trailing,20)
                 }
                 Spacer()
+                   
              }
           }
        }

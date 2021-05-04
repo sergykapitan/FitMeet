@@ -15,35 +15,63 @@ class StreamingVC: UIViewController {
     let streamView = StreamingVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
+    var viewModel  = StreamViewModel()
+    
+    let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+    let userId = UserDefaults.standard.string(forKey: Constants.userID)
     
     let date = Date()
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
-    
+   
     private var streamName: String?
     private var titleStream: String?
     private var descriptionStream: String?
-    
+    var listBroadcast: [BroadcastResponce] = []
     
     override func loadView() {
         super.loadView()
         view = streamView
+        view.backgroundColor = .white
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
        // tabBarController?.tabBar.backgroundColor = .white
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
             actionButton()
             createNavBar()
-           makeTableView()
+            makeTableView()
+            guard let usId = userId else { return }
+            binding(idUser: usId)
+           // title = "Broadcast"
+        self.navigationController?.navigationItem.title = "Broadcast"
     }
     
     func actionButton() {
       
     }
+    func binding(idUser:String) {
+        takeChannel = fitMeetStream.getListBroadcast(id: idUser)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast = response.data
+                    self.streamView.tableView.reloadData()
+                }
+        })
+    }
+    
+    
+    
+    
     private func makeTableView() {
         streamView.tableView.dataSource = self
         streamView.tableView.delegate = self
@@ -51,26 +79,29 @@ class StreamingVC: UIViewController {
     }
     func createNavBar() {
         let button = UIButton(type: .custom) as? UIButton
-        button?.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
-        button?.addTarget(self, action:#selector(addStream), for:.touchUpInside)
+        let origImage = UIImage(named: "Settings")
+        let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
+        button?.setImage(tintedImage, for: .normal)
+        button?.tintColor = .gray
+        button?.addTarget(self, action:#selector(addBroadcast), for:.touchUpInside)
         button?.frame = CGRect(x: 0, y: 0, width: 30, height: 30)
         let barButton = UIBarButtonItem(customView: button!)
         self.navigationItem.rightBarButtonItem = barButton
     }
     
-    @objc func addStream() {
-        let alertController = UIAlertController(title: "Stream", message: nil, preferredStyle: .alert)
+    @objc func addBroadcast() {
+        let alertController = UIAlertController(title: "Broadcast Name", message: nil, preferredStyle: .alert)
         
         let addAction = UIAlertAction(title: "Add", style: .default) {_ in
             
             guard let name = alertController.textFields?.first?.text else { return }
-            guard let title = alertController.textFields?[1].text else { return }
-            guard let description = alertController.textFields?[2].text else { return }
-            
+
             self.streamName = name
-            self.titleStream = title
-            self.descriptionStream = description
+            guard let chanellId = self.channelId else { return }
             
+            let IntIdChanell = Int(chanellId)
+            guard let iDchanell = IntIdChanell else { return }
+            self.nextView(chanellId: iDchanell, name: name)
         }
         
         addAction.isEnabled = false
@@ -78,18 +109,10 @@ class StreamingVC: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { textField in
-            textField.placeholder = "Enter Stream name..."
+            textField.placeholder = "Enter Broadcast name..."
             textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
         }
-        alertController.addTextField { textField in
-            textField.placeholder = "Enter Title name..."
-            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
-        }
-        alertController.addTextField { textField in
-            textField.placeholder = "Enter  Description..."
-            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
-        }
-        
+
         alertController.addAction(addAction);
         alertController.addAction(cancelAction);
         
@@ -101,28 +124,19 @@ class StreamingVC: UIViewController {
                       let addAction = alertController.actions.first,
                       let text = sender.text
                 else { return }
-                
+
                 addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
             }
 
-    @objc func nextView() {
-        guard let name = streamName, let title = titleStream, let description = descriptionStream else { return }
-        takeChannel = fitMeetChanell.createChannel(channel: ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+    func nextView(chanellId: Int ,name: String ) {
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1], scheduledStartDate: "2021-05-03T08:54:08.006Z"))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
-                    guard let name = self.streamName else { return }
+                    print("greate broadcast")
+                    guard let usId = self.userId else { return }
+                    self.binding(idUser: usId)
                 }
         })
-        take = fitMeetStream.startStremId(id: 4)
-        .mapError({ (error) -> Error in
-                    print("ERROR +++++++ \(error.self)")
-                    return error })
-        .sink(receiveCompletion: { _ in }, receiveValue: { response in
-            print(response.token)
-            if response.url != nil {
-            }
-          })
-       }
-   
+    }
 }

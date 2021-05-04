@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
+		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
+		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
 		B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */; };
 		B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA52637EEA5005473C1 /* VisualEffect.swift */; };
 		B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */; };
@@ -98,6 +100,8 @@
 /* Begin PBXFileReference section */
 		37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitMeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
+		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
+		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
 		B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceViewController.swift; sourceTree = "<group>"; };
 		B47D8FA52637EEA5005473C1 /* VisualEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
 		B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +211,15 @@
 				8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		B41097F12640C08700DFEC19 /* NotTokenView */ = {
+			isa = PBXGroup;
+			children = (
+				B41097F22640C0AA00DFEC19 /* NotTokenView.swift */,
+				B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */,
+			);
+			path = NotTokenView;
 			sourceTree = "<group>";
 		};
 		B47D8F9A2637DDC3005473C1 /* Profile */ = {
@@ -560,6 +573,7 @@
 		B4D9D7D6262DA7D5007CFB71 /* StreamScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B41097F12640C08700DFEC19 /* NotTokenView */,
 				B4A9F63C26321789000E00DE /* First */,
 				B4858A71263A80A500EC276B /* LiveStreamViewController.swift */,
 				B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */,
@@ -714,6 +728,7 @@
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
+				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
@@ -767,6 +782,7 @@
 				B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */,
 				B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
+				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
@@ -927,15 +943,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.FitMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -947,15 +967,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.FitMeet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

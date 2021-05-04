@@ -27,12 +27,19 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         actionButtonContinue()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUserProfile()
+    }
+    func setUserProfile() {
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
+        profileView.userName.text = "User Name: \(userName)"
+    }
     func actionButtonContinue() {
         profileView.buttonLogOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
        // authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        print("123")
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
         UserDefaults.standard.removeObject(forKey: Constants.userID)
         UserDefaults.standard.removeObject(forKey: Constants.chanellID)
@@ -44,8 +51,7 @@ class ProfileVC: UIViewController {
         viewController.selectedIndex = 4
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
-       // sceneDelegate.window!.rootViewController = viewController
-       // sceneDelegate.window!.makeKeyAndVisible()
+
     }
     @objc func actionSignIn() {
 //        let signUpVC = SignInViewController()

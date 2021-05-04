@@ -23,3 +23,6 @@ struct BroadcastResponce:Codable {
     let gcoreStatus: String?
     let url, iframeURL: String?
 }//sponsorsCount,
+struct BroadcastList: Codable {
+    let data: [BroadcastResponce]
+}

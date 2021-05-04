@@ -34,7 +34,7 @@ class LiveStreamViewController: UITabBarController {
     var url: String?
     var myuri: String = ""
     var myPublish: String = ""
-    
+    var idBroadcast: Int?
     
     private var rtmpConnection = RTMPConnection()
     private var rtmpStream: RTMPStream!
@@ -50,20 +50,6 @@ class LiveStreamViewController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         streamView.cameraModeButton.isHidden = true
-        print("ChanellllID =========== \(channelId)")
-        print("USERNAME ====================\(UserId)/n\(userName)/n\(streanUrl)/n\(channelId)")
-        
-//        if channelId == nil {
-//            self.fetchChannel(name: userName, title: userName, description: userName)
-//        } else {
-//            guard let ch = channelId else { return }
-//            let chanellI = Int(ch)
-//            guard let chan = chanellI else { return }
-//            self.fetchBroadcast(chanellId: chan, name: "BroadcastName")
-//        }
-           
-            
-        
         streamView.StartStreamButton.applyGradient(colours: [UIColor(hexString: "#EC008C"),UIColor(hexString: "#FC6767")])
         actionButton()
         rtmpStream = RTMPStream(connection: rtmpConnection)
@@ -84,10 +70,6 @@ class LiveStreamViewController: UITabBarController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapScreen))
         view.addGestureRecognizer(tap)
  
-        
-        print("URL =============\(urls)")
-
-        
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -95,6 +77,10 @@ class LiveStreamViewController: UITabBarController {
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
+//        if let idGuard = idBroadcast {
+//            fetchStream(id: idGuard, name: "IOSTEST@")
+//        }
+
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -121,11 +107,14 @@ class LiveStreamViewController: UITabBarController {
         rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
         rtmpStream.close()
         rtmpStream.dispose()
+       // Loaf.dismiss(sender: LiveStreamViewController())
     }
 
     func actionButton() {
         streamView.cameraModeButton.addTarget(self, action: #selector(rotateCamera), for: .touchUpInside)
         streamView.StartStreamButton.addTarget(self, action: #selector(startStream), for: .touchUpInside)
+        streamView.backButton.addTarget(self, action: #selector(dissmisVC), for: .touchUpInside)
+        streamView.settingButton.addTarget(self, action: #selector(settingStream), for: .touchUpInside)
     }
 
     @objc func rotateCamera() {
@@ -137,7 +126,49 @@ class LiveStreamViewController: UITabBarController {
         }
         currentPosition = position
     }
+    @objc func settingStream() {
+        
+        let alertController = UIAlertController(title: "Stream Name", message: nil, preferredStyle: .alert)
+        let addAction = UIAlertAction(title: "Add", style: .default) {_ in
+            
+            guard let name = alertController.textFields?.first?.text else { return }
+            self.nameStream = name
+            self.fetchStream(id: self.idBroadcast, name: name)
+        }
+        addAction.isEnabled = false
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter Stream name..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+
+        alertController.addAction(addAction);
+        alertController.addAction(cancelAction);
+        
+        present(alertController, animated: true, completion: nil)
+
+    }
+    @objc private func handleTextChanged(_ sender: UITextField) {
+        
+        guard let alertController = presentedViewController as? UIAlertController,
+              let addAction = alertController.actions.first,
+              let text = sender.text
+        else { return }
+
+        addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    private func alertNameStream() {
+        let alertController = UIAlertController(title: "Stream Name", message: "Please Enter Stream Name", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+        alertController.addAction(cancelAction);
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    
+    
     @objc func startStream() {
+        if nameStream != nil {
         if streamView.StartStreamButton.isSelected {
             UIApplication.shared.isIdleTimerDisabled = false
             rtmpConnection.close()
@@ -149,12 +180,15 @@ class LiveStreamViewController: UITabBarController {
             UIApplication.shared.isIdleTimerDisabled = true
             rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
             rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
-            rtmpConnection.connect(Preference.defaultInstance.uri!)
+            rtmpConnection.connect(myuri)
             streamView.StartStreamButton.setTitle("Pause Stream", for: [])
             streamView.cameraModeButton.isHidden = false
             streamView.StartStreamButton.anchor( right: streamView.capturePreviewView.rightAnchor, paddingRight: 64)
         }
         streamView.StartStreamButton.isSelected.toggle()
+        } else {
+            alertNameStream()
+        }
     }
     @objc
     private func rtmpStatusHandler(_ notification: Notification) {
@@ -198,7 +232,7 @@ class LiveStreamViewController: UITabBarController {
     @objc
     private func rtmpErrorHandler(_ notification: Notification) {
         logger.error(notification)
-        rtmpConnection.connect(Preference.defaultInstance.uri!)
+        rtmpConnection.connect(myuri)
     }
     
     @objc
@@ -232,43 +266,14 @@ class LiveStreamViewController: UITabBarController {
         }
         rtmpStream.orientation = orientation
     }
-    
-    
-    
-    func fetchChannel(name: String?,title: String?,description: String?) {
-        guard let name = name,let title = title, let description = description else { return }
-         takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
-             .mapError({ (error) -> Error in
-                         return error })
-             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                 if let idChanell = response.id {
-                     print("Create Chanell")
-                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    self.fetchBroadcast(chanellId: idChanell, name: response.name)
-               }
-         })
-     }
-    
-    func fetchBroadcast(chanellId: Int?,name : String?) {
-        guard let chanellId = chanellId,let name = name else { return }
-        
-        task = fitMeetStream.createBroadcas(broadcast:BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false,categoryIDS: [1], scheduledStartDate: "2021-04-28T15:32:57.135Z"))
-            .mapError({ (error) -> Error in
-                      print(error)
-                       return error })
-                     .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                        
-                        UserDefaults.standard.set(response.id, forKey: Constants.broadcastID)
-                        self.fetchStream(id: response.id, name: self.nameStream ?? "NameStream")
-                    print(response)
-                })
-             }
+
+    @objc func dissmisVC() {
+        self.dismiss(animated: true, completion: nil)
+    }
     
     func fetchStream(id:Int?,name: String?) {
         let UserId = UserDefaults.standard.string(forKey: Constants.userID)
-       
         guard let id = id , let name = name , let userId = UserId  else{ return }
-        
         let usId = Int(userId)
         guard let usID = usId else { return }
         taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
@@ -278,19 +283,17 @@ class LiveStreamViewController: UITabBarController {
                  .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     guard let url = response.url else { return }
                     UserDefaults.standard.set(url, forKey: Constants.urlStream)
+                    let twoString = self.removeUrl(url: url)
+                    self.myuri = twoString.0
+                    self.myPublish = twoString.1
                     self.url = url
                     print(response)
             })
            }
-    
-    
-    
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
-        print(fullUrlArr)
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
         let myPublish = fullUrlArr[4]
-        print("myuri ========\(myuri)\n ffffffff=====\(myPublish)")
         return (myuri,myPublish)
     }
     func blurEffect(key: Bool) {

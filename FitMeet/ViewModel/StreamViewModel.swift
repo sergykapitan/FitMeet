@@ -15,8 +15,11 @@ class StreamViewModel: ObservableObject {
     
     @Published var broadcast: BroadcastResponce?
     @Published var stream: StreamResponce?
+    @Published var broadcastList: BroadcastList?
     @Published var url: String = ""
     let userID = UserDefaults.standard.string(forKey: Constants.userID)
+    
+    
 
     func fetchStream(id:Int,name: String) {
         guard let userid = userID else { return }
@@ -47,6 +50,15 @@ class StreamViewModel: ObservableObject {
             })
            }
     
-    
+    func getListBroadcast(id:String) {
+        task = fitMeetStream.getListBroadcast(id: id)
+            .mapError({ (error) -> Error in
+                        print(error)
+                         return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                self.broadcastList = response
+                print(response)
+        })
+    }
     
 }

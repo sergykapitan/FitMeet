@@ -16,18 +16,17 @@ extension StreamingVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-       // let navVC = LiveStreamViewController()
-       // navVC.modalPresentationStyle = .fullScreen
-       // self.present(navVC, animated: true, completion: nil)
-        let detailVC = LiveStreamViewController()
-       // detailVC.viewModel = vm
-        navigationController?.pushViewController(detailVC, animated: true)
-       // let navVC = tabBarController?.viewControllers![0] as! UINavigationController
-       // let searchCollViewController = navVC.topViewController as! SearchCollectionViewController
-       // let searchText: String = viewModel.shared()[indexPath.row].searchText!
-       // searchCollViewController.makeReguest(searchText: searchText)
-      //  tabBarController?.selectedIndex = 0
- 
+        let navVC = LiveStreamViewController()
+        
+       // let indexPath = tableView.indexPathForSelectedRow
+       // let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
+        navVC.modalPresentationStyle = .fullScreen
+       // navVC.idBroadcast = listBroadcast[indexPath.row].id
+        let album = listBroadcast[indexPath.row].id
+        print("currentCell.textLabel?.text ======== \(album)")
+        navVC.idBroadcast = album
+        self.present(navVC, animated: true, completion: nil)
+
     }
 //    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
 //       
