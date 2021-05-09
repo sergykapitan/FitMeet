@@ -25,7 +25,6 @@
 		B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */; };
 		B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376892638622700D38EC3 /* ResponcePassword.swift */; };
 		B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493768C2638796600D38EC3 /* ParentViewController.swift */; };
-		B49376902639445B00D38EC3 /* RequestAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493768F2639445B00D38EC3 /* RequestAuth.swift */; };
 		B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769226394A5000D38EC3 /* StreamResponce.swift */; };
 		B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376952639625900D38EC3 /* BroadcastRequest.swift */; };
 		B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769B2639631500D38EC3 /* BroadcastResponce.swift */; };
@@ -117,7 +116,6 @@
 		B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClip.swift; sourceTree = "<group>"; };
 		B49376892638622700D38EC3 /* ResponcePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponcePassword.swift; sourceTree = "<group>"; };
 		B493768C2638796600D38EC3 /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
-		B493768F2639445B00D38EC3 /* RequestAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestAuth.swift; sourceTree = "<group>"; };
 		B493769226394A5000D38EC3 /* StreamResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamResponce.swift; sourceTree = "<group>"; };
 		B49376952639625900D38EC3 /* BroadcastRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastRequest.swift; sourceTree = "<group>"; };
 		B493769B2639631500D38EC3 /* BroadcastResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastResponce.swift; sourceTree = "<group>"; };
@@ -440,7 +438,6 @@
 				B4F580652631531A000095BB /* FitMeetChannels.swift */,
 				B4F58068263156CC000095BB /* FitMeetStream.swift */,
 				B4A9F6192631A388000E00DE /* AuthInterceptor.swift */,
-				B493768F2639445B00D38EC3 /* RequestAuth.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -771,7 +768,6 @@
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
-				B49376902639445B00D38EC3 /* RequestAuth.swift in Sources */,
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
