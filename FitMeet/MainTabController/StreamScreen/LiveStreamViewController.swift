@@ -14,6 +14,24 @@ import Foundation
 import Combine
 import Loaf
 
+final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
+    static let `default` = ExampleRecorderDelegate()
+
+    override func didFinishWriting(_ recorder: AVRecorder) {
+        guard let writer: AVAssetWriter = recorder.writer else {
+            return
+        }
+        PHPhotoLibrary.shared().performChanges({() -> Void in
+            PHAssetChangeRequest.creationRequestForAssetFromVideo(atFileURL: writer.outputURL)
+        }, completionHandler: { _, error -> Void in
+            do {
+                try FileManager.default.removeItem(at: writer.outputURL)
+            } catch {
+                print(error)
+            }
+        })
+    }
+}
 class LiveStreamViewController: UITabBarController {
     
     let streamView = LiveStreamVCCode()

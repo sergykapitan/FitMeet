@@ -10,11 +10,6 @@
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
-		B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */; };
-		B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FA52637EEA5005473C1 /* VisualEffect.swift */; };
-		B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */; };
-		B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */; };
-		B47D8FC62638098F005473C1 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47D8FC52638098F005473C1 /* LiveViewController.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -28,7 +23,6 @@
 		B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769226394A5000D38EC3 /* StreamResponce.swift */; };
 		B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376952639625900D38EC3 /* BroadcastRequest.swift */; };
 		B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769B2639631500D38EC3 /* BroadcastResponce.swift */; };
-		B49376A0263994E600D38EC3 /* ListChannell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769F263994E600D38EC3 /* ListChannell.swift */; };
 		B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A62639956600D38EC3 /* ChanellListViewModel.swift */; };
 		B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A92639968600D38EC3 /* ChannelModel.swift */; };
 		B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6192631A388000E00DE /* AuthInterceptor.swift */; };
@@ -101,11 +95,6 @@
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
-		B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreferenceViewController.swift; sourceTree = "<group>"; };
-		B47D8FA52637EEA5005473C1 /* VisualEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisualEffect.swift; sourceTree = "<group>"; };
-		B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackViewController.swift; sourceTree = "<group>"; };
-		B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaybackContainerViewController.swift; sourceTree = "<group>"; };
-		B47D8FC52638098F005473C1 /* LiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -119,7 +108,6 @@
 		B493769226394A5000D38EC3 /* StreamResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamResponce.swift; sourceTree = "<group>"; };
 		B49376952639625900D38EC3 /* BroadcastRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastRequest.swift; sourceTree = "<group>"; };
 		B493769B2639631500D38EC3 /* BroadcastResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BroadcastResponce.swift; sourceTree = "<group>"; };
-		B493769F263994E600D38EC3 /* ListChannell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListChannell.swift; sourceTree = "<group>"; };
 		B49376A62639956600D38EC3 /* ChanellListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellListViewModel.swift; sourceTree = "<group>"; };
 		B49376A92639968600D38EC3 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		B4A9F6192631A388000E00DE /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
@@ -307,12 +295,6 @@
 			isa = PBXGroup;
 			children = (
 				B4A9F6602632B200000E00DE /* Preference.swift */,
-				B47D8FC52638098F005473C1 /* LiveViewController.swift */,
-				B47D8FA22637EE98005473C1 /* PreferenceViewController.swift */,
-				B47D8FAB2637EED6005473C1 /* PlaybackViewController.swift */,
-				B47D8FAE2637EEDC005473C1 /* PlaybackContainerViewController.swift */,
-				B47D8FA52637EEA5005473C1 /* VisualEffect.swift */,
-				B493769F263994E600D38EC3 /* ListChannell.swift */,
 			);
 			path = Old;
 			sourceTree = "<group>";
@@ -727,10 +709,8 @@
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
-				B47D8FAF2637EEDC005473C1 /* PlaybackContainerViewController.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
-				B47D8FC62638098F005473C1 /* LiveViewController.swift in Sources */,
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
@@ -746,9 +726,7 @@
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
-				B47D8FA62637EEA5005473C1 /* VisualEffect.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
-				B47D8FAC2637EED6005473C1 /* PlaybackViewController.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,
@@ -775,7 +753,6 @@
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
 				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,
-				B47D8FA32637EE98005473C1 /* PreferenceViewController.swift in Sources */,
 				B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
@@ -785,7 +762,6 @@
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
-				B49376A0263994E600D38EC3 /* ListChannell.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
