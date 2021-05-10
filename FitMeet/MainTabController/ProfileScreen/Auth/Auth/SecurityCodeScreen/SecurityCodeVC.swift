@@ -41,6 +41,11 @@ class SecurityCodeVC: UIViewController {
         securityView.buttonSendCode.isUserInteractionEnabled = false
         actionButtonContinue()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     func actionButtonContinue() {
         securityView.buttonSendCode.addTarget(self, action: #selector(actionSendCode), for: .touchUpInside)
     }

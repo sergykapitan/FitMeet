@@ -38,6 +38,11 @@ class SignInPasswordViewController: UIViewController {
         signUpView.textFieldLogin.textContentType = .password
         signUpView.textFieldLogin.isSecureTextEntry = true
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     func actionButtonContinue() {
         signUpView.buttonSignIn.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
         signUpView.buttonFoggotPassword.addTarget(self, action: #selector(actionFoggotPassword), for: .touchUpInside)

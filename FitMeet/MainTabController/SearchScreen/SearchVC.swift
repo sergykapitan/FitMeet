@@ -26,6 +26,7 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()        
         actionButtonContinue()
+        self.navigationItem.title = "Search View"
     }
     func actionButtonContinue() {
        // authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

@@ -33,6 +33,11 @@ class FoggotPasswordViewController: UIViewController {
         passwordView.buttonContinue.isUserInteractionEnabled = false
         actionButtonContinue()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     func actionButtonContinue() {
         passwordView.buttonContinue.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
         passwordView.buttonSignUp.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)

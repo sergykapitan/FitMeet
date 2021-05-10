@@ -26,11 +26,14 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButtonContinue()
+        self.navigationItem.title = "User Profile"
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUserProfile()
+        self.navigationController?.navigationBar.isHidden = false
     }
+ 
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
         profileView.userName.text = "User Name: \(userName)"

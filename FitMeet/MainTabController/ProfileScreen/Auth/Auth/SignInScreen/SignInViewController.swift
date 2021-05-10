@@ -32,6 +32,11 @@ class SignInViewController: UIViewController {
         signUpView.buttonContinue.isUserInteractionEnabled = false
         actionButtonContinue()
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     func actionButtonContinue() {
         signUpView.buttonContinue.addTarget(self, action: #selector(actionContinue), for: .touchUpInside)
         signUpView.buttonSignUp.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

@@ -27,6 +27,7 @@ class NotTokenView: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         actionButtonContinue()
+        self.navigationItem.title = "Broadcast List"
     }
     func actionButtonContinue() {
 

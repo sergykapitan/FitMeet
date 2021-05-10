@@ -23,10 +23,14 @@ class AuthViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         authView.textFieldLogin.delegate = self
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
     }
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

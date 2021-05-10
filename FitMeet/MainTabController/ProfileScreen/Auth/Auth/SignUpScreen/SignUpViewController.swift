@@ -46,6 +46,11 @@ class SignUpViewController: UIViewController {
         buttonSignUp()
   
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = true
+        
+    }
     func buttonSignUp() {
         signUpView.buttonContinue.addTarget(self, action: #selector(buttonSignUpAction), for: .touchUpInside)
     }
@@ -80,6 +85,7 @@ class SignUpViewController: UIViewController {
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                 guard let userName = response.user?.username else { return }
+                    
                 self.fetchChannel(name: userName, title: userName, description: userName)
                 } else if response.message == "error.user.phoneExist"{
                     self.alertControl(message: "\(String(describing: response.message))")
