@@ -52,7 +52,8 @@ class StreamingVC: UIViewController {
             guard let usId = userId else { return }
             binding(idUser: usId)
            // title = "Broadcast"
-        self.navigationController?.navigationItem.title = "Broadcast"
+          //  self.navigationController?.navigationItem.title = "Broadcast"
+        view.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     }
     
     func actionButton() {

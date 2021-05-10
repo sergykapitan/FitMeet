@@ -15,8 +15,6 @@ final class StreamingVCCode: UIView {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-        
-        
         return view
     }()
     var tableView: UITableView = {
@@ -43,7 +41,11 @@ final class StreamingVCCode: UIView {
         
         capturePreviewView.fillSuperview()
         capturePreviewView.addSubview(tableView)
-        tableView.fillSuperview()
+        tableView.anchor(top: capturePreviewView.topAnchor,
+                         left: capturePreviewView.leftAnchor,
+                         right: capturePreviewView.rightAnchor,
+                         bottom: capturePreviewView.bottomAnchor,
+                         paddingTop: 0, paddingLeft: 10, paddingRight: 10, paddingBottom: 0)
          
     }
 }
