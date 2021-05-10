@@ -67,6 +67,13 @@ final class SignUpViewControllerCode: UIView {
         button.backgroundColor = UIColor(hexString: "0099AE")
         return button
     }()
+    let textPrivacyPolice: UILabel = {
+        let label = UILabel()
+        label.text = "By signing up, you agree to our Terms , Data Policy and Cookies Policy"
+        label.textColor = UIColor(hexString: "#BBBCBC")
+        label.font = UIFont.boldSystemFont(ofSize: 10)
+        return label
+    }()
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
