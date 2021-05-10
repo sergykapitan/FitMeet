@@ -36,6 +36,11 @@ final class SignUpViewControllerCode: UIView {
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
+    let alertImage: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "alert-triangle")
+        return image
+    }()
     let textFieldUserName: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 19
@@ -47,6 +52,14 @@ final class SignUpViewControllerCode: UIView {
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
+    }()
+    let alertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This username is taken, please choose diffrent."
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
     }()
     let textFieldPassword: UITextField = {
         let textField = UITextField()
@@ -71,7 +84,9 @@ final class SignUpViewControllerCode: UIView {
         let label = UILabel()
         label.text = "By signing up, you agree to our Terms , Data Policy and Cookies Policy"
         label.textColor = UIColor(hexString: "#BBBCBC")
-        label.font = UIFont.boldSystemFont(ofSize: 10)
+        label.font = UIFont.systemFont(ofSize: 10)
+        label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     // MARK: - Init
@@ -107,6 +122,13 @@ final class SignUpViewControllerCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        textFieldUserName.addSubview(alertImage)
+        alertImage.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldUserName)
+        
+        cardView.addSubview(alertLabel)
+        alertLabel.anchor(top: textFieldUserName.bottomAnchor, paddingTop: 5)
+        alertLabel.centerX(inView: cardView)
         
         cardView.addSubview(textFieldPassword)
         textFieldPassword.anchor(top: textFieldUserName.bottomAnchor,
@@ -120,7 +142,11 @@ final class SignUpViewControllerCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
 
-
+        cardView.addSubview(textPrivacyPolice)
+        textPrivacyPolice.anchor(top: buttonContinue.bottomAnchor,
+                                 left: cardView.leftAnchor,
+                                 right: cardView.rightAnchor,
+                                 paddingTop: 11, paddingLeft: 32, paddingRight: 32)
         
     }
 }

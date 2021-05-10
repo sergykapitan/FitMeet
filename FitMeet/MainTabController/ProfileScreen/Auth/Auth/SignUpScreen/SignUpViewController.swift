@@ -18,6 +18,7 @@ class SignUpViewController: UIViewController {
     let signUpView = SignUpViewControllerCode()
     private var userSubscriber: AnyCancellable?
     private var takeChannel: AnyCancellable?
+    typealias CompletionHandler = ( _ success:Bool) -> Void
     
     var userPhoneOreEmail: String?
     
@@ -49,7 +50,8 @@ class SignUpViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-        
+        signUpView.alertLabel.isHidden = true
+        signUpView.alertImage.isHidden = true
     }
     func buttonSignUp() {
         signUpView.buttonContinue.addTarget(self, action: #selector(buttonSignUpAction), for: .touchUpInside)
@@ -85,15 +87,29 @@ class SignUpViewController: UIViewController {
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                 guard let userName = response.user?.username else { return }
-                    
-                self.fetchChannel(name: userName, title: userName, description: userName)
+                    self.fetchChannel(name: userName, title: userName, description: userName) { (bool) in
+                        if bool {
+                            self.openProfileViewController()
+                        } else {
+                            self.alertControl(message: "the channel was not created")
+                        }
+                    }
                 } else if response.message == "error.user.phoneExist"{
-                    self.alertControl(message: "\(String(describing: response.message))")
+                    self.alertControl(message: "This phone number is taken, please choose diffrent")
                 } else if response.message == "error.user.emailExist" {
-                    self.alertControl(message: "\(String(describing: response.message))")
+                    self.alertControl(message: "This email is taken, please choose diffrent")
                 }else if response.message == "error.user.usernameExist"{
-                    self.alertControl(message: "\(String(describing: response.message))")
-                }else if response.message != nil {
+                    UIView.animate(withDuration: 0.5) {
+                      self.signUpView.textFieldPassword.frame.origin.y += 15
+                      self.signUpView.buttonContinue.frame.origin.y += 15
+                      self.signUpView.textPrivacyPolice.frame.origin.y += 15
+                    } completion: { (bool) in
+                        if bool {
+                            self.signUpView.alertImage.isHidden = false
+                            self.signUpView.alertLabel.isHidden = false
+                        }
+                    }
+                } else if response.message != nil {
                     self.alertControl(message: "\(String(describing: response.message))")
                 }
             
@@ -115,13 +131,28 @@ class SignUpViewController: UIViewController {
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                         guard let username = response.user?.username else { return }
-                    self.fetchChannel(name: username, title: username, description: username)
+                        self.fetchChannel(name: username, title: username, description: username) { (bool) in
+                            if bool {
+                                self.openProfileViewController()
+                            } else {
+                                self.alertControl(message: "the channel was not created")
+                            }
+                        }
                     } else if response.message == "error.user.phoneExist"{
-                        self.alertControl(message: "\(String(describing: response.message))")
+                        self.alertControl(message: "This phone number is taken, please choose diffrent")
                     } else if response.message == "error.user.emailExist" {
-                        self.alertControl(message: "\(String(describing: response.message))")
-                    }else if response.message == "error.user.usernameExist"{
-                        self.alertControl(message: "\(String(describing: response.message))")
+                        self.alertControl(message: "This email is taken, please choose diffrent")
+                    } else if response.message == "error.user.usernameExist"{
+                        UIView.animate(withDuration: 0.5) {
+                          self.signUpView.textFieldPassword.frame.origin.y += 15
+                          self.signUpView.buttonContinue.frame.origin.y += 15
+                          self.signUpView.textPrivacyPolice.frame.origin.y += 15
+                        } completion: { (bool) in
+                            if bool {
+                                self.signUpView.alertImage.isHidden = false
+                                self.signUpView.alertLabel.isHidden = false
+                            }
+                        }
                     } else if response.message != nil {
                         self.alertControl(message: "\(String(describing: response.message))")
                     }
@@ -138,10 +169,7 @@ class SignUpViewController: UIViewController {
     }
     private func alertControl(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-         
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-       // alert.addAction(UIAlertAction(title: "Нет", style: .cancel, handler: nil))
-         
         self.present(alert, animated: true)
     }
     private func openMainViewController() {
@@ -149,14 +177,15 @@ class SignUpViewController: UIViewController {
           mainVC.modalPresentationStyle = .fullScreen
           self.present(mainVC, animated: true, completion: nil)
     }
-   func fetchChannel(name: String,title: String,description: String) {
+   func fetchChannel(name: String,title: String,description: String,completionHandler:@escaping CompletionHandler) {
         takeChannel = fitMeetChannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
             .mapError({ (error) -> Error in
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let idChanell = response.id {
                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    self.openProfileViewController()
+                    let flag = true
+                    completionHandler(flag)
               }
         })
     }

@@ -35,12 +35,12 @@ class ProfileVC: UIViewController {
     }
  
     func setUserProfile() {
-        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let chanellId = UserDefaults.standard.string(forKey: Constants.chanellID) else { return }
         profileView.userName.text = "User Name: \(userName)"
+        profileView.chanellId.text = "Chanell ID: \(chanellId)"
     }
     func actionButtonContinue() {
         profileView.buttonLogOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
-       // authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -55,10 +55,6 @@ class ProfileVC: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
-    }
-    @objc func actionSignIn() {
-//        let signUpVC = SignInViewController()
-//        self.present(signUpVC, animated: true, completion: nil)
     }
 
 }

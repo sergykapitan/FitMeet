@@ -63,6 +63,13 @@ final class ProfileVCCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
+    let chanellId: UILabel = {
+        let label = UILabel()
+        label.text = "Chanell Id: "
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 19)
+        return label
+    }()
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -90,13 +97,21 @@ final class ProfileVCCode: UIView {
         buttonLogOut.centerX(inView: cardView)
         buttonLogOut.anchor(bottom: cardView.bottomAnchor,
                            paddingBottom: 50, width: 300,height: 40)
+        
         cardView.addSubview(imageUserProfile)
         imageUserProfile.centerX(inView: cardView)
         imageUserProfile.anchor(top: labelSignUp.bottomAnchor,
                                 paddingTop: 20)
+        
         cardView.addSubview(userName)
         userName.anchor(top: imageUserProfile.bottomAnchor,
                         paddingTop: 20)
         userName.centerX(inView: cardView)
+        
+        cardView.addSubview(chanellId)
+        chanellId.anchor(top: userName.bottomAnchor,
+                        paddingTop: 20)
+        chanellId.centerX(inView: cardView)
+        
     }
 }
