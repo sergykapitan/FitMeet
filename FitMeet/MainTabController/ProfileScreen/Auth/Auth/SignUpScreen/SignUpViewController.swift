@@ -70,15 +70,11 @@ class SignUpViewController: UIViewController {
         guard let phone = userPhoneOreEmail , let name = signUpView.textFieldName.text, let usr = signUpView.textFieldUserName.text, let password = signUpView.textFieldPassword.text else { return }
         
         if phone.isValidPhone() {
-            
-        
-        
-        userSubscriber = fitMeetApi.signupPassword(authRequest: AuthorizationRequest(
-                                                    fullName: name,
-                                                    username: usr,
-                                                    phone: phone,
-                                                    password: password
-        ))
+                userSubscriber = fitMeetApi.signupPassword(authRequest: AuthorizationRequest(
+                                                                                     fullName: name,
+                                                                                     username: usr,
+                                                                                     phone: phone,
+                                                                                     password: password ))
             .mapError({ (error) -> Error in
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in

@@ -7,6 +7,7 @@
 import Foundation
 
 struct LoginPassword: Codable {
-    var phone: String
+    var email: String?
+    var phone: String?
     let password: String
 }

@@ -18,6 +18,7 @@ class SignInPasswordViewController: UIViewController {
     private var userSubscriber: AnyCancellable?
     private var takeChannel: AnyCancellable?
     private var takeListChannel: AnyCancellable?
+    typealias CompletionHandler = ( _ success:Bool) -> Void
     
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
@@ -41,6 +42,8 @@ class SignInPasswordViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        signUpView.alertLabel.isHidden = true
+        signUpView.alertImage.isHidden = true
         
     }
     func actionButtonContinue() {
@@ -57,38 +60,73 @@ class SignInPasswordViewController: UIViewController {
     }
  
     private func fetchUser(){
-        guard let phone = userPhoneOreEmail,let password = signUpView.textFieldLogin.text else { return }
+        guard let phoneOreMail = userPhoneOreEmail,let password = signUpView.textFieldLogin.text else { return }
         
-        if phone.isValidPhone() {
-        
-            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(phone: phone, password: password))
+        if phoneOreMail.isValidPhone() {
+            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(phone: phoneOreMail, password: password))
             .mapError({ (error) -> Error in
-                   print(error)
                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print(response)
-                UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
+                if let token = response.token?.token {
+                UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                 guard let userName = response.user?.username else { return }
-                self.fetchListChannel(userName: userName)
-                
-                
-         })
+                self.fetchListChannel(userName: userName) { (bool) in
+                    if bool {
+                        self.openMainViewController()
+                    } else {
+                        self.fetchChannel(name: userName, title: userName, description: userName)
+                    }
+                }
+                } else {
+                    if response.message == "error.password.incorrect" {
+                        UIView.animate(withDuration: 0.5) {
+                          self.signUpView.buttonSignIn.frame.origin.y += 15
+                          self.signUpView.buttonFoggotPassword.frame.origin.y += 15
+                        } completion: { (bool) in
+                            if bool {
+                                self.signUpView.alertImage.isHidden = false
+                                self.signUpView.alertLabel.isHidden = false
+                            }
+                        }
+                    } else if response.message == "error.user.notFound" {
+                        self.alertControl(message: "User Not Found")
+                    }
+                }
+            })
         } else {
-            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(
-                                                        phone: phone,
-                                                        password: password))
+            userSubscriber = fitMeetApi.loginPassword(login: LoginPassword(email: phoneOreMail, password: password))
                 .mapError({ (error) -> Error in
-                       print(error)
                    return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    print(response)
-                    UserDefaults.standard.set(response.token?.token, forKey: Constants.accessTokenKeyUserDefaults)
+                    if let token = response.token?.token {
+                    UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
+                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                     guard let userName = response.user?.username else { return }
-                    self.fetchListChannel(userName: userName)
-                    
-               
+                    self.fetchListChannel(userName: userName) { (bool) in
+                        if bool {
+                            self.openMainViewController()
+                        } else {
+                            self.fetchChannel(name: userName, title: userName, description: userName)
+                        }
+                    }
+                    } else {
+                        if response.message == "error.password.incorrect" {
+                            UIView.animate(withDuration: 0.5) {
+                              self.signUpView.buttonSignIn.frame.origin.y += 15
+                              self.signUpView.buttonFoggotPassword.frame.origin.y += 15
+                            } completion: { (bool) in
+                                if bool {
+                                    self.signUpView.alertImage.isHidden = false
+                                    self.signUpView.alertLabel.isHidden = false
+                                }
+                            }
+                        } else if response.message == "error.user.notFound" {
+                            self.alertControl(message: "User Not Found")
+                        }
+                    }
              })
         }
     }
@@ -98,32 +136,43 @@ class SignInPasswordViewController: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
-    func fetchChannel(name: String,title: String,description: String) {
-         takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
-             .mapError({ (error) -> Error in
-                         return error })
-             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let idChanell = response.id {
-                     print("Create Chanell")
-                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                     self.openMainViewController()
-               }
-         })
-    }
-    private func fetchListChannel(userName: String) {
+    
+    private func fetchListChannel(userName: String,completionHandler:@escaping CompletionHandler) {
         takeListChannel = fitMeetchannel.listChannels()
             .mapError({ (error) -> Error in
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let idChanell = response.data.last?.id {
-                    print("Take id Chanell")
                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    self.openMainViewController()
+                    let flag = true
+                    completionHandler(flag)
                 } else {
-                    self.fetchChannel(name: userName, title: userName, description: userName)
-                }
+                    let flag = false
+                    completionHandler(flag)
+                  
+            }
         })
     }
+    
+    func fetchChannel(name: String,title: String,description: String) {
+        takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+            .mapError({ (error) -> Error in
+                        return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let idChanell = response.id {
+                    print("Create Chanell")
+                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                    self.openMainViewController()
+                }
+            })
+    }
+    
+    
+    private func alertControl(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true)
+    }  
 }
 extension SignInPasswordViewController: UITextFieldDelegate {
     

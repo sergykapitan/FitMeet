@@ -122,6 +122,7 @@ final class SignUpViewControllerCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        
         textFieldUserName.addSubview(alertImage)
         alertImage.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
         alertImage.centerY(inView: textFieldUserName)

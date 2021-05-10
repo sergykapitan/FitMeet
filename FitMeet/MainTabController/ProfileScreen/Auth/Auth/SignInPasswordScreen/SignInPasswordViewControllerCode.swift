@@ -55,7 +55,19 @@ final class SignInPasswordViewControllerCode: UIView {
         let view = UIView()
         return view
     }()
-    
+    let alertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This password is incorrect, please choose diffrent."
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
+    }()
+    let alertImage: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "alert-triangle")
+        return image
+    }()
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -83,11 +95,22 @@ final class SignInPasswordViewControllerCode: UIView {
                                    left: cardView.leftAnchor,
                                    right: cardView.rightAnchor,
                                    paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 39)
+        
+        textFieldLogin.addSubview(alertImage)
+        alertImage.anchor( right: textFieldLogin.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldLogin)
+        
+        cardView.addSubview(alertLabel)
+        alertLabel.anchor(top: textFieldLogin.bottomAnchor, paddingTop: 5)
+        alertLabel.centerX(inView: cardView)
+        
+        
         cardView.addSubview(buttonSignIn)
         buttonSignIn.anchor(top: textFieldLogin.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 15, paddingLeft: 10, paddingRight: 10, height: 39)
+        
         cardView.addSubview(buttonFoggotPassword)
         buttonFoggotPassword.anchor(top: buttonSignIn.bottomAnchor, paddingTop: 10)
         buttonFoggotPassword.centerX(inView: cardView)
