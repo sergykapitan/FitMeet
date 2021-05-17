@@ -47,7 +47,7 @@ class FoggotPasswordViewController: UIViewController {
 
     }
     @objc func actionSignIn() {
-
+        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
