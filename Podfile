@@ -8,6 +8,7 @@ target 'FitMeet' do
   pod 'HaishinKit', '~> 1.1.4'
   pod 'Hue', '~> 5.0.0'
   pod 'Loaf'
+  pod 'ContextMenuSwift'
   # Pods for FitMeet
 
 end

@@ -176,6 +176,7 @@ code_sign_if_enabled() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ContextMenuSwift/ContextMenuSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HaishinKit/HaishinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hue/Hue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework"
@@ -183,6 +184,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/ContextMenuSwift/ContextMenuSwift.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HaishinKit/HaishinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hue/Hue.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework"

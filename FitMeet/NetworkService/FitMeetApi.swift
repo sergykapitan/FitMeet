@@ -71,4 +71,16 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    ///api/v0/auth/sessions/signupApple
+    //MARK: - SignWithApple
+    public func signWithApple(token: AppleAuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/signupApple", method: .get, parameters: token.asDictionary(), encoding: URLEncoding.default, headers: nil)
+                // .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: ResponceLogin.self)
+                 .value()
+                 .print("signWithApple")
+                 .mapError{ DifferentError.alamofire(wrapped: $0)}
+                 .eraseToAnyPublisher()
+           }
 }

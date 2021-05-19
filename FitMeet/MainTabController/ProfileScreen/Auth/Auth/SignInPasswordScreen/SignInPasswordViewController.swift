@@ -104,14 +104,15 @@ class SignInPasswordViewController: UIViewController {
                     UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                    guard let userName = response.user?.username else { return }
-                    self.fetchListChannel(userName: userName) { (bool) in
-                        if bool {
-                            self.openMainViewController()
-                        } else {
-                            self.fetchChannel(name: userName, title: userName, description: userName)
-                        }
-                    }
+                        self.openMainViewController()
+//                    guard let userName = response.user?.username else { return }
+//                    self.fetchListChannel(userName: userName) { (bool) in
+//                        if bool {
+//                            self.openMainViewController()
+//                        } else {
+//                            self.fetchChannel(name: userName, title: userName, description: userName)
+//                        }
+//                    }
                     } else {
                         if response.message == "error.password.incorrect" {
                             UIView.animate(withDuration: 0.5) {

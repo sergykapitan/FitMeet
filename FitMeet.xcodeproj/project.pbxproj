@@ -85,6 +85,7 @@
 		B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */; };
 		B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */; };
 		B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */; };
+		B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */; };
 		B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F580652631531A000095BB /* FitMeetChannels.swift */; };
 		B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58068263156CC000095BB /* FitMeetStream.swift */; };
 /* End PBXBuildFile section */
@@ -172,6 +173,7 @@
 		B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVCCode.swift; sourceTree = "<group>"; };
 		B4EA55292652A5D50060A694 /* FitMeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FitMeet.entitlements; sourceTree = "<group>"; };
+		B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthorizationRequest.swift; sourceTree = "<group>"; };
 		B4F580652631531A000095BB /* FitMeetChannels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetChannels.swift; sourceTree = "<group>"; };
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 				B4D9D7B62629A98B007CFB71 /* Token.swift */,
 				B4D9D7B92629ABB5007CFB71 /* Password.swift */,
 				B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */,
+				B4EA552B2653C1160060A694 /* SignWithApple */,
 				B4A9F62D2631C256000E00DE /* Video */,
 				B4A9F6292631B842000E00DE /* CategoryModel */,
 				B47D8F9C2637DE12005473C1 /* Channel */,
@@ -574,6 +577,14 @@
 				B47D8F9B2637DDD8005473C1 /* Auth */,
 			);
 			path = ProfileScreen;
+			sourceTree = "<group>";
+		};
+		B4EA552B2653C1160060A694 /* SignWithApple */ = {
+			isa = PBXGroup;
+			children = (
+				B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */,
+			);
+			path = SignWithApple;
 			sourceTree = "<group>";
 		};
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
@@ -743,6 +754,7 @@
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
+				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,

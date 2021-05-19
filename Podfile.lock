@@ -1,5 +1,6 @@
 PODS:
   - Alamofire (5.4.1)
+  - ContextMenuSwift (0.0.8)
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - Hue (5.0.0)
@@ -8,6 +9,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
+  - ContextMenuSwift
   - HaishinKit (~> 1.1.4)
   - Hue (~> 5.0.0)
   - Loaf
@@ -15,6 +17,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - ContextMenuSwift
     - HaishinKit
     - Hue
     - Loaf
@@ -22,11 +25,12 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  ContextMenuSwift: b4d4066b9ebe47a43f7734a4a6989cf03efe5ad8
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
 
-PODFILE CHECKSUM: 936e78753c783a02c266c88a765dd5dfc9d8d1cb
+PODFILE CHECKSUM: 15ce6de704a282cd4d692035c7503007c9ea091b
 
 COCOAPODS: 1.10.1
