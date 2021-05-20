@@ -71,14 +71,7 @@ class SignInPasswordViewController: UIViewController {
                 UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                guard let userName = response.user?.username else { return }
-                self.fetchListChannel(userName: userName) { (bool) in
-                    if bool {
-                        self.openMainViewController()
-                    } else {
-                        self.fetchChannel(name: userName, title: userName, description: userName)
-                    }
-                }
+                    self.openMainViewController()
                 } else {
                     if response.message == "error.password.incorrect" {
                         UIView.animate(withDuration: 0.5) {
@@ -105,14 +98,6 @@ class SignInPasswordViewController: UIViewController {
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                         self.openMainViewController()
-//                    guard let userName = response.user?.username else { return }
-//                    self.fetchListChannel(userName: userName) { (bool) in
-//                        if bool {
-//                            self.openMainViewController()
-//                        } else {
-//                            self.fetchChannel(name: userName, title: userName, description: userName)
-//                        }
-//                    }
                     } else {
                         if response.message == "error.password.incorrect" {
                             UIView.animate(withDuration: 0.5) {
@@ -137,37 +122,7 @@ class SignInPasswordViewController: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
-    
-    private func fetchListChannel(userName: String,completionHandler:@escaping CompletionHandler) {
-        takeListChannel = fitMeetchannel.listChannels()
-            .mapError({ (error) -> Error in
-                        return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let idChanell = response.data.last?.id {
-                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    let flag = true
-                    completionHandler(flag)
-                } else {
-                    let flag = false
-                    completionHandler(flag)
-                  
-            }
-        })
-    }
-    
-    func fetchChannel(name: String,title: String,description: String) {
-        takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
-            .mapError({ (error) -> Error in
-                        return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let idChanell = response.id {
-                    print("Create Chanell")
-                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    self.openMainViewController()
-                }
-            })
-    }
-    
+ 
     
     private func alertControl(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)

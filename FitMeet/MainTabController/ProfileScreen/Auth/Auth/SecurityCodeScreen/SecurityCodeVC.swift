@@ -68,36 +68,11 @@ class SecurityCodeVC: UIViewController {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let token = response.token?.token {
                     UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
-                    guard let userName = response.user?.username else { return }
-                    self.fetchListChannel(userName: userName)
+                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+                    self.openProfileViewController()
              }
         })
-    }
-    private func fetchListChannel(userName: String) {
-        takeListChannel = fitMeetchannel.listChannels()
-            .mapError({ (error) -> Error in
-                        return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let idChanell = response.data.last?.id {
-                    print("Take id Chanell")
-                    UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                    self.openProfileViewController()
-                } else {
-                    self.fetchChannel(name: userName, title: userName, description: userName)
-            }
-        })
-    }
-   private func fetchChannel(name: String,title: String,description: String) {
-         takeChannel = fitMeetchannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
-             .mapError({ (error) -> Error in
-                         return error })
-             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let idChanell = response.id {
-                     print("Create Chanell")
-                     UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-                     self.openProfileViewController()
-               }
-         })
     }
 }
 extension SecurityCodeVC: UITextFieldDelegate {
@@ -107,7 +82,7 @@ extension SecurityCodeVC: UITextFieldDelegate {
        if fullString == "" {
             securityView.buttonSendCode.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
             securityView.buttonSendCode.isUserInteractionEnabled = false
-        } else if  fullString.isValidCode() {
+        } else if  fullString != nil {
             securityView.buttonSendCode.backgroundColor = UIColor(hexString: "0099AE")
             securityView.buttonSendCode.isUserInteractionEnabled = true
         } else {

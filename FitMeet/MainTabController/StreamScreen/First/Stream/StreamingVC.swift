@@ -140,3 +140,31 @@ class StreamingVC: UIViewController {
         })
     }
 }
+//func fetchChannel(name: String,title: String,description: String,completionHandler:@escaping CompletionHandler) {
+//     takeChannel = fitMeetChannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+//         .mapError({ (error) -> Error in
+//                     return error })
+//         .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//             if let idChanell = response.id {
+//                 UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+//                 let flag = true
+//                 completionHandler(flag)
+//           }
+//     })
+// }
+//private func fetchListChannel(userName: String,completionHandler:@escaping CompletionHandler) {
+//    takeListChannel = fitMeetchannel.listChannels()
+//        .mapError({ (error) -> Error in
+//                    return error })
+//        .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//            if let idChanell = response.data.last?.id {
+//                UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+//                let flag = true
+//                completionHandler(flag)
+//            } else {
+//                let flag = false
+//                completionHandler(flag)
+//              
+//        }
+//    })
+//}
