@@ -60,6 +60,8 @@ class SecurityCodeVC: UIViewController {
     }
     private func fetchNewPassword(){
         guard let code = securityView.textFieldCode.text ,let phone = userPhoneOreEmail else { return }
+        
+        if phone.isValidPhone() {
         userSubscriber =  fitMeetApi.requestLogin(phoneCode: PhoneCode(phone: phone, verifyCode: code))
             .mapError({ (error) -> Error in
                 print(error)
@@ -73,6 +75,9 @@ class SecurityCodeVC: UIViewController {
                     self.openProfileViewController()
              }
         })
+        } else {
+            
+        }
     }
 }
 extension SecurityCodeVC: UITextFieldDelegate {

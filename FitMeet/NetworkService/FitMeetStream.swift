@@ -31,7 +31,7 @@ class FitMeetStream {
 
     public func getListBroadcast(id:String) -> AnyPublisher<BroadcastList, DifferentError> {
         print("Id ==============\(id)")
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=1&take=40&userId=\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=1&take=10&userId=\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                 // .validate(statusCode: 200..<300)
                 // .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)

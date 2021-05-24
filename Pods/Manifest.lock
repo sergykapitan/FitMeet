@@ -1,6 +1,23 @@
 PODS:
   - Alamofire (5.4.1)
+  - AppAuth (1.4.0):
+    - AppAuth/Core (= 1.4.0)
+    - AppAuth/ExternalUserAgent (= 1.4.0)
+  - AppAuth/Core (1.4.0)
+  - AppAuth/ExternalUserAgent (1.4.0)
   - ContextMenuSwift (0.0.8)
+  - GoogleSignIn (5.0.2):
+    - AppAuth (~> 1.2)
+    - GTMAppAuth (~> 1.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+  - GTMAppAuth (1.1.0):
+    - AppAuth/Core (~> 1.4)
+    - GTMSessionFetcher (~> 1.4)
+  - GTMSessionFetcher (1.5.0):
+    - GTMSessionFetcher/Full (= 1.5.0)
+  - GTMSessionFetcher/Core (1.5.0)
+  - GTMSessionFetcher/Full (1.5.0):
+    - GTMSessionFetcher/Core (= 1.5.0)
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - Hue (5.0.0)
@@ -10,6 +27,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire (~> 5.2)
   - ContextMenuSwift
+  - GoogleSignIn
   - HaishinKit (~> 1.1.4)
   - Hue (~> 5.0.0)
   - Loaf
@@ -17,7 +35,11 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
+    - AppAuth
     - ContextMenuSwift
+    - GoogleSignIn
+    - GTMAppAuth
+    - GTMSessionFetcher
     - HaishinKit
     - Hue
     - Loaf
@@ -25,12 +47,16 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
+  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   ContextMenuSwift: b4d4066b9ebe47a43f7734a4a6989cf03efe5ad8
+  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
+  GTMAppAuth: 197a8dabfea5d665224aa00d17f164fc2248dab9
+  GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
 
-PODFILE CHECKSUM: 15ce6de704a282cd4d692035c7503007c9ea091b
+PODFILE CHECKSUM: 2b6c3e5ff84204504f37bebd7c0ba0db0b4e9a15
 
 COCOAPODS: 1.10.1

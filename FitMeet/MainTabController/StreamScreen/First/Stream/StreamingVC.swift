@@ -19,6 +19,7 @@ class StreamingVC: UIViewController {
     
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
     let userId = UserDefaults.standard.string(forKey: Constants.userID)
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
     let date = Date()
     private var take: AnyCancellable?
@@ -49,6 +50,8 @@ class StreamingVC: UIViewController {
             actionButton()
             createNavBar()
             makeTableView()
+            print("UserID ======\(userId)")
+            print("TOKEN ++++++\(token)")
             guard let usId = userId else { return }
             binding(idUser: usId)
             self.navigationItem.title = "Broadcast List"
@@ -62,16 +65,14 @@ class StreamingVC: UIViewController {
         takeChannel = fitMeetStream.getListBroadcast(id: idUser)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RESPONCE ====== \(response)")
                 if response.data != nil  {
-                    self.listBroadcast = response.data
+                    self.listBroadcast = response.data!
                     self.streamView.tableView.reloadData()
                 }
         })
     }
-    
-    
-    
-    
+
     private func makeTableView() {
         streamView.tableView.dataSource = self
         streamView.tableView.delegate = self
@@ -93,15 +94,15 @@ class StreamingVC: UIViewController {
         let alertController = UIAlertController(title: "Broadcast Name", message: nil, preferredStyle: .alert)
         
         let addAction = UIAlertAction(title: "Add", style: .default) {_ in
-            
+            print("GGGGGGG+++++++++++++\(alertController.textFields?.first?.text)")
             guard let name = alertController.textFields?.first?.text else { return }
 
             self.streamName = name
-            guard let chanellId = self.channelId else { return }
+          //  guard let chanellId = self.channelId else { return }
             
-            let IntIdChanell = Int(chanellId)
-            guard let iDchanell = IntIdChanell else { return }
-            self.nextView(chanellId: iDchanell, name: name)
+        //    let IntIdChanell = Int(chanellId)
+        //    guard let iDchanell = IntIdChanell else { return }
+            self.nextView(chanellId: 29, name: name)
         }
         
         addAction.isEnabled = false
@@ -129,7 +130,7 @@ class StreamingVC: UIViewController {
             }
 
     func nextView(chanellId: Int ,name: String ) {
-        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1], scheduledStartDate: "2021-05-03T08:54:08.006Z"))
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: 29, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {

@@ -24,5 +24,5 @@ struct BroadcastResponce:Codable {
     let url, iframeURL: String?
 }//sponsorsCount,
 struct BroadcastList: Codable {
-    let data: [BroadcastResponce]
+    let data: [BroadcastResponce]?
 }

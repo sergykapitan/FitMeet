@@ -9,6 +9,7 @@ target 'FitMeet' do
   pod 'Hue', '~> 5.0.0'
   pod 'Loaf'
   pod 'ContextMenuSwift'
+  pod 'GoogleSignIn'
   # Pods for FitMeet
 
 end
