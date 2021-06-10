@@ -15,10 +15,14 @@ struct CategoryResponce: Codable ,Hashable{
 
 // MARK: - Datum
 struct Datum: Codable ,Hashable{
-    let createdAt: CreatedAt?
+    
+    let createdAt: String?
     let id: Int?
-    let deleted: Deleted?
-    let title: String?
+    let deleted, name, title, datumDescription: String?
+    let previewPath: String?
+    let followersCount: Int?
+    let rate: Double?
+    let isNew, isPopular: Bool?
 }
 
 enum CreatedAt: String, Codable ,Hashable{

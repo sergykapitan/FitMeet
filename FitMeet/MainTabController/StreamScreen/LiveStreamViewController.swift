@@ -52,7 +52,8 @@ class LiveStreamViewController: UITabBarController {
     var url: String?
     var myuri: String = ""
     var myPublish: String = ""
-    var idBroadcast: Int?
+    var idBroadcast: Int = 0
+    var idBroad: Int?
     
     private var rtmpConnection = RTMPConnection()
     private var rtmpStream: RTMPStream!
@@ -67,6 +68,8 @@ class LiveStreamViewController: UITabBarController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         streamView.cameraModeButton.isHidden = true
         streamView.StartStreamButton.applyGradient(colours: [UIColor(hexString: "#EC008C"),UIColor(hexString: "#FC6767")])
         actionButton()
@@ -98,7 +101,10 @@ class LiveStreamViewController: UITabBarController {
 //        if let idGuard = idBroadcast {
 //            fetchStream(id: idGuard, name: "IOSTEST@")
 //        }
-
+        let date = Date()
+        print(idBroadcast)
+        self.nextView(chanellId: idBroadcast, name: "\(date)")
+        
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
@@ -151,7 +157,8 @@ class LiveStreamViewController: UITabBarController {
             
             guard let name = alertController.textFields?.first?.text else { return }
             self.nameStream = name
-            self.fetchStream(id: self.idBroadcast, name: name)
+            print("IDBroadcast ======\(self.idBroadcast)")
+            self.fetchStream(id: self.idBroad, name: name)
         }
         addAction.isEnabled = false
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -308,6 +315,19 @@ class LiveStreamViewController: UITabBarController {
                     print(response)
             })
            }
+    func nextView(chanellId: Int ,name: String )  {
+       
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("Responce ==== \(response.id)")
+                if let id = response.id  {
+                    print(id)
+                    self.idBroad = id
+                  
+                  }
+             })
+    }
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]

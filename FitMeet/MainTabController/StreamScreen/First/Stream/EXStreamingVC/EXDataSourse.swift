@@ -12,7 +12,8 @@ import UIKit
 
 extension StreamingVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return listBroadcast.count
+      //  return listBroadcast.count
+        return listChanell.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
        // return viewModel.shared().count
@@ -23,8 +24,11 @@ extension StreamingVC: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "StreamingViewCell", for: indexPath) as! StreamingViewCell
      //   let text = listBroadcast[indexPath.row].name
-        let text = listBroadcast[indexPath.section].name
-        guard let textGuard = text else { return  cell}
+     //   let text = listBroadcast[indexPath.section].name
+        let text = listChanell[indexPath.section].name
+        let title = listChanell[indexPath.section].title
+        let description = listChanell[indexPath.section].description
+        guard let textGuard = text,let guardtitle = title,let guarddescription = description else { return  cell}
         
         cell.layer.cornerRadius = 8
         cell.layer.borderWidth = 0.8
@@ -32,6 +36,9 @@ extension StreamingVC: UITableViewDataSource {
         cell.backgroundColor = .white
         cell.clipsToBounds = true
         cell.titleLabel.text = "\(textGuard)"
+        cell.nameLabel.text = guardtitle
+        cell.descriptionLabel.text = guarddescription
+        //cell.imageChanell.image = 
         return cell
     }
     

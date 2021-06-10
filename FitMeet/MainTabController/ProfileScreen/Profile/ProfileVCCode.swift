@@ -86,7 +86,8 @@ final class ProfileVCCode: UIView {
  
     }
     private func initLayout() {
-        cardView.fillSuperview()
+      //  cardView.fillSuperview()
+        cardView.fillFull(for: self)
         
         cardView.addSubview(labelSignUp)
         labelSignUp.anchor(top: cardView.topAnchor,
@@ -96,12 +97,12 @@ final class ProfileVCCode: UIView {
         cardView.addSubview(buttonLogOut)
         buttonLogOut.centerX(inView: cardView)
         buttonLogOut.anchor(bottom: cardView.bottomAnchor,
-                           paddingBottom: 50, width: 300,height: 40)
+                           paddingBottom: 80, width: 300,height: 40)
         
         cardView.addSubview(imageUserProfile)
         imageUserProfile.centerX(inView: cardView)
         imageUserProfile.anchor(top: labelSignUp.bottomAnchor,
-                                paddingTop: 20)
+                                paddingTop: 50)
         
         cardView.addSubview(userName)
         userName.anchor(top: imageUserProfile.bottomAnchor,

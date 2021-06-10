@@ -26,10 +26,12 @@ class StreamingVC: UIViewController {
     private var takeChannel: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
    
-    private var streamName: String?
-    private var titleStream: String?
-    private var descriptionStream: String?
+    private var chanellName: String?
+    private var titleChanell: String?
+    private var descriptionChanell: String?
     var listBroadcast: [BroadcastResponce] = []
+    var listChanell: [ChannelResponce] = []
+    var broadcast:  BroadcastResponce?
     
     override func loadView() {
         super.loadView()
@@ -48,13 +50,21 @@ class StreamingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             actionButton()
+            bindingChanell()
+
+        if channelId == nil {
             createNavBar()
+        } else {
+            self.navigationItem.rightBarButtonItem = nil
+        }
+            
             makeTableView()
             print("UserID ======\(userId)")
             print("TOKEN ++++++\(token)")
             guard let usId = userId else { return }
-            binding(idUser: usId)
-            self.navigationItem.title = "Broadcast List"
+           // binding(idUser: usId)
+           
+            self.navigationItem.title = "Chanell List"
             view.backgroundColor = UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
     }
     
@@ -68,6 +78,16 @@ class StreamingVC: UIViewController {
                 print("RESPONCE ====== \(response)")
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    //self.streamView.tableView.reloadData()
+                }
+        })
+    }
+    func bindingChanell() {
+        takeChannel = fitMeetChanell.listChannels()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listChanell = response.data                    
                     self.streamView.tableView.reloadData()
                 }
         })
@@ -79,6 +99,7 @@ class StreamingVC: UIViewController {
         streamView.tableView.register(StreamingViewCell.self, forCellReuseIdentifier: StreamingViewCell.reuseID)
     }
     func createNavBar() {
+        
         let button = UIButton(type: .custom) as? UIButton
         let origImage = UIImage(named: "Settings")
         let tintedImage = origImage?.withRenderingMode(.alwaysTemplate)
@@ -91,18 +112,17 @@ class StreamingVC: UIViewController {
     }
     
     @objc func addBroadcast() {
-        let alertController = UIAlertController(title: "Broadcast Name", message: nil, preferredStyle: .alert)
+        let alertController = UIAlertController(title: "Chanell Name", message: nil, preferredStyle: .alert)
         
         let addAction = UIAlertAction(title: "Add", style: .default) {_ in
-            print("GGGGGGG+++++++++++++\(alertController.textFields?.first?.text)")
-            guard let name = alertController.textFields?.first?.text else { return }
+            guard let name = alertController.textFields?.first?.text , let description = alertController.textFields?[1].text, let title = alertController.textFields?[2].text  else { return }
 
-            self.streamName = name
-          //  guard let chanellId = self.channelId else { return }
-            
-        //    let IntIdChanell = Int(chanellId)
-        //    guard let iDchanell = IntIdChanell else { return }
-            self.nextView(chanellId: 29, name: name)
+            self.chanellName = name
+            self.descriptionChanell = description
+            self.titleChanell = title
+
+           // self.nextView(chanellId: 29, name: name)
+            self.fetchChannel(name: name, title: title, description: description)
         }
         
         addAction.isEnabled = false
@@ -110,7 +130,15 @@ class StreamingVC: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alertController.addTextField { textField in
-            textField.placeholder = "Enter Broadcast name..."
+            textField.placeholder = "Enter Chanell name..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter Chanell description..."
+            textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
+        }
+        alertController.addTextField { textField in
+            textField.placeholder = "Enter Chanell title..."
             textField.addTarget(self, action: #selector(self.handleTextChanged), for: .editingChanged)
         }
 
@@ -129,43 +157,33 @@ class StreamingVC: UIViewController {
                 addAction.isEnabled = !text.trimmingCharacters(in: .whitespaces).isEmpty
             }
 
-    func nextView(chanellId: Int ,name: String ) {
-        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: 29, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [1],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
+    func nextView(chanellId: Int ,name: String )  {
+       
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("Responce ==== \(response.id)")
                 if let id = response.id  {
                     print("greate broadcast")
                     guard let usId = self.userId else { return }
-                    self.binding(idUser: usId)
+                    print(response.id)
+                    self.broadcast = response
+
                 }
-        })
-    }
+             })
+         
+         }
+
+func fetchChannel(name: String,title: String,description: String) {
+    takeChannel = fitMeetChanell.createChannel(channel:  ChannelRequest(name: name, title: title, description: description, favoriteCategoryIds: [25] , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
+         .mapError({ (error) -> Error in
+                     return error })
+         .sink(receiveCompletion: { _ in }, receiveValue: { response in
+             if let idChanell = response.id {
+                 UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
+                 self.bindingChanell()
+      
+                }
+             })
+          }
 }
-//func fetchChannel(name: String,title: String,description: String,completionHandler:@escaping CompletionHandler) {
-//     takeChannel = fitMeetChannel.createChannel(channel:  ChannelRequest(name: name, title: title, description: description , backgroundUrl: "https://static.fitliga.com/jyyRD5yf2tuv", facebookLink: "https://facebook.com/jyyRD5yf2tuv", instagramLink: "https://instagram.com/jyyRD5yf2tuv", twitterLink: "https://twitter.com/jyyRD5yf2tuv"))
-//         .mapError({ (error) -> Error in
-//                     return error })
-//         .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//             if let idChanell = response.id {
-//                 UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-//                 let flag = true
-//                 completionHandler(flag)
-//           }
-//     })
-// }
-//private func fetchListChannel(userName: String,completionHandler:@escaping CompletionHandler) {
-//    takeListChannel = fitMeetchannel.listChannels()
-//        .mapError({ (error) -> Error in
-//                    return error })
-//        .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//            if let idChanell = response.data.last?.id {
-//                UserDefaults.standard.set(idChanell, forKey: Constants.chanellID)
-//                let flag = true
-//                completionHandler(flag)
-//            } else {
-//                let flag = false
-//                completionHandler(flag)
-//              
-//        }
-//    })
-//}

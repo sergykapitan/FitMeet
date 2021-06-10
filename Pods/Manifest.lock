@@ -21,6 +21,7 @@ PODS:
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - Hue (5.0.0)
+  - Kingfisher (6.0.1)
   - Loaf (0.7.0)
   - Logboard (2.2.2)
 
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - HaishinKit (~> 1.1.4)
   - Hue (~> 5.0.0)
+  - Kingfisher (~> 6.0)
   - Loaf
 
 SPEC REPOS:
@@ -42,6 +44,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - HaishinKit
     - Hue
+    - Kingfisher
     - Loaf
     - Logboard
 
@@ -54,9 +57,10 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
+  Kingfisher: adde87a4f74f6a3845395769354efff593581740
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
 
-PODFILE CHECKSUM: 2b6c3e5ff84204504f37bebd7c0ba0db0b4e9a15
+PODFILE CHECKSUM: 8b9bc5e6757e4d2d0bbf71d52801aeffd6ea9b1d
 
 COCOAPODS: 1.10.1

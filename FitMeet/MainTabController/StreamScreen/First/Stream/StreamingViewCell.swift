@@ -12,9 +12,27 @@ class StreamingViewCell: UITableViewCell {
     
     static let reuseID = "StreamingViewCell"
     
+    var cardView: UIView = {
+        let view = UIView()
+        return view
+    }()
+    
     var titleLabel: UILabel =  {
         let label = UILabel()
         return label
+    }()
+    var descriptionLabel: UILabel =  {
+        let label = UILabel()
+        return label
+    }()
+    var nameLabel: UILabel =  {
+        let label = UILabel()
+        return label
+    }()
+    var imageChanell: UIImageView = {
+        let image = UIImageView()
+        image.backgroundColor = .red
+        return image
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -33,25 +51,26 @@ class StreamingViewCell: UITableViewCell {
     }
 
     func initialize() {
+        addSubview(cardView)
+        cardView.fillFull(for: self)
         
-        let titleLabel = UILabel(frame: .zero)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.contentView.addSubview(titleLabel)
-        self.titleLabel = titleLabel
+        cardView.addSubview(titleLabel)
+        cardView.addSubview(descriptionLabel)
+        cardView.addSubview(nameLabel)
+        cardView.addSubview(imageChanell)
         
-        NSLayoutConstraint.activate([
-            
-            self.contentView.centerXAnchor.constraint(equalTo: self.titleLabel.centerXAnchor),
-            self.contentView.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor),
-        ])
+        titleLabel.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 4, paddingLeft: 15)
+        descriptionLabel.anchor(top: titleLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 4, paddingLeft: 15)
+        nameLabel.anchor(top: descriptionLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 4, paddingLeft: 15)
+        imageChanell.anchor(top: cardView.topAnchor,right: cardView.leftAnchor, bottom: cardView.bottomAnchor, paddingTop: 4,  paddingRight: 4, paddingBottom: 4, width: 80, height: 80)
         
     }
     override func prepareForReuse() {
            super.prepareForReuse()
         
-        self.textLabel?.text = nil
-        self.detailTextLabel?.text = nil
-        self.imageView?.image = nil
+        self.titleLabel.text = nil
+        self.descriptionLabel.text = nil
+        self.nameLabel.text = nil
        }
-
+    
 }

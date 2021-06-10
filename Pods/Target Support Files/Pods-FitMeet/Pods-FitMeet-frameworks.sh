@@ -182,6 +182,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HaishinKit/HaishinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hue/Hue.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Logboard/Logboard.framework"
 fi
@@ -193,6 +194,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/HaishinKit/HaishinKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Hue/Hue.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Logboard/Logboard.framework"
 fi

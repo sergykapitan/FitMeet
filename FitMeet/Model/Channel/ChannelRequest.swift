@@ -11,6 +11,7 @@ struct ChannelRequest:Codable {
         let name : String
         let title: String
         let description: String
+        let favoriteCategoryIds: [Int]    
         let backgroundUrl:String
         let facebookLink :String
         let instagramLink: String

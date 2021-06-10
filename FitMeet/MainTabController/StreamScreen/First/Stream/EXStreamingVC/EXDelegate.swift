@@ -23,14 +23,10 @@ extension StreamingVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let navVC = LiveStreamViewController()
-        
-       // let indexPath = tableView.indexPathForSelectedRow
-       // let currentCell = tableView.cellForRow(at: indexPath)! as UITableViewCell
         navVC.modalPresentationStyle = .fullScreen
-       // navVC.idBroadcast = listBroadcast[indexPath.row].id
-        let album = listBroadcast[indexPath.row].id
-        print("currentCell.textLabel?.text ======== \(album)")
-        navVC.idBroadcast = album
+        guard  let chanellID = listChanell[indexPath.row].id else { return }
+        print(chanellID)
+        navVC.idBroadcast = chanellID
         self.present(navVC, animated: true, completion: nil)
 
     }

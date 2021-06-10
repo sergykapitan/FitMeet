@@ -10,6 +10,11 @@
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
+		B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D069A2664C61B00C28C29 /* HomeVC.swift */; };
+		B41D06A02664C65C00C28C29 /* HomeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D069F2664C65C00C28C29 /* HomeVCCode.swift */; };
+		B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06A22664C67600C28C29 /* HomeCell.swift */; };
+		B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */; };
+		B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -86,6 +91,10 @@
 		B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */; };
 		B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */; };
 		B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */; };
+		B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */; };
+		B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204D2266F4F9600ED11B5 /* CategoryCell.swift */; };
+		B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204D5266F501800ED11B5 /* CategoryVC.swift */; };
+		B4F204DA266F50BA00ED11B5 /* ExtentionCollectionCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204D9266F50BA00ED11B5 /* ExtentionCollectionCategory.swift */; };
 		B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F580652631531A000095BB /* FitMeetChannels.swift */; };
 		B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58068263156CC000095BB /* FitMeetStream.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +104,11 @@
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
+		B41D069A2664C61B00C28C29 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		B41D069F2664C65C00C28C29 /* HomeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCCode.swift; sourceTree = "<group>"; };
+		B41D06A22664C67600C28C29 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
+		B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
+		B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionHomeVC.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -174,6 +188,10 @@
 		B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVCCode.swift; sourceTree = "<group>"; };
 		B4EA55292652A5D50060A694 /* FitMeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FitMeet.entitlements; sourceTree = "<group>"; };
 		B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthorizationRequest.swift; sourceTree = "<group>"; };
+		B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCode.swift; sourceTree = "<group>"; };
+		B4F204D2266F4F9600ED11B5 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		B4F204D5266F501800ED11B5 /* CategoryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryVC.swift; sourceTree = "<group>"; };
+		B4F204D9266F50BA00ED11B5 /* ExtentionCollectionCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionCollectionCategory.swift; sourceTree = "<group>"; };
 		B4F580652631531A000095BB /* FitMeetChannels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetChannels.swift; sourceTree = "<group>"; };
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
@@ -207,6 +225,15 @@
 				B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */,
 			);
 			path = NotTokenView;
+			sourceTree = "<group>";
+		};
+		B41D069D2664C62700C28C29 /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				B481862C26300DB9009B715A /* HomeUI.swift */,
+				B4A9F63926320AA3000E00DE /* HomeCustomList.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		B47D8F9A2637DDC3005473C1 /* Profile */ = {
@@ -392,6 +419,7 @@
 				B4AE7ADB263B42A20033F78F /* UserSetting.swift */,
 				B4AE7ADF263D4D740033F78F /* HueButton.swift */,
 				B4AE7AE2263D61D40033F78F /* PopUpView.swift */,
+				B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -536,8 +564,11 @@
 		B4D9D7D4262DA7A4007CFB71 /* HomeScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B481862C26300DB9009B715A /* HomeUI.swift */,
-				B4A9F63926320AA3000E00DE /* HomeCustomList.swift */,
+				B41D069D2664C62700C28C29 /* SwiftUI */,
+				B41D069A2664C61B00C28C29 /* HomeVC.swift */,
+				B41D069F2664C65C00C28C29 /* HomeVCCode.swift */,
+				B41D06A22664C67600C28C29 /* HomeCell.swift */,
+				B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -565,7 +596,8 @@
 		B4D9D7D7262DA7EA007CFB71 /* CategoryScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B4A9F61C2631A787000E00DE /* CategoryUI.swift */,
+				B4F204CD266F4F1A00ED11B5 /* New */,
+				B4F204CC266F4EFE00ED11B5 /* Old */,
 			);
 			path = CategoryScreen;
 			sourceTree = "<group>";
@@ -585,6 +617,33 @@
 				B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */,
 			);
 			path = SignWithApple;
+			sourceTree = "<group>";
+		};
+		B4F204CC266F4EFE00ED11B5 /* Old */ = {
+			isa = PBXGroup;
+			children = (
+				B4A9F61C2631A787000E00DE /* CategoryUI.swift */,
+			);
+			path = Old;
+			sourceTree = "<group>";
+		};
+		B4F204CD266F4F1A00ED11B5 /* New */ = {
+			isa = PBXGroup;
+			children = (
+				B4F204D5266F501800ED11B5 /* CategoryVC.swift */,
+				B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */,
+				B4F204D2266F4F9600ED11B5 /* CategoryCell.swift */,
+				B4F204D8266F508C00ED11B5 /* ExtetionCategory */,
+			);
+			path = New;
+			sourceTree = "<group>";
+		};
+		B4F204D8266F508C00ED11B5 /* ExtetionCategory */ = {
+			isa = PBXGroup;
+			children = (
+				B4F204D9266F50BA00ED11B5 /* ExtentionCollectionCategory.swift */,
+			);
+			path = ExtetionCategory;
 			sourceTree = "<group>";
 		};
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
@@ -740,12 +799,14 @@
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
+				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
+				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
 				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
@@ -758,8 +819,11 @@
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,
 				B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */,
+				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
+				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
+				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
 				B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
@@ -768,6 +832,7 @@
 				B4D9D7AA262965E8007CFB71 /* SecurityCodeVC.swift in Sources */,
 				B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */,
 				B481862D26300DB9009B715A /* HomeUI.swift in Sources */,
+				B4F204DA266F50BA00ED11B5 /* ExtentionCollectionCategory.swift in Sources */,
 				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
@@ -781,7 +846,9 @@
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
 				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,
+				B41D06A02664C65C00C28C29 /* HomeVCCode.swift in Sources */,
 				B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */,
+				B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
@@ -801,6 +868,7 @@
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
 				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
 				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
+				B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
@@ -946,14 +1014,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -971,14 +1039,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

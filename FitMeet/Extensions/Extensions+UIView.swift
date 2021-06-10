@@ -20,7 +20,7 @@ extension UIView {
     }
   
     func fillSuperview() {
-        anchor(top: superview?.safeAreaLayoutGuide.topAnchor, left: superview?.leftAnchor, right: superview?.rightAnchor, bottom: superview?.safeAreaLayoutGuide.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        anchor(top: superview?.safeAreaLayoutGuide.topAnchor, left: superview?.leftAnchor, right: superview?.rightAnchor, bottom: superview?.safeAreaLayoutGuide.bottomAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10, paddingBottom: 0)
     }
 
     func anchor (top:NSLayoutYAxisAnchor? = nil,

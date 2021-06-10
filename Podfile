@@ -10,6 +10,7 @@ target 'FitMeet' do
   pod 'Loaf'
   pod 'ContextMenuSwift'
   pod 'GoogleSignIn'
+  pod 'Kingfisher', '~> 6.0'
   # Pods for FitMeet
 
 end

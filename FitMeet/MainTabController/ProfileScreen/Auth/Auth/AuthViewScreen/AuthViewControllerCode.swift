@@ -89,7 +89,8 @@ final class AuthViewControllerCode: UIView {
  
     }
     private func initLayout() {
-        cardView.fillSuperview()
+       // cardView.fillSuperview()
+        cardView.fillFull(for: self)
         cardView.addSubview(labelSignUp)
         labelSignUp.anchor(top: cardView.topAnchor,
                            paddingTop: 46, height: 40)

@@ -88,7 +88,9 @@ final class FoggotPasswordViewControllerCode: UIView {
  
     }
     private func initLayout() {
-        cardView.fillSuperview()
+       // cardView.fillSuperview()
+        cardView.fillFull(for: self)
+
         cardView.addSubview(labelSignIn)
         labelSignIn.anchor(top: cardView.topAnchor,
                            paddingTop: 46, height: 40)

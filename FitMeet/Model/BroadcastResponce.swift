@@ -7,6 +7,10 @@
 
 import Foundation
 
+struct BroadcastList: Codable {
+    let data: [BroadcastResponce]?
+}
+
 struct BroadcastResponce:Codable {
     let message: [String]?
     var error: String?
@@ -19,10 +23,35 @@ struct BroadcastResponce:Codable {
     let scheduledStartDate, startDate, endDate, status: String?
    // let onlyForSubscribers, onlyForSponsors,followersCount: Bool?
     let updatedAt: String?
-    let gcoreID, gcoreClientID: Int?
+    let gcoreId, gcoreClientId: Int?
     let gcoreStatus: String?
     let url, iframeURL: String?
-}//sponsorsCount,
-struct BroadcastList: Codable {
-    let data: [BroadcastResponce]?
+    let previewPath: String?
+    let categories: [Category]?
+    let streams: [Stream]?
+    let iframeUrl: String?
+  
+}
+
+// MARK: - Category
+struct Category: Codable{
+    let createdAt: String?
+    let id: Int?
+    let title, name, categoryDescription: String?
+    let description: String?
+    let followersCount: Int?
+    let previewPath: String?
+    let rate: Int?
+    let isNew, isPopular: Bool?
+}
+struct Stream: Codable {
+    let createdAt: String?
+    let id: Int?
+    let userID: Int?
+    let name: String?
+    let isActive: Bool?
+    let updatedAt: String?
+    let gcoreID, gcoreClientID: Int?
+    let hlsPlaylistUrl: String?
+    let dashURL: String?
 }

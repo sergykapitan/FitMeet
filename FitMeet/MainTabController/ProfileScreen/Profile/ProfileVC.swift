@@ -35,9 +35,10 @@ class ProfileVC: UIViewController {
     }
  
     func setUserProfile() {
-        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let chanellId = UserDefaults.standard.string(forKey: Constants.chanellID) else { return }
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
+        print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
         profileView.userName.text = "User Name: \(userName)"
-        profileView.chanellId.text = "Chanell ID: \(chanellId)"
+        profileView.chanellId.text = "User ID: \(userFullName)"
     }
     func actionButtonContinue() {
         profileView.buttonLogOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

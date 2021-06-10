@@ -23,5 +23,6 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let banReason: Bool?
     let subscribersCount, followersCount: Int?
     let updatedAt: String?
+    let description: String?
    // let lastBroadcastDate: NSNull
 }
