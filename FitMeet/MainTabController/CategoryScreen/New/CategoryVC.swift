@@ -18,6 +18,25 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
     
     func change(to index: Int) {
         print("Index ==\(index)")
+        if index == 0 {
+            filtredBroadcast = listBroadcast
+            self.searchView.collectionView.reloadData()
+        }
+        if index == 1 {
+            filtredBroadcast = listBroadcast.filter { $0.isPopular }
+            self.searchView.collectionView.reloadData()
+        }
+        if index == 2 {
+            filtredBroadcast = listBroadcast.filter { $0.isNew }
+            self.searchView.collectionView.reloadData()
+        }
+        if index == 3 {
+            filtredBroadcast = listBroadcast.filter { ($0.isFollow ?? false) }
+            self.searchView.collectionView.reloadData()
+        }
+        if index == 4 {
+            filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
+        }
     }
     
     var isSearchBarEmpty: Bool {
@@ -27,6 +46,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     var listBroadcast: [Datum] = []
+    var filtredBroadcast: [Datum] = []
     let searchView = CategoryCode()
     var categories: [Int: String] = [:]
    // let viewModel = ViewModel()
@@ -40,8 +60,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
+        makeNavItem()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -60,27 +79,30 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         super.viewDidLoad()
         setupMainView()
         binding()
-       
-       
-        makeNavItem()
         searchView.segmentControll.setButtonTitles(buttonTitles: ["All","Popular","New","Likes","Viewers"])
         searchView.segmentControll.delegate = self
+        title = "Category"
+        self.navigationController?.navigationBar.prefersLargeTitles = true
+        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+
 
     }
     func makeNavItem() {
-        let titleLabel = UILabel()
-                   titleLabel.text = "Category"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
+//        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+//        UINavigationBar.appearance().titleTextAttributes = attributes
+//        let titleLabel = UILabel()
+//                   titleLabel.text = "Category"
+//                   titleLabel.textAlignment = .center
+//                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+//                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+//
+//                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+//                   stackView.distribution = .equalSpacing
+//                   stackView.alignment = .leading
+//                   stackView.axis = .vertical
+//
+//                   let customTitles = UIBarButtonItem.init(customView: stackView)
+//                   self.navigationItem.leftBarButtonItems = [customTitles]
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
                                                                    style: .plain,
                                                                    target: self,
@@ -95,12 +117,6 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         print("right bar button action")
     }
 
-    // MARK: - Metods
-//    private func setupSearchBar() {
-//        navigationItem.searchController = searchController
-//        searchController.searchBar.placeholder = "Enter Albom name here"
-//        searchController.searchBar.delegate = self
-//    }
     private func setupMainView() {
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
@@ -111,7 +127,6 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         searchView.showSpinner()
     }
     func stopSpiners() {
-       // searchView.hideSpinner(withDelay: 0.2)
         refreshControl.endRefreshing()
     }
     private func showAlert(title: String, message: String) {
@@ -119,9 +134,6 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
-//    private func reloadView() {
-//            searchView.collectionView.reloadData()
-//        }
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
@@ -135,18 +147,9 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    self.filtredBroadcast = response.data!
                     self.searchView.collectionView.reloadData()
                 }
         })
     }
 }
-
-   //MARK: - UISearchBarDelegate
-//extension CategoryVC {
-//
-//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-//    guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
-//        navigationItem.searchController?.isActive = false
-//
-//    }
-//}

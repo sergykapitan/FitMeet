@@ -40,8 +40,9 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    //&status=ONLINE
     public func getBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=ONLINE", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -49,9 +50,20 @@ class FitMeetStream {
                  .print("getBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
-        //interceptor: Interceptor(interceptors: [AuthInterceptor()])
+        
            }
-    ///api​/v0​/stream​/broadcasts​/recommended​/private
+    ///stream/broadcasts?take=200&broadcastCategoryId=\(categoryId)
+    public func getBroadcastCategoryId(categoryId: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&broadcastCategoryId=\(categoryId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcastCategory")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
     public func getRecomandateBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream​/broadcasts​/recommended​/private?order=ASC", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -152,7 +164,7 @@ class FitMeetStream {
     }
     //MARK: - Get Broadcast Category//GET
     public func getBroadcastCategory() -> AnyPublisher<CategoryResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?order=ASC&page=1&take=10", method:.get, parameters: [:])
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?order=ASC&page=1&take=20", method:.get, parameters: [:])
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)

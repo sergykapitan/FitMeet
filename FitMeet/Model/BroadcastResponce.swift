@@ -17,7 +17,7 @@ struct BroadcastResponce:Codable {
     let createdAt: String?
     let id: Int?
     let deleted: String?
-    let userID: Int?
+    let userId: Int?
     let name, type, access: String?
     let hasChat, isPlanned: Bool?
     let scheduledStartDate, startDate, endDate, status: String?
@@ -30,6 +30,7 @@ struct BroadcastResponce:Codable {
     let categories: [Category]?
     let streams: [Stream]?
     let iframeUrl: String?
+    let isPopular: Bool?
   
 }
 
@@ -39,7 +40,7 @@ struct Category: Codable{
     let id: Int?
     let title, name, categoryDescription: String?
     let description: String?
-    let followersCount: Int?
+    let followersCount: Int
     let previewPath: String?
     let rate: Int?
     let isNew, isPopular: Bool?
@@ -47,11 +48,11 @@ struct Category: Codable{
 struct Stream: Codable {
     let createdAt: String?
     let id: Int?
-    let userID: Int?
+    let userId: Int?
     let name: String?
     let isActive: Bool?
     let updatedAt: String?
-    let gcoreID, gcoreClientID: Int?
+    let gcoreId, gcoreClientId: Int?
     let hlsPlaylistUrl: String?
     let dashURL: String?
 }

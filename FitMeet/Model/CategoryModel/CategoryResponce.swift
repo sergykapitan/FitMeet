@@ -20,9 +20,10 @@ struct Datum: Codable ,Hashable{
     let id: Int?
     let deleted, name, title, datumDescription: String?
     let previewPath: String?
-    let followersCount: Int?
+    let followersCount: Int
     let rate: Double?
-    let isNew, isPopular: Bool?
+    let isNew, isPopular : Bool
+    let isFollow: Bool?
 }
 
 enum CreatedAt: String, Codable ,Hashable{

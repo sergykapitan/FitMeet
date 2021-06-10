@@ -317,7 +317,7 @@ class LiveStreamViewController: UITabBarController {
            }
     func nextView(chanellId: Int ,name: String )  {
        
-        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: false, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 print("Responce ==== \(response.id)")

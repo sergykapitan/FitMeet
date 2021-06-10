@@ -16,6 +16,10 @@
 		B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */; };
 		B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
 		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
+		B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */; };
+		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
+		B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */; };
+		B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -110,6 +114,10 @@
 		B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionHomeVC.swift; sourceTree = "<group>"; };
 		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
+		B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcast.swift; sourceTree = "<group>"; };
+		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
+		B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCell.swift; sourceTree = "<group>"; };
+		B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionCategoryBroadcast.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -234,6 +242,17 @@
 				B4A9F63926320AA3000E00DE /* HomeCustomList.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		B46CF79B2672350D00EA0741 /* NextView */ = {
+			isa = PBXGroup;
+			children = (
+				B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */,
+				B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */,
+				B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */,
+				B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */,
+			);
+			path = NextView;
 			sourceTree = "<group>";
 		};
 		B47D8F9A2637DDC3005473C1 /* Profile */ = {
@@ -598,6 +617,7 @@
 			isa = PBXGroup;
 			children = (
 				B4F204CD266F4F1A00ED11B5 /* New */,
+				B46CF79B2672350D00EA0741 /* NextView */,
 			);
 			path = CategoryScreen;
 			sourceTree = "<group>";
@@ -796,6 +816,7 @@
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
+				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
@@ -831,8 +852,10 @@
 				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
+				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
+				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,
 				B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
@@ -854,6 +877,7 @@
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
+				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
@@ -1006,14 +1030,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1031,14 +1055,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.2;
+				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
