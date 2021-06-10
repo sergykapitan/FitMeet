@@ -24,6 +24,44 @@ PODS:
   - Kingfisher (6.0.1)
   - Loaf (0.7.0)
   - Logboard (2.2.2)
+  - MaterialComponents/AnimationTiming (98.0.0)
+  - MaterialComponents/Elevation (98.0.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/Ink (98.0.0):
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/Palettes (98.0.0)
+  - MaterialComponents/private/Application (98.0.0)
+  - MaterialComponents/private/Color (98.0.0)
+  - MaterialComponents/private/Math (98.0.0)
+  - MaterialComponents/Ripple (98.0.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/private/Color
+    - MaterialComponents/private/Math
+  - MaterialComponents/schemes/Color (98.0.0):
+    - MaterialComponents/private/Color
+  - MaterialComponents/ShadowElevations (98.0.0)
+  - MaterialComponents/ShadowLayer (98.0.0):
+    - MaterialComponents/ShadowElevations
+  - MaterialComponents/Tabs (98.0.0):
+    - MaterialComponents/AnimationTiming
+    - MaterialComponents/Elevation
+    - MaterialComponents/Ink
+    - MaterialComponents/Palettes
+    - MaterialComponents/private/Math
+    - MaterialComponents/Ripple
+    - MaterialComponents/ShadowElevations
+    - MaterialComponents/ShadowLayer
+    - MaterialComponents/Typography
+    - MDFInternationalization
+  - "MaterialComponents/Tabs+ColorThemer (98.0.0)":
+    - MaterialComponents/schemes/Color
+    - MaterialComponents/Tabs
+  - MaterialComponents/Typography (98.0.0):
+    - MaterialComponents/private/Application
+    - MaterialComponents/private/Math
+  - MDFInternationalization (2.0.0)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -33,6 +71,7 @@ DEPENDENCIES:
   - Hue (~> 5.0.0)
   - Kingfisher (~> 6.0)
   - Loaf
+  - "MaterialComponents/Tabs+ColorThemer"
 
 SPEC REPOS:
   trunk:
@@ -47,6 +86,8 @@ SPEC REPOS:
     - Kingfisher
     - Loaf
     - Logboard
+    - MaterialComponents
+    - MDFInternationalization
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
@@ -60,7 +101,9 @@ SPEC CHECKSUMS:
   Kingfisher: adde87a4f74f6a3845395769354efff593581740
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
+  MaterialComponents: 2a8b6fb1bf6655d3e2254dadae5edbb05559e1d7
+  MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
 
-PODFILE CHECKSUM: 8b9bc5e6757e4d2d0bbf71d52801aeffd6ea9b1d
+PODFILE CHECKSUM: 197b2a9d7baa8ba02db66ccbaaa1066af78aac07
 
 COCOAPODS: 1.10.1

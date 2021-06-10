@@ -9,3 +9,5 @@ ${BUILT_PRODUCTS_DIR}/Hue/Hue.framework
 ${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework
 ${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework
 ${BUILT_PRODUCTS_DIR}/Logboard/Logboard.framework
+${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework
+${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework
