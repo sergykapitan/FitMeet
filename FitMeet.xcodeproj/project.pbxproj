@@ -15,6 +15,7 @@
 		B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06A22664C67600C28C29 /* HomeCell.swift */; };
 		B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */; };
 		B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
+		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -31,7 +32,6 @@
 		B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A62639956600D38EC3 /* ChanellListViewModel.swift */; };
 		B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376A92639968600D38EC3 /* ChannelModel.swift */; };
 		B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6192631A388000E00DE /* AuthInterceptor.swift */; };
-		B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F61C2631A787000E00DE /* CategoryUI.swift */; };
 		B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */; };
 		B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */; };
 		B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6262631B54E000E00DE /* CategoryRequest.swift */; };
@@ -109,6 +109,7 @@
 		B41D06A22664C67600C28C29 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionHomeVC.swift; sourceTree = "<group>"; };
+		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -125,7 +126,6 @@
 		B49376A62639956600D38EC3 /* ChanellListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellListViewModel.swift; sourceTree = "<group>"; };
 		B49376A92639968600D38EC3 /* ChannelModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelModel.swift; sourceTree = "<group>"; };
 		B4A9F6192631A388000E00DE /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
-		B4A9F61C2631A787000E00DE /* CategoryUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryUI.swift; sourceTree = "<group>"; };
 		B4A9F61F2631A7FB000E00DE /* CategoryResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryResponce.swift; sourceTree = "<group>"; };
 		B4A9F6222631AC28000E00DE /* CategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryViewModel.swift; sourceTree = "<group>"; };
 		B4A9F6262631B54E000E00DE /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
@@ -420,6 +420,7 @@
 				B4AE7ADF263D4D740033F78F /* HueButton.swift */,
 				B4AE7AE2263D61D40033F78F /* PopUpView.swift */,
 				B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */,
+				B46CF7982672112800EA0741 /* SegmentCustomFull.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -597,7 +598,6 @@
 			isa = PBXGroup;
 			children = (
 				B4F204CD266F4F1A00ED11B5 /* New */,
-				B4F204CC266F4EFE00ED11B5 /* Old */,
 			);
 			path = CategoryScreen;
 			sourceTree = "<group>";
@@ -617,14 +617,6 @@
 				B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */,
 			);
 			path = SignWithApple;
-			sourceTree = "<group>";
-		};
-		B4F204CC266F4EFE00ED11B5 /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				B4A9F61C2631A787000E00DE /* CategoryUI.swift */,
-			);
-			path = Old;
 			sourceTree = "<group>";
 		};
 		B4F204CD266F4F1A00ED11B5 /* New */ = {
@@ -824,7 +816,6 @@
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
-				B4A9F61D2631A787000E00DE /* CategoryUI.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
 				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,
@@ -843,6 +834,7 @@
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,
+				B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
 				B4D9D74A2625D4F6007CFB71 /* Extentsions+ UIColor.swift in Sources */,
 				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,

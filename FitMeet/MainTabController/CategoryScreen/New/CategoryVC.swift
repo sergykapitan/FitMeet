@@ -12,8 +12,13 @@ import CoreData
 import Combine
 
 
-class CategoryVC: UIViewController, UISearchBarDelegate{
+
+class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullControlDelegate{
     
+    
+    func change(to index: Int) {
+        print("Index ==\(index)")
+    }
     
     var isSearchBarEmpty: Bool {
         navigationItem.searchController = searchController
@@ -23,6 +28,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
     private var takeBroadcast: AnyCancellable?
     var listBroadcast: [Datum] = []
     let searchView = CategoryCode()
+    var categories: [Int: String] = [:]
    // let viewModel = ViewModel()
     
     
@@ -34,6 +40,16 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
     }
 
     override func loadView() {
@@ -44,19 +60,32 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
         super.viewDidLoad()
         setupMainView()
         binding()
-        title = "Category"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+       
+       
         makeNavItem()
+        searchView.segmentControll.setButtonTitles(buttonTitles: ["All","Popular","New","Likes","Viewers"])
+        searchView.segmentControll.delegate = self
 
     }
     func makeNavItem() {
+        let titleLabel = UILabel()
+                   titleLabel.text = "Category"
+                   titleLabel.textAlignment = .center
+                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
+                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+                   stackView.distribution = .equalSpacing
+                   stackView.alignment = .leading
+                   stackView.axis = .vertical
+
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
                                                                    style: .plain,
                                                                    target: self,
                                                                    action: #selector(rightHandAction)),
-                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
+                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
                                                                    style: .plain,
                                                                    target: self,
                                                                    action: #selector(rightHandAction))]
@@ -65,12 +94,13 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
     func rightHandAction() {
         print("right bar button action")
     }
+
     // MARK: - Metods
-    private func setupSearchBar() {
-        navigationItem.searchController = searchController
-        searchController.searchBar.placeholder = "Enter Albom name here"
-        searchController.searchBar.delegate = self
-    }
+//    private func setupSearchBar() {
+//        navigationItem.searchController = searchController
+//        searchController.searchBar.placeholder = "Enter Albom name here"
+//        searchController.searchBar.delegate = self
+//    }
     private func setupMainView() {
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
@@ -81,7 +111,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
         searchView.showSpinner()
     }
     func stopSpiners() {
-        searchView.hideSpinner(withDelay: 0.2)
+       // searchView.hideSpinner(withDelay: 0.2)
         refreshControl.endRefreshing()
     }
     private func showAlert(title: String, message: String) {
@@ -89,9 +119,9 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
         ac.addAction(UIAlertAction(title: "OK", style: .default))
         present(ac, animated: true)
     }
-    private func reloadView() {
-            searchView.collectionView.reloadData()
-        }
+//    private func reloadView() {
+//            searchView.collectionView.reloadData()
+//        }
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
@@ -112,11 +142,11 @@ class CategoryVC: UIViewController, UISearchBarDelegate{
 }
 
    //MARK: - UISearchBarDelegate
-extension CategoryVC {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return } 
-        navigationItem.searchController?.isActive = false
-        
-    }
-}
+//extension CategoryVC {
+//
+//    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+//    guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
+//        navigationItem.searchController?.isActive = false
+//
+//    }
+//}

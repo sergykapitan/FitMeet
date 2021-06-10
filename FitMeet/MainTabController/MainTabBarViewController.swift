@@ -28,10 +28,10 @@ class MainTabBarViewController: UITabBarController {
         hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
         hostVC.tabBarItem.title = ""
         //CategoryUI
-        let category = CategoryUI()
-        let categoryVC = UIHostingController(rootView: category)
-        categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
-        categoryVC.tabBarItem.title = ""
+//        let category = CategoryUI()
+//        let categoryVC = UIHostingController(rootView: category)
+//        categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
+//        categoryVC.tabBarItem.title = ""
         //newList
 //        let listChannel = ListChannell()
 //        let channelVC = UIHostingController(rootView: listChannel)
