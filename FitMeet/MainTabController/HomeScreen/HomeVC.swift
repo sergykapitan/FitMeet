@@ -14,10 +14,10 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate {
     func change(to index: Int) {
         print("segmentedControl index changed to \(index)")
         if index == 0 {
-          //  binding()
+            binding()
         }
         if index == 1 {
-          //  bindingRecomandate()
+            bindingRecomandate()
         }
         if index == 2 {
             
@@ -47,7 +47,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        homeView.tableView.reloadData()
+     //   homeView.tableView.reloadData()
     
     }
     override func viewDidLoad() {
@@ -59,15 +59,26 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate {
         navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
         binding()
-        title = "HOME"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
 
     }
     func makeNavItem() {
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        let titleLabel = UILabel()
+                   titleLabel.text = "Home"
+                   titleLabel.textAlignment = .center
+                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
+                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+                   stackView.distribution = .equalSpacing
+                   stackView.alignment = .leading
+                   stackView.axis = .vertical
+
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
                                                                    style: .plain,
                                                                    target: self,

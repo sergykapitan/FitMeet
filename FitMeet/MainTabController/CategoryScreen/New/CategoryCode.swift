@@ -84,7 +84,7 @@ final class CategoryCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               bottom: cardView.bottomAnchor,
-                              paddingTop: 15, paddingLeft: 5, paddingRight: 5, paddingBottom: 0)
+                              paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 0)
         
         
 //        NSLayoutConstraint.activate([

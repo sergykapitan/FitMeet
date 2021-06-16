@@ -20,6 +20,11 @@
 		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
 		B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */; };
 		B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */; };
+		B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7B7267378B900EA0741 /* SearchVCCell.swift */; };
+		B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */; };
+		B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */; };
+		B46CF7C52678B90500EA0741 /* SearchVCCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */; };
+		B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C72678C1EF00EA0741 /* UserList.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
@@ -118,6 +123,11 @@
 		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
 		B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCell.swift; sourceTree = "<group>"; };
 		B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionCategoryBroadcast.swift; sourceTree = "<group>"; };
+		B46CF7B7267378B900EA0741 /* SearchVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCell.swift; sourceTree = "<group>"; };
+		B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchVC.swift; sourceTree = "<group>"; };
+		B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCUserCell.swift; sourceTree = "<group>"; };
+		B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCategory.swift; sourceTree = "<group>"; };
+		B46CF7C72678C1EF00EA0741 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -479,6 +489,7 @@
 			children = (
 				B4C4996A263ADB6A00BFD1EE /* CoreData */,
 				B4D9D76E2626D511007CFB71 /* User.swift */,
+				B46CF7C72678C1EF00EA0741 /* UserList.swift */,
 				B4D9D7722626D593007CFB71 /* AuthorizationRequest.swift */,
 				B4D9D7752626D78C007CFB71 /* AuthResponce.swift */,
 				B4D9D7A226286554007CFB71 /* Phone.swift */,
@@ -598,6 +609,10 @@
 			children = (
 				B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */,
 				B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */,
+				B46CF7B7267378B900EA0741 /* SearchVCCell.swift */,
+				B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */,
+				B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */,
+				B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */,
 			);
 			path = SearchScreen;
 			sourceTree = "<group>";
@@ -797,9 +812,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
 				B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */,
 				B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */,
+				B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */,
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
@@ -837,6 +854,7 @@
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
+				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
 				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,
@@ -854,8 +872,10 @@
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
+				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
+				B46CF7C52678B90500EA0741 /* SearchVCCategory.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,
 				B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */,
 				B4D9D7472625C2D7007CFB71 /* OneLineView.swift in Sources */,
@@ -1030,14 +1050,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1055,14 +1075,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

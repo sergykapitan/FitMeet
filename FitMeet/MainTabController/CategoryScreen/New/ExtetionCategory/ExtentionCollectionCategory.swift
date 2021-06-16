@@ -52,7 +52,7 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
       
       return CGSize(width: collectionView.bounds.width * 0.45,
-                    height: UIScreen.main.bounds.width * 0.50)
+                    height: UIScreen.main.bounds.width * 0.55)
     }
     
     func collectionView(_ collectionView: UICollectionView,

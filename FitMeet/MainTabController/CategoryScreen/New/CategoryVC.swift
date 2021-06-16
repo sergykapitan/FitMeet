@@ -81,28 +81,28 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         binding()
         searchView.segmentControll.setButtonTitles(buttonTitles: ["All","Popular","New","Likes","Viewers"])
         searchView.segmentControll.delegate = self
-        title = "Category"
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
+//        title = "Category"
+//        self.navigationController?.navigationBar.prefersLargeTitles = true
+//        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
 
 
     }
     func makeNavItem() {
-//        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-//        UINavigationBar.appearance().titleTextAttributes = attributes
-//        let titleLabel = UILabel()
-//                   titleLabel.text = "Category"
-//                   titleLabel.textAlignment = .center
-//                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-//                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-//
-//                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-//                   stackView.distribution = .equalSpacing
-//                   stackView.alignment = .leading
-//                   stackView.axis = .vertical
-//
-//                   let customTitles = UIBarButtonItem.init(customView: stackView)
-//                   self.navigationItem.leftBarButtonItems = [customTitles]
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        let titleLabel = UILabel()
+                   titleLabel.text = "Category"
+                   titleLabel.textAlignment = .center
+                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+
+                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+                   stackView.distribution = .equalSpacing
+                   stackView.alignment = .leading
+                   stackView.axis = .vertical
+
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
         self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
                                                                    style: .plain,
                                                                    target: self,

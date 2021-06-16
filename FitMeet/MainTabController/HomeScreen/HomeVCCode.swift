@@ -41,8 +41,8 @@ final class HomeVCCode: UIView {
     
     func createCardViewLayer() {
         addSubview(cardView)
-       // cardView.fillSuperview()
-        cardView.fillFull(for: self)
+        cardView.fillSuperview()
+        //cardView.fillFull(for: self)
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 5, height: 30)
         

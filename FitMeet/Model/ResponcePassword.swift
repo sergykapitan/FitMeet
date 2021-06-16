@@ -21,12 +21,13 @@ struct ResponcePassword: Codable {
 struct Users: Codable {
     let id: Int?
     let deleted: String?
-   // let avatarPath: JSONNull?
+    let avatarPath: String?
     let fullName, username, gender, status: String?
     let email, phone: String?
     let phoneVerify: Bool?
     let createdAt: String?
-   // let birthDate, nameLastUpdateDate, usernameLastUpdateDate: JSONNull?
+    let birthDate, nameLastUpdateDate, usernameLastUpdateDate: String?
+    let channelSubscribeCount: Int?
 }
 // MARK: - Token
 struct Tokens: Codable {
