@@ -54,6 +54,7 @@ class MainTabBarViewController: UITabBarController {
            // hostVC,
             generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "Home"), title: ""),
             generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Profile"), title: ""),
+           // generateViewController(rootViewController: ParView(), image: #imageLiteral(resourceName: "Search"), title: ""),
             generateViewController(rootViewController: streamView ?? SearchVC(), image: #imageLiteral(resourceName: "Stream") , title: ""),
             generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Category"), title: ""),
             generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "")

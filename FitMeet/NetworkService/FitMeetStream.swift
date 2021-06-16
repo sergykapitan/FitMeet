@@ -52,8 +52,8 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
-    public func getAllBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+    public func getAllBroadcast(name: String) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&nameLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -175,7 +175,7 @@ class FitMeetStream {
     }
     //MARK: - Get Broadcast Category//GET
     public func getBroadcastCategory() -> AnyPublisher<CategoryResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?order=ASC&page=1&take=20", method:.get, parameters: [:])
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40", method:.get, parameters: [:])
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
@@ -217,8 +217,8 @@ class FitMeetStream {
             .eraseToAnyPublisher()
     }
     //MARK: - Get List Users
-    public func getListUser() -> AnyPublisher<UserList,DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/user/users?take=100", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+    public func getListUser(name: String) -> AnyPublisher<UserList,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/user/users?take=100&fullNameLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UserList.self)

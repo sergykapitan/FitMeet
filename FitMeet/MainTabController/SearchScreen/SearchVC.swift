@@ -26,8 +26,9 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
     var listUsers:[Users] = []
     var filterListUser:[Users] = []
     var listCategory: [Datum] = []
+    var filerlistCategory: [Datum] = []
     
-    var index: Int?
+    var index: Int = 0
     var searchActive : Bool = false
 
     var isSearchBarEmpty: Bool {
@@ -43,19 +44,14 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
        
         if index == 0 {
             self.index = index
-            binding()
-            self.searchController.searchBar.isHidden = false
             self.searchView.tableView.reloadData()
         }
         if index == 1 {
             self.index = index
-            getUsers()
-            self.searchController.searchBar.isHidden = false
             self.searchView.tableView.reloadData()
         }
         if index == 2 {
             self.index = index
-            self.searchController.searchBar.isHidden = false
             self.searchView.tableView.reloadData()
         }
     }
@@ -97,8 +93,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         setupSearchBar()
         makeTableView()
         makeNavItem()
-        binding()
-        getUsers()
+        binding(name: "a")
+        getUsers(name: "a")
         getCategory()
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
         searchView.segmentControll.delegate = self
@@ -106,27 +102,26 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
     }
     
     // MARK: - Metods
-   func binding() {
-        takeBroadcast = fitMeetStream.getAllBroadcast()
+    func binding(name: String) {
+        takeBroadcast = fitMeetStream.getAllBroadcast(name: name)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = self.listBroadcast
                     self.searchView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
+                 
                 }
              })
     }
-    func getUsers() {
-        takeUser = fitMeetStream.getListUser()
+    func getUsers(name: String) {
+        takeUser = fitMeetStream.getListUser(name: name)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listUsers = response.data                   
-                    self.filterListUser = self.listUsers
+                    self.listUsers = response.data
                     self.searchView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
+                   
                 }
              })
     }
@@ -137,7 +132,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
                 if response.data != nil  {
                     self.listCategory = response.data!
                     self.searchView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
+
                 }
              })
     }
@@ -176,18 +171,24 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
           
         searchView.tableView.reloadData()
     }
-//    func filteringUser(_ searchText: String,category: Users? = nil) {
-//        
-//        filterListUser = listUsers.filter { (candy: Users) -> Bool in
-//            return (candy.fullName?.lowercased().contains(searchText.lowercased()) ?? true)
-//          }
-//          
-//        searchView.tableView.reloadData()
-//    }
+    func filteringUser(_ searchText: String,category: Users? = nil) {
+        
+        filterListUser = listUsers.filter { (candy: Users) -> Bool in
+            return (candy.fullName?.lowercased().contains(searchText.lowercased()) ?? true)
+          }
+          
+        searchView.tableView.reloadData()
+    }
+    func filteringCategory(_ searchText: String,category: Datum? = nil) {
+        filerlistCategory = listCategory.filter{ (list: Datum) -> Bool in
+            return (list.title?.lowercased().contains(searchText.lowercased()) ?? true)
+        }
+        searchView.tableView.reloadData()
+    }
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        binding()
+      //  binding()
        }
     private func makeTableView() {
         searchView.tableView.delegate = self
@@ -227,38 +228,36 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
 }
 
    //MARK: - UISearchBarDelegate
-extension SearchVC {
-    
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-    guard let searchText = searchBar.text?.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed) else { return }
 
-        self.filterContentForSearchText(searchText)
-        navigationItem.searchController?.isActive = false
-
-    }
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-            searchActive = true
-        }
-
-        func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-            searchActive = false
-        }
-
-        func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-            searchActive = false
-        }
-
-        func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-            searchActive = false
-        }
-
-}
 extension SearchVC: UISearchResultsUpdating {
+//    func updateSearchResults(for searchController: UISearchController) {
+//        let searchBar = searchController.searchBar
+//        print(searchBar.text!)
+//    }
+    
     
     func updateSearchResults(for searchController: UISearchController) {
+        if index == 0 {
+            let searchBar = searchController.searchBar
+            binding(name: searchBar.text!)
+            
+        }
+        if index == 1 {
+            let searchBar = searchController.searchBar
+            getUsers(name: searchBar.text!)
+           // filteringUser(searchBar.text!)
+           
+        }
+        if index == 2 {
+            let searchBar = searchController.searchBar
+            getCategory()
+           // filteringCategory(searchBar.text!)
+           
+        }
+//        let searchBar = searchController.searchBar
+//        binding(name: searchBar.text!)
+       // filterContentForSearchText(searchBar.text!)
 
-        let searchBar = searchController.searchBar
-        filterContentForSearchText(searchBar.text!)
-       // self.searchView.tableView.reloadData()
     }
 }
+
