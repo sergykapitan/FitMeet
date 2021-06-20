@@ -34,12 +34,16 @@ struct BroadcastRequest: Codable {
     let hasChat, isPlanned, onlyForSponsors, onlyForSubscribers: Bool?
     let categoryIDS: [Int]?
     let scheduledStartDate: String?
+    let description: String?
+    let previewPath: String?
 
     enum CodingKeys: String, CodingKey {
         case channelID = "channelId"
         case name, type, access, hasChat, isPlanned, onlyForSponsors, onlyForSubscribers
         case categoryIDS = "categoryIds"
         case scheduledStartDate
+        case description
+        case previewPath
     }
 }
 

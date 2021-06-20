@@ -16,7 +16,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let createdAt: String?
     let id: Int?
     let deleted: String?
-    let userID: Int?
+    let userId: Int?
     let name, title, welcome5Description: String?
     let backgroundURL, facebookLink, instagramLink, twitterLink: String?
     let status: String?

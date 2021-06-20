@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-class HomeVC: UIViewController,CustomSegmentedControlDelegate {
+class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
     
     func change(to index: Int) {
         print("segmentedControl index changed to \(index)")
@@ -61,6 +61,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate {
         binding()
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
+        self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
 
     }
     func makeNavItem() {

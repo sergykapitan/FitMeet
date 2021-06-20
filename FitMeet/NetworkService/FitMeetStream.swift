@@ -174,8 +174,8 @@ class FitMeetStream {
             .eraseToAnyPublisher()
     }
     //MARK: - Get Broadcast Category//GET
-    public func getBroadcastCategory() -> AnyPublisher<CategoryResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40", method:.get, parameters: [:])
+    public func getBroadcastCategory(name: String) -> AnyPublisher<CategoryResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40&titleLike=\(name)", method:.get, parameters: [:])
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)

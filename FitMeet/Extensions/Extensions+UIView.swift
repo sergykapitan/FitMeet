@@ -213,3 +213,32 @@ extension UIView {
     layer.rasterizationScale = scale ? UIScreen.main.scale : 1
   }
 }
+extension UIImage {
+    
+    enum Theme {
+        case triangle
+        
+        var name: String {
+            switch self {
+            case .triangle: return "triangle"
+            }
+        }
+            
+        var image: UIImage {
+            return UIImage(named: self.name)!
+        }
+    }
+}
+
+extension UIView {
+    
+    func constraintsPinTo(leading: NSLayoutXAxisAnchor, trailing: NSLayoutXAxisAnchor, top: NSLayoutYAxisAnchor, bottom: NSLayoutYAxisAnchor) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            self.leadingAnchor.constraint(equalTo: leading),
+            self.trailingAnchor.constraint(equalTo: trailing),
+            self.topAnchor.constraint(equalTo: top),
+            self.bottomAnchor.constraint(equalTo: bottom)
+            ])
+    }
+}

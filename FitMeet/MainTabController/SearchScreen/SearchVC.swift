@@ -95,7 +95,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         makeNavItem()
         binding(name: "a")
         getUsers(name: "a")
-        getCategory()
+        getCategory(name: "a")
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
         searchView.segmentControll.delegate = self
 
@@ -125,8 +125,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
                 }
              })
     }
-    func getCategory() {
-        takeCategory = fitMeetStream.getBroadcastCategory()
+    func getCategory(name: String) {
+        takeCategory = fitMeetStream.getBroadcastCategory(name: name)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
@@ -250,7 +250,7 @@ extension SearchVC: UISearchResultsUpdating {
         }
         if index == 2 {
             let searchBar = searchController.searchBar
-            getCategory()
+            getCategory(name: searchBar.text!)
            // filteringCategory(searchBar.text!)
            
         }

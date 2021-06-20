@@ -42,9 +42,11 @@ class MainTabBarViewController: UITabBarController {
         var streamView : UIViewController?
         
         let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+        
         if token != nil {
             profile = ProfileVC()
             streamView = StreamingVC()
+            //streamView.pop
         } else {
             profile = AuthViewController()
             streamView = NotTokenView()
@@ -55,7 +57,9 @@ class MainTabBarViewController: UITabBarController {
             generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "Home"), title: ""),
             generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Search"), title: ""),
            // generateViewController(rootViewController: ParView(), image: #imageLiteral(resourceName: "Search"), title: ""),
-            generateViewController(rootViewController: streamView ?? SearchVC(), image: #imageLiteral(resourceName: "Stream") , title: ""),
+            //streamView ?? SearchVC()
+            generateViewController(rootViewController: NewStartStream() , image: #imageLiteral(resourceName: "Stream") , title: ""),
+          // PopupViewController(),
             generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Category"), title: ""),
             generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "")
         ]
@@ -66,6 +70,15 @@ class MainTabBarViewController: UITabBarController {
     }
     
     private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {
+  
+        let navigationVC = UINavigationController(rootViewController: rootViewController)
+        navigationVC.tabBarItem.image = image
+        navigationVC.tabBarItem.title = title
+        rootViewController.navigationItem.title = title
+        navigationVC.navigationBar.backgroundColor = .white
+        return navigationVC
+    }
+    private func generateViewControllerTT(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {
   
         let navigationVC = UINavigationController(rootViewController: rootViewController)
         navigationVC.tabBarItem.image = image

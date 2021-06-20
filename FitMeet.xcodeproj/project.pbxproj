@@ -65,6 +65,13 @@
 		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
 		B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */; };
 		B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C49970263ADC3F00BFD1EE /* CoreDataManager.swift */; };
+		B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A938267C81F700010F88 /* VCcontroller.swift */; };
+		B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A93B267C820D00010F88 /* VCControllerCode.swift */; };
+		B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A944267C880300010F88 /* NewStartStream.swift */; };
+		B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A947267C881700010F88 /* NewStartStreamCode.swift */; };
+		B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A956267C965100010F88 /* DropDownTextField.swift */; };
+		B4C5A95D267C968C00010F88 /* DropDownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A95C267C968C00010F88 /* DropDownCell.swift */; };
+		B4C5A962267DD2DA00010F88 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A961267DD2D900010F88 /* Task.swift */; };
 		B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB869263B19BD00015380 /* NullEncodable.swift */; };
 		B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB86D263B2B8300015380 /* OptionalView.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
@@ -174,6 +181,13 @@
 		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
 		B4C4996C263ADB9600BFD1EE /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B4C49970263ADC3F00BFD1EE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		B4C5A938267C81F700010F88 /* VCcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCcontroller.swift; sourceTree = "<group>"; };
+		B4C5A93B267C820D00010F88 /* VCControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCControllerCode.swift; sourceTree = "<group>"; };
+		B4C5A944267C880300010F88 /* NewStartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStartStream.swift; sourceTree = "<group>"; };
+		B4C5A947267C881700010F88 /* NewStartStreamCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStartStreamCode.swift; sourceTree = "<group>"; };
+		B4C5A956267C965100010F88 /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
+		B4C5A95C267C968C00010F88 /* DropDownCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownCell.swift; sourceTree = "<group>"; };
+		B4C5A961267DD2D900010F88 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		B4CBB869263B19BD00015380 /* NullEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullEncodable.swift; sourceTree = "<group>"; };
 		B4CBB86D263B2B8300015380 /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* FitMeet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FitMeet.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -355,7 +369,9 @@
 		B4A9F63C26321789000E00DE /* First */ = {
 			isa = PBXGroup;
 			children = (
+				B4C5A937267C81D700010F88 /* VC */,
 				B4AE7AE6263D780A0033F78F /* Stream */,
+				B4C5A93E267C847A00010F88 /* NewStartStream */,
 				B4AE7AE7263D782A0033F78F /* Old */,
 			);
 			path = First;
@@ -403,6 +419,24 @@
 				B4C49970263ADC3F00BFD1EE /* CoreDataManager.swift */,
 			);
 			path = CoreDataService;
+			sourceTree = "<group>";
+		};
+		B4C5A937267C81D700010F88 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				B4C5A938267C81F700010F88 /* VCcontroller.swift */,
+				B4C5A93B267C820D00010F88 /* VCControllerCode.swift */,
+			);
+			path = VC;
+			sourceTree = "<group>";
+		};
+		B4C5A93E267C847A00010F88 /* NewStartStream */ = {
+			isa = PBXGroup;
+			children = (
+				B4C5A944267C880300010F88 /* NewStartStream.swift */,
+				B4C5A947267C881700010F88 /* NewStartStreamCode.swift */,
+			);
+			path = NewStartStream;
 			sourceTree = "<group>";
 		};
 		B4D9D71226257D8C007CFB71 = {
@@ -475,6 +509,9 @@
 				B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */,
 				B46CF7982672112800EA0741 /* SegmentCustomFull.swift */,
 				B46CF7E5267A427D00EA0741 /* TabySegmentedControl.swift */,
+				B4C5A956267C965100010F88 /* DropDownTextField.swift */,
+				B4C5A95C267C968C00010F88 /* DropDownCell.swift */,
+				B4C5A961267DD2D900010F88 /* Task.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -848,6 +885,7 @@
 				B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
+				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
@@ -858,6 +896,7 @@
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
+				B4C5A95D267C968C00010F88 /* DropDownCell.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
@@ -872,6 +911,7 @@
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
+				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
@@ -898,10 +938,12 @@
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
 				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
+				B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */,
 				B46CF83C267A5F4700EA0741 /* FirstVCCode.swift in Sources */,
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
+				B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */,
 				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B46CF7EE267A43A300EA0741 /* ParentControllwerCode.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
@@ -916,6 +958,7 @@
 				B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */,
 				B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
+				B4C5A962267DD2DA00010F88 /* Task.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
@@ -926,6 +969,7 @@
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
+				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
@@ -1082,14 +1126,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1107,14 +1151,14 @@
 				CODE_SIGN_ENTITLEMENTS = FitMeet/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = FitMeet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.5;
+				MARKETING_VERSION = 1.0.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

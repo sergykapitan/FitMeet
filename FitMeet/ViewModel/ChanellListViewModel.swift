@@ -22,7 +22,7 @@ class ChanellListViewModel: ObservableObject {
         let userName =  UserDefaults.standard.string(forKey: Constants.userFullName)
         guard let id = chanellId else {return }
         let idInt = Int(id)
-        task = fitMeetStrem.createBroadcas(broadcast:BroadcastRequest(channelID: idInt, name: userName, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false,categoryIDS: [1],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
+        task = fitMeetStrem.createBroadcas(broadcast:BroadcastRequest(channelID: idInt, name: userName, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false,categoryIDS: [1],scheduledStartDate: "2021-05-20T08:54:08.006Z",description: "ddddd",previewPath: "/path/to/file.jpg"))
             .mapError({ (error) -> Error in
                       print(error)
                        return error })

@@ -9,13 +9,21 @@
 import UIKit
 import Alamofire
 import Combine
+import BottomPopup
 
-class StreamingVC: UIViewController {
+class StreamingVC: BottomPopupViewController {
     
     let streamView = StreamingVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
     var viewModel  = StreamViewModel()
+    
+    var height: CGFloat?
+    var topCornerRadius: CGFloat?
+    var presentDuration: Double?
+    var dismissDuration: Double?
+    var shouldDismissInteractivelty: Bool?
+    
     
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
     let userId = UserDefaults.standard.string(forKey: Constants.userID)
@@ -33,20 +41,27 @@ class StreamingVC: UIViewController {
     var listChanell: [ChannelResponce] = []
     var broadcast:  BroadcastResponce?
     
+    
+    override var popupHeight: CGFloat { return height ?? CGFloat(300) }
+    
+    override var popupTopCornerRadius: CGFloat { return topCornerRadius ?? CGFloat(10) }
+    
+    override var popupPresentDuration: Double { return presentDuration ?? 1.0 }
+    
+    override var popupDismissDuration: Double { return dismissDuration ?? 1.0 }
+    
+    override var popupShouldDismissInteractivelty: Bool { return shouldDismissInteractivelty ?? true }
+    
+    override var popupDimmingViewAlpha: CGFloat { return 0.5 }
+    
     override func loadView() {
         super.loadView()
         view = streamView
         view.backgroundColor = .white
+    //    self.view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: self.view.frame.height)
         
     }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-       // tabBarController?.tabBar.backgroundColor = .white
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       
-    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
             actionButton()
@@ -159,7 +174,19 @@ class StreamingVC: UIViewController {
 
     func nextView(chanellId: Int ,name: String )  {
        
-        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(channelID: chanellId, name: name, type: "STANDARD", access: "ALL", hasChat: true, isPlanned: true, onlyForSponsors: false, onlyForSubscribers: false, categoryIDS: [],scheduledStartDate: "2021-05-20T08:54:08.006Z"))
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
+                                                    channelID: chanellId,
+                                                    name: name,
+                                                    type: "STANDARD",
+                                                    access: "ALL",
+                                                    hasChat: true,
+                                                    isPlanned: true,
+                                                    onlyForSponsors: false,
+                                                    onlyForSubscribers: false,
+                                                    categoryIDS: [],
+                                                    scheduledStartDate: "2021-05-20T08:54:08.006Z",
+                                                    description: "sssss",
+                                                    previewPath: "/path/to/file.jpg"))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 print("Responce ==== \(response.id)")

@@ -142,7 +142,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
        }
     
     func binding() {
-        takeBroadcast = fitMeetStream.getBroadcastCategory()
+        takeBroadcast = fitMeetStream.getBroadcastCategory(name: "a")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
