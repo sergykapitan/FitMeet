@@ -66,13 +66,23 @@ class DropDownTextField: UIView {
         return textField
     }()
     
-    init(frame: CGRect, title: String, options: [String]) {
+    init( title: String, options: [String]) {
         self.options = options
-        super.init(frame: frame)
+        super.init(frame: CGRect.zero)
         self.textField.text = title
         calculateHeight()
         setupViews()
     }
+    
+//    init(frame: CGRect, title: String, options: [String]) {
+//        self.options = options
+//        super.init(frame: frame)
+//        self.textField.text = title
+//        calculateHeight()
+//        setupViews()
+//    }
+    
+    
     
     private override init(frame: CGRect) {
         options = []

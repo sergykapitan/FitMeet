@@ -18,9 +18,9 @@ final class ProfileVCCode: UIView {
     }()
     let labelSignUp: UILabel = {
         let label = UILabel()
-        label.text = "PROFILE USER"
+        label.text = "Welcome!"
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 19)
+        label.font = UIFont.boldSystemFont(ofSize: 34)
         return label
     }()
     let imageUserProfile: UIImageView = {
@@ -91,8 +91,9 @@ final class ProfileVCCode: UIView {
         
         cardView.addSubview(labelSignUp)
         labelSignUp.anchor(top: cardView.topAnchor,
-                           paddingTop: 46)
-        labelSignUp.centerX(inView: cardView)
+                           left: cardView.leftAnchor,
+                           paddingTop: 20,paddingLeft: 155336)
+      //  labelSignUp.centerX(inView: cardView)
         
         cardView.addSubview(buttonLogOut)
         buttonLogOut.centerX(inView: cardView)

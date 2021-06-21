@@ -22,6 +22,7 @@ PODS:
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - Hue (5.0.0)
+  - iOSDropDown (0.3.4)
   - Kingfisher (6.0.1)
   - Loaf (0.7.0)
   - Logboard (2.2.2)
@@ -71,6 +72,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - HaishinKit (~> 1.1.4)
   - Hue (~> 5.0.0)
+  - iOSDropDown
   - Kingfisher (~> 6.0)
   - Loaf
   - "MaterialComponents/Tabs+ColorThemer"
@@ -86,6 +88,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - HaishinKit
     - Hue
+    - iOSDropDown
     - Kingfisher
     - Loaf
     - Logboard
@@ -102,12 +105,13 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: b3503b20a988c4e20cc189aa798fd18220133f52
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
+  iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   Kingfisher: adde87a4f74f6a3845395769354efff593581740
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   MaterialComponents: 2a8b6fb1bf6655d3e2254dadae5edbb05559e1d7
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
 
-PODFILE CHECKSUM: a2ffb7d3615865be6f0360ac15d0317fe8c3a085
+PODFILE CHECKSUM: 236f1168e7699f7c56ecafefe2fd624565450acf
 
 COCOAPODS: 1.10.1

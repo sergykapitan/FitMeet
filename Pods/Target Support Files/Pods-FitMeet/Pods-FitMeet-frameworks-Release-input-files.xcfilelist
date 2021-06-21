@@ -12,3 +12,4 @@ ${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework
 ${BUILT_PRODUCTS_DIR}/Logboard/Logboard.framework
 ${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework
 ${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework
+${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework

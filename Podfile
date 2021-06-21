@@ -13,6 +13,7 @@ target 'FitMeet' do
   pod 'GoogleSignIn'
   pod 'Kingfisher', '~> 6.0'
   pod 'BottomPopup'
+  pod 'iOSDropDown'
   
 
   # Pods for FitMeet

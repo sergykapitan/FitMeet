@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import iOSDropDown
 
 final class NewStartStreamCode: UIView {
     
@@ -17,12 +18,22 @@ final class NewStartStreamCode: UIView {
         view.backgroundColor = .white
         return view
     }()
-    let labelSignUp: UILabel = {
+    let labelAddImage: UILabel = {
         let label = UILabel()
-        label.text = "Start Stream"
-        label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 19)
+        label.text = "Add a preview"
+        label.textColor = UIColor(hexString: "#BBBCBC")
+        label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
+    }()
+    let imageBackground: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "Rectangle 966gggg")
+        return image
+    }()
+    let imageButton: UIButton = {
+        let image = UIButton()
+        image.setImage(#imageLiteral(resourceName: "Vector1"), for: .normal)
+        return image
     }()
 
     let textFieldName: UITextField = {
@@ -37,8 +48,8 @@ final class NewStartStreamCode: UIView {
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
-    let textFieldCategory: UITextField = {
-        let textField = UITextField()
+    let textFieldCategory: DropDown = {
+        let textField = DropDown()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
@@ -49,8 +60,8 @@ final class NewStartStreamCode: UIView {
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
-    let textFieldStartDate: UITextField = {
-        let textField = UITextField()
+    let textFieldStartDate: DropDown = {
+        let textField = DropDown()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
@@ -61,8 +72,8 @@ final class NewStartStreamCode: UIView {
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
-    let textFieldAviable: UITextField = {
-        let textField = UITextField()
+    let textFieldAviable: DropDown = {
+        let textField = DropDown()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
@@ -73,16 +84,18 @@ final class NewStartStreamCode: UIView {
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
-    let textFieldFree: UITextField = {
-        let textField = UITextField()
+    var textFieldFree: DropDown = {
+        let textField = DropDown()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
             NSAttributedString(string: "Free", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
+        
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        
         return textField
     }()
     let textFieldDescription: UITextField = {
@@ -132,14 +145,18 @@ final class NewStartStreamCode: UIView {
     private func initLayout() {
        // cardView.fillSuperview()
         cardView.fillFull(for: self)
-        cardView.addSubview(labelSignUp)
-        labelSignUp.anchor(top: cardView.topAnchor,
-                           paddingTop: 46, height: 40)
-        labelSignUp.centerX(inView: cardView)
         
-
+        cardView.addSubview(imageBackground)
+        
+        imageBackground.anchor(top: cardView.topAnchor,
+                               left: cardView.leftAnchor,
+                               right: cardView.rightAnchor,
+                               paddingTop: 20,paddingLeft: 20, paddingRight: 20)
+        imageBackground.centerX(inView: cardView)
+        
+       
         cardView.addSubview(textFieldName)
-        textFieldName.anchor(top: labelSignUp.bottomAnchor,
+        textFieldName.anchor(top: imageBackground.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
@@ -163,7 +180,7 @@ final class NewStartStreamCode: UIView {
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         cardView.addSubview(textFieldFree)
-        textFieldFree.anchor(top: textFieldStartDate.bottomAnchor,
+        textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

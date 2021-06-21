@@ -26,7 +26,7 @@ class ProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButtonContinue()
-        self.navigationItem.title = "User Profile"
+        makeNavItem()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -56,6 +56,35 @@ class ProfileVC: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
+    }
+    func makeNavItem() {
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+        let titleLabel = UILabel()
+                   titleLabel.text = "Profile"
+                   titleLabel.textAlignment = .center
+                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+
+                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+                   stackView.distribution = .equalSpacing
+                   stackView.alignment = .leading
+                   stackView.axis = .vertical
+
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
+        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
+                                                                   style: .plain,
+                                                                   target: self,
+                                                                   action: #selector(rightHandAction)),
+                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
+                                                                   style: .plain,
+                                                                   target: self,
+                                                                   action: #selector(rightHandAction))]
+    }
+    @objc
+    func rightHandAction() {
+        print("right bar button action")
     }
 
 }

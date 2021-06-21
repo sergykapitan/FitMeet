@@ -12,7 +12,16 @@ import AuthenticationServices
 import Combine
 import BottomPopup
 
-class NewStartStream: UIViewController {
+class NewStartStream: UIViewController, DropDownTextFieldDelegate {
+    
+    func menuDidAnimate(up: Bool) {
+        print("menuDidAnimate")
+    }
+    
+    func optionSelected(option: String) {
+        print("optionSelected")
+    }
+    
     
     let authView = NewStartStreamCode()
     
@@ -45,6 +54,10 @@ class NewStartStream: UIViewController {
     var myuri: String?
     var myPublish: String?
     
+    private var dropDown: DropDownTextField!
+    private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
+    
+    
     override  var shouldAutorotate: Bool {
         return false
     }
@@ -67,7 +80,7 @@ class NewStartStream: UIViewController {
         self.navigationController?.navigationBar.layoutIfNeeded()
         authView.textFieldName.text = ""
         authView.textFieldStartDate.text = ""
-        authView.textFieldFree.text = ""
+        //authView.textFieldFree.text = ""
         authView.textFieldAviable.text = ""
         authView.textFieldDescription.text = ""
         authView.textFieldCategory.text = ""
@@ -79,13 +92,32 @@ class NewStartStream: UIViewController {
         bindingChanell()
         
         authView.textFieldName.delegate = self
-        authView.textFieldCategory.delegate = self
-        authView.textFieldStartDate.delegate = self
-        authView.textFieldFree.delegate = self
-        authView.textFieldAviable.delegate = self
         authView.textFieldDescription.delegate = self
         
         
+        
+        authView.textFieldCategory.delegate = self
+        authView.textFieldStartDate.delegate = self
+        authView.textFieldAviable.delegate = self
+        authView.textFieldFree.delegate = self
+       
+        
+        
+        
+        authView.textFieldCategory.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
+        authView.textFieldStartDate.optionArray = ["\(date)", "Later"]
+        authView.textFieldAviable.optionArray = ["Subscribers", "Only Sponsors"]
+        authView.textFieldFree.optionArray = ["Free", "Not Free"]
+        
+        
+        
+        
+        
+      //  authView.textFieldFree.optionIds = [1,23,54,22]
+        
+        
+        
+
         actionButtonContinue()
         
 //        authView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
