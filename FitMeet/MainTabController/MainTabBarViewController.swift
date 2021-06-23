@@ -45,10 +45,9 @@ class MainTabBarViewController: UITabBarController {
         
         if token != nil {
             profile = ProfileVC()
-            streamView = StreamingVC()
-            //streamView.pop
+            streamView = NewStartStream()
         } else {
-            profile = AuthViewController()
+            profile = StartScreen()
             streamView = NotTokenView()
           }
 
@@ -56,12 +55,9 @@ class MainTabBarViewController: UITabBarController {
            // hostVC,
             generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "Home"), title: ""),
             generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "Search"), title: ""),
-           // generateViewController(rootViewController: ParView(), image: #imageLiteral(resourceName: "Search"), title: ""),
-            //streamView ?? SearchVC()
-            generateViewController(rootViewController: NewStartStream() , image: #imageLiteral(resourceName: "Stream") , title: ""),
-          // PopupViewController(),
+            generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Stream") , title: ""),
             generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Category"), title: ""),
-            generateViewController(rootViewController: profile ?? AuthViewController(), image: #imageLiteral(resourceName: "Profile") , title: "")
+            generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "Profile") , title: "")
         ]
     }
     
