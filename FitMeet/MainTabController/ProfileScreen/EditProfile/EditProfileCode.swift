@@ -17,13 +17,26 @@ final class EditProfileCode: UIView {
         view.backgroundColor = .white
         return view
     }()
-    let labelSignUp: UILabel = {
+    var imageLogoProfile: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "Group 17091")
+        return image
+    }()
+    var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Sign Up"
+        label.text = "Edit Profile"
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 23)
+        label.font = UIFont.boldSystemFont(ofSize: 34)
         return label
     }()
+    var labelFullName: UILabel = {
+        let label = UILabel()
+        label.text = "Full Name"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+
     let textFieldName: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 19
@@ -40,6 +53,13 @@ final class EditProfileCode: UIView {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "alert-triangle")
         return image
+    }()
+    var labelUserName: UILabel = {
+        let label = UILabel()
+        label.text = "Username"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
     }()
     let textFieldUserName: UITextField = {
         let textField = UITextField()
@@ -61,34 +81,139 @@ final class EditProfileCode: UIView {
         label.textAlignment = .center
         return label
     }()
-    let textFieldPassword: UITextField = {
+    var labelGender: UILabel = {
+        let label = UILabel()
+        label.text = "Gender"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    let textGender: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Password", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+            NSAttributedString(string: "Gender", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return textField
     }()
-    let buttonContinue: UIButton = {
+    var labelBirthday: UILabel = {
+        let label = UILabel()
+        label.text = "Birthday"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    let textBirthday: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 19
+        textField.backgroundColor = UIColor(hexString: "F9F9F9")
+        textField.attributedPlaceholder =
+            NSAttributedString(string: "Birthday", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
+        textField.textColor = .black
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        return textField
+    }()
+    var labelEmail: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    let textEmail: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 19
+        textField.backgroundColor = UIColor(hexString: "F9F9F9")
+        textField.attributedPlaceholder =
+            NSAttributedString(string: "Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
+        textField.textColor = .black
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        return textField
+    }()
+    var labelPhoneNumber: UILabel = {
+        let label = UILabel()
+        label.text = "Phone Number"
+        label.textColor = UIColor(hexString: "#999999")
+        label.font = UIFont.boldSystemFont(ofSize: 12)
+        return label
+    }()
+    let textPhoneNumber: UITextField = {
+        let textField = UITextField()
+        textField.layer.cornerRadius = 19
+        textField.backgroundColor = UIColor(hexString: "F9F9F9")
+        textField.attributedPlaceholder =
+            NSAttributedString(string: "Phone Number", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)
+        textField.textColor = .black
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        return textField
+    }()
+    let labelSoshial: UILabel = {
+        let label = UILabel()
+        label.text = "Connect with Social Networks:"
+        label.textColor = UIColor(hexString: "#868686")
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
+    let imageTwitter: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "Vector1-1")
+        return image
+    }()
+    let buttonTwitter: UIButton = {
         let button = UIButton()
-        button.setTitle("Sign Up", for: .normal)
+        button.setTitle("Connect with Facebook", for: .normal)
         button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(hexString: "0099AE")
         return button
     }()
-    let textPrivacyPolice: UILabel = {
-        let label = UILabel()
-        label.text = "By signing up, you agree to our Terms , Data Policy and Cookies Policy"
-        label.textColor = UIColor(hexString: "#BBBCBC")
-        label.font = UIFont.systemFont(ofSize: 10)
-        label.numberOfLines = 0
-        label.textAlignment = .center
-        return label
+    let imageFacebook: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "facebook 21")
+        return image
     }()
+    let buttonFacebook: UIButton = {
+        let button = UIButton()
+        button.setTitle("Connect with Google", for: .normal)
+        button.layer.cornerRadius = 19
+        button.backgroundColor = UIColor(hexString: "0099AE")
+        return button
+    }()
+    let imageGoogle: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "Goole1")
+        return image
+    }()
+    let buttonGoogle: UIButton = {
+        let button = UIButton()
+        button.setTitle("Connect with Twitter", for: .normal)
+        button.layer.cornerRadius = 19
+        button.backgroundColor = UIColor(hexString: "0099AE")
+        return button
+    }()
+    
+    let buttonSave : UIButton = {
+        let button = UIButton()
+        button.setTitle("Save", for: .normal)
+        button.layer.cornerRadius = 19
+        button.backgroundColor = UIColor(hexString: "0099AE")
+        return button
+    }()
+    let scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        return scroll
+    }()
+    
+ 
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -101,29 +226,47 @@ final class EditProfileCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        addSubview(cardView)
-
+      addSubview(cardView)
     }
     private func initLayout() {
-        //cardView.fillSuperview()
+      //  cardView.fillSuperview()
         cardView.fillFull(for: self)
 
-        cardView.addSubview(labelSignUp)
-        labelSignUp.anchor(top: cardView.topAnchor,
-                           paddingTop: 46, height: 40)
-        labelSignUp.centerX(inView: cardView)
+        cardView.addSubview(imageLogoProfile)
+        imageLogoProfile.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
+                                paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
+        
+        cardView.addSubview(welcomeLabel)
+        welcomeLabel.anchor(left: imageLogoProfile.rightAnchor, paddingLeft: 10)
+        welcomeLabel.centerY(inView: imageLogoProfile)
+        
+        cardView.addSubview(labelFullName)
+        labelFullName.anchor(top: imageLogoProfile.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+     
 
         cardView.addSubview(textFieldName)
-        textFieldName.anchor(top: labelSignUp.bottomAnchor,
+        textFieldName.anchor(top: labelFullName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                              paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        cardView.addSubview(labelUserName)
+        labelUserName.anchor(top: textFieldName.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
+     
+        
+        
         
         cardView.addSubview(textFieldUserName)
-        textFieldUserName.anchor(top: textFieldName.bottomAnchor,
+        textFieldUserName.anchor(top: labelUserName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                              paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         textFieldUserName.addSubview(alertImage)
         alertImage.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
@@ -133,23 +276,92 @@ final class EditProfileCode: UIView {
         alertLabel.anchor(top: textFieldUserName.bottomAnchor, paddingTop: 5)
         alertLabel.centerX(inView: cardView)
         
-        cardView.addSubview(textFieldPassword)
-        textFieldPassword.anchor(top: textFieldUserName.bottomAnchor,
+        
+        cardView.addSubview(labelGender)
+        labelGender.anchor(top: textFieldUserName.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
+     
+        cardView.addSubview(textGender)
+        textGender.anchor(top: labelGender.bottomAnchor,
+                              left: cardView.leftAnchor,
+                              right: cardView.rightAnchor,
+                              paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        
+        cardView.addSubview(labelBirthday)
+        labelBirthday.anchor(top: textGender.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
+     
+        cardView.addSubview(textBirthday)
+        textBirthday.anchor(top: labelBirthday.bottomAnchor,
+                              left: cardView.leftAnchor,
+                              right: cardView.rightAnchor,
+                              paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        cardView.addSubview(labelEmail)
+        labelEmail.anchor(top: textBirthday.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
+     
+        cardView.addSubview(textEmail)
+        textEmail.anchor(top: labelEmail.bottomAnchor,
+                              left: cardView.leftAnchor,
+                              right: cardView.rightAnchor,
+                              paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        cardView.addSubview(labelPhoneNumber)
+        labelPhoneNumber.anchor(top: textEmail.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: cardView.rightAnchor,
+                             paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
+     
+        cardView.addSubview(textPhoneNumber)
+        textPhoneNumber.anchor(top: labelPhoneNumber.bottomAnchor,
+                              left: cardView.leftAnchor,
+                              right: cardView.rightAnchor,
+                              paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        cardView.addSubview(labelSoshial)
+        labelSoshial.anchor(top: textPhoneNumber.bottomAnchor,
+                     left: cardView.leftAnchor,
+                     paddingTop: 15, paddingLeft: 10)
+
+        cardView.addSubview(buttonTwitter)
+        buttonTwitter.anchor(top: labelSoshial.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-
-        cardView.addSubview(buttonContinue)
-        buttonContinue.anchor(top: textFieldPassword.bottomAnchor,
+        buttonTwitter.addSubview(imageTwitter)
+        imageTwitter.anchor(left: buttonTwitter.leftAnchor, paddingLeft: 30)
+        imageTwitter.centerY(inView: buttonTwitter)
+        
+        cardView.addSubview(buttonFacebook)
+        buttonFacebook.anchor(top: buttonTwitter.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        buttonFacebook.addSubview(imageFacebook)
+        imageFacebook.anchor(left: buttonFacebook.leftAnchor, paddingLeft: 30)
+        imageFacebook.centerY(inView: buttonFacebook)
+        
+        cardView.addSubview(buttonGoogle)
+        buttonGoogle.anchor(top: buttonFacebook.bottomAnchor,
+                              left: cardView.leftAnchor,
+                              right: cardView.rightAnchor,
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        buttonGoogle.addSubview(imageGoogle)
+        imageGoogle.anchor(left: buttonGoogle.leftAnchor, paddingLeft: 30)
+        imageGoogle.centerY(inView: buttonGoogle)
+        
+        cardView.addSubview(buttonSave)
+        buttonSave.anchor(top: buttonGoogle.bottomAnchor, paddingTop: 30, width: 137)
+        buttonSave.centerX(inView: cardView)
 
-        cardView.addSubview(textPrivacyPolice)
-        textPrivacyPolice.anchor(top: buttonContinue.bottomAnchor,
-                                 left: cardView.leftAnchor,
-                                 right: cardView.rightAnchor,
-                                 paddingTop: 11, paddingLeft: 32, paddingRight: 32)
         
     }
 }

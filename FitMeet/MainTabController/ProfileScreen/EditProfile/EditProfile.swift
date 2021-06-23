@@ -8,7 +8,7 @@
 import Foundation
 import UIKit
 
-class EditProfile: UIViewController {
+class EditProfile: UIViewController, UIScrollViewDelegate {
     
     let profileView = EditProfileCode()
     
@@ -27,11 +27,14 @@ class EditProfile: UIViewController {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
+        profileView.scroll.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUserProfile()
         self.navigationController?.navigationBar.isHidden = false
+        profileView.alertLabel.isHidden = true
+        profileView.alertImage.isHidden = true
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -73,16 +76,20 @@ class EditProfile: UIViewController {
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Profile"
+                    let titleLabel = UILabel()
+                   titleLabel.text = "   Profile"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        
+                   let backButton = UIButton()
+                   backButton.setImage(#imageLiteral(resourceName: "Vector1-1"), for: .normal)
+                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
 
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+                   let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
-                   stackView.axis = .vertical
+                   stackView.axis = .horizontal
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
@@ -98,6 +105,10 @@ class EditProfile: UIViewController {
     @objc
     func rightHandAction() {
         print("right bar button action")
+    }
+    @objc
+    func rightBack() {
+        self.navigationController?.popViewController(animated: true)
     }
 
 }
