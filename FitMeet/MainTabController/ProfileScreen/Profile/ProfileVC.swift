@@ -33,15 +33,24 @@ class ProfileVC: UIViewController {
         setUserProfile()
         self.navigationController?.navigationBar.isHidden = false
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    
+    }
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
         print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
-        profileView.userName.text = "User Name: \(userName)"
-        profileView.chanellId.text = "User ID: \(userFullName)"
+        
     }
     func actionButtonContinue() {
-        profileView.buttonLogOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+       profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+       profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -56,6 +65,11 @@ class ProfileVC: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
+    }
+    @objc func actionEditProfile() {
+        let editProfile = EditProfile()
+        editProfile.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(editProfile, animated: true)
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]

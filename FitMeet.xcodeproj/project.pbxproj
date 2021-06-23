@@ -35,6 +35,8 @@
 		B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8DE2682828200D75BE8 /* StartScreen.swift */; };
 		B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E12682829600D75BE8 /* StartScreenCode.swift */; };
 		B484E8E5268287D700D75BE8 /* OneLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E4268287D700D75BE8 /* OneLine.swift */; };
+		B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E826837CAD00D75BE8 /* EditProfile.swift */; };
+		B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8EC26837CC400D75BE8 /* EditProfileCode.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
 		B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */; };
@@ -154,6 +156,8 @@
 		B484E8DE2682828200D75BE8 /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 		B484E8E12682829600D75BE8 /* StartScreenCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenCode.swift; sourceTree = "<group>"; };
 		B484E8E4268287D700D75BE8 /* OneLine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLine.swift; sourceTree = "<group>"; };
+		B484E8E826837CAD00D75BE8 /* EditProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfile.swift; sourceTree = "<group>"; };
+		B484E8EC26837CC400D75BE8 /* EditProfileCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCode.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
@@ -344,6 +348,15 @@
 				B484E8E4268287D700D75BE8 /* OneLine.swift */,
 			);
 			path = StartScreen;
+			sourceTree = "<group>";
+		};
+		B484E8E726837C8500D75BE8 /* EditProfile */ = {
+			isa = PBXGroup;
+			children = (
+				B484E8E826837CAD00D75BE8 /* EditProfile.swift */,
+				B484E8EC26837CC400D75BE8 /* EditProfileCode.swift */,
+			);
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		B4937698263962A200D38EC3 /* Broadcast */ = {
@@ -720,6 +733,7 @@
 		B4D9D7D8262DA807007CFB71 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
+				B484E8E726837C8500D75BE8 /* EditProfile */,
 				B47D8F9A2637DDC3005473C1 /* Profile */,
 				B47D8F9B2637DDD8005473C1 /* Auth */,
 			);
@@ -900,6 +914,7 @@
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */,
+				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
@@ -931,6 +946,7 @@
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */,
+				B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,

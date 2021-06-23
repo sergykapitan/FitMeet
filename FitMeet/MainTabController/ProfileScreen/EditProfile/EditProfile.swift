@@ -1,36 +1,37 @@
 //
-//  StartScreen.swift
+//  EditProfile.swift
 //  FitMeet
 //
-//  Created by novotorica on 22.06.2021.
+//  Created by novotorica on 23.06.2021.
 //
 
-import Combine
+import Foundation
 import UIKit
 
-class StartScreen: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
+class EditProfile: UIViewController {
     
-    func change(to index: Int) {
-        print("segmentedControl index changed to \(index)")
-        if index == 0 {
-            let auth = AuthViewController()
-            self.present(auth, animated: true, completion: nil)
-           
+    let profileView = EditProfileCode()
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            return .allButUpsideDown
+        } else {
+            return .all
         }
-        if index == 1 {
-            let sign = SignInViewController()
-            self.present(sign, animated: true, completion: nil)
-            
-        }
-
     }
- 
-    let homeView = StartScreenCode()
-
-
-    //MARK - LifeCicle
     override func loadView() {
-        view = homeView
+        super.loadView()
+        view = profileView
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        actionButtonContinue()
+        makeNavItem()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUserProfile()
+        self.navigationController?.navigationBar.isHidden = false
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -41,19 +42,34 @@ class StartScreen: UIViewController,CustomSegmentedControlDelegate,UITabBarContr
         self.navigationController?.navigationBar.layoutIfNeeded()
     
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        makeNavItem()
-        homeView.segmentControll.setButtonTitles(buttonTitles: ["Sign Up  ","  Sign In"])
-        homeView.segmentControll.delegate = self
-        navigationItem.largeTitleDisplayMode = .always
+ 
+    func setUserProfile() {
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
+        print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
         
-    
+    }
+    func actionButtonContinue() {
+       
+    }
+    @objc func actionSignUp() {
+        UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
+        UserDefaults.standard.removeObject(forKey: Constants.userID)
+        UserDefaults.standard.removeObject(forKey: Constants.chanellID)
+        UserDefaults.standard.removeObject(forKey: Constants.userFullName)
+        UserDefaults.standard.removeObject(forKey: Constants.broadcastID)
+        UserDefaults.standard.removeObject(forKey: Constants.urlStream)
+ 
+        let viewController = MainTabBarViewController()
+        viewController.selectedIndex = 4
+        let mySceneDelegate = (self.view.window?.windowScene)!
+        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
     }
-
+    @objc func actionEditProfile() {
+        
+        
+        
+    }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
@@ -84,9 +100,6 @@ class StartScreen: UIViewController,CustomSegmentedControlDelegate,UITabBarContr
         print("right bar button action")
     }
 
-    @objc
-    func leftHandAction() {
-        print("left bar button action")
-    }
-
 }
+
+
