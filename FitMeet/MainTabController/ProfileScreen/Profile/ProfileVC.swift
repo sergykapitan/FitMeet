@@ -7,10 +7,15 @@
 
 import Foundation
 import UIKit
+import Combine
 
-class ProfileVC: UIViewController {
+class ProfileVC: UIViewController, UIScrollViewDelegate {
     
     let profileView = ProfileVCCode()
+    private var take: AnyCancellable?
+ 
+    @Inject var fitMeetApi: FitMeetApi
+    var user: User?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -27,6 +32,7 @@ class ProfileVC: UIViewController {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
+        profileView.scroll.delegate = self
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -40,12 +46,19 @@ class ProfileVC: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-    
+        
     }
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
         print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
+        bindingUser()
+        let name: String?
+        if user?.fullName != nil {
+            name = user?.fullName
+        } else { name = userName }
+        guard let n = name else { return }
+        profileView.welcomeLabel.text = "Hi! " + n
         
     }
     func actionButtonContinue() {
@@ -65,6 +78,16 @@ class ProfileVC: UIViewController {
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
+    }
+    func bindingUser() {
+        take = fitMeetApi.getUser()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.username != nil  {
+                    self.user = response
+                    print(self.user)
+                }
+        })
     }
     @objc func actionEditProfile() {
         let editProfile = EditProfile()

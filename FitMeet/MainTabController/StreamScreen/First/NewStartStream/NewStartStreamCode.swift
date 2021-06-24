@@ -125,7 +125,14 @@ final class NewStartStreamCode: UIView {
         button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
         return button
     }()
-
+    let scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.contentSize.height = 1000
+       // scroll.contentSize.width = 400
+        scroll.backgroundColor = .white
+        return scroll
+    }()
     
     // MARK: - Init
     init() {
@@ -139,13 +146,17 @@ final class NewStartStreamCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        addSubview(cardView)
+        addSubview(scroll)
+        scroll.fillFull(for: self)
+        scroll.addSubview(cardView)
  
     }
     private func initLayout() {
        // cardView.fillSuperview()
-        cardView.fillFull(for: self)
+      //  cardView.fillFull(for: self)
         
+
+        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
         cardView.addSubview(imageBackground)
         
         imageBackground.anchor(top: cardView.topAnchor,
@@ -155,49 +166,49 @@ final class NewStartStreamCode: UIView {
         imageBackground.centerX(inView: cardView)
         
        
-        cardView.addSubview(textFieldName)
+        scroll.addSubview(textFieldName)
         textFieldName.anchor(top: imageBackground.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(textFieldCategory)
+        scroll.addSubview(textFieldCategory)
         textFieldCategory.anchor(top: textFieldName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(textFieldStartDate)
+        scroll.addSubview(textFieldStartDate)
         textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(textFieldAviable)
+        scroll.addSubview(textFieldAviable)
         textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(textFieldFree)
+        scroll.addSubview(textFieldFree)
         textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(textFieldDescription)
+        scroll.addSubview(textFieldDescription)
         textFieldDescription.anchor(top: textFieldFree.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
    
-        cardView.addSubview(buttonContinue)
+        scroll.addSubview(buttonContinue)
         buttonContinue.anchor(top: textFieldDescription.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(buttonOK)
+        scroll.addSubview(buttonOK)
         buttonOK.anchor(top: buttonContinue.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,

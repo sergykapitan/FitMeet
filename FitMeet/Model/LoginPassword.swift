@@ -11,3 +11,10 @@ struct LoginPassword: Codable {
     var phone: String?
     let password: String
 }
+struct UserRequest: Codable {
+    var fullName: String?
+    var username: String?
+    var birthDate: String?
+    var gender: String?
+    var avatarPath: String?    
+}

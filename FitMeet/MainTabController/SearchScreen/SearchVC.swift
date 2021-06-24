@@ -188,7 +188,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-      //  binding()
+        binding(name: "a")
+        stopSpiners()
        }
     private func makeTableView() {
         searchView.tableView.delegate = self

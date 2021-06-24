@@ -83,4 +83,26 @@ class FitMeetApi {
                  .mapError{ DifferentError.alamofire(wrapped: $0)}
                  .eraseToAnyPublisher()
            }
+    
+    public func getUser() -> AnyPublisher<User,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/user/users/profile", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: User.self)
+            .value()
+            .print("getUser")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    public func putUser(user: UserRequest) -> AnyPublisher<User,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/user/users/profile", method: .put, parameters: user.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+           // .validate(statusCode: 200..<300)
+           // .validate(contentType: ["application/json"])
+            .publishDecodable(type: User.self)
+            .value()
+            .print("getUser")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }

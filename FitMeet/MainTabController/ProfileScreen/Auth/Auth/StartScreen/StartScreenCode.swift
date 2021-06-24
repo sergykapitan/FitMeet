@@ -223,12 +223,29 @@ final class StartScreenCode: UIView {
         let button = UIButton()
         return button
     }()
+    let scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.contentSize.height = 1000
+       // scroll.contentSize.width = 400
+        scroll.backgroundColor = .white
+        return scroll
+    }()
     //MARK: - initial
     
     override init(frame: CGRect) {
-        super.init(frame: frame)
+        super.init(frame: CGRect.zero)
+        initUI()
         createCardViewLayer()
     
+    }
+    private func initUI() {
+        
+        
+      addSubview(cardView)
+     // scroll.fillFull(for: self)
+     // scroll.addSubview(cardView)
+       
     }
     
     //MARK: - constraint First Layer
@@ -236,10 +253,10 @@ final class StartScreenCode: UIView {
     func createCardViewLayer() {
         
         
-        addSubview(cardView)
+       // addSubview(cardView)
         cardView.fillSuperview()
 
-        
+      //  cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
         
         
         cardView.addSubview(welcomeLabel)
@@ -247,12 +264,7 @@ final class StartScreenCode: UIView {
         
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
-        
-       
-        
-        
-        
-        
+
         cardView.addSubview(firstLine)
         firstLine.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         

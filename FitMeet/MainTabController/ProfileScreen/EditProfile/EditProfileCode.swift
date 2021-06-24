@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import iOSDropDown
 
 final class EditProfileCode: UIView {
     
@@ -88,8 +89,8 @@ final class EditProfileCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
-    let textGender: UITextField = {
-        let textField = UITextField()
+    let textGender: DropDown = {
+        let textField = DropDown()
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
@@ -210,6 +211,10 @@ final class EditProfileCode: UIView {
     }()
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.contentSize.height = 1000
+       // scroll.contentSize.width = 400
+        scroll.backgroundColor = .white
         return scroll
     }()
     
@@ -226,34 +231,41 @@ final class EditProfileCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-      addSubview(cardView)
+        
+        
+      addSubview(scroll)
+      scroll.fillFull(for: self)
+      scroll.addSubview(cardView)
+       
     }
     private func initLayout() {
-      //  cardView.fillSuperview()
-        cardView.fillFull(for: self)
+       // cardView.fillSuperview()
+       // cardView.fillFull(for: self)
+        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
 
-        cardView.addSubview(imageLogoProfile)
+        scroll.addSubview(imageLogoProfile)
         imageLogoProfile.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
                                 paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
         
-        cardView.addSubview(welcomeLabel)
+        scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(left: imageLogoProfile.rightAnchor, paddingLeft: 10)
         welcomeLabel.centerY(inView: imageLogoProfile)
+
         
-        cardView.addSubview(labelFullName)
+        scroll.addSubview(labelFullName)
         labelFullName.anchor(top: imageLogoProfile.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
      
 
-        cardView.addSubview(textFieldName)
+        scroll.addSubview(textFieldName)
         textFieldName.anchor(top: labelFullName.bottomAnchor,
                               left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              right:  cardView.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(labelUserName)
+        scroll.addSubview(labelUserName)
         labelUserName.anchor(top: textFieldName.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
@@ -262,7 +274,7 @@ final class EditProfileCode: UIView {
         
         
         
-        cardView.addSubview(textFieldUserName)
+        scroll.addSubview(textFieldUserName)
         textFieldUserName.anchor(top: labelUserName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
@@ -272,66 +284,66 @@ final class EditProfileCode: UIView {
         alertImage.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
         alertImage.centerY(inView: textFieldUserName)
         
-        cardView.addSubview(alertLabel)
+        scroll.addSubview(alertLabel)
         alertLabel.anchor(top: textFieldUserName.bottomAnchor, paddingTop: 5)
         alertLabel.centerX(inView: cardView)
         
         
-        cardView.addSubview(labelGender)
+        scroll.addSubview(labelGender)
         labelGender.anchor(top: textFieldUserName.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
-        cardView.addSubview(textGender)
+        scroll.addSubview(textGender)
         textGender.anchor(top: labelGender.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         
-        cardView.addSubview(labelBirthday)
+        scroll.addSubview(labelBirthday)
         labelBirthday.anchor(top: textGender.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
-        cardView.addSubview(textBirthday)
+        scroll.addSubview(textBirthday)
         textBirthday.anchor(top: labelBirthday.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(labelEmail)
+        scroll.addSubview(labelEmail)
         labelEmail.anchor(top: textBirthday.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
-        cardView.addSubview(textEmail)
+        scroll.addSubview(textEmail)
         textEmail.anchor(top: labelEmail.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(labelPhoneNumber)
+        scroll.addSubview(labelPhoneNumber)
         labelPhoneNumber.anchor(top: textEmail.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
-        cardView.addSubview(textPhoneNumber)
+        scroll.addSubview(textPhoneNumber)
         textPhoneNumber.anchor(top: labelPhoneNumber.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        cardView.addSubview(labelSoshial)
+        scroll.addSubview(labelSoshial)
         labelSoshial.anchor(top: textPhoneNumber.bottomAnchor,
                      left: cardView.leftAnchor,
                      paddingTop: 15, paddingLeft: 10)
 
-        cardView.addSubview(buttonTwitter)
+        scroll.addSubview(buttonTwitter)
         buttonTwitter.anchor(top: labelSoshial.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
@@ -340,7 +352,7 @@ final class EditProfileCode: UIView {
         imageTwitter.anchor(left: buttonTwitter.leftAnchor, paddingLeft: 30)
         imageTwitter.centerY(inView: buttonTwitter)
         
-        cardView.addSubview(buttonFacebook)
+        scroll.addSubview(buttonFacebook)
         buttonFacebook.anchor(top: buttonTwitter.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
@@ -349,7 +361,7 @@ final class EditProfileCode: UIView {
         imageFacebook.anchor(left: buttonFacebook.leftAnchor, paddingLeft: 30)
         imageFacebook.centerY(inView: buttonFacebook)
         
-        cardView.addSubview(buttonGoogle)
+        scroll.addSubview(buttonGoogle)
         buttonGoogle.anchor(top: buttonFacebook.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
@@ -358,7 +370,7 @@ final class EditProfileCode: UIView {
         imageGoogle.anchor(left: buttonGoogle.leftAnchor, paddingLeft: 30)
         imageGoogle.centerY(inView: buttonGoogle)
         
-        cardView.addSubview(buttonSave)
+        scroll.addSubview(buttonSave)
         buttonSave.anchor(top: buttonGoogle.bottomAnchor, paddingTop: 30, width: 137)
         buttonSave.centerX(inView: cardView)
 

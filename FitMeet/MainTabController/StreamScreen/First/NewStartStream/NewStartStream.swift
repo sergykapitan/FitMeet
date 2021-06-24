@@ -12,7 +12,7 @@ import AuthenticationServices
 import Combine
 import BottomPopup
 
-class NewStartStream: UIViewController, DropDownTextFieldDelegate {
+class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate {
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
@@ -91,8 +91,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate {
         makeNavItem()
         bindingChanell()
         
+        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
+        scrollViewTap.numberOfTapsRequired = 1
+        authView.scroll.addGestureRecognizer(scrollViewTap)
+        
         authView.textFieldName.delegate = self
         authView.textFieldDescription.delegate = self
+        authView.scroll.delegate = self
         
         
         
@@ -128,7 +133,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate {
         
   
     }
-
+    @objc func scrollViewTapped() {
+            authView.scroll.endEditing(true)
+            self.view.endEditing(true) // anyone
+        }
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

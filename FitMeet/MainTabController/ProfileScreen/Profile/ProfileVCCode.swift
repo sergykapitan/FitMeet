@@ -18,7 +18,7 @@ final class ProfileVCCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
+       // view.clipsToBounds = true
             return view
         }()
     var imageLogoProfile: UIImageView = {
@@ -39,12 +39,7 @@ final class ProfileVCCode: UIView {
         
     }()
     
-    var scrollView: UIScrollView = {
-        var scroll = UIScrollView()
-        scroll.backgroundColor = .cyan
-        return scroll
-    }()
-    
+   
     
     var firstLine: OneLine = {
         let line = OneLine()
@@ -308,30 +303,45 @@ final class ProfileVCCode: UIView {
         let button = UIButton()
         return button
     }()
+    let scroll: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.contentSize.height = 1000
+       // scroll.contentSize.width = 400
+        scroll.backgroundColor = .white
+        return scroll
+    }()
     //MARK: - initial
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init() {
+        super.init(frame: CGRect.zero)
+        initUI()
         createCardViewLayer()
-    
+        
     }
     
     //MARK: - constraint First Layer
-    
+    private func initUI() {
+        
+      addSubview(scroll)
+      scroll.fillSuperview()
+      scroll.addSubview(cardView)
+       
+    }
     func createCardViewLayer() {
         
-        
-        addSubview(cardView)
-        cardView.fillSuperview()
+       // addSubview(cardView)
+       // cardView.fillFull(for: self)
 
+        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
         
-        cardView.addSubview(imageLogoProfile)
+        scroll.addSubview(imageLogoProfile)
         imageLogoProfile.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 5,width: 80, height: 80)
         
-        cardView.addSubview(welcomeLabel)
+        scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(top: cardView.topAnchor, left: imageLogoProfile.rightAnchor, paddingTop: 5, paddingLeft: 20)
         
-        cardView.addSubview(segmentControll)
+        scroll.addSubview(segmentControll)
         segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
         
        
@@ -339,10 +349,10 @@ final class ProfileVCCode: UIView {
         
         
         
-        cardView.addSubview(firstLine)
+        scroll.addSubview(firstLine)
         firstLine.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonProfile)
+        scroll.addSubview(buttonProfile)
         buttonProfile.anchor(top: firstLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonProfile.addSubview(imageProfile)
         imageProfile.anchor(top: buttonProfile.topAnchor, left: buttonProfile.leftAnchor,  bottom: buttonProfile.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
@@ -350,10 +360,10 @@ final class ProfileVCCode: UIView {
         labelProfile.anchor(left: imageProfile.rightAnchor,paddingLeft: 5)
         labelProfile.centerY(inView: buttonProfile)
         
-        cardView.addSubview(firstAndLine)
+        scroll.addSubview(firstAndLine)
         firstAndLine.anchor(top: buttonProfile.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonStudio)
+        scroll.addSubview(buttonStudio)
         buttonStudio.anchor(top: firstAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonStudio.addSubview(imageStudio)
@@ -363,7 +373,7 @@ final class ProfileVCCode: UIView {
         labelStudio.centerY(inView: buttonStudio)
         
         
-        cardView.addSubview(buttonChanell)
+        scroll.addSubview(buttonChanell)
         buttonChanell.anchor(top: buttonStudio.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonChanell.addSubview(imageChanell)
@@ -372,7 +382,7 @@ final class ProfileVCCode: UIView {
         labelChanell.anchor(left: imageChanell.rightAnchor,paddingLeft: 5)
         labelChanell.centerY(inView: buttonChanell)
 
-        cardView.addSubview(buttonHistory)
+        scroll.addSubview(buttonHistory)
         buttonHistory.anchor(top: buttonChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonHistory.addSubview(imageLogo)
@@ -381,10 +391,10 @@ final class ProfileVCCode: UIView {
         labelHistory.anchor(left: imageLogo.rightAnchor,paddingLeft: 5)
         labelHistory.centerY(inView: buttonHistory)
         
-        cardView.addSubview(secondLine)
+        scroll.addSubview(secondLine)
         secondLine.anchor(top: buttonHistory.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonWallet)
+        scroll.addSubview(buttonWallet)
         buttonWallet.anchor(top: secondLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonWallet.addSubview(imageWallet)
@@ -394,7 +404,7 @@ final class ProfileVCCode: UIView {
         labelWallet.anchor(left: imageWallet.rightAnchor,paddingLeft: 5)
         labelWallet.centerY(inView: buttonWallet)
         
-        cardView.addSubview(buttonSetting)
+        scroll.addSubview(buttonSetting)
         buttonSetting.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonSetting.addSubview(imageSettinh)
@@ -404,7 +414,7 @@ final class ProfileVCCode: UIView {
         labelSetting.anchor(left: imageSettinh.rightAnchor,paddingLeft: 5)
         labelSetting.centerY(inView: buttonSetting)
         
-        cardView.addSubview(buttonLanguage)
+        scroll.addSubview(buttonLanguage)
         buttonLanguage.anchor(top: buttonSetting.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonLanguage.addSubview(imageLanguage)
@@ -414,23 +424,23 @@ final class ProfileVCCode: UIView {
         labelLanguage.anchor(left: imageLanguage.rightAnchor,paddingLeft: 5)
         labelLanguage.centerY(inView: buttonLanguage)
         
-        cardView.addSubview(treeLine)
+        scroll.addSubview(treeLine)
         treeLine.anchor(top: buttonLanguage.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonHelp)
+        scroll.addSubview(buttonHelp)
         buttonHelp.anchor(top: treeLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        buttonHelp.addSubview(imageHelp)
+        scroll.addSubview(imageHelp)
         imageHelp.anchor(top: buttonHelp.topAnchor, left: buttonHelp.leftAnchor,  bottom: buttonHelp.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
         
         buttonHelp.addSubview(labelHelp)
         labelHelp.anchor(left: imageHelp.rightAnchor,paddingLeft: 5)
         labelHelp.centerY(inView: buttonHelp)
         
-        cardView.addSubview(fourLine)
+        scroll.addSubview(fourLine)
         fourLine.anchor(top: buttonHelp.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonSignOut)
+        scroll.addSubview(buttonSignOut)
         buttonSignOut.anchor(top: fourLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonSignOut.addSubview(imageSignOut)
@@ -440,50 +450,50 @@ final class ProfileVCCode: UIView {
         labelSignOut.anchor(left: imageSignOut.rightAnchor,paddingLeft: 5)
         labelSignOut.centerY(inView: buttonSignOut)
         
-        cardView.addSubview(fourAndLine)
+        scroll.addSubview(fourAndLine)
         fourAndLine.anchor(top: buttonSignOut.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         
-        cardView.addSubview(buttonAbout)
+        scroll.addSubview(buttonAbout)
         buttonAbout.anchor(top: fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
         buttonAbout.addSubview(labelAbout)
         labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
         labelAbout.centerY(inView: buttonAbout)
         
         
-        cardView.addSubview(buttonPartners)
+        scroll.addSubview(buttonPartners)
         buttonPartners.anchor(top: buttonAbout.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonPartners.addSubview(labelPartners)
         labelPartners.anchor(left: buttonPartners.leftAnchor,paddingLeft: 5)
         labelPartners.centerY(inView: buttonPartners)
         
         
-        cardView.addSubview(buttonCommunityGuidelines)
+        scroll.addSubview(buttonCommunityGuidelines)
         buttonCommunityGuidelines.anchor(top: buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonCommunityGuidelines.addSubview(labelCommunityGuidelines)
         labelCommunityGuidelines.anchor(left: buttonCommunityGuidelines.leftAnchor,paddingLeft: 5)
         labelCommunityGuidelines.centerY(inView: buttonCommunityGuidelines)
         
-        cardView.addSubview(buttonCookiePolicy)
+        scroll.addSubview(buttonCookiePolicy)
         buttonCookiePolicy.anchor(top: buttonCommunityGuidelines.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonCookiePolicy.addSubview(labelCookiePolicy)
         labelCookiePolicy.anchor(left: buttonCookiePolicy.leftAnchor,paddingLeft: 5)
         labelCookiePolicy.centerY(inView: buttonCookiePolicy)
         
-        cardView.addSubview(buttonPrivacyPolicy)
+        scroll.addSubview(buttonPrivacyPolicy)
         buttonPrivacyPolicy.anchor(top: buttonCookiePolicy.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonPrivacyPolicy.addSubview(labelPrivacyPolicy)
         labelPrivacyPolicy.anchor(left: buttonPrivacyPolicy.leftAnchor,paddingLeft: 5)
         labelPrivacyPolicy.centerY(inView: buttonPrivacyPolicy)
         
-        cardView.addSubview(buttonSecurity)
+        scroll.addSubview(buttonSecurity)
         buttonSecurity.anchor(top: buttonPrivacyPolicy.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonSecurity.addSubview(labelSecurity)
         labelSecurity.anchor(left: buttonSecurity.leftAnchor,paddingLeft: 5)
         labelSecurity.centerY(inView: buttonSecurity)
         
         
-        cardView.addSubview(buttonTerms)
+        scroll.addSubview(buttonTerms)
         buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonTerms.addSubview(labelTerms)
         labelTerms.anchor(left: buttonTerms.leftAnchor,paddingLeft: 5)
