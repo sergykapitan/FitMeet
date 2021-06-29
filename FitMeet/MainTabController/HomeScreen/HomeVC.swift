@@ -105,7 +105,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
        // makeReguest(searchText:viewModel.lastRequestName)
        }
     func binding() {
-        takeBroadcast = fitMeetStream.getBroadcast()
+        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                // print("RESPONCE ====== \(response)")

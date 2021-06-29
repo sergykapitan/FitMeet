@@ -10,6 +10,8 @@
 		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
+		B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4163829268B09BB005BAA46 /* ChanellVC.swift */; };
+		B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B416382D268B09CF005BAA46 /* ChanellCode.swift */; };
 		B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D069A2664C61B00C28C29 /* HomeVC.swift */; };
 		B41D06A02664C65C00C28C29 /* HomeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D069F2664C65C00C28C29 /* HomeVCCode.swift */; };
 		B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06A22664C67600C28C29 /* HomeCell.swift */; };
@@ -132,6 +134,8 @@
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
+		B4163829268B09BB005BAA46 /* ChanellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellVC.swift; sourceTree = "<group>"; };
+		B416382D268B09CF005BAA46 /* ChanellCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellCode.swift; sourceTree = "<group>"; };
 		B41D069A2664C61B00C28C29 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		B41D069F2664C65C00C28C29 /* HomeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVCCode.swift; sourceTree = "<group>"; };
 		B41D06A22664C67600C28C29 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
@@ -283,6 +287,15 @@
 			path = NotTokenView;
 			sourceTree = "<group>";
 		};
+		B4163828268B099D005BAA46 /* Chanell */ = {
+			isa = PBXGroup;
+			children = (
+				B4163829268B09BB005BAA46 /* ChanellVC.swift */,
+				B416382D268B09CF005BAA46 /* ChanellCode.swift */,
+			);
+			path = Chanell;
+			sourceTree = "<group>";
+		};
 		B41D069D2664C62700C28C29 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +333,8 @@
 			children = (
 				B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */,
 				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
+				B4163828268B099D005BAA46 /* Chanell */,
+				B484E8E726837C8500D75BE8 /* EditProfile */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -736,7 +751,6 @@
 		B4D9D7D8262DA807007CFB71 /* ProfileScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B484E8E726837C8500D75BE8 /* EditProfile */,
 				B47D8F9A2637DDC3005473C1 /* Profile */,
 				B47D8F9B2637DDD8005473C1 /* Auth */,
 			);
@@ -955,6 +969,7 @@
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,
 				B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */,
+				B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
@@ -985,6 +1000,7 @@
 				B46CF7EE267A43A300EA0741 /* ParentControllwerCode.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
+				B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */,
 				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
 				B46CF7C52678B90500EA0741 /* SearchVCCategory.swift in Sources */,
 				B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */,

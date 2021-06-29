@@ -156,7 +156,7 @@ final class NewStartStreamCode: UIView {
       //  cardView.fillFull(for: self)
         
 
-        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
+        cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
         cardView.addSubview(imageBackground)
         
         imageBackground.anchor(top: cardView.topAnchor,

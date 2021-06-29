@@ -14,6 +14,7 @@ target 'FitMeet' do
   pod 'Kingfisher', '~> 6.0'
   pod 'BottomPopup'
   pod 'iOSDropDown'
+  pod 'HHCustomCorner'
   
 
   # Pods for FitMeet

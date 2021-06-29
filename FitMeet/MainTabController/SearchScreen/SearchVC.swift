@@ -12,10 +12,7 @@ import Combine
 
 
 class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDelegate {
-    
-    
-    
-    
+
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     private var takeUser: AnyCancellable?

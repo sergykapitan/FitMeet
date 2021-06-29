@@ -31,6 +31,7 @@ struct BroadcastResponce:Codable {
     let streams: [Stream]?
     let iframeUrl: String?
     let isPopular: Bool?
+    let description: String?
   
 }
 

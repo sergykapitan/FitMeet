@@ -86,6 +86,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldCategory.text = ""
     
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNavItem()
@@ -98,16 +102,15 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldName.delegate = self
         authView.textFieldDescription.delegate = self
         authView.scroll.delegate = self
-        
-        
-        
+   
         authView.textFieldCategory.delegate = self
         authView.textFieldStartDate.delegate = self
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
-        
-        
+        authView.textFieldStartDate.isSearchEnable = false
+        authView.textFieldAviable.isSearchEnable = false
+        authView.textFieldFree.isSearchEnable = false
         
         authView.textFieldCategory.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
         authView.textFieldStartDate.optionArray = ["\(date)", "Later"]

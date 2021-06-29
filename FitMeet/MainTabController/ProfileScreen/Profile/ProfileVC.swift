@@ -64,6 +64,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     func actionButtonContinue() {
        profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
        profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
+        profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -94,6 +95,12 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         editProfile.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(editProfile, animated: true)
     }
+    @objc func actionChanell() {
+        let editProfile = ChanellVC()
+        editProfile.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(editProfile, animated: true)
+    }
+    
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
