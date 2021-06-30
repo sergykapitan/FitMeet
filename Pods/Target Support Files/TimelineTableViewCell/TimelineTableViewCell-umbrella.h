@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_FitMeetVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_FitMeetVersionString[];
+FOUNDATION_EXPORT double TimelineTableViewCellVersionNumber;
+FOUNDATION_EXPORT const unsigned char TimelineTableViewCellVersionString[];
 

@@ -1,4 +1,4 @@
-${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks.sh
+${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/AppAuth/AppAuth.framework
 ${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework
@@ -13,4 +13,5 @@ ${BUILT_PRODUCTS_DIR}/Loaf/Loaf.framework
 ${BUILT_PRODUCTS_DIR}/Logboard/Logboard.framework
 ${BUILT_PRODUCTS_DIR}/MDFInternationalization/MDFInternationalization.framework
 ${BUILT_PRODUCTS_DIR}/MaterialComponents/MaterialComponents.framework
+${BUILT_PRODUCTS_DIR}/TimelineTableViewCell/TimelineTableViewCell.framework
 ${BUILT_PRODUCTS_DIR}/iOSDropDown/iOSDropDown.framework

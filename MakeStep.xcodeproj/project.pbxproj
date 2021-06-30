@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */; };
+		1F4F5CAE812DF1543A99FF1C /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 589C7AEA98FA8BAA6F08F1F2 /* Pods_MakeStep.framework */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
 		B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4163829268B09BB005BAA46 /* ChanellVC.swift */; };
@@ -130,7 +130,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FitMeet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		589C7AEA98FA8BAA6F08F1F2 /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BA550A0BF918AF60A061E8B /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.release.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.release.xcconfig"; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
@@ -255,6 +256,7 @@
 		B4F580652631531A000095BB /* FitMeetChannels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetChannels.swift; sourceTree = "<group>"; };
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FitMeet.debug.xcconfig"; path = "Target Support Files/Pods-FitMeet/Pods-FitMeet.debug.xcconfig"; sourceTree = "<group>"; };
+		BA607DEA34C16D30EBF579B3 /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -262,7 +264,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				437AC4E5911835D9359AF7E3 /* Pods_FitMeet.framework in Frameworks */,
+				1F4F5CAE812DF1543A99FF1C /* Pods_MakeStep.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +276,8 @@
 			children = (
 				B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */,
 				8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */,
+				BA607DEA34C16D30EBF579B3 /* Pods-MakeStep.debug.xcconfig */,
+				6BA550A0BF918AF60A061E8B /* Pods-MakeStep.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -787,7 +791,7 @@
 		E42F6DC95E2BF9C44AEFD569 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				37C6BC9ABB813D35D06D475E /* Pods_FitMeet.framework */,
+				589C7AEA98FA8BAA6F08F1F2 /* Pods_MakeStep.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -875,7 +879,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-FitMeet-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-MakeStep-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -888,15 +892,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-resources-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-resources-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A88BAF6B5745BDF6DE340537 /* [CP] Embed Pods Frameworks */ = {
@@ -905,15 +909,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FitMeet/Pods-FitMeet-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1175,7 +1179,7 @@
 		};
 		B4D9D73026257D8F007CFB71 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8D1D0EFB35A1F938864F5ED /* Pods-FitMeet.debug.xcconfig */;
+			baseConfigurationReference = BA607DEA34C16D30EBF579B3 /* Pods-MakeStep.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1200,7 +1204,7 @@
 		};
 		B4D9D73126257D8F007CFB71 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8ADDDB8B6F415438F8B69B1C /* Pods-FitMeet.release.xcconfig */;
+			baseConfigurationReference = 6BA550A0BF918AF60A061E8B /* Pods-MakeStep.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

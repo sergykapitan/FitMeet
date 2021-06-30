@@ -65,6 +65,7 @@ PODS:
     - MaterialComponents/private/Application
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
+  - TimelineTableViewCell (2.2.2)
 
 DEPENDENCIES:
   - Alamofire (~> 5.2)
@@ -78,6 +79,7 @@ DEPENDENCIES:
   - Kingfisher (~> 6.0)
   - Loaf
   - "MaterialComponents/Tabs+ColorThemer"
+  - TimelineTableViewCell
 
 SPEC REPOS:
   trunk:
@@ -97,6 +99,7 @@ SPEC REPOS:
     - Logboard
     - MaterialComponents
     - MDFInternationalization
+    - TimelineTableViewCell
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
@@ -115,7 +118,8 @@ SPEC CHECKSUMS:
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   MaterialComponents: 2a8b6fb1bf6655d3e2254dadae5edbb05559e1d7
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: 6d57a454d6e894995db7ca68485de158cc6446fb
+PODFILE CHECKSUM: 8ed2e205118002d74eeb03180582fa7f599e41a4
 
 COCOAPODS: 1.10.1

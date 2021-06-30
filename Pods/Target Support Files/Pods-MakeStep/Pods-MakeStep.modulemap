@@ -1,0 +1,6 @@
+framework module Pods_MakeStep {
+  umbrella header "Pods-MakeStep-umbrella.h"
+
+  export *
+  module * { export * }
+}

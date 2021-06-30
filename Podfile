@@ -15,7 +15,8 @@ target 'MakeStep' do
   pod 'BottomPopup'
   pod 'iOSDropDown'
   pod 'HHCustomCorner'
-  
+  pod 'TimelineTableViewCell'
+   
 
   # Pods for FitMeet
 
