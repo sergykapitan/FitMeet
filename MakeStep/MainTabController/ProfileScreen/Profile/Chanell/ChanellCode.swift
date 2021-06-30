@@ -107,6 +107,10 @@ final class ChanellCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+    var tableView: UITableView = {
+        let table = UITableView()
+        return table
+    }()
     
     
     
@@ -128,6 +132,9 @@ final class ChanellCode: UIView {
         
        // addSubview(cardView)
         cardView.fillFull(for: self)
+        
+       
+        
        
         cardView.addSubview(viewTop)
         viewTop.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0,  height: 100)
@@ -145,6 +152,10 @@ final class ChanellCode: UIView {
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: viewTop.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, height: 30)
         
+        cardView.addSubview(tableView)
+        tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+               
+
         cardView.addSubview(buttonOnline)
         buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
         
