@@ -17,6 +17,7 @@
 		B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06A22664C67600C28C29 /* HomeCell.swift */; };
 		B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */; };
 		B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
+		B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB73268E1BE9007096AB /* SocketIOManager.swift */; };
 		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
 		B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */; };
 		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
@@ -142,6 +143,7 @@
 		B41D06A22664C67600C28C29 /* HomeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCell.swift; sourceTree = "<group>"; };
 		B41D06AA2664D1B100C28C29 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
 		B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionHomeVC.swift; sourceTree = "<group>"; };
+		B41DCB73268E1BE9007096AB /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
 		B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcast.swift; sourceTree = "<group>"; };
 		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
@@ -307,6 +309,14 @@
 				B4A9F63926320AA3000E00DE /* HomeCustomList.swift */,
 			);
 			path = SwiftUI;
+			sourceTree = "<group>";
+		};
+		B41DCB72268E1BCA007096AB /* SocketIOManager */ = {
+			isa = PBXGroup;
+			children = (
+				B41DCB73268E1BE9007096AB /* SocketIOManager.swift */,
+			);
+			path = SocketIOManager;
 			sourceTree = "<group>";
 		};
 		B46CF79B2672350D00EA0741 /* NextView */ = {
@@ -515,6 +525,7 @@
 				B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */,
 				B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */,
 				B4D9D7622626D2A1007CFB71 /* NetworkService */,
+				B41DCB72268E1BCA007096AB /* SocketIOManager */,
 				B4C4996F263ADC1700BFD1EE /* CoreDataService */,
 				B4D9D78326270789007CFB71 /* ViewModel */,
 				B4D9D76D2626D4D3007CFB71 /* Model */,
@@ -1023,6 +1034,7 @@
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
+				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
 				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
@@ -1186,14 +1198,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1211,14 +1223,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.11;
+				MARKETING_VERSION = 1.0.12;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
