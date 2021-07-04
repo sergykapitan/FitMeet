@@ -7,8 +7,7 @@
 
 import Foundation
 
-//// MARK: - Token
-//struct Token: Codable {
-//    let expiresIn: Int?
-//    let token: String?
-//}
+// MARK: - Token
+struct TokenChat: Codable {
+    let token: String?
+}

@@ -105,4 +105,16 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    
+    //MARK: - create token chat
+    public func getTokenChat() -> AnyPublisher<TokenChat,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/chat/chats/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: TokenChat.self)
+            .value()
+            .print("TokenChat")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }

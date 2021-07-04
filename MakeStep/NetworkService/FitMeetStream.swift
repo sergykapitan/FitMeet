@@ -173,6 +173,21 @@ class FitMeetStream {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    
+    ///api/v0/stream/broadcastCategories/private
+    public func getCategoryPrivate() -> AnyPublisher<CategoryResponce,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: CategoryResponce.self)
+            .value()
+            .print("getCategoryPrivate")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    
+    
     //MARK: - Get Broadcast Category//GET
     public func getBroadcastCategory(name: String) -> AnyPublisher<CategoryResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40&titleLike=\(name)", method:.get, parameters: [:])
@@ -186,7 +201,6 @@ class FitMeetStream {
     }
     //MARK: - Start Stream//POST//AUTH
     public func startStream(stream:StartStream) -> AnyPublisher<StreamResponce, DifferentError> {
-        print(stream.asDictionary())
         return AF.request(Constants.apiEndpoint + "/stream/streams", method: .post, parameters: stream.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .publishDecodable(type: StreamResponce.self)
             .value()
@@ -227,8 +241,29 @@ class FitMeetStream {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    ///api/v0/stream/broadcastCategories/{id}/follow
     
+    public func followCategory(id: Int) -> AnyPublisher<Category,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/\(id)/follow", method: .put, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: Category.self)
+            .value()
+            .print("getListUser")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
     
+    }
+    public func unFollowCategory(id: Int) -> AnyPublisher<Category,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/\(id)/follow", method: .delete, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: Category.self)
+            .value()
+            .print("getListUser")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
     
+    }
     
 }

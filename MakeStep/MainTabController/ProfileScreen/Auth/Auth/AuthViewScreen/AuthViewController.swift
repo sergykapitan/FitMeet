@@ -85,7 +85,7 @@ class AuthViewController: UIViewController {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-        CM.closeAllViews()
+       // CM.closeAllViews()
     }
 
 }
@@ -138,7 +138,7 @@ extension AuthViewController : ContextMenuDelegate {
     func contextMenuDidDeselect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) {
         if index == 0 {
            // CM.closeAllViews()
-            contextMenu.closeAllViews()
+          //  contextMenu.closeAllViews()
             self.avtorizete()
 //            let request = ASAuthorizationAppleIDProvider().createRequest()
 //            request.requestedScopes = [.fullName, .email]

@@ -13,38 +13,20 @@ import Combine
 
 
 
-class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullControlDelegate{
+class CategoryVC: UIViewController, UISearchBarDelegate {
     
-    
-    func change(to index: Int) {
-        print("Index ==\(index)")
-        if index == 0 {
-            filtredBroadcast = listBroadcast
-            self.searchView.collectionView.reloadData()
-        }
-        if index == 1 {
-            filtredBroadcast = listBroadcast.filter { $0.isPopular }
-            self.searchView.collectionView.reloadData()
-        }
-        if index == 2 {
-            filtredBroadcast = listBroadcast.filter { $0.isNew }
-            self.searchView.collectionView.reloadData()
-        }
-        if index == 3 {
-            filtredBroadcast = listBroadcast.filter { ($0.isFollow ?? false) }
-            self.searchView.collectionView.reloadData()
-        }
-        if index == 4 {
-            filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
-        }
-    }
-    
+
     var isSearchBarEmpty: Bool {
         navigationItem.searchController = searchController
         return searchController.searchBar.text?.isEmpty ?? true
     }
+    
     @Inject var fitMeetStream: FitMeetStream
+    
     private var takeBroadcast: AnyCancellable?
+    private var takeCategory: AnyCancellable?
+    private var unCategory: AnyCancellable?
+    
     var listBroadcast: [Datum] = []
     var filtredBroadcast: [Datum] = []
     let searchView = CategoryCode()
@@ -79,14 +61,23 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         super.viewDidLoad()
         setupMainView()
         binding()
-        searchView.segmentControll.setButtonTitles(buttonTitles: ["All","Popular","New","Likes","Viewers"])
-        searchView.segmentControll.delegate = self
-//        title = "Category"
-//        self.navigationController?.navigationBar.prefersLargeTitles = true
-//        self.navigationController?.navigationItem.largeTitleDisplayMode = .always
-
+        actionButton()
 
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+       // searchView.scrollView.contentSize = CGSize(width: searchView.stackHFirst.frame.width, height: searchView.stackHFirst.frame.height)
+    }
+    
+    func actionButton() {
+        searchView.buttonAll.addTarget(self, action: #selector(actionAll), for: .touchUpInside)
+        searchView.buttonPopular.addTarget(self, action: #selector(actionPopular), for: .touchUpInside)
+        searchView.buttonNew.addTarget(self, action: #selector(actionNew), for: .touchUpInside)
+        searchView.buttonLikes.addTarget(self, action: #selector(actionLikes), for: .touchUpInside)
+        searchView.buttonViewers.addTarget(self, action: #selector(actionViewers), for: .touchUpInside)
+
+    }
+
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
@@ -112,9 +103,65 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
                                                                    target: self,
                                                                    action: #selector(rightHandAction))]
     }
-    @objc
-    func rightHandAction() {
+    @objc func rightHandAction() {
         print("right bar button action")
+    }
+    @objc func actionAll() {
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
+
+        filtredBroadcast = listBroadcast
+        self.searchView.collectionView.reloadData()
+    }
+    @objc func actionPopular() {
+        
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+        
+        
+        filtredBroadcast = listBroadcast.filter { $0.isPopular }
+        self.searchView.collectionView.reloadData()
+    }
+    @objc func actionNew() {
+        
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+        
+        filtredBroadcast = listBroadcast.filter { $0.isNew }
+        self.searchView.collectionView.reloadData()
+    }
+    @objc func actionLikes() {
+        
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+        
+        filtredBroadcast = listBroadcast.filter { $0.isFollow ?? false}
+        self.searchView.collectionView.reloadData()
+    }
+    @objc func actionViewers() {
+        
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#0099AE")
+      
+        filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
     }
 
     private func setupMainView() {
@@ -124,7 +171,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
     }
     func makeReguest(searchText: String) {
-        searchView.showSpinner()
+       // searchView.showSpinner()
     }
     func stopSpiners() {
         refreshControl.endRefreshing()
@@ -138,11 +185,26 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")
-       // makeReguest(searchText:viewModel.lastRequestName)
        }
+    @objc func editButtonTapped(_ sender: UIButton) -> Void {
+        if sender.currentImage == UIImage(named: "LikeNot") {
+            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+            guard let id = filtredBroadcast[sender.tag].id else { return }
+            followCategory(id: id)
+            binding()
+            self.searchView.collectionView.reloadData()
+        } else {
+            sender.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+            guard let id = filtredBroadcast[sender.tag].id else { return }
+            unFollowCategory(id: id)
+            binding()
+            self.searchView.collectionView.reloadData()
+        }
+        
+        }
     
     func binding() {
-        takeBroadcast = fitMeetStream.getBroadcastCategory(name: "a")
+        takeBroadcast = fitMeetStream.getCategoryPrivate()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
@@ -150,6 +212,28 @@ class CategoryVC: UIViewController, UISearchBarDelegate,CustomSegmentedFullContr
                     self.filtredBroadcast = response.data!
                     self.searchView.collectionView.reloadData()
                 }
+        })
+    }
+    func followCategory(id: Int) {
+        takeCategory = fitMeetStream.followCategory(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil {
+                    print("goodFolow")
+                   // self.searchView.collectionView.reloadData()
+                  
+            }
+        })
+    }
+    func unFollowCategory(id: Int) {
+        unCategory = fitMeetStream.unFollowCategory(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil {
+                    print("goodFolow")
+                   // self.searchView.collectionView.reloadData()
+                  
+            }
         })
     }
 }

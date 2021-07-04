@@ -11,26 +11,75 @@ import UIKit
 
 final class CategoryCode: UIView {
 
-   // MARK: - UI
-//    private let spinner: UIActivityIndicatorView = {
-//        let spinner = UIActivityIndicatorView(style: .large)
-//        spinner.color = UIColor.black
-//        spinner.translatesAutoresizingMaskIntoConstraints = false
-//        spinner.hidesWhenStopped = true
-//        return spinner
-//    }()
     let cardView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-            return view
+        return view
         }()
+    let scrollView: UIScrollView = {
+        var scroll = UIScrollView()
+        scroll.contentSize.height = 26
+        scroll.contentSize.width = 400
+        return scroll
+        }()
+        
+    var stackHFirst: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.distribution = .equalSpacing
+        stack.axis = .horizontal
+        stack.spacing = 16
+        return stack
+        }()
+
+    var buttonAll: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle("All", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.layer.cornerRadius = 13
+        button.anchor(width: 64,height: 26)
+        
+        return button
+    }()
+    var buttonPopular: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle("Popular", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.layer.cornerRadius = 13
+        button.anchor(width: 64,height: 26)
+        return button
+    }()
+    var buttonNew: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle("New", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.layer.cornerRadius = 13
+        button.anchor(width: 64,height: 26)
+        return button
+    }()
+    var buttonLikes: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle("Likes", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.layer.cornerRadius = 13
+        button.anchor(width: 64,height: 26)
+        return button
+    }()
+    var buttonViewers: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle("Viewers", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.layer.cornerRadius = 13
+        button.anchor(width: 64,height: 26)
+        return button
+    }()
     
-    var segmentControll: SegmentCustomFull = {
-            let segment = SegmentCustomFull()
-            return segment
-        }()
     
     lazy var collectionView: UICollectionView = {
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -43,15 +92,15 @@ final class CategoryCode: UIView {
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
         return collectionView
     }()
-    
+    let table: UIView = {
+       let table = UIView()
+       return table
+   }()
     
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
-        
-      //  initUI()
         initLayout()
-      //  setupGrid()
     }
     
     required init?(coder: NSCoder) {
@@ -61,56 +110,54 @@ final class CategoryCode: UIView {
     private func initUI() {
         backgroundColor = .white
         
-      //  addSubview(spinner)
-        
-        
         
     }
     
     private func initLayout() {
-        //collectionView.fillSuperview()
         addSubview(cardView)
-      //  cardView.fillFull(for: self)
         cardView.fillSuperview()
-        cardView.addSubview(segmentControll)
         
-        segmentControll.anchor(top: cardView.topAnchor,
-                               left: cardView.leftAnchor,
-                               paddingTop: 5, paddingLeft: 5, height: 30)
+        stackHFirst = UIStackView(arrangedSubviews: [buttonAll,buttonPopular,buttonNew,buttonLikes,buttonViewers])
+        stackHFirst.axis = .horizontal
+        stackHFirst.distribution = .equalSpacing
+        stackHFirst.spacing = 8
+
+//        cardView.addSubview(table)
+//        table.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 400, height: 26)
         
+//        table.addSubview(scrollView)
+//        scrollView.anchor(top: table.topAnchor, left: table.leftAnchor, right: table.rightAnchor, bottom: table.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+//        scrollView.addSubview(stackHFirst)
+//        stackHFirst.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor,right: scrollView.rightAnchor,bottom: scrollView.bottomAnchor, paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0)
+        
+
+          
+        cardView.addSubview(buttonAll)
+        buttonAll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+
+        cardView.addSubview(buttonPopular)
+        buttonPopular.anchor(top: cardView.topAnchor, left: buttonAll.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+
+        cardView.addSubview(buttonNew)
+        buttonNew.anchor(top: cardView.topAnchor, left: buttonPopular.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+
+        cardView.addSubview(buttonLikes)
+        buttonLikes.anchor(top: cardView.topAnchor, left: buttonNew.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+
+        cardView.addSubview(buttonViewers)
+        buttonViewers.anchor(top: cardView.topAnchor, left: buttonLikes.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+
+                
         cardView.addSubview(collectionView)
 
-        collectionView.anchor(top: segmentControll.bottomAnchor,
+        collectionView.anchor(top: buttonAll.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               bottom: cardView.bottomAnchor,
-                              paddingTop: 15, paddingLeft: 15, paddingRight: 15, paddingBottom: 0)
-        
-        
-//        NSLayoutConstraint.activate([
-//            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
-//        ])
-    }
-    
-    //MARK: - Methods
-    func showSpinner() {
-      //  spinner.startAnimating()
+                              paddingTop: 10, paddingLeft: 15, paddingRight: 15, paddingBottom: 0)
+
     }
 
-    private func hideSpinner() {
-       // spinner.stopAnimating()
-    }
     
-//    func hideSpinner(withDelay delay: TimeInterval) {
-//        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [unowned self] in
-//            self.hideSpinner()
-//        }
-//    }
-//    private func setupGrid() {
-//        NotificationCenter.default.addObserver(forName: Notification.Name.AlbumNotification, object: nil, queue: .main) { note in
-//            guard let userInfo = note.userInfo as? [String:ViewModel] else { return }
-//            self.viewModel = userInfo["ViewModel"]!
-//        }
-//    }
 }

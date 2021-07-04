@@ -20,7 +20,7 @@ open class DropDown : UITextField{
 
     @IBInspectable public var rowHeight: CGFloat = 30
     @IBInspectable public var rowBackgroundColor: UIColor = .white
-    @IBInspectable public var selectedRowColor: UIColor = .lightGray
+    @IBInspectable public var selectedRowColor: UIColor = .cyan
     @IBInspectable public var hideOptionsWhenSelect = true
     @IBInspectable  public var isSearchEnable: Bool = true {
         didSet{
@@ -130,7 +130,7 @@ open class DropDown : UITextField{
 
     func setupUI () {
         let size = self.frame.height
-        let rightView = UIView(frame: CGRect(x: -15.0, y: 0.0, width: size, height: size))
+        let rightView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: size, height: size))
         self.rightView = rightView
         self.rightViewMode = .always
         let arrowContainerView = UIView(frame: rightView.frame)
@@ -501,7 +501,7 @@ class Arrow: UIView {
         bezierPath.move(to: CGPoint(x: 0, y: qSize))
         bezierPath.addLine(to: CGPoint(x: size, y: qSize))
         bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))
-      //  bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
+        bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
         bezierPath.close()
 
         // Mask to path

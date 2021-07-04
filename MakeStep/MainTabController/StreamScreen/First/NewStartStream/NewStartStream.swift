@@ -80,7 +80,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.layoutIfNeeded()
         authView.textFieldName.text = ""
         authView.textFieldStartDate.text = ""
-        //authView.textFieldFree.text = ""
+        authView.textFieldFree.text = ""
         authView.textFieldAviable.text = ""
         authView.textFieldDescription.text = ""
         authView.textFieldCategory.text = ""

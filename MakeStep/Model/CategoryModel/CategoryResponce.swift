@@ -35,7 +35,4 @@ enum Deleted: String, Codable ,Hashable{
     case notDeleted = "NOT_DELETED"
 }
 
-// MARK: - Meta
-//struct Meta: Codable,Hashable {
-//    let page, take, itemCount, pageCount: Int?
-//}
+

@@ -12,15 +12,14 @@ import SocketIO
 class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
-    
-    //var socket: SocketIOClient = SocketIOClient(manager: <#T##SocketManagerSpec#>, nsp: <#T##String#>)
-    
+        
     let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!)
-  //  let defaultNamespaceSocket = manager.defaultSocket
-   // let swiftSocket = manager.socket(forNamespace: "/swift")
+    
+   // lazy var defaultNamespaceSocket = manager.defaultSocket
+   // lazy var swiftSocket = manager.socket(forNamespace: "/swift")
     
     
-    lazy var socket: SocketIOClient = SocketIOClient(manager: manager, nsp: "swift")
+    lazy var socket: SocketIOClient = SocketIOClient(manager: manager, nsp: "/swift" )
     
     override init() {
         super.init()

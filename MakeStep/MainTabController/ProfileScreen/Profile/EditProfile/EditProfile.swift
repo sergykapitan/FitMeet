@@ -42,6 +42,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         profileView.textEmail.delegate = self
         profileView.textPhoneNumber.delegate = self
         
+        profileView.textGender.isSearchEnable = false        
         profileView.textGender.optionArray = ["MALE", "FEMALE"]
         
         bindingUser()
@@ -49,16 +50,14 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
         
     }
-//    override func setupContainer(_ container: UIView) {
-//        //view = profileView
-//        // add views here
-//    }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setUserProfile()
         self.navigationController?.navigationBar.isHidden = false
         profileView.alertLabel.isHidden = true
         profileView.alertImage.isHidden = true
+        profileView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)

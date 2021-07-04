@@ -32,6 +32,7 @@ struct BroadcastResponce:Codable {
     let iframeUrl: String?
     let isPopular: Bool?
     let description: String?
+    let followersCount: Int?
   
 }
 
@@ -45,6 +46,8 @@ struct Category: Codable{
     let previewPath: String?
     let rate: Int?
     let isNew, isPopular: Bool?
+    let isFollow: Bool?
+   
 }
 struct Stream: Codable {
     let createdAt: String?

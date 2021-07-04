@@ -97,7 +97,7 @@ public struct ContextMenuConstants {
     public var LabelDefaultColor : UIColor = UIColor.black.withAlphaComponent(0.95)
     public var ItemDefaultColor : UIColor = UIColor.white.withAlphaComponent(0.95)
     
-    public var MenuCornerRadius : CGFloat = 15
+    public var MenuCornerRadius : CGFloat = 12
     public var BlurEffectEnabled : Bool = true
     public var BlurEffectDefault : UIBlurEffect = UIBlurEffect(style: .dark)
     public var BackgroundViewColor : UIColor = UIColor.black.withAlphaComponent(0.6)
@@ -205,7 +205,7 @@ open class ContextMenu: NSObject {
             self.delegate = delegate
             self.viewTargeted = viewTargeted
             if !self.items.isEmpty {
-                self.menuHeight = (CGFloat(self.items.count) * self.MenuConstants.ItemDefaultHeight) + (self.headerView?.frame.height ?? 0) + (self.footerView?.frame.height ?? 0)  + CGFloat(self.items.count - 1)
+                self.menuHeight = (CGFloat(self.items.count) * self.MenuConstants.ItemDefaultHeight) + (self.headerView?.frame.height ?? 0) + (self.footerView?.frame.height ?? 0) // + CGFloat(self.items.count - 1)
             }else{
                 self.menuHeight = self.MenuConstants.MenuDefaultHeight
             }
@@ -337,17 +337,14 @@ open class ContextMenu: NSObject {
         menuView.backgroundColor = MenuConstants.ItemDefaultColor
         menuView.layer.cornerRadius = MenuConstants.MenuCornerRadius
         menuView.clipsToBounds = true
-       
-        //
-        menuView.frame = CGRect(x: rect.x ,
+        menuView.frame = CGRect(x: rect.x,
                                 y: rect.y,
-                                width: self.viewTargeted.frame.width , height: self.viewTargeted.frame.height)
+                                width: self.viewTargeted.frame.width, height: self.viewTargeted.frame.height)
         menuView.addSubview(tableView)
         
         tableView.dataSource = self
         tableView.delegate = self
         tableView.frame = menuView.bounds
-        
         tableView.register(self.nibView, forCellReuseIdentifier: "ContextMenuCell")
         tableView.tableHeaderView = self.headerView
         tableView.tableFooterView = self.footerView
@@ -453,7 +450,7 @@ open class ContextMenu: NSObject {
         menuView.alpha = 0
         menuView.isUserInteractionEnabled = true
         //        menuView.transform = CGAffineTransform.identity.scaledBy(x: 0, y: 0)
-        menuView.frame = CGRect(x: rect.x, y: rect.y, width: self.viewTargeted.frame.width , height: self.viewTargeted.frame.height)
+        menuView.frame = CGRect(x: rect.x, y: rect.y, width: self.viewTargeted.frame.width, height: self.viewTargeted.frame.height)
         
         if animated {
             UIView.animate(withDuration: 0.2) {
@@ -470,16 +467,16 @@ open class ContextMenu: NSObject {
         self.delegate?.contextMenuDidAppear(self)
     }
     
-    open func closeAllViews(){
+    func closeAllViews(){
         NotificationCenter.default.removeObserver(self, name: UIDevice.orientationDidChangeNotification, object: nil)
         DispatchQueue.main.async {
-                        UIView.animate(withDuration: 0.2, animations: {
-                            self.blurEffectView.alpha = 0
-                            self.targetedImageView.layer.shadowOpacity = 0
-                        }) { (_) in
-                            self.viewTargeted.alpha = 1
-                            self.customView.removeFromSuperview()
-                        }
+            //            UIView.animate(withDuration: 0.2, animations: {
+            //                self.blurEffectView.alpha = 0
+            //                self.targetedImageView.layer.shadowOpacity = 0
+            //            }) { (_) in
+            //                self.viewTargeted.alpha = 1
+            //                self.customView.removeFromSuperview()
+            //            }
             self.targetedImageView.isUserInteractionEnabled = false
             self.menuView.isUserInteractionEnabled = false
             self.closeButton.isUserInteractionEnabled = false
@@ -755,7 +752,6 @@ open class ContextMenu: NSObject {
         tvX = targetedImagePosition.origin.x
         mH = menuHeight
         mW = MenuConstants.MenuWidth
-       // mW = self.viewTargeted.frame.width - 5
         mY = tvY + MenuConstants.MenuMarginSpace
         mX = MenuConstants.HorizontalMarginSpace
         
@@ -813,7 +809,6 @@ open class ContextMenu: NSObject {
         //            self.menuView.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1) //.translatedBy(x: 0, y: 0)
         weakSelf.menuView.frame = CGRect(
             x: weakSelf.mX,
-           // x: self.viewTargeted.center.x,
             y: weakSelf.mY,
             width: weakSelf.mW,
             height: weakSelf.mH

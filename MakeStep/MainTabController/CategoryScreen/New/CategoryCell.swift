@@ -43,9 +43,10 @@ final class CategoryCell: UICollectionViewCell {
         view.backgroundColor = UIColor(hexString: "#0099AE")
         return view
     }()
-    private let buttonLike : UIButton = {
+   let buttonLike : UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+    button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+  //  button.setImage(#imageLiteral(resourceName: "Like"), for: .selected)
         return button
     }()
     private let spinner: UIActivityIndicatorView = {
@@ -97,7 +98,7 @@ final class CategoryCell: UICollectionViewCell {
                           paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         artistNameLabel.anchor(top: bottomView.topAnchor,
                                left: bottomView.leftAnchor,
-                               right: bottomView.rightAnchor,
+                               right: buttonLike.leftAnchor,
                                paddingTop: 8,paddingLeft: 5,paddingRight: 5 )
         buttonLike.anchor(top: bottomView.topAnchor,
                           right: bottomView.rightAnchor,

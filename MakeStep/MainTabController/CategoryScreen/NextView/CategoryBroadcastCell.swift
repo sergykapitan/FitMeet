@@ -16,7 +16,7 @@ class CategoryBroadcastCell: UITableViewCell {
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
+       
             return view
         }()
     var backgroundImage: UIImageView = {
@@ -83,8 +83,8 @@ class CategoryBroadcastCell: UITableViewCell {
 
     func initialize() {
         addSubview(cardView)
-       // cardView.fillSuperview()
-        cardView.fillFull(for: self)
+        cardView.fillSuperview()
+       // cardView.fillFull(for: self)
         cardView.addSubview(backgroundImage)
         backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height:208)
         cardView.addSubview(logoUserImage)

@@ -18,10 +18,23 @@ extension CategoryVC: UICollectionViewDataSource {
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+ 
+        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as? CategoryCell else { return CategoryCell()}
         let newUrl = URL(string:filtredBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_eee66711-a824-415f-a64e-3e0857e37956.jpeg")
         guard let url = newUrl,
               let title = filtredBroadcast[indexPath.row].title else { return cell }
+        
+        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+        cell.buttonLike.tag = indexPath.row
+        cell.buttonLike.isUserInteractionEnabled = true
+        
+        if filtredBroadcast[indexPath.row].isFollow ?? false {
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        } else {
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+        }
+    
         cell.contentView.layer.cornerRadius = 8
         cell.contentView.layer.borderWidth = 1.0
         cell.contentView.layer.borderColor = UIColor.clear.cgColor
@@ -36,8 +49,7 @@ extension CategoryVC: UICollectionViewDataSource {
 extension CategoryVC: UICollectionViewDelegate {
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-
-        print(filtredBroadcast[indexPath.row].id)
+        
         let detailVC = CategoryBroadcast()
         detailVC.categoryid = filtredBroadcast[indexPath.row].id
         detailVC.categoryTitle = filtredBroadcast[indexPath.row].title
@@ -50,9 +62,15 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
+        
+        let width = (self.view.frame.size.width - 12 * 4) / 2 //some width
+        let height = width * 1.4 //ratio
+        
+        //collectionView.bounds.width * 0.45
+        //UIScreen.main.bounds.width * 0.55
       
-      return CGSize(width: collectionView.bounds.width * 0.45,
-                    height: UIScreen.main.bounds.width * 0.55)
+      return CGSize(width: width,
+                    height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView,

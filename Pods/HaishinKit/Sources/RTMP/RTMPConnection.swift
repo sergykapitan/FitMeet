@@ -123,7 +123,6 @@ open class RTMPConnection: EventDispatcher {
     }
 
     private static func createSanJoseAuthCommand(_ url: URL, description: String) -> String {
-        print("url =====\(url)")
         var command: String = url.absoluteString
 
         guard let index: String.Index = description.firstIndex(of: "?") else {
@@ -287,7 +286,6 @@ open class RTMPConnection: EventDispatcher {
         self.uri = uri
         self.arguments = arguments
         timer = Timer(timeInterval: 1.0, target: self, selector: #selector(on(timer:)), userInfo: nil, repeats: true)
-        print(scheme)
         switch scheme {
         case "rtmpt", "rtmpts":
             socket = socket is RTMPTSocket ? socket : RTMPTSocket()
@@ -301,10 +299,7 @@ open class RTMPConnection: EventDispatcher {
         socket.delegate = self
         socket.setProperty(parameters, forKey: "parameters")
         socket.securityLevel = uri.scheme == "rtmps" || uri.scheme == "rtmpts"  ? .negotiatedSSL : .none
-        socket.connect(withName: uri.host!, port:  RTMPConnection.defaultPort)
-       // print(uri.host)
-        //uri.port ??
-       // socket.connect(withName: "rtmp://vp-push-ix1.gvideo.co/in/67674?10e42ad17cff46bfa0118f5043180884", port: RTMPConnection.defaultPort)
+        socket.connect(withName: uri.host!, port: uri.port ?? RTMPConnection.defaultPort)
     }
 
     /**
@@ -351,9 +346,8 @@ open class RTMPConnection: EventDispatcher {
             let code: String = data["code"] as? String else {
             return
         }
-        print("SSSSSS+++++++\(code)")
+
         switch Code(rawValue: code) {
-       
         case .some(.connectSuccess):
             connected = true
             socket.chunkSizeS = chunkSize
@@ -404,12 +398,9 @@ open class RTMPConnection: EventDispatcher {
         guard let uri: URL = uri else {
             return nil
         }
-        print("URI === \(uri)")
-      //  var app = String(uri.path[uri.path.index(uri.path.startIndex,offsetBy: 0)...])
+
         var app = String(uri.path[uri.path.index(uri.path.startIndex, offsetBy: 1)...])
-     //   var app = "vp-push-ix1.gvideo.co"
         if let query: String = uri.query {
-            print("app === \(app)    ======== qwery ===\(query)")
             app += "?" + query
         }
 
@@ -422,7 +413,7 @@ open class RTMPConnection: EventDispatcher {
             objectEncoding: .amf0,
             commandName: "connect",
             commandObject: [
-               // "app": app,
+                "app": app,
                 "flashVer": flashVer,
                 "swfUrl": swfUrl,
                 "tcUrl": uri.absoluteWithoutAuthenticationString,
@@ -436,7 +427,7 @@ open class RTMPConnection: EventDispatcher {
             ],
             arguments: arguments
         )
-        print("message = \(message)")
+
         return RTMPChunk(message: message)
     }
 
