@@ -32,7 +32,7 @@ final class NewStartStreamCode: UIView {
     }()
     let imageButton: UIButton = {
         let image = UIButton()
-        image.setImage(#imageLiteral(resourceName: "Vector1"), for: .normal)
+        image.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         return image
     }()
 
@@ -157,17 +157,21 @@ final class NewStartStreamCode: UIView {
         
 
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
-        cardView.addSubview(imageBackground)
+        scroll.addSubview(imageButton)
         
-        imageBackground.anchor(top: cardView.topAnchor,
+        imageButton.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
                                right: cardView.rightAnchor,
-                               paddingTop: 20,paddingLeft: 20, paddingRight: 20)
-        imageBackground.centerX(inView: cardView)
+                               paddingTop: 20,paddingLeft: 20, paddingRight: 20,width: 300,height: 100)
+        imageButton.centerX(inView: cardView)
+        
+       // cardView.addSubview(imageButton)
+       // imageButton.centerX(inView: imageBackground)
+       // imageButton.centerY(inView: imageBackground)
         
        
         scroll.addSubview(textFieldName)
-        textFieldName.anchor(top: imageBackground.bottomAnchor,
+        textFieldName.anchor(top: imageButton.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

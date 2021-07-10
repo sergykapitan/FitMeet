@@ -31,6 +31,8 @@
 	<string>Allowing access to the camera lets you view and record.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Allowing access to the microphone lets you hear and record sounds.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Used to access the Image Gallery</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

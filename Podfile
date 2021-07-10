@@ -16,7 +16,7 @@ target 'MakeStep' do
   pod 'iOSDropDown'
   pod 'HHCustomCorner'
   pod 'TimelineTableViewCell'
-  pod 'Socket.IO-Client-Swift', '~> 15.2.0'
+  pod 'Socket.IO-Client-Swift', '~> 16.0.1'
    
 
   # Pods for FitMeet

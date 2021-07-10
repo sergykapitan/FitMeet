@@ -23,15 +23,14 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             
         }
     }
-    
-    
+
   
     let homeView = HomeVCCode()
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
-   // let viewModel = ViewModel()
+    var  playerContainerView: PlayerContainerView?
 
     
     

@@ -7,43 +7,101 @@
 
 import Foundation
 import SocketIO
-
+import Combine
 
 class SocketIOManager: NSObject {
     
+  
+    @Inject var fitMeetApi: FitMeetApi
+    private var takeTokenChat: AnyCancellable?
+    
     static let sharedInstance = SocketIOManager()
+    var query = ["broadcastId": 29, "channelId": 29]
+   // var token: String?
+    
+   // var auth  = ["token" : token ]\(token)
+    let path = ""
+    let token = UserDefaults.standard.string(forKey: "tokenChat")
         
-    let manager = SocketManager(socketURL: URL(string:"http://localhost:8080/")!)
+    var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [.log(true),                                                                                           .compress,
+                                                                                        .forceNew(true),
+                                                                                       // .forcePolling(true),
+                                                                                        .reconnects(true),
+                                                                                        .forceWebsockets(true),
+                                                                                        .reconnectAttempts(3),
+                                                                                        .reconnectWait(3),
+                                                                                        .connectParams(["broadcastId": 264, "channelId": 9,"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUyMiwidXNlcklkIjoyOSwic2VydmljZU5hbWUiOiJBVVRIX0FQUCIsImlhdCI6MTYyNTU3MjQ1MSwiZXhwIjoxNjI3MTk4MDgzODI5fQ.yJrRKGzSdApRHLEvMDvg1863KVZrhHOxTJKN9ItSSSw","path":"/api/v0/chatSocket"])
+                                                                                        
+    ])
+    lazy var socket = manager.defaultSocket
     
-   // lazy var defaultNamespaceSocket = manager.defaultSocket
-   // lazy var swiftSocket = manager.socket(forNamespace: "/swift")
-    
-    
-    lazy var socket: SocketIOClient = SocketIOClient(manager: manager, nsp: "/swift" )
     
     override init() {
         super.init()
     }
     
     func establishConnection() {
-        socket.connect()
+        let token = UserDefaults.standard.string(forKey: "tokenChat")
+        
+        self.manager.config = SocketIOClientConfiguration(
+               arrayLiteral: .connectParams(["token": token!]), .secure(true)
+               )
+               socket.connect()
+      //  socket.connect()
+ 
+
     }
-    
-    
+        
     func closeConnection() {
         socket.disconnect()
     }
     
+    func saveToken(tokenChat: String) {
+        UserDefaults.standard.set(tokenChat, forKey: "tokenChat")
+    }
+    func getTokenChat() {
+        takeTokenChat = fitMeetApi.getTokenChat()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                guard let token = response.token else { return }
+                self.saveToken(tokenChat: token)
+              
+                   
+        })
+    }
+    
     func connectToServerWithNickname(nickname: String,  completionHandler: @escaping (_ userList: [[String: Any]]?) -> Void) {
+        let token = UserDefaults.standard.string(forKey: "tokenChat")
         
-        socket.emit("connectUser", nickname)
+//        self.manager.config = SocketIOClientConfiguration(
+//            arrayLiteral: .connectParams(), .secure(true)
+//               )
+//               socket.connect()
+//               socket.on(clientEvent: .connect) {data, ack in
+//               print("socket connected")
+//               self.gotConnection()
+//              }
+        
+        socket.emit("editRole", nickname)
+        socket.emit("message", nickname)
+        socket.emit("help", nickname)
        
-        socket.on("userList") { ( dataArray, ack) -> Void in
+        socket.on("message") { ( dataArray, ack) -> Void in
+            print("DATAARRAY ===== \(dataArray)")
+            
             completionHandler(dataArray[0] as? [[String: Any]])
         }
         
         listenForOtherMessages()
     }
+    func gotConnection(){
+
+     socket.on("new message here") { (dataArray, ack) in
+
+        print(dataArray.count)
+
+         }
+       }
     
     func exitChatWithNickname(nickname: String, completionHandler: () -> Void) {
         socket.emit("exitUser", nickname)

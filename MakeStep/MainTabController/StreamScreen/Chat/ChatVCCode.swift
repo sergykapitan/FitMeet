@@ -2,11 +2,11 @@
 //  ChatVCCode.swift
 //  MakeStep
 //
-//  Created by novotorica on 02.07.2021.
+//  Created by novotorica on 08.07.2021.
 //
 
-import Foundation
 import UIKit
+import Kingfisher
 
 final class ChatVCCode: UIView {
 
@@ -14,10 +14,12 @@ final class ChatVCCode: UIView {
     
     let cardView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-            return view
+        view.layer.cornerRadius = 8
+        view.layer.borderWidth = 0.8
+        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+        return view
         }()
     var tableView: UITableView = {
         let table = UITableView()
@@ -25,9 +27,26 @@ final class ChatVCCode: UIView {
     }()
     var buttonChat: UIButton = {
         let button = UIButton()
-        button.setTitle("JOIN", for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Back1-2"), for: .normal)
+       // button.backgroundColor = .blue
         return button
     }()
+    var textView: UITextView = {
+        let text = UITextView()
+        text.layer.cornerRadius = 20
+        text.layer.borderWidth = 1
+        text.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        text.backgroundColor = .clear
+        text.textColor = .white
+        text.font = UIFont.systemFont(ofSize: 25)
+        return text
+    }()
+    var sendMessage: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "send1"), for: .normal)
+        return button
+    }()
+   
 
     //MARK: - initial
     
@@ -42,16 +61,24 @@ final class ChatVCCode: UIView {
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillSuperview()
- 
+
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(bottom: cardView.bottomAnchor,paddingBottom: 10)
+        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 12,height: 12)
         buttonChat.centerX(inView: cardView)
         
+        cardView.addSubview(textView)
+        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 0, height: 40)
+        
+        cardView.addSubview(sendMessage)
+        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 25 ,height: 25)
+        sendMessage.centerY(inView: textView)
+        
         cardView.addSubview(tableView)
-        tableView.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: buttonChat.topAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 10)
+        tableView.anchor(top: buttonChat.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 10)
  
         
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

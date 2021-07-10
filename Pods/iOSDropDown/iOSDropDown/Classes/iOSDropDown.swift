@@ -20,7 +20,7 @@ open class DropDown : UITextField{
 
     @IBInspectable public var rowHeight: CGFloat = 30
     @IBInspectable public var rowBackgroundColor: UIColor = .white
-    @IBInspectable public var selectedRowColor: UIColor = .cyan
+    @IBInspectable public var selectedRowColor: UIColor = .lightGray
     @IBInspectable public var hideOptionsWhenSelect = true
     @IBInspectable  public var isSearchEnable: Bool = true {
         didSet{
@@ -136,7 +136,7 @@ open class DropDown : UITextField{
         let arrowContainerView = UIView(frame: rightView.frame)
         self.rightView?.addSubview(arrowContainerView)
         let center = arrowContainerView.center
-        arrow = Arrow(origin: CGPoint(x: center.x - arrowSize/2,y: center.y - arrowSize/2),size: arrowSize  )
+        arrow = Arrow(origin: CGPoint(x: center.x - arrowSize/2 - 20,y: center.y - arrowSize/2),size: arrowSize  )
         arrowContainerView.addSubview(arrow)
 
         self.backgroundView = UIView(frame: .zero)

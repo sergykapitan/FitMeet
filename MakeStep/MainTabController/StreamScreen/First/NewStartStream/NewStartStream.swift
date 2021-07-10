@@ -117,23 +117,11 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldAviable.optionArray = ["Subscribers", "Only Sponsors"]
         authView.textFieldFree.optionArray = ["Free", "Not Free"]
         
-        
-        
-        
-        
-      //  authView.textFieldFree.optionIds = [1,23,54,22]
-        
-        
-        
 
         actionButtonContinue()
-        
-//        authView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
+
         authView.buttonContinue.isUserInteractionEnabled = false
-        
-//        authView.buttonOK.backgroundColor = UIColor(hexString: "0099AE")
-//        authView.buttonOK.isUserInteractionEnabled = true
-        
+ 
   
     }
     @objc func scrollViewTapped() {
@@ -143,12 +131,20 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+        authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
       print("create broadcast")
         guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text else { return }
         self.nextView(chanellId: chanelId, name: name, description: description)
         print("Date = \(date)")
+    }
+    @objc func actionUploadImage() {
+        print("Upload Image")
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self;
+        myPickerController.sourceType =  UIImagePickerController.SourceType.photoLibrary
+        self.present(myPickerController, animated: true, completion: nil)
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -253,10 +249,9 @@ extension NewStartStream: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-        
-        let string = "formate"
-        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+
         if textField == authView.textFieldName {
+            
         if fullString == "" {
             authView.buttonOK.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
             authView.buttonOK.isUserInteractionEnabled = false
@@ -265,7 +260,7 @@ extension NewStartStream: UITextFieldDelegate {
             authView.buttonOK.isUserInteractionEnabled = true
           }
         }
-        return false
+        return true
     }
     
     func NewStartStream(_ textField: UITextField) -> Bool {
@@ -304,3 +299,17 @@ extension NewStartStream: UITextFieldDelegate {
 }
 
 
+extension NewStartStream: UIImagePickerControllerDelegate,UINavigationControllerDelegate
+{
+   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+    {
+        let image_data = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
+    //let i = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
+        self.authView.imageButton.setImage(image_data, for: .normal)
+        guard let image = image_data else { return }
+        let imageData:Data = image.pngData()!
+        
+        let imageStr = imageData.base64EncodedString()
+        self.dismiss(animated: true, completion: nil)
+    }
+}

@@ -19,8 +19,8 @@
 		B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
 		B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB73268E1BE9007096AB /* SocketIOManager.swift */; };
 		B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB77268F4A1E007096AB /* MakeStepChat.swift */; };
-		B41DCB7C268F4D8D007096AB /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7B268F4D8D007096AB /* ChatVC.swift */; };
-		B41DCB80268F4D9C007096AB /* ChatVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7F268F4D9C007096AB /* ChatVCCode.swift */; };
+		B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7B268F4D8D007096AB /* UserVC.swift */; };
+		B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7F268F4D9C007096AB /* UserVCCode.swift */; };
 		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
 		B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */; };
 		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
@@ -73,6 +73,22 @@
 		B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */; };
 		B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */; };
 		B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF3263D794E0033F78F /* EXDelegate.swift */; };
+		B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1114D269221C70006CA5A /* BaseCell.swift */; };
+		B4B11151269221EA0006CA5A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B11150269221EA0006CA5A /* UserCell.swift */; };
+		B4B111552692239A0006CA5A /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B111542692239A0006CA5A /* ChatCell.swift */; };
+		B4B1115B2692F8880006CA5A /* SlideInPresentationAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1115A2692F8880006CA5A /* SlideInPresentationAnimator.swift */; };
+		B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1115E2692F8AA0006CA5A /* SlideInPresentationController.swift */; };
+		B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */; };
+		B4B113A7269739090006CA5A /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113A6269739090006CA5A /* ChatVC.swift */; };
+		B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113A9269739180006CA5A /* ChatVCCode.swift */; };
+		B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */; };
+		B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113B72698561F0006CA5A /* PlayerContainerView.swift */; };
+		B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113BA269856290006CA5A /* CustomSlider.swift */; };
+		B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */; };
+		B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113C02698563C0006CA5A /* customActionSheet.xib */; };
+		B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C3269856460006CA5A /* CustomActionSheet.swift */; };
+		B4B113C8269868790006CA5A /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C7269868790006CA5A /* PresentVC.swift */; };
+		B4B113CB2698688C0006CA5A /* PresentVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113CA2698688C0006CA5A /* PresentVCCode.swift */; };
 		B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */; };
 		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
 		B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */; };
@@ -146,8 +162,8 @@
 		B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionHomeVC.swift; sourceTree = "<group>"; };
 		B41DCB73268E1BE9007096AB /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		B41DCB77268F4A1E007096AB /* MakeStepChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeStepChat.swift; sourceTree = "<group>"; };
-		B41DCB7B268F4D8D007096AB /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
-		B41DCB7F268F4D9C007096AB /* ChatVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCCode.swift; sourceTree = "<group>"; };
+		B41DCB7B268F4D8D007096AB /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
+		B41DCB7F268F4D9C007096AB /* UserVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVCCode.swift; sourceTree = "<group>"; };
 		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
 		B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcast.swift; sourceTree = "<group>"; };
 		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
@@ -200,6 +216,22 @@
 		B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDataSourse.swift; sourceTree = "<group>"; };
 		B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingViewCell.swift; sourceTree = "<group>"; };
 		B4AE7AF3263D794E0033F78F /* EXDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDelegate.swift; sourceTree = "<group>"; };
+		B4B1114D269221C70006CA5A /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		B4B11150269221EA0006CA5A /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		B4B111542692239A0006CA5A /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
+		B4B1115A2692F8880006CA5A /* SlideInPresentationAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationAnimator.swift; sourceTree = "<group>"; };
+		B4B1115E2692F8AA0006CA5A /* SlideInPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationController.swift; sourceTree = "<group>"; };
+		B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideInPresentationManager.swift; sourceTree = "<group>"; };
+		B4B113A6269739090006CA5A /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
+		B4B113A9269739180006CA5A /* ChatVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCCode.swift; sourceTree = "<group>"; };
+		B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoPlayerContainerNib.xib; sourceTree = "<group>"; };
+		B4B113B72698561F0006CA5A /* PlayerContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerContainerView.swift; sourceTree = "<group>"; };
+		B4B113BA269856290006CA5A /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
+		B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActionSheetContainer.swift; sourceTree = "<group>"; };
+		B4B113C02698563C0006CA5A /* customActionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = customActionSheet.xib; sourceTree = "<group>"; };
+		B4B113C3269856460006CA5A /* CustomActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
+		B4B113C7269868790006CA5A /* PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentVC.swift; sourceTree = "<group>"; };
+		B4B113CA2698688C0006CA5A /* PresentVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentVCCode.swift; sourceTree = "<group>"; };
 		B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamViewModel.swift; sourceTree = "<group>"; };
 		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
 		B4C4996C263ADB9600BFD1EE /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -332,8 +364,11 @@
 		B41DCB7A268F4D57007096AB /* Chat */ = {
 			isa = PBXGroup;
 			children = (
-				B41DCB7B268F4D8D007096AB /* ChatVC.swift */,
-				B41DCB7F268F4D9C007096AB /* ChatVCCode.swift */,
+				B41DCB7B268F4D8D007096AB /* UserVC.swift */,
+				B41DCB7F268F4D9C007096AB /* UserVCCode.swift */,
+				B4B113A6269739090006CA5A /* ChatVC.swift */,
+				B4B113A9269739180006CA5A /* ChatVCCode.swift */,
+				B4B11153269223850006CA5A /* Cell */,
 			);
 			path = Chat;
 			sourceTree = "<group>";
@@ -484,6 +519,41 @@
 			path = EXStreamingVC;
 			sourceTree = "<group>";
 		};
+		B4B11153269223850006CA5A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				B4B1114D269221C70006CA5A /* BaseCell.swift */,
+				B4B11150269221EA0006CA5A /* UserCell.swift */,
+				B4B111542692239A0006CA5A /* ChatCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		B4B111592692F8720006CA5A /* Presentashion */ = {
+			isa = PBXGroup;
+			children = (
+				B4B1115A2692F8880006CA5A /* SlideInPresentationAnimator.swift */,
+				B4B1115E2692F8AA0006CA5A /* SlideInPresentationController.swift */,
+				B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */,
+			);
+			path = Presentashion;
+			sourceTree = "<group>";
+		};
+		B4B113B3269855ED0006CA5A /* Suporting files */ = {
+			isa = PBXGroup;
+			children = (
+				B4B113C3269856460006CA5A /* CustomActionSheet.swift */,
+				B4B113C02698563C0006CA5A /* customActionSheet.xib */,
+				B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */,
+				B4B113BA269856290006CA5A /* CustomSlider.swift */,
+				B4B113B72698561F0006CA5A /* PlayerContainerView.swift */,
+				B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */,
+				B4B113C7269868790006CA5A /* PresentVC.swift */,
+				B4B113CA2698688C0006CA5A /* PresentVCCode.swift */,
+			);
+			path = "Suporting files";
+			sourceTree = "<group>";
+		};
 		B4C4996A263ADB6A00BFD1EE /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
@@ -576,6 +646,7 @@
 		B4D9D7412625C097007CFB71 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B4B111592692F8720006CA5A /* Presentashion */,
 				B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */,
 				B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */,
 				B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */,
@@ -741,6 +812,7 @@
 			isa = PBXGroup;
 			children = (
 				B41D069D2664C62700C28C29 /* SwiftUI */,
+				B4B113B3269855ED0006CA5A /* Suporting files */,
 				B41D069A2664C61B00C28C29 /* HomeVC.swift */,
 				B41D069F2664C65C00C28C29 /* HomeVCCode.swift */,
 				B41D06A22664C67600C28C29 /* HomeCell.swift */,
@@ -880,7 +952,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
+				B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */,
 				B4D9D72826257D8E007CFB71 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -951,15 +1025,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4B113A7269739090006CA5A /* ChatVC.swift in Sources */,
+				B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
 				B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */,
 				B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */,
 				B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */,
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
+				B4B1115B2692F8880006CA5A /* SlideInPresentationAnimator.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */,
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
+				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
@@ -968,6 +1046,7 @@
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
+				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
@@ -975,24 +1054,29 @@
 				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4C5A95D267C968C00010F88 /* DropDownCell.swift in Sources */,
-				B41DCB7C268F4D8D007096AB /* ChatVC.swift in Sources */,
+				B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
+				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
+				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
 				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */,
-				B41DCB80268F4D9C007096AB /* ChatVCCode.swift in Sources */,
+				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
+				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
+				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */,
+				B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */,
 				B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
@@ -1000,6 +1084,7 @@
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,
 				B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */,
 				B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */,
+				B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
@@ -1020,6 +1105,7 @@
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
 				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */,
+				B4B113CB2698688C0006CA5A /* PresentVCCode.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */,
 				B46CF83C267A5F4700EA0741 /* FirstVCCode.swift in Sources */,
@@ -1062,8 +1148,10 @@
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
+				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B46CF836267A504A00EA0741 /* ParView.swift in Sources */,
+				B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
 				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
@@ -1214,14 +1302,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1239,14 +1327,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.13;
+				MARKETING_VERSION = 1.0.14;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

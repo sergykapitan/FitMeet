@@ -41,14 +41,39 @@ extension HomeVC: UITableViewDelegate {
         let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         print("RESPONCE ====== \(listBroadcast[indexPath.row].streams?.first)")
         print("URRRRKKHHJGVHJGJGHLUG =======\(url)")
+        
+        
+        
+        
+        
         guard let Url = url else { return }
-        let videoURL = URL(string: Url)
-        let player = AVPlayer(url: videoURL!)
-        let playerViewController = AVPlayerViewController()
-        playerViewController.player = player
-        self.present(playerViewController, animated: true) {
-            playerViewController.player!.play()
-        }
+        let vc = PresentVC()
+        vc.modalPresentationStyle = .fullScreen
+        vc.Url = Url
+        self.present(vc, animated: true, completion: nil)
+        
+//        self.playerContainerView = Bundle.main.loadNibNamed("videoPlayerContainerNib", owner: self, options: nil)?.first as? PlayerContainerView
+//        self.playerContainerView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+//        self.view.addSubview(self.playerContainerView!)
+//        self.playerContainerView?.initializeView()
+//        self.playerContainerView?.link = Url
+//        self.playerContainerView?.minimizedOrigin = {
+//            let x = UIScreen.main.bounds.width/2
+//            let y = UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 9 / 32)
+//            let coordinate = CGPoint.init(x: x, y: y)
+//            return coordinate
+//        }()
+//        self.playerContainerView?.initializeView()
+    }
+        
+        
+//        let videoURL = URL(string: Url)
+//        let player = AVPlayer(url: videoURL!)
+//        let playerViewController = AVPlayerViewController()
+//        playerViewController.player = player
+//        self.present(playerViewController, animated: true) {
+//            playerViewController.player!.play()
+//        }
 
 //        let navVC = tabBarController?.viewControllers![0] as! UINavigationController
 //        let searchCollViewController = navVC.topViewController as! SearchCollectionViewController
@@ -69,4 +94,4 @@ extension HomeVC: UITableViewDelegate {
 //
 //       return swipeActions
 //   }
-}
+//}
