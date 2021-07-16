@@ -26,8 +26,7 @@ final class NotTkenViewCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
-    
-    
+        
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)

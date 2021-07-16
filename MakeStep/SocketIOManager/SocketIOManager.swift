@@ -16,24 +16,33 @@ class SocketIOManager: NSObject {
     private var takeTokenChat: AnyCancellable?
     
     static let sharedInstance = SocketIOManager()
-    var query = ["broadcastId": 29, "channelId": 29]
+  //  var query = ["broadcastId": 29, "channelId": 29]
    // var token: String?
     
    // var auth  = ["token" : token ]\(token)
     let path = ""
     let token = UserDefaults.standard.string(forKey: "tokenChat")
+    let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
+    let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+    
+   // guard let t = token else { return }
+    
         
-    var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [.log(true),                                                                                           .compress,
-                                                                                        .forceNew(true),
-                                                                                       // .forcePolling(true),
-                                                                                        .reconnects(true),
-                                                                                        .forceWebsockets(true),
-                                                                                        .reconnectAttempts(3),
-                                                                                        .reconnectWait(3),
-                                                                                        .connectParams(["broadcastId": 264, "channelId": 9,"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTUyMiwidXNlcklkIjoyOSwic2VydmljZU5hbWUiOiJBVVRIX0FQUCIsImlhdCI6MTYyNTU3MjQ1MSwiZXhwIjoxNjI3MTk4MDgzODI5fQ.yJrRKGzSdApRHLEvMDvg1863KVZrhHOxTJKN9ItSSSw","path":"/api/v0/chatSocket"])
+    lazy var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
+                                                                .log(true),
+                                                                .compress,
+                                                                .forceNew(true),
+                                                                .reconnects(true),
+                                                                .forceWebsockets(true),
+                                                                .reconnectAttempts(3),
+                                                                .reconnectWait(3),
+                                                                .path("/api/v0/chatSocket"),
+                                                                .reconnectWaitMax(10000),
+                                                                .connectParams(["broadcastId": broadcastId, "channelId": chanelId,"token": token])
                                                                                         
     ])
-    lazy var socket = manager.defaultSocket
+    lazy var socket = manager.socket(forNamespace: "/swift")
+
     
     
     override init() {
@@ -41,11 +50,25 @@ class SocketIOManager: NSObject {
     }
     
     func establishConnection() {
-        let token = UserDefaults.standard.string(forKey: "tokenChat")
         
-        self.manager.config = SocketIOClientConfiguration(
-               arrayLiteral: .connectParams(["token": token!]), .secure(true)
-               )
+        let token = UserDefaults.standard.string(forKey: "tokenChat")
+        let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
+        let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+        print("TOKEN +++++++++++++\(token)\n BROADCASTID +++++++++++\(broadcastId)\n ChanellID ===== \(chanelId)")
+        
+        guard let t = token,let b = broadcastId ,let chanel = chanelId else { return }
+        
+        
+        
+        print("TOKEN +++++++++++++\(t)\n BROADCASTID +++++++++++\(b)\n ChanellID ===== \(chanel)")
+        
+//        self.manager.config = SocketIOClientConfiguration(
+//               arrayLiteral:
+//        
+//               .connectParams(["broadcastId": b, "channelId": chanel,"token": t]),
+//               .path("/api/v0/chatSocket"),
+//               .secure(true)
+//               )
                socket.connect()
       //  socket.connect()
  
@@ -76,7 +99,7 @@ class SocketIOManager: NSObject {
 //        self.manager.config = SocketIOClientConfiguration(
 //            arrayLiteral: .connectParams(), .secure(true)
 //               )
-//               socket.connect()
+               socket.connect()
 //               socket.on(clientEvent: .connect) {data, ack in
 //               print("socket connected")
 //               self.gotConnection()

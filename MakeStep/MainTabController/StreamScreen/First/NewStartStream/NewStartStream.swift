@@ -136,6 +136,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func actionSignUp() {
       print("create broadcast")
         guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text else { return }
+        UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
+        
         self.nextView(chanellId: chanelId, name: name, description: description)
         print("Date = \(date)")
     }
@@ -203,7 +205,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     print("greate broadcast")
                     guard let usId = self.userId else { return }
                     self.broadcast = response
-                    print("Response Broadcast = \(response)")
+                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
                     self.fetchStream(id: self.broadcast?.id, name: name)
 
                 }

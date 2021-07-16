@@ -51,7 +51,11 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
                // self.scrollToBottom()
             }
         }
-
+        SocketIOManager.sharedInstance.establishConnection()
+            
+            
+            
+        
     
     }
     override func viewDidLoad() {
@@ -111,36 +115,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         }
     }
     
-    
-//    func askForNickname() {
-//        let alertController = UIAlertController(title: "SocketChat", message: "Please enter a nickname:", preferredStyle: UIAlertController.Style.alert)
-//
-//        alertController.addTextField(configurationHandler: nil)
-//
-//        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) -> Void in
-//            let textfield = alertController.textFields![0]
-//            if textfield.text?.count == 0 {
-//                self.askForNickname()
-//            }
-//            else {
-//                self.nickname = textfield.text ?? <#default value#>
-//
-//                SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: self.nickname, completionHandler: { (userList) -> Void in
-//                    DispatchQueue.main.async { () -> Void in
-//                        if userList != nil {
-//                            guard let usr = userList else { return }
-//                           // self.users = usr
-//                            self.chatView.tableView.reloadData()
-//                            self.chatView.tableView.isHidden = false
-//                        }
-//                    }
-//                })
-//            }
-//        }
-        
-//        alertController.addAction(OKAction)
-//        present(alertController, animated: true, completion: nil)
-//    }
+
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes

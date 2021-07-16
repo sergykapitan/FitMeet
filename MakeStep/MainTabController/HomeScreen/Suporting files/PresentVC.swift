@@ -9,12 +9,12 @@
 import Combine
 import UIKit
 
-class PresentVC: UIViewController, ClassBVCDelegate {
+class PresentVC: UIViewController {
     
-    func changeBackgroundColor() {
-        print("GoodStaf")
-
-    }
+//    func changeBackgroundColor() {
+//        print("GoodStaf")
+//
+//    }
     
 
     let homeView = PresentVCCode()
@@ -57,7 +57,7 @@ class PresentVC: UIViewController, ClassBVCDelegate {
         slideInTransitioningDelegate.disableCompactHeight = true
         chatVC.transitioningDelegate = slideInTransitioningDelegate
         chatVC.modalPresentationStyle = .custom
-        chatVC.delegate = self
+      //  chatVC.delegate = self
         self.present(chatVC, animated: true, completion: nil)
        // makeNavItem()
 

@@ -11,6 +11,7 @@ final class SlideInPresentationController: UIPresentationController {
   // MARK: - Properties
   private var dimmingView: UIView!
   private let direction: PresentationDirection
+  weak var delegaten: ClassBVCDelegate?
   
   override var frameOfPresentedViewInContainerView: CGRect {
     var frame: CGRect = .zero
@@ -103,6 +104,7 @@ private extension SlideInPresentationController {
   }
   
   @objc func handleTap(recognizer: UITapGestureRecognizer) {
-    presentingViewController.dismiss(animated: true)
+   // delegaten?.changeBackgroundColor()
+   // presentingViewController.dismiss(animated: true)
   }
 }
