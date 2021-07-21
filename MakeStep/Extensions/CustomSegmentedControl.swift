@@ -18,8 +18,8 @@ class CustomSegmentedControl: UIView {
     private var selectorView: UIView!
     
     var textColor:UIColor = .black
-    var selectorViewColor: UIColor = UIColor.init(hexString: "#0099AE")
-    var selectorTextColor: UIColor = UIColor.init(hexString: "#0099AE")
+    var selectorViewColor: UIColor = UIColor.init(hexString: "#3B58A4")
+    var selectorTextColor: UIColor = UIColor.init(hexString: "#3B58A4")
     
     weak var delegate:CustomSegmentedControlDelegate?
     

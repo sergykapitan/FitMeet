@@ -99,14 +99,13 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction)),
-                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction))]
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(rightHandAction))
+        startItem.tintColor = UIColor(hexString: "#7C7C7C")
+        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(rightHandAction))
+        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
+        
+        
+        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc
     func rightHandAction() {

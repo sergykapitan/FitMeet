@@ -148,7 +148,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
 
     }
     @objc func actionOnline() {
-        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#0099AE")
+        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         bindingChanell(status: "ONLINE")
@@ -156,7 +156,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
     }
     @objc func actionOffline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#0099AE")
+        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         bindingChanell(status: "OFFLINE")
        setUserProfile()
@@ -166,7 +166,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
     @objc func actionComming() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonComing.backgroundColor = UIColor(hexString: "#0099AE")
+        profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
         bindingChanell(status: "PLANNED")
         setUserProfile()
 
@@ -222,14 +222,13 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction)),
-                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction))]
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(rightHandAction))
+        startItem.tintColor = UIColor(hexString: "#7C7C7C")
+        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(rightHandAction))
+        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
+        
+        
+        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc
     func rightBack() {

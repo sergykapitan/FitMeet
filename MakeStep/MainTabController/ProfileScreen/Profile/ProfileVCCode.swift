@@ -45,7 +45,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageProfile:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "edit 1")
+        image.image =  #imageLiteral(resourceName: "edit 1-1")
         return image
         }()
     
@@ -66,7 +66,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageLogo:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "Group1")
+        image.image =  #imageLiteral(resourceName: "history 1")
         return image
         }()
     
@@ -83,7 +83,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageStudio:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "video 2")
+        image.image =  #imageLiteral(resourceName: "video 2-1")
         return image
         }()
     
@@ -101,7 +101,7 @@ final class ProfileVCCode: UIView {
     
     var imageChanell:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "youtube 1")
+        image.image =  #imageLiteral(resourceName: "youtube 1-1")
         return image
         }()
     
@@ -113,7 +113,7 @@ final class ProfileVCCode: UIView {
         return label
     }()
     var buttonChanell: UIButton = {
-        let button = UIButton()
+        let button = UIButton()   
         return button
     }()
     
@@ -121,7 +121,7 @@ final class ProfileVCCode: UIView {
     
     var imageWallet: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "credit-card1")
+        image.image =  #imageLiteral(resourceName: "wallet")
         return image
         }()
     
@@ -142,7 +142,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageSettinh: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "settings 1")
+        image.image =  #imageLiteral(resourceName: "settings 1-1")
         return image
         }()
     var labelSetting: UILabel = {
@@ -158,7 +158,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageLanguage: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "globe 1")
+        image.image =  #imageLiteral(resourceName: "globe 1-1")
         return image
         }()
     var labelLanguage: UILabel = {
@@ -179,7 +179,7 @@ final class ProfileVCCode: UIView {
     
     var imageHelp: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "help-circle 1")
+        image.image =  #imageLiteral(resourceName: "help-circle 1-1")
         return image
         }()
     var labelHelp: UILabel = {
@@ -199,7 +199,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageSignOut: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "log-out 1")
+        image.image =  #imageLiteral(resourceName: "log-out 1-1")
         return image
         }()
     var labelSignOut: UILabel = {

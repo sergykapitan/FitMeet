@@ -46,7 +46,7 @@ final class StartScreenCode: UIView {
     
     var imageLogo:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "Group1")
+        image.image =  #imageLiteral(resourceName: "history 1")
         return image
         }()
     
@@ -63,7 +63,7 @@ final class StartScreenCode: UIView {
     }()
     var imageWallet: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "credit-card1")
+        image.image =  #imageLiteral(resourceName: "wallet")
         return image
         }()
     
@@ -84,7 +84,7 @@ final class StartScreenCode: UIView {
     }()
     var imageSettinh: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "settings 1")
+        image.image =  #imageLiteral(resourceName: "settings 1-1")
         return image
         }()
     var labelSetting: UILabel = {
@@ -100,7 +100,7 @@ final class StartScreenCode: UIView {
     }()
     var imageLanguage: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "globe 1")
+        image.image =  #imageLiteral(resourceName: "globe 1-1")
         return image
         }()
     var labelLanguage: UILabel = {
@@ -121,7 +121,7 @@ final class StartScreenCode: UIView {
     
     var imageHelp: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "help-circle 1")
+        image.image =  #imageLiteral(resourceName: "help-circle 1-1")
         return image
         }()
     var labelHelp: UILabel = {
