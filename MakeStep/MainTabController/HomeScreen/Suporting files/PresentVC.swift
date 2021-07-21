@@ -9,13 +9,13 @@
 import Combine
 import UIKit
 
-class PresentVC: UIViewController {
+class PresentVC: UIViewController, ClassBDelegate {
     
-//    func changeBackgroundColor() {
-//        print("GoodStaf")
-//
-//    }
-    
+    func changeBackgroundColor() {
+        print("CLOSE PLAY")
+        self.dismiss(animated: true, completion: nil)
+    }
+ 
 
     let homeView = PresentVCCode()
     @Inject var fitMeetStream: FitMeetStream
@@ -45,20 +45,22 @@ class PresentVC: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
      //   homeView.tableView.reloadData()
+        print("URL ============================================== \(Url)")
+        loadPlayer()
     
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         navigationItem.largeTitleDisplayMode = .always
-        loadPlayer()
-        let chatVC = ChatVC()
-        slideInTransitioningDelegate.direction = .bottom
-        slideInTransitioningDelegate.disableCompactHeight = true
-        chatVC.transitioningDelegate = slideInTransitioningDelegate
-        chatVC.modalPresentationStyle = .custom
-      //  chatVC.delegate = self
-        self.present(chatVC, animated: true, completion: nil)
+//        loadPlayer()
+//        let chatVC = ChatVC()
+//        slideInTransitioningDelegate.direction = .bottom
+//        slideInTransitioningDelegate.disableCompactHeight = true
+//        chatVC.transitioningDelegate = slideInTransitioningDelegate
+//        chatVC.modalPresentationStyle = .custom
+//      //  chatVC.delegate = self
+//        self.present(chatVC, animated: true, completion: nil)
        // makeNavItem()
 
     }
@@ -93,6 +95,7 @@ class PresentVC: UIViewController {
         self.view.addSubview(self.playerContainerView!)
         self.playerContainerView?.initializeView()
         self.playerContainerView?.link = Url
+        self.playerContainerView?.delegate = self
         self.playerContainerView?.minimizedOrigin = {
             let x = UIScreen.main.bounds.width/2
             let y = UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 9 / 32)

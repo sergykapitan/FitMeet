@@ -33,6 +33,7 @@ final class NewStartStreamCode: UIView {
     let imageButton: UIButton = {
         let image = UIButton()
         image.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        image.imageView?.contentMode = .scaleAspectFill
         return image
     }()
 
@@ -122,7 +123,7 @@ final class NewStartStreamCode: UIView {
         let button = UIButton()
         button.setTitle("Ok", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
         return button
     }()
     let scroll: UIScrollView = {
@@ -162,7 +163,7 @@ final class NewStartStreamCode: UIView {
         imageButton.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
                                right: cardView.rightAnchor,
-                               paddingTop: 20,paddingLeft: 20, paddingRight: 20,width: 300,height: 100)
+                               paddingTop: 20,paddingLeft: 20, paddingRight: 20,height: 160)
         imageButton.centerX(inView: cardView)
         
        // cardView.addSubview(imageButton)
@@ -205,15 +206,9 @@ final class NewStartStreamCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-   
-        scroll.addSubview(buttonContinue)
-        buttonContinue.anchor(top: textFieldDescription.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(buttonOK)
-        buttonOK.anchor(top: buttonContinue.bottomAnchor,
+        buttonOK.anchor(top: textFieldDescription.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

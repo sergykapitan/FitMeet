@@ -5,6 +5,7 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -126,11 +127,26 @@
                             <rect key="frame" x="218" y="142" width="30" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="IAl-ec-bAs">
+                            <rect key="frame" x="332" y="69" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="qT8-aN-8Lg">
+                            <rect key="frame" x="172" y="125" width="30" height="30"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <accessibility key="accessibilityConfiguration">
                         <bool key="isElement" value="YES"/>
                     </accessibility>
+                </view>
+                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N56-ST-VaP">
+                    <rect key="frame" x="0.0" y="308" width="375" height="359"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="Ou7-YZ-XAQ"/>
@@ -142,6 +158,8 @@
                 <outlet property="ButtonDown" destination="Ksq-DW-aPh" id="zoy-4Z-zoq"/>
                 <outlet property="ButtonUp" destination="dRu-2K-B72" id="ZNc-oo-4rB"/>
                 <outlet property="adaptiveBtn" destination="j7f-wq-n0f" id="tKj-qc-FIb"/>
+                <outlet property="buttonSetting" destination="IAl-ec-bAs" id="Ncy-jd-t0S"/>
+                <outlet property="buttonVolume" destination="qT8-aN-8Lg" id="tv5-vs-yxW"/>
                 <outlet property="changeVideoScaleBtn" destination="bv2-tq-7v4" id="Tg4-oD-ATg"/>
                 <outlet property="durationLbl" destination="pNs-Ry-CtD" id="ige-CH-4AU"/>
                 <outlet property="expiredTimeLbl" destination="xlP-3p-Q9z" id="k4V-L4-Dan"/>
@@ -151,8 +169,14 @@
                 <outlet property="playerBtnContainerLbl" destination="ahq-w9-6Vi" id="2rs-bg-dfO"/>
                 <outlet property="playerContainer" destination="uad-Pq-IjH" id="T48-Ur-bAX"/>
                 <outlet property="sliderBackgroundLbl" destination="cLK-Oe-FJ3" id="vA7-JB-cjf"/>
+                <outlet property="viewChat" destination="N56-ST-VaP" id="dRi-zE-dXe"/>
             </connections>
             <point key="canvasLocation" x="32.799999999999997" y="52.623688155922046"/>
         </view>
     </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>

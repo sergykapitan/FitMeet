@@ -117,4 +117,18 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    //Constants.apiEndpoint + "/uploader/user" as! URLRequestConvertible
+//    public func uploadImage(image:Data) -> AnyPublisher<Bool,DifferentError> {
+//        return AF.upload(image, with:  , interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+//            .validate(statusCode: 200..<300)
+//            .validate(contentType: ["application/json"])
+//            .publishDecodable(type: Bool.self)
+//            .value()
+//            .print("TokenChat")
+//            .mapError{ DifferentError.alamofire(wrapped: $0)}
+//            .eraseToAnyPublisher()
+//        
+//    }
+    
+    
 }

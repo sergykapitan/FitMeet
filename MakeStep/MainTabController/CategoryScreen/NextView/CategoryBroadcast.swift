@@ -123,7 +123,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func actionAll() {
-        categoryView.buttonAll.backgroundColor = UIColor(hexString: "#0099AE")
+        categoryView.buttonAll.backgroundColor = UIColor(hexString: "#3B58A4")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -134,7 +134,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     @objc func actionPopular() {
         
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#0099AE")
+        categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#3B58A4")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
@@ -147,7 +147,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonNew.backgroundColor = UIColor(hexString: "#0099AE")
+        categoryView.buttonNew.backgroundColor = UIColor(hexString: "#3B58A4")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
         
@@ -160,7 +160,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#0099AE")
+        categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
       
         sortListCategory = listBroadcast.filter{ $0.followersCount ?? 0 > 1}
         self.categoryView.tableView.reloadData()

@@ -40,7 +40,7 @@ final class CategoryCell: UICollectionViewCell {
     }()
     private let bottomView : UIView = {
         let view = UIView()
-        view.backgroundColor = UIColor(hexString: "#0099AE")
+        view.backgroundColor = UIColor(hexString: "#3B58A4")
         return view
     }()
    let buttonLike : UIButton = {

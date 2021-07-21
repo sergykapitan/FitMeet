@@ -21,7 +21,11 @@ extension HomeVC: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
        // let text = viewModel.shared()[indexPath.row].searchText
+        if listBroadcast[indexPath.row].previewPath == "https://dev.fitliga.com/path/to/file.jpg" {
+            cell.setImage(image: "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        } else {
         cell.setImage(image: listBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        }
         cell.labelDescription.text = listBroadcast[indexPath.row].categories?.first?.description
         cell.titleLabel.text = listBroadcast[indexPath.row].name
         guard let category = listBroadcast[indexPath.row].categories?.first?.title, let category2 = listBroadcast[indexPath.row].categories?.last?.title else { return cell}

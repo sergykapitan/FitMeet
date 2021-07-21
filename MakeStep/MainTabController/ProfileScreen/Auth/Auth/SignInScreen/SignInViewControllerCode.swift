@@ -27,7 +27,7 @@ final class SignInViewControllerCode: UIView {
     }()
     let buttonSocialNetwork: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         button.setTitle("Sign up with Social Network", for: .normal)
         button.layer.cornerRadius = 19
         return button
@@ -48,7 +48,7 @@ final class SignInViewControllerCode: UIView {
         let button = UIButton()
         button.setTitle("Continue", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
         return button
     }()
     let oneLine: OneLineView = {
@@ -65,7 +65,7 @@ final class SignInViewControllerCode: UIView {
     }()
     let buttonSignUp: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "0099AE"), for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
         button.setAttributedTitle(NSAttributedString(string: "Sign Up", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button

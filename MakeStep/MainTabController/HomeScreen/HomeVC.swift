@@ -15,9 +15,11 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         print("segmentedControl index changed to \(index)")
         if index == 0 {
             binding()
+            self.homeView.tableView.reloadData()
         }
         if index == 1 {
             bindingRecomandate()
+            self.homeView.tableView.reloadData()
         }
         if index == 2 {
             

@@ -96,13 +96,13 @@ extension AuthViewController: UITextFieldDelegate {
         let string = "formate"
         textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
-            authView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
         } else if  fullString.isValidPhone() || fullString.isValidEmail() {
-            authView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
+            authView.buttonContinue.backgroundColor = UIColor(hexString: "#3B58A4")
             authView.buttonContinue.isUserInteractionEnabled = true
         } else {
-            authView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
         }
 

@@ -22,6 +22,9 @@ enum Direction {
     case left
     case none
 }
+protocol ClassBDelegate: class {
+   func changeBackgroundColor()
+}
 
 
 class PlayerContainerView: UIView    {
@@ -39,6 +42,7 @@ class PlayerContainerView: UIView    {
     private let expiredTimeLblWidth: CGFloat = 52
     private let duratiponLblWidth: CGFloat = 66
     private let sliderBackgroundLblWidth: CGFloat = 40
+    weak var delegate: ClassBDelegate?
     var linkUrl: String?
     
     //init IBOutlet
@@ -54,6 +58,10 @@ class PlayerContainerView: UIView    {
     @IBOutlet weak var changeVideoScaleBtn: UIButton!
     @IBOutlet weak var expiredTimeLbl: UILabel!
     @IBOutlet weak var custommErrorContainer: UIView!
+    @IBOutlet weak var buttonVolume: UIButton!
+    
+    @IBOutlet weak var viewChat: UIView!
+    @IBOutlet weak var buttonSetting: UIButton!
     
     @IBOutlet weak var ButtonUp: UIButton!
     @IBOutlet weak var ButtonDown: UIButton!
@@ -95,16 +103,21 @@ class PlayerContainerView: UIView    {
         playBtn.frame = CGRect(x: (UIScreen.main.bounds.width-playBtnHeight)/2, y: (playerContainer.frame.height-playBtnHeight)/2, width: playBtnHeight, height: playBtnHeight)
         
         minimizeBtn.frame = CGRect(x: defaultMargin, y: 3*defaultMargin , width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
-        minimizeBtn.setImage(UIImage(named: "dismiss"), for: .normal)
-      //  slider.addTarget(self, action: #selector(playbackSliderValueChanged(_:)), for: .valueChanged)
-      //  slider.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(sliderTapped(gestureRecognizer:))))
+        minimizeBtn.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        
+        buttonSetting.frame = CGRect(x: 4 * defaultMargin , y: 3 * defaultMargin , width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
+        buttonSetting.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
+        
+        
+   
         playerContainer.alpha = 1
         
         //slider.isHidden = false
         changeVideoScaleBtn.isHidden = true
+        buttonVolume.isHidden = true
         
         //adaptive button initialize
-        adaptiveBtn.isHidden = false
+        adaptiveBtn.isHidden = true
         adaptiveBtn.backgroundColor = .white
         adaptiveBtn.tintColor = .black
         adaptiveBtn.layer.cornerRadius = 6.0
@@ -143,10 +156,8 @@ class PlayerContainerView: UIView    {
             playerLayer?.removeFromSuperlayer()
         }
         isVideoLandScape = false
-       // link = "https://bitdash-a.akamaihd.net/content/MI201109210084_1/m3u8s/f08e80da-bf1d-4e3d-8899-f0f6155f6efa.m3u8"
-        
+        adaptiveBtn.isHidden = true
         adaptiveBtn.setTitle("Subscribe", for: UIControl.State.normal)
-        print("link==========\(link)")
         
         guard let link = link  else { return }
         
@@ -161,7 +172,11 @@ class PlayerContainerView: UIView    {
         sliderBackgroundLbl.isHidden = true
         expiredTimeLbl.isHidden = false
         durationLbl.isHidden = false
-        adaptiveBtn.frame = CGRect(x: UIScreen.main.bounds.width - adaptiveWidth - defaultMargin , y: 3*defaultMargin , width: adaptiveWidth, height: adaptiveHeight)
+        
+       // adaptiveBtn.frame = CGRect(x: UIScreen.main.bounds.width - adaptiveWidth - defaultMargin , y: 3*defaultMargin , width: adaptiveWidth, height: adaptiveHeight)
+        
+        
+        
         playerContainer.layer.addSublayer(playerLayer!)
         playerLayer?.player?.play()
         playerLayer?.videoGravity = .resizeAspect
@@ -172,13 +187,20 @@ class PlayerContainerView: UIView    {
         playerLayer?.addSublayer(changeVideoScaleBtn.layer)
         playerLayer?.addSublayer(minimizeBtn.layer)
         playerLayer?.addSublayer(adaptiveBtn.layer)
+        playerLayer?.addSublayer(buttonSetting.layer)
         playerLayer?.addSublayer(expiredTimeLbl.layer)
         playerLayer?.addSublayer(gestureLbl.layer)
         playerLayer?.addSublayer(ButtonUp.layer)
         playerLayer?.addSublayer(ButtonDown.layer)
+        playerLayer?.addSublayer(buttonVolume.layer)
+        
+        
+        buttonSetting.frame = CGRect(x: UIScreen.main.bounds.maxX - 50 , y: 3*defaultMargin , width: 25, height: 25)
+
         
         gestureLbl.frame = CGRect(x: 0, y: defaultMargin, width: UIScreen.main.bounds.width, height: playerLayerHeight)
-        changeVideoScaleBtn.setBackgroundImage(UIImage(named: "enlarge"), for: .normal)
+        //UIImage(named: "enlarge"
+        changeVideoScaleBtn.setBackgroundImage(#imageLiteral(resourceName: "fullscreen_24px1"), for: .normal)
         playerBtnContainerLbl.frame = gestureLbl.frame
         
         self.playerLayer?.addSublayer(self.playBtn.layer)
@@ -259,32 +281,41 @@ class PlayerContainerView: UIView    {
         playerBtnContainerLbl.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(handleHideContainerBtn)))
         
         isVideoLandScape = true
+        viewChat.isHidden = true
         
         self.transform = CGAffineTransform(rotationAngle: CGFloat.pi / 2)
         
         self.frame = CGRect(x: 0, y: 0, width: self.frame.height, height: self.frame.width)
         
+        self.playerContainer.frame = CGRect(x: 0, y: 0, width: self.frame.height , height: self.frame.width )
 
-        
-        self.playerContainer.frame = CGRect(x: 0, y: 0, width: self.frame.height -  900, height: self.frame.width + 350)
-
-        
         self.playerLayer?.frame = playerContainer.frame
         self.gestureLbl.frame = CGRect(x: 0, y: 0, width: self.frame.height, height: playerContainer.frame.width)
         sliderBackgroundLbl.frame = CGRect(x: 0, y: (playerLayer?.frame.height)!-sliderBackgroundLblWidth ,  width: UIScreen.main.bounds.height, height: sliderBackgroundLblWidth)
         
         playerBtnContainerLbl.frame = gestureLbl.frame
-     //   self.slider?.frame = CGRect(x: expiredTimeLblWidth + 4*defaultMargin , y: sliderBackgroundLbl.frame.origin.y + 2*defaultMargin, width: playerContainer.frame.width - expiredTimeLblWidth - changeVideoScaleBtnHeight - duratiponLblWidth - 7*defaultMargin, height: sliderHeight)
-     //   self.expiredTimeLbl.frame = CGRect(x: defaultMargin*2, y: self.slider.frame.origin.y-defaultMargin/2 , width: expiredTimeLblWidth + 2*defaultMargin , height: expiredTimeLblHeight)
-     //   self.durationLbl.frame = CGRect(x: self.playerContainer.frame.width - duratiponLblWidth - changeVideoScaleBtnHeight - 2*defaultMargin, y: expiredTimeLbl.frame.origin.y, width: duratiponLblWidth, height: expiredTimeLblHeight)
+        
+        self.adaptiveBtn.isHidden = false
+
         self.adaptiveBtn.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth - defaultMargin, y: 2*defaultMargin, width: adaptiveWidth, height: adaptiveHeight)
+   
+     //  self.changeVideoScaleBtn.frame = CGRect(x: (playerLayer?.frame.size.width)!/2 + 100, y: (playerLayer?.frame.size.height)!/2 + 100 , width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
+        //
+       // self.changeVideoScaleBtn.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth - defaultMargin, y:playerContainer.frame.height - 300, width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
+        self.changeVideoScaleBtn.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth, y:sliderBackgroundLbl.frame.origin.y + defaultMargin/2, width: 15, height: 15)
         
-        // playerContainer.frame.width - changeVideoScaleBtnHeight - defaultMargin
-        //playerContainer.frame.height - changeVideoScaleBtnHeight/2 - defaultMargin - defaultMargin/2
+        changeVideoScaleBtn.setBackgroundImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
         
-        self.changeVideoScaleBtn.frame = CGRect(x: (playerLayer?.frame.size.width)!/2 + 400, y: (playerLayer?.frame.size.height)!/2 + 200 , width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
-        changeVideoScaleBtn.setBackgroundImage(UIImage(named: "scale-down"), for: .normal)
-        minimizeBtn.setImage(UIImage(named: "back"), for: .normal)
+        self.buttonSetting.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth - 30, y:sliderBackgroundLbl.frame.origin.y + defaultMargin/2, width: 15, height: 15)
+        buttonSetting.setBackgroundImage(#imageLiteral(resourceName: "Settings"), for: .normal)
+        
+        minimizeBtn.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        
+        buttonVolume.isHidden = false
+        buttonVolume.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth - 60, y:sliderBackgroundLbl.frame.origin.y + defaultMargin/2, width: 25, height: 25)
+        buttonVolume.setImage(#imageLiteral(resourceName: "Volume1"), for: .normal)
+        
+        
         self.playBtn.frame = CGRect(x: (playerLayer?.frame.size.width)!/2, y:(playerLayer?.frame.size.height)!/2 , width: playBtnHeight, height: playBtnHeight)
         self.ButtonDown.frame = CGRect(x: (playerLayer?.frame.size.width)!/2 - 30, y:(playerLayer?.frame.size.height)!/2, width: playBtnHeight, height: playBtnHeight)
         ButtonDown.setImage(#imageLiteral(resourceName: "Skip Previous1"), for: .normal)
@@ -304,7 +335,8 @@ class PlayerContainerView: UIView    {
     
     func portraitMode() {
         isVideoLandScape = false
-        
+        buttonVolume.isHidden = true
+        viewChat.isHidden = false
         gestureLbl.isUserInteractionEnabled = true
         playerBtnContainerLbl.isHidden = true
         playerBtnContainerLbl.isUserInteractionEnabled = false
@@ -319,13 +351,20 @@ class PlayerContainerView: UIView    {
         self.gestureLbl.frame = CGRect(x: 0, y: defaultMargin, width: self.frame.width, height: playerLayerHeight)
         playerBtnContainerLbl.frame = gestureLbl.frame
 //        slider.frame = CGRect(x: expiredTimeLblWidth + 2*defaultMargin , y: sliderBackgroundLbl.frame.origin.y + 2*defaultMargin  , width: UIScreen.main.bounds.width-expiredTimeLblWidth - duratiponLblWidth - changeVideoScaleBtnHeight - 4*defaultMargin  , height: sliderHeight)
+        adaptiveBtn.isHidden = true
+        
         changeVideoScaleBtn.frame = CGRect(x: UIScreen.main.bounds.width - changeVideoScaleBtnHeight - defaultMargin, y:sliderBackgroundLbl.frame.origin.y + defaultMargin/2, width: changeVideoScaleBtnHeight, height: changeVideoScaleBtnHeight)
+        buttonSetting.frame = CGRect(x: UIScreen.main.bounds.width - changeVideoScaleBtnHeight - defaultMargin, y:UIScreen.main.bounds.minY + 40, width: 20, height: 20)
+        buttonSetting.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
         
         expiredTimeLbl.frame = CGRect(x: defaultMargin/2, y:sliderBackgroundLbl.frame.origin.y + defaultMargin , width: expiredTimeLblWidth + 10, height: expiredTimeLblHeight)
         durationLbl.frame = CGRect(x: UIScreen.main.bounds.width - duratiponLblWidth - changeVideoScaleBtnHeight - 2*defaultMargin , y: sliderBackgroundLbl.frame.origin.y + defaultMargin, width: duratiponLblWidth, height: expiredTimeLblHeight)
         self.adaptiveBtn.frame = CGRect(x: playerContainer.frame.width - adaptiveWidth - defaultMargin, y: 4*defaultMargin, width: adaptiveWidth, height: adaptiveHeight)
         changeVideoScaleBtn.setBackgroundImage(UIImage(named: "enlarge"), for: .normal)
-        minimizeBtn.setImage(UIImage(named: "dismiss"), for: .normal)
+        minimizeBtn.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+        
+        
+        
         self.playBtn.frame = CGRect(x: (playerLayer?.frame.size.width)!/2, y:(playerLayer?.frame.size.height)!/2 , width: playBtnHeight, height: playBtnHeight)
         self.ButtonDown.frame = CGRect(x: (playerLayer?.frame.size.width)!/2 - 30, y:(playerLayer?.frame.size.height)!/2 , width: playBtnHeight, height: playBtnHeight)
         ButtonDown.setImage(#imageLiteral(resourceName: "Skip Previous1"), for: .normal)
@@ -384,8 +423,9 @@ class PlayerContainerView: UIView    {
             self.minimizeBtn.isHidden = false
             self.durationLbl.isHidden = false
             self.expiredTimeLbl.isHidden = false
-            self.adaptiveBtn.isHidden = false
+            self.adaptiveBtn.isHidden = true
             self.changeVideoScaleBtn.isHidden = false
+            self.buttonSetting.isHidden = false
         }
     }
     
@@ -440,22 +480,27 @@ class PlayerContainerView: UIView    {
         self.expiredTimeLbl.isHidden = true
         self.adaptiveBtn.isHidden = true
         self.changeVideoScaleBtn.isHidden = true
+        self.buttonSetting.isHidden = true
         self.backgroundColor = UIColor.clear
         self.playerContainer.backgroundColor = UIColor.black// UIColor.clear
     }
-    
+  //: MARK: - minimizd
     @IBAction func minimizeBtnPlayerTapped(_ sender: Any) {
         
         if UIDevice.current.userInterfaceIdiom == .pad || player == nil{
-            playerLayer?.player?.pause()
-            killTimer()
+           // playerLayer?.player?.pause()
+           // killTimer()
+            self.dismissCustomActionSheet()
             return
         }
         if isVideoLandScape == true{
-            portraitMode()
+            
+            self.dismissCustomActionSheet()
+           // portraitMode()
             return
         }
-        minimizePlayer()
+        self.dismissCustomActionSheet()
+      //  minimizePlayer()
     }
     
     @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
@@ -509,7 +554,7 @@ class PlayerContainerView: UIView    {
                 let factor = 1 - (abs(sender.translation(in: nil).y) / UIScreen.main.bounds.height)
                 self.swipeToMinimize(translation: factor, toState: .fullScreen)
                 self.minimizeBtn.isHidden = false
-                self.slider.isHidden = false
+              //  self.slider.isHidden = false
                 self.durationLbl.isHidden = false
                 self.expiredTimeLbl.isHidden = false
                 
@@ -802,6 +847,8 @@ class PlayerContainerView: UIView    {
     
     @objc func dismissCustomActionSheet() {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 5, options: [.beginFromCurrentState], animations: {
+            
+            self.delegate?.changeBackgroundColor()
             
             self.parentView?.removeFromSuperview()
             self.actionSheetContainer?.removeFromSuperview()

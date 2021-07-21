@@ -21,6 +21,10 @@
 		B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB77268F4A1E007096AB /* MakeStepChat.swift */; };
 		B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7B268F4D8D007096AB /* UserVC.swift */; };
 		B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7F268F4D9C007096AB /* UserVCCode.swift */; };
+		B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4626A6EA9300321AB8 /* ImagePicker.swift */; };
+		B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */; };
+		B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */; };
+		B4497D5026A7315500321AB8 /* Responce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4F26A7315500321AB8 /* Responce.swift */; };
 		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
 		B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */; };
 		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
@@ -164,6 +168,10 @@
 		B41DCB77268F4A1E007096AB /* MakeStepChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeStepChat.swift; sourceTree = "<group>"; };
 		B41DCB7B268F4D8D007096AB /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		B41DCB7F268F4D9C007096AB /* UserVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVCCode.swift; sourceTree = "<group>"; };
+		B4497D4626A6EA9300321AB8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequstBilder.swift; sourceTree = "<group>"; };
+		B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
+		B4497D4F26A7315500321AB8 /* Responce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responce.swift; sourceTree = "<group>"; };
 		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
 		B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcast.swift; sourceTree = "<group>"; };
 		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
@@ -665,6 +673,9 @@
 				B4C5A95C267C968C00010F88 /* DropDownCell.swift */,
 				B4C5A961267DD2D900010F88 /* Task.swift */,
 				B484E8F12684512900D75BE8 /* BaseViewController.swift */,
+				B4497D4626A6EA9300321AB8 /* ImagePicker.swift */,
+				B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */,
+				B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -721,6 +732,7 @@
 				B47D8F9C2637DE12005473C1 /* Channel */,
 				B4937699263962B900D38EC3 /* Stream */,
 				B4937698263962A200D38EC3 /* Broadcast */,
+				B4497D4F26A7315500321AB8 /* Responce.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -904,7 +916,6 @@
 				B4D9D71826257D8C007CFB71 /* Frameworks */,
 				B4D9D71926257D8C007CFB71 /* Resources */,
 				9C04A03CF6B1258867032E6E /* [CP] Embed Pods Frameworks */,
-				09093E378D26C2448248573A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -962,23 +973,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		09093E378D26C2448248573A /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		8591A959A651716A0E434D78 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1062,6 +1056,7 @@
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
+				B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */,
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
 				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
 				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
@@ -1072,6 +1067,7 @@
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
+				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
@@ -1134,10 +1130,12 @@
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
+				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
 				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
+				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
@@ -1302,14 +1300,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.14;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1327,14 +1325,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.14;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

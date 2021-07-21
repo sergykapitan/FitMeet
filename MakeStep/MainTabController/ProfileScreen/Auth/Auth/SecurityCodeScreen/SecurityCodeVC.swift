@@ -84,17 +84,11 @@ extension SecurityCodeVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
        let fullString = (textField.text ?? "") + string
-       if fullString == "" {
-            securityView.buttonSendCode.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-            securityView.buttonSendCode.isUserInteractionEnabled = false
-        } else if  fullString != nil {
-            securityView.buttonSendCode.backgroundColor = UIColor(hexString: "0099AE")
+        
+     if  fullString != nil {
+            securityView.buttonSendCode.backgroundColor = UIColor(hexString: "#3B58A4")
             securityView.buttonSendCode.isUserInteractionEnabled = true
-        } else {
-            securityView.buttonSendCode.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-            securityView.buttonSendCode.isUserInteractionEnabled = false
-        }
-
+     }
         return true
     }
     

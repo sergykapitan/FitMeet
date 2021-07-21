@@ -59,13 +59,13 @@ extension SignInViewController: UITextFieldDelegate {
         let string = "formate"
         textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
-            signUpView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            signUpView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             signUpView.buttonContinue.isUserInteractionEnabled = false
         } else if  fullString.isValidPhone() || fullString.isValidEmail() {
-            signUpView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
+            signUpView.buttonContinue.backgroundColor = UIColor(hexString: "#3B58A4")
             signUpView.buttonContinue.isUserInteractionEnabled = true
         } else {
-            signUpView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            signUpView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             signUpView.buttonContinue.isUserInteractionEnabled = false
         }
 

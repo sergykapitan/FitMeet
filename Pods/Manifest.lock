@@ -1,20 +1,7 @@
 PODS:
   - Alamofire (5.4.1)
-  - AppAuth (1.4.0):
-    - AppAuth/Core (= 1.4.0)
-    - AppAuth/ExternalUserAgent (= 1.4.0)
-  - AppAuth/Core (1.4.0)
-  - AppAuth/ExternalUserAgent (1.4.0)
   - BottomPopup (0.6.0)
   - ContextMenuSwift (0.0.8)
-  - GoogleSignIn (5.0.2):
-    - AppAuth (~> 1.2)
-    - GTMAppAuth (~> 1.0)
-    - GTMSessionFetcher/Core (~> 1.1)
-  - GTMAppAuth (1.2.2):
-    - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher/Core (1.6.1)
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - HHCustomCorner (0.1.3)
@@ -70,7 +57,6 @@ DEPENDENCIES:
   - Alamofire (~> 5.4)
   - BottomPopup
   - ContextMenuSwift
-  - GoogleSignIn (~> 5.0.0)
   - HaishinKit (~> 1.1.4)
   - HHCustomCorner
   - Hue (~> 5.0.0)
@@ -84,12 +70,8 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - Alamofire
-    - AppAuth
     - BottomPopup
     - ContextMenuSwift
-    - GoogleSignIn
-    - GTMAppAuth
-    - GTMSessionFetcher
     - HaishinKit
     - HHCustomCorner
     - Hue
@@ -105,12 +87,8 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
   ContextMenuSwift: b4d4066b9ebe47a43f7734a4a6989cf03efe5ad8
-  GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
-  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 36689134877faeb055b27dfa4ccc9ceaa42e029e
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   HHCustomCorner: d7817fc58b894347245363dd8a0d0beafd474bcd
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
@@ -124,6 +102,6 @@ SPEC CHECKSUMS:
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: 489ed2dc4eb3b241d40dcdd8648190b5c0f9d8cb
+PODFILE CHECKSUM: efaa208782286593cb285b5a4786ac7d7d3ce42e
 
 COCOAPODS: 1.10.1

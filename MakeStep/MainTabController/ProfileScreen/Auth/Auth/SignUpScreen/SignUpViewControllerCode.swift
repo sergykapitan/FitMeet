@@ -77,7 +77,7 @@ final class SignUpViewControllerCode: UIView {
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     let textPrivacyPolice: UILabel = {

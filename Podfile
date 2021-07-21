@@ -10,7 +10,7 @@ target 'MakeStep' do
   pod 'Hue', '~> 5.0.0'
   pod 'Loaf'
   pod 'ContextMenuSwift'
-  pod 'GoogleSignIn', '~> 5.0.0'
+  #pod 'GoogleSignIn', '~> 5.0.0'
   pod 'Kingfisher', '~> 6.0'
   pod 'BottomPopup'
   pod 'iOSDropDown'

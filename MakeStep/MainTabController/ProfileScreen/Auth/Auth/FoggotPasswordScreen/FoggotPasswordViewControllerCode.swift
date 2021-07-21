@@ -63,7 +63,7 @@ final class FoggotPasswordViewControllerCode: UIView {
     }()
     let buttonSignUp: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "0099AE"), for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
         button.setAttributedTitle(NSAttributedString(string: "Sign In", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button

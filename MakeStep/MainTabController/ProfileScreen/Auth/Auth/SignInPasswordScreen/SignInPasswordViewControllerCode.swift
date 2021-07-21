@@ -39,14 +39,14 @@ final class SignInPasswordViewControllerCode: UIView {
     }()
     let buttonSignIn: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         button.setTitle("Sign In", for: .normal)
         button.layer.cornerRadius = 19
         return button
     }()
     let buttonFoggotPassword: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "0099AE"), for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
         button.setAttributedTitle(NSAttributedString(string: "Forgot password?", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button

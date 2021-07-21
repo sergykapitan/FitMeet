@@ -107,7 +107,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         print("right bar button action")
     }
     @objc func actionAll() {
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonAll.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -119,7 +119,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     @objc func actionPopular() {
         
         searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -133,7 +133,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         
         searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonNew.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
@@ -146,7 +146,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
         
@@ -159,7 +159,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#0099AE")
+        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
       
         filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
     }

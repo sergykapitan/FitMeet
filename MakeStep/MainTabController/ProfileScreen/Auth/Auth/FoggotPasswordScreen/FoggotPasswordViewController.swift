@@ -74,13 +74,13 @@ extension FoggotPasswordViewController: UITextFieldDelegate {
         let string = "formate"
         textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
-            passwordView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            passwordView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             passwordView.buttonContinue.isUserInteractionEnabled = false
         } else if  fullString.isValidPhone() || fullString.isValidEmail() {
-            passwordView.buttonContinue.backgroundColor = UIColor(hexString: "0099AE")
+            passwordView.buttonContinue.backgroundColor = UIColor(hexString: "#3B58A4")
             passwordView.buttonContinue.isUserInteractionEnabled = true
         } else {
-            passwordView.buttonContinue.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            passwordView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             passwordView.buttonContinue.isUserInteractionEnabled = false
         }
 

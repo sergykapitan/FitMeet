@@ -11,6 +11,7 @@ import ContextMenuSwift
 import AuthenticationServices
 import Combine
 import BottomPopup
+import Alamofire
 
 class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate {
     
@@ -19,7 +20,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     }
     
     func optionSelected(option: String) {
-        print("optionSelected")
+        print("optionSelected===========\(option)")
     }
     
     
@@ -30,6 +31,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
+    var imagePicker: ImagePicker!
+    
+    var image: String?
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
@@ -53,6 +57,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var url: String?
     var myuri: String?
     var myPublish: String?
+    
+    let serviceProvider = Serviceprovider<CharacterProvider>()
+   // let request: URLRequest?
     
     private var dropDown: DropDownTextField!
     private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
@@ -113,10 +120,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldFree.isSearchEnable = false
         
         authView.textFieldCategory.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
-        authView.textFieldStartDate.optionArray = ["\(date)", "Later"]
-        authView.textFieldAviable.optionArray = ["Subscribers", "Only Sponsors"]
-        authView.textFieldFree.optionArray = ["Free", "Not Free"]
+        authView.textFieldStartDate.optionArray = ["NOW", "Later"]
+        authView.textFieldAviable.optionArray = ["All","Subscribers", "Only Sponsors"]
+        authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         
+        changeData()
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+       // authView.textFieldStartDate.cance
 
         actionButtonContinue()
 
@@ -128,25 +138,52 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
         }
+
+    func changeData() {
+        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
+            print("ggggggg ==== \(gg)\n tttttt======\(tt)\n hhhhhhh===\(hh)")
+            if gg == "NOW" {
+                self.authView.buttonOK.setTitle("OK", for: .normal)
+                self.authView.buttonOK.isUserInteractionEnabled = true
+                
+            } else {
+                self.authView.buttonOK.setTitle("Planned", for: .normal)
+                self.authView.buttonOK.isUserInteractionEnabled = true
+            }
+        }
+        authView.textFieldAviable.didSelect { (str, ind, col) in
+            if str == "All" || str == "Subscribers"{
+                self.authView.textFieldFree.isUserInteractionEnabled = false
+                
+        } else if str == "Only Sponsors" {
+            self.authView.textFieldFree.isUserInteractionEnabled = true
+       }
+    }
+}
+
     func actionButtonContinue() {
-        authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+      //  authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
       print("create broadcast")
-        guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text else { return }
+        guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text,let img = image else { return }
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         
-        self.nextView(chanellId: chanelId, name: name, description: description)
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img)
         print("Date = \(date)")
     }
-    @objc func actionUploadImage() {
+    @objc func actionUploadImage(_ sender: UIButton) {
         print("Upload Image")
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType =  UIImagePickerController.SourceType.photoLibrary
-        self.present(myPickerController, animated: true, completion: nil)
+        
+        self.imagePicker.present(from: sender)
+        
+        
+//        let myPickerController = UIImagePickerController()
+//        myPickerController.delegate = self;
+//        myPickerController.sourceType =  UIImagePickerController.SourceType.photoLibrary
+//        self.present(myPickerController, animated: true, completion: nil)
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -184,8 +221,23 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-    func nextView(chanellId: Int ,name: String , description: String)  {
-       
+//    func bindingImage(image: Data) {
+//        takeChannel = fitMeetApi.uploadImage(image: image)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response != nil  {
+//
+//                    print(response)
+//                }
+//        })
+//    }
+    func nextView(chanellId: Int ,name: String , description: String,previewPath: String)  {
+        
+        
+        print("PREVIEWPATH ===============\(previewPath)")
+       // uploadImage()
+  
+    
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
                                                     channelID: chanellId,
                                                     name: name,
@@ -196,9 +248,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                                                     onlyForSponsors: false,
                                                     onlyForSubscribers: false,
                                                     categoryIDS: [],
-                                                    scheduledStartDate: "2021-06-18T10:50:26.017Z",
+                                                    scheduledStartDate: "\(date)",
                                                     description: description,
-                                                    previewPath: "/path/to/file.jpg" ))
+                                                    previewPath: "/path/to/file.jpg"))
+            //
+       // "2021-06-18T10:50:26.017Z"
+            //"/path/to/file.jpg"
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
@@ -246,6 +301,50 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         let myPublish = fullUrlArr[4]
         return (myuri,myPublish)
     }
+    func uploadImage(image: UIImage) {
+       
+            let imageData = image.jpegData(compressionQuality: 1.0)
+               
+            let urlString = Constants.apiEndpoint + "/uploader/user"
+            let session = URLSession(configuration: URLSessionConfiguration.default)
+               
+            let mutableURLRequest = NSMutableURLRequest(url: NSURL(string: urlString)! as URL)
+               
+            mutableURLRequest.httpMethod = "POST"
+               
+               let boundaryConstant = "----------------12345";
+               let contentType = "multipart/form-data;boundary=" + boundaryConstant
+               mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
+               
+               // create upload data to send
+               let uploadData = NSMutableData()
+               
+               // add image
+            uploadData.append("\r\n--\(boundaryConstant)\r\n".data(using: .utf8)!)
+            uploadData.append("Content-Disposition: form-data; name=\"picture\"; filename=\"file.png\"\r\n".data(using: .utf8)!)
+            uploadData.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
+            uploadData.append(imageData!)
+            uploadData.append("\r\n--\(boundaryConstant)--\r\n".data(using: .utf8)!)
+               
+            mutableURLRequest.httpBody = uploadData as Data
+        //let t = session.das
+               
+            let task = session.dataTask(with: mutableURLRequest as URLRequest, completionHandler: { (data, response, error) -> Void in
+                   if error == nil {
+                    print("Image uploaded")
+                    print("DATA===========\(data?.toString())\n RESPONCE ==== \(response)" )
+                   } else {
+                    print(error)
+                   }
+               })
+               
+               task.resume()
+               
+           
+    }
+    
+    
+   
 }
 extension NewStartStream: UITextFieldDelegate {
     
@@ -255,13 +354,28 @@ extension NewStartStream: UITextFieldDelegate {
         if textField == authView.textFieldName {
             
         if fullString == "" {
-            authView.buttonOK.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+            authView.buttonOK.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonOK.isUserInteractionEnabled = false
         } else {
-            authView.buttonOK.backgroundColor = UIColor(hexString: "0099AE")
+           // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
+            authView.buttonOK.backgroundColor = UIColor(hexString: "#3B58A4")
             authView.buttonOK.isUserInteractionEnabled = true
           }
         }
+        
+        if textField == authView.textFieldStartDate {
+            print("hhhhhhhh============\(fullString)")
+            if fullString == "NOW" {
+               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
+                authView.buttonOK.setTitle("OK", for: .normal)
+                authView.buttonOK.isUserInteractionEnabled = true
+            } else {
+              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
+                authView.buttonOK.setTitle("Planned", for: .normal)
+                authView.buttonOK.isUserInteractionEnabled = true
+            }
+        }
+             
         return true
     }
     
@@ -300,18 +414,44 @@ extension NewStartStream: UITextFieldDelegate {
         }
 }
 
+//
+//extension NewStartStream: UIImagePickerControllerDelegate,UINavigationControllerDelegate
+//{
+//   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
+//    {
+//        let image_data = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
+//    //let i = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
+//        self.authView.imageButton.setImage(image_data, for: .normal)
+//        guard let image = image_data else { return }
+//        let imageData:Data = image.pngData()!
+//        
+//        let imageStr = imageData.base64EncodedString()
+//        self.dismiss(animated: true, completion: nil)
+//    }
+//    
+//    
+//}
+extension NewStartStream: ImagePickerDelegate {
 
-extension NewStartStream: UIImagePickerControllerDelegate,UINavigationControllerDelegate
-{
-   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-    {
-        let image_data = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
-    //let i = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
-        self.authView.imageButton.setImage(image_data, for: .normal)
-        guard let image = image_data else { return }
-        let imageData:Data = image.pngData()!
+    func didSelect(image: UIImage?) {
+        self.authView.imageButton.setImage(image, for: .normal)
         
+        guard let imagee = image else { return }
+        uploadImage(image: imagee)
+        
+        let imageData:Data = imagee.pngData()!
+       // bindingImage(image: imageData)
         let imageStr = imageData.base64EncodedString()
-        self.dismiss(animated: true, completion: nil)
+        self.image = imageStr
+        
+//        serviceProvider.loadView(service: .showCharacter(limit: 30), decodeType: Responce.self) { (result) in
+//            switch result {
+//            case .success(let responce):
+//                print(result)
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+       // self.imageView.image = image
     }
 }
