@@ -25,6 +25,11 @@
 		B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */; };
 		B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */; };
 		B4497D5026A7315500321AB8 /* Responce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4F26A7315500321AB8 /* Responce.swift */; };
+		B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5526A836F800321AB8 /* PresentedViewController.swift */; };
+		B4497D5926A8370200321AB8 /* PickerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5826A8370200321AB8 /* PickerStyle.swift */; };
+		B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5B26A8370C00321AB8 /* SJDatePicker.swift */; };
+		B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5E26A8371500321AB8 /* CustomPresentationController.swift */; };
+		B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D6126A8371E00321AB8 /* CustomPresentationAnimationController.swift */; };
 		B46CF7992672112800EA0741 /* SegmentCustomFull.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7982672112800EA0741 /* SegmentCustomFull.swift */; };
 		B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */; };
 		B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */; };
@@ -172,6 +177,11 @@
 		B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequstBilder.swift; sourceTree = "<group>"; };
 		B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
 		B4497D4F26A7315500321AB8 /* Responce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responce.swift; sourceTree = "<group>"; };
+		B4497D5526A836F800321AB8 /* PresentedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentedViewController.swift; sourceTree = "<group>"; };
+		B4497D5826A8370200321AB8 /* PickerStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PickerStyle.swift; sourceTree = "<group>"; };
+		B4497D5B26A8370C00321AB8 /* SJDatePicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SJDatePicker.swift; sourceTree = "<group>"; };
+		B4497D5E26A8371500321AB8 /* CustomPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationController.swift; sourceTree = "<group>"; };
+		B4497D6126A8371E00321AB8 /* CustomPresentationAnimationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentationAnimationController.swift; sourceTree = "<group>"; };
 		B46CF7982672112800EA0741 /* SegmentCustomFull.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentCustomFull.swift; sourceTree = "<group>"; };
 		B46CF79C2672354100EA0741 /* CategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcast.swift; sourceTree = "<group>"; };
 		B46CF79F2672355D00EA0741 /* CategoryBroadcastCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCode.swift; sourceTree = "<group>"; };
@@ -379,6 +389,18 @@
 				B4B11153269223850006CA5A /* Cell */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		B4497D5426A836DE00321AB8 /* SJDataPicker */ = {
+			isa = PBXGroup;
+			children = (
+				B4497D5526A836F800321AB8 /* PresentedViewController.swift */,
+				B4497D5826A8370200321AB8 /* PickerStyle.swift */,
+				B4497D5B26A8370C00321AB8 /* SJDatePicker.swift */,
+				B4497D5E26A8371500321AB8 /* CustomPresentationController.swift */,
+				B4497D6126A8371E00321AB8 /* CustomPresentationAnimationController.swift */,
+			);
+			path = SJDataPicker;
 			sourceTree = "<group>";
 		};
 		B46CF79B2672350D00EA0741 /* NextView */ = {
@@ -654,6 +676,7 @@
 		B4D9D7412625C097007CFB71 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B4497D5426A836DE00321AB8 /* SJDataPicker */,
 				B4B111592692F8720006CA5A /* Presentashion */,
 				B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */,
 				B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */,
@@ -1043,6 +1066,7 @@
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
+				B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */,
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */,
 				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
@@ -1051,6 +1075,7 @@
 				B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
+				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
@@ -1086,6 +1111,7 @@
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
+				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
@@ -1099,6 +1125,7 @@
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
+				B4497D5926A8370200321AB8 /* PickerStyle.swift in Sources */,
 				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */,
 				B4B113CB2698688C0006CA5A /* PresentVCCode.swift in Sources */,
@@ -1112,6 +1139,7 @@
 				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B46CF7EE267A43A300EA0741 /* ParentControllwerCode.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
+				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
 				B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */,
 				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
@@ -1300,14 +1328,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.16;
+				MARKETING_VERSION = 1.0.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1325,14 +1353,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.16;
+				MARKETING_VERSION = 1.0.17;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

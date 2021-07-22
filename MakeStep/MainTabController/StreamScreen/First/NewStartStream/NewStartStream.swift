@@ -91,6 +91,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldAviable.text = ""
         authView.textFieldDescription.text = ""
         authView.textFieldCategory.text = ""
+        authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
     
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -115,7 +116,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
-        authView.textFieldStartDate.isSearchEnable = false
+        authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
         
@@ -158,8 +159,33 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         } else if str == "Only Sponsors" {
             self.authView.textFieldFree.isUserInteractionEnabled = true
        }
+   
     }
+        authView.textFieldStartDate.didSelect { (ff, _, _) in
+                       if ff == "Later" {
+                        self.showPicker()
+                        self.authView.buttonOK.setTitle("Planned", for: .normal)
+                        self.authView.buttonOK.isUserInteractionEnabled = true
+                       }
+                   }
 }
+    private func showPicker() {
+        var style = DefaultStyle()
+        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
+        style.pickerMode = .dateAndTime
+        style.titleString = "This is Date Picker"
+        style.returnDateFormat = .yyyy_To_ss
+        style.minimumDate = Date()
+        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
+        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
+        
+        let pick:PresentedViewController = PresentedViewController()
+        pick.style = style
+        pick.block = { [weak self] (date) in
+            self?.authView.textFieldStartDate.text = date
+        }
+        self.present(pick, animated: true, completion: nil)
+    }
 
     func actionButtonContinue() {
       //  authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)

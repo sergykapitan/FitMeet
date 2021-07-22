@@ -48,16 +48,12 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             DispatchQueue.main.async { () -> Void in
                 self.chatMessages.append(messageInfo)
                 self.chatView.tableView.reloadData()
-               // self.scrollToBottom()
+                self.scrollToBottom()
             }
         }
-        SocketIOManager.sharedInstance.establishConnection()
-            
-            
-            
-        
-    
+
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
@@ -75,16 +71,13 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
-        
-        
-//        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: "dismissKeyboard")
-//        swipeGestureRecognizer.direction = UISwipeGestureRecognizer.Direction.down
-//        swipeGestureRecognizer.delegate = self
-//        view.addGestureRecognizer(swipeGestureRecognizer)
+
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+            SocketIOManager.sharedInstance.getTokenChat()
+            SocketIOManager.sharedInstance.establishConnection()
             makeNavItem()
             makeTableView()
       
@@ -105,12 +98,17 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     }
     
     @objc func sendMessage() {
+        
+        let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if chatView.textView.text.count > 0 {
-            SocketIOManager.sharedInstance.sendMessage(message: chatView.textView.text!, withNickname: "OLD User")
-            self.chatMessages.append(["nickname":"Old Name","message": chatView.textView.text,"date":"5 sec"])
+            SocketIOManager.sharedInstance.sendMessage(message: chatView.textView.text!, withNickname: "\(name)")
+            self.chatMessages.append(["nickname":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
             chatView.textView.text = ""
             chatView.textView.resignFirstResponder()
+//            SocketIOManager.sharedInstance.getChatMessage { (old) in
+//                print("JJJJJJJJJJJJJ========================\(old)")
+//            }
   
         }
     }
@@ -277,6 +275,26 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         }
         
     }
+    func showBannerLabelAnimated() {
+        UIView.animate(withDuration: 0.75, animations: { () -> Void in
+           // self.lblNewsBanner.alpha = 1.0
+            
+            }) { (finished) -> Void in
+            self.bannerLabelTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: Selector(("hideBannerLabel")), userInfo: nil, repeats: false)
+        }
+    }
+    func hideBannerLabel() {
+        if bannerLabelTimer != nil {
+            bannerLabelTimer.invalidate()
+            bannerLabelTimer = nil
+        }
+        
+        UIView.animate(withDuration: 0.75, animations: { () -> Void in
+           // self.lblNewsBanner.alpha = 0.0
+            
+            }) { (finished) -> Void in
+        }
+    }
 
 }
 extension ChatVC: UITableViewDataSource {
@@ -308,14 +326,19 @@ extension ChatVC: UITableViewDataSource {
         
         
         if senderNickname == nickname {
+            cell.labelChatMessage.textAlignment = NSTextAlignment.left
+            cell.labelMessageDetail.textAlignment = NSTextAlignment.left
+            cell.backgroundColor = UIColor(hexString: "#3B58A4")
+            cell.labelChatMessage.textColor = .blue
+        } else {
             cell.labelChatMessage.textAlignment = NSTextAlignment.right
             cell.labelMessageDetail.textAlignment = NSTextAlignment.right
-            cell.labelChatMessage.textColor = .blue
+            cell.labelChatMessage.textColor = .black
         }
         
         cell.labelChatMessage.text = message
         cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate)"
-        cell.labelChatMessage.textColor = UIColor.darkGray
+        cell.labelChatMessage.textColor = .white
         
         cell.backgroundColor = .clear
         cell.layer.cornerRadius = 20
