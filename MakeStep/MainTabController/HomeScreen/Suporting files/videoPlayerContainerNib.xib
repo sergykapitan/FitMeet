@@ -146,6 +146,18 @@
                 <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="N56-ST-VaP">
                     <rect key="frame" x="0.0" y="308" width="375" height="359"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M8j-WM-fKg">
+                            <rect key="frame" x="8" y="317" width="359" height="30"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                            <state key="normal" title="Comments" image="Back1-2">
+                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="actionChat:" destination="TYb-EC-r9i" eventType="touchUpInside" id="ZMi-sW-0th"/>
+                            </connections>
+                        </button>
+                    </subviews>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                 </view>
             </subviews>
@@ -158,6 +170,7 @@
                 <outlet property="ButtonDown" destination="Ksq-DW-aPh" id="zoy-4Z-zoq"/>
                 <outlet property="ButtonUp" destination="dRu-2K-B72" id="ZNc-oo-4rB"/>
                 <outlet property="adaptiveBtn" destination="j7f-wq-n0f" id="tKj-qc-FIb"/>
+                <outlet property="btnComments" destination="M8j-WM-fKg" id="2wu-Bz-vDU"/>
                 <outlet property="buttonSetting" destination="IAl-ec-bAs" id="Ncy-jd-t0S"/>
                 <outlet property="buttonVolume" destination="qT8-aN-8Lg" id="tv5-vs-yxW"/>
                 <outlet property="changeVideoScaleBtn" destination="bv2-tq-7v4" id="Tg4-oD-ATg"/>
@@ -171,10 +184,11 @@
                 <outlet property="sliderBackgroundLbl" destination="cLK-Oe-FJ3" id="vA7-JB-cjf"/>
                 <outlet property="viewChat" destination="N56-ST-VaP" id="dRi-zE-dXe"/>
             </connections>
-            <point key="canvasLocation" x="32.799999999999997" y="52.623688155922046"/>
+            <point key="canvasLocation" x="284" y="-619"/>
         </view>
     </objects>
     <resources>
+        <image name="Back1-2" width="12.5" height="8"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

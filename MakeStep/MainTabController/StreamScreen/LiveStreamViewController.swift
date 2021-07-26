@@ -179,6 +179,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     
     @objc func openChat() {
         let chatVC = ChatVC()
+        chatVC.color = .clear
+        chatVC.tint = .white
         slideInTransitioningDelegate.direction = .bottom
         slideInTransitioningDelegate.disableCompactHeight = true
         chatVC.transitioningDelegate = slideInTransitioningDelegate

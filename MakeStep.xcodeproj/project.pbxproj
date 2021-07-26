@@ -149,6 +149,8 @@
 		B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */; };
 		B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */; };
 		B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */; };
+		B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */; };
+		B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */; };
 		B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */; };
 		B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */; };
 		B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204D2266F4F9600ED11B5 /* CategoryCell.swift */; };
@@ -303,6 +305,8 @@
 		B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVC.swift; sourceTree = "<group>"; };
 		B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
 		B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVCCode.swift; sourceTree = "<group>"; };
+		B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCPlayer.swift; sourceTree = "<group>"; };
+		B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCPlayerCode.swift; sourceTree = "<group>"; };
 		B4EA55292652A5D50060A694 /* FitMeet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FitMeet.entitlements; sourceTree = "<group>"; };
 		B4EA552C2653C1450060A694 /* AppleAuthorizationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleAuthorizationRequest.swift; sourceTree = "<group>"; };
 		B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCode.swift; sourceTree = "<group>"; };
@@ -578,6 +582,8 @@
 				B4B113BA269856290006CA5A /* CustomSlider.swift */,
 				B4B113B72698561F0006CA5A /* PlayerContainerView.swift */,
 				B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */,
+				B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */,
+				B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */,
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4B113CA2698688C0006CA5A /* PresentVCCode.swift */,
 			);
@@ -1058,6 +1064,7 @@
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
+				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
@@ -1113,6 +1120,7 @@
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
+				B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
 				B4D9D785262707B1007CFB71 /* SingUpViewModel.swift in Sources */,

@@ -16,8 +16,42 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     let homeView = UserVCCode()
    // var users = [[String: Any]]()
     
-    var users = [["nickname": "Claira Pomme", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected": true],
-                 ["nickname": "Anastasia Krasnova", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Julia Amonova", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Maria Frolova", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Steven Carpenter", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Claira Pomme", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Anastasia Krasnova", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],["nickname": "Jane", "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true]]
+    var users = [["username": "Claira Pomme",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected": true],
+                 ["username": "Anastasia Krasnova",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Julia Amonova",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Maria Frolova",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Steven Carpenter",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Claira Pomme",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Anastasia Krasnova",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
+                 ["username": "Jane",
+                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true]]
     
     var nickname: String!
     var configurationOK = false
@@ -85,7 +119,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
                     DispatchQueue.main.async { () -> Void in
                         if userList != nil {
                             guard let usr = userList else { return }
-                           // self.users = usr
+                            self.users.append(contentsOf: usr)
                             self.homeView.tableView.reloadData()
                             self.homeView.tableView.isHidden = false
                         }
@@ -140,21 +174,21 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     @objc  func buttonJoin() {
         dismiss(animated: true)
         
-//        SocketIOManager.sharedInstance.getTokenChat()
-//        guard let token =  UserDefaults.standard.value(forKey: "tokenChat") else { return }
-//        print( token )
-//
-//        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: token as! String, completionHandler: { (userList) -> Void in
-//            DispatchQueue.main.async { () -> Void in
-//                print("USERLIST ======= \(userList)")
-//                if userList != nil {
-//                    guard let usr = userList else { return }
-//                  //  self.users = usr
-//                    self.homeView.tableView.reloadData()
-//                    self.homeView.tableView.isHidden = false
-//                }
-//            }
-//        })
+        SocketIOManager.sharedInstance.getTokenChat()
+        guard let token =  UserDefaults.standard.value(forKey: "tokenChat") else { return }
+   
+
+        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: token as! String, completionHandler: { (userList) -> Void in
+            DispatchQueue.main.async { () -> Void in
+                print("USERLIST ======= \(userList)")
+                if userList != nil {
+                    guard let usr = userList else { return }
+                    self.users.append(contentsOf: usr)
+                    self.homeView.tableView.reloadData()
+                    self.homeView.tableView.isHidden = false
+                }
+            }
+        })
     }
     func binding() {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
@@ -194,7 +228,7 @@ extension UserVC: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
         cell.setImage(image: (users[indexPath.row]["image"] as? String)!)
-        cell.titleLabel.text = users[indexPath.row]["nickname"] as? String
+        cell.titleLabel.text = users[indexPath.row]["username"] as? String
         cell.labelCategory.text =  (users[indexPath.row]["isConnected"] as! Bool) ? "Online" : "Offline"
         cell.labelCategory.textColor = (users[indexPath.row]["isConnected"] as! Bool) ? UIColor.green : UIColor.red
         cell.backgroundColor = .clear

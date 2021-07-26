@@ -49,13 +49,13 @@ extension HomeVC: UITableViewDelegate {
         
         
         
-        
-        guard let Url = url else { return }
+//
+       guard let Url = url else { return }
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.Url = Url
         self.present(vc, animated: true, completion: nil)
-        
+
 //        self.playerContainerView = Bundle.main.loadNibNamed("videoPlayerContainerNib", owner: self, options: nil)?.first as? PlayerContainerView
 //        self.playerContainerView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
 //        self.view.addSubview(self.playerContainerView!)
