@@ -113,14 +113,15 @@ class SocketIOManager: NSObject {
         }
         
         listenForOtherMessages()
+       // gotConnection()
     }
-    func gotConnection(){
-          socket.on("message") { (dataArray, ack) in
-
-          print(dataArray.count)
-
-         }
-       }
+//    func gotConnection(){
+//          socket.on("message") { (dataArray, ack) in
+//
+//          print("BJHCKHFCKCKGXKGCXKFCXKF+++++++====\(dataArray)")
+//
+//         }
+//       }
     
     func exitChatWithNickname(nickname: String, completionHandler: () -> Void) {
         socket.emit("disconnectUser", nickname)
@@ -128,19 +129,43 @@ class SocketIOManager: NSObject {
     }
     
     func sendMessage(message: String, withNickname nickname: String) {
-        socket.emit("message", nickname, message)
+        
+        var dict =  ["message": message, "messageType": "TEXT_MESSAGE", "targetUserId": nil,"targetMessageId": nil]
+        socket.emit("message", dict)
+       // gotConnection()
+
+//
+        
+//
+//        socket.emit(message, with: ["message"]) {
+//            print(message)
+//        }
     }
     
-    func getChatMessage(completionHandler: @escaping (_ messageInfo: [String: Any]) -> Void) {
-        socket.on("messageAll") { (dataArray, socketAck) -> Void in
-            var messageDictionary = [String: AnyObject]()
+    func getChatMessage(completionHandler: @escaping (_ messageInfo: [String : Any]) -> Void) {
+        
+
+        socket.on("message") { (dataArray, socketAck) -> Void in
+            var messageDictionary = [String: Any]()
+            print("GGGGGGHJBJHVLJGVHGCKHCKHFC======\(dataArray)")
+      
+        
        
-            messageDictionary["username"] = dataArray[4] as! String as AnyObject?
-            messageDictionary["message"] = dataArray[1]  as! String as AnyObject?
-            messageDictionary["timestamp"] = dataArray[3] as! String as AnyObject?
+          //  messageDictionary["username"] = dataArray[0]  as AnyObject?
+          //  messageDictionary["message"] = dataArray[1] as AnyObject?
+          //  messageDictionary["timestamp"] = dataArray[3]  as AnyObject?
+            
+            
+            messageDictionary["username"] = "SSSSS"
+            messageDictionary["message"] = "HHHHHH"
+            messageDictionary["timestamp"] = "KKKKKK"
+            
+            
        
             
             completionHandler(messageDictionary)
+          //  completionHandler(any)
+            
         }
     }
 
@@ -157,6 +182,9 @@ class SocketIOManager: NSObject {
         socket.on("userTypingUpdate") { (dataArray, socketAck) -> Void in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userTypingNotification"), object: dataArray[0] as? [String: Any])
         }
+//        socket.on("message") { (dataArray, socketAck) -> Void in
+//            print("LlllllllllllLLLLLLLLLLK==========\(dataArray), \(socketAck)")
+//        }
     }
     
     func sendStartTypingMessage(nickname: String) {

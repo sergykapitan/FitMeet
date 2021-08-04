@@ -117,18 +117,50 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-    //Constants.apiEndpoint + "/uploader/user" as! URLRequestConvertible
-//    public func uploadImage(image:Data) -> AnyPublisher<Bool,DifferentError> {
-//        return AF.upload(image, with:  , interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-//            .validate(statusCode: 200..<300)
-//            .validate(contentType: ["application/json"])
-//            .publishDecodable(type: Bool.self)
-//            .value()
-//            .print("TokenChat")
-//            .mapError{ DifferentError.alamofire(wrapped: $0)}
-//            .eraseToAnyPublisher()
-//        
-//    }
+
     
+    //Constants.apiEndpoint + "/uploader/user" as! URLRequestConvertible
+    //, mimeType: "image/jpeg"jpegData(compressionQuality: 0.5)! fileName: "file.jpg"
+    public func uploadImage(image: UIImage) -> AnyPublisher<UploadImage,DifferentError> {
+        return AF.upload( multipartFormData: { multipartFormData in
+
+            let data = image.jpegData(compressionQuality: 1.0)
+            //, mimeType: "image/png" ,,,, fileName: "image.png"
+            multipartFormData.append(data!,  withName: "image")
+
+        }, to: Constants.apiEndpoint + "/uploader/user/azure", usingThreshold: UInt64.init(), method: .post ,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        .response { ret in
+            
+            print("HHHHHHHHkkkkkkkHGGHGHGHGHGHGHG=====\(ret.data)")
+        }
+           // .validate(statusCode: 200..<300)
+            //.validate(contentType: ["application/json"])
+            .publishDecodable(type: UploadImage.self)
+            .value()
+            .print("uploadImage")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+        
+    }
+    
+    
+    
+//
+//    let headers: HTTPHeaders = [
+//                /* "Authorization": "your_access_token",  in case you need authorization header */
+//                "Content-type": "multipart/form-data"
+//            ]
+//
+//
+//                AF.upload(
+//                    multipartFormData: { multipartFormData in
+//                        multipartFormData.append(imageOrVideo!.jpegData(compressionQuality: 0.5)!, withName: "upload_data" , fileName: "file.jpeg", mimeType: "image/jpeg")
+//                },
+//                    to: "http://35.227.31.145/new.php", method: .post , headers: headers)
+//                    .response { resp in
+//                        print(resp)
+//
+//
+//                }
     
 }

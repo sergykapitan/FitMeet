@@ -47,9 +47,10 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
+                print(messageInfo)
                 self.chatMessages.append(messageInfo)
                 self.chatView.tableView.reloadData()
-                self.scrollToBottom()
+              //  self.scrollToBottom()
             }
         }
 
@@ -70,7 +71,9 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         registerForKeyboardNotifications()
         
         NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
+        
         NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
 
 
@@ -109,12 +112,12 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if chatView.textView.text.count > 0 {
             SocketIOManager.sharedInstance.sendMessage(message: chatView.textView.text!, withNickname: "\(name)")
-            self.chatMessages.append(["username":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
+           // self.chatMessages.append(["username":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
             chatView.textView.text = ""
             chatView.textView.resignFirstResponder()
             SocketIOManager.sharedInstance.getChatMessage { (old) in
-                print("JJJJJJJJJJJJJ========================\(old)")
+               // print("JJJJJJJJJJJJJ========================\(old)")
             }
   
         }
@@ -342,9 +345,9 @@ extension ChatVCPlayer: UITableViewDataSource {
             cell.labelChatMessage.textColor = .gray
         }
         
-        cell.labelChatMessage.text = message
+        cell.labelChatMessage.text = message?.description
         cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate)"
-       // cell.labelChatMessage.textColor = .lightGray
+        cell.labelChatMessage.textColor = .gray
         
         cell.backgroundColor = .lightGray
         cell.layer.cornerRadius = 20
@@ -358,6 +361,7 @@ extension ChatVCPlayer: UITableViewDataSource {
     // MARK: UITextViewDelegate Methods
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        
         SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname)
         
         return true

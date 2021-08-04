@@ -31,13 +31,27 @@ extension HomeVC: UITableViewDataSource {
         guard let category = listBroadcast[indexPath.row].categories?.first?.title, let category2 = listBroadcast[indexPath.row].categories?.last?.title else { return cell}
         cell.labelCategory.text = category + " \u{2665} " +  category2
         
+        
+        // assign the youtuber model to the cell
+          // cell.youtuber = youtubers[indexPath.row]
+           
+           // the 'self' here means the view controller, set view controller as the delegate
+           cell.delegate = self
+        
+       // cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
+      //  cell.buttonLike.tag = indexPath.row
+      //  cell.buttonLike.isUserInteractionEnabled = true
+        
+     //   if listBroadcast[indexPath.row].
+        
+        
         return cell
     }
 }
 extension HomeVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 330
+        return 300
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -54,6 +68,8 @@ extension HomeVC: UITableViewDelegate {
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.Url = Url
+        
+        //navigationController?.pushViewController(vc, animated: true)
         self.present(vc, animated: true, completion: nil)
 
 //        self.playerContainerView = Bundle.main.loadNibNamed("videoPlayerContainerNib", owner: self, options: nil)?.first as? PlayerContainerView
@@ -99,3 +115,17 @@ extension HomeVC: UITableViewDelegate {
 //       return swipeActions
 //   }
 //}
+extension HomeVC : YoutuberTableViewCellDelegate {
+    
+    func youtuberTableViewCell(_ youtuberTableViewCell: HomeCell, subscribeButtonTappedFor youtuber: String) { do {
+    // directly use the youtuber saved in the cell
+    // show alert
+    let alert = UIAlertController(title: "Subscribed!", message: "Subscribed to \(youtuber)", preferredStyle: .alert)
+    let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+    alert.addAction(okAction)
+    
+    self.present(alert, animated: true, completion: nil)
+  }
+  }
+
+}

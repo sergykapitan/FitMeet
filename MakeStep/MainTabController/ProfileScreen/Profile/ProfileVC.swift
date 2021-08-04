@@ -118,19 +118,24 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
         
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(rightHandAction))
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(rightHandAction))
+        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
         self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    @objc
-    func rightHandAction() {
-        print("right bar button action")
+    @objc func timeHandAction() {
+        print("timeHandAction")
+        let tvc = Timetable()
+        navigationController?.present(tvc, animated: true, completion: nil)
+        
+        
     }
-
+    @objc func notificationHandAction() {
+        print("notificationHandAction")
+    }
 }
 
 

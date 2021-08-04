@@ -9,6 +9,11 @@ import Foundation
 import Combine
 import UIKit
 
+// Only class object can conform to this protocol (struct/enum can't)
+protocol YoutuberTableViewCellDelegate: AnyObject {
+  func youtuberTableViewCell(_ youtuberTableViewCell: HomeCell, subscribeButtonTappedFor youtuber: String)
+}
+
 class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
     
     func change(to index: Int) {
@@ -24,6 +29,13 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         if index == 2 {
             
         }
+    }
+    
+    override  var shouldAutorotate: Bool {
+        return false
+    }
+    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
 
   
@@ -81,23 +93,55 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(rightHandAction))
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(rightHandAction))
+        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
         self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    @objc
-    func rightHandAction() {
-        print("right bar button action")
+    @objc func timeHandAction() {
+        print("timeHandAction")
+        let tvc = Timetable()
+        tvc.modalPresentationStyle = .fullScreen
+      //  self.present(tvc, animated: true, completion: nil)
+        navigationController?.pushViewController(tvc, animated: true)
+      //  navigationController?.present(tvc, animated: true, completion: nil)
+        
     }
-
-    @objc
-    func leftHandAction() {
-        print("left bar button action")
+    @objc func notificationHandAction() {
+        print("notificationHandAction")
     }
+    
+    @objc func editButtonTapped(_ sender: Any, event: Any) -> Void {
+        let point : CGPoint = (sender as AnyObject).convert(CGPoint.zero, to: homeView.tableView)
+        var indexPath =  self.homeView.tableView.indexPathForRow(at: point)
+                if let btnlike = sender as? UIButton{
+                    if btnlike.isSelected{
+                        btnlike.isSelected = false
+                    }else{
+                        btnlike.isSelected = true
+                    }
+//                }
+//       // self.ButtonHandler()
+//       // guard viewModels.indices.contains(sender.tag) else { return }
+//        if sender.currentImage == UIImage(named: "LikeNot") {
+//            print("123")
+//            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+//            guard let id = listBroadcast[sender.tag].id else { return }
+//          //  followCategory(id: id)
+//           // binding()
+//            self.homeView.tableView.reloadData()
+//        } else {
+//            sender.setImage(#imageLiteral(resourceName: "Like-1"), for: .normal)
+//            guard let id = listBroadcast[sender.tag].id else { return }
+//         //   unFollowCategory(id: id)
+//          //  binding()
+//            self.homeView.tableView.reloadData()
+        }
+        
+        }
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")

@@ -34,6 +34,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var imagePicker: ImagePicker!
     
     var image: String?
+    var name: String = "JOPE"
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
@@ -52,6 +53,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var listBroadcast: [BroadcastResponce] = []
     var listChanell: [ChannelResponce] = []
     var broadcast:  BroadcastResponce?
+    var imageUpload: UploadImage?
     
     let date = Date()
     var url: String?
@@ -227,25 +229,24 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(rightHandAction))
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(rightHandAction))
+        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
         self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    
-    @objc
-    func rightHandAction() {
-        print("right bar button action")
+    @objc func timeHandAction() {
+        print("timeHandAction")
+        let tvc = Timetable()
+        navigationController?.present(tvc, animated: true, completion: nil)
+        
+        
     }
-
-    @objc
-    func leftHandAction() {
-        print("left bar button action")
+    @objc func notificationHandAction() {
+        print("notificationHandAction")
     }
-
     
     
     
@@ -261,16 +262,16 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-//    func bindingImage(image: Data) {
-//        takeChannel = fitMeetApi.uploadImage(image: image)
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response != nil  {
-//
-//                    print(response)
-//                }
-//        })
-//    }
+    func bindingImage(image: UIImage) {
+        takeChannel = fitMeetApi.uploadImage(image: image)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.imageUpload = response
+                    print("GGGGYGGGLUFLUTCFLTFLYT+++++++++\(response.data?.first?.url)")
+                }
+        })
+    }
     func nextView(chanellId: Int ,name: String , description: String,previewPath: String)  {
         
         
@@ -335,52 +336,95 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             })
            }
     
+    
+    
+    
+    
+    
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
         let myPublish = fullUrlArr[4]
         return (myuri,myPublish)
     }
-    func uploadImage(image: UIImage) {
-       
-            let imageData = image.jpegData(compressionQuality: 1.0)
-               
-            let urlString = Constants.apiEndpoint + "/uploader/user"
-            let session = URLSession(configuration: URLSessionConfiguration.default)
-               
-            let mutableURLRequest = NSMutableURLRequest(url: NSURL(string: urlString)! as URL)
-               
-            mutableURLRequest.httpMethod = "POST"
-               
-               let boundaryConstant = "----------------12345";
-               let contentType = "multipart/form-data;boundary=" + boundaryConstant
-               mutableURLRequest.setValue(contentType, forHTTPHeaderField: "Content-Type")
-               
-               // create upload data to send
-               let uploadData = NSMutableData()
-               
-               // add image
-            uploadData.append("\r\n--\(boundaryConstant)\r\n".data(using: .utf8)!)
-            uploadData.append("Content-Disposition: form-data; name=\"picture\"; filename=\"file.png\"\r\n".data(using: .utf8)!)
-            uploadData.append("Content-Type: image/png\r\n\r\n".data(using: .utf8)!)
-            uploadData.append(imageData!)
-            uploadData.append("\r\n--\(boundaryConstant)--\r\n".data(using: .utf8)!)
-               
-            mutableURLRequest.httpBody = uploadData as Data
-        //let t = session.das
-               
-            let task = session.dataTask(with: mutableURLRequest as URLRequest, completionHandler: { (data, response, error) -> Void in
-                   if error == nil {
-                    print("Image uploaded")
-                    print("DATA===========\(data?.toString())\n RESPONCE ==== \(response)" )
-                   } else {
-                    print(error)
-                   }
-               })
-               
-               task.resume()
-               
-           
+    
+    func ffff(img_photo_image: UIImage) {
+        
+        //Set Your URL
+          let api_url = Constants.apiEndpoint + "/uploader/user/azure"
+          guard let url = URL(string: api_url) else {
+              return
+          }
+
+          var urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0 * 1000)
+          urlRequest.httpMethod = "POST"
+          urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
+
+          //Set Your Parameter
+          let parameterDict = NSMutableDictionary()
+          parameterDict.setValue(self.name, forKey: "name")
+
+          //Set Image Data
+        let imgData = img_photo_image.jpegData(compressionQuality: 1)!
+
+         // Now Execute
+          AF.upload(multipartFormData: { multiPart in
+//              for (key, value) in parameterDict {
+//                  if let temp = value as? String {
+//                      multiPart.append(temp.data(using: .utf8)!, withName: key as! String)
+//                  }
+//                  if let temp = value as? Int {
+//                      multiPart.append("\(temp)".data(using: .utf8)!, withName: key as! String)
+//                  }
+//                  if let temp = value as? NSArray {
+//                      temp.forEach({ element in
+//                          let keyObj = key as! String + "[]"
+//                          if let string = element as? String {
+//                              multiPart.append(string.data(using: .utf8)!, withName: keyObj)
+//                          } else
+//                              if let num = element as? Int {
+//                                  let value = "\(num)"
+//                                  multiPart.append(value.data(using: .utf8)!, withName: keyObj)
+//                          }
+//                      })
+//                  }
+//              }
+            //
+          //  , fileName: "file.png", mimeType: "image/png"
+            multiPart.append(imgData, withName: "file", fileName: "file.png", mimeType: "image/png")
+          }, with: urlRequest,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+              .uploadProgress(queue: .main, closure: { progress in
+                  //Current upload progress of file
+                  print("Upload Progress: \(progress.fractionCompleted)")
+              })
+              .responseJSON(completionHandler: { data in
+
+                         switch data.result {
+
+                         case .success(_):
+                          do {
+                          
+                          let dictionary = try JSONSerialization.jsonObject(with: data.data!, options: .fragmentsAllowed) as! NSDictionary
+                            
+                              print("Success!")
+                              print(dictionary)
+                         }
+                         catch {
+                            // catch error.
+                          print("catch error")
+
+                                }
+                          break
+                              
+                         case .failure(_):
+                          print("failure")
+
+                          break
+                          
+                      }
+
+
+              })
     }
     
     
@@ -477,10 +521,11 @@ extension NewStartStream: ImagePickerDelegate {
         self.authView.imageButton.setImage(image, for: .normal)
         
         guard let imagee = image else { return }
-        uploadImage(image: imagee)
-        
+        self.ffff(img_photo_image: imagee)
+       // uploadImage(image: imagee)
+       // bindingImage(image: imagee)
         let imageData:Data = imagee.pngData()!
-       // bindingImage(image: imageData)
+       
         let imageStr = imageData.base64EncodedString()
         self.image = imageStr
         

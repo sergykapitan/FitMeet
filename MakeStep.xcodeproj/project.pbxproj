@@ -46,6 +46,9 @@
 		B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF838267A5F3800EA0741 /* FirstVC.swift */; };
 		B46CF83C267A5F4700EA0741 /* FirstVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF83B267A5F4700EA0741 /* FirstVCCode.swift */; };
 		B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF83E267A67C000EA0741 /* FirstVCCell.swift */; };
+		B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A93B26B91CE000EF96A4 /* UploadImage.swift */; };
+		B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94726BA7A8400EF96A4 /* Timetable.swift */; };
+		B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8DE2682828200D75BE8 /* StartScreen.swift */; };
 		B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E12682829600D75BE8 /* StartScreenCode.swift */; };
@@ -200,6 +203,9 @@
 		B46CF838267A5F3800EA0741 /* FirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
 		B46CF83B267A5F4700EA0741 /* FirstVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVCCode.swift; sourceTree = "<group>"; };
 		B46CF83E267A67C000EA0741 /* FirstVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVCCell.swift; sourceTree = "<group>"; };
+		B475A93B26B91CE000EF96A4 /* UploadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImage.swift; sourceTree = "<group>"; };
+		B475A94726BA7A8400EF96A4 /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
+		B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableCode.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B484E8DE2682828200D75BE8 /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 		B484E8E12682829600D75BE8 /* StartScreenCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenCode.swift; sourceTree = "<group>"; };
@@ -430,6 +436,15 @@
 			path = SwitchController;
 			sourceTree = "<group>";
 		};
+		B475A94626BA7A4B00EF96A4 /* NavBar */ = {
+			isa = PBXGroup;
+			children = (
+				B475A94726BA7A8400EF96A4 /* Timetable.swift */,
+				B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */,
+			);
+			path = NavBar;
+			sourceTree = "<group>";
+		};
 		B47D8F9A2637DDC3005473C1 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -594,6 +609,7 @@
 			isa = PBXGroup;
 			children = (
 				B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */,
+				B475A93B26B91CE000EF96A4 /* UploadImage.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -840,6 +856,7 @@
 			isa = PBXGroup;
 			children = (
 				B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */,
+				B475A94626BA7A4B00EF96A4 /* NavBar */,
 				B4D9D7D4262DA7A4007CFB71 /* HomeScreen */,
 				B4D9D7D5262DA7B8007CFB71 /* SearchScreen */,
 				B4D9D7D6262DA7D5007CFB71 /* StreamScreen */,
@@ -1085,6 +1102,7 @@
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
+				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
@@ -1093,6 +1111,7 @@
 				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
 				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
+				B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */,
 				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
@@ -1118,6 +1137,7 @@
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
+				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */,

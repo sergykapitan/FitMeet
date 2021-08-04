@@ -49,7 +49,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
-                self.chatMessages.append(messageInfo)
+               // self.chatMessages.append(messageInfo)
                 self.chatView.tableView.reloadData()
                 self.scrollToBottom()
             }
@@ -324,6 +324,10 @@ extension ChatVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath) as! ChatCell
         
         let currentChatMessage = chatMessages[indexPath.section]
+        
+        print("CCCCCCCCCCCCCC======\(currentChatMessage)")
+        
+        
         let senderNickname = currentChatMessage["nickname"] as? String
         let message = currentChatMessage["message"] as? String
         let messageDate = currentChatMessage["timestamp"] as? String

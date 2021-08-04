@@ -12,12 +12,21 @@ class HomeCell: UITableViewCell {
     
     static let reuseID = "HomeCell"
     
+    // the youtuber (Model), you can use your custom model class here
+      var youtuber : String?
+        
+      // the delegate, remember to set to weak to prevent cycles
+      weak var delegate : YoutuberTableViewCellDelegate?
+    
+    
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
             return view
         }()
+   
+
     var backgroundImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .red
@@ -35,9 +44,17 @@ class HomeCell: UITableViewCell {
         return image
         
     }()
+    
+    private let bottomView : UIView = {
+        let view = UIView()
+        
+      //  view.isUserInteractionEnabled = false
+        view.backgroundColor = UIColor(hexString: "#3B58A4")
+        return view
+    }()
     let buttonLike: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Like-1"), for: .normal)
         return button
     }()
     let buttonMore: UIButton = {
@@ -71,6 +88,13 @@ class HomeCell: UITableViewCell {
         self.initialize()
     }
     
+    override func setSelected(_ selected: Bool, animated: Bool) {
+       super.setSelected(selected, animated: animated)
+        print("Selected")
+
+       // Configure the view for the selected state
+     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -78,25 +102,51 @@ class HomeCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         self.initialize()
+        // Add action to perform when the button is tapped
+        self.buttonLike.addTarget(self, action: #selector(subscribeButtonTapped(_:)), for: .touchUpInside)
+              
     }
-
+    @objc func subscribeButtonTapped(_ sender: UIButton){
+        // ask the delegate (in most case, its the view controller) to
+        // call the function 'subscribeButtonTappedFor' on itself.
+        print("Selected12e47236476238456")
+        if let youtuber = youtuber,
+           let delegate = delegate {
+            self.delegate?.youtuberTableViewCell(self, subscribeButtonTappedFor: youtuber)
+        }
+      }
+   
     func initialize() {
         addSubview(cardView)
        // cardView.fillSuperview()
         cardView.fillFull(for: self)
         cardView.addSubview(backgroundImage)
         backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height:208)
-        cardView.addSubview(logoUserImage)
-        logoUserImage.anchor(top: backgroundImage.bottomAnchor, left: cardView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
-        cardView.addSubview(titleLabel)
-        titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
-        cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: backgroundImage.bottomAnchor, right: cardView.rightAnchor ,paddingTop: 8,paddingRight: 26)
-        cardView.addSubview(buttonLike)
-        buttonLike.anchor(top:  backgroundImage.bottomAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 20)
-        cardView.addSubview(labelDescription)
+        
+        cardView.addSubview(bottomView)
+        bottomView.anchor(top: backgroundImage.bottomAnchor,
+                          left: cardView.leftAnchor,
+                          right: cardView.rightAnchor,
+                          bottom: cardView.bottomAnchor,
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0)
+        
+        
+        bottomView.addSubview(logoUserImage)
+        logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
+        
+        bottomView.addSubview(titleLabel)
+        titleLabel.anchor(top: bottomView.topAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
+        
+        bottomView.addSubview(buttonMore)
+        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 26)
+        
+        bottomView.addSubview(buttonLike)
+        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 20)
+        
+        bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: cardView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
-        cardView.addSubview(labelCategory)
+        
+        bottomView.addSubview(labelCategory)
         labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,paddingTop: 8, paddingLeft: 8)
    
     }
