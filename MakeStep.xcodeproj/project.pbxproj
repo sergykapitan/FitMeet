@@ -49,6 +49,9 @@
 		B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A93B26B91CE000EF96A4 /* UploadImage.swift */; };
 		B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94726BA7A8400EF96A4 /* Timetable.swift */; };
 		B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */; };
+		B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94E26BBB19F00EF96A4 /* ExDate.swift */; };
+		B475A95826BCA65D00EF96A4 /* Calendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A95726BCA65D00EF96A4 /* Calendar.swift */; };
+		B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A95A26BCA71200EF96A4 /* CalendarClass.swift */; };
 		B481862D26300DB9009B715A /* HomeUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B481862C26300DB9009B715A /* HomeUI.swift */; };
 		B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8DE2682828200D75BE8 /* StartScreen.swift */; };
 		B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E12682829600D75BE8 /* StartScreenCode.swift */; };
@@ -206,6 +209,9 @@
 		B475A93B26B91CE000EF96A4 /* UploadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImage.swift; sourceTree = "<group>"; };
 		B475A94726BA7A8400EF96A4 /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableCode.swift; sourceTree = "<group>"; };
+		B475A94E26BBB19F00EF96A4 /* ExDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExDate.swift; sourceTree = "<group>"; };
+		B475A95726BCA65D00EF96A4 /* Calendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calendar.swift; sourceTree = "<group>"; };
+		B475A95A26BCA71200EF96A4 /* CalendarClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarClass.swift; sourceTree = "<group>"; };
 		B481862C26300DB9009B715A /* HomeUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeUI.swift; sourceTree = "<group>"; };
 		B484E8DE2682828200D75BE8 /* StartScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreen.swift; sourceTree = "<group>"; };
 		B484E8E12682829600D75BE8 /* StartScreenCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenCode.swift; sourceTree = "<group>"; };
@@ -721,6 +727,7 @@
 				B4497D4626A6EA9300321AB8 /* ImagePicker.swift */,
 				B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */,
 				B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */,
+				B475A94E26BBB19F00EF96A4 /* ExDate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -778,6 +785,8 @@
 				B4937699263962B900D38EC3 /* Stream */,
 				B4937698263962A200D38EC3 /* Broadcast */,
 				B4497D4F26A7315500321AB8 /* Responce.swift */,
+				B475A95726BCA65D00EF96A4 /* Calendar.swift */,
+				B475A95A26BCA71200EF96A4 /* CalendarClass.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1102,6 +1111,7 @@
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
+				B475A95826BCA65D00EF96A4 /* Calendar.swift in Sources */,
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
@@ -1134,6 +1144,7 @@
 				B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
+				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
@@ -1203,6 +1214,7 @@
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
+				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B46CF836267A504A00EA0741 /* ParView.swift in Sources */,
 				B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */,

@@ -39,11 +39,18 @@ class Timetable: UIViewController {
     }
     
     // TimelinePoint, Timeline back color, title, description, lineInfo, thumbnails, illustration
-    let data:[Int: [(TimelinePoint, UIColor, String, String, String?, [String]?, String?)]] = [0:[
-            (TimelinePoint(), UIColor.black, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-            (TimelinePoint(color: UIColor.green, filled: true), UIColor.green, "16:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "150 mins", ["Apple"], "Sun"),
-            (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Moon")
+    
+    var ddd:[String: Any]?
+    
+    var data:[Int: [(TimelinePoint, UIColor, String, String, String?, [String]?, String?)]]
+        
+        
+        = [0:[
+        (TimelinePoint(), UIColor.black, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
+        (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
+            
+        (TimelinePoint(color: UIColor(hexString: "#3B58A4"), filled: true), UIColor(hexString: "#3B58A4"), "16:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "150 mins", ["Apple"], "Sun"),
+        (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Moon")
         ], 1:[
             (TimelinePoint(), UIColor.lightGray, "08:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "60 mins", nil, "Sun"),
             (TimelinePoint(), UIColor.lightGray, "09:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "30 mins", nil, "Sun"),
@@ -96,42 +103,46 @@ class Timetable: UIViewController {
  
     
     func actionButtonContinue() {
-     //   profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
-     //   profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
-     //   profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
 
     }
 
-//    func bindingUser() {
-//        take = fitMeetApi.getUser()
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.username != nil  {
-//                    self.user = response
-//                    print(self.user)
-//                }
-//        })
-//    }
-//
-//    func bindingChanell(status: String) {
-//        takeChanell = fitMeetSream.getBroadcast(status: status)
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.data != nil  {
-//                    self.brodcast = response.data?.last
-//                    print(self.brodcast)
-//                }
-//        })
-//
-//    }
     func binding() {
         takeBroadcast = fitMeetSream.getBroadcast(status: "PLANNED")
             .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+            .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                // print("RESPONCE ====== \(response)")
                 if response.data != nil  {
-                    print("Responce ====== \(response)")
                     self.brodcast = response
+                     
+                    guard let f = response.data?.first else { return }
+                    
+                    self.ddd = f.asDictionary()
+                   // print("HJBHBJJBJBJH++++++++\(ddd)")
+                    let key =  ddd?.values
+                  //  print(key?.debugDescription)
+                 //   let g = key
+//                    self.data = [0:[
+//
+//
+//                        (TimelinePoint(),
+//                              UIColor(hexString: "#3B58A4"),
+//                              f.scheduledStartDate!.getFormattedDate(format: "HH:mm:ss"),
+//                              f.name!,
+//                              f.scheduledStartDate?.getFormattedDate(format: "MMM d"),
+//                              ["aaa","ddd","fffff","fff????"],
+//                              "hhhhhhh?????")
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//                    ]]
+
                     self.profileView.tableView.reloadData()
                    // self.refreshControl.endRefreshing()
                 }
@@ -179,11 +190,8 @@ class Timetable: UIViewController {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func timeHandAction() {
-        print("timeHandAction")
         let tvc = Timetable()
         navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
     }
     @objc func notificationHandAction() {
         print("notificationHandAction")
@@ -198,19 +206,37 @@ class Timetable: UIViewController {
 extension Timetable: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return data.count
+       // return data.count
+       // return ddd?.count ?? 0
+        return 50
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        guard let sectionData = data[section] else {
-            return 0
-        }
+       // guard let sectionData = data[section] else { return 0}
+        guard let sectionData = brodcast?.data! else { return 0}
+       // guard let datas = ddd? else { return 0}
+        
+       // print("DATTTAS = \(datas)")
+ 
+      //,let datas = ddd[section]
+     //   guard let sectionDatas = datas[section] else { return 0}
+     //   guard let d = datas[section] else { return 0}
+        
         return sectionData.count
+       return 7
+        
+      //  return ddd?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Day " + String(describing: section + 1)
+        var date = Date()
+        let calendar = Calendar.current
+        
+        var c = TimeInterval(7)
+        
+       // print(calendar.nextWeekend(startingAfter: date, start: &date, interval: &c))
+        return "August " + String(describing: section + 1)
     }
  
     
@@ -218,47 +244,103 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
         // Configure the cell...
-        guard let sectionData = data[indexPath.section] else {
-            return cell
-        }
+        guard let sectionData = data[indexPath.section] else { return cell }
+       // guard let sectionData2 = ddd[indexPath.section] else { return cell}
         
-        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
+        
+        
+        guard let dataArr = ddd else { return cell}
+     //   print("KKKKKKKKKKK====\(dataArr["name"])")
+      
+        
+     //   let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
+     //   let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = (dataArr)[indexPath.row]
+        
+        
+      //  print("gknfdnvefnvenverono====\(sectionData2[indexPath.row])")
+        
         var timelineFrontColor = UIColor.clear
-        if (indexPath.row > 0) {
-            timelineFrontColor = sectionData[indexPath.row - 1].1
-        }
-        cell.timelinePoint = timelinePoint
-        cell.timeline.frontColor = timelineFrontColor
-        cell.timeline.backColor = timelineBackColor
-        cell.titleLabel.text = title
-        cell.descriptionLabel.text = description
-        cell.lineInfoLabel.text = lineInfo
         
-        if let thumbnails = thumbnails {
-            cell.viewsInStackView = thumbnails.map { thumbnail in
-                return UIImageView(image: UIImage(named: thumbnail))
-            }
+        if (indexPath.row > 0) {
+           // timelineFrontColor = sectionData[indexPath.row - 1].1
         }
-        else {
+        let key = Array(dataArr)[indexPath.row].key
+        let array = dataArr[key]
+       // print(array)
+       // let value = array[indexPath.row]
+        
+        let gg =  Array(dataArr)// or .value
+        
+        print("GGGGGGG=\(gg[indexPath.section])")
+        
+        let ggg =  Array(dataArr)[indexPath.row] // or .value
+        
+        print("hhhhhhhhh=\(ggg)")
+        
+        
+//        var dict = [String: [Int]]()
+//
+//        dict.updateValue([1, 2, 3], forKey: "firstKey")
+//        dict.updateValue([3, 4, 5], forKey: "secondKey")
+//
+//        var keyIndex = ["firstKey": "firstKey", "secondKey": "secondKey"]
+//        var arr = [[String: [Int]]]()
+//
+//        for (key, value) in dict {
+//            arr.append([keyIndex[key]!: value])
+//        }
+//
+//        print(arr[0]) // ["firstKey": [1, 2, 3]]
+        
+        cell.timelinePoint = TimelinePoint(color: UIColor.red, filled: true)
+        cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
+        cell.timeline.backColor = UIColor(hexString: "#3B58A4")
+        cell.titleLabel.text = "title"
+        cell.descriptionLabel.text = dataArr["name"] as! String
+        
+      //  let date = dataArr["scheduledStartDate"] as! String
+      //  print("HHHHHHHHH=\(date)")
+        
+        
+        
+//        let dateformat = DateFormatter()
+//        dateformat.dateFormat = "MMM d"
+//        let d = dateformat.date(from: date)
+//        print("DATE =\(d)")
+//        guard let getDate = d else { return cell}
+//        let c = dateformat.string(from: getDate)
+//        print("CATT=\(c)")
+        
+        cell.lineInfoLabel.text = "`hhhh"
+        
+//        if let thumbnails = "thumbnails" {
+        
+        cell.viewsInStackView = [UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail"))]
+        
+ //            thumbnails.map { thumbnail in
+  //              return UIImageView(image: UIImage(named: thumbnail))
+//            }
+//        }
+      //  else {
             cell.viewsInStackView = []
-        }
+     //   }
 
-        if let illustration = illustration {
-            cell.illustrationImageView.image = UIImage(named: illustration)
-        }
-        else {
-            cell.illustrationImageView.image = nil
-        }
+//        if let illustration = illustration {
+            cell.illustrationImageView.image = UIImage(named: "illustration")
+//        }
+//        else {
+  //          cell.illustrationImageView.image = nil
+      //  }
    
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let sectionData = data[indexPath.section] else {
+        guard let sectionData = brodcast?.data?[indexPath.section] else {
             return
         }
         
-        print(sectionData[indexPath.row])
+        print(sectionData.name?[indexPath.row])
     }
 
 

@@ -47,7 +47,7 @@ class FitMeetStream {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                 .print("getBroadcast")
+                // .print("getBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
         
