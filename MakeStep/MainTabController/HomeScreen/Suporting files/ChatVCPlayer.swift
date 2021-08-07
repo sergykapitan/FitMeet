@@ -15,8 +15,8 @@ import UIKit
 class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
       
     let chatView = ChatVCPlayerCode()
-    var nickname: String = "Coach"
-    var chatMessages = [[String: Any]]()
+    var nickname: String?
+    var chatMessages = [[String: String]]()
     var bannerLabelTimer: Timer!
     
     var color: UIColor?
@@ -39,18 +39,12 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-        
+
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
-                print(messageInfo)
                 self.chatMessages.append(messageInfo)
                 self.chatView.tableView.reloadData()
-              //  self.scrollToBottom()
+               // self.scrollToBottom()
             }
         }
 
@@ -70,7 +64,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         
         registerForKeyboardNotifications()
         
-        NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
         
@@ -111,15 +105,16 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if chatView.textView.text.count > 0 {
-            SocketIOManager.sharedInstance.sendMessage(message: chatView.textView.text!, withNickname: "\(name)")
+            SocketIOManager.sharedInstance.sendMessage(message: ["text" : chatView.textView.text!], withNickname: "\(name)")
+            self.nickname = name
            // self.chatMessages.append(["username":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
             chatView.textView.text = ""
             chatView.textView.resignFirstResponder()
             SocketIOManager.sharedInstance.getChatMessage { (old) in
-               // print("JJJJJJJJJJJJJ========================\(old)")
+                
             }
-  
+         //   self.chatView.tableView.reloadData()
         }
     }
     
@@ -244,14 +239,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         if chatView.textView.isFirstResponder {
             chatView.textView.resignFirstResponder()
             
-            SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nickname)
+            SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nickname ?? "")
         }
     }
     func handleConnectedUserUpdateNotification(notification: NSNotification) {
         let connectedUserInfo = notification.object as! [String: AnyObject]
-        let connectedUserNickname = connectedUserInfo["nickname"] as? String
+        let connectedUserNickname = connectedUserInfo["message"] as? String
        // lblNewsBanner.text = "User \(connectedUserNickname!.uppercased()) was just connected."
        // showBannerLabelAnimated()
+        print("connectedUserNickname =======\(connectedUserInfo)")
     }
     
     
@@ -326,27 +322,27 @@ extension ChatVCPlayer: UITableViewDataSource {
         
         let currentChatMessage = chatMessages[indexPath.section]
         
-        let senderNickname = currentChatMessage["username"] as! String
-        let message = currentChatMessage["message"] as? String
-        let messageDate = currentChatMessage["timestamp"] as? String
-        
-        
-        
-        
-        if senderNickname == currentChatMessage["username"] as! String {
+        guard let senderNickname = currentChatMessage["username"],let message = currentChatMessage["message"], let messageDate = currentChatMessage["timestamp"] else { return  cell}
+       // let message = currentChatMessage["message"] as? String
+
+        if senderNickname == nickname as! String {
+
             cell.labelChatMessage.textAlignment = NSTextAlignment.right
             cell.labelMessageDetail.textAlignment = NSTextAlignment.right
-            cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
+            cell.backgroundColor = .lightGray
+           // cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
             cell.labelChatMessage.textColor = .gray
+            
         } else {
+            cell.cardView.fillSuperviewforCellRight()
             cell.labelChatMessage.textAlignment = NSTextAlignment.left
             cell.labelMessageDetail.textAlignment = NSTextAlignment.left
             cell.backgroundColor = .lightGray
             cell.labelChatMessage.textColor = .gray
+           
         }
-        
-        cell.labelChatMessage.text = message?.description
-        cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate)"
+        cell.labelChatMessage.text = message.description
+        cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate.getFormattedDate(format: "HH:mm:ss"))"
         cell.labelChatMessage.textColor = .gray
         
         cell.backgroundColor = .lightGray
@@ -362,7 +358,7 @@ extension ChatVCPlayer: UITableViewDataSource {
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         
-        SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname)
+        SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname ?? "")
         
         return true
     }

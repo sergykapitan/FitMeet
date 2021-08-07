@@ -33,6 +33,21 @@ extension UIView {
                bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
                paddingTop: 5, paddingLeft: 15, paddingRight: 15, paddingBottom: 5)
     }
+    func fillSuperviewforCellRight() {
+        anchor(top: superview?.safeAreaLayoutGuide.topAnchor,
+               left: superview?.safeAreaLayoutGuide.leftAnchor,
+               right: superview?.safeAreaLayoutGuide.rightAnchor,
+               bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
+               paddingTop: 5, paddingLeft: 15, paddingRight: 45, paddingBottom: 5,height: 88)
+    }
+    func fillSuperviewforLeft() {
+        anchor(top: superview?.safeAreaLayoutGuide.topAnchor,
+               left: superview?.safeAreaLayoutGuide.leftAnchor,
+               right: superview?.safeAreaLayoutGuide.rightAnchor,
+               bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
+               paddingTop: 5, paddingLeft: 45, paddingRight: 15, paddingBottom: 5)
+    }
+
 
     func anchor (top:NSLayoutYAxisAnchor? = nil,
                  left:NSLayoutXAxisAnchor? = nil,

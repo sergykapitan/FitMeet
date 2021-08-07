@@ -17,8 +17,8 @@ func changeBackgroundColor()
 class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
       
     let chatView = ChatVCCode()
-    var nickname: String = "Coach"
-    var chatMessages = [[String: Any]]()
+    var nickname: String?
+    var chatMessages = [[String: String]]()
     var bannerLabelTimer: Timer!
     
     var color: UIColor?
@@ -49,9 +49,9 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
-               // self.chatMessages.append(messageInfo)
+                self.chatMessages.append(messageInfo)
                 self.chatView.tableView.reloadData()
-                self.scrollToBottom()
+               // self.scrollToBottom()
             }
         }
 
@@ -109,16 +109,19 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     @objc func sendMessage() {
         
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
+        //let userName = UserDefaults.standard.string(forKey: Constants)
+        
         if chatView.textView.text.count > 0 {
-            SocketIOManager.sharedInstance.sendMessage(message: chatView.textView.text!, withNickname: "\(name)")
-            self.chatMessages.append(["nickname":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
+            SocketIOManager.sharedInstance.sendMessage( message: ["text" : chatView.textView.text!], withNickname: "\(name)")
+            self.nickname = name
+           // self.chatMessages.append(["nickname":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
             chatView.textView.text = ""
             chatView.textView.resignFirstResponder()
-//            SocketIOManager.sharedInstance.getChatMessage { (old) in
-//                print("JJJJJJJJJJJJJ========================\(old)")
-//            }
-  
+            SocketIOManager.sharedInstance.getChatMessage { (old) in
+               
+            }
+            self.chatView.tableView.reloadData()
         }
     }
     
@@ -243,7 +246,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         if chatView.textView.isFirstResponder {
             chatView.textView.resignFirstResponder()
             
-            SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nickname)
+            SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nickname ?? "")
         }
     }
     func handleConnectedUserUpdateNotification(notification: NSNotification) {
@@ -325,30 +328,33 @@ extension ChatVC: UITableViewDataSource {
         
         let currentChatMessage = chatMessages[indexPath.section]
         
-        print("CCCCCCCCCCCCCC======\(currentChatMessage)")
         
         
-        let senderNickname = currentChatMessage["nickname"] as? String
+        let senderNickname = currentChatMessage["username"] as? String
         let message = currentChatMessage["message"] as? String
         let messageDate = currentChatMessage["timestamp"] as? String
         
         
         
-        
+        print("senderNickname=====\(senderNickname)\n   nikname=====\(nickname)")
         if senderNickname == nickname {
-            cell.labelChatMessage.textAlignment = NSTextAlignment.left
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.left
+      
+            cell.labelChatMessage.textAlignment = NSTextAlignment.right
+            cell.labelMessageDetail.textAlignment = NSTextAlignment.right
             cell.backgroundColor = UIColor(hexString: "#3B58A4")
             cell.labelChatMessage.textColor = .blue
         } else {
-            cell.labelChatMessage.textAlignment = NSTextAlignment.right
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.right
+            cell.cardView.fillSuperviewforCellRight()
+            viewWillLayoutSubviews()
+            cell.labelChatMessage.textAlignment = NSTextAlignment.left
+            cell.labelMessageDetail.textAlignment = NSTextAlignment.left
            // cell.backgroundColor = .lightGray
             cell.labelChatMessage.textColor = .black
+            
         }
         
         cell.labelChatMessage.text = message
-        cell.labelMessageDetail.text = "by \(senderNickname?.uppercased()) @ \(messageDate)"
+        cell.labelMessageDetail.text = "by \(senderNickname?.uppercased()) @ \(messageDate?.getFormattedDate(format: "HH:mm:ss"))"
         cell.labelChatMessage.textColor = .white
         
         cell.backgroundColor = .clear
@@ -363,7 +369,7 @@ extension ChatVC: UITableViewDataSource {
     // MARK: UITextViewDelegate Methods
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname)
+        SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname ?? "")
         
         return true
     }

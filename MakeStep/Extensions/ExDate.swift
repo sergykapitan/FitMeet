@@ -46,12 +46,46 @@ public extension String {
  //  "MMM d"
   
     func getFormattedDate(format: String) -> String {
-            let dateformat = DateFormatter()
-        // Convert String to Date
-           let d = dateformat.date(from: self)
-            dateformat.dateFormat = format
-        guard let date = d else { return "00:00"}
-            return dateformat.string(from: date)
+        
+       // let isoDate = "2021-08-03T13:06:52.026Z"
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        isoDateFormatter.formatOptions = [
+            .withFullDate,
+            .withFullTime,
+            .withDashSeparatorInDate,
+            .withFractionalSeconds]
+
+        guard let realDate = isoDateFormatter.date(from: self) else { return "00:00"}
+            print("Got it: \(realDate)")
+           return  realDate.getFormattedDate(format: format)
+        
+        
+    }
+    func getFormattedDateR(format: String) -> Date {
+        
+       // let isoDate = "2021-08-03T13:06:52.026Z"
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+        isoDateFormatter.formatOptions = [
+            .withFullDate,
+            .withFullTime,
+            .withDashSeparatorInDate,
+            .withFractionalSeconds]
+
+        guard let realDate = isoDateFormatter.date(from: self) else { return Date()}
+            print("Got it: \(realDate)")
+           return  realDate
+        
         
     }
 }
+
+let formatter = ISO8601DateFormatter()
+
+class DateTextItem: NSObject {
+    var text: String = ""
+    var insertDate: NSDate = NSDate()
+}
+
+var testArray = [DateTextItem]()

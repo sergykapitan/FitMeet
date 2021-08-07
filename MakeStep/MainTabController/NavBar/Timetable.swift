@@ -208,7 +208,7 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
     func numberOfSections(in tableView: UITableView) -> Int {
        // return data.count
        // return ddd?.count ?? 0
-        return 50
+        return 30
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -223,20 +223,22 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
      //   guard let sectionDatas = datas[section] else { return 0}
      //   guard let d = datas[section] else { return 0}
         
-        return sectionData.count
+       // return sectionData.count
        return 7
         
       //  return ddd?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        var date = Date()
+    
         let calendar = Calendar.current
         
-        var c = TimeInterval(7)
-        
-       // print(calendar.nextWeekend(startingAfter: date, start: &date, interval: &c))
-        return "August " + String(describing: section + 1)
+//        let str = brodcast!.data!.first?.scheduledStartDate!.getFormattedDateR
+//        let end = brodcast!.data!.last?.scheduledStartDate!.getFormattedDateR
+//
+//        let ymd = calendar.dateComponents([ .month, .day], from:(brodcast!.data!.first?.scheduledStartDate!.getFormattedDateR)! , to: (brodcast!.data!.last?.scheduledStartDate!.getFormattedDateR)!)
+       // print("YYYYYY++++++\(ymd)")
+        return "Week " + String(describing: section + 1)
     }
  
     
@@ -264,18 +266,18 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
         if (indexPath.row > 0) {
            // timelineFrontColor = sectionData[indexPath.row - 1].1
         }
-        let key = Array(dataArr)[indexPath.row].key
-        let array = dataArr[key]
+    //    let key = Array(dataArr)[indexPath.row].key
+    //    let array = dataArr[key]
        // print(array)
        // let value = array[indexPath.row]
         
-        let gg =  Array(dataArr)// or .value
+    //    let gg =  Array(dataArr)// or .value
         
-        print("GGGGGGG=\(gg[indexPath.section])")
+    //    print("GGGGGGG=\(gg[indexPath.section])")
         
-        let ggg =  Array(dataArr)[indexPath.row] // or .value
+    //    let ggg =  Array(dataArr)[indexPath.row] // or .value
         
-        print("hhhhhhhhh=\(ggg)")
+   //     print("hhhhhhhhh=\(ggg)")
         
         
 //        var dict = [String: [Int]]()
@@ -295,23 +297,15 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
         cell.timelinePoint = TimelinePoint(color: UIColor.red, filled: true)
         cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
         cell.timeline.backColor = UIColor(hexString: "#3B58A4")
-        cell.titleLabel.text = "title"
-        cell.descriptionLabel.text = dataArr["name"] as! String
-        
-      //  let date = dataArr["scheduledStartDate"] as! String
-      //  print("HHHHHHHHH=\(date)")
-        
-        
-        
-//        let dateformat = DateFormatter()
-//        dateformat.dateFormat = "MMM d"
-//        let d = dateformat.date(from: date)
-//        print("DATE =\(d)")
-//        guard let getDate = d else { return cell}
-//        let c = dateformat.string(from: getDate)
-//        print("CATT=\(c)")
-        
-        cell.lineInfoLabel.text = "`hhhh"
+        cell.titleLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "MMM d")
+        cell.descriptionLabel.text = "\(brodcast!.data![indexPath.row].name!)/n" + "\(brodcast!.data![indexPath.row].description!)/n" + "\(brodcast!.data![indexPath.row].categories?.first?.description!)"
+        cell.descriptionLabel.backgroundColor = UIColor(hexString: "#3B58A4")
+        cell.descriptionLabel.layer.cornerRadius = 6
+        cell.descriptionLabel.layer.borderWidth = 1
+        cell.descriptionLabel.layer.borderColor = UIColor.black.cgColor
+        cell.descriptionLabel.layer.masksToBounds = true
+
+        cell.lineInfoLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "HH:mm")
         
 //        if let thumbnails = "thumbnails" {
         
@@ -337,10 +331,20 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let sectionData = brodcast?.data?[indexPath.section] else {
+             
             return
         }
+       let g =  brodcast?.asDictionaryInt()
         
-        print(sectionData.name?[indexPath.row])
+        for i in brodcast!.data! {
+            print("iiiiiiiii====\(i)")
+        }
+        let f = brodcast!.data![indexPath.row]
+        print("ffffffffffff======\(f)")
+        
+        print("Dict ==== \(g)")
+        
+        print(sectionData.name)
     }
 
 

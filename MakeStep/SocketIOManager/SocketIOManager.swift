@@ -36,7 +36,7 @@ class SocketIOManager: NSObject {
                                                                 .connectParams(["broadcastId": broadcastId!, "channelId": chanelId!,"token": token!])
                                                                                         
     ])
-    //"token": token!
+    
     lazy var socket = manager.defaultSocket
 
     
@@ -55,7 +55,7 @@ class SocketIOManager: NSObject {
         
         guard let t = token,let b = broadcastId ,let chanel = chanelId else { return }
 
-               socket.connect()
+        socket.connect()
       
  
 
@@ -87,25 +87,6 @@ class SocketIOManager: NSObject {
      
 
         socket.connect()
-
-//        connection = 'connection',
-//        connectUser = 'connectUser',
-//        disconnectUser = 'disconnectUser',
-//        message = 'message',
-//        closeRoom = 'closeRoom',
-//        editRole = 'editRole',
-//        systemMessage = 'systemMessage',
-//        help = 'help',
-        
-        socket.emit("connection", nickname)
-        socket.emit("connectUser", nickname)
-        socket.emit("disconnectUser", nickname)
-        socket.emit("closeRoom", nickname)
-        socket.emit("systemMessage", nickname)
-        socket.emit("editRole", nickname)
-        socket.emit("message", nickname)
-        socket.emit("help", nickname)
-       
         socket.on("message") { ( dataArray, ack) -> Void in
             print("DATAARRAY ===== \(dataArray)")
             
@@ -113,65 +94,62 @@ class SocketIOManager: NSObject {
         }
         
         listenForOtherMessages()
-       // gotConnection()
+        gotConnection()
     }
-//    func gotConnection(){
-//          socket.on("message") { (dataArray, ack) in
-//
-//          print("BJHCKHFCKCKGXKGCXKFCXKF+++++++====\(dataArray)")
-//
-//         }
-//       }
+    func gotConnection(){
+          socket.on("message") { (dataArray, ack) in
+
+          
+
+         }
+       }
     
     func exitChatWithNickname(nickname: String, completionHandler: () -> Void) {
         socket.emit("disconnectUser", nickname)
         completionHandler()
     }
     
-    func sendMessage(message: String, withNickname nickname: String) {
+    func sendMessage(message: [String: String], withNickname nickname: String) {
         
-        var dict =  ["message": message, "messageType": "TEXT_MESSAGE", "targetUserId": nil,"targetMessageId": nil]
+        let dict =  ["message": message,
+                     "messageType": "TEXT_MESSAGE",
+                     "targetUserId": nil,
+                     "targetMessageId": nil] as [String : Any?]
         socket.emit("message", dict)
-       // gotConnection()
 
-//
-        
-//
-//        socket.emit(message, with: ["message"]) {
-//            print(message)
-//        }
     }
     
-    func getChatMessage(completionHandler: @escaping (_ messageInfo: [String : Any]) -> Void) {
+    func getChatMessage(completionHandler: @escaping (_ messageInfo: [String : String]) -> Void) {
         
 
         socket.on("message") { (dataArray, socketAck) -> Void in
-            var messageDictionary = [String: Any]()
-            print("GGGGGGHJBJHVLJGVHGCKHCKHFC======\(dataArray)")
-      
-        
-       
-          //  messageDictionary["username"] = dataArray[0]  as AnyObject?
-          //  messageDictionary["message"] = dataArray[1] as AnyObject?
-          //  messageDictionary["timestamp"] = dataArray[3]  as AnyObject?
+            var messageDictionary = [String: String]()
+            
+
+            let dict = dataArray[0] as? [String: Any]
+            
+            let user = dict!["user"] as? [String: Any]
+            
+            let message = dict!["payload"] as? [String: Any]
+            
+            let text = message!["message"] as? [String: Any]
+            print(user)
             
             
-            messageDictionary["username"] = "SSSSS"
-            messageDictionary["message"] = "HHHHHH"
-            messageDictionary["timestamp"] = "KKKKKK"
-            
-            
-       
-            
+            messageDictionary["username"] = user!["fullName"] as! String
+            messageDictionary["message"] = text!["text"] as! String
+            messageDictionary["timestamp"] = dict!["timestamp"] as! String
+
             completionHandler(messageDictionary)
-          //  completionHandler(any)
-            
+ 
         }
+
+ 
     }
 
     private func listenForOtherMessages() {
          
-        socket.on("connectUser"){ (dataArray, socketAck) -> Void in
+        socket.on("message"){ (dataArray, socketAck) -> Void in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: dataArray[0] as! [String: Any])
         }
         
@@ -182,9 +160,7 @@ class SocketIOManager: NSObject {
         socket.on("userTypingUpdate") { (dataArray, socketAck) -> Void in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userTypingNotification"), object: dataArray[0] as? [String: Any])
         }
-//        socket.on("message") { (dataArray, socketAck) -> Void in
-//            print("LlllllllllllLLLLLLLLLLK==========\(dataArray), \(socketAck)")
-//        }
+
     }
     
     func sendStartTypingMessage(nickname: String) {
@@ -195,5 +171,5 @@ class SocketIOManager: NSObject {
     func sendStopTypingMessage(nickname: String) {
         socket.emit("disconnectUser", nickname)
     }
-    
+
 }

@@ -15,9 +15,9 @@ public extension Encodable {
        return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
      }
     
-    func asDictionaryInt() -> [String: Dictionary<String, Any>]? {
+    func asDictionaryInt() -> [String: [String:[String]]]? {
        guard let data = try? JSONEncoder().encode(self) else { return nil }
-       return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Dictionary] }
+       return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: [String:[String]]] }
      }
 }
 
@@ -59,5 +59,23 @@ extension Data
     func toString() -> String?
     {
         return String(data: self, encoding: .utf8)
+    }
+}
+extension Array
+
+{
+//    func asDictionary() -> [String: Any]? {
+//       guard let data = try? JSONEncoder().encode(self) else { return nil }
+//       return (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)).flatMap { $0 as? [String: Any] }
+//     }
+}
+extension Array {
+
+    func dictionary<Key, Value>(withKey key: KeyPath<Element, Key>, value: KeyPath<Element, Value>) -> [Key: Value] {
+        return reduce(into: [:]) { dictionary, element in
+            let key = element[keyPath: key]
+            let value = element[keyPath: value]
+            dictionary[key] = value
+        }
     }
 }

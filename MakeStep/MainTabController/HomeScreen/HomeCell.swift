@@ -49,7 +49,7 @@ class HomeCell: UITableViewCell {
         let view = UIView()
         
       //  view.isUserInteractionEnabled = false
-        view.backgroundColor = UIColor(hexString: "#3B58A4")
+      //  view.backgroundColor = UIColor(hexString: "#3B58A4")
         return view
     }()
     let buttonLike: UIButton = {
