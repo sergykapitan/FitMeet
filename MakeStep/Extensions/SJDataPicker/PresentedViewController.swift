@@ -28,6 +28,7 @@ class PresentedViewController: UIViewController {
     
     func injected() {
         let btnConfirm = UIButton(type: .custom)
+        
         btnConfirm.setTitle("OK", for: .normal)
         btnConfirm.backgroundColor = style.textColor
         btnConfirm.layer.cornerRadius = cornerRadius
@@ -35,7 +36,7 @@ class PresentedViewController: UIViewController {
         btnConfirm.addTarget(self, action: #selector(confirmButton_Click), for: .touchUpInside)
         btnConfirm.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(btnConfirm)
-        NSLayoutConstraint.activate([btnConfirm.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+        NSLayoutConstraint.activate([btnConfirm.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor,constant: -20),
                                      btnConfirm.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
                                      btnConfirm.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
                                      btnConfirm.heightAnchor.constraint(equalToConstant: CustomPresentationController.buttonHeight)])

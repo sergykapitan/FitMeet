@@ -29,7 +29,10 @@ class HomeCell: UITableViewCell {
 
     var backgroundImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .red
+       // image.contentMode = .scaleAspectFit
+       // image.contentMode = .scaleAspectFill
+       // image.contentMode = .scaleToFill
+        
         return image
         
     }()
@@ -121,8 +124,10 @@ class HomeCell: UITableViewCell {
        // cardView.fillSuperview()
         cardView.fillFull(for: self)
         cardView.addSubview(backgroundImage)
-        backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height:208)
-        
+        backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 200)
+        //
+        //,height:150
+
         cardView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
                           left: cardView.leftAnchor,

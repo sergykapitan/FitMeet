@@ -66,6 +66,8 @@
 		B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */; };
 		B48D82B7262DC12700F5A0D9 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82B6262DC12700F5A0D9 /* Video.swift */; };
 		B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */; };
+		B4908FCE26C27FBB00AE3117 /* PlayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4908FCD26C27FBB00AE3117 /* PlayButton.swift */; };
+		B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4908FE026C2B03E00AE3117 /* PresentCode.swift */; };
 		B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376892638622700D38EC3 /* ResponcePassword.swift */; };
 		B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493768C2638796600D38EC3 /* ParentViewController.swift */; };
 		B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B493769226394A5000D38EC3 /* StreamResponce.swift */; };
@@ -165,6 +167,7 @@
 		B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F580652631531A000095BB /* FitMeetChannels.swift */; };
 		B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58068263156CC000095BB /* FitMeetStream.swift */; };
 		B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF0D26BEC15800C25304 /* Message.swift */; };
+		B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -227,6 +230,8 @@
 		B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVCCode.swift; sourceTree = "<group>"; };
 		B48D82B6262DC12700F5A0D9 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoClip.swift; sourceTree = "<group>"; };
+		B4908FCD26C27FBB00AE3117 /* PlayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayButton.swift; sourceTree = "<group>"; };
+		B4908FE026C2B03E00AE3117 /* PresentCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentCode.swift; sourceTree = "<group>"; };
 		B49376892638622700D38EC3 /* ResponcePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponcePassword.swift; sourceTree = "<group>"; };
 		B493768C2638796600D38EC3 /* ParentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentViewController.swift; sourceTree = "<group>"; };
 		B493769226394A5000D38EC3 /* StreamResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamResponce.swift; sourceTree = "<group>"; };
@@ -329,6 +334,7 @@
 		B4F580652631531A000095BB /* FitMeetChannels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetChannels.swift; sourceTree = "<group>"; };
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B4FCCF0D26BEC15800C25304 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
 		DAFC849543649BF7FBEF05D4 /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		FA4DB2B64A5CB7250CB4B688 /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -592,6 +598,7 @@
 				B4B1115A2692F8880006CA5A /* SlideInPresentationAnimator.swift */,
 				B4B1115E2692F8AA0006CA5A /* SlideInPresentationController.swift */,
 				B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */,
+				B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */,
 			);
 			path = Presentashion;
 			sourceTree = "<group>";
@@ -609,6 +616,8 @@
 				B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */,
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4B113CA2698688C0006CA5A /* PresentVCCode.swift */,
+				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
+				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
 			);
 			path = "Suporting files";
 			sourceTree = "<group>";
@@ -1091,6 +1100,7 @@
 				B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */,
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
+				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
@@ -1172,6 +1182,7 @@
 				B4EA552D2653C1450060A694 /* AppleAuthorizationRequest.swift in Sources */,
 				B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */,
 				B4B113CB2698688C0006CA5A /* PresentVCCode.swift in Sources */,
+				B4908FCE26C27FBB00AE3117 /* PlayButton.swift in Sources */,
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */,
 				B46CF83C267A5F4700EA0741 /* FirstVCCode.swift in Sources */,
@@ -1219,6 +1230,7 @@
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
+				B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B46CF836267A504A00EA0741 /* ParView.swift in Sources */,
 				B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */,
@@ -1372,14 +1384,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.20;
+				MARKETING_VERSION = 1.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1397,14 +1409,14 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.20;
+				MARKETING_VERSION = 1.0.21;
 				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

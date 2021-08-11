@@ -21,7 +21,7 @@ class CategoryBroadcastCell: UITableViewCell {
         }()
     var backgroundImage: UIImageView = {
         let image = UIImageView()
-        image.backgroundColor = .red
+       // image.backgroundColor = .red
         return image
         
     }()
@@ -48,6 +48,7 @@ class CategoryBroadcastCell: UITableViewCell {
     }()
     var titleLabel: UILabel =  {
         let label = UILabel()
+        label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
@@ -89,12 +90,20 @@ class CategoryBroadcastCell: UITableViewCell {
         backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height:208)
         cardView.addSubview(logoUserImage)
         logoUserImage.anchor(top: backgroundImage.bottomAnchor, left: cardView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
-        cardView.addSubview(titleLabel)
-        titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
+        
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: backgroundImage.bottomAnchor, right: cardView.rightAnchor ,paddingTop: 8,paddingRight: 26)
         cardView.addSubview(buttonLike)
         buttonLike.anchor(top:  backgroundImage.bottomAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 20)
+        
+        
+        cardView.addSubview(titleLabel)
+        titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor,right: buttonLike.leftAnchor, paddingTop: 8, paddingLeft: 8,paddingRight: 5)
+        
+       
+        
+        
+        
         cardView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: cardView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         cardView.addSubview(labelCategory)

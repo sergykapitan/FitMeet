@@ -264,3 +264,46 @@ extension UIView {
             ])
     }
 }
+
+extension UIView {
+    public func turnOffAutoResizing() {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        for view in self.subviews as [UIView] {
+           view.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    public func orientationHasChanged(_ isInPortrait:inout Bool) -> Bool {
+        if self.frame.width > self.frame.height {
+            if isInPortrait {
+                isInPortrait = false
+                return true
+            }
+        } else {
+            if !isInPortrait {
+                isInPortrait = true
+                return true
+            }
+        }
+        return false
+    }
+    public func setOrientation(_ p:[NSLayoutConstraint], _ l:[NSLayoutConstraint]) {
+        NSLayoutConstraint.deactivate(l)
+        NSLayoutConstraint.deactivate(p)
+        if self.bounds.width > self.bounds.height {
+            NSLayoutConstraint.activate(l)
+        } else {
+            NSLayoutConstraint.activate(p)
+        }
+    }
+}
+extension UIImageView {
+
+    func makeRounded() {
+
+        self.layer.borderWidth = 1
+        self.layer.masksToBounds = false
+        self.layer.borderColor = UIColor.black.cgColor
+        self.layer.cornerRadius = self.frame.height / 2
+        self.clipsToBounds = true
+    }
+}

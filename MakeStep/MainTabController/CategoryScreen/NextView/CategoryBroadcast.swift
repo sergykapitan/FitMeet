@@ -42,7 +42,12 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     var categoryTitle: String?
    // let viewModel = ViewModel()
 
-    
+    override  var shouldAutorotate: Bool {
+        return false
+    }
+    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
     
     //MARK - LifeCicle
     override func loadView() {

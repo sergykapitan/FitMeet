@@ -50,6 +50,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     private var chanellName: String?
     private var titleChanell: String?
     private var descriptionChanell: String?
+    
     var listBroadcast: [BroadcastResponce] = []
     var listChanell: [ChannelResponce] = []
     var broadcast:  BroadcastResponce?
@@ -87,13 +88,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        authView.textFieldName.text = ""
-        authView.textFieldStartDate.text = ""
-        authView.textFieldFree.text = ""
-        authView.textFieldAviable.text = ""
-        authView.textFieldDescription.text = ""
-        authView.textFieldCategory.text = ""
-        authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+//        authView.textFieldName.text = ""
+//        authView.textFieldStartDate.text = ""
+//        authView.textFieldFree.text = ""
+//        authView.textFieldAviable.text = ""
+//        authView.textFieldDescription.text = ""
+//        authView.textFieldCategory.text = ""
+//        authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
     
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -129,10 +130,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         
         changeData()
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-       // authView.textFieldStartDate.cance
-
         actionButtonContinue()
-
         authView.buttonContinue.isUserInteractionEnabled = false
  
   
@@ -144,7 +142,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 
     func changeData() {
         authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-            print("ggggggg ==== \(gg)\n tttttt======\(tt)\n hhhhhhh===\(hh)")
             if gg == "NOW" {
                 self.authView.buttonOK.setTitle("OK", for: .normal)
                 self.authView.buttonOK.isUserInteractionEnabled = true
@@ -175,12 +172,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         var style = DefaultStyle()
         style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
         style.pickerMode = .dateAndTime
-        style.titleString = "This is Date Picker"
+        style.titleString = "Please Сhoose Date"
         style.returnDateFormat = .yyyy_To_ss
         style.minimumDate = Date()
         style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
         style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
-        
+    
+        style.textColor = UIColor(hexString: "#3B58A4")
         let pick:PresentedViewController = PresentedViewController()
         pick.style = style
         pick.block = { [weak self] (date) in
@@ -195,23 +193,45 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-      print("create broadcast")
-        guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text,let img = image else { return }
-        UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
+        guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text,let img = image ,let planedDate = authView.textFieldStartDate.text else { return }
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img)
-        print("Date = \(date)")
+        UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
+        //(chanellId: chanelId, name: name, description: description, previewPath: img)
+        var isPlan: Bool?
+        var date: String?
+        
+        var onlyForSponsors : Bool?
+        var onlyForSubscribers: Bool?
+        
+        if authView.textFieldStartDate.text == "NOW" {
+            isPlan = false
+            date = "\(Date())"
+        } else {
+            
+            isPlan = true
+            date = authView.textFieldStartDate.text
+        }
+        //"All","Subscribers", "Only Sponsors"
+        if authView.textFieldAviable.text == "All" {
+             onlyForSponsors = false
+             onlyForSubscribers = false
+        } else if authView.textFieldAviable.text == "Subscribers" {
+            onlyForSponsors = false
+            onlyForSubscribers = true
+        } else if authView.textFieldAviable.text == "Only Sponsors" {
+            onlyForSponsors = true
+            onlyForSubscribers = false
+        }
+        
+        
+        guard let isP = isPlan,let d = date,let sponsor = onlyForSponsors,let sub = onlyForSubscribers else { return }
+        
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: 26)
+     
     }
     @objc func actionUploadImage(_ sender: UIButton) {
-        print("Upload Image")
-        
         self.imagePicker.present(from: sender)
-        
-        
-//        let myPickerController = UIImagePickerController()
-//        myPickerController.delegate = self;
-//        myPickerController.sourceType =  UIImagePickerController.SourceType.photoLibrary
-//        self.present(myPickerController, animated: true, completion: nil)
+
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -266,35 +286,30 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RESPONSE======\(response)")
                 if response != nil  {
                     self.imageUpload = response
-                    print("GGGGYGGGLUFLUTCFLTFLYT+++++++++\(response.data?.first?.url)")
+                    
+                  
                 }
         })
     }
-    func nextView(chanellId: Int ,name: String , description: String,previewPath: String)  {
-        
-        
-        print("PREVIEWPATH ===============\(previewPath)")
-       // uploadImage()
-  
-    
+    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: Int)  {
+
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
                                                     channelID: chanellId,
                                                     name: name,
                                                     type: "STANDARD",
                                                     access: "ALL",
                                                     hasChat: true,
-                                                    isPlanned: false,
-                                                    onlyForSponsors: false,
-                                                    onlyForSubscribers: false,
-                                                    categoryIDS: [],
-                                                    scheduledStartDate: "\(date)",
+                                                    isPlanned: isPlaned,
+                                                    onlyForSponsors: onlyForSponsors,
+                                                    onlyForSubscribers: onlyForSubscribers,
+                                                    categoryIDS: [categoryId],
+                                                    scheduledStartDate: date,
                                                     description: description,
-                                                    previewPath: "/path/to/file.jpg"))
-            //
-       // "2021-06-18T10:50:26.017Z"
-            //"/path/to/file.jpg"
+                                                    previewPath: self.imageUpload?.data?.first?.filename))
+
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
@@ -303,6 +318,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.broadcast = response
                     UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
                     self.fetchStream(id: self.broadcast?.id, name: name)
+                    
+                    self.authView.textFieldName.text = ""
+                    self.authView.textFieldStartDate.text = ""
+                    self.authView.textFieldFree.text = ""
+                    self.authView.textFieldAviable.text = ""
+                    self.authView.textFieldDescription.text = ""
+                    self.authView.textFieldCategory.text = ""
+                    self.authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
 
                 }
              })
@@ -335,12 +358,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.present(navVC, animated: true, completion: nil)
             })
            }
-    
-    
-    
-    
-    
-    
+
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
@@ -348,86 +366,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         return (myuri,myPublish)
     }
     
-    func ffff(img_photo_image: UIImage) {
-        
-        //Set Your URL
-          let api_url = Constants.apiEndpoint + "/uploader/user/azure"
-          guard let url = URL(string: api_url) else {
-              return
-          }
-
-          var urlRequest = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 10.0 * 1000)
-          urlRequest.httpMethod = "POST"
-          urlRequest.addValue("application/json", forHTTPHeaderField: "Accept")
-
-          //Set Your Parameter
-          let parameterDict = NSMutableDictionary()
-          parameterDict.setValue(self.name, forKey: "name")
-
-          //Set Image Data
-        let imgData = img_photo_image.jpegData(compressionQuality: 1)!
-
-         // Now Execute
-          AF.upload(multipartFormData: { multiPart in
-//              for (key, value) in parameterDict {
-//                  if let temp = value as? String {
-//                      multiPart.append(temp.data(using: .utf8)!, withName: key as! String)
-//                  }
-//                  if let temp = value as? Int {
-//                      multiPart.append("\(temp)".data(using: .utf8)!, withName: key as! String)
-//                  }
-//                  if let temp = value as? NSArray {
-//                      temp.forEach({ element in
-//                          let keyObj = key as! String + "[]"
-//                          if let string = element as? String {
-//                              multiPart.append(string.data(using: .utf8)!, withName: keyObj)
-//                          } else
-//                              if let num = element as? Int {
-//                                  let value = "\(num)"
-//                                  multiPart.append(value.data(using: .utf8)!, withName: keyObj)
-//                          }
-//                      })
-//                  }
-//              }
-            //
-          //  , fileName: "file.png", mimeType: "image/png"
-            multiPart.append(imgData, withName: "file", fileName: "file.png", mimeType: "image/png")
-          }, with: urlRequest,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-              .uploadProgress(queue: .main, closure: { progress in
-                  //Current upload progress of file
-                  print("Upload Progress: \(progress.fractionCompleted)")
-              })
-              .responseJSON(completionHandler: { data in
-
-                         switch data.result {
-
-                         case .success(_):
-                          do {
-                          
-                          let dictionary = try JSONSerialization.jsonObject(with: data.data!, options: .fragmentsAllowed) as! NSDictionary
-                            
-                              print("Success!")
-                              print(dictionary)
-                         }
-                         catch {
-                            // catch error.
-                          print("catch error")
-
-                                }
-                          break
-                              
-                         case .failure(_):
-                          print("failure")
-
-                          break
-                          
-                      }
-
-
-              })
-    }
-    
-    
+   
    
 }
 extension NewStartStream: UITextFieldDelegate {
@@ -498,45 +437,17 @@ extension NewStartStream: UITextFieldDelegate {
         }
 }
 
-//
-//extension NewStartStream: UIImagePickerControllerDelegate,UINavigationControllerDelegate
-//{
-//   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any])
-//    {
-//        let image_data = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
-//    //let i = info[UIImagePickerController.InfoKey.originalImage.rawValue] as? UIImage
-//        self.authView.imageButton.setImage(image_data, for: .normal)
-//        guard let image = image_data else { return }
-//        let imageData:Data = image.pngData()!
-//        
-//        let imageStr = imageData.base64EncodedString()
-//        self.dismiss(animated: true, completion: nil)
-//    }
-//    
-//    
-//}
 extension NewStartStream: ImagePickerDelegate {
 
     func didSelect(image: UIImage?) {
         self.authView.imageButton.setImage(image, for: .normal)
         
         guard let imagee = image else { return }
-        self.ffff(img_photo_image: imagee)
-       // uploadImage(image: imagee)
-       // bindingImage(image: imagee)
+        bindingImage(image: imagee)
         let imageData:Data = imagee.pngData()!
        
         let imageStr = imageData.base64EncodedString()
         self.image = imageStr
-        
-//        serviceProvider.loadView(service: .showCharacter(limit: 30), decodeType: Responce.self) { (result) in
-//            switch result {
-//            case .success(let responce):
-//                print(result)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-       // self.imageView.image = image
+
     }
 }

@@ -129,7 +129,7 @@ final class NewStartStreamCode: UIView {
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.contentSize.height = 1000
+        scroll.contentSize.height = 800
        // scroll.contentSize.width = 400
         scroll.backgroundColor = .white
         return scroll

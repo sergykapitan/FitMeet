@@ -51,7 +51,8 @@ extension HomeVC: UITableViewDataSource {
 extension HomeVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 300
+        return 250
+       // return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -61,16 +62,18 @@ extension HomeVC: UITableViewDelegate {
         print("URRRRKKHHJGVHJGJGHLUG =======\(url)")
         
         
-        
+        let id = self.listBroadcast[indexPath.row].id
         
 //
        guard let Url = url else { return }
         let vc = PresentVC()
+       
         vc.modalPresentationStyle = .fullScreen
+        vc.id = id
         vc.Url = Url
         
-        //navigationController?.pushViewController(vc, animated: true)
-        self.present(vc, animated: true, completion: nil)
+        navigationController?.pushViewController(vc, animated: true)
+       // self.present(vc, animated: true, completion: nil)
 
 //        self.playerContainerView = Bundle.main.loadNibNamed("videoPlayerContainerNib", owner: self, options: nil)?.first as? PlayerContainerView
 //        self.playerContainerView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
