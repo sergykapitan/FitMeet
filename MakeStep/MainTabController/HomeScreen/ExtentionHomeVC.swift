@@ -62,7 +62,7 @@ extension HomeVC: UITableViewDelegate {
         print("URRRRKKHHJGVHJGJGHLUG =======\(url)")
         
         
-        let id = self.listBroadcast[indexPath.row].id
+        let id = self.listBroadcast[indexPath.row].userId
         
 //
        guard let Url = url else { return }

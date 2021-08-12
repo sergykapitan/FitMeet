@@ -51,6 +51,7 @@ final class PresentCode: UIView {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.boldSystemFont(ofSize: 12)
+      
         return label
     }()
     var segmentControll: CustomSegmentedControl = {

@@ -54,13 +54,13 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        homeView.tableView.reloadData()
+       // homeView.tableView.reloadData()
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-     //   homeView.tableView.reloadData()
+    
     
     }
     override func viewDidLoad() {
@@ -105,9 +105,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         print("timeHandAction")
         let tvc = Timetable()
         tvc.modalPresentationStyle = .fullScreen
-      //  self.present(tvc, animated: true, completion: nil)
         navigationController?.pushViewController(tvc, animated: true)
-      //  navigationController?.present(tvc, animated: true, completion: nil)
         
     }
     @objc func notificationHandAction() {
@@ -123,22 +121,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     }else{
                         btnlike.isSelected = true
                     }
-//                }
-//       // self.ButtonHandler()
-//       // guard viewModels.indices.contains(sender.tag) else { return }
-//        if sender.currentImage == UIImage(named: "LikeNot") {
-//            print("123")
-//            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-//            guard let id = listBroadcast[sender.tag].id else { return }
-//          //  followCategory(id: id)
-//           // binding()
-//            self.homeView.tableView.reloadData()
-//        } else {
-//            sender.setImage(#imageLiteral(resourceName: "Like-1"), for: .normal)
-//            guard let id = listBroadcast[sender.tag].id else { return }
-//         //   unFollowCategory(id: id)
-//          //  binding()
-//            self.homeView.tableView.reloadData()
+
         }
         
         }
@@ -146,7 +129,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     @objc private func refreshAlbumList() {
         print("refrech")
         binding()
-       // makeReguest(searchText:viewModel.lastRequestName)
        }
     func binding() {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
