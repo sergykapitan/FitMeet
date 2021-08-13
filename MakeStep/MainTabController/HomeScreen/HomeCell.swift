@@ -36,14 +36,16 @@ class HomeCell: UITableViewCell {
         return image
         
     }()
-    let logoUserImage: UIImageView = {
+    var logoUserImage: UIImageView = {
         let image = UIImageView()
-       // image.layer.borderWidth = 1
-       // image.layer.masksToBounds = false
-       // image.layer.borderColor = UIColor.red.cgColor
-        image.layer.cornerRadius = image.frame.height/2
-        image.image = UIImage(named: "avatar")
+        //image.makeRounded()
+        image.layer.borderWidth = 1
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
+        image.layer.cornerRadius = 12
+        
+       // image.image = UIImage(named: "avatar")
         return image
         
     }()
@@ -82,6 +84,42 @@ class HomeCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        return label
+    }()
+    var overlay : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        view.layer.borderWidth = 0.5
+        view.layer.masksToBounds = false
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    var labelLive: UILabel = {
+        let label = UILabel()
+        label.text = "Live"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        return label
+    }()
+    var imageLive: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "slider")
+        return image
+        
+    }()
+    var imageEye: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "eye")
+        return image
+        
+    }()
+    var labelEye: UILabel = {
+        let label = UILabel()
+        label.text = "123"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
         return label
     }()
     
@@ -133,7 +171,7 @@ class HomeCell: UITableViewCell {
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
                           bottom: cardView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0)
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 80)
         
         
         bottomView.addSubview(logoUserImage)
@@ -153,11 +191,39 @@ class HomeCell: UITableViewCell {
         
         bottomView.addSubview(labelCategory)
         labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,paddingTop: 8, paddingLeft: 8)
-   
+        
+        cardView.addSubview(overlay)
+        overlay.anchor(top: cardView.topAnchor,
+                       left: cardView.leftAnchor,
+                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
+        
+        cardView.addSubview(imageLive)
+        imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
+        imageLive.centerY(inView: overlay)
+        
+        cardView.addSubview(labelLive)
+        labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
+        labelLive.centerY(inView: overlay)
+        
+        cardView.addSubview(imageEye)
+        imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
+        imageEye.centerY(inView: overlay)
+        
+        cardView.addSubview(labelEye)
+        labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
+        labelEye.centerY(inView: overlay)
+        
+        
+        
     }
     func setImage(image:String) {
         let url = URL(string: image)        
         backgroundImage.kf.setImage(with: url)
+    }
+    func setImageLogo(image:String) {
+        let url = URL(string: image)
+        logoUserImage.kf.setImage(with: url)
+       
     }
     override func prepareForReuse() {
            super.prepareForReuse()

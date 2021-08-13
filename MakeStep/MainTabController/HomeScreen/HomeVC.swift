@@ -40,12 +40,18 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
 
   
     let homeView = HomeVCCode()
+    
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    
+    @Inject var fitMeetApi: FitMeetApi
+    private var takeUser: AnyCancellable?
+    
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
     var  playerContainerView: PlayerContainerView?
-
+    var user: User?
+    var ar = [User]()
     
     
     //MARK - LifeCicle
@@ -60,6 +66,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+    
     
     
     }
@@ -154,6 +161,26 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.homeView.tableView.reloadData()
                 }
         })
+    }
+    func bindingUser(id: Int)  {
+        
+      
+        takeUser = fitMeetApi.getUserId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                        self.user = response
+                    self.ar.append(self.user!)
+                   // self.homeView.tableView.reloadData()
+                    print("RES ========\(self.ar)")
+                    
+                 
+                    
+                      // self.setUserProfile(user: self.user!)
+                }
+                
+        })
+
     }
     
     private func makeTableView() {

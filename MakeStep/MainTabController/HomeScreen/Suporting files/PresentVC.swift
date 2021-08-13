@@ -10,7 +10,7 @@ import Combine
 import UIKit
 import AVKit
 
-class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate {
+class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate {
     
     func change(to index: Int) {
         print("segmentedControl index changed to \(index)")
@@ -35,17 +35,54 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.tableView.isHidden = false
         }
     }
-    
-    
     func changeBackgroundColor() {
+        print("oldji")
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            
+ 
+            self.homeView.viewChat.anchor(top: self.homeView.labelStreamDescription.bottomAnchor,
+                                     left: self.homeView.cardView.leftAnchor,
+                                     right: self.homeView.cardView.rightAnchor,
+                                     bottom: self.homeView.cardView.bottomAnchor,
+                                     paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+            self.homeView.viewChat.removeFromSuperview()
+            self.homeView.viewChat.layoutIfNeeded()
+            
+            self.controller.view.frame = CGRect(x: 0, y: 0, width: self.homeView.viewChat.frame.width, height: 0)
+            self.controller.view.layoutIfNeeded()
+          
+                }, completion: { (finished) -> Void in
+                    self.homeView.buttonChat.setTitle("Comments", for: .normal)
+                    self.t = true
+                    self.controller.view.removeFromSuperview()
+                })
+ 
+    }
+
+    func changeUp(key: CGFloat) {
+        print("OLLLL === \(key)")
+
+    }
+    func changeDown(key: CGFloat) {
+        print("changeDown")
+
+    }
+    
+    func changeBackground() {
         print("CLOSE PLAY")
         self.dismiss(animated: true, completion: nil)
     }
     var isPlaying: Bool = false
+    var isButton: Bool = true
     var id: Int?
+    var follow: String?
+    
+    let controller =  ChatVCPlayer()
 
     let homeView = PresentCode()
     var playerViewController: AVPlayerViewController?
+    
+    lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -58,17 +95,28 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
     var  playerContainerView: PlayerContainerView?
-    lazy var slideInTransitioningDelegate = SlideInPresentationManager()
+  
     var Url: String?
     var playPauseButton: PlayPauseButton!
     var user: User?
+    
+    var t:Bool = true
 
-//    override  var shouldAutorotate: Bool {
-//        return false
-//    }
-//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
+    override  var shouldAutorotate: Bool {
+        print(t)
+        return t
+    }
+    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        
+        
+        if t {
+            return .portrait
+                        
+        } else {
+            return .all
+            
+        }
+    }
     
 //    override var prefersStatusBarHidden: Bool {
 //        return true
@@ -88,8 +136,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         loadPlayer()
         makeNavItem()
         homeView.imageLogoProfile.makeRounded()
-        guard let id = id  else { return }
+        guard let id = id ,let live = follow else { return }
         bindingUser(id: id)
+       // self.homeView.labelEye.text = follow!
       //  guard let us = user else { return }
       //  setUserProfile(user: us)
     
@@ -102,7 +151,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.segmentControll.delegate = self
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         actionButton ()
+        self.view.addSubview(self.homeView.viewChat)
+       // controller.delegate = self
+        SocketIOManager.sharedInstance.getTokenChat()
         
+        let token = UserDefaults.standard.string(forKey: "tokenChat")
+        let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
+        let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+        
+        print("GGGGGG=====\(token)\n JJJJJJ=====\(broadcastId)\n  KKKKKKK=====\(chanelId)")
+        
+        homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
 
 
     }
@@ -111,9 +170,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
         homeView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         homeView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
-        
-        
-        
+        homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
     }
 
     @objc func actionOnline() {
@@ -121,6 +178,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.imagePromo.isHidden = false
+        homeView.labelCategory.isHidden = false
+        homeView.labelStreamDescription.isHidden = false
+        homeView.labelStreamInfo.isHidden = false
+        
+        
        // bindingChanell(status: "ONLINE")
        // setUserProfile()
     }
@@ -130,6 +192,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
        // bindingChanell(status: )
         homeView.imagePromo.isHidden = true
+        homeView.labelCategory.isHidden = true
+        homeView.labelStreamDescription.isHidden = true
+        homeView.labelStreamInfo.isHidden = true
+        
+        
         binding(status: "OFFLINE")
       // setUserProfile()
     
@@ -141,26 +208,59 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
        // bindingChanell(status: "PLANNED")
         homeView.imagePromo.isHidden = true
+        homeView.labelCategory.isHidden = true
+        homeView.labelStreamDescription.isHidden = true
+        homeView.labelStreamInfo.isHidden = true
         binding(status: "PLANNED")
        // setUserProfile()
 
     }
-    
+    @objc func actionBut(sender:UITapGestureRecognizer) {
+        
+        
+        if isButton {
+            homeView.overlay.isHidden = true
+            homeView.imageLive.isHidden = true
+            homeView.labelLive.isHidden = true
+            homeView.imageEye.isHidden = true
+            homeView.labelEye.isHidden = true
+            homeView.buttonSetting.isHidden = true
+            homeView.buttonLandScape.isHidden = true
+            playPauseButton.isHidden = true
+            isButton = false
+        } else {
+            homeView.overlay.isHidden = false
+            homeView.imageLive.isHidden = false
+            homeView.labelLive.isHidden = false
+            homeView.imageEye.isHidden = false
+            homeView.labelEye.isHidden = false
+            homeView.buttonSetting.isHidden = false
+            homeView.buttonLandScape.isHidden = false
+            playPauseButton.isHidden = false
+            isButton = true
+        }
+
+    }
     
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         let titleLabel = UILabel()
-                   titleLabel.text = "Chanell"
+                   titleLabel.text = ""
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        
+        
+                    let backButto = UIButton()
+                    backButto.setTitle("Back", for: .normal)
+                    backButto.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                     
                     let backButton = UIButton()
                     backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
 
-                   let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
+                   let stackView = UIStackView(arrangedSubviews: [backButton,backButto,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
                    stackView.axis = .horizontal
@@ -187,11 +287,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         print("notificationHandAction")
     }
     func setUserProfile(user: User) {
-
+        
         homeView.welcomeLabel.text =  user.fullName
-        homeView.labelFollow.text = "Followers:" + "\(user.channelFollowCount)"
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-  
+        guard let follow = user.channelFollowCount else { return }
+        homeView.labelFollow.text = "Followers:" + "\(follow)"
     }
     
     func loadPlayer() {
@@ -232,9 +332,32 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
              homeView.imagePromo.addSubview(homeView.labelTimer)
              homeView.labelTimer.anchor( left: homeView.imagePromo.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingLeft: 10, paddingBottom: 20)
         
+        homeView.imagePromo.addSubview(homeView.overlay)
+        homeView.overlay.anchor(top: homeView.imagePromo.topAnchor,
+                       left: homeView.imagePromo.leftAnchor,
+                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
+        
+        homeView.imagePromo.addSubview(homeView.imageLive)
+        homeView.imageLive.anchor( left: homeView.overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
+        homeView.imageLive.centerY(inView: homeView.overlay)
+        
+        homeView.imagePromo.addSubview(homeView.labelLive)
+        homeView.labelLive.anchor( left: homeView.imageLive.rightAnchor, paddingLeft: 6)
+        homeView.labelLive.centerY(inView: homeView.overlay)
+        
+        homeView.imagePromo.addSubview(homeView.imageEye)
+        homeView.imageEye.anchor( left: homeView.labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
+        homeView.imageEye.centerY(inView: homeView.overlay)
+        
+        homeView.imagePromo.addSubview(homeView.labelEye)
+        homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
+        homeView.labelEye.centerY(inView: homeView.overlay)
+        
+        self.homeView.labelEye.text = "1"
             
         
                let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
+        print("TIM=====\(tim)")
         
                homeView.labelTimer.text = String(format: "\(tim.format(using: [.hour, .minute, .second])!)")
 //              DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
@@ -280,8 +403,24 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
             playPauseButton.updateUI()
            if UIDevice.current.orientation.isLandscape {
-               print("Landscape")
-         //   self.playerViewController!.videoGravity = AVLayerVideoGravity.resize
+               print("Landscape ===== \(t)")
+            self.homeView.buttonChat.setTitle("", for: .normal)
+            UIView.animate(withDuration: 1.0,
+                delay: 0.0,
+                options: [],
+                animations: {
+                    
+                    self.view.setNeedsLayout()
+                    self.homeView.imagePromo.fillFull(for: self.view)
+                    self.view.setNeedsLayout()
+
+                },completion: nil)
+           // self.view.setNeedsLayout()
+            navigationController?.navigationBar.isHidden = true
+            tabBarController?.tabBar.isHidden = true
+            homeView.imageLogoProfile.isHidden = true
+//            view.needsUpdateConstraints()
+            isPlaying = true
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
            } else {
@@ -312,12 +451,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 options: [],
                 animations: {
                     
+//                    self.homeView.imagePromo.removeFromSuperview()
+//                    self.homeView.imagePromo.anchor(top: self.homeView.labelStreamDescription.bottomAnchor,
+//                                                    left: self.homeView.cardView.leftAnchor,
+//                                                    right: self.homeView.cardView.rightAnchor,
+//                                                    bottom: self.homeView.cardView.bottomAnchor,
+//                                                    paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 25)
+                    
                     self.navigationController?.popViewController(animated: true)
                     
                 },completion: nil)
 
         } else {
-
+            self.homeView.buttonChat.setTitle("", for: .normal)
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
@@ -349,8 +495,54 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
        }
     @objc func rightBack() {
+        
         self.navigationController?.popViewController(animated: true)
     }
+    
+    //weak var viewChat: UIView!
+    
+    @objc func actionChat() {
+        self.homeView.buttonChat.setTitle("", for: .normal)
+        self.t = false
+        
+        UIView.animate(withDuration: 0.3, animations: { () -> Void in
+            
+            self.view.addSubview(self.homeView.viewChat)
+
+            self.homeView.viewChat.anchor(top: self.homeView.viewTop.bottomAnchor,
+                                     left: self.homeView.cardView.leftAnchor,
+                                     right: self.homeView.cardView.rightAnchor,
+                                     bottom: self.homeView.cardView.bottomAnchor,
+                                     paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+
+            self.view.layoutIfNeeded()
+                }, completion: { (finished) -> Void in
+
+                   // self.controller.view.removeFromSuperview()
+                   // self.btnComments.setTitle("Comments", for: .normal)
+                })
+        
+        
+       let h =  navigationController?.navigationBar.frame.height
+        
+
+        slideInTransitioningDelegate.direction = .bottom
+        slideInTransitioningDelegate.disableCompactHeight = true
+        
+        controller.transitioningDelegate = slideInTransitioningDelegate
+        controller.modalPresentationStyle = .custom
+        controller.navBar = h
+        controller.view.frame = homeView.viewChat.bounds
+        controller.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        controller.delegate = self
+        // Add the view controller to the container.
+         addChild(controller)
+        homeView.viewChat.backgroundColor = UIColor(hexString: "#F6F6F6")
+        homeView.viewChat.addSubview(controller.view)
+        controller.didMove(toParent: controller.self)
+    }
+    
+ 
     func binding(status: String) {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
@@ -372,5 +564,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 }
         })
     }
+    
+   
 }
 

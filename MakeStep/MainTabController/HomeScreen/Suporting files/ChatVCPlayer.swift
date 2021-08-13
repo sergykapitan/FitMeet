@@ -12,7 +12,7 @@ import UIKit
 
 
 
-class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
+class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
       
     let chatView = ChatVCPlayerCode()
     var nickname: String?
@@ -24,7 +24,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     
     //MARK: step 2 Create a delegate property here.
     weak var delegate: ClassBVCDelegate?
-
+    var navBar: CGFloat?
     
     
     
@@ -61,7 +61,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         chatView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
         // Do any additional setup after loading the view.
-        
+        chatView.textView.delegate = self
         registerForKeyboardNotifications()
         
         NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
@@ -105,6 +105,10 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if chatView.textView.text.count > 0 {
+            
+            
+            
+            
             SocketIOManager.sharedInstance.sendMessage(message: ["text" : chatView.textView.text!], withNickname: "\(name)")
             self.nickname = name
            // self.chatMessages.append(["username":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
@@ -197,14 +201,16 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
        
       // write source code handle when keyboard will show
         let info = notificiation.userInfo!
-        let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        var keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            if self.chatView.cardView.frame.origin.y == 0{
-            self.chatView.cardView.frame.origin.y -= keyboardFrame.size.height
+        if self.chatView.cardView.frame.origin.y == 0{
+            //self.delegate?.changeUp(key: keyboardFrame.size.height)
+            guard let size = self.navBar else { return }
+            self.chatView.cardView.frame.origin.y -= keyboardFrame.size.height - size - CGFloat(40)
             self.view.layoutIfNeeded()
             }
-            })
+        })
     }
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
        // write source code handle when keyboard will be hidden
@@ -213,7 +219,9 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
 
         
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            self.chatView.cardView.frame.origin.y += keyboardFrame.height
+           // self.delegate?.changeDown(key: keyboardFrame.height)
+            guard let size = self.navBar else { return }
+            self.chatView.cardView.frame.origin.y += keyboardFrame.height + size + CGFloat( 40 )
             self.view.layoutIfNeeded()
             })
       
@@ -301,6 +309,20 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             }) { (finished) -> Void in
         }
     }
+    
+    
+
+}
+
+extension ChatVCPlayer: UITextFieldDelegate {
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            if textField == chatView.textView {
+                self.chatView.textView.resignFirstResponder()
+            }
+            return true
+        }
+
 
 }
 extension ChatVCPlayer: UITableViewDataSource {
@@ -326,29 +348,27 @@ extension ChatVCPlayer: UITableViewDataSource {
        // let message = currentChatMessage["message"] as? String
 
         if senderNickname == nickname as! String {
-
+         
             cell.labelChatMessage.textAlignment = NSTextAlignment.right
             cell.labelMessageDetail.textAlignment = NSTextAlignment.right
             cell.backgroundColor = .lightGray
-           // cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
-            cell.labelChatMessage.textColor = .gray
+            cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
+            cell.labelChatMessage.textColor = .white
             
         } else {
             cell.cardView.fillSuperviewforCellRight()
             cell.labelChatMessage.textAlignment = NSTextAlignment.left
             cell.labelMessageDetail.textAlignment = NSTextAlignment.left
             cell.backgroundColor = .lightGray
-            cell.labelChatMessage.textColor = .gray
+            cell.labelChatMessage.textColor = .white
            
         }
         cell.labelChatMessage.text = message.description
         cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate.getFormattedDate(format: "HH:mm:ss"))"
-        cell.labelChatMessage.textColor = .gray
-        
-        cell.backgroundColor = .lightGray
+  
         cell.layer.cornerRadius = 20
         cell.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        cell.layer.borderWidth = 1
+        cell.layer.borderWidth = 0.5
         cell.clipsToBounds = true
 
         
@@ -362,6 +382,7 @@ extension ChatVCPlayer: UITableViewDataSource {
         
         return true
     }
+
 
     
     // MARK: UIGestureRecognizerDelegate Methods

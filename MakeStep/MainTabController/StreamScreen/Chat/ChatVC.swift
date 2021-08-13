@@ -10,8 +10,12 @@ import UIKit
 
 //MARK: step 1 Add Protocol here.
 protocol ClassBVCDelegate: class {
-func changeBackgroundColor()
+    
+    func changeBackgroundColor()
+    func changeUp(key: CGFloat)
+    func changeDown(key: CGFloat)
 }
+
 
 
 class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {

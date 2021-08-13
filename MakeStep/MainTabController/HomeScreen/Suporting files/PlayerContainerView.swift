@@ -23,11 +23,22 @@ enum Direction {
     case none
 }
 protocol ClassBDelegate: class {
-   func changeBackgroundColor()
+   func changeBackground()
 }
 
 
 class PlayerContainerView: UIView, ClassBVCDelegate    {
+    
+    func changeUp(key: CGFloat) {
+        print("changeOut")
+                
+    }
+    func changeDown(key: CGFloat) {
+        print("changeDown")
+        
+    }
+    
+    
     func changeBackgroundColor() {
         print("oldji")
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
@@ -82,6 +93,7 @@ class PlayerContainerView: UIView, ClassBVCDelegate    {
     @IBOutlet weak var buttonVolume: UIButton!
     
     @IBOutlet weak var viewChat: UIView!
+    
     @IBOutlet weak var buttonSetting: UIButton!
     
     @IBOutlet weak var ButtonUp: UIButton!
@@ -941,7 +953,7 @@ class PlayerContainerView: UIView, ClassBVCDelegate    {
     @objc func dismissCustomActionSheet() {
         UIView.animate(withDuration: 0.3, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 5, options: [.beginFromCurrentState], animations: {
             
-            self.delegate?.changeBackgroundColor()
+            self.delegate?.changeBackground()
             
             self.parentView?.removeFromSuperview()
             self.actionSheetContainer?.removeFromSuperview()

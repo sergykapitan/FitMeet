@@ -28,7 +28,7 @@ final class ChatVCPlayerCode: UIView {
     var buttonChat: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "dismiss"), for: .normal)
-        button.tintColor = .black
+       // button.tintColor = .black
        // button.backgroundColor = .blue
         return button
     }()
@@ -68,7 +68,7 @@ final class ChatVCPlayerCode: UIView {
         buttonChat.centerX(inView: cardView)
         
         cardView.addSubview(textView)
-        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 0, height: 40)
+        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10, height: 40)
         
         cardView.addSubview(sendMessage)
         sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 45 ,height: 45)

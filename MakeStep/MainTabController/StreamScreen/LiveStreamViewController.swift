@@ -33,6 +33,18 @@ final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
     }
 }
 class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
+    
+
+    func changeUp(key: CGFloat) {
+        
+    }
+    func changeDown(key: CGFloat) {
+        
+    }
+    
+    
+    
+    
     func changeBackgroundColor() {
         print("GoodStaf")
         

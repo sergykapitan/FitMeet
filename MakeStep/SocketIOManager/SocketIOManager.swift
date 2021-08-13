@@ -54,6 +54,7 @@ class SocketIOManager: NSObject {
        
         
         guard let t = token,let b = broadcastId ,let chanel = chanelId else { return }
+        print("TTTTTTT=====\(t)\n OOOOOOO=====\(b)\n KKKKKKKKK===\(chanel)")
 
         socket.connect()
       
@@ -70,8 +71,11 @@ class SocketIOManager: NSObject {
     }
     func getTokenChat() {
         takeTokenChat = fitMeetApi.getTokenChat()
-            .mapError({ (error) -> Error in return error })
+            .mapError({ (error) -> Error in
+                        print("ERRRRR====\(error)")
+                        return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RES === +++++++\(response)")
                 guard let token = response.token else { return }
                 print("\(token)")
                 self.saveToken(tokenChat: token)

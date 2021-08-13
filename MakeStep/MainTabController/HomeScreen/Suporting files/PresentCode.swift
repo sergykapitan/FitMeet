@@ -126,12 +126,57 @@ final class PresentCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+    var viewChat: UIView = {
+        var view = UIView()
+       // view.backgroundColor = .gray
+        return view
+    }()
+    var buttonChat: UIButton = {
+        var button = UIButton()
+        button.setTitle("Comments", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        return button
+    }()
     var tableView: UITableView = {
         let table = UITableView()
         return table
+    }()    
+    var overlay : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        view.layer.borderWidth = 0.5
+        view.layer.masksToBounds = false
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
     }()
-    
-    
+    var labelLive: UILabel = {
+        let label = UILabel()
+        label.text = "Live"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        return label
+    }()
+    var imageLive: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "slider")
+        return image
+        
+    }()
+    var imageEye: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "eye")
+        return image
+        
+    }()
+    var labelEye: UILabel = {
+        let label = UILabel()
+        label.text = "123"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        return label
+    }()
     
     //MARK: - initial
     init() {
@@ -198,6 +243,16 @@ final class PresentCode: UIView {
         
         cardView.addSubview(labelStreamDescription)
         labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+        
+        cardView.addSubview(buttonChat)
+        buttonChat.anchor(bottom: cardView.bottomAnchor,paddingBottom: 5)
+        buttonChat.centerX(inView: cardView)
+        
+        cardView.addSubview(viewChat)
+        viewChat.anchor(top: labelStreamDescription.bottomAnchor,
+                        left: cardView.leftAnchor,
+                        right: cardView.rightAnchor,
+                        bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
     
 

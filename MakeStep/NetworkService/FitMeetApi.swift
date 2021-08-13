@@ -110,6 +110,9 @@ class FitMeetApi {
     //MARK: - create token chat
     public func getTokenChat() -> AnyPublisher<TokenChat,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/chat/chats/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .response(completionHandler: { ggg in
+                print("GGGGG====\(ggg)")
+            })
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: TokenChat.self)
