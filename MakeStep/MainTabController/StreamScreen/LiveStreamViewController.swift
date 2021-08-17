@@ -65,7 +65,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     let UserId = UserDefaults.standard.string(forKey: Constants.userID)
     let userName = UserDefaults.standard.string(forKey: Constants.userFullName)
     let streanUrl = UserDefaults.standard.string(forKey: Constants.urlStream)
+    
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+    
     let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
     
     private var takeChannel: AnyCancellable?
@@ -76,8 +78,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     var url: String?
     var myuri: String = ""
     var myPublish: String = ""
+    
     var idBroadcast: Int = 0
     var idBroad: Int?
+    var chanell: Int?
+    
+    
     var timer: Timer?
     var isPaused = true
     
@@ -198,6 +204,10 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         chatVC.transitioningDelegate = slideInTransitioningDelegate
         chatVC.modalPresentationStyle = .custom
         chatVC.delegate = self
+        guard let id = idBroad,let channel = channelId else { return }
+        
+        chatVC.broadcastId = "\(id)"
+        chatVC.chanellId = channel
         
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
@@ -210,9 +220,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         self.present(chatVC, animated: true, completion: nil)
     }
     @objc func openUserOnline() {
+        
         let chatVC = UserVC()
+        
         slideInTransitioningDelegate.direction = .bottom
         slideInTransitioningDelegate.disableCompactHeight = true
+        
+        
         chatVC.transitioningDelegate = slideInTransitioningDelegate
         chatVC.modalPresentationStyle = .custom
         

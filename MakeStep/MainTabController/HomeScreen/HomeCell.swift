@@ -29,6 +29,9 @@ class HomeCell: UITableViewCell {
 
     var backgroundImage: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+       // image.frame.size.height = 200
+        image.clipsToBounds = true
        // image.contentMode = .scaleAspectFit
        // image.contentMode = .scaleAspectFill
        // image.contentMode = .scaleToFill
@@ -162,7 +165,9 @@ class HomeCell: UITableViewCell {
        // cardView.fillSuperview()
         cardView.fillFull(for: self)
         cardView.addSubview(backgroundImage)
-        backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 200)
+        backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,
+                               paddingTop: 0, paddingLeft: 0, paddingRight: 0,
+                               height: 200)
         //
         //,height:150
 
@@ -171,7 +176,7 @@ class HomeCell: UITableViewCell {
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
                           bottom: cardView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 80)
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 104)
         
         
         bottomView.addSubview(logoUserImage)

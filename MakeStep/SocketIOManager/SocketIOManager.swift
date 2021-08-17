@@ -18,47 +18,83 @@ class SocketIOManager: NSObject {
     static let sharedInstance = SocketIOManager()
 
     
-    let token = UserDefaults.standard.string(forKey: "tokenChat")
-    let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
-    let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+  //  let token = UserDefaults.standard.string(forKey: "tokenChat")
+    
+   // let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
+   // let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
     
 
-    lazy var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
-                                                                .log(true),
-                                                                .compress,
-                                                                .forceNew(true),
-                                                                .reconnects(true),
-                                                                .forceWebsockets(true),
-                                                                .reconnectAttempts(3),
-                                                                .reconnectWait(3),
-                                                                .path("/api/v0/chatSocket"),
-                                                                .reconnectWaitMax(10000),
-                                                                .connectParams(["broadcastId": broadcastId!, "channelId": chanelId!,"token": token!])
-                                                                                        
-    ])
-    
-    lazy var socket = manager.defaultSocket
-
-    
+//    lazy var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
+//                                                                .log(true),
+//                                                                .compress,
+//                                                                .forceNew(true),
+//                                                                .reconnects(true),
+//                                                                .forceWebsockets(true),
+//                                                                .reconnectAttempts(3),
+//                                                                .reconnectWait(3),
+//                                                                .path("/api/v0/chatSocket"),
+//                                                                .reconnectWaitMax(10000),
+//                                                                .connectParams(["broadcastId": broadcastId!, "channelId": chanelId!,"token": token!])
+//
+//    ])
+//
+//    lazy var socket = manager.defaultSocket
+    var manager: SocketManager!
+    var socket: SocketIOClient!
     
     override init() {
         super.init()
     }
     
-    func establishConnection() {
-        getTokenChat()
+    func establishConnection(broadcastId: String,chanelId: String) {
+       // getTokenChat()
         
         let token = UserDefaults.standard.string(forKey: "tokenChat")
-        let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
-        let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+        
+        print("BROADCASTID = \(broadcastId)")
+        print("CHANELID = \(chanelId)")
+        print("TOKEN = \(token)")
+       // let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
+       // let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
        
         
-        guard let t = token,let b = broadcastId ,let chanel = chanelId else { return }
-        print("TTTTTTT=====\(t)\n OOOOOOO=====\(b)\n KKKKKKKKK===\(chanel)")
+       // guard let t = token,let id =  broadcastId,let chanelI = chanelId else { return }
+        
+       // print("TTTTTTT=====\(t)")
+      //  print("ID ======= \(id)")
+      //  print("FACK ===== \(chanelI)")
+        
+        self.manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
+                                                                    .log(true),
+                                                                    .compress,
+                                                                    .forceNew(true),
+                                                                    .reconnects(true),
+                                                                    .forceWebsockets(true),
+                                                                    .reconnectAttempts(3),
+                                                                    .reconnectWait(3),
+                                                                    .path("/api/v0/chatSocket"),
+                                                                    .reconnectWaitMax(10000),
+                                                                    .connectParams(["broadcastId": broadcastId, "channelId": chanelId,"token": token!])
+        
+        
+        
+        ])
+        
+        
+        self.socket = manager.defaultSocket
+        
+        
+        socket.on("connection") {data, ack in
+            print("socket connected")
+            print("Type \"quit\" to stop")
+        }
+
+        
+        
 
         socket.connect()
       
- 
+       // manager.connectSocket(socket)
 
     }
         
@@ -72,10 +108,8 @@ class SocketIOManager: NSObject {
     func getTokenChat() {
         takeTokenChat = fitMeetApi.getTokenChat()
             .mapError({ (error) -> Error in
-                        print("ERRRRR====\(error)")
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RES === +++++++\(response)")
                 guard let token = response.token else { return }
                 print("\(token)")
                 self.saveToken(tokenChat: token)
@@ -127,6 +161,9 @@ class SocketIOManager: NSObject {
         
 
         socket.on("message") { (dataArray, socketAck) -> Void in
+            
+            print("CHAT ===\(dataArray)")
+            
             var messageDictionary = [String: String]()
             
 
@@ -174,6 +211,13 @@ class SocketIOManager: NSObject {
     
     func sendStopTypingMessage(nickname: String) {
         socket.emit("disconnectUser", nickname)
+       
+        //socket.disconnect()
+    
+    }
+    
+    func stopSocket() {
+        socket.manager?.disconnect()
     }
 
 }

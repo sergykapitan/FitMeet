@@ -12,10 +12,18 @@ import Combine
 class EditProfile: UIViewController, UIScrollViewDelegate {
     
     let profileView = EditProfileCode()
+    
     private var take: AnyCancellable?
     private var putUser: AnyCancellable?
+    private var takeChannel: AnyCancellable?
+    
     @Inject var fitMeetApi: FitMeetApi
+    var imageUpload: UploadImage?
+    
+    
+    
     var user: User?
+    var imagePicker: ImagePicker!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -44,6 +52,8 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
         profileView.textGender.isSearchEnable = false        
         profileView.textGender.optionArray = ["MALE", "FEMALE"]
+        
+        self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
         bindingUser()
         
@@ -77,6 +87,12 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     }
     func actionButtonContinue() {
         profileView.buttonSave.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
+        profileView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
+    }
+    
+    @objc func actionUploadImage(_ sender: UIButton) {
+        self.imagePicker.present(from: sender)
+
     }
     @objc func actionSave() {        
         puteUser()
@@ -98,17 +114,23 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     self.profileView.textBirthday.text = self.user?.birthDate
                     self.profileView.textEmail.text = self.user?.email
                     self.profileView.textPhoneNumber.text = self.user?.phone
-                    print(self.user)
+                    self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
+                    print(response.avatarPath)
                 }
         })
     }
     func puteUser() {
 
-        let usr = UserRequest( fullName: self.profileView.textFieldName.text, username: self.profileView.textFieldUserName.text, birthDate: "1985-12-20", gender: self.profileView.textGender.text, avatarPath: self.profileView.textPhoneNumber.text)
+        let usr = UserRequest( fullName: self.profileView.textFieldName.text,
+                               username: self.profileView.textFieldUserName.text,
+                               birthDate: "1985-12-20",
+                               gender: self.profileView.textGender.text,
+                               avatarPath: self.imageUpload?.data?.first?.filename)
         
         putUser = fitMeetApi.putUser(user: usr)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RES === \(response)")
                 if response.username != nil  {
                     print(self.user)
                     self.navigationController?.popViewController(animated: true)
@@ -165,17 +187,17 @@ extension EditProfile: UITextFieldDelegate {
         let fullString = (textField.text ?? "") + string
         
         let string = "formate"
-        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
-        if textField == profileView.textFieldName {
-        if fullString == "" {
-            profileView.buttonSave.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-            profileView.buttonSave.isUserInteractionEnabled = false
-        } else {
-            profileView.buttonSave.backgroundColor = UIColor(hexString: "0099AE")
-            profileView.buttonSave.isUserInteractionEnabled = true
-          }
-        }
-        return false
+        //textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+//        if textField == profileView.textFieldName {
+//        if fullString == "" {
+//            profileView.buttonSave.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+//            profileView.buttonSave.isUserInteractionEnabled = false
+//        } else {
+//            profileView.buttonSave.backgroundColor = UIColor(hexString: "0099AE")
+//            profileView.buttonSave.isUserInteractionEnabled = true
+//          }
+//        }
+        return true
     }
     
     func EditProfile(_ textField: UITextField) -> Bool {
@@ -211,4 +233,29 @@ extension EditProfile: UITextFieldDelegate {
             self.view.endEditing(true)
             return false
         }
+    func bindingImage(image: UIImage) {
+        takeChannel = fitMeetApi.uploadImage(image: image)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RESPONSE======\(response)")
+                if response != nil  {
+                    self.imageUpload = response
+                    
+                  
+                }
+        })
+    }
+}
+extension EditProfile: ImagePickerDelegate {
+
+    func didSelect(image: UIImage?) {
+        
+    self.profileView.imageButton.setImage(image, for: .normal)
+        guard let imagee = image else { return }
+    bindingImage(image: imagee)
+        let imageData:Data = imagee.pngData()!
+        let imageStr = imageData.base64EncodedString()
+      
+
+    }
 }

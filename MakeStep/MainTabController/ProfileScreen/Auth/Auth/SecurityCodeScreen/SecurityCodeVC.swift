@@ -38,7 +38,7 @@ class SecurityCodeVC: UIViewController {
         super.viewDidLoad()
         securityView.textFieldCode.delegate = self
         securityView.textFieldCode.keyboardType = .numberPad
-        securityView.buttonSendCode.isUserInteractionEnabled = false
+        securityView.buttonSendCode.isUserInteractionEnabled = true
         actionButtonContinue()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -83,12 +83,15 @@ class SecurityCodeVC: UIViewController {
 extension SecurityCodeVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-       let fullString = (textField.text ?? "") + string
+      // let fullString = (textField.text ?? "") + string
         
-     if  fullString != nil {
+        if  securityView.textFieldCode.text == "" {
+            securityView.buttonSendCode.backgroundColor = UIColor(hexString: "#3B58A4")
+            securityView.buttonSendCode.isUserInteractionEnabled = false
+        } else {
             securityView.buttonSendCode.backgroundColor = UIColor(hexString: "#3B58A4")
             securityView.buttonSendCode.isUserInteractionEnabled = true
-     }
+        }
         return true
     }
     

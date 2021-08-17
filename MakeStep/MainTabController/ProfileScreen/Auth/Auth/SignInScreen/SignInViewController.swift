@@ -10,7 +10,41 @@ import Foundation
 import UIKit
 import Combine
 
-class SignInViewController: UIViewController {
+class SignInViewController: UIViewController, SignInDelegate {
+    
+    func changeAlert() {
+        
+        if self.signUpView.buttonContinue.frame.origin.y == 263.0 {
+         
+         UIView.animate(withDuration: 0.5) {
+           self.signUpView.buttonContinue.frame.origin.y += 15
+           self.signUpView.labelAccount.frame.origin.y += 15
+            self.signUpView.buttonSignUp.frame.origin.y += 15
+         } completion: { (bool) in
+             if bool {
+                 self.signUpView.alertImage.isHidden = false
+                 self.signUpView.alertLabel.isHidden = false
+             }
+         }
+       }
+    }
+    
+    func changeMail() {
+        if self.signUpView.buttonContinue.frame.origin.y == 263.0 {
+         
+         UIView.animate(withDuration: 0.5) {
+           self.signUpView.buttonContinue.frame.origin.y += 15
+           self.signUpView.labelAccount.frame.origin.y += 15
+            self.signUpView.buttonSignUp.frame.origin.y += 15
+         } completion: { (bool) in
+             if bool {
+                 self.signUpView.alertImage.isHidden = false
+                 self.signUpView.alertMailLabel.isHidden = false
+             }
+         }
+       }
+    }
+    
     
     @Inject var fitMeetApi: FitMeetApi
     let signUpView = SignInViewControllerCode()
@@ -35,6 +69,9 @@ class SignInViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        signUpView.alertLabel.isHidden = true
+        signUpView.alertMailLabel.isHidden = true
+        signUpView.alertImage.isHidden = true
         
     }
     func actionButtonContinue() {
@@ -45,6 +82,7 @@ class SignInViewController: UIViewController {
         let userPhoneOreMail = signUpView.textFieldLogin.text
         let signInVC = SignInPasswordViewController()
         signInVC.userPhoneOreEmail = userPhoneOreMail
+        signInVC.delegate = self
         self.present(signInVC, animated: true, completion: nil)
     }
     @objc func actionSignUp() {

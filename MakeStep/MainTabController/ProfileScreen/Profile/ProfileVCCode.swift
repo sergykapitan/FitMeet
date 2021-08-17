@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import Kingfisher
 
 final class ProfileVCCode: UIView {
 
@@ -22,6 +23,11 @@ final class ProfileVCCode: UIView {
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.layer.borderWidth = 0.2
+        image.layer.masksToBounds = false
+        image.layer.borderColor = UIColor.black.cgColor
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 40
         return image
     }()
     var welcomeLabel: UILabel = {
@@ -506,6 +512,10 @@ final class ProfileVCCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    func setImageLogo(image:String) {
+        let url = URL(string: image)
+        imageLogoProfile.kf.setImage(with: url)
+       
+    }
 }
 

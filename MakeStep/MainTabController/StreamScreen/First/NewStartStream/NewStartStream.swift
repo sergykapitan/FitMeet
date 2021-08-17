@@ -31,9 +31,11 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
+    
     var imagePicker: ImagePicker!
     
     var image: String?
+    
     var name: String = "JOPE"
 
     private var take: AnyCancellable?
@@ -54,6 +56,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var listBroadcast: [BroadcastResponce] = []
     var listChanell: [ChannelResponce] = []
     var broadcast:  BroadcastResponce?
+    
     var imageUpload: UploadImage?
     
     let date = Date()
@@ -190,6 +193,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     func actionButtonContinue() {
       //  authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+        
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
@@ -352,6 +356,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     
                     let navVC = LiveStreamViewController()
                     navVC.modalPresentationStyle = .fullScreen
+                    navVC.idBroad = id
+                    
                     guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
                     navVC.myuri = myuris
                     navVC.myPublish = myPublishh                    

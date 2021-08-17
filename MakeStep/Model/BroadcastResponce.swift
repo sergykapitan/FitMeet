@@ -33,6 +33,7 @@ struct BroadcastResponce:Codable {
     let isPopular: Bool?
     let description: String?
     let followersCount: Int?
+    let channelIds: [Int]?
   
 }
 

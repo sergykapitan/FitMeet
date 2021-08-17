@@ -10,7 +10,40 @@ import ContextMenuSwift
 import AuthenticationServices
 import Combine
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController,SignUpDelegate {
+    
+    func changeAlert() {
+  
+       if self.authView.buttonContinue.frame.origin.y == 263.0 {
+        
+        UIView.animate(withDuration: 0.5) {
+          self.authView.buttonContinue.frame.origin.y += 15
+          self.authView.labelAccount.frame.origin.y += 15
+          self.authView.buttonSignIn.frame.origin.y += 15
+        } completion: { (bool) in
+            if bool {
+                self.authView.alertImage.isHidden = false
+                self.authView.alertLabel.isHidden = false
+            }
+        }
+      }
+    }
+    func changeMail() {
+        
+        if self.authView.buttonContinue.frame.origin.y == 263.0 {
+         
+         UIView.animate(withDuration: 0.5) {
+           self.authView.buttonContinue.frame.origin.y += 15
+           self.authView.labelAccount.frame.origin.y += 15
+           self.authView.buttonSignIn.frame.origin.y += 15
+         } completion: { (bool) in
+             if bool {
+                 self.authView.alertMailLabel.isHidden = false
+                 self.authView.alertImage.isHidden = false
+             }
+         }
+       }
+    }
     
     let authView = AuthViewControllerCode()
     private let signInButton = ASAuthorizationAppleIDButton(type: .default, style: .black)
@@ -37,11 +70,16 @@ class AuthViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        authView.alertLabel.isHidden = true
+        authView.alertMailLabel.isHidden = true
+        authView.alertImage.isHidden = true
         
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-       // CM.closeAllViews()
+        authView.alertLabel.isHidden = true
+        authView.alertMailLabel.isHidden = true
+        authView.alertImage.isHidden = true
     }
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
@@ -52,6 +90,7 @@ class AuthViewController: UIViewController {
         let userPhoneOreMail = authView.textFieldLogin.text
         let signUpVC = SignUpViewController()
         signUpVC.userPhoneOreEmail = userPhoneOreMail
+        signUpVC.delegate = self
         self.present(signUpVC, animated: true, completion: nil)
     }
     @objc func actionSignIn() {

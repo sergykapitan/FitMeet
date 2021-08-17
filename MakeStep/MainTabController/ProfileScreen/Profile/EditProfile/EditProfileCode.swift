@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import iOSDropDown
+import Kingfisher
 
 final class EditProfileCode: UIView {
     
@@ -23,6 +24,19 @@ final class EditProfileCode: UIView {
         image.image = #imageLiteral(resourceName: "Group 17091")
         return image
     }()
+    
+    var imageButton: UIButton = {
+        let button = UIButton()
+       // button.setImage(#imageLiteral(resourceName: "Group 17091"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFill
+        button.layer.borderWidth = 0.2
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor.black.cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 40
+        return button
+    }()
+    
     var welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "Edit Profile"
@@ -243,17 +257,17 @@ final class EditProfileCode: UIView {
        // cardView.fillFull(for: self)
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
 
-        scroll.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
+        scroll.addSubview(imageButton)
+        imageButton.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
                                 paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
         
         scroll.addSubview(welcomeLabel)
-        welcomeLabel.anchor(left: imageLogoProfile.rightAnchor, paddingLeft: 10)
-        welcomeLabel.centerY(inView: imageLogoProfile)
+        welcomeLabel.anchor(left: imageButton.rightAnchor, paddingLeft: 10)
+        welcomeLabel.centerY(inView: imageButton)
 
         
         scroll.addSubview(labelFullName)
-        labelFullName.anchor(top: imageLogoProfile.bottomAnchor,
+        labelFullName.anchor(top: imageButton.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: cardView.rightAnchor,
                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
@@ -376,4 +390,15 @@ final class EditProfileCode: UIView {
 
         
     }
+    
+    func setImageLogo(image:String) {
+        let url = URL(string: image)
+        imageLogoProfile.kf.setImage(with: url)
+ 
+        //imageButton.imageView?.kf.setImage(with: url)
+        imageButton.setImage(imageLogoProfile.image, for: .normal)
+       
+    }
+    
+    
 }

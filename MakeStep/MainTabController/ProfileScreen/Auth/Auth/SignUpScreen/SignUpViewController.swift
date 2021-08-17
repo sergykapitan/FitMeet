@@ -10,6 +10,13 @@ import UIKit
 import Combine
 import Alamofire
 
+protocol SignUpDelegate: class {
+    
+    func changeAlert()
+    func changeMail()
+
+}
+
 class SignUpViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
@@ -21,7 +28,7 @@ class SignUpViewController: UIViewController {
     private var takeAppleSign: AnyCancellable?
     
     typealias CompletionHandler = ( _ success:Bool) -> Void
-   
+    weak var delegate: SignUpDelegate?
     
     var userPhoneOreEmail: String?
     
@@ -92,10 +99,17 @@ class SignUpViewController: UIViewController {
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                     self.openProfileViewController()
                 } else if response.message == "error.user.phoneExist"{
-                    self.alertControl(message: "This phone number is taken, please choose diffrent")
+                    self.delegate?.changeAlert()
+                    self.dismiss(animated: true, completion: nil)
                 } else if response.message == "error.user.emailExist" {
-                    self.alertControl(message: "This email is taken, please choose diffrent")
+                    self.delegate?.changeMail()
+                    self.dismiss(animated: true, completion: nil)
                 }else if response.message == "error.user.usernameExist"{
+                    
+                    print("HHHH ==\(self.signUpView.textFieldPassword.frame.origin.y)")
+                    
+                    if self.signUpView.textFieldPassword.frame.origin.y == 209.0 {
+                    
                     UIView.animate(withDuration: 0.5) {
                       self.signUpView.textFieldPassword.frame.origin.y += 15
                       self.signUpView.buttonContinue.frame.origin.y += 15
@@ -106,6 +120,7 @@ class SignUpViewController: UIViewController {
                             self.signUpView.alertLabel.isHidden = false
                         }
                     }
+                  }
                 } else if response.message != nil {
                     self.alertControl(message: "\(String(describing: response.message))")
                 }
@@ -118,21 +133,29 @@ class SignUpViewController: UIViewController {
                                                         fullName: name,
                                                         username: usr,
                                                         email: phone,
-                                                        password: password
+                                                        password: "\(password)"
             ))
                 .mapError({ (error) -> Error in
                             return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    print("RESPONCE====\(response)")
                     if let token = response.token?.token {
                     UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                     UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                     UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                         self.openProfileViewController()
                     } else if response.message == "error.user.phoneExist"{
-                        self.alertControl(message: "This phone number is taken, please choose diffrent")
+                        
+                        self.delegate?.changeAlert()
+                        self.dismiss(animated: true, completion: nil)
+                      
                     } else if response.message == "error.user.emailExist" {
-                        self.alertControl(message: "This email is taken, please choose diffrent")
+                        
+                        self.delegate?.changeMail()
+                        self.dismiss(animated: true, completion: nil)
+                        
                     } else if response.message == "error.user.usernameExist"{
+                        if self.signUpView.textFieldPassword.frame.origin.y == 209.0 {
                         UIView.animate(withDuration: 0.5) {
                           self.signUpView.textFieldPassword.frame.origin.y += 15
                           self.signUpView.buttonContinue.frame.origin.y += 15
@@ -143,6 +166,7 @@ class SignUpViewController: UIViewController {
                                 self.signUpView.alertLabel.isHidden = false
                             }
                         }
+                      }
                     } else if response.message != nil {
                         self.alertControl(message: "\(String(describing: response.message))")
                     }

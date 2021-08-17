@@ -74,6 +74,28 @@ final class SignInViewControllerCode: UIView {
         let view = UIView()
         return view
     }()
+    let alertImage: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "alert-triangle")
+        return image
+    }()
+    
+    let alertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This phone number is incorrect"
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
+    }()
+    let alertMailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "This email is incorrect"
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
+    }()
     
     // MARK: - Init
     init() {
@@ -114,6 +136,20 @@ final class SignInViewControllerCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        textFieldLogin.addSubview(alertImage)
+        alertImage.anchor( right: textFieldLogin.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldLogin)
+        
+        cardView.addSubview(alertLabel)
+        alertLabel.anchor(top: textFieldLogin.bottomAnchor, paddingTop: 5)
+        alertLabel.centerX(inView: cardView)
+        
+        cardView.addSubview(alertMailLabel)
+        alertMailLabel.anchor(top: textFieldLogin.bottomAnchor, paddingTop: 5)
+        alertMailLabel.centerX(inView: cardView)
+        
+ 
         cardView.addSubview(buttonContinue)
         buttonContinue.anchor(top: textFieldLogin.bottomAnchor,
                               left: cardView.leftAnchor,

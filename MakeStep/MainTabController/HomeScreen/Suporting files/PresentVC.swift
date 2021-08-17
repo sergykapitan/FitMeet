@@ -93,6 +93,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     let screenSize:CGRect = UIScreen.main.bounds
     
     var listBroadcast: [BroadcastResponce] = []
+    
+    var broadcast: BroadcastResponce?
+    
     private let refreshControl = UIRefreshControl()
     var  playerContainerView: PlayerContainerView?
   
@@ -197,7 +200,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelStreamInfo.isHidden = true
         
         
-        binding(status: "OFFLINE")
+       // binding(status: "OFFLINE")
       // setUserProfile()
     
 
@@ -211,7 +214,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelCategory.isHidden = true
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
-        binding(status: "PLANNED")
+       // binding(status: "PLANNED")
        // setUserProfile()
 
     }
@@ -523,8 +526,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 })
         
         
-       let h =  navigationController?.navigationBar.frame.height
+        let h =  navigationController?.navigationBar.frame.height
         
+        controller.broadcast = self.broadcast
 
         slideInTransitioningDelegate.direction = .bottom
         slideInTransitioningDelegate.disableCompactHeight = true
@@ -543,16 +547,16 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     
  
-    func binding(status: String) {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.refreshControl.endRefreshing()
-                }
-        })
-    }
+//    func binding(status: String) {
+//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.listBroadcast = response.data!
+//                    self.refreshControl.endRefreshing()
+//                }
+//        })
+//    }
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })

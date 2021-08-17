@@ -74,6 +74,8 @@ extension HomeVC: UITableViewDelegate {
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
         vc.Url = Url
+        vc.broadcast = self.listBroadcast[indexPath.row]
+        
         vc.follow = "\(follow)"
         
         navigationController?.pushViewController(vc, animated: true)

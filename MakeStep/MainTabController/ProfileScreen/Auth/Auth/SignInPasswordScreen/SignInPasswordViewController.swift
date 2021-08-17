@@ -9,6 +9,14 @@ import Foundation
 import UIKit
 import Combine
 
+protocol SignInDelegate: class {
+    
+    func changeAlert()
+    func changeMail()
+
+}
+
+
 class SignInPasswordViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
@@ -19,6 +27,8 @@ class SignInPasswordViewController: UIViewController {
     private var takeChannel: AnyCancellable?
     private var takeListChannel: AnyCancellable?
     typealias CompletionHandler = ( _ success:Bool) -> Void
+    
+    weak var delegate: SignInDelegate?
     
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
@@ -74,6 +84,8 @@ class SignInPasswordViewController: UIViewController {
                     self.openMainViewController()
                 } else {
                     if response.message == "error.password.incorrect" {
+                      
+                        if self.signUpView.buttonSignIn.frame.origin.y == 155.0 {
                         UIView.animate(withDuration: 0.5) {
                           self.signUpView.buttonSignIn.frame.origin.y += 15
                           self.signUpView.buttonFoggotPassword.frame.origin.y += 15
@@ -83,8 +95,11 @@ class SignInPasswordViewController: UIViewController {
                                 self.signUpView.alertLabel.isHidden = false
                             }
                         }
+                      }
                     } else if response.message == "error.user.notFound" {
-                        self.alertControl(message: "User Not Found")
+                        self.delegate?.changeAlert()
+                        self.dismiss(animated: true, completion: nil)
+                       // self.alertControl(message: "User Not Found")
                     }
                 }
             })
@@ -100,6 +115,8 @@ class SignInPasswordViewController: UIViewController {
                         self.openMainViewController()
                     } else {
                         if response.message == "error.password.incorrect" {
+                         
+                            if self.signUpView.buttonSignIn.frame.origin.y == 155.0 {
                             UIView.animate(withDuration: 0.5) {
                               self.signUpView.buttonSignIn.frame.origin.y += 15
                               self.signUpView.buttonFoggotPassword.frame.origin.y += 15
@@ -109,8 +126,11 @@ class SignInPasswordViewController: UIViewController {
                                     self.signUpView.alertLabel.isHidden = false
                                 }
                             }
+                          }
                         } else if response.message == "error.user.notFound" {
-                            self.alertControl(message: "User Not Found")
+                            self.delegate?.changeMail()
+                            self.dismiss(animated: true, completion: nil)
+                           // self.alertControl(message: "User Not Found")
                         }
                     }
              })

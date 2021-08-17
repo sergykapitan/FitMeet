@@ -169,7 +169,7 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: Bool.self)
             .value()
-            .print("changePassword")
+            .print("getCategoryPrivate")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -177,7 +177,7 @@ class FitMeetStream {
     ///api/v0/stream/broadcastCategories/private
     public func getCategoryPrivate() -> AnyPublisher<CategoryResponce,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
+            .validate(statusCode: 200..<25500)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
             .value()

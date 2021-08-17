@@ -30,6 +30,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setUserProfile()
         actionButtonContinue()
         makeNavItem()
         profileView.scroll.delegate = self
@@ -41,6 +42,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        setUserProfile()
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
@@ -54,17 +56,19 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
         bindingUser()
         let name: String?
-        if user?.fullName != nil {
-            name = user?.fullName
+        if user?.fullName != nil { name = user?.fullName
         } else { name = userName }
+        print("IMAGE === \(self.user?.avatarPath)")
         guard let n = name else { return }
+        //print("IMAGE3333 === \(image)")
         profileView.welcomeLabel.text = "Hi! " + n
+        //profileView.setImageLogo(image: image)
         
     }
     func actionButtonContinue() {
        profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
        profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
-        profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
+       profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -86,6 +90,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
+                    self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
                     print(self.user)
                 }
         })
