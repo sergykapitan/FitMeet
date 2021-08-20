@@ -50,15 +50,15 @@ class StreamViewModel: ObservableObject {
             })
            }
     
-    func getListBroadcast(id:String) {
-        task = fitMeetStream.getListBroadcast(id: id)
-            .mapError({ (error) -> Error in
-                        print(error)
-                         return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                self.broadcastList = response
-                print(response)
-        })
-    }
+//    func getListBroadcast(id:String) {
+//        task = fitMeetStream.getListBroadcast(id: id)
+//            .mapError({ (error) -> Error in
+//                        print(error)
+//                         return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                self.broadcastList = response
+//                print(response)
+//        })
+//    }
     
 }

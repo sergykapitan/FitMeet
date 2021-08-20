@@ -9,10 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-// Only class object can conform to this protocol (struct/enum can't)
-protocol YoutuberTableViewCellDelegate: AnyObject {
-  func youtuberTableViewCell(_ youtuberTableViewCell: HomeCell, subscribeButtonTappedFor youtuber: String)
-}
+
 
 class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
     
@@ -31,6 +28,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         }
     }
     
+    //weak var delegate : YourCellDelegate?
+    
     override  var shouldAutorotate: Bool {
         return false
     }
@@ -46,6 +45,9 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
+    private var followBroad: AnyCancellable?
+    
+    
     
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
@@ -118,27 +120,14 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    
-    @objc func editButtonTapped(_ sender: Any, event: Any) -> Void {
-        let point : CGPoint = (sender as AnyObject).convert(CGPoint.zero, to: homeView.tableView)
-        var indexPath =  self.homeView.tableView.indexPathForRow(at: point)
-                if let btnlike = sender as? UIButton{
-                    if btnlike.isSelected{
-                        btnlike.isSelected = false
-                    }else{
-                        btnlike.isSelected = true
-                    }
-
-        }
-        
-        }
+ 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")
         binding()
        }
     func binding() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+        takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                // print("RESPONCE ====== \(response)")
@@ -163,8 +152,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         })
     }
     func bindingUser(id: Int)  {
-        
-      
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
@@ -182,11 +169,32 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         })
 
     }
+    func followBroadcast(id: Int) {
+        followBroad = fitMeetStream.followBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil {
+                    print("RESPONCE ==== \(response)")
+                    //self.homeView.tableView.reloadData()
+                }
+              })
+    }
+    func unFollowBroadcast(id: Int) {
+        followBroad = fitMeetStream.unFollowBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil {
+                    print("RESPONCE ==== \(response)")
+                    //self.homeView.tableView.reloadData()
+                }
+              })
+    }
     
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+       // homeView.tableView.tableFooterView
     }
 
 }

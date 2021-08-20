@@ -42,27 +42,13 @@ class SocketIOManager: NSObject {
     var manager: SocketManager!
     var socket: SocketIOClient!
     
-    override init() {
-        super.init()
-    }
+//    override init() {
+//        super.init()
+//    }
     
     func establishConnection(broadcastId: String,chanelId: String) {
-       // getTokenChat()
         
         let token = UserDefaults.standard.string(forKey: "tokenChat")
-        
-        print("BROADCASTID = \(broadcastId)")
-        print("CHANELID = \(chanelId)")
-        print("TOKEN = \(token)")
-       // let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
-       // let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
-       
-        
-       // guard let t = token,let id =  broadcastId,let chanelI = chanelId else { return }
-        
-       // print("TTTTTTT=====\(t)")
-      //  print("ID ======= \(id)")
-      //  print("FACK ===== \(chanelI)")
         
         self.manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
                                                                     .log(true),
@@ -85,16 +71,22 @@ class SocketIOManager: NSObject {
         
         
         socket.on("connection") {data, ack in
-            print("socket connected")
-            print("Type \"quit\" to stop")
+            
+//            let dict = data[0] as? [String: Any]
+//            let user = dict!["connectedUsers"] as? [[String: Any]]
+//            print("USER == \(user)")
+//            let col = user!
+//            let k = col
+//            print("K ==\(k)")
+//            print("COL == \(col)")
+//            let id = user![0]["username"] as? String
+//            print("USERNAME === \(id)")
+            
+           // UserDefaults.standard.set(id, forKey: "idChat")
+            
         }
-
-        
-        
-
+   
         socket.connect()
-      
-       // manager.connectSocket(socket)
 
     }
         
@@ -120,19 +112,24 @@ class SocketIOManager: NSObject {
     
     func connectToServerWithNickname(nickname: String,  completionHandler: @escaping (_ userList: [[String: Any]]?) -> Void) {
         
-        getTokenChat()
+       // getTokenChat()
         let token = UserDefaults.standard.string(forKey: "tokenChat")
      
 
         socket.connect()
-        socket.on("message") { ( dataArray, ack) -> Void in
-            print("DATAARRAY ===== \(dataArray)")
-            
-            completionHandler(dataArray[0] as? [[String: Any]])
+        
+//        socket.on("message") { ( dataArray, ack) -> Void in
+//            print("DATAARRAY ===== \(dataArray)")
+//
+//            completionHandler(dataArray[0] as? [[String: Any]])
+//        }
+        
+        socket.on("connectUser") { dataArr, socData in
+            print("CONECTENUSER == \(dataArr)")
         }
         
-        listenForOtherMessages()
-        gotConnection()
+       // listenForOtherMessages()
+       // gotConnection()
     }
     func gotConnection(){
           socket.on("message") { (dataArray, ack) in

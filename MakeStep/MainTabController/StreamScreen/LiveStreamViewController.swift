@@ -84,6 +84,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     var chanell: Int?
     
     
+    var captureSession: AVCaptureSession!
+    var videoInput: AVCaptureDeviceInput!
+    
     var timer: Timer?
     var isPaused = true
     
@@ -226,6 +229,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         slideInTransitioningDelegate.direction = .bottom
         slideInTransitioningDelegate.disableCompactHeight = true
         
+        guard let id = idBroad,let channel = channelId else { return }
+        
+        chatVC.broadcastId = "\(id)"
+        chatVC.chanellId = channel
+        
         
         chatVC.transitioningDelegate = slideInTransitioningDelegate
         chatVC.modalPresentationStyle = .custom
@@ -239,14 +247,37 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     
     @objc func settingStream() {
         streamView.cameraButton.isSelected.toggle()
+        captureSession = AVCaptureSession()
+        
         
         if streamView.cameraButton.isSelected {
-            streamView.previewView.isHidden = true
+   
             UIApplication.shared.isIdleTimerDisabled = false
+            streamView.previewView.isHidden = true
+            self.rtmpStream.paused = true
+            self.rtmpStream.receiveVideo = false
+        
+            
+           // self.captureSession?.stopRunning()
+           // rtmpConnection.
+//            streamView.previewView
+//            rtmpConnection.close()
+//            rtmpConnection.removeEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
+//            rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
+//            createTimer()
             streamView.cameraButton.setImage(#imageLiteral(resourceName: "notcamera"), for: [])
             
         } else {
+           
+//            createTimer()
+//            UIApplication.shared.isIdleTimerDisabled = true
+//            rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
+//            rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
+//            rtmpConnection.connect(myuri)
             streamView.previewView.isHidden = false
+            self.rtmpStream.paused = false
+            self.rtmpStream.receiveVideo = true
+       //     self.captureSession.startRunning()
             UIApplication.shared.isIdleTimerDisabled = true
             streamView.cameraButton.setImage(#imageLiteral(resourceName: "camera"), for: [])
             
@@ -274,11 +305,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
             rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "startCamera"), for: [])
             createTimer()
+            
             streamView.recButton.isHidden = true
-
-            
             streamView.stopButton.isHidden = false
-            
             streamView.microfoneButton.isHidden = true
             streamView.cameraModeButton.isHidden = true
             streamView.cameraButton.isHidden = true
@@ -394,10 +423,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         if streamView.microfoneButton.isSelected {
            
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
+            self.rtmpStream.receiveAudio = false
             
         } else {
             
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "notmicrofone"), for: [])
+            self.rtmpStream.receiveAudio = true
             
         }
     }

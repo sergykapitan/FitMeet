@@ -8,23 +8,28 @@
 import UIKit
 import Kingfisher
 
-class HomeCell: UITableViewCell {
+//protocol NewsfeedCodeCellDelegate: AnyObject {
+//    func reavalPost(for cell: HomeCell)
+//}
+
+final class HomeCell: UITableViewCell {
     
     static let reuseID = "HomeCell"
     
-    // the youtuber (Model), you can use your custom model class here
-      var youtuber : String?
-        
-      // the delegate, remember to set to weak to prevent cycles
-      weak var delegate : YoutuberTableViewCellDelegate?
+   // weak var delegate: NewsfeedCodeCellDelegate?
+    
+  //  var likeButtonPressedHandler: (() -> ())?
+    
+
     
     
-    let cardView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-            return view
-        }()
+    
+//    let cardView: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.clipsToBounds = true
+//            return view
+//        }()
    
 
     var backgroundImage: UIImageView = {
@@ -53,7 +58,7 @@ class HomeCell: UITableViewCell {
         
     }()
     
-    private let bottomView : UIView = {
+    let bottomView : UIView = {
         let view = UIView()
         
       //  view.isUserInteractionEnabled = false
@@ -130,53 +135,45 @@ class HomeCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.initialize()
+       // self.buttonLike.addTarget(self, action: #selector(subscribeButtonTapped(_:)), for: .touchUpInside)
+        selectionStyle = .none
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-       super.setSelected(selected, animated: animated)
-        print("Selected")
 
-       // Configure the view for the selected state
-     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        self.initialize()
-        // Add action to perform when the button is tapped
-        self.buttonLike.addTarget(self, action: #selector(subscribeButtonTapped(_:)), for: .touchUpInside)
-              
-    }
-    @objc func subscribeButtonTapped(_ sender: UIButton){
-        // ask the delegate (in most case, its the view controller) to
-        // call the function 'subscribeButtonTappedFor' on itself.
-        print("Selected12e47236476238456")
-        if let youtuber = youtuber,
-           let delegate = delegate {
-            self.delegate?.youtuberTableViewCell(self, subscribeButtonTappedFor: youtuber)
-        }
-      }
+//    @objc func subscribeButtonTapped(_ sender: UIButton){
+//        likeButtonPressedHandler?()
+//      }
+
+    
    
     func initialize() {
-        addSubview(cardView)
+        clipsToBounds = true
+       // contentView
+       // addSubview(cardView)
        // cardView.fillSuperview()
-        cardView.fillFull(for: self)
-        cardView.addSubview(backgroundImage)
-        backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,
+       // cardView.fillFull(for: self)
+        
+        
+        
+        
+        contentView.addSubview(backgroundImage)
+        backgroundImage.anchor(top: contentView.topAnchor,
+                               left: contentView.leftAnchor,
+                               right: contentView.rightAnchor,
                                paddingTop: 0, paddingLeft: 0, paddingRight: 0,
                                height: 200)
         //
         //,height:150
 
-        cardView.addSubview(bottomView)
+        contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
-                          left: cardView.leftAnchor,
-                          right: cardView.rightAnchor,
-                          bottom: cardView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 104)
+                          left: contentView.leftAnchor,
+                          right: contentView.rightAnchor,
+                          bottom: contentView.bottomAnchor,
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 120)
         
         
         bottomView.addSubview(logoUserImage)
@@ -192,29 +189,29 @@ class HomeCell: UITableViewCell {
         buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 20)
         
         bottomView.addSubview(labelDescription)
-        labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: cardView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
+        labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         
         bottomView.addSubview(labelCategory)
         labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,paddingTop: 8, paddingLeft: 8)
         
-        cardView.addSubview(overlay)
-        overlay.anchor(top: cardView.topAnchor,
-                       left: cardView.leftAnchor,
+        contentView.addSubview(overlay)
+        overlay.anchor(top: contentView.topAnchor,
+                       left: contentView.leftAnchor,
                        paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
-        cardView.addSubview(imageLive)
+        contentView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
         
-        cardView.addSubview(labelLive)
+        contentView.addSubview(labelLive)
         labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
         labelLive.centerY(inView: overlay)
         
-        cardView.addSubview(imageEye)
+        contentView.addSubview(imageEye)
         imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
         imageEye.centerY(inView: overlay)
         
-        cardView.addSubview(labelEye)
+        contentView.addSubview(labelEye)
         labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
         labelEye.centerY(inView: overlay)
         

@@ -87,15 +87,15 @@ class StreamingVC: BottomPopupViewController {
       
     }
     func binding(idUser:String) {
-        takeChannel = fitMeetStream.getListBroadcast(id: idUser)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RESPONCE ====== \(response)")
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    //self.streamView.tableView.reloadData()
-                }
-        })
+//        takeChannel = fitMeetStream.getListBroadcast(id: idUser)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                print("RESPONCE ====== \(response)")
+//                if response.data != nil  {
+//                    self.listBroadcast = response.data!
+//                    //self.streamView.tableView.reloadData()
+//                }
+//        })
     }
     func bindingChanell() {
         takeChannel = fitMeetChanell.listChannels()

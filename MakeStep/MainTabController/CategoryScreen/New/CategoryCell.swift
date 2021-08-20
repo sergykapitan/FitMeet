@@ -45,8 +45,7 @@ final class CategoryCell: UICollectionViewCell {
     }()
    let buttonLike : UIButton = {
         let button = UIButton()
-    button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-  //  button.setImage(#imageLiteral(resourceName: "Like"), for: .selected)
+        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
     private let spinner: UIActivityIndicatorView = {

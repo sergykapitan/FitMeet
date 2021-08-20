@@ -14,6 +14,12 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
 
   
     let homeView = UserVCCode()
+    
+    var broadcastId: String?
+    var chanellId: String?
+    
+    var nickname: String?
+    
    // var users = [[String: Any]]()
     
     var users = [["username": "Claira Pomme",
@@ -53,7 +59,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
                  ["username": "Jane",
                   "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true]]
     
-    var nickname: String!
+   
     var configurationOK = false
     
     
@@ -84,7 +90,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
         super.viewDidLoad()
         view.backgroundColor = .clear
        // makeTableView()
-        makeNavItem()
+       // makeNavItem()
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
@@ -92,117 +98,125 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
        // setupGestureRecognizers()
 
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        if !configurationOK {
-            makeNavItem()
+
+
+        guard let broadId = broadcastId,let channelId = chanellId else { return }
+      
+            SocketIOManager.sharedInstance.getTokenChat()
+            SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
+          //  makeNavItem()
             makeTableView()
-            configurationOK = true
-        }
-        
+      
     }
-    func askForNickname() {
-        let alertController = UIAlertController(title: "SocketChat", message: "Please enter a nickname:", preferredStyle: UIAlertController.Style.alert)
-        
-        alertController.addTextField(configurationHandler: nil)
-        
-        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) -> Void in
-            let textfield = alertController.textFields![0]
-            if textfield.text?.count == 0 {
-                self.askForNickname()
-            }
-            else {
-                self.nickname = textfield.text
-                
-                SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: self.nickname, completionHandler: { (userList) -> Void in
-                    DispatchQueue.main.async { () -> Void in
-                        if userList != nil {
-                            guard let usr = userList else { return }
-                            self.users.append(contentsOf: usr)
-                            self.homeView.tableView.reloadData()
-                            self.homeView.tableView.isHidden = false
-                        }
-                    }
-                })
-            }
-        }
-        
-        alertController.addAction(OKAction)
-        present(alertController, animated: true, completion: nil)
-    }
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Chat"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction)),
-                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction))]
-    }
-    @objc
-    func rightHandAction() {
-        print("right bar button action")
-    }
-
-    @objc
-    func leftHandAction() {
-        print("left bar button action")
-    }
+//    func askForNickname() {
+//        let alertController = UIAlertController(title: "SocketChat", message: "Please enter a nickname:", preferredStyle: UIAlertController.Style.alert)
+//
+//        alertController.addTextField(configurationHandler: nil)
+//
+//        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) -> Void in
+//            let textfield = alertController.textFields![0]
+//            if textfield.text?.count == 0 {
+//                self.askForNickname()
+//            }
+//            else {
+//                self.nickname = textfield.text
+//
+//                SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: self.nickname, completionHandler: { (userList) -> Void in
+//                    DispatchQueue.main.async { () -> Void in
+//                        if userList != nil {
+//                            guard let usr = userList else { return }
+//                            self.users.append(contentsOf: usr)
+//                            self.homeView.tableView.reloadData()
+//                            self.homeView.tableView.isHidden = false
+//                        }
+//                    }
+//                })
+//            }
+//        }
+//
+//        alertController.addAction(OKAction)
+//        present(alertController, animated: true, completion: nil)
+//    }
+//    func makeNavItem() {
+//        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+//        UINavigationBar.appearance().titleTextAttributes = attributes
+//        let titleLabel = UILabel()
+//                   titleLabel.text = "Chat"
+//                   titleLabel.textAlignment = .center
+//                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+//                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+//
+//                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
+//                   stackView.distribution = .equalSpacing
+//                   stackView.alignment = .leading
+//                   stackView.axis = .vertical
+//
+//                   let customTitles = UIBarButtonItem.init(customView: stackView)
+//                   self.navigationItem.leftBarButtonItems = [customTitles]
+//        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
+//                                                                   style: .plain,
+//                                                                   target: self,
+//                                                                   action: #selector(rightHandAction)),
+//                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
+//                                                                   style: .plain,
+//                                                                   target: self,
+//                                                                   action: #selector(rightHandAction))]
+//    }
+//    @objc
+//    func rightHandAction() {
+//        print("right bar button action")
+//    }
+//
+//    @objc
+//    func leftHandAction() {
+//        print("left bar button action")
+//    }
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")
-        binding()
+       // binding()
       
        }
     @objc  func buttonJoin() {
-        dismiss(animated: true)
+       // dismiss(animated: true)
         
-        SocketIOManager.sharedInstance.getTokenChat()
-        guard let token =  UserDefaults.standard.value(forKey: "tokenChat") else { return }
-   
-
-        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: token as! String, completionHandler: { (userList) -> Void in
+       // SocketIOManager.sharedInstance.getTokenChat()
+       // SocketIOManager.sharedInstance.establishConnection(broadcastId: <#T##String#>, chanelId: <#T##String#>)
+    
+      //  guard let token =  UserDefaults.standard.value(forKey: "tokenChat") else { return }
+        guard let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
+        self.nickname = name
+        
+        
+        
+        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: name, completionHandler: { (userList) -> Void in
             DispatchQueue.main.async { () -> Void in
                 print("USERLIST ======= \(userList)")
-                if userList != nil {
-                    guard let usr = userList else { return }
-                    self.users.append(contentsOf: usr)
-                    self.homeView.tableView.reloadData()
-                    self.homeView.tableView.isHidden = false
-                }
+//                if userList != nil {
+//                    guard let usr = userList else { return }
+//                    self.users.append(contentsOf: usr)
+//                    self.homeView.tableView.reloadData()
+//                    self.homeView.tableView.isHidden = false
+//                }
             }
         })
     }
-    func binding() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-               // print("RESPONCE ====== \(response)")
-                if response.data != nil  {
-                    print("Responce ====== \(response)")
-                    self.listBroadcast = response.data!
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                }
-        })
-    }
+//    func binding() {
+//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//               // print("RESPONCE ====== \(response)")
+//                if response.data != nil  {
+//                    print("Responce ====== \(response)")
+//                    self.listBroadcast = response.data!
+//                    self.homeView.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+//                }
+//        })
+//    }
     
   
     
