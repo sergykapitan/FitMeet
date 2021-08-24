@@ -451,7 +451,7 @@ enum Position {
 
 class Arrow: UIView {
     let shapeLayer = CAShapeLayer()
-    var arrowColor:UIColor = .black {
+    var arrowColor:UIColor = .clear {
         didSet{
             shapeLayer.fillColor = arrowColor.cgColor
         }
@@ -497,16 +497,30 @@ class Arrow: UIView {
 
         // Draw points
         let qSize = size/4
+        
+//        let path = UIBezierPath()
+//        path.move(to: CGPoint(x: self.frame.width/2, y: 0.0))
+//        path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
+//        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
+//        path.close()
 
-        bezierPath.move(to: CGPoint(x: 0, y: qSize))
-        bezierPath.addLine(to: CGPoint(x: size, y: qSize))
-        bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))
-        bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
-        bezierPath.close()
+//        bezierPath.move(to: CGPoint(x: 0, y: qSize))
+//        bezierPath.addLine(to: CGPoint(x: size, y: qSize))
+//        bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))
+//        bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
+//        bezierPath.close()
+        
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: 0, y: qSize)) //StartPoint
+        path.addLine(to: CGPoint(x: size/2, y: qSize*3)) //EndPoint of First Line and StartPoint for Second Line
+        path.addLine(to: CGPoint(x: size, y: qSize)) //EndPoint of Second Line
 
         // Mask to path
-        shapeLayer.path = bezierPath.cgPath
-      //  shapeLayer.fillColor = arrowColor.cgColor
+       // shapeLayer.path = bezierPath.cgPath
+        shapeLayer.path = path.cgPath
+        shapeLayer.fillColor = arrowColor.cgColor
+        shapeLayer.strokeColor = UIColor.lightGray.cgColor
+        shapeLayer.lineWidth = 2.0
        
         if #available(iOS 12.0, *) {
             self.layer.addSublayer (shapeLayer)
@@ -520,13 +534,13 @@ extension UIView {
 
     func dropShadow(scale: Bool = true) {
         layer.masksToBounds = false
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.5
-        layer.shadowOffset = CGSize(width: 1, height: 1)
-        layer.shadowRadius = 2
-        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-        layer.shouldRasterize = true
-        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+       // layer.shadowColor = UIColor.clear.cgColor
+       // layer.shadowOpacity = 0.5
+       // layer.shadowOffset = CGSize(width: 1, height: 1)
+       // layer.shadowRadius = 2
+      //  layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+     //   layer.shouldRasterize = true
+      //  layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 
     var parentViewController: UIViewController? {

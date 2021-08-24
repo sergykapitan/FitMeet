@@ -39,13 +39,8 @@ final class PresentVCCode: UIView {
        
     }
     func createCardViewLayer() {
-        
-       // addSubview(cardView)
+
         cardView.fillFull(for: self)
-        
-       
-     
-    
 
     }
     func setImage(image:String,imagepromo: String) {

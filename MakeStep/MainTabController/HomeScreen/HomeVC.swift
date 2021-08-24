@@ -14,22 +14,25 @@ import UIKit
 class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
     
     func change(to index: Int) {
-        print("segmentedControl index changed to \(index)")
         if index == 0 {
-            binding()
-            self.homeView.tableView.reloadData()
+            self.index = index
+           // guard let token =  self.token else { return }
+            if token != nil {
+                binding()
+            } else {
+                bindingNotAuht()
+            }
         }
         if index == 1 {
+            self.index = index
             bindingRecomandate()
-            self.homeView.tableView.reloadData()
         }
         if index == 2 {
-            
+            self.index = index
+            onlyFollowBroadcast(follow: true)
         }
     }
-    
-    //weak var delegate : YourCellDelegate?
-    
+
     override  var shouldAutorotate: Bool {
         return false
     }
@@ -37,7 +40,10 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         return .portrait
     }
 
-  
+    lazy var slideInTransitioningDelegate = SlideInPresentationManager()
+    let actionSheetTransitionManager = ActionSheetTransitionManager()
+    
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
     
     @Inject var fitMeetStream: FitMeetStream
@@ -53,7 +59,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     private let refreshControl = UIRefreshControl()
     var  playerContainerView: PlayerContainerView?
     var user: User?
-    var ar = [User]()
+    var ar =  [User]()
+    var index = 0
     
     
     //MARK - LifeCicle
@@ -62,7 +69,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-       // homeView.tableView.reloadData()
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
@@ -80,7 +86,14 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.segmentControll.delegate = self
         navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
-        binding()
+       // guard let token =  self.token else { return }
+        
+        if token != nil {
+            binding()
+        } else {
+            bindingNotAuht()
+        }
+        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
@@ -124,15 +137,37 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")
-        binding()
+        if index == 0 {
+           // guard let token =  self.token else { return }
+            
+            if token != nil {
+                binding()
+            } else {
+                bindingNotAuht()
+            }
+        } else if index == 1 {
+            bindingRecomandate()
+        } else if index == 2 {
+            onlyFollowBroadcast(follow: true)
+        }
+        
        }
     func binding() {
         takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-               // print("RESPONCE ====== \(response)")
                 if response.data != nil  {
-                    print("Responce ====== \(response)")
+                    self.listBroadcast = response.data!
+                    self.homeView.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+        })
+    }
+    func bindingNotAuht() {
+        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
@@ -144,58 +179,69 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         takeBroadcast = fitMeetStream.getRecomandateBroadcast()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RESPONCE ====== \(response)")
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.homeView.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
                 }
-        })
+          })
     }
     func bindingUser(id: Int)  {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
-                        self.user = response
+                if response.username != nil  {
+                    self.user = response
                     self.ar.append(self.user!)
-                   // self.homeView.tableView.reloadData()
-                    print("RES ========\(self.ar)")
-                    
-                 
-                    
-                      // self.setUserProfile(user: self.user!)
                 }
-                
-        })
-
+          })
     }
+    func bindingUserMap(ids: [Int])  {
+        takeUser = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    print("RES = \(response)")
+                   // self.user = response
+                   // self.ar = response
+                }
+          })
+    }
+    
+    
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil {
-                    print("RESPONCE ==== \(response)")
-                    //self.homeView.tableView.reloadData()
                 }
-              })
+          })
     }
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil {
-                    print("RESPONCE ==== \(response)")
-                    //self.homeView.tableView.reloadData()
                 }
-              })
+         })
     }
     
+    func onlyFollowBroadcast(follow: Bool) {
+        followBroad = fitMeetStream.getListFollowBroadcast(status: "ONLINE", follow: true)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil {
+                    self.listBroadcast = response.data!
+                    self.homeView.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                }
+         })
+    }
+        
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
-       // homeView.tableView.tableFooterView
     }
-
 }
 

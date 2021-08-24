@@ -13,7 +13,6 @@ import AVKit
 class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate {
     
     func change(to index: Int) {
-        print("segmentedControl index changed to \(index)")
         if index == 0 {
             homeView.buttonOnline.isHidden = false
             homeView.buttonOffline.isHidden = false
@@ -36,10 +35,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         }
     }
     func changeBackgroundColor() {
-        print("oldji")
+        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
-            
- 
             self.homeView.viewChat.anchor(top: self.homeView.labelStreamDescription.bottomAnchor,
                                      left: self.homeView.cardView.leftAnchor,
                                      right: self.homeView.cardView.rightAnchor,
@@ -53,7 +50,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           
                 }, completion: { (finished) -> Void in
                     self.homeView.buttonChat.setTitle("Comments", for: .normal)
-                    self.t = true
+                   // self.t = true
                     self.controller.view.removeFromSuperview()
                 })
  
@@ -83,12 +80,16 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var playerViewController: AVPlayerViewController?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
+    let actionSheetTransitionManager = ActionSheetTransitionManager()
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
+    
+    @Inject var fitMeetChannels: FitMeetChannels
+    private var takeChannels: AnyCancellable?
     
     let screenSize:CGRect = UIScreen.main.bounds
     
@@ -103,28 +104,24 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var playPauseButton: PlayPauseButton!
     var user: User?
     
-    var t:Bool = true
+  //  var t:Bool = true
 
-    override  var shouldAutorotate: Bool {
-        print(t)
-        return t
-    }
-    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        
-        
-        if t {
-            return .portrait
-                        
-        } else {
-            return .all
-            
-        }
-    }
-    
-//    override var prefersStatusBarHidden: Bool {
-//        return true
+//    override  var shouldAutorotate: Bool {
+//        print("BOOL TRANS  ==== \(t)")
+//        return t
 //    }
-    
+//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//
+//
+//        if t {
+//            return .portrait
+//
+//        } else {
+//            return .all
+//
+//        }
+//    }
+
     //MARK - LifeCicle
     override func loadView() {
         view = homeView
@@ -141,10 +138,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imageLogoProfile.makeRounded()
         guard let id = id ,let live = follow else { return }
         bindingUser(id: id)
-       // self.homeView.labelEye.text = follow!
-      //  guard let us = user else { return }
-      //  setUserProfile(user: us)
-    
+
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,27 +152,30 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.segmentControll.setButtonTitles(buttonTitles: ["Videos "," Timetable"])
         homeView.segmentControll.delegate = self
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
+        homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         actionButton ()
         self.view.addSubview(self.homeView.viewChat)
-       // controller.delegate = self
         SocketIOManager.sharedInstance.getTokenChat()
         
         let token = UserDefaults.standard.string(forKey: "tokenChat")
         let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
         let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
         
-        print("GGGGGG=====\(token)\n JJJJJJ=====\(broadcastId)\n  KKKKKKK=====\(chanelId)")
         
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
+        guard let broadcast = broadcast else { return }        
+        homeView.labelStreamDescription.text = broadcast.description
 
 
     }
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
+        
         homeView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
         homeView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         homeView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
+        homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
     }
 
     @objc func actionOnline() {
@@ -184,38 +186,52 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelCategory.isHidden = false
         homeView.labelStreamDescription.isHidden = false
         homeView.labelStreamInfo.isHidden = false
+        homeView.buttonChat.isHidden = false
+
+    }
+    @objc func actionSubscribe() {
+        homeView.buttonSubscribe.isSelected.toggle()
         
-        
-       // bindingChanell(status: "ONLINE")
-       // setUserProfile()
+        if homeView.buttonSubscribe.isSelected {
+            homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
+            homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+            let detailViewController = SubscribeVC()
+           // detailViewController.title = sender.currentTitle
+            
+            detailViewController.modalPresentationStyle = .custom
+            detailViewController.transitioningDelegate = actionSheetTransitionManager
+            
+            present(detailViewController, animated: true)
+           // guard let id = broadcast?.channelIds?.first else { return }
+           // followChannels(id: id)
+        } else {
+            homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
+            homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        }
+
     }
     @objc func actionOffline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-       // bindingChanell(status: )
+      
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
-        
-        
-       // binding(status: "OFFLINE")
-      // setUserProfile()
-    
+        homeView.buttonChat.isHidden = true
 
     }
     @objc func actionComming() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
-       // bindingChanell(status: "PLANNED")
+     
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
-       // binding(status: "PLANNED")
-       // setUserProfile()
+        homeView.buttonChat.isHidden = true
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
@@ -301,8 +317,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 let videoURL = URL(string: Url!)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
-               // let playerFrame = CGRect(x: 0, y: 0, width: view.frame.width, height: 300)
-                //
+             
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
                 player.rate = 1 //auto play
@@ -312,9 +327,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                   
                 
         addChild(playerViewController!)
-      //  self.player.fillMode = .resizeAspectFit
-      //  playerViewController.mode
-               // view.addSubview(playerViewController.view)
         homeView.imagePromo.addSubview(playerViewController!.view)
 
         playerViewController!.didMove(toParent: self)
@@ -323,14 +335,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
               playPauseButton.avPlayer = player
         
         
-            //  playPauseButton.vies = homeView.imagePromo
-            //  playPauseButton.vc = PresentVC()
               homeView.imagePromo.addSubview(playPauseButton)
-              homeView.imagePromo.addSubview(homeView.buttonLandScape)
-              homeView.buttonLandScape.anchor( right: homeView.imagePromo.rightAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
         
-              homeView.imagePromo.addSubview(homeView.buttonSetting)
-              homeView.buttonSetting.anchor( right: homeView.buttonLandScape.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 10, paddingBottom: 20,width: 30,height: 30)
+              view.addSubview(homeView.buttonLandScape)
+              homeView.buttonLandScape.anchor( right: homeView.imagePromo.rightAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 24, paddingBottom: 20,width: 40,height: 40)
+            
+        
+              homeView.addSubview(homeView.buttonSetting)
+              homeView.buttonSetting.anchor( right: homeView.buttonLandScape.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
         
              homeView.imagePromo.addSubview(homeView.labelTimer)
              homeView.labelTimer.anchor( left: homeView.imagePromo.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingLeft: 10, paddingBottom: 20)
@@ -338,7 +350,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addSubview(homeView.overlay)
         homeView.overlay.anchor(top: homeView.imagePromo.topAnchor,
                        left: homeView.imagePromo.leftAnchor,
-                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
+                       paddingTop: 8, paddingLeft: 16,  width: 110, height: 24)
         
         homeView.imagePromo.addSubview(homeView.imageLive)
         homeView.imageLive.anchor( left: homeView.overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
@@ -356,48 +368,16 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
         homeView.labelEye.centerY(inView: homeView.overlay)
         
-        self.homeView.labelEye.text = "1"
+       // self.homeView.labelEye.text = "1"
             
         
                let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
-        print("TIM=====\(tim)")
+               print("TIM=====\(tim)")
         
                homeView.labelTimer.text = String(format: "\(tim.format(using: [.hour, .minute, .second])!)")
-//              DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//                        self.hidePlayerButtonsOnPlay()
-//               }
         
-              playPauseButton.setup(in: self)
-        
-//        let videoURL = URL(string: Url!)
-//        let player = AVPlayer(url: videoURL!)
-//        let playerViewController = AVPlayerViewController()
-//        playerViewController.player = player
-//
-//      //  homeView.imagePromo.addSubview(self.p)
-//                self.present(playerViewController, animated: true) {
-//                    playerViewController.player!.play()
-//                }
-        
-//        self.playerContainerView = Bundle.main.loadNibNamed("videoPlayerContainerNib", owner: self, options: nil)?.first as? PlayerContainerView
-//
-//        self.playerContainerView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-//
-//       // self.playerContainerView?.frame = homeView.imagePromo.bounds
-//       // homeView.imagePromo.addSubview(self.playerContainerView!)
-//        self.view.addSubview(self.playerContainerView!)
-//        self.playerContainerView?.initializeView()
-//        self.playerContainerView?.link = Url
-//        self.playerContainerView?.delegate = self
-//
-//        self.playerContainerView?.minimizedOrigin = {
-//            let x = UIScreen.main.bounds.width/2
-//            let y = UIScreen.main.bounds.height - (UIScreen.main.bounds.width * 9 / 32)
-//            let coordinate = CGPoint.init(x: x, y: y)
-//            return coordinate
-//        }()
-//        self.playerContainerView?.initializeView()
-    
+                playPauseButton.setup(in: self)
+
     }
 
     
@@ -406,7 +386,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
             playPauseButton.updateUI()
            if UIDevice.current.orientation.isLandscape {
-               print("Landscape ===== \(t)")
+             //  print("Landscape ===== \(t)")
+           // self.homeView.buttonLandScape.removeFromSuperview()
+           // self.homeView.buttonSetting.removeFromSuperview()
             self.homeView.buttonChat.setTitle("", for: .normal)
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
@@ -414,79 +396,71 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 animations: {
                     
                     self.view.setNeedsLayout()
+                   // self.homeView.buttonLandScape.addSubview(self.homeView.buttonLandScape)
+                    self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 100, paddingBottom: 20,width: 45,height: 45)
+                   // self.homeView.imagePromo.addSubview(self.homeView.buttonSetting)
+                    self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
                     self.homeView.imagePromo.fillFull(for: self.view)
                     self.view.setNeedsLayout()
 
                 },completion: nil)
-           // self.view.setNeedsLayout()
+            self.view.setNeedsLayout()
             navigationController?.navigationBar.isHidden = true
             tabBarController?.tabBar.isHidden = true
             homeView.imageLogoProfile.isHidden = true
-//            view.needsUpdateConstraints()
+            view.needsUpdateConstraints()
             isPlaying = true
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
            } else {
                print("Portrait")
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill//resizeAspect
-
-           }
-       }
-    
-    @objc
-    func rightHandAction() {
-        
-       // self.homeView.buttonSetting.removeFromSuperview()
-       // self.view.layoutIfNeeded()
-        self.view.layoutIfNeeded()
-        self.view.setNeedsLayout()
-        if isPlaying {
-          
-            isPlaying = false
-
-            navigationController?.navigationBar.isHidden = false
-            tabBarController?.tabBar.isHidden = false
-            homeView.imageLogoProfile.isHidden = false
-
-            
-            UIView.animate(withDuration: 1.0,
-                delay: 0.0,
-                options: [],
-                animations: {
-                    
-//                    self.homeView.imagePromo.removeFromSuperview()
-//                    self.homeView.imagePromo.anchor(top: self.homeView.labelStreamDescription.bottomAnchor,
-//                                                    left: self.homeView.cardView.leftAnchor,
-//                                                    right: self.homeView.cardView.rightAnchor,
-//                                                    bottom: self.homeView.cardView.bottomAnchor,
-//                                                    paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 25)
-                    
-                    self.navigationController?.popViewController(animated: true)
-                    
-                },completion: nil)
-
-        } else {
-            self.homeView.buttonChat.setTitle("", for: .normal)
+            self.homeView.buttonLandScape.removeFromSuperview()
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
                 animations: {
                     
                     self.view.setNeedsLayout()
+                    self.homeView.imagePromo.addSubview(self.homeView.buttonLandScape)
+                    self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 24, paddingBottom: 20,width: 45,height: 45)
+                    self.homeView.imagePromo.addSubview(self.homeView.buttonSetting)
+                    self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25 ,width: 30,height: 30)
                     self.homeView.imagePromo.fillFull(for: self.view)
                     self.view.setNeedsLayout()
 
                 },completion: nil)
-           // self.view.setNeedsLayout()
-            navigationController?.navigationBar.isHidden = true
-            tabBarController?.tabBar.isHidden = true
-            homeView.imageLogoProfile.isHidden = true
-//            view.needsUpdateConstraints()
-            isPlaying = true
+            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+
+           }
+       }
+    
+    @objc func rightHandAction() {
+        self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        if isPlaying {
+            isPlaying = false
+            self.view.layoutIfNeeded()
+            navigationController?.navigationBar.isHidden = false
+            tabBarController?.tabBar.isHidden = false
+            self.homeView.imageLogoProfile.isHidden = false
+            self.homeView.buttonSubscribe.isHidden = false
+            self.homeView.viewTop.isHidden =  false
+            self.homeView.segmentControll.isHidden = false
+            self.homeView.buttonComing.isHidden = false
+            self.homeView.buttonOnline.isHidden = false
+            self.homeView.buttonOffline.isHidden = false
+
+            self.view.setNeedsLayout()
+            UIView.animate(withDuration: 1.0,
+                delay: 0.0,
+                options: [],
+                animations: {
+                            
+                    self.navigationController?.popViewController(animated: true)
+                    
+                },completion: nil)
+        } else {
+            AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
         }
-        
-       // homeView.imagePromo.fillFull(for: view)
-        print("right bar button action")
     }
 
     @objc
@@ -495,18 +469,13 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-
        }
     @objc func rightBack() {
-        
         self.navigationController?.popViewController(animated: true)
     }
-    
-    //weak var viewChat: UIView!
-    
     @objc func actionChat() {
         self.homeView.buttonChat.setTitle("", for: .normal)
-        self.t = false
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         
         UIView.animate(withDuration: 0.3, animations: { () -> Void in
             
@@ -547,28 +516,36 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     
  
-//    func binding(status: String) {
-//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.data != nil  {
-//                    self.listBroadcast = response.data!
-//                    self.refreshControl.endRefreshing()
-//                }
-//        })
-//    }
+    func followChannels(id: Int) {
+        takeChannels = fitMeetChannels.followChannels(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.subscribersCount != nil  {
+                   print(response)
+                }
+            })
+      }
+
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
+                if response.username != nil  {
                         self.user = response
-                    print("RES ========\(response)")
-                       self.setUserProfile(user: self.user!)
+                        self.setUserProfile(user: self.user!)
                 }
-        })
-    }
+            })
+        }
     
-   
+//     func lockOrientation(_ orientation: UIInterfaceOrientationMask, andRotateTo rotateOrientation: UIInterfaceOrientation? = nil) {
+//
+//        if let delegate = UIApplication.shared.delegate as? AppDelegate {
+//            delegate.orientationLock = orientation
+//        }
+//
+//        if let rotateOrientation = rotateOrientation {
+//            UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+//        }
+//    }
 }
 

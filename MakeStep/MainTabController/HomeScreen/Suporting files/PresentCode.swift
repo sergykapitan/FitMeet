@@ -21,8 +21,7 @@ final class PresentCode: UIView {
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
-       // view.clipsToBounds = true
-            return view
+        return view
         }()
     var viewTop: HHCustomCornerView = {
         var view = HHCustomCornerView()
@@ -30,9 +29,8 @@ final class PresentCode: UIView {
         view.radiusLowerRightCorner = 20
         view.radiusUpperLeftCorner = 0
         view.radiusUpperRightCorner = 0
-       // view.stroke = 2
-      //  view.strokeColor = .black
         view.fillColor = .white
+       // view.isUserInteractionEnabled = true
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
     }()
@@ -51,14 +49,12 @@ final class PresentCode: UIView {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.boldSystemFont(ofSize: 12)
-      
         return label
     }()
     var segmentControll: CustomSegmentedControl = {
         let segment = CustomSegmentedControl()
         segment.backgroundColor = UIColor(hexString: "#F6F6F6")
         return segment
-        
     }()
     var buttonOnline: UIButton = {
         var button = UIButton()
@@ -86,7 +82,7 @@ final class PresentCode: UIView {
     }()
     var imagePromo: UIView = {
         var image = UIView()
-        image.backgroundColor = .red
+       // image.backgroundColor = .red
         return image
     }()
     var buttonLandScape: UIButton = {
@@ -124,11 +120,11 @@ final class PresentCode: UIView {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#000000")
         label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 0
         return label
     }()
     var viewChat: UIView = {
         var view = UIView()
-       // view.backgroundColor = .gray
         return view
     }()
     var buttonChat: UIButton = {
@@ -177,7 +173,19 @@ final class PresentCode: UIView {
         label.textColor = .white
         return label
     }()
-    
+    var buttonSubscribe: UIButton = {
+        var button = UIButton()
+        button.setTitle("Subscribed", for: .normal)
+        button.setTitleColor(UIColor(hexString: "3B58A4"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = UIColor(hexString: "FFFFFF")
+        button.layer.borderWidth = 0.5
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "3B58A4").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -190,59 +198,89 @@ final class PresentCode: UIView {
     private func initUI() {
         
         addSubview(cardView)
-       
     }
     func createCardViewLayer() {
-        
-       // addSubview(cardView)
-       // cardView.fillFull(for: self)
+
         cardView.fillSuperview()
-       
-        
-       
+     
         cardView.addSubview(viewTop)
-        viewTop.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0,  height: 100)
+        viewTop.anchor(top: cardView.topAnchor,
+                       left: cardView.leftAnchor,
+                       right: cardView.rightAnchor,
+                       paddingTop: 0, paddingLeft: 0, paddingRight: 0,  height: 100)
         
         viewTop.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor( left: viewTop.leftAnchor, paddingLeft: 15,width: 70, height: 70)
+        imageLogoProfile.anchor( left: viewTop.leftAnchor,
+                                 paddingLeft: 15,
+                                 width: 70, height: 70)
         imageLogoProfile.centerY(inView: viewTop)
         
         viewTop.addSubview(welcomeLabel)
-        welcomeLabel.anchor(top: imageLogoProfile.centerYAnchor, left: imageLogoProfile.rightAnchor, paddingTop: -20, paddingLeft: 20)
+        welcomeLabel.anchor(top: imageLogoProfile.centerYAnchor,
+                            left: imageLogoProfile.rightAnchor,
+                            paddingTop: -20, paddingLeft: 20)
         
         viewTop.addSubview(labelFollow)
-        labelFollow.anchor(top: welcomeLabel.bottomAnchor, left: imageLogoProfile.rightAnchor, paddingTop: 5, paddingLeft: 20)
+        labelFollow.anchor(top: welcomeLabel.bottomAnchor,
+                           left: imageLogoProfile.rightAnchor,
+                           paddingTop: 5, paddingLeft: 20)
+        
+        
  
         cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: viewTop.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, height: 30)
+        segmentControll.anchor(top: viewTop.bottomAnchor,
+                               left: cardView.leftAnchor,
+                               paddingTop: 15, paddingLeft: 20, height: 30)
         
         cardView.addSubview(tableView)
-        tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: segmentControll.bottomAnchor,
+                         left: cardView.leftAnchor,
+                         right: cardView.rightAnchor,
+                         bottom: cardView.bottomAnchor,
+                         paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                
 
         cardView.addSubview(buttonOnline)
-        buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
+        buttonOnline.anchor(top: segmentControll.bottomAnchor,
+                            left: cardView.leftAnchor,
+                            paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
         
+        cardView.addSubview(buttonSubscribe)
+        buttonSubscribe.anchor(right: viewTop.rightAnchor,
+                                       paddingRight: 10,
+                                       width: 86,height: 24)
+        buttonSubscribe.centerY(inView: imageLogoProfile)
+
         cardView.addSubview(buttonOffline)
-        buttonOffline.anchor(top: segmentControll.bottomAnchor, left: buttonOnline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
+        buttonOffline.anchor(top: segmentControll.bottomAnchor,
+                             left: buttonOnline.rightAnchor,
+                             paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
         cardView.addSubview(buttonComing)
-        buttonComing.anchor(top: segmentControll.bottomAnchor, left: buttonOffline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
+        buttonComing.anchor(top: segmentControll.bottomAnchor,
+                            left: buttonOffline.rightAnchor,
+                            paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
         cardView.addSubview(imagePromo)
-        imagePromo.anchor(top: buttonComing.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
-        
-//        imagePromo.addSubview(buttonLandScape)
-//        buttonLandScape.anchor(  right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingRight: 30, paddingBottom: 30,width: 30,height: 30)
+        imagePromo.anchor(top: buttonComing.bottomAnchor,
+                          left: cardView.leftAnchor,
+                          right: cardView.rightAnchor,
+                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
         
         cardView.addSubview(labelCategory)
-        labelCategory.anchor(top: imagePromo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
+        labelCategory.anchor(top: imagePromo.bottomAnchor,
+                             left: cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: labelCategory.bottomAnchor, left: cardView.leftAnchor,paddingTop: 9, paddingLeft: 16)
+        labelStreamInfo.anchor(top: labelCategory.bottomAnchor,
+                               left: cardView.leftAnchor,
+                               paddingTop: 9, paddingLeft: 16)
         
         cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+        labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor,
+                                      left: cardView.leftAnchor,
+                                      right: cardView.rightAnchor,
+                                      paddingTop: 4, paddingLeft: 16, paddingRight: 16)
         
         cardView.addSubview(buttonChat)
         buttonChat.anchor(bottom: cardView.bottomAnchor,paddingBottom: 5)

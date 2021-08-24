@@ -28,17 +28,7 @@ class MainTabBarViewController: UITabBarController {
         let hostVC = UIHostingController(rootView: home)
         hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
         hostVC.tabBarItem.title = ""
-        //CategoryUI
-//        let category = CategoryUI()
-//        let categoryVC = UIHostingController(rootView: category)
-//        categoryVC.tabBarItem.image = #imageLiteral(resourceName: "Category")
-//        categoryVC.tabBarItem.title = ""
-        //newList
-//        let listChannel = ListChannell()
-//        let channelVC = UIHostingController(rootView: listChannel)
-//        channelVC.tabBarItem.image = #imageLiteral(resourceName: "Stream")
-//        channelVC.tabBarItem.title = ""
-            
+    
         var profile: UIViewController?
         var streamView : UIViewController?
         

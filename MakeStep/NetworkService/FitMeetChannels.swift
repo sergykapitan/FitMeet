@@ -66,4 +66,34 @@ class FitMeetChannels {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    //MARK: - Follow Channels
+    public func followChannels(id: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/follow", method: .put, encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ChannelResponce.self)
+            .value()
+            .print("followChannels")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    ///api/v0/channel/channels/{uniqField}
+    //, interceptor: Interceptor(interceptors: [AuthInterceptor()])
+    public func getChannelsUserName(username: String) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(username)", method: .get, encoding: JSONEncoding.default)
+            //.validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ChannelResponce.self)
+            .value()
+            .print("getChannelsUserName")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    
+    
+    
+    
+    
 }

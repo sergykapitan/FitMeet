@@ -230,7 +230,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         
         guard let isP = isPlan,let d = date,let sponsor = onlyForSponsors,let sub = onlyForSubscribers else { return }
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: 26)
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: [25,30])
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {
@@ -298,7 +298,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: Int)  {
+    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
 
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
                                                     channelID: chanellId,
@@ -309,7 +309,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                                                     isPlanned: isPlaned,
                                                     onlyForSponsors: onlyForSponsors,
                                                     onlyForSubscribers: onlyForSubscribers,
-                                                    categoryIDS: [categoryId],
+                                                    categoryIDS: categoryId,
                                                     scheduledStartDate: date,
                                                     description: description,
                                                     previewPath: self.imageUpload?.data?.first?.filename))
