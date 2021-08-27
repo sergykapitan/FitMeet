@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		51E4AAD435C30FE4FAD5E133 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */; };
+		B404922926D6456600A2F417 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
+		B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */; };
+		B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923026D7970200A2F417 /* ActionChatPresentationController.swift */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
 		B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4163829268B09BB005BAA46 /* ChanellVC.swift */; };
@@ -181,6 +184,9 @@
 
 /* Begin PBXFileReference section */
 		64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
+		B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTransishionChatManadger.swift; sourceTree = "<group>"; };
+		B404923026D7970200A2F417 /* ActionChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionChatPresentationController.swift; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
 		B4163829268B09BB005BAA46 /* ChanellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellVC.swift; sourceTree = "<group>"; };
@@ -386,6 +392,47 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		B404922A26D78A9300A2F417 /* HomeChat */ = {
+			isa = PBXGroup;
+			children = (
+				B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */,
+				B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */,
+			);
+			path = HomeChat;
+			sourceTree = "<group>";
+		};
+		B404922B26D78ADC00A2F417 /* PresentVC */ = {
+			isa = PBXGroup;
+			children = (
+				B4B113C7269868790006CA5A /* PresentVC.swift */,
+				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
+				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
+			);
+			path = PresentVC;
+			sourceTree = "<group>";
+		};
+		B404922C26D78D9D00A2F417 /* Wath is this */ = {
+			isa = PBXGroup;
+			children = (
+				B4B113C3269856460006CA5A /* CustomActionSheet.swift */,
+				B4B113C02698563C0006CA5A /* customActionSheet.xib */,
+				B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */,
+				B4B113BA269856290006CA5A /* CustomSlider.swift */,
+				B4B113B72698561F0006CA5A /* PlayerContainerView.swift */,
+				B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */,
+			);
+			path = "Wath is this";
+			sourceTree = "<group>";
+		};
+		B404922D26D7969000A2F417 /* ActionForChat */ = {
+			isa = PBXGroup;
+			children = (
+				B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */,
+				B404923026D7970200A2F417 /* ActionChatPresentationController.swift */,
+			);
+			path = ActionForChat;
+			sourceTree = "<group>";
+		};
 		B41097F12640C08700DFEC19 /* NotTokenView */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +535,7 @@
 		B47828A226CFF3E30068292A /* Transishion */ = {
 			isa = PBXGroup;
 			children = (
+				B404922D26D7969000A2F417 /* ActionForChat */,
 				B47828A326CFF3F50068292A /* ActionSheet */,
 			);
 			path = Transishion;
@@ -639,6 +687,7 @@
 				B4B1114D269221C70006CA5A /* BaseCell.swift */,
 				B4B11150269221EA0006CA5A /* UserCell.swift */,
 				B4B111542692239A0006CA5A /* ChatCell.swift */,
+				B404922826D6456600A2F417 /* Label.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -659,18 +708,10 @@
 			children = (
 				B47828A826CFF4710068292A /* SubscribeVC */,
 				B4E88E5426D3E3DF003E6B16 /* Send */,
-				B4B113C3269856460006CA5A /* CustomActionSheet.swift */,
-				B4B113C02698563C0006CA5A /* customActionSheet.xib */,
-				B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */,
-				B4B113BA269856290006CA5A /* CustomSlider.swift */,
-				B4B113B72698561F0006CA5A /* PlayerContainerView.swift */,
-				B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */,
-				B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */,
-				B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */,
-				B4B113C7269868790006CA5A /* PresentVC.swift */,
+				B404922C26D78D9D00A2F417 /* Wath is this */,
+				B404922A26D78A9300A2F417 /* HomeChat */,
+				B404922B26D78ADC00A2F417 /* PresentVC */,
 				B4B113CA2698688C0006CA5A /* PresentVCCode.swift */,
-				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
-				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
 			);
 			path = "Suporting files";
 			sourceTree = "<group>";
@@ -1176,6 +1217,7 @@
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
 				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
+				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
@@ -1234,6 +1276,7 @@
 				B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */,
 				B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */,
 				B4E88E4D26D3DB79003E6B16 /* Usermap.swift in Sources */,
+				B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */,
 				B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
@@ -1305,6 +1348,7 @@
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
+				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
@@ -1468,7 +1512,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1493,7 +1537,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = DP58Q9BS98;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

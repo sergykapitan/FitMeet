@@ -13,6 +13,13 @@ struct Message: Codable {
     let socketEvent: String?
     let timestamp:String?
     let user: Usr?
+    let messageSender: MessageSender
+    
+ //  init(message: String, messageSender: MessageSender, username: String) {      
+ //    self.messageSender = messageSender
+ //       self.user?.fullName = username
+ //      self.payload?.message?.text = message.withoutWhitespace()
+ //   }
 }
    
 struct PayLoad: Codable {

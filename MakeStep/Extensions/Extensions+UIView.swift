@@ -38,7 +38,7 @@ extension UIView {
                left: superview?.safeAreaLayoutGuide.leftAnchor,
                right: superview?.safeAreaLayoutGuide.rightAnchor,
                bottom: superview?.safeAreaLayoutGuide.bottomAnchor,
-               paddingTop: 5, paddingLeft: 15, paddingRight: 45, paddingBottom: 5,height: 88)
+               paddingTop: 5, paddingLeft: 15, paddingRight: 45,width: 50, height: 88)
     }
     func fillSuperviewforLeft() {
         anchor(top: superview?.safeAreaLayoutGuide.topAnchor,
@@ -307,4 +307,43 @@ extension UIImageView {
         self.layer.cornerRadius = self.frame.height / 2
         self.clipsToBounds = true
     }
+}
+extension UIView {
+
+    func edges(_ edges: UIRectEdge, to view: UIView, offset: UIEdgeInsets) {
+        if edges.contains(.top) || edges.contains(.all) {
+            self.topAnchor.constraint(equalTo: view.topAnchor, constant: offset.top).isActive = true
+        }
+        
+        if edges.contains(.bottom) || edges.contains(.all) {
+            self.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: offset.bottom).isActive = true
+        }
+        
+        if edges.contains(.left) || edges.contains(.all) {
+            self.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offset.left).isActive = true
+        }
+        
+        if edges.contains(.right) || edges.contains(.all) {
+            self.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: offset.right).isActive = true
+        }
+    }
+    
+    func edges(_ edges: UIRectEdge, to layoutGuide: UILayoutGuide, offset: UIEdgeInsets) {
+        if edges.contains(.top) || edges.contains(.all) {
+            self.topAnchor.constraint(equalTo: layoutGuide.topAnchor, constant: offset.top).isActive = true
+        }
+        
+        if edges.contains(.bottom) || edges.contains(.all) {
+            self.bottomAnchor.constraint(equalTo: layoutGuide.bottomAnchor, constant: offset.bottom).isActive = true
+        }
+        
+        if edges.contains(.left) || edges.contains(.all) {
+            self.leadingAnchor.constraint(equalTo: layoutGuide.leadingAnchor, constant: offset.left).isActive = true
+        }
+        
+        if edges.contains(.right) || edges.contains(.all) {
+            self.trailingAnchor.constraint(equalTo: layoutGuide.trailingAnchor, constant: offset.right).isActive = true
+        }
+    }
+    
 }

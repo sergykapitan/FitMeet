@@ -57,7 +57,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
-    var  playerContainerView: PlayerContainerView?
+   // var  playerContainerView: PlayerContainerView?
     var user: User?
     var ar =  [User]()
     var index = 0
@@ -230,7 +230,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         followBroad = fitMeetStream.getListFollowBroadcast(status: "ONLINE", follow: true)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil {
+                if response.data != nil {
                     self.listBroadcast = response.data!
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()

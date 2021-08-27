@@ -17,35 +17,9 @@ class SocketIOManager: NSObject {
     
     static let sharedInstance = SocketIOManager()
 
-    
-  //  let token = UserDefaults.standard.string(forKey: "tokenChat")
-    
-   // let broadcastId = UserDefaults.standard.string(forKey: Constants.broadcastID)
-   // let chanelId = UserDefaults.standard.string(forKey: Constants.chanellID)
-    
-
-//    lazy var  manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
-//                                                                .log(true),
-//                                                                .compress,
-//                                                                .forceNew(true),
-//                                                                .reconnects(true),
-//                                                                .forceWebsockets(true),
-//                                                                .reconnectAttempts(3),
-//                                                                .reconnectWait(3),
-//                                                                .path("/api/v0/chatSocket"),
-//                                                                .reconnectWaitMax(10000),
-//                                                                .connectParams(["broadcastId": broadcastId!, "channelId": chanelId!,"token": token!])
-//
-//    ])
-//
-//    lazy var socket = manager.defaultSocket
     var manager: SocketManager!
     var socket: SocketIOClient!
-    
-//    override init() {
-//        super.init()
-//    }
-    
+
     func establishConnection(broadcastId: String,chanelId: String) {
         
         let token = UserDefaults.standard.string(forKey: "tokenChat")
@@ -111,25 +85,17 @@ class SocketIOManager: NSObject {
     }
     
     func connectToServerWithNickname(nickname: String,  completionHandler: @escaping (_ userList: [[String: Any]]?) -> Void) {
-        
-       // getTokenChat()
+
         let token = UserDefaults.standard.string(forKey: "tokenChat")
      
 
         socket.connect()
-        
-//        socket.on("message") { ( dataArray, ack) -> Void in
-//            print("DATAARRAY ===== \(dataArray)")
-//
-//            completionHandler(dataArray[0] as? [[String: Any]])
-//        }
+
         
         socket.on("connectUser") { dataArr, socData in
             print("CONECTENUSER == \(dataArr)")
         }
-        
-       // listenForOtherMessages()
-       // gotConnection()
+ 
     }
     func gotConnection(){
           socket.on("message") { (dataArray, ack) in
@@ -140,7 +106,7 @@ class SocketIOManager: NSObject {
        }
     
     func exitChatWithNickname(nickname: String, completionHandler: () -> Void) {
-        socket.emit("disconnectUser", nickname)
+       // socket.emit("disconnectUser", nickname)
         completionHandler()
     }
     
@@ -207,7 +173,7 @@ class SocketIOManager: NSObject {
     
     
     func sendStopTypingMessage(nickname: String) {
-        socket.emit("disconnectUser", nickname)
+       // socket.emit("disconnectUser", nickname)
        
         //socket.disconnect()
     

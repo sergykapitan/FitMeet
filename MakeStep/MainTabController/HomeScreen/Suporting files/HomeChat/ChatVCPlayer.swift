@@ -22,7 +22,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     var color: UIColor?
     var tint: UIColor?
     
-    //MARK: step 2 Create a delegate property here.
+    //MARK: -Create a delegate property here.
     weak var delegate: ClassBVCDelegate?
     var navBar: CGFloat?
     
@@ -43,6 +43,8 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+       // chatView.imageComm.tintColor = .black
+       
 
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
@@ -56,19 +58,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-       // makeTableView()
-        makeNavItem()
+       // makeNavItem()
         actionButton()
         chatView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-        chatView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
-        // Do any additional setup after loading the view.
         chatView.textView.delegate = self
         registerForKeyboardNotifications()
         
-        NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self,selector: Selector(("handleConnectedUserUpdateNotification")), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         
         NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
         
@@ -82,31 +80,34 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.backgroundColor = color
         chatView.sendMessage.tintColor = tint
         chatView.textView.backgroundColor = tint
+        chatView.cardView.backgroundColor = color
+        chatView.tableView.backgroundColor = color
+        if color == .clear {
+            chatView.imageComm.image  = UIImage(named: "arrow")
+            chatView.labelComm.textColor = .white
+        }
+       // chatView.imageComm.image = #imageLiteral(resourceName: "icons8-expand-arrow-100-2")
+        //chatView.view.backgroundColor = color
+       // chatView.tableView.
         
         
         
 
         guard let broad = broadcast else { return }
-        print("BROAD = \(broad)")
-        print("CHANEL==\(broad.channelIds?.first)")
-        
         guard let id = broad.channelIds?.first,let broadID = broad.id else { return }
-        
-        print("brood = \(broad.id)")
-        print("ID =====\(id)")
-        
+
         SocketIOManager.sharedInstance.getTokenChat()
         SocketIOManager.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
-          //  makeNavItem()
-            makeTableView()
+        makeTableView()
       
     }
     override func viewDidDisappear(_ animated: Bool) {
+        delegate?.changeBackgroundColor()
         super.viewDidDisappear(animated)
         print("viewDidDisappear = \(nickname)")
         guard let nic = nickname else { return }
         print("viewDidDisappearGuard = \(nic)")
-        SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
+       // SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
         
     }
     override func didReceiveMemoryWarning() {
@@ -121,7 +122,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
 
     func actionButton() {
         chatView.sendMessage.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
-        
+        chatView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
     }
     
     @objc func sendMessage() {
@@ -147,33 +148,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
           //  self.chatView.tableView.reloadData()
         }
     }
-    
 
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Chat"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction)),
-                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
-                                                                   style: .plain,
-                                                                   target: self,
-                                                                   action: #selector(rightHandAction))]
-    }
     @objc
     func rightHandAction() {
         print("right bar button action")
@@ -194,7 +169,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         delegate?.changeBackgroundColor()
         guard let nic = nickname else { return }
         print("buttonJoin = \(nic)")
-        SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
+       // SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
         dismiss(animated: true)
 
     }
@@ -216,6 +191,8 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: ChatCell.reuseID)
+        chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.receiverCellId)
+        chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.senderCellId)
         chatView.tableView.isHidden = false
         chatView.tableView.estimatedRowHeight = 90.0
         chatView.tableView.rowHeight = UITableView.automaticDimension
@@ -223,22 +200,21 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     }
     
     func registerForKeyboardNotifications() {
-      NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),name: UIResponder.keyboardWillShowNotification, object: nil)
+        
+    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),name: UIResponder.keyboardWillShowNotification, object: nil)
     NotificationCenter.default.addObserver(self, selector:
     #selector(keyboardWillBeHidden(_:)),name: UIResponder.keyboardWillHideNotification, object: nil)
-    }
+  }
+    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
         let info = notificiation.userInfo!
-        var keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
 
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            print("CHATVIEW222 ===== \(self.chatView.cardView.frame.origin.y)")
         if self.chatView.cardView.frame.origin.y == 0 {
-            //self.delegate?.changeUp(key: keyboardFrame.size.height)
-            guard let size = self.navBar else { return }
-            self.chatView.cardView.frame.origin.y -= keyboardFrame.size.height - size - CGFloat(40)
+            self.chatView.cardView.frame.origin.y -= keyboardFrame.size.height  - CGFloat(30)
             self.view.layoutIfNeeded()
             }
         })
@@ -250,9 +226,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
 
         
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-   
             self.chatView.cardView.frame.origin.y = 0.0
-            //self.chatView.cardView.frame.origin.y += keyboardFrame.height + size + CGFloat(40)
             self.view.layoutIfNeeded()
             })
       
@@ -365,46 +339,41 @@ extension ChatVCPlayer: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return chatMessages.count
-        return 1
+            return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath) as! ChatCell
-        
         let currentChatMessage = chatMessages[indexPath.section]
         
-        guard let senderNickname = currentChatMessage["username"],let message = currentChatMessage["message"], let messageDate = currentChatMessage["timestamp"] else { return  cell}
-       // let message = currentChatMessage["message"] as? String
-
-        if senderNickname == nickname as? String {
-         
-            cell.labelChatMessage.textAlignment = NSTextAlignment.right
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.right
-            cell.backgroundColor = .lightGray
-            cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
-            cell.labelChatMessage.textColor = .white
-            
-        } else {
-           // cell.cardView.fillSuperviewforCellRight()
-            cell.labelChatMessage.textAlignment = NSTextAlignment.left
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.left
-            cell.backgroundColor = .lightGray
-            cell.labelChatMessage.textColor = .white
-           
-        }
-        cell.labelChatMessage.text = message.description
-        cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate.getFormattedDate(format: "HH:mm:ss"))"
-  
-        cell.layer.cornerRadius = 20
-        cell.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        cell.layer.borderWidth = 0.5
-        cell.clipsToBounds = true
-
+        guard let senderNickname = currentChatMessage["username"],
+              let message = currentChatMessage["message"],
+              let messageDate = currentChatMessage["timestamp"],
+              let nic = nickname else { return UITableViewCell()}
         
-        return cell
+if senderNickname == nic {
+          if let cell = tableView.dequeueReusableCell(withIdentifier: "senderCellId", for: indexPath) as? ChatCell {
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                cell.topLabel.text = senderNickname
+                cell.textView.text = message
+                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                return cell
+            }
+} else {
+    if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell
+       {
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                cell.topLabel.text = senderNickname
+                cell.textView.text = message
+                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                return cell
+            }
+        }
+        return UITableViewCell()
+    
     }
+    
     // MARK: UITextViewDelegate Methods
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
@@ -419,7 +388,7 @@ extension ChatVCPlayer: UITableViewDataSource {
     // MARK: UIGestureRecognizerDelegate Methods
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                let headerView = UIView()
-        headerView.backgroundColor = .clear
+               headerView.backgroundColor = .clear
                return headerView
            }
 
@@ -429,7 +398,7 @@ extension ChatVCPlayer: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 88
+        return UITableView.automaticDimension
         }
 
         // Set the spacing between sections

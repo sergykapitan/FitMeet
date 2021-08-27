@@ -129,10 +129,27 @@ final class PresentCode: UIView {
     }()
     var buttonChat: UIButton = {
         var button = UIButton()
-        button.setTitle("Comments", for: .normal)
-        button.setTitleColor(.black, for: .normal)
+      //  button.setTitle("Comments", for: .normal)
+       // button.setTitleColor(.black, for: .normal)
         return button
     }()
+    var imageChat: UIImageView = {
+        let image = UIImageView()
+        image.image =  #imageLiteral(resourceName: "icons8-expand-arrow-100")
+        image.tintColor = .black
+        return image
+        }()
+    var labelChat: UILabel = {
+        let label = UILabel()
+        label.text = "Comments"
+        label.textColor = .black
+      //  label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
+//    var buttonHelp: UIButton = {
+//        let button = UIButton()
+//        return button
+//    }()
     var tableView: UITableView = {
         let table = UITableView()
         return table
@@ -283,8 +300,15 @@ final class PresentCode: UIView {
                                       paddingTop: 4, paddingLeft: 16, paddingRight: 16)
         
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(bottom: cardView.bottomAnchor,paddingBottom: 5)
-        buttonChat.centerX(inView: cardView)
+        buttonChat.anchor(left:cardView.leftAnchor,bottom: cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 5,width: 80, height: 30)
+        buttonChat.addSubview(imageChat)
+        imageChat.anchor(left: buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
+        imageChat.centerY(inView: buttonChat)
+        
+        buttonChat.addSubview(labelChat)
+        labelChat.anchor( left: imageChat.rightAnchor, paddingLeft: 10)
+        labelChat.centerY(inView: buttonChat)
+        
         
         cardView.addSubview(viewChat)
         viewChat.anchor(top: labelStreamDescription.bottomAnchor,

@@ -15,7 +15,12 @@ protocol ClassBVCDelegate: class {
     func changeUp(key: CGFloat)
     func changeDown(key: CGFloat)
 }
-
+class CellIds {
+    
+    static let senderCellId = "senderCellId"
+    
+    static let receiverCellId = "receiverCellId"
+}
 
 
 class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
@@ -90,16 +95,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         super.viewWillAppear(animated)
         
         chatView.backgroundColor = color
-      //  chatView.sendMessage.tintColor = tint
-      //  chatView.textView.backgroundColor = tint
-        
-        print("Broadcast =\(broadcastId)")
-        print("Chanell === \(chanellId)")
-        
-        
+
         guard let broadId = broadcastId,let channelId = chanellId else { return }
-        print("BROAD = \(broadId)")
-        print("CHANEL==\(channelId)")
             SocketIOManager.sharedInstance.getTokenChat()
             SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
             makeNavItem()
@@ -108,10 +105,19 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+       // delegate?.changeBackgroundColor()
+       // AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+
         print("viewDidDisappear = \(nickname)")
         guard let nic = nickname else { return }
         print("viewDidDisappearGuard = \(nic)")
-        SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
+       // SocketIOManager.sharedInstance.sendStopTypingMessage(nickname: nic)
+       
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("DISSSSAAAA")
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -121,6 +127,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        print("DEINIT")
     }
 
     func actionButton() {
@@ -211,6 +218,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: ChatCell.reuseID)
+        chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.receiverCellId)
+        chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.senderCellId)
         chatView.tableView.isHidden = false
         chatView.tableView.estimatedRowHeight = 90.0
         chatView.tableView.rowHeight = UITableView.automaticDimension
@@ -352,56 +361,46 @@ extension ChatVC: UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-       // return chatMessages.count
         return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath) as! ChatCell
+       // let cell = tableView.dequeueReusableCell(withIdentifier: "ChatCell", for: indexPath) as! ChatCell
         
         let currentChatMessage = chatMessages[indexPath.section]
         
+        guard let senderNickname = currentChatMessage["username"],
+              let message = currentChatMessage["message"],
+              let messageDate = currentChatMessage["timestamp"],
+              let nic = nickname else { return UITableViewCell()}
         
-        
-//        let senderNickname = currentChatMessage["username"] as? String
-//        let message = currentChatMessage["message"] as? String
-//        let messageDate = currentChatMessage["timestamp"] as? String
-        guard let senderNickname = currentChatMessage["username"],let message = currentChatMessage["message"], let messageDate = currentChatMessage["timestamp"] else { return  cell}
-  
-        if senderNickname == nickname as? String {
-      
-            cell.labelChatMessage.textAlignment = NSTextAlignment.right
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.right
-            cell.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
-            cell.labelChatMessage.textColor = .white
-        } else {
-           // cell.cardView.fillSuperviewforCellRight()
-           // viewWillLayoutSubviews()
-            cell.labelChatMessage.textAlignment = NSTextAlignment.left
-            cell.labelMessageDetail.textAlignment = NSTextAlignment.left
-            cell.backgroundColor = .lightGray
-            cell.labelChatMessage.textColor = .white
-            
+if senderNickname == nic {
+          if let cell = tableView.dequeueReusableCell(withIdentifier: "senderCellId", for: indexPath) as? ChatCell {
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                cell.topLabel.text = senderNickname
+                cell.textView.text = message
+                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                return cell
+            }
+} else {
+    if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell
+       {
+                cell.selectionStyle = .none
+                cell.backgroundColor = .clear
+                cell.topLabel.text = senderNickname
+                cell.textView.text = message
+                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                return cell
+            }
         }
-        
-        cell.labelChatMessage.text = message.description
-        cell.labelMessageDetail.text = "by \(senderNickname.uppercased()) @ \(messageDate.getFormattedDate(format: "HH:mm:ss"))"
-        cell.labelChatMessage.textColor = .white
-        
-       // cell.backgroundColor = .clear
-        cell.layer.cornerRadius = 20
-        cell.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        cell.layer.borderWidth = 1
-        cell.clipsToBounds = true
+        return UITableViewCell()
 
-        
-        return cell
     }
     // MARK: UITextViewDelegate Methods
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname ?? "")
+       // SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: nickname ?? "")
         
         return true
     }
@@ -410,7 +409,7 @@ extension ChatVC: UITableViewDataSource {
     // MARK: UIGestureRecognizerDelegate Methods
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                let headerView = UIView()
-        headerView.backgroundColor = .clear
+               headerView.backgroundColor = .clear
                return headerView
            }
 
@@ -420,8 +419,8 @@ extension ChatVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 88
-        }
+        return UITableView.automaticDimension
+    }
 
         // Set the spacing between sections
         func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

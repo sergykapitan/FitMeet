@@ -14,7 +14,7 @@ final class ChatVCPlayerCode: UIView {
     
     let cardView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
         view.layer.borderWidth = 0.8
@@ -27,10 +27,35 @@ final class ChatVCPlayerCode: UIView {
     }()
     var buttonChat: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "dismiss"), for: .normal)
-       // button.tintColor = .black
-       // button.backgroundColor = .blue
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
         return button
+    }()
+    
+    var view : UILabel = {
+        let view = UILabel()
+        view.frame = CGRect(x: 0, y: 0, width: 31, height: 4)
+        view.backgroundColor = .white
+        view.layer.backgroundColor = UIColor.gray.cgColor//UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1).cgColor
+        view.layer.cornerRadius = 20
+        return view
+    }()
+    
+    var buttonComm: UIButton = {
+        var button = UIButton()
+        return button
+    }()
+    var imageComm: UIImageView = {
+        let image = UIImageView()
+        image.image =  #imageLiteral(resourceName: "icons8-expand-arrow-100")
+        image.tintColor = .black
+        return image
+        }()
+    var labelComm: UILabel = {
+        let label = UILabel()
+        label.text = "Comments"
+        label.textColor = .black
+      //  label.font = UIFont.systemFont(ofSize: 18)
+        return label
     }()
     var textView: UITextView = {
         let text = UITextView()
@@ -64,8 +89,20 @@ final class ChatVCPlayerCode: UIView {
         cardView.fillSuperview()
 
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 12,height: 12)
+        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 40,height: 30)
         buttonChat.centerX(inView: cardView)
+        
+        cardView.addSubview(buttonComm)
+        buttonComm.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
+                          paddingTop: 10, paddingLeft: 15, width: 60, height: 30)
+        buttonComm.addSubview(imageComm)
+        imageComm.anchor(left: buttonComm.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
+        imageComm.centerY(inView: buttonComm)
+        
+        buttonComm.addSubview(labelComm)
+        labelComm.anchor( left: imageComm.rightAnchor, paddingLeft: 10)
+        labelComm.centerY(inView: buttonComm)
+        
         
         cardView.addSubview(textView)
         textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10, height: 40)

@@ -8,8 +8,8 @@
 
 import UIKit
 
-class CustomActionSheetContainer: UIView {
-
-    var linkDic : [String: String] = [:]
-}
+//class CustomActionSheetContainer: UIView {
+//
+//    var linkDic : [String: String] = [:]
+//}
 
