@@ -112,6 +112,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+        SocketWatcher.sharedInstance.closeConnection()
     }
     override func viewDidLoad() {
         super.viewDidLoad()

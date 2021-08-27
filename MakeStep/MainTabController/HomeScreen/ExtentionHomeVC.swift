@@ -113,14 +113,19 @@ extension HomeVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-       // tableView.deselectRow(at: indexPath, animated: true)
-        
+     
         let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.listBroadcast[indexPath.row].userId
         let follow = self.listBroadcast[indexPath.row].followersCount
-       guard let Url = url else { return }
+        print("ID BROAD === \(self.listBroadcast[indexPath.row].id)")
+        print("ChanellId ==== \(self.listBroadcast[indexPath.row].channelIds)")
+        
+    
+         
+        guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+        
+        self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
         let vc = PresentVC()
-
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
         vc.Url = Url

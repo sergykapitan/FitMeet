@@ -174,8 +174,30 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+///api/v0/watcher/watchers/map
+    public func getWatcherMap(ids: [Int]) -> AnyPublisher<UploadImages,DifferentError> {
 
-
-
-    
+        let parameters = [
+            "ids": ids
+        ]
+        return AF.request(Constants.apiEndpoint + "/watcher/watchers/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: UploadImages.self)
+            .value()
+            .print("getWatcherMap")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+///api/v0/watcher/watchers/token токен для ватчера
+    public func getTokenWatcher() -> AnyPublisher<TokenWatcher,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/watcher/watchers/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: TokenWatcher.self)
+            .value()
+            .print("getTokenWatcher")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }

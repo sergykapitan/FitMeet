@@ -207,8 +207,17 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
           })
     }
-    
-    
+//    func getWatcherToken() {
+//        takeUser = fitMeetApi.getTokenWatcher()
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.token != nil  {
+//                    print("RES = \(response)")
+//                }
+//          })
+//    }
+//
+//
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
@@ -242,6 +251,13 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+    }
+    func connectUser (broadcastId:String?,channellId: String?) {
+        
+        guard let broadID = broadcastId,let id = channellId else { return }
+     
+        SocketWatcher.sharedInstance.getTokenChat()
+        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
     }
 }
 
