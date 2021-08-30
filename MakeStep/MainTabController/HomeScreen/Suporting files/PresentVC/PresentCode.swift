@@ -185,7 +185,7 @@ final class PresentCode: UIView {
     }()
     var labelEye: UILabel = {
         let label = UILabel()
-        label.text = "123"
+       // label.text = "123"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label

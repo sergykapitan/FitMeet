@@ -31,37 +31,38 @@ extension HomeVC: UITableViewDataSource {
         cell.titleLabel.text = listBroadcast[indexPath.row].name
         guard let category = listBroadcast[indexPath.row].categories?.first?.title,
               let category2 = listBroadcast[indexPath.row].categories?.last?.title,
-              let id = listBroadcast[indexPath.row].userId
+              let id = listBroadcast[indexPath.row].userId,
+              let broadcastID = self.listBroadcast[indexPath.row].id
               else { return cell}
-        
-        print("IDDDDDDD===\(id)")
+
         var arrIds = [Int]()
         arrIds.append(id)
         
-        print("KKKKKKKKK=====\(arrIds)")
+    
+        
+        self.ids.append(broadcastID)
+        print("IDS ++++ \(broadcastID)")
+        self.getMapWather(ids: [broadcastID])
+        cell.labelEye.text = "\(self.watch)"
+        
+        
+        
+         
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}.reduce("") { $0.title + "\u{00B7} " + $1.title }  //
       
         cell.labelCategory.text = s
 
-        cell.labelEye.text = " \(listBroadcast[indexPath.row].followersCount!)"        
-        bindingUser(id: id)
-       // self.bindingUserMap(ids: arrIds)
+
         
         if listBroadcast[indexPath.row].isFollow ?? false {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
             cell.buttonLike.setImage(UIImage(named: "Like-1"), for: .normal)
         }
-        print("ARARARRARAARRARA= \(ar)")
+    
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
-            
             cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
-          //  if  self.ar != nil {
-           // guard let arrIds = self.ar else { return }
-          //  cell.setImageLogo(image: self.ar[indexPath.row].avatarPath ?? "https://logodix.com/logo/1070633.png")
-  
         }
        
         cell.buttonLike.tag = indexPath.row
@@ -123,6 +124,8 @@ extension HomeVC: UITableViewDelegate {
     
          
         guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+      
+       
         
         self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
         let vc = PresentVC()
@@ -131,6 +134,7 @@ extension HomeVC: UITableViewDelegate {
         vc.Url = Url
         vc.broadcast = self.listBroadcast[indexPath.row]
         vc.follow = "\(follow)"
+        vc.broadId = broadcastID
         navigationController?.pushViewController(vc, animated: true)
 
     }

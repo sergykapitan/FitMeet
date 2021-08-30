@@ -36,7 +36,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     func changeBackgroundColor() {
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-      // // homeView.buttonChat.setTitle("Comments", for: .normal)
         homeView.labelChat.text = "Comments"
     }
 
@@ -50,13 +49,13 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     
     func changeBackground() {
-        print("CLOSE PLAY")
         self.dismiss(animated: true, completion: nil)
     }
     var isPlaying: Bool = false
     var isButton: Bool = true
     var id: Int?
     var follow: String?
+    var watch: Int?
     
     let controller =  ChatVCPlayer()
 
@@ -72,6 +71,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
+    private var watcherMap: AnyCancellable?
     
     @Inject var fitMeetChannels: FitMeetChannels
     private var takeChannels: AnyCancellable?
@@ -81,6 +81,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var listBroadcast: [BroadcastResponce] = []
     
     var broadcast: BroadcastResponce?
+    var  broadId: Int?
     
     private let refreshControl = UIRefreshControl()
    // var  playerContainerView: PlayerContainerView?
@@ -105,8 +106,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         makeNavItem()
         homeView.imageLogoProfile.makeRounded()
         guard let id = id ,let _ = follow else { return }
+        
         bindingUser(id: id)
-       
+        guard let  broadId = broadId else { return }
+        getMapWather(ids: [broadId])
+       // guard let watch = watch  else { return }
+       // homeView.labelEye.text = "\(watch)"
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -134,6 +139,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         guard let broadcast = broadcast else { return }        
         homeView.labelStreamDescription.text = broadcast.description
+        
 
 
     }
@@ -314,7 +320,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addSubview(homeView.overlay)
         homeView.overlay.anchor(top: homeView.imagePromo.topAnchor,
                        left: homeView.imagePromo.leftAnchor,
-                       paddingTop: 8, paddingLeft: 16,  width: 110, height: 24)
+                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
         homeView.imagePromo.addSubview(homeView.imageLive)
         homeView.imageLive.anchor( left: homeView.overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
@@ -332,15 +338,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
         homeView.labelEye.centerY(inView: homeView.overlay)
         
-       // self.homeView.labelEye.text = "1"
-            
+    
+       
         
                let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
                print("TIM=====\(tim)")
-        
-             //  homeView.labelTimer.text = String(format: "\(tim.format(using: [.hour, .minute, .second])!)")
-        
-                playPauseButton.setup(in: self)
+               playPauseButton.setup(in: self)
 
     }
 
@@ -479,11 +482,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             detailViewController.broadcast = broadcast
             detailViewController.delegate = self
             detailViewController.color = .white
-            //detailViewController.chatView.buttonChat.isHidden = false
                    
                    present(detailViewController, animated: true)
-
-            
         }
        
     }
@@ -509,6 +509,23 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 }
             })
         }
+    
+    
+    
+    func getMapWather(ids: [Int])  {
+        watcherMap = fitMeetApi.getWatcherMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                   // print("WATCHERPresent======\(response.data["\(ids.first!)"]!)")
+                    guard let watchers = response.data["\(ids.first!)"] else { return }
+                   // self.loadPlayer()
+                    self.homeView.labelEye.text = "\(watchers)"
+                   // print("WATCH RETURN = \(self.watch)")
+                        
+                }
+            })
+       }
     
 }
 

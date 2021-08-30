@@ -13,6 +13,7 @@
 		B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923026D7970200A2F417 /* ActionChatPresentationController.swift */; };
 		B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923326D8DF9800A2F417 /* TokenWatcher.swift */; };
 		B404923626D8F23D00A2F417 /* SocketWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923526D8F23D00A2F417 /* SocketWatcher.swift */; };
+		B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923726D8FA1500A2F417 /* MapWatcher.swift */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
 		B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4163829268B09BB005BAA46 /* ChanellVC.swift */; };
@@ -191,6 +192,7 @@
 		B404923026D7970200A2F417 /* ActionChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionChatPresentationController.swift; sourceTree = "<group>"; };
 		B404923326D8DF9800A2F417 /* TokenWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenWatcher.swift; sourceTree = "<group>"; };
 		B404923526D8F23D00A2F417 /* SocketWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketWatcher.swift; sourceTree = "<group>"; };
+		B404923726D8FA1500A2F417 /* MapWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWatcher.swift; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
 		B4163829268B09BB005BAA46 /* ChanellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellVC.swift; sourceTree = "<group>"; };
@@ -441,6 +443,7 @@
 			isa = PBXGroup;
 			children = (
 				B404923326D8DF9800A2F417 /* TokenWatcher.swift */,
+				B404923726D8FA1500A2F417 /* MapWatcher.swift */,
 			);
 			name = Watcher;
 			sourceTree = "<group>";
@@ -1368,6 +1371,7 @@
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
+				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,

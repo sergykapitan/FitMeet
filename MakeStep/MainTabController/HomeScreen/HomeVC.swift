@@ -39,6 +39,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    var ids = [Int]()
 
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
@@ -52,6 +54,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
     private var followBroad: AnyCancellable?
+    private var watcherMap: AnyCancellable?
     
     
     
@@ -174,7 +177,23 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
         })
     }
-    
+    var complishionHandler: ((Bool) -> Void)?
+    var watch = 0
+    func getMapWather(ids: [Int])   {
+        
+        watcherMap = fitMeetApi.getWatcherMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    print("ffffffffffffff ====\(ids)")
+                    print("WATCHER======\(response.data)")
+                  //  let watcher  = Int(response.data.values.first)
+                  //  guard let watch = response.data["\(ids.first!)"] else { return watch}
+                    self.watch = response.data["\(ids.first!)"]!
+             
+                }
+          })
+    }
     func bindingRecomandate() {
         takeBroadcast = fitMeetStream.getRecomandateBroadcast()
             .mapError({ (error) -> Error in return error })
@@ -207,17 +226,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
           })
     }
-//    func getWatcherToken() {
-//        takeUser = fitMeetApi.getTokenWatcher()
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.token != nil  {
-//                    print("RES = \(response)")
-//                }
-//          })
-//    }
-//
-//
+
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })

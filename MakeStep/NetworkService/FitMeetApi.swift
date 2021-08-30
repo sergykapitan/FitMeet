@@ -175,7 +175,7 @@ class FitMeetApi {
             .eraseToAnyPublisher()
     }
 ///api/v0/watcher/watchers/map
-    public func getWatcherMap(ids: [Int]) -> AnyPublisher<UploadImages,DifferentError> {
+    public func getWatcherMap(ids: [Int]) -> AnyPublisher<MapWatcher,DifferentError> {
 
         let parameters = [
             "ids": ids
@@ -183,7 +183,7 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/watcher/watchers/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .publishDecodable(type: UploadImages.self)
+            .publishDecodable(type: MapWatcher.self)
             .value()
             .print("getWatcherMap")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
