@@ -20,7 +20,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let name, title, welcome5Description: String?
     let backgroundUrl, facebookLink, instagramLink, twitterLink: String?
     let status: String?
-    let banReason: Bool?
+   // let banReason: Bool?
     let subscribersCount, followersCount: Int?
     let updatedAt: String?
     let description: String?

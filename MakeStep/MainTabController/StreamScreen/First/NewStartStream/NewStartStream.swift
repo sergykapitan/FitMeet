@@ -91,13 +91,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-//        authView.textFieldName.text = ""
-//        authView.textFieldStartDate.text = ""
-//        authView.textFieldFree.text = ""
-//        authView.textFieldAviable.text = ""
-//        authView.textFieldDescription.text = ""
-//        authView.textFieldCategory.text = ""
-//        authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+
     
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -191,16 +185,21 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     }
 
     func actionButtonContinue() {
-      //  authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
-        
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        guard let chanelId = listChanell.last?.id ,let name = authView.textFieldName.text ,let description = authView.textFieldDescription.text,let img = image ,let planedDate = authView.textFieldStartDate.text else { return }
+        print("let chanelId = \(listChanell.last?.id) \n ,let name = \(authView.textFieldName.text ) \n, let description = \(authView.textFieldDescription.text)   \n ,let planedDate = \(authView.textFieldStartDate.text)")
+        
+        
+        
+        guard let chanelId = listChanell.last?.id ,
+              let name = authView.textFieldName.text ,
+              let description = authView.textFieldDescription.text,
+              let img = image ,
+              let planedDate = authView.textFieldStartDate.text else { return }
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
-        //(chanellId: chanelId, name: name, description: description, previewPath: img)
         var isPlan: Bool?
         var date: String?
         
@@ -228,7 +227,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         }
         
         
-        guard let isP = isPlan,let d = date,let sponsor = onlyForSponsors,let sub = onlyForSubscribers else { return }
+        guard let isP = isPlan,
+              let d = date,
+              let sponsor = onlyForSponsors,
+              let sub = onlyForSubscribers else { return }
+        
+        print("isP = \(isP)\n  d == \(d) \n  sponsor == \(sponsor) \n SUB === \(sub)\n  CHANELLID == \(chanelId) \n NAME  == \(name)")
         
         self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: [25,30])
      
@@ -282,7 +286,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listChanell = response.data
-                    print(self.listChanell.last)
+                    print("ListChanel = ==== \(self.listChanell.last)")
                 }
         })
     }
@@ -324,7 +328,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.fetchStream(id: self.broadcast?.id, name: name)
                     
                     self.authView.textFieldName.text = ""
-                    self.authView.textFieldStartDate.text = ""
+                   // self.authView.textFieldStartDate.text = ""
                     self.authView.textFieldFree.text = ""
                     self.authView.textFieldAviable.text = ""
                     self.authView.textFieldDescription.text = ""
@@ -353,16 +357,26 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.myPublish = twoString.1
                     self.url = url
                     print(response)
+                    print("chat === \(self.authView.textFieldStartDate.text)")
                     
-                    let navVC = LiveStreamViewController()
-                    navVC.modalPresentationStyle = .fullScreen
-                    navVC.idBroad = id
-                    
-                    guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-                    navVC.myuri = myuris
-                    navVC.myPublish = myPublishh                    
-                    self.present(navVC, animated: true, completion: nil)
-            })
+                    if self.authView.textFieldStartDate.text == "NOW" {
+                        let navVC = LiveStreamViewController()
+                        navVC.modalPresentationStyle = .fullScreen
+                        navVC.idBroad = id
+                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+                        navVC.myuri = myuris
+                        navVC.myPublish = myPublishh
+                       // self.present(navVC, animated: true, completion: nil)
+                        self.present(navVC, animated: true) {
+                            self.authView.textFieldStartDate.text = ""
+                        }
+                    } else {
+                        let channelVC = ChanellVC()
+                        self.present(channelVC, animated: true) {
+                            self.authView.textFieldStartDate.text = ""
+                        }
+                    }
+               })
            }
 
     func removeUrl(url: String) -> (url:String,publish: String) {

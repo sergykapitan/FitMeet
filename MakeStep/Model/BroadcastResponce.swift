@@ -12,7 +12,7 @@ struct BroadcastList: Codable {
 }
 
 struct BroadcastResponce:Codable {
-    let message: [String]?
+    let message: String?
     var error: String?
     let createdAt: String?
     let id: Int?

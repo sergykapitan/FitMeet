@@ -12,6 +12,8 @@ import AVKit
 
 class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate {
     
+    var button = UIButton()
+    
     func change(to index: Int) {
         if index == 0 {
             homeView.buttonOnline.isHidden = false
@@ -35,8 +37,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         }
     }
     func changeBackgroundColor() {
-        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-        homeView.labelChat.text = "Comments"
+        AppUtility.lockOrientation(.all)
+        isLandscape = false
+        
+        if isLandscape {
+
+        } else {
+            homeView.buttonChat.isHidden = false
+        }
+        if isLand {
+            self.button.isHidden = false
+        } else {
+            
+        }
     }
 
     func changeUp(key: CGFloat) {
@@ -53,6 +66,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     var isPlaying: Bool = false
     var isButton: Bool = true
+    
+    var isLandscape: Bool = true
+    var isLand:Bool = true
+    
     var id: Int?
     var follow: String?
     var watch: Int?
@@ -65,6 +82,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
+   // let actionPresentChat = ActionChatPresentationController()
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -150,6 +168,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
     }
     //MARK: - Selectors
     @objc func actionOnline() {
@@ -352,18 +371,28 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            super.viewWillTransition(to: size, with: coordinator)
         
             playPauseButton.updateUI()
+            
         
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
-            self.homeView.labelChat.textColor = .white
-            self.homeView.imageChat.image = UIImage(named: "arrow")
-       
+            isLand = true
+            button.isHidden = false
+            //actionChatTransitionManager.intWidth = 0.5
+            //actionChatTransitionManager.intHeight = 1
+            self.view.addSubview(button)
+            button.anchor( right: self.homeView.cardView.rightAnchor, paddingRight: 20, width: 30, height: 30)
+            button.centerY(inView: self.view)
+            button.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+            
+            
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
                 animations: {
                     
                     self.view.setNeedsLayout()
+                    
+                    self.homeView.buttonChat.removeFromSuperview()
                     self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 100, paddingBottom: 20,width: 45,height: 45)
                     self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
                     self.homeView.imagePromo.fillFull(for: self.view)
@@ -374,24 +403,44 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             navigationController?.navigationBar.isHidden = true
             tabBarController?.tabBar.isHidden = true
             homeView.imageLogoProfile.isHidden = true
-           // self.homeView.labelChat.textColor = .white
-           // self.homeView.imageChat.image = #imageLiteral(resourceName: "Back11")
             view.needsUpdateConstraints()
             isPlaying = true
+            isLandscape = true
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
             
            } else {
                print("Portrait")
-            self.homeView.labelChat.textColor = .white
-            self.homeView.imageChat.image = UIImage(named: "arrow")
+            isLand = false
+            button.isHidden = true
+           // actionChatTransitionManager.intWidth = 1
+           // actionChatTransitionManager.intHeight = 0.7
+            
             self.homeView.buttonLandScape.removeFromSuperview()
+            self.homeView.buttonChat.removeFromSuperview()
+           // isPlaying = false
+            isLandscape = false
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
                 animations: {
                     
-                    self.view.setNeedsLayout()
-                
+                   // self.view.setNeedsLayout()
+                    
+                    self.homeView.addSubview(self.homeView.buttonChat)
+                   
+                   // self.homeView.buttonChat.needsUpdateConstraints()
+                    
+                    self.homeView.buttonChat.anchor(left:self.view.leftAnchor,
+                                                               bottom: self.view.bottomAnchor,
+                                                               paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
+                    self.homeView.labelChat.text = "Comments"
+                    self.homeView.labelChat.textColor = .white
+                                       
+                    self.homeView.buttonChat.addSubview(self.homeView.imageChat)
+                    self.homeView.imageChat.image = #imageLiteral(resourceName: "arrow")
+                    self.homeView.imageChat.anchor(left: self.homeView.buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
+                    self.homeView.imageChat.centerY(inView: self.homeView.buttonChat)
+       
                     self.homeView.imagePromo.addSubview(self.homeView.buttonLandScape)
                     self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 24, paddingBottom: 20,width: 45,height: 45)
                     self.homeView.imagePromo.addSubview(self.homeView.buttonSetting)
@@ -406,6 +455,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
        }
     
     @objc func rightHandAction() {
+        
+        print("ISPLAYENG === \(isPlaying)")
+        
         self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
         if isPlaying {
             isPlaying = false
@@ -432,7 +484,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 },completion: nil)
         } else {
             AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
-          //  controller.dismiss(animated: true, completion: nil)
         }
     }
 
@@ -447,6 +498,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.popViewController(animated: true)
     }
     @objc func actionChat(sender:UITapGestureRecognizer) {
+        self.button.isHidden = true
         if isPlaying {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
@@ -457,24 +509,35 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.buttonLandScape.isHidden = true
             playPauseButton.isHidden = true
             isButton = false
-           // homeView.buttonChat.setTitle("", for: .normal)
+            homeView.buttonChat.isHidden = true
             
-            homeView.labelChat.text = ""
-            homeView.imageChat.isHidden = true
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
             detailViewController.transitioningDelegate = actionChatTransitionManager
             detailViewController.broadcast = broadcast
             detailViewController.delegate = self
             detailViewController.color = .clear
-            detailViewController.chatView.imageComm.image = UIImage(named: "arrow")
-            detailViewController.chatView.buttonChat.isHidden = true
-            
-                   
-                   present(detailViewController, animated: true)
+
+            if isLand {
+                actionChatTransitionManager.intWidth = 0.5
+                actionChatTransitionManager.intHeight = 1
+                actionChatTransitionManager.isLandscape = isLand
+                detailViewController.chatView.buttonChat.isHidden = true
+                detailViewController.chatView.buttonComm.isHidden = true
+                detailViewController.chatView.buttonCloseChat.isHidden = false
+                transitionVc(vc: detailViewController, duration: 0.5, type: .fromRight)
+            } else {
+                actionChatTransitionManager.intWidth = 1
+                actionChatTransitionManager.intHeight = 0.7
+                actionChatTransitionManager.isLandscape = isLand
+                detailViewController.chatView.buttonChat.isHidden = false
+                detailViewController.chatView.buttonComm.isHidden = false
+                detailViewController.chatView.buttonCloseChat.isHidden = true
+                present(detailViewController, animated: true)
+            }
             
         } else {
-            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+            AppUtility.lockOrientation(.portrait)
             
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
@@ -482,8 +545,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             detailViewController.broadcast = broadcast
             detailViewController.delegate = self
             detailViewController.color = .white
-                   
-                   present(detailViewController, animated: true)
+            actionChatTransitionManager.intWidth = 1
+            actionChatTransitionManager.intHeight = 0.7
+            present(detailViewController, animated: true)
         }
        
     }

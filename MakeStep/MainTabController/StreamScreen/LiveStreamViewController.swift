@@ -35,6 +35,10 @@ final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
 class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     
 
+    var isLandscape: Bool = false
+    
+    
+    
     func changeUp(key: CGFloat) {
         
     }
@@ -98,6 +102,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     private var retryCount: Int = 0
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
+    let actionChatTransitionManager = ActionTransishionChatManadger()
     
     override func loadView() {
         super.loadView()
@@ -199,18 +204,32 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     // MARK: - presentChat
     
     @objc func openChat() {
+        
         let chatVC = ChatVC()
         chatVC.color = .clear
         chatVC.tint = .white
-        slideInTransitioningDelegate.direction = .bottom
-        slideInTransitioningDelegate.disableCompactHeight = true
-        chatVC.transitioningDelegate = slideInTransitioningDelegate
+      //  slideInTransitioningDelegate.direction = .bottom
+      //  slideInTransitioningDelegate.disableCompactHeight = true
+        chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         chatVC.delegate = self
         guard let id = idBroad,let channel = channelId else { return }
         
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = channel
+        
+        if isLandscape {
+            actionChatTransitionManager.intWidth = 0.5
+            actionChatTransitionManager.intHeight = 1
+            //actionChatTransitionManager.isLandscape = isLandscape
+            present(chatVC, animated: true, completion: nil)
+           // transitionVc(vc: chatVC, duration: 0.5, type: .fromRight)
+        } else {
+            actionChatTransitionManager.intWidth = 1
+            actionChatTransitionManager.intHeight = 0.7
+            actionChatTransitionManager.isLandscape = isLandscape
+            present(chatVC, animated: true)
+        }
         
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
@@ -220,7 +239,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         streamView.chatButton.isHidden = true
         streamView.StartStreamButton.isHidden = true
         
-        self.present(chatVC, animated: true, completion: nil)
+      //  self.present(chatVC, animated: true, completion: nil)
     }
     @objc func openUserOnline() {
         
@@ -434,6 +453,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     }
     
     @objc func stopStream() {
+        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         self.dismiss(animated: true, completion: nil)
     }
 
@@ -509,5 +529,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         streamView.timerLabel.text = "\(hours):\(minutes):\(seconds)"
       
     }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           super.viewWillTransition(to: size, with: coordinator)
+   
+           if UIDevice.current.orientation.isLandscape {
+            isLandscape = true
+           } else {
+            isLandscape = false
+           }
+       }
 }
 

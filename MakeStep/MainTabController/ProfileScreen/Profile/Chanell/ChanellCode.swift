@@ -84,7 +84,8 @@ final class ChanellCode: UIView {
     }()
     var imagePromo: UIImageView = {
         var image = UIImageView()
-        image.backgroundColor = .red
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
     var labelCategory: UILabel = {

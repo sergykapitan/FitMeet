@@ -34,24 +34,28 @@ class ChatCell: BaseCell {
     }()
     var topLabel: UILabel = {
         let v = UILabel()
+        v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var bottomLabel: UILabel = {
         let v = UILabel()
+        v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var statusLabel: UILabel = {
         let v = UILabel()
+        v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var textView: UITextView = {
         let v = UITextView()
+        v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -73,13 +77,13 @@ class ChatCell: BaseCell {
         return label
     }()
     
-    var showTopLabel = true {
-        didSet {
-            textviewTopConstraintToBg.isActive = !showTopLabel
-            textviewTopConstraintToTopLabel.isActive = showTopLabel
-            topLabel.isHidden = !showTopLabel
-        }
-    }
+//    var showTopLabel = true {
+//        didSet {
+//            textviewTopConstraintToBg.isActive = !showTopLabel
+//            textviewTopConstraintToTopLabel.isActive = showTopLabel
+//            topLabel.isHidden = !showTopLabel
+//        }
+//    }
     
     let extraSpacing: CGFloat = 80
     
@@ -95,11 +99,7 @@ class ChatCell: BaseCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-       // self.initialize()
-        print("reuse id ======== \(reuseIdentifier)")
         if let id = reuseIdentifier {
-            print("IDDDDDD ======= \(id)")
             if id == "senderCellId" {
                 self.setupSendersCell()
             }else {
@@ -112,34 +112,36 @@ class ChatCell: BaseCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-       // self.initialize()
-    }
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+//
+//    override func awakeFromNib() {
+//        super.awakeFromNib()
+//       // self.initialize()
+//    }
+//    override func setSelected(_ selected: Bool, animated: Bool) {
+//        super.setSelected(selected, animated: animated)
+//
+//        // Configure the view for the selected state
+//    }
 
     func initialize() {
+       
     
-        contentView.addSubview(labelChatMessage)
-        labelChatMessage.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5)
-              
-        contentView.addSubview(labelMessageDetail)
-        labelMessageDetail.anchor(top: labelChatMessage.bottomAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,bottom: contentView.bottomAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5,paddingBottom: 5)       
+//        contentView.addSubview(labelChatMessage)
+//        labelChatMessage.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5)
+//
+//        contentView.addSubview(labelMessageDetail)
+//        labelMessageDetail.anchor(top: labelChatMessage.bottomAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,bottom: contentView.bottomAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5,paddingBottom: 5)
    
     }
     
     func setupSendersCell() {
         print("setupSendersCell")
-        let offset = UIEdgeInsets(top: padding, left: padding, bottom: -padding, right: -padding)
-        self.contentView.addSubview(bgView)
+        let offset = UIEdgeInsets(top: 2, left: padding, bottom: 2, right: -padding)
+       
+        self.contentView.addSubview(bgView)        
         bgView.edges([.right, .top, .bottom], to: self.contentView, offset: offset)
         
-        bgView.layer.cornerRadius = 8
+        bgView.layer.cornerRadius = 10
         bgView.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
         
         
@@ -148,28 +150,12 @@ class ChatCell: BaseCell {
         topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding, left: secondaryPadding, bottom: 0, right: 0))
         topLabel.font = UIFont.boldSystemFont(ofSize: 14)
         topLabel.textColor = .white
-        
-//        self.bgView.addSubview(textView)
-//        textView.edges([.left, .right, .top], to: self.bgView, offset: .init(top: innerSpacing, left: innerSpacing, bottom: -innerSpacing, right: -innerSpacing))
-       // textviewTopConstraintToTopLabel = textView.topAnchor.constraint(equalTo: topLabel.bottomAnchor, constant: 0)
-       // textviewTopConstraintToTopLabel.isActive = true
-       // textviewTopConstraintToBg = textView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: innerSpacing)
- //       textviewTopConstraintToBg.isActive = false
-        //textView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: innerSpacing).isActive = true
-       // textView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -innerSpacing).isActive = true
-//        topLabel.trailingAnchor.constraint(lessThanOrEqualTo: textView.trailingAnchor, constant: 0).isActive = true
-//        bgView.trailingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor, constant: -extraSpacing).isActive = true
-//        textView.isScrollEnabled = false
-//        textView.isEditable = false
-//        textView.isSelectable = true
-//        textView.font = UIFont.systemFont(ofSize: 14)
-//        textView.backgroundColor = UIColor.clear
-//
-        
+     
+ 
         self.bgView.addSubview(textView)
         textView.edges([.left,.right,.top ], to: self.bgView, offset: .init(top: padding + 10 , left: secondaryPadding - 5, bottom: -innerSpacing, right: -innerSpacing))
         topLabel.trailingAnchor.constraint(lessThanOrEqualTo: textView.trailingAnchor, constant: 0).isActive = true
-        bgView.leadingAnchor.constraint(greaterThanOrEqualTo: self.contentView.leadingAnchor, constant: extraSpacing).isActive = true
+        bgView.leadingAnchor.constraint(greaterThanOrEqualTo: self.contentView.leadingAnchor, constant: 0).isActive = true
         
         textView.isScrollEnabled = false
         textView.isEditable = false
@@ -189,9 +175,11 @@ class ChatCell: BaseCell {
     
     func setupReceiversCell() {
         print("setupReceiversCell")
-        let offset = UIEdgeInsets(top: padding, left: padding, bottom: -padding, right: -padding)
+        let offset = UIEdgeInsets(top: 5, left: padding, bottom: 0, right: -padding)
         self.contentView.addSubview(bgView)
+       // self.contentView.backgroundColor = .red
         bgView.edges([.left, .top, .bottom], to: self.contentView, offset: offset)
+
         bgView.layer.cornerRadius = 8
         bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
         

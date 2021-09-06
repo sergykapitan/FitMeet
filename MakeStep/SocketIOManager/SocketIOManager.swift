@@ -22,7 +22,8 @@ class SocketIOManager: NSObject {
 
     func establishConnection(broadcastId: String,chanelId: String) {
         
-        let token = UserDefaults.standard.string(forKey: "tokenChat")
+        guard let token = UserDefaults.standard.string(forKey: "tokenChat") else { return }
+        print("token Chat = \(token)")
         
         self.manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
                                                                     .log(true),
@@ -34,7 +35,7 @@ class SocketIOManager: NSObject {
                                                                     .reconnectWait(3),
                                                                     .path("/api/v0/chatSocket"),
                                                                     .reconnectWaitMax(10000),
-                                                                    .connectParams(["broadcastId": broadcastId, "channelId": chanelId,"token": token!])
+                                                                    .connectParams(["broadcastId": broadcastId, "channelId": chanelId,"token": token])
         
         
         

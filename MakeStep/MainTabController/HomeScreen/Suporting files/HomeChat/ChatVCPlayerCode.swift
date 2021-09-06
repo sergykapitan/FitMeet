@@ -14,7 +14,7 @@ final class ChatVCPlayerCode: UIView {
     
     let cardView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = .clear
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 8
         view.layer.borderWidth = 0.8
@@ -54,7 +54,6 @@ final class ChatVCPlayerCode: UIView {
         let label = UILabel()
         label.text = "Comments"
         label.textColor = .black
-      //  label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     var textView: UITextView = {
@@ -70,6 +69,11 @@ final class ChatVCPlayerCode: UIView {
     var sendMessage: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "send"), for: .normal)
+        return button
+    }()
+    var buttonCloseChat: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Back1-1"), for: .normal)
         return button
     }()
    
@@ -108,11 +112,15 @@ final class ChatVCPlayerCode: UIView {
         textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10, height: 40)
         
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 45 ,height: 45)
+        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 50 ,height: 50)
         sendMessage.centerY(inView: textView)
         
+        cardView.addSubview(buttonCloseChat)
+        buttonCloseChat.anchor( left: cardView.leftAnchor,  paddingLeft: 5,width: 30, height: 30)
+        buttonCloseChat.centerY(inView: cardView)
+        
         cardView.addSubview(tableView)
-        tableView.anchor(top: buttonChat.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 10, paddingLeft: 10, paddingRight: 10, paddingBottom: 10)
+        tableView.anchor(top: buttonChat.bottomAnchor, left: buttonCloseChat.rightAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 0, paddingLeft: 5, paddingRight: 10, paddingBottom: 10)
  
         
     }

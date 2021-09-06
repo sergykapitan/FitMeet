@@ -113,7 +113,7 @@ final class ProfileVCCode: UIView {
     
     var labelChanell: UILabel = {
         let label = UILabel()
-        label.text = "Chanell"
+        label.text = "Channel"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 18)
         return label

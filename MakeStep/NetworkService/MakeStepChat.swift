@@ -29,4 +29,16 @@ class MakeStepChat {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    // api/v0/chat/chats/history
+    
+    public func getHistoryMessage(broadId: Int) -> AnyPublisher<HistoryChat,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/chat/chats/history?take=10&broadcastId=\(broadId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: HistoryChat.self)
+            .value()
+            .print("TokenChat")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }

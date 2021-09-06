@@ -108,7 +108,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         bindingChanell(status: "ONLINE")
         setUserProfile()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
-
+        
         
         self.navigationController?.navigationBar.isHidden = false
         //profileView.viewTop.backgroundColor = .white
@@ -120,6 +120,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        profileView.imageLogoProfile.makeRounded()
         
     }
    
@@ -159,7 +160,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         bindingChanell(status: "OFFLINE")
-       setUserProfile()
+        setUserProfile()
     
 
     }
@@ -179,8 +180,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
                     self.user = response
                     print(self.user)
                 }
-        })
-    }
+            })
+        }
     
     func bindingChanell(status: String) {
         takeChanell = fitMeetSream.getBroadcast(status: status)
@@ -189,16 +190,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
                 if response.data != nil  {
                     self.brodcast = response.data?.last
                     print(self.brodcast)
+                    self.profileView.reloadInputViews()
                 }
-        })
-        
-        
-        
-    }
-    
-    
-    
-    
+           })
+       }
+ 
     @objc func actionEditProfile() {
 
     }
@@ -206,7 +202,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         let titleLabel = UILabel()
-                   titleLabel.text = "Chanell"
+                   titleLabel.text = "Channel"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)

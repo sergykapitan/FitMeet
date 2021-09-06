@@ -301,6 +301,7 @@ final class PresentCode: UIView {
         
         cardView.addSubview(buttonChat)
         buttonChat.anchor(left:cardView.leftAnchor,bottom: cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 5,width: 80, height: 30)
+        
         buttonChat.addSubview(imageChat)
         imageChat.anchor(left: buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
         imageChat.centerY(inView: buttonChat)

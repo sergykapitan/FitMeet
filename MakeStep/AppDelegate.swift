@@ -20,7 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let appDependencies = Dependencies{
             Module { FitMeetApi() }
             Module { FitMeetStream() }
-            Module {FitMeetChannels() }
+            Module { FitMeetChannels() }
+            Module { MakeStepChat() }
         }
         appDependencies.build()      
     }

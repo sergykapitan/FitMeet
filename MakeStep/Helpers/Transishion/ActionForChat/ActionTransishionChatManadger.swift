@@ -9,18 +9,32 @@ import UIKit
 
 final class ActionTransishionChatManadger: NSObject, UIViewControllerTransitioningDelegate {
     
+    var intWidth: CGFloat?
+    var intHeight: CGFloat?
+    var presentTransition: UIViewControllerAnimatedTransitioning?
+    var dismissTransition: UIViewControllerAnimatedTransitioning?
+    var isLandscape: Bool = false
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return nil
+
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+        if isLandscape {
+        dismissTransition = LeftToRightTransition()
+        return dismissTransition
+        } else {
         return nil
+       }
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return ActionChatPresentationController(
-            presentedViewController: presented,
-            presenting: presenting
-        )
+        
+        let actionChat = ActionChatPresentationController(presentedViewController: presented, presenting: presenting)
+        guard let width = intWidth,let height = intHeight else { return actionChat}
+        actionChat.intWith = width
+        actionChat.intHeight = height
+        return actionChat
     }
 }

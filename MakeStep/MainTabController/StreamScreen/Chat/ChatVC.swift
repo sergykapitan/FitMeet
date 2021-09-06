@@ -29,6 +29,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     var nickname: String?
     var chatMessages = [[String: String]]()
     var bannerLabelTimer: Timer!
+    var messHistory: [Datums]?
     
     var color: UIColor?
     var tint: UIColor?
@@ -42,6 +43,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    
+    @Inject var fitMeetChat: MakeStepChat
+    private var takeMessage: AnyCancellable?
+    
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
    
@@ -101,11 +106,16 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
             makeNavItem()
             makeTableView()
+        
+        guard let broadID = broadcastId,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
+        self.nickname = name
+        guard let intBroad = Int(broadId) else { return }
+        bindingMessage(broad: intBroad)
       
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-       // delegate?.changeBackgroundColor()
+        delegate?.changeBackgroundColor()
        // AppUtility.lockOrientation(.all, andRotateTo: .portrait)
 
         print("viewDidDisappear = \(nickname)")
@@ -211,7 +221,16 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
                 }
         })
     }
-    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           super.viewWillTransition(to: size, with: coordinator)
+       if UIDevice.current.orientation.isLandscape {
+              print("Landscape8888")
+            dismiss(animated: true)
+           } else {
+              print("Portrait8888")
+            dismiss(animated: true)
+            }
+    }
   
     
     private func makeTableView() {
@@ -339,6 +358,36 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             }) { (finished) -> Void in
         }
     }
+    func bindingMessage(broad: Int) {
+        takeMessage = fitMeetChat.getHistoryMessage(broadId: broad)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+            
+                    self.messHistory = response.data
+                    guard  let  mess = response.data else { return }
+                    var messageDictionary = [String: String]()
+                    
+                    for i in mess {
+                        
+                        if i.payload?.message?.text == nil {
+                         
+                        } else {
+                        messageDictionary["username"] = i.user?.fullName
+                        messageDictionary["message"] = i.payload?.message?.text
+                        messageDictionary["timestamp"] = i.timestamp
+                        self.chatMessages.append(messageDictionary)
+                        self.chatView.tableView.reloadData()
+                        self.chatView.tableView.scrollToBottom()
+                        }
+
+                    }
+   
+                   
+                    self.refreshControl.endRefreshing()
+                }
+            })
+        }
 
 }
 extension ChatVC: UITextFieldDelegate {

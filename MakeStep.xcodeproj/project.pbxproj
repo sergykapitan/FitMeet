@@ -14,6 +14,7 @@
 		B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923326D8DF9800A2F417 /* TokenWatcher.swift */; };
 		B404923626D8F23D00A2F417 /* SocketWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923526D8F23D00A2F417 /* SocketWatcher.swift */; };
 		B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923726D8FA1500A2F417 /* MapWatcher.swift */; };
+		B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923926DE799000A2F417 /* HistoryChat.swift */; };
 		B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F22640C0AA00DFEC19 /* NotTokenView.swift */; };
 		B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */; };
 		B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4163829268B09BB005BAA46 /* ChanellVC.swift */; };
@@ -128,6 +129,7 @@
 		B4C5A962267DD2DA00010F88 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A961267DD2D900010F88 /* Task.swift */; };
 		B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB869263B19BD00015380 /* NullEncodable.swift */; };
 		B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB86D263B2B8300015380 /* OptionalView.swift */; };
+		B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
 		B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
@@ -193,6 +195,7 @@
 		B404923326D8DF9800A2F417 /* TokenWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenWatcher.swift; sourceTree = "<group>"; };
 		B404923526D8F23D00A2F417 /* SocketWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketWatcher.swift; sourceTree = "<group>"; };
 		B404923726D8FA1500A2F417 /* MapWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapWatcher.swift; sourceTree = "<group>"; };
+		B404923926DE799000A2F417 /* HistoryChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryChat.swift; sourceTree = "<group>"; };
 		B41097F22640C0AA00DFEC19 /* NotTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTokenView.swift; sourceTree = "<group>"; };
 		B41097F52640C0F500DFEC19 /* NotTkenViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotTkenViewCode.swift; sourceTree = "<group>"; };
 		B4163829268B09BB005BAA46 /* ChanellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChanellVC.swift; sourceTree = "<group>"; };
@@ -307,6 +310,7 @@
 		B4C5A961267DD2D900010F88 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		B4CBB869263B19BD00015380 /* NullEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullEncodable.swift; sourceTree = "<group>"; };
 		B4CBB86D263B2B8300015380 /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
+		B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightToLeft.swift; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* MakeStep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeStep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -551,6 +555,7 @@
 		B47828A226CFF3E30068292A /* Transishion */ = {
 			isa = PBXGroup;
 			children = (
+				B4D4FAD926E502CF004AAC42 /* ActionTransihion */,
 				B404922D26D7969000A2F417 /* ActionForChat */,
 				B47828A326CFF3F50068292A /* ActionSheet */,
 			);
@@ -767,6 +772,14 @@
 			path = NewStartStream;
 			sourceTree = "<group>";
 		};
+		B4D4FAD926E502CF004AAC42 /* ActionTransihion */ = {
+			isa = PBXGroup;
+			children = (
+				B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */,
+			);
+			path = ActionTransihion;
+			sourceTree = "<group>";
+		};
 		B4D9D71226257D8C007CFB71 = {
 			isa = PBXGroup;
 			children = (
@@ -913,6 +926,7 @@
 				B475A95A26BCA71200EF96A4 /* CalendarClass.swift */,
 				B4FCCF0D26BEC15800C25304 /* Message.swift */,
 				B4E88E4C26D3DB79003E6B16 /* Usermap.swift */,
+				B404923926DE799000A2F417 /* HistoryChat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1257,6 +1271,7 @@
 				B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
+				B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */,
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
@@ -1360,6 +1375,7 @@
 				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
+				B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */,
 				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
 				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
@@ -1507,6 +1523,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -1518,7 +1535,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -1532,15 +1549,15 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
-				DEVELOPMENT_TEAM = DP58Q9BS98;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.21;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1557,15 +1574,15 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 11;
-				DEVELOPMENT_TEAM = DP58Q9BS98;
+				CURRENT_PROJECT_VERSION = 5;
+				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.21;
-				PRODUCT_BUNDLE_IDENTIFIER = com.fitmeet.novotorica;
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

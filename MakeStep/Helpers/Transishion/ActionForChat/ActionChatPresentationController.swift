@@ -13,6 +13,9 @@ final class ActionChatPresentationController: UIPresentationController {
     private static let actionSheetCornerRadius: CGFloat = 30
     private static let dimmingViewMaxAlpha: CGFloat = 0.2
     
+    var intWith: CGFloat?
+    var intHeight: CGFloat?
+    
     // MARK: Views
     private lazy var dimmingView: UIView = {
         let blurEffect = UIBlurEffect(style: .systemMaterialDark)
@@ -32,14 +35,15 @@ final class ActionChatPresentationController: UIPresentationController {
     
     // MARK: Presentation
     override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView = containerView else {
+        guard let containerView = containerView,let width = intWith,let height = intHeight else {
             return .zero
         }
         
-        let targetWidth = containerView.bounds.width
-        let targetHeight = containerView.bounds.height * 0.7
+        let targetWidth = containerView.bounds.width * width
+        let targetHeight = containerView.bounds.height * height//0.7
         
-        let originX: CGFloat = .zero
+      //  let originX: CGFloat = .zero
+        let originX: CGFloat =  containerView.bounds.width - targetWidth
         let originY: CGFloat = containerView.bounds.height - targetHeight
         
         return CGRect(
