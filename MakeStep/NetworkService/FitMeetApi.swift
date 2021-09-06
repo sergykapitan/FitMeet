@@ -160,7 +160,7 @@ class FitMeetApi {
     }
     
     //
-    public func getUserIdMap(ids: [Int]) -> AnyPublisher<UploadImages,DifferentError> {
+    public func getUserIdMap(ids: [Int]) -> AnyPublisher<UploadMapUser,DifferentError> {
 
         let parameters = [
             "ids": ids
@@ -168,7 +168,7 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/user/users/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .publishDecodable(type: UploadImages.self)
+            .publishDecodable(type: UploadMapUser.self)
             .value()
             .print("getUserMap")
             .mapError{ DifferentError.alamofire(wrapped: $0)}

@@ -57,6 +57,15 @@ class UserCell: BaseCell {
 
         // Configure the view for the selected state
     }
+    override func layoutSubviews() {
+        imageProfile.round()
+    }
+    override func setNeedsLayout() {
+        imageProfile.round()
+    }
+    override func layoutIfNeeded() {
+        imageProfile.round()
+    }
 
     func initialize() {
         addSubview(cardView)

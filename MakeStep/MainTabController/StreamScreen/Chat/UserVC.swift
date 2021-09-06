@@ -9,6 +9,10 @@ import Foundation
 import Combine
 import UIKit
 
+protocol ClassUserDelegate: class {
+    func changeButton()
+}
+
 class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate {
     
 
@@ -17,49 +21,14 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     
     var broadcastId: String?
     var chanellId: String?
-    
     var nickname: String?
     
-   // var users = [[String: Any]]()
+    weak var delegate: ClassUserDelegate?
     
-    var users = [["username": "Claira Pomme",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected": true],
-                 ["username": "Anastasia Krasnova",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Julia Amonova",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Maria Frolova",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Steven Carpenter",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Claira Pomme",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Anastasia Krasnova",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true],
-                 ["username": "Jane",
-                  "image": "http://getdrawings.com/free-icon/male-avatar-icon-52.png", "isConnected":  true]]
+    @Inject var fitMeetApi: FitMeetApi
+    private var takeUser: AnyCancellable?
     
-   
+    var usersd = [Int: User]()
     var configurationOK = false
     
     
@@ -78,24 +47,17 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
 
+       
     
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .clear
-       // makeTableView()
-       // makeNavItem()
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         homeView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
-       // setupGestureRecognizers()
 
     }
 
@@ -107,73 +69,21 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
       
             SocketIOManager.sharedInstance.getTokenChat()
             SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
-          //  makeNavItem()
+            SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "OLD") { arrayId in
+                   print("array Id === \(arrayId)")
+                guard let array = arrayId else { return }
+                self.bindingUserMap(ids: array)
+               }
+
             makeTableView()
+            homeView.tableView.reloadData()
       
     }
-//    func askForNickname() {
-//        let alertController = UIAlertController(title: "SocketChat", message: "Please enter a nickname:", preferredStyle: UIAlertController.Style.alert)
-//
-//        alertController.addTextField(configurationHandler: nil)
-//
-//        let OKAction = UIAlertAction(title: "OK", style: UIAlertAction.Style.default) { (action) -> Void in
-//            let textfield = alertController.textFields![0]
-//            if textfield.text?.count == 0 {
-//                self.askForNickname()
-//            }
-//            else {
-//                self.nickname = textfield.text
-//
-//                SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: self.nickname, completionHandler: { (userList) -> Void in
-//                    DispatchQueue.main.async { () -> Void in
-//                        if userList != nil {
-//                            guard let usr = userList else { return }
-//                            self.users.append(contentsOf: usr)
-//                            self.homeView.tableView.reloadData()
-//                            self.homeView.tableView.isHidden = false
-//                        }
-//                    }
-//                })
-//            }
-//        }
-//
-//        alertController.addAction(OKAction)
-//        present(alertController, animated: true, completion: nil)
-//    }
-//    func makeNavItem() {
-//        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-//        UINavigationBar.appearance().titleTextAttributes = attributes
-//        let titleLabel = UILabel()
-//                   titleLabel.text = "Chat"
-//                   titleLabel.textAlignment = .center
-//                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-//                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-//
-//                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-//                   stackView.distribution = .equalSpacing
-//                   stackView.alignment = .leading
-//                   stackView.axis = .vertical
-//
-//                   let customTitles = UIBarButtonItem.init(customView: stackView)
-//                   self.navigationItem.leftBarButtonItems = [customTitles]
-//        self.navigationItem.rightBarButtonItems = [UIBarButtonItem(image: #imageLiteral(resourceName: "Note"),
-//                                                                   style: .plain,
-//                                                                   target: self,
-//                                                                   action: #selector(rightHandAction)),
-//                                                   UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),
-//                                                                   style: .plain,
-//                                                                   target: self,
-//                                                                   action: #selector(rightHandAction))]
-//    }
-//    @objc
-//    func rightHandAction() {
-//        print("right bar button action")
-//    }
-//
-//    @objc
-//    func leftHandAction() {
-//        print("left bar button action")
-//    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        delegate?.changeButton()
+    }
+
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         print("refrech")
@@ -181,50 +91,45 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
       
        }
     @objc  func buttonJoin() {
-       // dismiss(animated: true)
-        
-       // SocketIOManager.sharedInstance.getTokenChat()
-       // SocketIOManager.sharedInstance.establishConnection(broadcastId: <#T##String#>, chanelId: <#T##String#>)
-    
-      //  guard let token =  UserDefaults.standard.value(forKey: "tokenChat") else { return }
+
         guard let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
         self.nickname = name
-        
-        
-        
-        SocketIOManager.sharedInstance.connectToServerWithNickname(nickname: name, completionHandler: { (userList) -> Void in
+  
+        SocketIOManager.sharedInstance.connectToServerWithNickname( nicname: "Old", completionHandler: { (userList) -> Void in
             DispatchQueue.main.async { () -> Void in
                 print("USERLIST ======= \(userList)")
-//                if userList != nil {
-//                    guard let usr = userList else { return }
-//                    self.users.append(contentsOf: usr)
-//                    self.homeView.tableView.reloadData()
-//                    self.homeView.tableView.isHidden = false
-//                }
+
             }
         })
     }
-//    func binding() {
-//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//               // print("RESPONCE ====== \(response)")
-//                if response.data != nil  {
-//                    print("Responce ====== \(response)")
-//                    self.listBroadcast = response.data!
-//                    self.homeView.tableView.reloadData()
-//                    self.refreshControl.endRefreshing()
-//                }
-//        })
-//    }
-    
-  
-    
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           super.viewWillTransition(to: size, with: coordinator)
+       if UIDevice.current.orientation.isLandscape {
+            dismiss(animated: true)
+           } else {
+            dismiss(animated: true)
+            }
+    }
+
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(UserCell.self, forCellReuseIdentifier: UserCell.reuseID)
         homeView.tableView.isHidden = false
+    }
+    
+    func bindingUserMap(ids: [Int])  {
+        takeUser = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    let dict = response.data
+                    print("DICT ==== \(dict)")
+                    self.usersd = dict
+                    self.homeView.tableView.reloadData()
+   
+                }
+          })
     }
 
 }
@@ -235,16 +140,28 @@ extension UserVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return users.count
+        return usersd.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-        cell.setImage(image: (users[indexPath.row]["image"] as? String)!)
-        cell.titleLabel.text = users[indexPath.row]["username"] as? String
-        cell.labelCategory.text =  (users[indexPath.row]["isConnected"] as! Bool) ? "Online" : "Offline"
-        cell.labelCategory.textColor = (users[indexPath.row]["isConnected"] as! Bool) ? UIColor.green : UIColor.red
+        
+     //   guard let user = usersd[indexPath.row] else { return cell}
+          
+        
+//        cell.setImage(image: (users[indexPath.row]["image"] as? String)!)
+//        cell.titleLabel.text = users[indexPath.row]["username"] as? String
+//        cell.labelCategory.text =  (users[indexPath.row]["isConnected"] as! Bool) ? "Online" : "Offline"
+//        cell.labelCategory.textColor = (users[indexPath.row]["isConnected"] as! Bool) ? UIColor.green : UIColor.red
+        print("AVATAr ====== \(usersd.values)")
+        let us = usersd.map { key,user in
+            return user
+        }
+        cell.setImage(image: us[indexPath.row].avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+        cell.titleLabel.text = us[indexPath.row].fullName
+        cell.labelCategory.text =  "Online"
+        cell.labelCategory.textColor = UIColor.green
         cell.backgroundColor = .clear
         
         return cell

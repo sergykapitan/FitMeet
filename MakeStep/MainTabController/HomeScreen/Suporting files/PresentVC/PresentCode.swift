@@ -146,6 +146,11 @@ final class PresentCode: UIView {
       //  label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
+    var buttonChatUser: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "user"), for: .normal)
+        return button
+    }()
 //    var buttonHelp: UIButton = {
 //        let button = UIButton()
 //        return button
@@ -309,6 +314,9 @@ final class PresentCode: UIView {
         buttonChat.addSubview(labelChat)
         labelChat.anchor( left: imageChat.rightAnchor, paddingLeft: 10)
         labelChat.centerY(inView: buttonChat)
+        
+       // cardView.addSubview(buttonChatUser)
+       // buttonChatUser.anchor( left: buttonChat.rightAnchor,  paddingLeft: 15, width: 40, height: 40)
         
         
         cardView.addSubview(viewChat)

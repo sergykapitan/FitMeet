@@ -10,7 +10,15 @@ import Combine
 import UIKit
 import AVKit
 
-class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate {
+class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate {
+    
+    func changeButton() {
+        AppUtility.lockOrientation(.all)
+        homeView.buttonChatUser.isHidden = false
+        homeView.buttonChat.isHidden = false
+
+    }
+    
     
     var button = UIButton()
     
@@ -120,6 +128,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        homeView.buttonChatUser.isHidden = true
         loadPlayer()
         makeNavItem()
         homeView.imageLogoProfile.makeRounded()
@@ -168,6 +177,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
     }
     //MARK: - Selectors
@@ -333,6 +343,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
               homeView.addSubview(homeView.buttonSetting)
               homeView.buttonSetting.anchor( right: homeView.buttonLandScape.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
         
+        homeView.addSubview(homeView.buttonChatUser)
+        homeView.buttonChatUser.anchor( right: homeView.buttonSetting.leftAnchor, paddingRight: 5, width: 30, height: 30)
+        homeView.buttonChatUser.centerY(inView: homeView.buttonSetting)
+        
              homeView.imagePromo.addSubview(homeView.labelTimer)
              homeView.labelTimer.anchor( left: homeView.imagePromo.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingLeft: 10, paddingBottom: 20)
         
@@ -375,10 +389,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
+            homeView.buttonChatUser.isHidden = false
             isLand = true
             button.isHidden = false
-            //actionChatTransitionManager.intWidth = 0.5
-            //actionChatTransitionManager.intHeight = 1
             self.view.addSubview(button)
             button.anchor( right: self.homeView.cardView.rightAnchor, paddingRight: 20, width: 30, height: 30)
             button.centerY(inView: self.view)
@@ -496,6 +509,39 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
        }
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    @objc func actionUserOnline () {
+        homeView.overlay.isHidden = true
+        homeView.imageLive.isHidden = true
+        homeView.labelLive.isHidden = true
+        homeView.imageEye.isHidden = true
+        homeView.labelEye.isHidden = true
+        homeView.buttonSetting.isHidden = true
+        homeView.buttonLandScape.isHidden = true
+        playPauseButton.isHidden = true
+        isButton = false
+        homeView.buttonChat.isHidden = true
+        homeView.buttonChatUser.isHidden = true
+
+        let chatVC = UserVC()
+        guard let id = broadcast?.id,let channel = broadcast?.channelIds?.first  else { return }
+        chatVC.broadcastId = "\(id)"
+        chatVC.chanellId = "\(channel)"
+        chatVC.delegate = self
+        
+        chatVC.transitioningDelegate = actionChatTransitionManager
+        chatVC.modalPresentationStyle = .custom
+        if isLandscape {
+            actionChatTransitionManager.intWidth = 0.5
+            actionChatTransitionManager.intHeight = 1
+            
+            present(chatVC, animated: true, completion: nil)
+        } else {
+            actionChatTransitionManager.intWidth = 1
+            actionChatTransitionManager.intHeight = 0.7
+            actionChatTransitionManager.isLandscape = isLandscape
+            present(chatVC, animated: true)
+        }
     }
     @objc func actionChat(sender:UITapGestureRecognizer) {
         self.button.isHidden = true

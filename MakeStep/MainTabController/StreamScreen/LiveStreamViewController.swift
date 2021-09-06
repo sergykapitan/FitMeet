@@ -32,7 +32,19 @@ final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
         })
     }
 }
-class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
+class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDelegate{
+    
+    func changeButton() {
+        
+        streamView.recButton.isHidden = false
+        streamView.stopButton.isHidden = false
+        streamView.microfoneButton.isHidden = false
+        streamView.cameraModeButton.isHidden = false
+        streamView.cameraButton.isHidden = false
+        streamView.chatButton.isHidden = false
+        streamView.StartStreamButton.isHidden = false
+    }
+    
     
 
     var isLandscape: Bool = false
@@ -51,7 +63,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
     
     func changeBackgroundColor() {
         print("GoodStaf")
-        
         streamView.recButton.isHidden = false
         streamView.stopButton.isHidden = false
         streamView.microfoneButton.isHidden = false
@@ -208,8 +219,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         let chatVC = ChatVC()
         chatVC.color = .clear
         chatVC.tint = .white
-      //  slideInTransitioningDelegate.direction = .bottom
-      //  slideInTransitioningDelegate.disableCompactHeight = true
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         chatVC.delegate = self
@@ -221,9 +230,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         if isLandscape {
             actionChatTransitionManager.intWidth = 0.5
             actionChatTransitionManager.intHeight = 1
-            //actionChatTransitionManager.isLandscape = isLandscape
             present(chatVC, animated: true, completion: nil)
-           // transitionVc(vc: chatVC, duration: 0.5, type: .fromRight)
         } else {
             actionChatTransitionManager.intWidth = 1
             actionChatTransitionManager.intHeight = 0.7
@@ -238,32 +245,41 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
         streamView.cameraButton.isHidden = true
         streamView.chatButton.isHidden = true
         streamView.StartStreamButton.isHidden = true
-        
-      //  self.present(chatVC, animated: true, completion: nil)
+ 
     }
     @objc func openUserOnline() {
         
+        streamView.recButton.isHidden = true
+        streamView.stopButton.isHidden = true
+        streamView.microfoneButton.isHidden = true
+        streamView.cameraModeButton.isHidden = true
+        streamView.cameraButton.isHidden = true
+        streamView.chatButton.isHidden = true
+        streamView.StartStreamButton.isHidden = true
+        
+
         let chatVC = UserVC()
-        
-        slideInTransitioningDelegate.direction = .bottom
-        slideInTransitioningDelegate.disableCompactHeight = true
-        
         guard let id = idBroad,let channel = channelId else { return }
-        
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = channel
+        chatVC.delegate = self
         
-        
-        chatVC.transitioningDelegate = slideInTransitioningDelegate
+        chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
-        
-        self.present(chatVC, animated: true, completion: nil)
+        if isLandscape {
+            actionChatTransitionManager.intWidth = 0.5
+            actionChatTransitionManager.intHeight = 1
+            
+            present(chatVC, animated: true, completion: nil)
+        } else {
+            actionChatTransitionManager.intWidth = 1
+            actionChatTransitionManager.intHeight = 0.7
+            actionChatTransitionManager.isLandscape = isLandscape
+            present(chatVC, animated: true)
+        }
+     
     }
-    
-    
-    
-    
-    
+
     @objc func settingStream() {
         streamView.cameraButton.isSelected.toggle()
         captureSession = AVCaptureSession()
@@ -275,28 +291,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate{
             streamView.previewView.isHidden = true
             self.rtmpStream.paused = true
             self.rtmpStream.receiveVideo = false
-        
-            
-           // self.captureSession?.stopRunning()
-           // rtmpConnection.
-//            streamView.previewView
-//            rtmpConnection.close()
-//            rtmpConnection.removeEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
-//            rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
-//            createTimer()
             streamView.cameraButton.setImage(#imageLiteral(resourceName: "notcamera"), for: [])
-            
         } else {
-           
-//            createTimer()
-//            UIApplication.shared.isIdleTimerDisabled = true
-//            rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
-//            rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
-//            rtmpConnection.connect(myuri)
             streamView.previewView.isHidden = false
             self.rtmpStream.paused = false
             self.rtmpStream.receiveVideo = true
-       //     self.captureSession.startRunning()
             UIApplication.shared.isIdleTimerDisabled = true
             streamView.cameraButton.setImage(#imageLiteral(resourceName: "camera"), for: [])
             

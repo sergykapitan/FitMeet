@@ -44,23 +44,11 @@ class SocketIOManager: NSObject {
         
         self.socket = manager.defaultSocket
         
-        
-        socket.on("connection") {data, ack in
-            
-//            let dict = data[0] as? [String: Any]
-//            let user = dict!["connectedUsers"] as? [[String: Any]]
-//            print("USER == \(user)")
-//            let col = user!
-//            let k = col
-//            print("K ==\(k)")
-//            print("COL == \(col)")
-//            let id = user![0]["username"] as? String
-//            print("USERNAME === \(id)")
-            
-           // UserDefaults.standard.set(id, forKey: "idChat")
-            
-        }
-   
+//        
+//        socket.on("connection") {data, ack in
+//         print("DATTTTTTAAA ---- \(data)")
+//        }
+//   
         socket.connect()
 
     }
@@ -85,23 +73,33 @@ class SocketIOManager: NSObject {
         })
     }
     
-    func connectToServerWithNickname(nickname: String,  completionHandler: @escaping (_ userList: [[String: Any]]?) -> Void) {
-
-        let token = UserDefaults.standard.string(forKey: "tokenChat")
-     
-
+    func connectToServerWithNickname(nicname: String, completionHandler: @escaping (_ userList: [Int]?) -> Void) {
         socket.connect()
-
-        
-        socket.on("connectUser") { dataArr, socData in
-            print("CONECTENUSER == \(dataArr)")
+        var arrayUserId = [Int]()
+        var arrUser = [Any]()
+        socket.on("connection") { dataArr, socData in
+          
+            for i in dataArr {
+                let dicty = i as? [String: Any]
+                let user = dicty?["connectedUsers"] as? [Any]
+                print("User === \(user)")
+                guard let users = user else { return }
+                arrUser = users
+            }
+            arrUser.forEach { i in
+                let  dictUser =  i as? [String: Any]
+                let  userid = dictUser?["userId"] as? Int
+                guard let userId = userid else { return }
+                arrayUserId.append(userId)
+                print("UserID ===== \(arrayUserId)")
+            }
+            completionHandler(arrayUserId)
         }
- 
+       
     }
+    
     func gotConnection(){
           socket.on("message") { (dataArray, ack) in
-
-          
 
          }
        }
