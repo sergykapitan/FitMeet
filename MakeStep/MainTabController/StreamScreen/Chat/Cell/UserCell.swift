@@ -60,12 +60,12 @@ class UserCell: BaseCell {
     override func layoutSubviews() {
         imageProfile.round()
     }
-    override func setNeedsLayout() {
-        imageProfile.round()
-    }
-    override func layoutIfNeeded() {
-        imageProfile.round()
-    }
+//    override func setNeedsLayout() {
+//        imageProfile.round()
+//    }
+//    override func layoutIfNeeded() {
+//        imageProfile.round()
+//    }
 
     func initialize() {
         addSubview(cardView)

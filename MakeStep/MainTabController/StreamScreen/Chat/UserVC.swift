@@ -146,19 +146,12 @@ extension UserVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-        
-     //   guard let user = usersd[indexPath.row] else { return cell}
-          
-        
-//        cell.setImage(image: (users[indexPath.row]["image"] as? String)!)
-//        cell.titleLabel.text = users[indexPath.row]["username"] as? String
-//        cell.labelCategory.text =  (users[indexPath.row]["isConnected"] as! Bool) ? "Online" : "Offline"
-//        cell.labelCategory.textColor = (users[indexPath.row]["isConnected"] as! Bool) ? UIColor.green : UIColor.red
-        print("AVATAr ====== \(usersd.values)")
+
         let us = usersd.map { key,user in
             return user
         }
         cell.setImage(image: us[indexPath.row].avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+        cell.layoutIfNeeded()
         cell.titleLabel.text = us[indexPath.row].fullName
         cell.labelCategory.text =  "Online"
         cell.labelCategory.textColor = UIColor.green
