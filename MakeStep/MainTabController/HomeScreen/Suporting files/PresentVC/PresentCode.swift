@@ -23,6 +23,7 @@ final class PresentCode: UIView {
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
         }()
+    //HHCustomCornerView
     var viewTop: HHCustomCornerView = {
         var view = HHCustomCornerView()
         view.radiusLowerLeftCorner = 20
@@ -34,6 +35,19 @@ final class PresentCode: UIView {
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
     }()
+//    var viewTop: SwipeableView = {
+//        var view = SwipeableView()
+//        view.backgroundColor = .lightGray
+//        view.indicatorPosition = .bottom
+//        view.hasRoundedCorners = true
+//        return view
+//    }()
+    
+    var buttonHelp: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
+        return button
+    }()
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
@@ -41,6 +55,7 @@ final class PresentCode: UIView {
     }()
     var welcomeLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 0
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
@@ -82,7 +97,10 @@ final class PresentCode: UIView {
     }()
     var imagePromo: UIView = {
         var image = UIView()
-       // image.backgroundColor = .red
+        return image
+    }()
+    var imagePromoN: UIView = {
+        var image = UIView()
         return image
     }()
     var buttonLandScape: UIButton = {
@@ -151,10 +169,7 @@ final class PresentCode: UIView {
         button.setImage(#imageLiteral(resourceName: "user"), for: .normal)
         return button
     }()
-//    var buttonHelp: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
+  
     var tableView: UITableView = {
         let table = UITableView()
         return table
@@ -229,30 +244,42 @@ final class PresentCode: UIView {
         viewTop.anchor(top: cardView.topAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 0, paddingLeft: 0, paddingRight: 0,  height: 100)
-        
+                       paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 100)
+
         viewTop.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor( left: viewTop.leftAnchor,
-                                 paddingLeft: 15,
+
+        imageLogoProfile.anchor( top: viewTop.topAnchor,
+                                 left: viewTop.leftAnchor,
+                                 paddingTop: 15,paddingLeft: 15,
                                  width: 70, height: 70)
-        imageLogoProfile.centerY(inView: viewTop)
-        
+
+        cardView.addSubview(buttonSubscribe)
+        buttonSubscribe.anchor(right:cardView.rightAnchor,
+                                paddingRight: 10,
+                                width: 86,height: 24)
+        buttonSubscribe.centerY(inView: imageLogoProfile)
+
         viewTop.addSubview(welcomeLabel)
         welcomeLabel.anchor(top: imageLogoProfile.centerYAnchor,
                             left: imageLogoProfile.rightAnchor,
-                            paddingTop: -20, paddingLeft: 20)
-        
+                            right: buttonSubscribe.leftAnchor,
+                            paddingTop: -20, paddingLeft: 20,paddingRight: 5)
+
         viewTop.addSubview(labelFollow)
         labelFollow.anchor(top: welcomeLabel.bottomAnchor,
                            left: imageLogoProfile.rightAnchor,
                            paddingTop: 5, paddingLeft: 20)
+
+        viewTop.addSubview(buttonHelp)
+        buttonHelp.anchor(bottom: viewTop.bottomAnchor,paddingBottom: 10, width: 40, height: 40)
+        buttonHelp.centerX(inView: viewTop)
         
         
  
         cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: viewTop.bottomAnchor,
+        segmentControll.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
-                               paddingTop: 15, paddingLeft: 20, height: 30)
+                               paddingTop: 115, paddingLeft: 20, height: 30)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor,
@@ -267,11 +294,7 @@ final class PresentCode: UIView {
                             left: cardView.leftAnchor,
                             paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
         
-        cardView.addSubview(buttonSubscribe)
-        buttonSubscribe.anchor(right: viewTop.rightAnchor,
-                                       paddingRight: 10,
-                                       width: 86,height: 24)
-        buttonSubscribe.centerY(inView: imageLogoProfile)
+        
 
         cardView.addSubview(buttonOffline)
         buttonOffline.anchor(top: segmentControll.bottomAnchor,
@@ -283,11 +306,21 @@ final class PresentCode: UIView {
                             left: buttonOffline.rightAnchor,
                             paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
+        cardView.addSubview(imagePromoN)
+        imagePromoN.anchor(top: buttonComing.bottomAnchor,
+                          left: cardView.leftAnchor,
+                          right: cardView.rightAnchor,
+                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+        
         cardView.addSubview(imagePromo)
         imagePromo.anchor(top: buttonComing.bottomAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
                           paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+        
+        
+        
+        
         
         cardView.addSubview(labelCategory)
         labelCategory.anchor(top: imagePromo.bottomAnchor,
@@ -335,6 +368,7 @@ final class PresentCode: UIView {
     
     
     required init?(coder: NSCoder) {
+        //super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     

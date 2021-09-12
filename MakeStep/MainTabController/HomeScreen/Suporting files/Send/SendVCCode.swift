@@ -44,11 +44,11 @@ final class SendVCCode: UIView {
        // cardView.fillSuperview()
         cardView.fillFull(for: self)
         cardView.addSubview(butH)
-        butH.anchor(top: cardView.topAnchor, paddingTop: 25, width: 50)
+        butH.anchor(top: cardView.topAnchor, paddingTop: 8, width: 50)
         butH.centerX(inView: cardView)
         
         cardView.addSubview(tableView)
-        tableView.anchor(top: butH.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 15, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: butH.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

@@ -16,6 +16,7 @@ class SecurityCodeVC: UIViewController {
     @Inject var fitMeetchannel: FitMeetChannels
     
     let securityView = SecurityCodeVCCode()
+    var getHash: String?
     
     private var userSubscriber: AnyCancellable?
     private var takeListChannel: AnyCancellable?
@@ -59,22 +60,36 @@ class SecurityCodeVC: UIViewController {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
     private func fetchNewPassword(){
-        guard let code = securityView.textFieldCode.text ,let phone = userPhoneOreEmail else { return }
+        guard let code = securityView.textFieldCode.text ,let phone = userPhoneOreEmail,let hash = getHash else { return }
         
         if phone.isValidPhone() {
-        userSubscriber =  fitMeetApi.requestLogin(phoneCode: PhoneCode(phone: phone, verifyCode: code))
-            .mapError({ (error) -> Error in
-                print(error)
-                return error
-            })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let token = response.token?.token {
-                    UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
-                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
-                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                    self.openProfileViewController()
-             }
-        })
+            
+            
+            let vc = NewPassword()
+            vc.verCode = code
+            vc.userPhoneOreEmail = phone
+            vc.getHash = hash
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+            
+//        userSubscriber =  fitMeetApi.requestLogin(phoneCode: PhoneCode(phone: phone, verifyCode: code))
+//            .mapError({ (error) -> Error in
+//                print(error)
+//                return error
+//            })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if let token = response.token?.token {
+//                    UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
+//                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
+//                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+//
+//
+//
+//
+//                   // self.openProfileViewController()
+//             }
+//        })
+            
         } else {
             
         }

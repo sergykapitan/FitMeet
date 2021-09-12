@@ -18,23 +18,25 @@ final class NewStartStreamCode: UIView {
         view.backgroundColor = .white
         return view
     }()
-    let labelAddImage: UILabel = {
-        let label = UILabel()
-        label.text = "Add a preview"
-        label.textColor = UIColor(hexString: "#BBBCBC")
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
-    let imageBackground: UIImageView = {
-        let image = UIImageView()
-        image.image = #imageLiteral(resourceName: "Rectangle 966gggg")
-        return image
-    }()
+//    let labelAddImage: UILabel = {
+//        let label = UILabel()
+//        label.text = "Add a preview"
+//        label.textColor = UIColor(hexString: "#BBBCBC")
+//        label.font = UIFont.boldSystemFont(ofSize: 14)
+//        return label
+//    }()
+//    let imageBackground: UIImageView = {
+//        let image = UIImageView()
+//        image.image = #imageLiteral(resourceName: "Rectangle 966gggg")
+//        return image
+//    }()
     let imageButton: UIButton = {
-        let image = UIButton()
-        image.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-        image.imageView?.contentMode = .scaleAspectFill
-        return image
+        let button = UIButton()
+       // image.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        button.imageView?.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
     }()
 
     let textFieldName: UITextField = {
@@ -130,7 +132,6 @@ final class NewStartStreamCode: UIView {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.contentSize.height = 800
-       // scroll.contentSize.width = 400
         scroll.backgroundColor = .white
         return scroll
     }()
@@ -153,24 +154,15 @@ final class NewStartStreamCode: UIView {
  
     }
     private func initLayout() {
-       // cardView.fillSuperview()
-      //  cardView.fillFull(for: self)
-        
-
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
-        scroll.addSubview(imageButton)
         
+        scroll.addSubview(imageButton)
         imageButton.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
                                right: cardView.rightAnchor,
-                               paddingTop: 20,paddingLeft: 20, paddingRight: 20,height: 160)
+                               paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 160)
         imageButton.centerX(inView: cardView)
-        
-       // cardView.addSubview(imageButton)
-       // imageButton.centerX(inView: imageBackground)
-       // imageButton.centerY(inView: imageBackground)
-        
-       
+
         scroll.addSubview(textFieldName)
         textFieldName.anchor(top: imageButton.bottomAnchor,
                               left: cardView.leftAnchor,

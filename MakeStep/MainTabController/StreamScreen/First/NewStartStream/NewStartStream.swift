@@ -97,6 +97,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,7 +258,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
         let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
@@ -333,7 +334,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.authView.textFieldAviable.text = ""
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
-                    self.authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+                   // self.authView.imageButton.imageView?.image = nil
+                  //  self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+                    self.authView.imageButton.setImage(nil, for: .normal)
 
                 }
              })

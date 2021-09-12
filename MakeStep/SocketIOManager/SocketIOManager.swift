@@ -121,7 +121,7 @@ class SocketIOManager: NSObject {
     
     func getChatMessage(completionHandler: @escaping (_ messageInfo: [String : String]) -> Void) {
         
-
+        guard let socket = socket else { return }
         socket.on("message") { (dataArray, socketAck) -> Void in
             
             print("CHAT ===\(dataArray)")

@@ -134,31 +134,31 @@ final class LiveStreamVCCode: UIView {
      
     capturePreviewView.addSubview(stopButton)
     stopButton.anchor(right: StartStreamButton.leftAnchor,
-                                       paddingRight: 25)
+                                       paddingRight: 15)
     stopButton.centerY(inView: StartStreamButton)
         
         
     capturePreviewView.addSubview(chatButton)
         chatButton.anchor(left: StartStreamButton.rightAnchor,
-                                  paddingLeft: 25)
+                                  paddingLeft: 15)
         chatButton.centerY(inView: StartStreamButton)
         
         
     capturePreviewView.addSubview(cameraButton)
     cameraButton.anchor(right: StartStreamButton.leftAnchor,
-                                   paddingRight: 25)
+                                   paddingRight: 15)
     cameraButton.centerY(inView: StartStreamButton)
      
         
     capturePreviewView.addSubview(cameraModeButton)
     cameraModeButton.anchor(right: cameraButton.leftAnchor,
-                                paddingRight: 25)
+                                paddingRight: 15)
     cameraModeButton.centerY(inView: StartStreamButton)
         
     
     capturePreviewView.addSubview(microfoneButton)
     microfoneButton.anchor(left: chatButton.rightAnchor,
-                                 paddingLeft: 25)
+                                 paddingLeft: 15)
     microfoneButton.centerY(inView: StartStreamButton)
         
         

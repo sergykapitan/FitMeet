@@ -21,12 +21,9 @@ final class ActionTransishionChatManadger: NSObject, UIViewControllerTransitioni
     }
     
     func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        if isLandscape {
-        dismissTransition = LeftToRightTransition()
-        return dismissTransition
-        } else {
+  
         return nil
-       }
+       
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {

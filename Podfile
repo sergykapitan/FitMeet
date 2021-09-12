@@ -17,6 +17,7 @@ target 'MakeStep' do
   pod 'HHCustomCorner'
   pod 'TimelineTableViewCell'
   pod 'Socket.IO-Client-Swift', '~> 16.0.1'
+  pod 'Presentr'
    
 
   # Pods for FitMeet

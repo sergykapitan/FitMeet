@@ -52,20 +52,36 @@ class FoggotPasswordViewController: UIViewController {
     private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
 
-        userSubscriber = fitMeetApi.requestSecurityCode(phone: Phone(phone: phone  ))
-            .mapError({ (error) -> Error in
-                print(error)
-                return error
-            })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print(response)
-                if response {
-                    let securityCode = SecurityCodeVC()
-                    securityCode.userPhoneOreEmail = phone
-                    self.present(securityCode, animated: true, completion: nil)
+//        userSubscriber = fitMeetApi.requestSecurityCode(phone: Phone(phone: phone  ))
+//            .mapError({ (error) -> Error in
+//                print(error)
+//                return error
+//            })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                print(response)
+//                if response {
+//                    let securityCode = SecurityCodeVC()
+//                    securityCode.userPhoneOreEmail = phone
+//                    self.present(securityCode, animated: true, completion: nil)
+//
+//                }
+//        })
+ //       -------------------------------------------------------------------------------------------------
+            userSubscriber = fitMeetApi.resetPassword(phone: Phone(phone: phone  ))
+                .mapError({ (error) -> Error in
+                    print(error)
+                    return error
+                })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    print(response)
+                    if response.hash != nil {
+                        let securityCode = SecurityCodeVC()
+                        securityCode.getHash = response.hash
+                        securityCode.userPhoneOreEmail = phone
+                        self.present(securityCode, animated: true, completion: nil)
 
-                }
-        })
+                    }
+            })
     }
 }
 extension FoggotPasswordViewController: UITextFieldDelegate {

@@ -34,6 +34,7 @@ struct User: Codable,Identifiable {
     let birthDate: String?
     let nameLastUpdateDate, usernameLastUpdateDate: String?
     let channelFollowCount: Int?
+    let channelSubscribeCount: Int?
 }
 // MARK: - Token
 struct Token: Codable,Identifiable {

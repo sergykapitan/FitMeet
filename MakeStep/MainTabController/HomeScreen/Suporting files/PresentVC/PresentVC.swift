@@ -9,8 +9,12 @@
 import Combine
 import UIKit
 import AVKit
+import Presentr
 
-class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate {
+
+class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate{
+    
+  
     
     func changeButton() {
         AppUtility.lockOrientation(.all)
@@ -51,12 +55,13 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         if isLandscape {
 
         } else {
-            homeView.buttonChat.isHidden = false
+           
+            self.homeView.buttonChatUser.isHidden = false
         }
         if isLand {
             self.button.isHidden = false
         } else {
-            
+           // homeView.buttonChat.isHidden = false
         }
     }
 
@@ -77,6 +82,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     var isLandscape: Bool = true
     var isLand:Bool = true
+    var isPortraiteFull: Bool = false
     
     var id: Int?
     var follow: String?
@@ -115,7 +121,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var Url: String?
     var playPauseButton: PlayPauseButton!
     var user: User?
+   // var swipeableFlexLayout: NSLayoutConstraint?
 
+   // var swipeableView: SwipeableView! = View(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
+    //swipeableView.setTranslatesAutoresizingMaskIntoConstraints(false)
 
     //MARK - LifeCicle
     override func loadView() {
@@ -129,6 +138,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         homeView.buttonChatUser.isHidden = true
+        
         loadPlayer()
         makeNavItem()
         homeView.imageLogoProfile.makeRounded()
@@ -137,8 +147,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         bindingUser(id: id)
         guard let  broadId = broadId else { return }
         getMapWather(ids: [broadId])
-       // guard let watch = watch  else { return }
-       // homeView.labelEye.text = "\(watch)"
+       
+
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -166,8 +176,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         guard let broadcast = broadcast else { return }        
         homeView.labelStreamDescription.text = broadcast.description
-        
-
 
     }
     func actionButton () {
@@ -179,8 +187,71 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
+      //  homeView.buttonHelp.addTarget(self, action: #selector(viewTopPresent), for: .touchUpInside)
+       // homeView.viewTop.addGestureRecognizer(createSwipeGestureRecognizer(for: .up))
+        homeView.viewTop.addGestureRecognizer(createSwipeGestureRecognizer(for: .down))
+    
+  
     }
+    // MARK: - Helper Methods
+    @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
+
+            switch sender.direction {
+            case .up:
+              
+             print("U{PPPPP")
+            default:
+                break
+            }
+
+            UIView.animate(withDuration: 0.25) {
+                
+                
+              //  self.homeView.viewTop.frame = frame
+              //  self.homeView.viewTop.transform = CGAffineTransform(scaleX: x, y: y)
+            }
+    }
+    
+    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
+        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(viewTopPresent))
+        swipeGestureRecognizer.direction = direction        
+        return swipeGestureRecognizer
+    }
+    let presenter: Presentr = {
+        let presenter = Presentr(presentationType: .topHalf)
+        return presenter
+    }()
     //MARK: - Selectors
+    @objc func viewTopPresent(_ sender: UISwipeGestureRecognizer) {
+        switch sender.direction {
+        case .up:
+          
+         print("U{PPPPP")
+        case .down:
+        
+        print("~Down")
+        default:
+            break
+        }
+
+        UIView.animate(withDuration: 0.25) {
+            
+            
+          //  self.homeView.viewTop.frame = frame
+          //  self.homeView.viewTop.transform = CGAffineTransform(scaleX: x, y: y)
+        }
+        presenter.transitionType = TransitionType.coverVerticalFromTop
+        presenter.transitionType = nil
+        presenter.dismissTransitionType = nil
+        presenter.dismissOnSwipe = true
+        presenter.dismissAnimated = true
+        presenter.roundCorners = true
+    
+        let vc = Coach()
+        vc.user = self.user
+        customPresentViewController(presenter, viewController: vc, animated: true)
+
+    }
     @objc func actionOnline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -246,8 +317,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.buttonSetting.isHidden = true
             homeView.buttonLandScape.isHidden = true
             playPauseButton.isHidden = true
+            homeView.buttonChat.isHidden = true
+            homeView.buttonChatUser.isHidden = true
+            button.isHidden = true
             isButton = false
         } else {
+            button.isHidden = false
+            homeView.buttonChatUser.isHidden = false
+            homeView.buttonChat.isHidden = false
             homeView.overlay.isHidden = false
             homeView.imageLive.isHidden = false
             homeView.labelLive.isHidden = false
@@ -319,7 +396,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
              
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
-                player.rate = 1 //auto play
+        player.rate = 1 
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -371,7 +448,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
         homeView.labelEye.centerY(inView: homeView.overlay)
         
-    
+        if isLand {
+            //button
+        } else {
+            
+        }
        
         
                let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
@@ -389,13 +470,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
-            homeView.buttonChatUser.isHidden = false
+           // isPortraiteFull = true
+           // homeView.buttonChatUser.isHidden = false
+            homeView.buttonChatUser.removeFromSuperview()
             isLand = true
             button.isHidden = false
             self.view.addSubview(button)
-            button.anchor( right: self.homeView.cardView.rightAnchor, paddingRight: 20, width: 30, height: 30)
-            button.centerY(inView: self.view)
-            button.setImage(#imageLiteral(resourceName: "back"), for: .normal)
+            
+           
             
             
             UIView.animate(withDuration: 1.0,
@@ -406,9 +488,22 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.view.setNeedsLayout()
                     
                     self.homeView.buttonChat.removeFromSuperview()
+                    
                     self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 100, paddingBottom: 20,width: 45,height: 45)
                     self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
-                    self.homeView.imagePromo.fillFull(for: self.view)
+                    
+                    self.homeView.addSubview(self.homeView.buttonChatUser)
+                    self.homeView.buttonChatUser.anchor(right: self.homeView.buttonSetting.leftAnchor,
+                                                        paddingRight: 5)
+                    
+                    self.homeView.buttonChatUser.centerY(inView: self.homeView.buttonSetting)
+                    
+                    
+                    self.button.anchor( right: self.homeView.buttonChatUser.leftAnchor, paddingRight: 10, width: 30, height: 30)
+                    self.button.centerY(inView: self.homeView.buttonChatUser)
+                    self.button.setImage( #imageLiteral(resourceName: "Group1-1"), for: .normal)
+                    
+                    self.playerViewController?.view.fillFull(for: self.view)//, insets: <#T##UIEdgeInsets#>)
                     self.view.setNeedsLayout()
 
                 },completion: nil)
@@ -439,18 +534,30 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     
                    // self.view.setNeedsLayout()
                     
-                    self.homeView.addSubview(self.homeView.buttonChat)
-                   
-                   // self.homeView.buttonChat.needsUpdateConstraints()
+                    self.homeView.cardView.addSubview(self.homeView.buttonChat)
                     
-                    self.homeView.buttonChat.anchor(left:self.view.leftAnchor,
-                                                               bottom: self.view.bottomAnchor,
-                                                               paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
-                    self.homeView.labelChat.text = "Comments"
-                    self.homeView.labelChat.textColor = .white
+                    
+                    
+                    if self.isPortraiteFull {
+                        self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,
+                                                        bottom: self.homeView.imagePromo.bottomAnchor,
+                                                        paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
+                        self.homeView.labelChat.text = "Comments"
+                        
+                        self.homeView.labelChat.textColor = .white
+                        self.homeView.imageChat.image = #imageLiteral(resourceName: "arrow")
+                    } else if self.isPortraiteFull == false {
+                        
+                        self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,
+                                                        bottom: self.homeView.cardView.bottomAnchor,
+                                                        paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
+                        self.homeView.labelChat.text = "Comments"
+                        self.homeView.labelChat.textColor = .black
+                        self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
+                    }
+                    
                                        
                     self.homeView.buttonChat.addSubview(self.homeView.imageChat)
-                    self.homeView.imageChat.image = #imageLiteral(resourceName: "arrow")
                     self.homeView.imageChat.anchor(left: self.homeView.buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
                     self.homeView.imageChat.centerY(inView: self.homeView.buttonChat)
        
@@ -458,7 +565,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 24, paddingBottom: 20,width: 45,height: 45)
                     self.homeView.imagePromo.addSubview(self.homeView.buttonSetting)
                     self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25 ,width: 30,height: 30)
-                    self.homeView.imagePromo.fillFull(for: self.view)
+                  //  self.homeView.imagePromo.fillFull(for: self.view)
                     self.view.setNeedsLayout()
 
                 },completion: nil)
@@ -466,42 +573,108 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
            }
        }
-    
+    // MARK: - ButtonLandscape
     @objc func rightHandAction() {
         
         print("ISPLAYENG === \(isPlaying)")
-        
+       let bounds =  self.homeView.imagePromo.bounds
+        print("IS BOUNDS  ====== \(bounds)")
         self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
         if isPlaying {
             isPlaying = false
+            isPortraiteFull = false
             self.view.layoutIfNeeded()
            
             navigationController?.navigationBar.isHidden = false
             tabBarController?.tabBar.isHidden = false
             self.homeView.imageLogoProfile.isHidden = false
             self.homeView.buttonSubscribe.isHidden = false
-            self.homeView.viewTop.isHidden =  false
             self.homeView.segmentControll.isHidden = false
             self.homeView.buttonComing.isHidden = false
             self.homeView.buttonOnline.isHidden = false
             self.homeView.buttonOffline.isHidden = false
-
-            self.view.setNeedsLayout()
+            self.homeView.viewTop.isHidden = false
+            self.homeView.imagePromo.removeFromSuperview()
+            self.homeView.labelCategory.removeFromSuperview()
+            self.homeView.labelStreamInfo.removeFromSuperview()
+            self.homeView.labelStreamDescription.removeFromSuperview()
+            self.homeView.buttonChat.removeFromSuperview()
+            self.homeView.buttonChatUser.removeFromSuperview()
+            self.homeView.imageChat.removeFromSuperview()
+            self.homeView.labelChat.removeFromSuperview()
+            self.homeView.labelChat.textColor = .black
+            self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
+            self.homeView.viewTop.removeFromSuperview()
+            
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
                 animations: {
-                            
-                    self.navigationController?.popViewController(animated: true)
                     
+                    self.homeView.cardView.addSubview(self.homeView.viewTop)
+                    if self.isLand {
+                        self.homeView.viewTop.anchor(top: self.self.homeView.cardView.topAnchor,
+                                                     left: self.homeView.cardView.leftAnchor,
+                                                     right: self.homeView.cardView.rightAnchor,
+                                                     paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 100)
+                        
+                    } else {
+                        self.homeView.viewTop.anchor(top: self.self.homeView.cardView.topAnchor,
+                                                     left: self.homeView.cardView.leftAnchor,
+                                                     right: self.homeView.cardView.rightAnchor,
+                                                     paddingTop: 44, paddingLeft: 0, paddingRight: 0,height: 100)
+                    }
+                   
+
+                    
+                    self.homeView.cardView.addSubview(self.homeView.imagePromo)
+                    self.homeView.imagePromo.anchor(top: self.homeView.buttonComing.bottomAnchor,
+                                                  left: self.homeView.cardView.leftAnchor,
+                                                  right: self.homeView.cardView.rightAnchor,
+                                                  paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+                    
+                    self.homeView.cardView.addSubview(self.homeView.labelCategory)
+                    self.homeView.labelCategory.anchor(top: self.homeView.imagePromo.bottomAnchor,
+                                         left: self.homeView.cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
+                    
+                    self.homeView.cardView.addSubview(self.homeView.labelStreamInfo)
+                    self.homeView.labelStreamInfo.anchor(top: self.homeView.labelCategory.bottomAnchor,
+                                                         left: self.homeView.cardView.leftAnchor,
+                                           paddingTop: 9, paddingLeft: 16)
+                    
+                    self.homeView.cardView.addSubview(self.homeView.labelStreamDescription)
+                    self.homeView.labelStreamDescription.anchor(top: self.homeView.labelStreamInfo.bottomAnchor,
+                                                                left: self.homeView.cardView.leftAnchor,
+                                                                right: self.homeView.cardView.rightAnchor,
+                                                  paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+                    
+                    self.homeView.cardView.addSubview(self.homeView.buttonChat)
+                    self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,bottom: self.homeView.cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 55,width: 80, height: 30)
+                    
+                    self.homeView.buttonChat.addSubview(self.homeView.imageChat)
+                    
+                    self.homeView.imageChat.anchor(left: self.homeView.buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
+                    self.homeView.imageChat.centerY(inView: self.homeView.buttonChat)
+                    
+                    self.homeView.buttonChat.addSubview(self.homeView.labelChat)
+                    self.homeView.labelChat.anchor( left: self.homeView.imageChat.rightAnchor, paddingLeft: 10)
+                    self.homeView.labelChat.centerY(inView: self.homeView.buttonChat)
+                    
+                  
+                  
+                    AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+                    self.isPortraiteFull = false
+                    self.view.layoutIfNeeded()
                 },completion: nil)
         } else {
+            isPortraiteFull = true
             AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
+            print("ALL EXIT")
         }
     }
-
-    @objc
-    func leftHandAction() {
+   
+    @objc func leftHandAction() {
+    
         print("left bar button action")
     }
     //MARK: - Selectors
@@ -510,6 +683,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
     }
+    
+    
+    // MARK: - UserOnline
     @objc func actionUserOnline () {
         homeView.overlay.isHidden = true
         homeView.imageLive.isHidden = true
@@ -531,10 +707,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
-        if isLandscape {
+        if isLand {
+            button.isHidden = true
             actionChatTransitionManager.intWidth = 0.5
             actionChatTransitionManager.intHeight = 1
-            
             present(chatVC, animated: true, completion: nil)
         } else {
             actionChatTransitionManager.intWidth = 1
@@ -543,8 +719,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             present(chatVC, animated: true)
         }
     }
+    
+    
+    // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
         self.button.isHidden = true
+        self.homeView.buttonChatUser.isHidden = true
         if isPlaying {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
@@ -571,7 +751,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 detailViewController.chatView.buttonChat.isHidden = true
                 detailViewController.chatView.buttonComm.isHidden = true
                 detailViewController.chatView.buttonCloseChat.isHidden = false
-                transitionVc(vc: detailViewController, duration: 0.5, type: .fromRight)
+                present(detailViewController, animated: true)
+                //transitionVc(vc: detailViewController, duration: 0.5, type: .fromRight)
             } else {
                 actionChatTransitionManager.intWidth = 1
                 actionChatTransitionManager.intHeight = 0.7
@@ -598,7 +779,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
        
     }
     
- 
+ // MARK: - NetworkMetod
     func followChannels(id: Int) {
         takeChannels = fitMeetChannels.followChannels(id: id)
             .mapError({ (error) -> Error in return error })

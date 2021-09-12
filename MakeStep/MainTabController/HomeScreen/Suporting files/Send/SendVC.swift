@@ -16,7 +16,7 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
     
 
     var list = ["Send a complaint...","Copy link","Share with..."]
-    
+    var url: String?
     
     // MARK: Views
 //    let cardView: UIView = {
@@ -81,12 +81,12 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         let inset: CGFloat = 24
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            butH.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: -inset),
+            butH.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
             
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
             
            
         ])

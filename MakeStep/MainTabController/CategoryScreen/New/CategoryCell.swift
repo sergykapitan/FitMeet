@@ -101,7 +101,7 @@ final class CategoryCell: UICollectionViewCell {
                                paddingTop: 8,paddingLeft: 5,paddingRight: 5 )
         buttonLike.anchor(top: bottomView.topAnchor,
                           right: bottomView.rightAnchor,
-                          paddingTop: 8, paddingRight: 12)
+                          paddingTop: 8, paddingRight: 12,width: 30,height: 30)
         albumNameLabel.anchor(top: artistNameLabel.bottomAnchor,
                               left: bottomView.leftAnchor,
                               right: bottomView.rightAnchor,

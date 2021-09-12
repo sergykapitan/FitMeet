@@ -53,6 +53,10 @@
 		B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF838267A5F3800EA0741 /* FirstVC.swift */; };
 		B46CF83C267A5F4700EA0741 /* FirstVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF83B267A5F4700EA0741 /* FirstVCCode.swift */; };
 		B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF83E267A67C000EA0741 /* FirstVCCell.swift */; };
+		B471E65A26EA0C3A007B63BE /* NewPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65926EA0C3A007B63BE /* NewPassword.swift */; };
+		B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65B26EA0C49007B63BE /* NewPasswordCode.swift */; };
+		B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65D26EA1CF4007B63BE /* ResetPassword.swift */; };
+		B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */; };
 		B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A93B26B91CE000EF96A4 /* UploadImage.swift */; };
 		B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94726BA7A8400EF96A4 /* Timetable.swift */; };
 		B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */; };
@@ -129,6 +133,11 @@
 		B4C5A962267DD2DA00010F88 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A961267DD2D900010F88 /* Task.swift */; };
 		B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB869263B19BD00015380 /* NullEncodable.swift */; };
 		B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB86D263B2B8300015380 /* OptionalView.swift */; };
+		B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93A26E78E880080E7E3 /* Coach.swift */; };
+		B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */; };
+		B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */; };
+		B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B94126E7C7F30080E7E3 /* SwipeableItemTransform.swift */; };
+		B4D2B94426E7D2AA0080E7E3 /* SwipbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */; };
 		B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
@@ -187,6 +196,19 @@
 		B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B4D2B95726E909880080E7E3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -234,6 +256,10 @@
 		B46CF838267A5F3800EA0741 /* FirstVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVC.swift; sourceTree = "<group>"; };
 		B46CF83B267A5F4700EA0741 /* FirstVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVCCode.swift; sourceTree = "<group>"; };
 		B46CF83E267A67C000EA0741 /* FirstVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstVCCell.swift; sourceTree = "<group>"; };
+		B471E65926EA0C3A007B63BE /* NewPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPassword.swift; sourceTree = "<group>"; };
+		B471E65B26EA0C49007B63BE /* NewPasswordCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordCode.swift; sourceTree = "<group>"; };
+		B471E65D26EA1CF4007B63BE /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
+		B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetOldPassword.swift; sourceTree = "<group>"; };
 		B475A93B26B91CE000EF96A4 /* UploadImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadImage.swift; sourceTree = "<group>"; };
 		B475A94726BA7A8400EF96A4 /* Timetable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timetable.swift; sourceTree = "<group>"; };
 		B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeTableCode.swift; sourceTree = "<group>"; };
@@ -310,6 +336,14 @@
 		B4C5A961267DD2D900010F88 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		B4CBB869263B19BD00015380 /* NullEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullEncodable.swift; sourceTree = "<group>"; };
 		B4CBB86D263B2B8300015380 /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
+		B4D2B93A26E78E880080E7E3 /* Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coach.swift; sourceTree = "<group>"; };
+		B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCode.swift; sourceTree = "<group>"; };
+		B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
+		B4D2B94126E7C7F30080E7E3 /* SwipeableItemTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableItemTransform.swift; sourceTree = "<group>"; };
+		B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwipbleView.xib; sourceTree = "<group>"; };
+		B4D2B94B26E909880080E7E3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		B4D2B94E26E909880080E7E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		B4D2B95026E909880080E7E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightToLeft.swift; sourceTree = "<group>"; };
 		B4D9D71B26257D8C007CFB71 /* MakeStep.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeStep.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -417,6 +451,9 @@
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
 				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
+				B4D2B93A26E78E880080E7E3 /* Coach.swift */,
+				B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */,
+				B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */,
 			);
 			path = PresentVC;
 			sourceTree = "<group>";
@@ -535,6 +572,15 @@
 			path = SwitchController;
 			sourceTree = "<group>";
 		};
+		B471E65826EA0C19007B63BE /* NewPassword */ = {
+			isa = PBXGroup;
+			children = (
+				B471E65926EA0C3A007B63BE /* NewPassword.swift */,
+				B471E65B26EA0C49007B63BE /* NewPasswordCode.swift */,
+			);
+			path = NewPassword;
+			sourceTree = "<group>";
+		};
 		B475A94626BA7A4B00EF96A4 /* NavBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +593,7 @@
 		B47828A126CFF3D20068292A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B4D2B93E26E7C7970080E7E3 /* SwipbleView */,
 				B47828A226CFF3E30068292A /* Transishion */,
 			);
 			path = Helpers;
@@ -772,6 +819,25 @@
 			path = NewStartStream;
 			sourceTree = "<group>";
 		};
+		B4D2B93E26E7C7970080E7E3 /* SwipbleView */ = {
+			isa = PBXGroup;
+			children = (
+				B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */,
+				B4D2B94126E7C7F30080E7E3 /* SwipeableItemTransform.swift */,
+			);
+			path = SwipbleView;
+			sourceTree = "<group>";
+		};
+		B4D2B94A26E909880080E7E3 /* share */ = {
+			isa = PBXGroup;
+			children = (
+				B4D2B94B26E909880080E7E3 /* ShareViewController.swift */,
+				B4D2B94D26E909880080E7E3 /* MainInterface.storyboard */,
+				B4D2B95026E909880080E7E3 /* Info.plist */,
+			);
+			path = share;
+			sourceTree = "<group>";
+		};
 		B4D4FAD926E502CF004AAC42 /* ActionTransihion */ = {
 			isa = PBXGroup;
 			children = (
@@ -784,6 +850,7 @@
 			isa = PBXGroup;
 			children = (
 				B4D9D71D26257D8C007CFB71 /* MakeStep */,
+				B4D2B94A26E909880080E7E3 /* share */,
 				B4D9D71C26257D8C007CFB71 /* Products */,
 				7A73FD9EA921833CA615049F /* Pods */,
 				059B0ADA41663AEBA0AF57D8 /* Frameworks */,
@@ -832,7 +899,7 @@
 				B4D9D790262848C3007CFB71 /* SignInPasswordScreen */,
 				B4D9D799262850CD007CFB71 /* FoggotPasswordScreen */,
 				B4D9D7A52628752F007CFB71 /* SecurityCodeScreen */,
-				B4D9D7B52629A2AA007CFB71 /* NewPasswordScreen */,
+				B471E65826EA0C19007B63BE /* NewPassword */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -927,6 +994,8 @@
 				B4FCCF0D26BEC15800C25304 /* Message.swift */,
 				B4E88E4C26D3DB79003E6B16 /* Usermap.swift */,
 				B404923926DE799000A2F417 /* HistoryChat.swift */,
+				B471E65D26EA1CF4007B63BE /* ResetPassword.swift */,
+				B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -992,13 +1061,6 @@
 				B4D9D7AC262965FB007CFB71 /* SecurityCodeVCCode.swift */,
 			);
 			path = SecurityCodeScreen;
-			sourceTree = "<group>";
-		};
-		B4D9D7B52629A2AA007CFB71 /* NewPasswordScreen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NewPasswordScreen;
 			sourceTree = "<group>";
 		};
 		B4D9D7C6262D8AA7007CFB71 /* MainTabController */ = {
@@ -1130,6 +1192,7 @@
 				B4D9D71826257D8C007CFB71 /* Frameworks */,
 				B4D9D71926257D8C007CFB71 /* Resources */,
 				9C04A03CF6B1258867032E6E /* [CP] Embed Pods Frameworks */,
+				B4D2B95726E909880080E7E3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
@@ -1146,7 +1209,7 @@
 		B4D9D71326257D8C007CFB71 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1240;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1240;
 				TargetAttributes = {
 					B4D9D71A26257D8C007CFB71 = {
@@ -1177,6 +1240,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4D2B94426E7D2AA0080E7E3 /* SwipbleView.xib in Resources */,
 				B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
 				B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */,
@@ -1245,10 +1309,12 @@
 				B4B1115B2692F8880006CA5A /* SlideInPresentationAnimator.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B46CF83F267A67C000EA0741 /* FirstVCCell.swift in Sources */,
+				B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */,
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
 				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
 				B404923626D8F23D00A2F417 /* SocketWatcher.swift in Sources */,
+				B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */,
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
@@ -1261,6 +1327,7 @@
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
+				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */,
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
@@ -1298,6 +1365,7 @@
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4E88E5126D3E375003E6B16 /* SendVCCode.swift in Sources */,
+				B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				B4E88E5326D3E3D3003E6B16 /* SendVCCell.swift in Sources */,
 				B46CF839267A5F3800EA0741 /* FirstVC.swift in Sources */,
@@ -1317,9 +1385,11 @@
 				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
+				B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
+				B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */,
 				B4D9D78B26282703007CFB71 /* SignInViewController.swift in Sources */,
@@ -1353,6 +1423,7 @@
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
+				B471E65A26EA0C3A007B63BE /* NewPassword.swift in Sources */,
 				B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */,
 				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
 				B47828AA26CFF48C0068292A /* SubscribeVC.swift in Sources */,
@@ -1370,6 +1441,7 @@
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4C5A962267DD2DA00010F88 /* Task.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
+				B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,
@@ -1412,6 +1484,14 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		B4D2B94D26E909880080E7E3 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B4D2B94E26E909880080E7E3 /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
 		B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1544,12 +1624,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = FA4DB2B64A5CB7250CB4B688 /* Pods-MakeStep.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1569,12 +1650,13 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DAFC849543649BF7FBEF05D4 /* Pods-MakeStep.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

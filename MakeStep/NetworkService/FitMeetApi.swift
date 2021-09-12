@@ -54,6 +54,27 @@ class FitMeetApi {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    // api/v0/auth/sessions/passwordResetSms
+    public func resetPassword(phone:Phone) -> AnyPublisher< ResetPassword, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/passwordResetSms", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: ResetPassword.self)
+                 .value()
+                 .print("requestSecurityCode")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    // api/v0/auth/sessions/password/sms/{code}
+    public func resetOldPassword(code:String,resetOld:ResetOldPassword) -> AnyPublisher< Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/password/sms/\(code)", method: .put, parameters: resetOld.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: Bool.self)
+                 .value()
+                 .print("resetOldPassword")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    
+    
+    
     //MARK: - requestLogin
     public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/loginPhone", method: .post, parameters: phoneCode.asDictionary(), encoding: JSONEncoding.default, headers: nil)

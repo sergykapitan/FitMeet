@@ -13,9 +13,7 @@ import UIKit
 
 
 extension SendVC: UITableViewDataSource {
-    
-   
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count
     }
@@ -29,13 +27,15 @@ extension SendVC: UITableViewDataSource {
     
 }
 extension SendVC: UITableViewDelegate {
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 25
-//    }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Send")
+        print("Send  = \(indexPath.row)")
+        if indexPath.row == 2 {
+            guard let urlString = url else { return }
+            urlString.share()
+           // "Data to share".share()
+        }
+    
     }
 }
 

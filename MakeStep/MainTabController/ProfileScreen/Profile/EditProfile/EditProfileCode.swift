@@ -188,7 +188,7 @@ final class EditProfileCode: UIView {
         let button = UIButton()
         button.setTitle("Connect with Facebook", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     let imageFacebook: UIImageView = {
@@ -200,7 +200,7 @@ final class EditProfileCode: UIView {
         let button = UIButton()
         button.setTitle("Connect with Google", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     let imageGoogle: UIImageView = {
@@ -212,7 +212,7 @@ final class EditProfileCode: UIView {
         let button = UIButton()
         button.setTitle("Connect with Twitter", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     
@@ -220,7 +220,7 @@ final class EditProfileCode: UIView {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "0099AE")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     let scroll: UIScrollView = {

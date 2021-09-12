@@ -177,11 +177,11 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     @objc  func buttonJoin() {
         
         delegate?.changeBackgroundColor()
-        let tr = CATransition()
-        tr.duration = 0.25
-        tr.type = CATransitionType.moveIn // use "Reveal" here
-        tr.subtype = CATransitionSubtype.fromRight
-        view.window!.layer.add(tr, forKey: kCATransition)
+//        let tr = CATransition()
+//        tr.duration = 0.25
+//        tr.type = CATransitionType.moveIn // use "Reveal" here
+//        tr.subtype = CATransitionSubtype.fromRight
+//        view.window!.layer.add(tr, forKey: kCATransition)
         dismiss(animated: true)
 
     }

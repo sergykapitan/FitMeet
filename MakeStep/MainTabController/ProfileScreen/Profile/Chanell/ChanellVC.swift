@@ -218,7 +218,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
         let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")

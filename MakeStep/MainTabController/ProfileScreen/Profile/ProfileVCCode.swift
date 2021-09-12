@@ -33,6 +33,7 @@ final class ProfileVCCode: UIView {
     var welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "Hi,"
+        label.numberOfLines = 0
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 34)
         return label
@@ -343,7 +344,7 @@ final class ProfileVCCode: UIView {
         imageLogoProfile.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 5,width: 80, height: 80)
         
         scroll.addSubview(welcomeLabel)
-        welcomeLabel.anchor(top: cardView.topAnchor, left: imageLogoProfile.rightAnchor, paddingTop: 5, paddingLeft: 20)
+        welcomeLabel.anchor(top: cardView.topAnchor, left: imageLogoProfile.rightAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 20,paddingRight: 10)
         
         scroll.addSubview(segmentControll)
         segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)

@@ -65,6 +65,9 @@ extension HomeVC: UITableViewDataSource {
             cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
         }
        
+        self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+        
+        
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         cell.buttonLike.isUserInteractionEnabled = true
@@ -99,6 +102,7 @@ extension HomeVC: UITableViewDataSource {
  
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
+        detailViewController.url = self.url
         
         present(detailViewController, animated: true)
 
@@ -110,7 +114,7 @@ extension HomeVC: UITableViewDataSource {
 extension HomeVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 310
+        return 330
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

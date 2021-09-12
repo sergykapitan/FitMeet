@@ -73,7 +73,7 @@ final class ChatVCPlayerCode: UIView {
     }()
     var buttonCloseChat: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Back1-1"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
         return button
     }()
    
@@ -100,6 +100,7 @@ final class ChatVCPlayerCode: UIView {
         buttonComm.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
                           paddingTop: 10, paddingLeft: 15, width: 60, height: 30)
         buttonComm.addSubview(imageComm)
+        
         imageComm.anchor(left: buttonComm.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
         imageComm.centerY(inView: buttonComm)
         
@@ -116,11 +117,11 @@ final class ChatVCPlayerCode: UIView {
         sendMessage.centerY(inView: textView)
         
         cardView.addSubview(buttonCloseChat)
-        buttonCloseChat.anchor( left: cardView.leftAnchor,  paddingLeft: 5,width: 30, height: 30)
-        buttonCloseChat.centerY(inView: cardView)
+        buttonCloseChat.anchor( top: cardView.topAnchor,paddingTop: 5,width: 30, height: 30)
+        buttonCloseChat.centerX(inView: cardView)
         
         cardView.addSubview(tableView)
-        tableView.anchor(top: buttonChat.bottomAnchor, left: buttonCloseChat.rightAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 0, paddingLeft: 5, paddingRight: 10, paddingBottom: 10)
+        tableView.anchor(top: buttonChat.bottomAnchor, left: buttonCloseChat.rightAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 10, paddingLeft: 5, paddingRight: 10, paddingBottom: 10)
  
         
     }

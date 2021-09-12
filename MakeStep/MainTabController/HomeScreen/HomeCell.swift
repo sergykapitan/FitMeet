@@ -15,54 +15,26 @@ import Kingfisher
 final class HomeCell: UITableViewCell {
     
     static let reuseID = "HomeCell"
-    
-   // weak var delegate: NewsfeedCodeCellDelegate?
-    
-  //  var likeButtonPressedHandler: (() -> ())?
-    
-
-    
-    
-    
-//    let cardView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.clipsToBounds = true
-//            return view
-//        }()
-   
 
     var backgroundImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
-       // image.frame.size.height = 200
         image.clipsToBounds = true
-       // image.contentMode = .scaleAspectFit
-       // image.contentMode = .scaleAspectFill
-       // image.contentMode = .scaleToFill
-        
         return image
         
     }()
     var logoUserImage: UIImageView = {
         let image = UIImageView()
-        //image.makeRounded()
         image.layer.borderWidth = 1
         image.layer.masksToBounds = false
         image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
-        
-       // image.image = UIImage(named: "avatar")
         return image
         
     }()
-    
     let bottomView : UIView = {
         let view = UIView()
-        
-      //  view.isUserInteractionEnabled = false
-      //  view.backgroundColor = UIColor(hexString: "#3B58A4")
         return view
     }()
     let buttonLike: UIButton = {
@@ -133,47 +105,29 @@ final class HomeCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
         self.initialize()
-       // self.buttonLike.addTarget(self, action: #selector(subscribeButtonTapped(_:)), for: .touchUpInside)
         selectionStyle = .none
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-//    @objc func subscribeButtonTapped(_ sender: UIButton){
-//        likeButtonPressedHandler?()
-//      }
 
-    
-   
     func initialize() {
         clipsToBounds = true
-       // contentView
-       // addSubview(cardView)
-       // cardView.fillSuperview()
-       // cardView.fillFull(for: self)
-        
-        
-        
-        
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
                                right: contentView.rightAnchor,
                                paddingTop: 0, paddingLeft: 0, paddingRight: 0,
                                height: 200)
-        //
-        //,height:150
 
         contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
                           left: contentView.leftAnchor,
                           right: contentView.rightAnchor,
                           bottom: contentView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 120)
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 134)
         
         
         bottomView.addSubview(logoUserImage)
@@ -183,7 +137,7 @@ final class HomeCell: UITableViewCell {
         titleLabel.anchor(top: bottomView.topAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
         
         bottomView.addSubview(buttonMore)
-        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 26,width: 30)
+        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 26,width: 40)
         
         bottomView.addSubview(buttonLike)
         buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 2)

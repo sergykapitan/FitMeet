@@ -15,7 +15,7 @@ extension String {
    }
     //"^[0-9+]{0,1}+[0-9]{11,13}$"
    func isValidPhone() -> Bool {
-      let regularExpressionForPhone = "^[0-9+]{0,1}+[0-9]{10,13}$"
+      let regularExpressionForPhone = "^[+]{0,1}+[0,1,2,3,4,5,6,7]{0,1}+[0-9]{10,14}$"
       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
       return testPhone.evaluate(with: self)
    }
@@ -52,7 +52,7 @@ extension String {
               let pattern = "(\\d)(\\d+)"
               number = number.replacingOccurrences(of: pattern, with: "+$1$2", options: .regularExpression, range: regRange)
           }
-        if number.count < 7 {
+        if number.count < 6 {
             let pattern = "(\\d)(\\d{3})(\\d+)"
             number = number.replacingOccurrences(of: pattern, with: "+$1$2$3", options: .regularExpression, range: regRange)
         } else {

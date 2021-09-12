@@ -122,16 +122,6 @@ final class CategoryCode: UIView {
         stackHFirst.distribution = .equalSpacing
         stackHFirst.spacing = 8
 
-//        cardView.addSubview(table)
-//        table.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 400, height: 26)
-        
-//        table.addSubview(scrollView)
-//        scrollView.anchor(top: table.topAnchor, left: table.leftAnchor, right: table.rightAnchor, bottom: table.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-        
-//        scrollView.addSubview(stackHFirst)
-//        stackHFirst.anchor(top: scrollView.topAnchor, left: scrollView.leftAnchor,right: scrollView.rightAnchor,bottom: scrollView.bottomAnchor, paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0)
-        
-
           
         cardView.addSubview(buttonAll)
         buttonAll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)

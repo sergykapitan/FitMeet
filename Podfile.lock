@@ -48,6 +48,7 @@ PODS:
     - MaterialComponents/private/Application
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
+  - Presentr (1.9)
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
   - Starscream (4.0.4)
@@ -64,6 +65,7 @@ DEPENDENCIES:
   - Kingfisher (~> 6.0)
   - Loaf
   - "MaterialComponents/Tabs+ColorThemer"
+  - Presentr
   - Socket.IO-Client-Swift (~> 16.0.1)
   - TimelineTableViewCell
 
@@ -81,6 +83,7 @@ SPEC REPOS:
     - Logboard
     - MaterialComponents
     - MDFInternationalization
+    - Presentr
     - Socket.IO-Client-Swift
     - Starscream
     - TimelineTableViewCell
@@ -98,10 +101,11 @@ SPEC CHECKSUMS:
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   MaterialComponents: 2a8b6fb1bf6655d3e2254dadae5edbb05559e1d7
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: efaa208782286593cb285b5a4786ac7d7d3ce42e
+PODFILE CHECKSUM: 52ae01e0d776a448f286889be5b3c40d64ab8082
 
 COCOAPODS: 1.10.1
