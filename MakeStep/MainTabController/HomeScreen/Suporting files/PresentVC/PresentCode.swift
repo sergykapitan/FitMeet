@@ -40,6 +40,11 @@ final class PresentCode: UIView {
         button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
         return button
     }()
+    var buttonHelpCoach: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
+        return button
+    }()
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
@@ -200,13 +205,13 @@ final class PresentCode: UIView {
     }()
     var buttonSubscribe: UIButton = {
         var button = UIButton()
-        button.setTitle("Subscribed", for: .normal)
-        button.setTitleColor(UIColor(hexString: "#000000"), for: .normal)
+        button.setTitle("Subscribers", for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = UIColor(hexString: "#DADADA")
-        button.layer.borderWidth = 0.5
+        button.backgroundColor = .white //UIColor(hexString: "#DADADA")
+        button.layer.borderWidth = 1
         button.layer.masksToBounds = false
-        button.layer.borderColor = UIColor(hexString: "3B58A4").cgColor
+        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         return button
@@ -214,12 +219,12 @@ final class PresentCode: UIView {
     var buttonFollow: UIButton = {
         var button = UIButton()
         button.setTitle("Follow", for: .normal)
-        button.setTitleColor(UIColor(hexString: "#000000"), for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = UIColor(hexString: "#DADADA")
-        button.layer.borderWidth = 0.5
+        button.backgroundColor = .white//UIColor(hexString: "#DADADA")
+        button.layer.borderWidth = 1
         button.layer.masksToBounds = false
-        button.layer.borderColor = UIColor(hexString: "3B58A4").cgColor
+        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         return button

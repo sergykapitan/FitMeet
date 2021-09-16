@@ -46,8 +46,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private var topOverlayConstant = NSLayoutConstraint()
     private var rightLandscape = NSLayoutConstraint()
     
-   // private var topFollowConstant = NSLayoutConstraint()
-   // private var leftFollowConstant = NSLayoutConstraint()
+    private var topbuttonSubscribeConstant = NSLayoutConstraint()
+    private var leftbuttonSubscribeConstant = NSLayoutConstraint()
+    private var rightbuttonSubscribeConstant = NSLayoutConstraint()
+    private var centerbuttonSubscribeConstant = NSLayoutConstraint()
     
     
        private func layout() {
@@ -55,10 +57,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
         homeView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         homeView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
+        homeView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
+        homeView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
+        
         view.addSubview(homeView.viewTop)
         view.addSubview(homeView.imageLogoProfile)
         view.addSubview(homeView.welcomeLabel)
         view.addSubview(homeView.labelFollow)
+        view.addSubview(homeView.buttonHelpCoach)
         
         view.addSubview(homeView.buttonSubscribe)
         view.addSubview(homeView.buttonFollow)
@@ -73,7 +79,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         view.addSubview(homeView.labelFolowers)
         view.addSubview(homeView.labelDescription)
         
-        self.homeView.buttonSubscribe.isHidden = true
+        self.homeView.buttonSubscribe.isHidden = false
         self.homeView.buttonFollow.isHidden = true
         self.homeView.buttonInstagram.isHidden = true
         self.homeView.buttonTwiter.isHidden = true
@@ -126,8 +132,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         widthConstant.isActive = true
         
         
-       
-        homeView.buttonSubscribe.anchor(top: homeView.welcomeLabel.bottomAnchor, left: homeView.viewTop.leftAnchor, paddingTop: 20, paddingLeft: 18,  width: 102, height: 28)
+        topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
+        topbuttonSubscribeConstant.isActive = false
+        leftbuttonSubscribeConstant = homeView.buttonSubscribe.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 18)
+        leftbuttonSubscribeConstant.isActive = false
+        rightbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -10)
+        rightbuttonSubscribeConstant.isActive = true
+        centerbuttonSubscribeConstant = homeView.buttonSubscribe.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor)
+        centerbuttonSubscribeConstant.isActive = true
+        
+        
+        homeView.buttonSubscribe.anchor( width: 100, height: 28)
         
         
         homeView.buttonFollow.anchor(top: homeView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
@@ -172,7 +187,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.cardView.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
         
-        
+        homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
+        homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
        
        }
     
@@ -263,6 +279,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
+                print("OPEN First")
                 self.bottomConstraint.constant = -400
                 self.heightConstant.constant = 70
                 self.widthConstant.constant = 70
@@ -276,9 +293,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerWelcomeLabelConstant.isActive = false
                 self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                 self.homeView.labelFollow.isHidden = false
+                
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+                
              self.homeView.imageLogoProfile.makeRounded()
              
-             self.homeView.buttonSubscribe.isHidden = true
+            // self.homeView.buttonSubscribe.isHidden = true
              self.homeView.buttonFollow.isHidden = true
              self.homeView.buttonInstagram.isHidden = true
              self.homeView.buttonTwiter.isHidden = true
@@ -292,6 +315,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
              self.homeView.labelDescription.isHidden = true
              
             case .closed:
+                print("close First")
                 self.heightConstant.constant = 90
                 self.widthConstant.constant = 90
                 self.bottomConstraint.constant = -100
@@ -304,8 +328,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerWelcomeLabelConstant.isActive = true
                 self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                 self.homeView.labelFollow.isHidden = true
+                
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+                
+                
+                
+                
              self.homeView.imageLogoProfile.makeRounded()
-             self.homeView.buttonSubscribe.isHidden = false
+             //self.homeView.buttonSubscribe.isHidden = false
              self.homeView.buttonFollow.isHidden = false
              self.homeView.buttonInstagram.isHidden = false
              self.homeView.buttonTwiter.isHidden = false
@@ -351,9 +384,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerWelcomeLabelConstant.isActive = false
                 self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                 self.homeView.labelFollow.isHidden = false
+                
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
+                
              self.homeView.imageLogoProfile.makeRounded()
              
-             self.homeView.buttonSubscribe.isHidden = true
+            // self.homeView.buttonSubscribe.isHidden = true
              self.homeView.buttonFollow.isHidden = true
              self.homeView.buttonInstagram.isHidden = true
              self.homeView.buttonTwiter.isHidden = true
@@ -379,8 +418,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerWelcomeLabelConstant.isActive = true
                 self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                 self.homeView.labelFollow.isHidden = true
-             self.homeView.imageLogoProfile.makeRounded()
-             self.homeView.buttonSubscribe.isHidden = false
+                
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                
+           //  self.homeView.imageLogoProfile.makeRounded()
+            // self.homeView.buttonSubscribe.isHidden = false
              self.homeView.buttonFollow.isHidden = false
              self.homeView.buttonInstagram.isHidden = false
              self.homeView.buttonTwiter.isHidden = false
@@ -440,6 +485,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                switch state {
                
                case .open:
+                print("OPEN First")
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
+                
                    self.bottomConstraint.constant = -400
                    self.heightConstant.constant = 70
                    self.widthConstant.constant = 70
@@ -453,9 +504,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.centerWelcomeLabelConstant.isActive = false
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                    self.homeView.labelFollow.isHidden = false
+                
+                
+                
                 self.homeView.imageLogoProfile.makeRounded()
                 
-                self.homeView.buttonSubscribe.isHidden = true
+
                 self.homeView.buttonFollow.isHidden = true
                 self.homeView.buttonInstagram.isHidden = true
                 self.homeView.buttonTwiter.isHidden = true
@@ -469,6 +523,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.homeView.labelDescription.isHidden = true
                 
                case .closed:
+                print("close First")
+                
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
 
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
@@ -483,7 +543,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                    self.homeView.labelFollow.isHidden = true
                 self.homeView.imageLogoProfile.makeRounded()
-                self.homeView.buttonSubscribe.isHidden = false
                 self.homeView.buttonFollow.isHidden = false
                 self.homeView.buttonInstagram.isHidden = false
                 self.homeView.buttonTwiter.isHidden = false
@@ -495,6 +554,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.homeView.labelINTFolowers.isHidden = false
                 self.homeView.labelFolowers.isHidden = false
                 self.homeView.labelDescription.isHidden = false
+                
+                
                 
                }
                self.view.layoutIfNeeded()
@@ -513,6 +574,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                switch self.currentState {
                
                case .open:
+                print("OPEN Second")
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
+                
                    self.bottomConstraint.constant = -400
                    self.topConstraint.isActive = false
                    self.centerConstant.isActive = false
@@ -527,7 +594,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                    self.homeView.labelFollow.isHidden = false
                 self.homeView.imageLogoProfile.makeRounded()
-                self.homeView.buttonSubscribe.isHidden = true
+               
                 self.homeView.buttonFollow.isHidden = true
                 self.homeView.buttonInstagram.isHidden = true
                 self.homeView.buttonTwiter.isHidden = true
@@ -539,8 +606,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.homeView.labelINTFolowers.isHidden = true
                 self.homeView.labelFolowers.isHidden = true
                 self.homeView.labelDescription.isHidden = true
-               case .closed:
                 
+               
+               case .closed:
+                print("close Second")
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+
                    self.bottomConstraint.constant = -100
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
@@ -554,7 +628,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                    self.homeView.labelFollow.isHidden = true
                 self.homeView.imageLogoProfile.makeRounded()
-                self.homeView.buttonSubscribe.isHidden = false
                 self.homeView.buttonFollow.isHidden = false
                 self.homeView.buttonInstagram.isHidden = false
                 self.homeView.buttonTwiter.isHidden = false
@@ -566,6 +639,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.homeView.labelINTFolowers.isHidden = false
                 self.homeView.labelFolowers.isHidden = false
                 self.homeView.labelDescription.isHidden = false
+                
+                
                }
            }
            transitionAnimator.startAnimation()
@@ -778,46 +853,46 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     // MARK: - Helper Methods
  
     
-    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
-        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(viewTopPresent))
-        swipeGestureRecognizer.direction = direction        
-        return swipeGestureRecognizer
-    }
-    let presenter: Presentr = {
-        let presenter = Presentr(presentationType: .topHalf)
-        return presenter
-    }()
+//    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
+//        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(viewTopPresent))
+//        swipeGestureRecognizer.direction = direction
+//        return swipeGestureRecognizer
+//    }
+//    let presenter: Presentr = {
+//        let presenter = Presentr(presentationType: .topHalf)
+//        return presenter
+//    }()
     //MARK: - Selectors
-    @objc func viewTopPresent(_ sender: UISwipeGestureRecognizer) {
-        switch sender.direction {
-        case .up:
-          
-         print("U{PPPPP")
-        case .down:
-        
-        print("~Down")
-        default:
-            break
-        }
-
-        UIView.animate(withDuration: 0.25) {
-            
-            
-          //  self.homeView.viewTop.frame = frame
-          //  self.homeView.viewTop.transform = CGAffineTransform(scaleX: x, y: y)
-        }
-        presenter.transitionType = TransitionType.coverVerticalFromTop
-        presenter.transitionType = nil
-        presenter.dismissTransitionType = nil
-        presenter.dismissOnSwipe = true
-        presenter.dismissAnimated = true
-        presenter.roundCorners = true
-    
-        let vc = Coach()
-        vc.user = self.user
-        customPresentViewController(presenter, viewController: vc, animated: true)
-
-    }
+//    @objc func viewTopPresent(_ sender: UISwipeGestureRecognizer) {
+//        switch sender.direction {
+//        case .up:
+//
+//         print("U{PPPPP")
+//        case .down:
+//
+//        print("~Down")
+//        default:
+//            break
+//        }
+//
+//        UIView.animate(withDuration: 0.25) {
+//
+//
+//          //  self.homeView.viewTop.frame = frame
+//          //  self.homeView.viewTop.transform = CGAffineTransform(scaleX: x, y: y)
+//        }
+//        presenter.transitionType = TransitionType.coverVerticalFromTop
+//        presenter.transitionType = nil
+//        presenter.dismissTransitionType = nil
+//        presenter.dismissOnSwipe = true
+//        presenter.dismissAnimated = true
+//        presenter.roundCorners = true
+//
+//        let vc = Coach()
+//        vc.user = self.user
+//        customPresentViewController(presenter, viewController: vc, animated: true)
+//
+//    }
     @objc func actionOnline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -1075,6 +1150,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             button.isHidden = false
             self.view.addSubview(button)
             homeView.viewTop.isHidden = true
+            self.homeView.buttonHelpCoach.isHidden = true
             self.homeView.welcomeLabel.isHidden = true
             self.homeView.buttonSubscribe.isHidden = true
             self.homeView.buttonFollow.isHidden = true
@@ -1260,6 +1336,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             self.homeView.buttonOnline.isHidden = false
             self.homeView.buttonOffline.isHidden = false
             self.homeView.labelFollow.isHidden = false
+            self.homeView.buttonHelpCoach.isHidden = false
     
             self.homeView.viewTop.isHidden = false
             self.homeView.imagePromo.removeFromSuperview()
@@ -1510,7 +1587,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         self.view.addSubview(self.homeView.welcomeLabel)
         self.view.addSubview(self.homeView.labelFollow)
-        view.addSubview(homeView.buttonSubscribe)
+        self.homeView.viewTop.addSubview(homeView.buttonSubscribe)
         view.addSubview(homeView.buttonFollow)
         view.addSubview(homeView.buttonInstagram)
         view.addSubview(homeView.buttonTwiter)
@@ -1523,7 +1600,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         view.addSubview(homeView.labelFolowers)
         view.addSubview(homeView.labelDescription)
         
-        self.homeView.buttonSubscribe.isHidden = true
+       // self.homeView.buttonSubscribe.isHidden = true
         self.homeView.buttonFollow.isHidden = true
         self.homeView.buttonInstagram.isHidden = true
         self.homeView.buttonTwiter.isHidden = true
@@ -1580,8 +1657,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         widthConstant = homeView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
         widthConstant.isActive = true
        
-        homeView.buttonSubscribe.anchor(top: homeView.welcomeLabel.bottomAnchor, left: homeView.viewTop.leftAnchor, paddingTop: 20, paddingLeft: 18,  width: 102, height: 28)
+        topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
+        topbuttonSubscribeConstant.isActive = false
+        leftbuttonSubscribeConstant = homeView.buttonSubscribe.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 18)
+        leftbuttonSubscribeConstant.isActive = false
+        rightbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -10)
+        rightbuttonSubscribeConstant.isActive = true
+        centerbuttonSubscribeConstant = homeView.buttonSubscribe.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor)
+        centerbuttonSubscribeConstant.isActive = true
         
+        
+        homeView.buttonSubscribe.anchor( width: 100, height: 28)
         
         homeView.buttonFollow.anchor(top: homeView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
         homeView.buttonFollow.centerX(inView: homeView.viewTop)
@@ -1625,7 +1711,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
         
-        
+        homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
+        homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
         
     }
     
