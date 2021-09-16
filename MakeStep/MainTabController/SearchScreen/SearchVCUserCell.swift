@@ -27,9 +27,6 @@ class SearchVCUserCell: UITableViewCell {
     }()
     let logoUserImage: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "avatar")
-        image.layer.cornerRadius = image.frame.size.width / 2
-        image.clipsToBounds = true
         return image
         
     }()
@@ -77,6 +74,14 @@ class SearchVCUserCell: UITableViewCell {
         super.awakeFromNib()
         self.initialize()
     }
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+
+        // Configure the view for the selected state
+    }
+    override func layoutSubviews() {
+        logoUserImage.round()
+    }
 
     func initialize() {
         addSubview(cardView)
@@ -84,25 +89,27 @@ class SearchVCUserCell: UITableViewCell {
         cardView.addSubview(logoUserImage)
         logoUserImage.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
-                               bottom: cardView.bottomAnchor,
-                               paddingTop: 5, paddingLeft: 5,paddingBottom: 5 ,width: 65 ,height: 65)
+                               paddingTop: 5, paddingLeft: 18,width: 66 ,height: 66)
         
 
-        cardView.addSubview(titleLabel)
-        titleLabel.anchor(left: logoUserImage.rightAnchor,
-                          bottom: cardView.bottomAnchor,
-                          paddingLeft: 8, paddingBottom: 8 )
-        
         cardView.addSubview(labelDescription)
         labelDescription.anchor(top: cardView.topAnchor,
                                 left: logoUserImage.rightAnchor,
-                                paddingTop: 8, paddingLeft: 8 )
+                                paddingTop: 8, paddingLeft: 20 )
+        
+        cardView.addSubview(titleLabel)
+        titleLabel.anchor(top:labelDescription.bottomAnchor,
+                          left: logoUserImage.rightAnchor,
+                          paddingTop: 8 ,paddingLeft: 20 )
+        
+        
 
     }
     func setImage(image:String) {
         
         let url = URL(string: image )
         logoUserImage.kf.setImage(with: url)
+       
     }
     override func prepareForReuse() {
            super.prepareForReuse()

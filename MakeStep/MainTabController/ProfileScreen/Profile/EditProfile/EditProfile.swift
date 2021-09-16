@@ -163,7 +163,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")

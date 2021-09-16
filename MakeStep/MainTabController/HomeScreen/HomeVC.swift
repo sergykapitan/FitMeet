@@ -63,8 +63,10 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
    // var  playerContainerView: PlayerContainerView?
     var user: User?
     var ar =  [User]()
+    var arrayIdUser = [Int]()
     var index = 0
     var url:String?
+    var usersd = [Int: User]()
     
     
     //MARK - LifeCicle
@@ -109,7 +111,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         let titleLabel = UILabel()
                    titleLabel.text = "Home"
                    titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                  // titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
                    let stackView = UIStackView(arrangedSubviews: [titleLabel])
@@ -125,7 +127,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")
@@ -220,10 +222,9 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
-                    print("RES = \(response)")
-                   // self.user = response
-                   // self.ar = response
+                if response.data != nil  {
+                    self.usersd = response.data
+                   // self.homeView.tableView.reloadData()
                 }
           })
     }

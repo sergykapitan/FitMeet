@@ -11,7 +11,7 @@ import Combine
 import ContextMenuSwift
 import TimelineTableViewCell
 
-class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
+class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
     
     
     func change(to index: Int) {
@@ -86,7 +86,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
-        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos "," Timetable"])
+        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         profileView.segmentControll.delegate = self
         
         
@@ -127,8 +127,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-        print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
-   
+     
         let name: String?
         if user?.fullName != nil {
             name = user?.fullName
@@ -224,7 +223,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate {
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")

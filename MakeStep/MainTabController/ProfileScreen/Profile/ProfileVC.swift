@@ -101,9 +101,10 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(editProfile, animated: true)
     }
     @objc func actionChanell() {
-        let editProfile = ChanellVC()
-        editProfile.modalPresentationStyle = .fullScreen
-        self.navigationController?.pushViewController(editProfile, animated: true)
+        //let channelUs = ChanellVC()
+        let channelUs = PresentVC()
+        channelUs.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(channelUs, animated: true)
     }
     
     func makeNavItem() {
@@ -129,7 +130,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+      //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")

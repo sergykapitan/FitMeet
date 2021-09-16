@@ -2,6 +2,7 @@ ${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks.sh
 ${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
 ${BUILT_PRODUCTS_DIR}/BottomPopup/BottomPopup.framework
 ${BUILT_PRODUCTS_DIR}/ContextMenuSwift/ContextMenuSwift.framework
+${BUILT_PRODUCTS_DIR}/EasyPeasy/EasyPeasy.framework
 ${BUILT_PRODUCTS_DIR}/HHCustomCorner/HHCustomCorner.framework
 ${BUILT_PRODUCTS_DIR}/HaishinKit/HaishinKit.framework
 ${BUILT_PRODUCTS_DIR}/Hue/Hue.framework

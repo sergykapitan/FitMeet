@@ -20,7 +20,6 @@ class SearchVCCell: UITableViewCell {
         }()
     var backgroundImage: UIImageView = {
         let image = UIImageView()
-       // image.backgroundColor = .red
         return image
         
     }()
@@ -84,7 +83,7 @@ class SearchVCCell: UITableViewCell {
         backgroundImage.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
                                bottom: cardView.bottomAnchor,
-                               paddingTop: 5, paddingLeft: 5,paddingBottom: 5 ,width: contentView.bounds.width / 2)
+                               paddingTop: 5, paddingLeft: 18,paddingBottom: 5 ,width: contentView.bounds.width / 2)
         
 
         cardView.addSubview(titleLabel)

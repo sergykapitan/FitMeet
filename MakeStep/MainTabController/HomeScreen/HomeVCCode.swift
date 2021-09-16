@@ -24,8 +24,7 @@ final class HomeVCCode: UIView {
         return table
     }()
     var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
-      //  segment.backgroundColor = .clear
+        let segment = CustomSegmentedControl()    
         return segment
         
     }()
@@ -44,7 +43,7 @@ final class HomeVCCode: UIView {
         cardView.fillSuperview()
         //cardView.fillFull(for: self)
         cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 5, height: 30)
+        segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 15, height: 30)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)

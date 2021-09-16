@@ -29,7 +29,7 @@ final class HomeCell: UITableViewCell {
         image.layer.masksToBounds = false
         image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
-        image.layer.cornerRadius = 12
+        image.layer.cornerRadius = 18
         return image
         
     }()
@@ -39,7 +39,9 @@ final class HomeCell: UITableViewCell {
     }()
     let buttonLike: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Like-1"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "iconlove"), for: .normal)
+        button.imageView?.clipsToBounds = true
+        button.imageView?.contentMode = .scaleToFill
         return button
     }()
     let buttonMore: UIButton = {
@@ -49,7 +51,7 @@ final class HomeCell: UITableViewCell {
     }()
     var titleLabel: UILabel =  {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.systemFont(ofSize: 16)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
@@ -62,7 +64,7 @@ final class HomeCell: UITableViewCell {
     }()
     var labelCategory : UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
@@ -131,7 +133,7 @@ final class HomeCell: UITableViewCell {
         
         
         bottomView.addSubview(logoUserImage)
-        logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
+        logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 36,height: 36)
         
         bottomView.addSubview(titleLabel)
         titleLabel.anchor(top: bottomView.topAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
@@ -139,8 +141,8 @@ final class HomeCell: UITableViewCell {
         bottomView.addSubview(buttonMore)
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 26,width: 40)
         
-        bottomView.addSubview(buttonLike)
-        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 2)
+        contentView.addSubview(buttonLike)
+        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 2,width: 25,height: 25)
         
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
@@ -185,6 +187,7 @@ final class HomeCell: UITableViewCell {
            super.prepareForReuse()
         self.backgroundImage.image = nil
         self.titleLabel.text = nil
+        self.logoUserImage.image = nil
         
         
         

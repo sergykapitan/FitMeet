@@ -52,8 +52,8 @@ final class ChanellCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
-    var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
+    var segmentControll: SegmentCustomFull = {
+        let segment = SegmentCustomFull()
         segment.backgroundColor = UIColor(hexString: "#F6F6F6")
         return segment
         

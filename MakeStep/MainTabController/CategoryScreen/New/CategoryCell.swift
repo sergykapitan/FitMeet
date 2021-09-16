@@ -26,7 +26,7 @@ final class CategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = UIFont.boldSystemFont(ofSize: 12)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = .white
         return label
     }()
@@ -34,7 +34,7 @@ final class CategoryCell: UICollectionViewCell {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textColor = .white
         return label
     }()
@@ -98,14 +98,14 @@ final class CategoryCell: UICollectionViewCell {
         artistNameLabel.anchor(top: bottomView.topAnchor,
                                left: bottomView.leftAnchor,
                                right: buttonLike.leftAnchor,
-                               paddingTop: 8,paddingLeft: 5,paddingRight: 5 )
+                               paddingTop: 8,paddingLeft: 12,paddingRight: 5 )
         buttonLike.anchor(top: bottomView.topAnchor,
                           right: bottomView.rightAnchor,
                           paddingTop: 8, paddingRight: 12,width: 30,height: 30)
         albumNameLabel.anchor(top: artistNameLabel.bottomAnchor,
                               left: bottomView.leftAnchor,
                               right: bottomView.rightAnchor,
-                              paddingTop: 5,paddingLeft: 5,paddingRight: 5)
+                              paddingTop: 5,paddingLeft: 12,paddingRight: 5)
         
         
         NSLayoutConstraint.activate([

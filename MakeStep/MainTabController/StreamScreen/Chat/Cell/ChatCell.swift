@@ -142,8 +142,8 @@ class ChatCell: BaseCell {
         bgView.edges([.right, .top, .bottom], to: self.contentView, offset: offset)
         
         bgView.layer.cornerRadius = 10
-        bgView.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
-        
+       // bgView.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
+        bgView.backgroundColor = UIColor(hexString: "#3B58A4")
         
         
         self.bgView.addSubview(topLabel)

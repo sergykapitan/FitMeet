@@ -19,17 +19,9 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
     var url: String?
     
     // MARK: Views
-//    let cardView: UIView = {
-//        let view = UIView()
-//       // view.backgroundColor = .blue
-//      // view.translatesAutoresizingMaskIntoConstraints = false
-//       // view.clipsToBounds = true
-//            return view
-//        }()
-    
     var butH: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "Line"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
         return button
     }()
     var tableView: UITableView = {
@@ -37,35 +29,6 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         return table
     }()
 
-    
-    
- //   let sendView = SendVCCode()
-//
-//    @Inject var fitMeetStream: FitMeetStream
-//    private var takeBroadcast: AnyCancellable?
-//
-//    @Inject var fitMeetApi: FitMeetApi
-//    private var takeUser: AnyCancellable?
-//    private var followBroad: AnyCancellable?
-//
-//
-
-    
-    //MARK - LifeCicle
-//    override func loadView() {
-//        view = sendView
-//    }
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(true)
-//        self.navigationController?.navigationBar.isTranslucent = false
-//        navigationController?.navigationBar.backgroundColor = .white
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.layoutIfNeeded()
-//
-//
-//
-//    }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
@@ -77,12 +40,13 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         }
         
         butH.setContentHuggingPriority(.required, for: .vertical)
-        
-        let inset: CGFloat = 24
+  //.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            butH.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
             butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
+            butH.heightAnchor.constraint(equalToConstant:15),
+            butH.widthAnchor.constraint(equalToConstant: 32),
             
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
@@ -92,8 +56,6 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         ])
 
     }
-
-
  
     //MARK: - Selectors
 

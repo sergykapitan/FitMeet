@@ -490,25 +490,10 @@ class Arrow: UIView {
     override func draw(_ rect: CGRect) {
 
         // Get size
-        let size = self.layer.frame.width
-
-        // Create path
-        let bezierPath = UIBezierPath()
+        let size = self.layer.frame.width * 0.6
 
         // Draw points
         let qSize = size/4
-        
-//        let path = UIBezierPath()
-//        path.move(to: CGPoint(x: self.frame.width/2, y: 0.0))
-//        path.addLine(to: CGPoint(x: 0.0, y: self.frame.size.height))
-//        path.addLine(to: CGPoint(x: self.frame.size.width, y: self.frame.size.height))
-//        path.close()
-
-//        bezierPath.move(to: CGPoint(x: 0, y: qSize))
-//        bezierPath.addLine(to: CGPoint(x: size, y: qSize))
-//        bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))
-//        bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
-//        bezierPath.close()
         
         let path = UIBezierPath()
         path.move(to: CGPoint(x: 0, y: qSize)) //StartPoint
@@ -520,7 +505,7 @@ class Arrow: UIView {
         shapeLayer.path = path.cgPath
         shapeLayer.fillColor = arrowColor.cgColor
         shapeLayer.strokeColor = UIColor.lightGray.cgColor
-        shapeLayer.lineWidth = 2.0
+        shapeLayer.lineWidth = 1.0
        
         if #available(iOS 12.0, *) {
             self.layer.addSublayer (shapeLayer)

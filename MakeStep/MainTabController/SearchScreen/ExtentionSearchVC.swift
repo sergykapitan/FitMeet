@@ -29,8 +29,6 @@ extension SearchVC: UITableViewDataSource {
             return self.listCategory.count
         }
   
-        
-      //  print(indexCount)
         return indexCount
     }
     
@@ -53,8 +51,8 @@ extension SearchVC: UITableViewDataSource {
 
         if index == 1 {
             cell2.setImage(image: listUsers[indexPath.row].avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png" )
+            cell2.layoutIfNeeded()
             cell2.labelDescription.text = listUsers[indexPath.row].fullName
-            cell2.logoUserImage.layer.cornerRadius = cell2.logoUserImage.frame.height/2
             cell2.titleLabel.text = "\(listUsers[indexPath.row].channelSubscribeCount!)" + "  Views"
 
 
@@ -79,7 +77,7 @@ extension SearchVC: UITableViewDelegate {
             sizeCell =  96
         }
         if index == 1 {
-            sizeCell = 70
+            sizeCell = 77
         }
         if index == 2 {
             sizeCell = 40
@@ -92,11 +90,6 @@ extension SearchVC: UITableViewDelegate {
         
         var url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
 
-//        if isFiltering {
-//             url = self.filtredBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-//        } else {
-//             url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-//        }
         if index == 0 {
             url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         } else if index == 1 {

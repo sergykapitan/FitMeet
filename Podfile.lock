@@ -2,6 +2,7 @@ PODS:
   - Alamofire (5.4.1)
   - BottomPopup (0.6.0)
   - ContextMenuSwift (0.0.8)
+  - EasyPeasy (1.10.0)
   - HaishinKit (1.1.4):
     - Logboard (~> 2.2.1)
   - HHCustomCorner (0.1.3)
@@ -58,6 +59,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.4)
   - BottomPopup
   - ContextMenuSwift
+  - EasyPeasy
   - HaishinKit (~> 1.1.4)
   - HHCustomCorner
   - Hue (~> 5.0.0)
@@ -74,6 +76,7 @@ SPEC REPOS:
     - Alamofire
     - BottomPopup
     - ContextMenuSwift
+    - EasyPeasy
     - HaishinKit
     - HHCustomCorner
     - Hue
@@ -92,6 +95,7 @@ SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
   BottomPopup: 1d5649a3b29396238f0e8f3c82075a7bfcf37ba7
   ContextMenuSwift: b4d4066b9ebe47a43f7734a4a6989cf03efe5ad8
+  EasyPeasy: b9b1bae024d21a7dfa9bad26d6826d88348cc6f1
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   HHCustomCorner: d7817fc58b894347245363dd8a0d0beafd474bcd
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
@@ -106,6 +110,6 @@ SPEC CHECKSUMS:
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: 52ae01e0d776a448f286889be5b3c40d64ab8082
+PODFILE CHECKSUM: 7afb71d62d0f336d74b6a29f03d14ad8fca1f312
 
 COCOAPODS: 1.10.1

@@ -28,6 +28,10 @@
 		B41DCB78268F4A1E007096AB /* MakeStepChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB77268F4A1E007096AB /* MakeStepChat.swift */; };
 		B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7B268F4D8D007096AB /* UserVC.swift */; };
 		B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7F268F4D9C007096AB /* UserVCCode.swift */; };
+		B43A6C7326F24DC2009E6DDE /* SendCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7226F24DC2009E6DDE /* SendCoach.swift */; };
+		B43A6C7526F24DD5009E6DDE /* SendCoachCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7426F24DD5009E6DDE /* SendCoachCode.swift */; };
+		B43A6C7726F24DEE009E6DDE /* SendCoachCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7626F24DEE009E6DDE /* SendCoachCell.swift */; };
+		B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7826F24DFE009E6DDE /* ExSendCoach.swift */; };
 		B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4626A6EA9300321AB8 /* ImagePicker.swift */; };
 		B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */; };
 		B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */; };
@@ -137,7 +141,6 @@
 		B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */; };
 		B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */; };
 		B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B94126E7C7F30080E7E3 /* SwipeableItemTransform.swift */; };
-		B4D2B94426E7D2AA0080E7E3 /* SwipbleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */; };
 		B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */; };
 		B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D71E26257D8D007CFB71 /* AppDelegate.swift */; };
 		B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72026257D8D007CFB71 /* SceneDelegate.swift */; };
@@ -231,6 +234,10 @@
 		B41DCB77268F4A1E007096AB /* MakeStepChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeStepChat.swift; sourceTree = "<group>"; };
 		B41DCB7B268F4D8D007096AB /* UserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVC.swift; sourceTree = "<group>"; };
 		B41DCB7F268F4D9C007096AB /* UserVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVCCode.swift; sourceTree = "<group>"; };
+		B43A6C7226F24DC2009E6DDE /* SendCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoach.swift; sourceTree = "<group>"; };
+		B43A6C7426F24DD5009E6DDE /* SendCoachCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoachCode.swift; sourceTree = "<group>"; };
+		B43A6C7626F24DEE009E6DDE /* SendCoachCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendCoachCell.swift; sourceTree = "<group>"; };
+		B43A6C7826F24DFE009E6DDE /* ExSendCoach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExSendCoach.swift; sourceTree = "<group>"; };
 		B4497D4626A6EA9300321AB8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequstBilder.swift; sourceTree = "<group>"; };
 		B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProvider.swift; sourceTree = "<group>"; };
@@ -340,7 +347,6 @@
 		B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCode.swift; sourceTree = "<group>"; };
 		B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
 		B4D2B94126E7C7F30080E7E3 /* SwipeableItemTransform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableItemTransform.swift; sourceTree = "<group>"; };
-		B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SwipbleView.xib; sourceTree = "<group>"; };
 		B4D2B94B26E909880080E7E3 /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		B4D2B94E26E909880080E7E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		B4D2B95026E909880080E7E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -453,7 +459,6 @@
 				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
 				B4D2B93A26E78E880080E7E3 /* Coach.swift */,
 				B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */,
-				B4D2B94326E7D2AA0080E7E3 /* SwipbleView.xib */,
 			);
 			path = PresentVC;
 			sourceTree = "<group>";
@@ -535,6 +540,17 @@
 				B4B11153269223850006CA5A /* Cell */,
 			);
 			path = Chat;
+			sourceTree = "<group>";
+		};
+		B43A6C7126F24DA8009E6DDE /* SendCoach */ = {
+			isa = PBXGroup;
+			children = (
+				B43A6C7226F24DC2009E6DDE /* SendCoach.swift */,
+				B43A6C7426F24DD5009E6DDE /* SendCoachCode.swift */,
+				B43A6C7626F24DEE009E6DDE /* SendCoachCell.swift */,
+				B43A6C7826F24DFE009E6DDE /* ExSendCoach.swift */,
+			);
+			path = SendCoach;
 			sourceTree = "<group>";
 		};
 		B4497D5426A836DE00321AB8 /* SJDataPicker */ = {
@@ -1141,6 +1157,7 @@
 				B4E88E5026D3E375003E6B16 /* SendVCCode.swift */,
 				B4E88E5226D3E3D3003E6B16 /* SendVCCell.swift */,
 				B4E88E5526D3E6B3003E6B16 /* EcSendVC.swift */,
+				B43A6C7126F24DA8009E6DDE /* SendCoach */,
 			);
 			path = Send;
 			sourceTree = "<group>";
@@ -1240,7 +1257,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4D2B94426E7D2AA0080E7E3 /* SwipbleView.xib in Resources */,
 				B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
 				B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */,
@@ -1343,6 +1359,7 @@
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
 				B475A95826BCA65D00EF96A4 /* Calendar.swift in Sources */,
+				B43A6C7326F24DC2009E6DDE /* SendCoach.swift in Sources */,
 				B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */,
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
@@ -1360,6 +1377,7 @@
 				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
+				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
@@ -1422,6 +1440,7 @@
 				B46CF7EE267A43A300EA0741 /* ParentControllwerCode.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
+				B43A6C7726F24DEE009E6DDE /* SendCoachCell.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
 				B471E65A26EA0C3A007B63BE /* NewPassword.swift in Sources */,
 				B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */,
@@ -1462,6 +1481,7 @@
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
+				B43A6C7526F24DD5009E6DDE /* SendCoachCode.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
@@ -1630,7 +1650,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1656,7 +1676,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -100,7 +100,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")
@@ -197,14 +197,14 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             guard let id = filtredBroadcast[sender.tag].id else { return }
             followCategory(id: id)
-            binding()
-            self.searchView.collectionView.reloadData()
+           // binding()
+           // self.searchView.collectionView.reloadData()
         } else {
             sender.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
             guard let id = filtredBroadcast[sender.tag].id else { return }
             unFollowCategory(id: id)
-            binding()
-            self.searchView.collectionView.reloadData()
+           // binding()
+           // self.searchView.collectionView.reloadData()
         }
         
         }

@@ -25,18 +25,10 @@ final class ChatVCPlayerCode: UIView {
         let table = UITableView()
         return table
     }()
-    var buttonChat: UIButton = {
-        let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
-        return button
-    }()
-    
-    var view : UILabel = {
-        let view = UILabel()
-        view.frame = CGRect(x: 0, y: 0, width: 31, height: 4)
-        view.backgroundColor = .white
-        view.layer.backgroundColor = UIColor.gray.cgColor//UIColor(red: 0.854, green: 0.854, blue: 0.854, alpha: 1).cgColor
-        view.layer.cornerRadius = 20
+
+    var imageNotToken: UIImageView = {
+        let view = UIImageView()
+        view.image = #imageLiteral(resourceName: "Group1-3")
         return view
     }()
     
@@ -63,12 +55,19 @@ final class ChatVCPlayerCode: UIView {
         text.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         text.backgroundColor = UIColor(hexString: "#F6F6F6")
         text.textColor = .lightGray
-        text.font = UIFont.systemFont(ofSize: 25)
+       // text.textContainerInset = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 0)
+        
+        text.font = UIFont.systemFont(ofSize: 18)
+       // text.sizeToFit()
+       // text.layoutIfNeeded ()
+       // text.isScrollEnabled = false
+        //text.isScrollEnabled = false
+        //text.clipsToBounds = false
         return text
     }()
     var sendMessage: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "send"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Frame"), for: .normal)
         return button
     }()
     var buttonCloseChat: UIButton = {
@@ -91,11 +90,7 @@ final class ChatVCPlayerCode: UIView {
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillSuperview()
-
-        cardView.addSubview(buttonChat)
-        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 40,height: 30)
-        buttonChat.centerX(inView: cardView)
-        
+  
         cardView.addSubview(buttonComm)
         buttonComm.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
                           paddingTop: 10, paddingLeft: 15, width: 60, height: 30)
@@ -108,20 +103,23 @@ final class ChatVCPlayerCode: UIView {
         labelComm.anchor( left: imageComm.rightAnchor, paddingLeft: 10)
         labelComm.centerY(inView: buttonComm)
         
-        
-        cardView.addSubview(textView)
-        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10, height: 40)
-        
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 50 ,height: 50)
-        sendMessage.centerY(inView: textView)
+        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 10, paddingBottom: 15,width: 70 ,height: 60)
         
+//        cardView.addSubview(textView)
+//        textView.anchor(left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10)//,height: 40
+ 
         cardView.addSubview(buttonCloseChat)
         buttonCloseChat.anchor( top: cardView.topAnchor,paddingTop: 5,width: 30, height: 30)
         buttonCloseChat.centerX(inView: cardView)
         
         cardView.addSubview(tableView)
-        tableView.anchor(top: buttonChat.bottomAnchor, left: buttonCloseChat.rightAnchor, right: cardView.rightAnchor, bottom: textView.topAnchor, paddingTop: 10, paddingLeft: 5, paddingRight: 10, paddingBottom: 10)
+        tableView.anchor(top: buttonCloseChat.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: sendMessage.topAnchor, paddingTop: 10, paddingLeft: 5, paddingRight: 10, paddingBottom: 10)
+        
+        cardView.addSubview(imageNotToken)
+        imageNotToken.anchor( width: 100, height: 100)
+        imageNotToken.centerX(inView: cardView)
+        imageNotToken.centerY(inView: cardView)
  
         
     }

@@ -18,21 +18,8 @@ final class NewStartStreamCode: UIView {
         view.backgroundColor = .white
         return view
     }()
-//    let labelAddImage: UILabel = {
-//        let label = UILabel()
-//        label.text = "Add a preview"
-//        label.textColor = UIColor(hexString: "#BBBCBC")
-//        label.font = UIFont.boldSystemFont(ofSize: 14)
-//        return label
-//    }()
-//    let imageBackground: UIImageView = {
-//        let image = UIImageView()
-//        image.image = #imageLiteral(resourceName: "Rectangle 966gggg")
-//        return image
-//    }()
     let imageButton: UIButton = {
         let button = UIButton()
-       // image.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleAspectFill

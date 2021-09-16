@@ -31,18 +31,10 @@ final class PresentCode: UIView {
         view.radiusUpperLeftCorner = 0
         view.radiusUpperRightCorner = 0
         view.fillColor = .white
-       // view.isUserInteractionEnabled = true
-        view.backgroundColor = UIColor(hexString: "#F6F6F6")
+        view.backgroundColor = .clear
         return view
     }()
-//    var viewTop: SwipeableView = {
-//        var view = SwipeableView()
-//        view.backgroundColor = .lightGray
-//        view.indicatorPosition = .bottom
-//        view.hasRoundedCorners = true
-//        return view
-//    }()
-    
+
     var buttonHelp: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
@@ -66,8 +58,8 @@ final class PresentCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
-    var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
+    var segmentControll: SegmentCustomFull = {
+        let segment = SegmentCustomFull()
         segment.backgroundColor = UIColor(hexString: "#F6F6F6")
         return segment
     }()
@@ -75,7 +67,7 @@ final class PresentCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Online", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -83,7 +75,7 @@ final class PresentCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Offline", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -91,7 +83,7 @@ final class PresentCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Coming", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -147,8 +139,6 @@ final class PresentCode: UIView {
     }()
     var buttonChat: UIButton = {
         var button = UIButton()
-      //  button.setTitle("Comments", for: .normal)
-       // button.setTitleColor(.black, for: .normal)
         return button
     }()
     var imageChat: UIImageView = {
@@ -161,12 +151,11 @@ final class PresentCode: UIView {
         let label = UILabel()
         label.text = "Comments"
         label.textColor = .black
-      //  label.font = UIFont.systemFont(ofSize: 18)
         return label
     }()
     var buttonChatUser: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "user"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
         return button
     }()
   
@@ -205,7 +194,6 @@ final class PresentCode: UIView {
     }()
     var labelEye: UILabel = {
         let label = UILabel()
-       // label.text = "123"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
@@ -213,9 +201,9 @@ final class PresentCode: UIView {
     var buttonSubscribe: UIButton = {
         var button = UIButton()
         button.setTitle("Subscribed", for: .normal)
-        button.setTitleColor(UIColor(hexString: "3B58A4"), for: .normal)
+        button.setTitleColor(UIColor(hexString: "#000000"), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = UIColor(hexString: "FFFFFF")
+        button.backgroundColor = UIColor(hexString: "#DADADA")
         button.layer.borderWidth = 0.5
         button.layer.masksToBounds = false
         button.layer.borderColor = UIColor(hexString: "3B58A4").cgColor
@@ -223,6 +211,98 @@ final class PresentCode: UIView {
         button.layer.cornerRadius = 12
         return button
     }()
+    var buttonFollow: UIButton = {
+        var button = UIButton()
+        button.setTitle("Follow", for: .normal)
+        button.setTitleColor(UIColor(hexString: "#000000"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = UIColor(hexString: "#DADADA")
+        button.layer.borderWidth = 0.5
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "3B58A4").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    var buttonTwiter: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-3"), for: .normal)
+        return button
+    }()
+    var buttonfaceBook: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-2"), for: .normal)
+        return button
+    }()
+    var buttonInstagram: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-4"), for: .normal)
+        return button
+    }()
+    var labelVideo : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "Video"
+        label.textAlignment = .center
+        return label
+    }()
+    var labelINTVideo : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text  = "2"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelFollows : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.textAlignment = .center
+        label.text = "Followers"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    var labelINTFollows : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelFolowers : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.textAlignment = .center
+        label.text = "Following"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    var labelINTFolowers : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelDescription : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    var buttonLike: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "iconlove"), for: .normal)
+        return button
+    }()
+    var buttonMore: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        return button
+    }()
+    
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -238,43 +318,8 @@ final class PresentCode: UIView {
     }
     func createCardViewLayer() {
 
-        cardView.fillSuperview()
-     
-        cardView.addSubview(viewTop)
-        viewTop.anchor(top: cardView.topAnchor,
-                       left: cardView.leftAnchor,
-                       right: cardView.rightAnchor,
-                       paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 100)
-
-        viewTop.addSubview(imageLogoProfile)
-
-        imageLogoProfile.anchor( top: viewTop.topAnchor,
-                                 left: viewTop.leftAnchor,
-                                 paddingTop: 15,paddingLeft: 15,
-                                 width: 70, height: 70)
-
-        cardView.addSubview(buttonSubscribe)
-        buttonSubscribe.anchor(right:cardView.rightAnchor,
-                                paddingRight: 10,
-                                width: 86,height: 24)
-        buttonSubscribe.centerY(inView: imageLogoProfile)
-
-        viewTop.addSubview(welcomeLabel)
-        welcomeLabel.anchor(top: imageLogoProfile.centerYAnchor,
-                            left: imageLogoProfile.rightAnchor,
-                            right: buttonSubscribe.leftAnchor,
-                            paddingTop: -20, paddingLeft: 20,paddingRight: 5)
-
-        viewTop.addSubview(labelFollow)
-        labelFollow.anchor(top: welcomeLabel.bottomAnchor,
-                           left: imageLogoProfile.rightAnchor,
-                           paddingTop: 5, paddingLeft: 20)
-
-        viewTop.addSubview(buttonHelp)
-        buttonHelp.anchor(bottom: viewTop.bottomAnchor,paddingBottom: 10, width: 40, height: 40)
-        buttonHelp.centerX(inView: viewTop)
-        
-        
+      //  cardView.fillSuperview()
+        cardView.fillFull(for: self)
  
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor,
@@ -326,6 +371,14 @@ final class PresentCode: UIView {
         labelCategory.anchor(top: imagePromo.bottomAnchor,
                              left: cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
         
+        cardView.addSubview(buttonMore)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 20, width: 40, height: 20)
+        
+        cardView.addSubview(buttonLike)
+        buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 10, width: 20, height: 20)
+        
+        
+        
         cardView.addSubview(labelStreamInfo)
         labelStreamInfo.anchor(top: labelCategory.bottomAnchor,
                                left: cardView.leftAnchor,
@@ -338,7 +391,7 @@ final class PresentCode: UIView {
                                       paddingTop: 4, paddingLeft: 16, paddingRight: 16)
         
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(left:cardView.leftAnchor,bottom: cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 5,width: 80, height: 30)
+        buttonChat.anchor(left:cardView.leftAnchor,bottom: cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 80,width: 80, height: 30)
         
         buttonChat.addSubview(imageChat)
         imageChat.anchor(left: buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
@@ -353,6 +406,18 @@ final class PresentCode: UIView {
                         left: cardView.leftAnchor,
                         right: cardView.rightAnchor,
                         bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
+        
+        
         
     
 

@@ -67,17 +67,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
+      //  searchView.
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
-//        self.navigationController?.navigationBar.isTranslucent = true
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.layoutIfNeeded()
-//        self.navigationController?.navigationBar.backgroundColor = .white
-        
+
     }
 
     override func loadView() {
@@ -93,7 +89,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         binding(name: "a")
         getUsers(name: "a")
         getCategory(name: "a")
-        searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
+        searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches"," Categories"])
         searchView.segmentControll.delegate = self
 
     }
@@ -217,7 +213,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")

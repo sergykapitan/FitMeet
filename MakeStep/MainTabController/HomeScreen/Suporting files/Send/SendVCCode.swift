@@ -41,7 +41,6 @@ final class SendVCCode: UIView {
     
     func createCardViewLayer() {
         addSubview(cardView)
-       // cardView.fillSuperview()
         cardView.fillFull(for: self)
         cardView.addSubview(butH)
         butH.anchor(top: cardView.topAnchor, paddingTop: 8, width: 50)

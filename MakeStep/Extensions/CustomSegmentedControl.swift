@@ -17,7 +17,7 @@ class CustomSegmentedControl: UIView {
     private var buttons: [UIButton]!
     private var selectorView: UIView!
     
-    var textColor:UIColor = .black
+    var textColor:UIColor = UIColor.init(hexString: "#7C7C7C")
     var selectorViewColor: UIColor = UIColor.init(hexString: "#3B58A4")
     var selectorTextColor: UIColor = UIColor.init(hexString: "#3B58A4")
     
@@ -48,7 +48,7 @@ class CustomSegmentedControl: UIView {
         button.setTitleColor(selectorTextColor, for: .normal)
         let selectorPosition = frame.width/CGFloat(buttonTitles.count) * CGFloat(index)
         UIView.animate(withDuration: 0.2) {
-            self.selectorView.frame.origin.x = selectorPosition
+            self.selectorView.frame.origin.x = selectorPosition + button.frame.width/5.5
         }
     }
     
@@ -60,7 +60,9 @@ class CustomSegmentedControl: UIView {
                 selectedIndex = buttonIndex
                 delegate?.change(to: selectedIndex)
                 UIView.animate(withDuration: 0.3) {
-                    self.selectorView.frame.origin.x = selectorPosition
+                    print("SELFHHHHHHH> ================== \(btn.frame.width)")
+                    self.selectorView.frame.origin.x = selectorPosition + btn.frame.width/5.5
+
                 }
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
@@ -80,7 +82,8 @@ extension CustomSegmentedControl {
         let stack = UIStackView(arrangedSubviews: buttons)
         stack.axis = .horizontal
         stack.alignment = .fill
-        stack.distribution = .fillEqually
+        stack.spacing = 10
+        stack.distribution = .equalSpacing//.fillEqually
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -90,8 +93,8 @@ extension CustomSegmentedControl {
     }
     
     private func configSelectorView() {
-        let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)
-        selectorView = UIView(frame: CGRect(x: 0, y: self.frame.height , width: selectorWidth , height: 2))
+        let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)/3
+        selectorView = UIView(frame: CGRect(x: 20, y: self.frame.height , width: selectorWidth, height: 2))
         selectorView.backgroundColor = selectorViewColor
         addSubview(selectorView)
     }
@@ -106,6 +109,7 @@ extension CustomSegmentedControl {
             button.setTitle(buttonTitle, for: .normal)
             button.addTarget(self, action:#selector(CustomSegmentedControl.buttonAction(sender:)), for: .touchUpInside)
             button.setTitleColor(textColor, for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             buttons.append(button)
         }
         buttons[0].setTitleColor(selectorTextColor, for: .normal)

@@ -20,9 +20,9 @@ final class CategoryBroadcastCode: UIView {
         }()
     var buttonAll: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
         button.setTitle("All", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 13
         button.anchor(width: 64,height: 26)
         
@@ -32,7 +32,7 @@ final class CategoryBroadcastCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Popular", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 13
         button.anchor(width: 64,height: 26)
         return button
@@ -41,7 +41,7 @@ final class CategoryBroadcastCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("New", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 13
         button.anchor(width: 64,height: 26)
         return button
@@ -50,7 +50,7 @@ final class CategoryBroadcastCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Viewers", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
         button.layer.cornerRadius = 13
         button.anchor(width: 64,height: 26)
         return button

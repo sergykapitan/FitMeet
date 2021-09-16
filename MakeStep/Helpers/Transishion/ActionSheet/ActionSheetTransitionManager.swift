@@ -9,6 +9,8 @@ import UIKit
 
 final class ActionSheetTransitionManager: NSObject, UIViewControllerTransitioningDelegate {
     
+    var height: CGFloat?
+    
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return nil
     }
@@ -18,9 +20,13 @@ final class ActionSheetTransitionManager: NSObject, UIViewControllerTransitionin
     }
     
     func presentationController(forPresented presented: UIViewController, presenting: UIViewController?, source: UIViewController) -> UIPresentationController? {
-        return ActionSheetPresentationController(
+        
+        let ActionController = ActionSheetPresentationController(
             presentedViewController: presented,
             presenting: presenting
         )
+        ActionController.height = height
+        
+        return ActionController
     }
 }

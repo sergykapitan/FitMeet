@@ -35,32 +35,30 @@ extension HomeVC: UITableViewDataSource {
               let broadcastID = self.listBroadcast[indexPath.row].id
               else { return cell}
 
-        var arrIds = [Int]()
-        arrIds.append(id)
-        
-    
+        self.arrayIdUser.append(id)
+       // self.bindingUserMap(ids: arrayIdUser)
+        self.bindingUser(id: id)
+        let us = usersd.map { key,user in
+            return user
+        }
         
         self.ids.append(broadcastID)
-        print("IDS ++++ \(broadcastID)")
         self.getMapWather(ids: [broadcastID])
         cell.labelEye.text = "\(self.watch)"
-        
-        
-        
-         
+ 
         let categorys = listBroadcast[indexPath.row].categories
-        let s = categorys!.map{$0.title!}.reduce("") { $0.title + "\u{00B7} " + $1.title }  //
-      
+        let s = categorys!.map{$0.title!}.reduce("") { $0.title + " \u{0023}" + $1.title }  //
         cell.labelCategory.text = s
 
-
+       
         
         if listBroadcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
         } else {
-            cell.buttonLike.setImage(UIImage(named: "Like-1"), for: .normal)
+            cell.buttonLike.setImage(UIImage(named: "iconlove"), for: .normal)
         }
     
+        print("SELF US ==== \(us.count)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
         }
@@ -82,28 +80,27 @@ extension HomeVC: UITableViewDataSource {
     }
 
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        if sender.currentImage == UIImage(named: "Like-1") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        if sender.currentImage == UIImage(named: "iconlove") {
+            sender.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
            guard let id = listBroadcast[sender.tag].id else { return }
             self.followBroadcast(id: id)
-            binding()
-            self.homeView.tableView.reloadData()
+          //  binding()
+           // self.homeView.tableView.reloadData()
         } else {
-            sender.setImage(UIImage(named: "Like-1"), for: .normal)
+            sender.setImage(UIImage(named: "iconlove"), for: .normal)
            guard let id = listBroadcast[sender.tag].id else { return }
             self.unFollowBroadcast(id: id)
-            binding()
-            self.homeView.tableView.reloadData()
+           // binding()
+          //  self.homeView.tableView.reloadData()
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         
         let detailViewController = SendVC()
- 
+        actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        
+        detailViewController.url = self.url        
         present(detailViewController, animated: true)
 
     }

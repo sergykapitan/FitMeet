@@ -41,7 +41,7 @@ final class SendVCCell: UITableViewCell {
         clipsToBounds = true
   
         contentView.addSubview(labelCategory)
-        labelCategory.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, paddingTop: 15, paddingLeft: 8)
+        labelCategory.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, paddingTop: 0, paddingLeft: 8)
         
     }
 

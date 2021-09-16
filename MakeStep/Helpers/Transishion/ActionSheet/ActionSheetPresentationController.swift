@@ -9,6 +9,8 @@ import UIKit
 
 final class ActionSheetPresentationController: UIPresentationController {
     
+    var height: CGFloat?
+    
     // MARK: Constants
     private static let actionSheetCornerRadius: CGFloat = 30
     private static let dimmingViewMaxAlpha: CGFloat = 1.0
@@ -32,12 +34,12 @@ final class ActionSheetPresentationController: UIPresentationController {
     
     // MARK: Presentation
     override var frameOfPresentedViewInContainerView: CGRect {
-        guard let containerView = containerView else {
+        guard let containerView = containerView,let height = height else {
             return .zero
         }
         
         let targetWidth = containerView.bounds.width
-        let targetHeight = containerView.bounds.height * 0.3
+        let targetHeight = containerView.bounds.height * height
         
         let originX: CGFloat = .zero
         let originY: CGFloat = containerView.bounds.height - targetHeight

@@ -18,8 +18,8 @@ class SegmentCustomFull: UIView {
     private var selectorView: UIView!
     
     var textColor:UIColor = .black
-    var selectorViewColor: UIColor = UIColor.init(hexString: "#0099AE")
-    var selectorTextColor: UIColor = UIColor.init(hexString: "#0099AE")
+    var selectorViewColor: UIColor = UIColor.init(hexString: "#3B58A4")
+    var selectorTextColor: UIColor = UIColor.init(hexString: "#3B58A4")
     
     weak var delegate:CustomSegmentedFullControlDelegate?
     
@@ -106,6 +106,7 @@ extension SegmentCustomFull {
             button.setTitle(buttonTitle, for: .normal)
             button.addTarget(self, action:#selector(CustomSegmentedControl.buttonAction(sender:)), for: .touchUpInside)
             button.setTitleColor(textColor, for: .normal)
+            button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 15)
             buttons.append(button)
         }
         buttons[0].setTitleColor(selectorTextColor, for: .normal)

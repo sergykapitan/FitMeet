@@ -186,7 +186,7 @@ final class EditProfileCode: UIView {
     }()
     let buttonTwitter: UIButton = {
         let button = UIButton()
-        button.setTitle("Connect with Facebook", for: .normal)
+        button.setTitle("Connect with Twitter", for: .normal)
         button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
@@ -198,19 +198,19 @@ final class EditProfileCode: UIView {
     }()
     let buttonFacebook: UIButton = {
         let button = UIButton()
-        button.setTitle("Connect with Google", for: .normal)
+        button.setTitle("Connect with Facebook", for: .normal)
         button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
     let imageGoogle: UIImageView = {
         let image = UIImageView()
-        image.image = #imageLiteral(resourceName: "Goole1")
+        image.image = #imageLiteral(resourceName: "Goole1-1")
         return image
     }()
     let buttonGoogle: UIButton = {
         let button = UIButton()
-        button.setTitle("Connect with Twitter", for: .normal)
+        button.setTitle("Connect with Google", for: .normal)
         button.layer.cornerRadius = 19
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
