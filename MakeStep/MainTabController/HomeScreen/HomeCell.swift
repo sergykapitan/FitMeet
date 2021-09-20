@@ -39,14 +39,14 @@ final class HomeCell: UITableViewCell {
     }()
     let buttonLike: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "iconlove"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleToFill
         return button
     }()
     let buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
     var titleLabel: UILabel =  {
@@ -65,6 +65,7 @@ final class HomeCell: UITableViewCell {
     var labelCategory : UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 2
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
@@ -139,16 +140,16 @@ final class HomeCell: UITableViewCell {
         titleLabel.anchor(top: bottomView.topAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
         
         bottomView.addSubview(buttonMore)
-        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 26,width: 40)
+        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
         
         contentView.addSubview(buttonLike)
-        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 2,width: 25,height: 25)
+        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 0,width: 24,height: 24)
         
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         
         bottomView.addSubview(labelCategory)
-        labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,paddingTop: 8, paddingLeft: 8)
+        labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
         
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,

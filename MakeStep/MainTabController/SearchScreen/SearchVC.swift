@@ -11,12 +11,13 @@ import CoreData
 import Combine
 
 
-class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDelegate {
+class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelegate {
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     private var takeUser: AnyCancellable?
     private var takeCategory: AnyCancellable?
+    let actionSheetTransitionManager = ActionSheetTransitionManager()
     
     var listBroadcast: [BroadcastResponce] = []
     var filtredBroadcast: [BroadcastResponce] = []
@@ -32,6 +33,9 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
            navigationItem.searchController = searchController
            return searchController.searchBar.text?.isEmpty ?? true
        }
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     var isFiltering: Bool {
       return searchController.isActive && !isSearchBarEmpty
@@ -56,7 +60,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
    
     
     let searchView = SearchVCCode()
-  //  let viewModel = ViewModel()
+ 
     
     
     private let refreshControl = UIRefreshControl()
@@ -66,13 +70,27 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.tabBarController?.tabBar.isHidden = false
-      //  searchView.
+       self.navigationController?.navigationBar.isTranslucent = true
+        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    //    setupSearchBar()
+      //  self.searchController.searchBar.isTranslucent = false
+       
 
     }
     override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
+        super.viewDidAppear(true)
+        print("searchBAr === \(self.navigationItem.searchController?.searchBar.frame)")
+        //
+//        view.addSubview(searchView.segmentControll)
         searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
+
+   //     searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+//               view.addSubview(searchView.tableView)
+//               searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+
 
     }
 
@@ -89,7 +107,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         binding(name: "a")
         getUsers(name: "a")
         getCategory(name: "a")
-        searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches"," Categories"])
+        searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
         searchView.segmentControll.delegate = self
 
     }
@@ -134,6 +152,11 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
+        self.searchController.searchBar.isTranslucent = false
+      //  self.searchController.searchBar.backgroundImage = UIImage()
+      //  self.searchController.searchBar.barTintColor = .white
+       // self.searchController.searchBar.tintColor = .white
+       // UISearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
     }
     private func setupMainView() {        
         searchView.tableView.refreshControl = refreshControl
@@ -190,6 +213,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         searchView.tableView.register(SearchVCCell.self, forCellReuseIdentifier: SearchVCCell.reuseID)
         searchView.tableView.register(SearchVCUserCell.self, forCellReuseIdentifier: SearchVCUserCell.reuseID)
         searchView.tableView.register(SearchVCCategory.self, forCellReuseIdentifier: SearchVCCategory.reuseID)
+        searchView.tableView.separatorStyle = .none
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -197,7 +221,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
         let titleLabel = UILabel()
                    titleLabel.text = "Search"
                    titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
                    let stackView = UIStackView(arrangedSubviews: [titleLabel])
@@ -230,12 +253,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,CustomSegmentedControlDele
    //MARK: - UISearchBarDelegate
 
 extension SearchVC: UISearchResultsUpdating {
-//    func updateSearchResults(for searchController: UISearchController) {
-//        let searchBar = searchController.searchBar
-//        print(searchBar.text!)
-//    }
-    
-    
+
     func updateSearchResults(for searchController: UISearchController) {
         if index == 0 {
             let searchBar = searchController.searchBar
@@ -245,19 +263,21 @@ extension SearchVC: UISearchResultsUpdating {
         if index == 1 {
             let searchBar = searchController.searchBar
             getUsers(name: searchBar.text!)
-           // filteringUser(searchBar.text!)
            
         }
         if index == 2 {
             let searchBar = searchController.searchBar
             getCategory(name: searchBar.text!)
-           // filteringCategory(searchBar.text!)
            
         }
-//        let searchBar = searchController.searchBar
-//        binding(name: searchBar.text!)
-       // filterContentForSearchText(searchBar.text!)
 
+    }
+    func connectUser (broadcastId:String?,channellId: String?) {
+        
+        guard let broadID = broadcastId,let id = channellId else { return }
+     
+        SocketWatcher.sharedInstance.getTokenChat()
+        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
     }
 }
 

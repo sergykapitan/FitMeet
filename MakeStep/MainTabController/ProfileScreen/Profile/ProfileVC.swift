@@ -101,8 +101,8 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(editProfile, animated: true)
     }
     @objc func actionChanell() {
-        //let channelUs = ChanellVC()
-        let channelUs = PresentVC()
+        let channelUs = ChanellVC()
+      //  let channelUs = PresentVC()
         channelUs.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(channelUs, animated: true)
     }

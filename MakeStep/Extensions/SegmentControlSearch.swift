@@ -1,27 +1,30 @@
 //
-//  SegmentCustomFull.swift
-//  FitMeet
+//  SegmentControlSearch.swift
+//  MakeStep
 //
-//  Created by novotorica on 10.06.2021.
+//  Created by novotorica on 17.09.2021.
 //
+
 
 import Foundation
 import UIKit
 
-protocol CustomSegmentedFullControlDelegate:class {
+protocol SegmentControlSearchDelegate:class {
     func change(to index:Int)
 }
 
-class SegmentCustomFull: UIView {
+class SegmentControlSearch: UIView {
+    
     private var buttonTitles:[String]!
     private var buttons: [UIButton]!
     private var selectorView: UIView!
+    private var selector: CGFloat?
     
-    var textColor:UIColor = .black
+    var textColor:UIColor = UIColor.init(hexString: "#7C7C7C")
     var selectorViewColor: UIColor = UIColor.init(hexString: "#3B58A4")
     var selectorTextColor: UIColor = UIColor.init(hexString: "#3B58A4")
     
-    weak var delegate:CustomSegmentedFullControlDelegate?
+    weak var delegate: SegmentControlSearchDelegate?
     
     public private(set) var selectedIndex : Int = 0
     
@@ -48,7 +51,7 @@ class SegmentCustomFull: UIView {
         button.setTitleColor(selectorTextColor, for: .normal)
         let selectorPosition = frame.width/CGFloat(buttonTitles.count) * CGFloat(index)
         UIView.animate(withDuration: 0.2) {
-            self.selectorView.frame.origin.x = selectorPosition
+            self.selectorView.frame.origin.x = selectorPosition// + 60//+ /5.5
         }
     }
     
@@ -60,7 +63,18 @@ class SegmentCustomFull: UIView {
                 selectedIndex = buttonIndex
                 delegate?.change(to: selectedIndex)
                 UIView.animate(withDuration: 0.3) {
-                    self.selectorView.frame.origin.x = selectorPosition
+                    print("SELFHHHHHHH> ================== \(selectorPosition)")
+                    print("BTNFrame = \(btn.frame.midX)")
+                    self.selectorView.frame.origin.x = btn.frame.minX
+//                    if buttonIndex == 2 {
+//                        self.selectorView.frame.origin.x = btn.frame.midX  + 12
+//                    } else if buttonIndex == 1 {
+//                        self.selectorView.frame.origin.x = btn.frame.midX  + 4
+//                    } else {
+//                        self.selectorView.frame.origin.x = btn.frame.midX + 2
+//                    }
+                   // selectorPosition //+ 60 //+ /5.5
+
                 }
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }
@@ -69,7 +83,7 @@ class SegmentCustomFull: UIView {
 }
 
 //Configuration View
-extension SegmentCustomFull {
+extension SegmentControlSearch {
     private func updateView() {
         createButton()
         configSelectorView()
@@ -80,7 +94,8 @@ extension SegmentCustomFull {
         let stack = UIStackView(arrangedSubviews: buttons)
         stack.axis = .horizontal
         stack.alignment = .fill
-        stack.distribution = .fillEqually
+        stack.spacing = 15
+        stack.distribution = .fillProportionally// .fillEqually
         addSubview(stack)
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
@@ -90,8 +105,9 @@ extension SegmentCustomFull {
     }
     
     private func configSelectorView() {
-        let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)
-        selectorView = UIView(frame: CGRect(x: 0, y: self.frame.height , width: selectorWidth , height: 0))
+        let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)/3
+        print("SelectorFrame === \(selectorWidth)")
+        selectorView = UIView(frame: CGRect(x: 0, y: self.frame.height , width: selectorWidth, height: 2))
         selectorView.backgroundColor = selectorViewColor
         addSubview(selectorView)
     }

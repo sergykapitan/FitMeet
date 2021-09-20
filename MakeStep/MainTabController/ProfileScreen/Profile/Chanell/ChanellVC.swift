@@ -7,9 +7,27 @@
 
 import Foundation
 import UIKit
+import UIKit.UIGestureRecognizerSubclass
 import Combine
 import ContextMenuSwift
 import TimelineTableViewCell
+
+
+// MARK: - State
+
+private enum State {
+    case closed
+    case open
+}
+
+extension State {
+    var opposite: State {
+        switch self {
+        case .open: return .closed
+        case .closed: return .open
+        }
+    }
+}
 
 class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
     
@@ -39,6 +57,29 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
    
     }
+    private let popupOffset: CGFloat = -400
+    
+    private var bottomConstraint = NSLayoutConstraint()
+    
+    private var topConstraint = NSLayoutConstraint()
+    private var leftConstant = NSLayoutConstraint()
+    private var botConstant = NSLayoutConstraint()
+    private var centerConstant = NSLayoutConstraint()
+    
+    private var heightConstant = NSLayoutConstraint()
+    private var widthConstant = NSLayoutConstraint()
+    
+    private var topWelcomLabelConstant = NSLayoutConstraint()
+    private var leftWelcomeLabelConstant = NSLayoutConstraint()
+    private var centerWelcomeLabelConstant = NSLayoutConstraint()
+    
+    private var topOverlayConstant = NSLayoutConstraint()
+    private var rightLandscape = NSLayoutConstraint()
+    
+    private var topbuttonSubscribeConstant = NSLayoutConstraint()
+    private var leftbuttonSubscribeConstant = NSLayoutConstraint()
+    private var rightbuttonSubscribeConstant = NSLayoutConstraint()
+    private var centerbuttonSubscribeConstant = NSLayoutConstraint()
     
     
     let profileView = ChanellCode()
@@ -57,27 +98,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-    
-    // TimelinePoint, Timeline back color, title, description, lineInfo, thumbnails, illustration
-    let data:[Int: [(TimelinePoint, UIColor, String, String, String?, [String]?, String?)]] = [0:[
-            (TimelinePoint(), UIColor.black, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-            (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-            (TimelinePoint(color: UIColor.green, filled: true), UIColor.green, "16:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "150 mins", ["Apple"], "Sun"),
-            (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Moon")
-        ], 1:[
-            (TimelinePoint(), UIColor.lightGray, "08:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "60 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "09:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "30 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "10:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "90 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "11:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "60 mins", nil, "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.red, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "30 mins", ["Apple", "Apple", "Apple", "Apple"], "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.red, "13:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "120 mins", ["Apple", "Apple", "Apple", "Apple", "Apple"], "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.lightGray, "15:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "150 mins", ["Apple", "Apple"], "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "17:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "60 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "18:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "60 mins", nil, "Moon"),
-            (TimelinePoint(), UIColor.lightGray, "19:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "30 mins", nil, "Moon"),
-            (TimelinePoint(), backColor: UIColor.clear, "20:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", nil, nil, "Moon")
-        ]]
-
     override func loadView() {
         super.loadView()
         view = profileView
@@ -88,13 +108,13 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         makeNavItem()
         profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         profileView.segmentControll.delegate = self
-        
-        
         profileView.tableView.isHidden = true
-        
-        profileView.tableView.dataSource = self
-        profileView.tableView.delegate = self
-        
+        actionOnline()
+        layout()
+        profileView.viewTop.addGestureRecognizer(panRecognizer)
+       // profileView.tableView.dataSource = self
+       // profileView.tableView.delegate = self
+        bindingChanell(status: "ONLINE")
         let bundle = Bundle(for: TimelineTableViewCell.self)
         let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
         let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell",
@@ -103,15 +123,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        bindingUser()
-        bindingChanell(status: "ONLINE")
-        setUserProfile()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
-        
-        
         self.navigationController?.navigationBar.isHidden = false
-        //profileView.viewTop.backgroundColor = .white
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -121,24 +134,154 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         profileView.imageLogoProfile.makeRounded()
-        
+        setUserProfile()
+    }
+    private func layout() {
+        profileView.viewTop.translatesAutoresizingMaskIntoConstraints = false
+        profileView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
+        profileView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
+        profileView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
+    // homeView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
+   //  homeView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
+     
+     view.addSubview(profileView.viewTop)
+     view.addSubview(profileView.imageLogoProfile)
+     view.addSubview(profileView.welcomeLabel)
+     view.addSubview(profileView.labelFollow)
+
+        profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+     bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: -400)
+     bottomConstraint.isActive = true
+        profileView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
+
+        profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
+        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
+     
+
+     topWelcomLabelConstant = profileView.welcomeLabel.topAnchor.constraint(equalTo: profileView.imageLogoProfile.topAnchor, constant: 0)
+     topWelcomLabelConstant.isActive = true
+     
+     leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
+     leftWelcomeLabelConstant.isActive = true
+     
+     centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
+     centerWelcomeLabelConstant.isActive = false
+     
+
+     leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
+     leftConstant.isActive = true
+     
+     
+     botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
+     botConstant.isActive = true
+     
+     topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
+     topConstraint.isActive = false
+     
+     centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
+     centerConstant.isActive = false
+     
+     heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
+     heightConstant.isActive = true
+     widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
+     widthConstant.isActive = true
+
+    
+    }
+    
+    // MARK: - Animation
+    
+    /// The current state of the animation. This variable is changed only when an animation completes.
+    private var currentState: State = .closed
+    
+    /// All of the currently running animators.
+    private var runningAnimators = [UIViewPropertyAnimator]()
+    
+    /// The progress of each animator. This array is parallel to the `runningAnimators` array.
+    private var animationProgress = [CGFloat]()
+    
+    private lazy var panRecognizer: InstantPanGestureRecognizer = {
+        let recognizer = InstantPanGestureRecognizer()
+        recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
+        return recognizer
+    }()
+    
+    @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            
+            // start the animations
+            animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
+            
+            // pause all animations, since the next event may be a pan changed
+            runningAnimators.forEach { $0.pauseAnimation() }
+            
+            // keep track of each animator's progress
+            animationProgress = runningAnimators.map { $0.fractionComplete }
+            
+        case .changed:
+            
+            // variable setup
+            let translation = recognizer.translation(in: profileView.viewTop)
+            var fraction = -translation.y / popupOffset
+            
+            // adjust the fraction for the current state and reversed state
+            if currentState == .open { fraction *= -1 }
+            if runningAnimators[0].isReversed { fraction *= -1 }
+            
+            // apply the new fraction
+            for (index, animator) in runningAnimators.enumerated() {
+                animator.fractionComplete = fraction + animationProgress[index]
+            }
+            
+        case .ended:
+            
+            // variable setup
+            let yVelocity = recognizer.velocity(in: profileView.viewTop).y
+            let shouldClose = yVelocity < 0
+            
+            // if there is no motion, continue all animations and exit early
+            if yVelocity == 0 {
+                runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+                break
+            }
+            
+            // reverse the animations based on their current state and pan motion
+            switch currentState {
+            case .open:
+                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+            case .closed:
+                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+            }
+            
+            // continue all animations
+            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+            
+        default:
+            ()
+        }
     }
    
  
     func setUserProfile() {
+        bindingUser()
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
      
         let name: String?
         if user?.fullName != nil {
             name = user?.fullName
         } else { name = userName }
-        guard let n = name else { return }
+        guard let n = name ,let imageUser = user?.avatarPath else { return }
         profileView.welcomeLabel.text =  n
         profileView.labelFollow.text = "Followers:" + "\(user?.channelFollowCount)"
-        profileView.setImage(image: user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png", imagepromo: brodcast?.previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        profileView.setImage(image: imageUser,
+        imagepromo: brodcast?.previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         profileView.labelStreamDescription.text = brodcast?.description
       //  profileView.setLabel(description: brodcast?.description, category: brodcast?.createdAt)
-       // profileView.setLabel(description: brodcast?.deleted, category: brodcast?.categories)
+      //  profileView.setLabel(description: brodcast?.deleted, category: brodcast?.categories)
         
     }
     func actionButtonContinue() {
@@ -177,7 +320,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
-                    print(self.user)
                 }
             })
         }
@@ -207,9 +349,10 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
                     
                     let backButton = UIButton()
-                    backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                  //  backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-
+                    backButton.anchor(width:40,height: 40)
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
@@ -239,77 +382,163 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.popViewController(animated: true)
     }
     
+    //  MARK:  - Animation Top View
+    private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
+        
+        // ensure that the animators array is empty (which implies new animations need to be created)
+        guard runningAnimators.isEmpty else { return }
+        
+        // an animator for the transition
+        let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
+            switch state {
+            case .open:
+                self.bottomConstraint.constant = -100
+              
+                self.profileView.labelFollow.transform = CGAffineTransform(scaleX: 1.6, y: 1.6).concatenating(CGAffineTransform(translationX: 0, y: 15))
+                self.profileView.labelFollow.transform = .identity
+            case .closed:
+                self.bottomConstraint.constant = self.popupOffset
+               
+                self.profileView.labelFollow.transform = .identity
+                self.profileView.labelFollow.transform = CGAffineTransform(scaleX: 0.65, y: 0.65).concatenating(CGAffineTransform(translationX: 0, y: -15))
+            }
+            self.view.layoutIfNeeded()
+        })
+        
+        // the transition completion block
+        transitionAnimator.addCompletion { position in
+            
+            // update the state
+            switch position {
+            case .start:
+                self.currentState = state.opposite
+            case .end:
+                self.currentState = state
+            case .current:
+                ()
+            }
+            
+            // manually reset the constraint positions
+            switch self.currentState {
+            case .open:
+                self.bottomConstraint.constant = -100
+            case .closed:
+                self.bottomConstraint.constant = self.popupOffset
+            }
+            
+            // remove all running animators
+            self.runningAnimators.removeAll()
+            
+        }
+        
+        // an animator for the title that is transitioning into view
+        let inTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeIn, animations: {
+            switch state {
+            case .open:
+                self.profileView.labelFollow.alpha = 1
+            case .closed:
+                self.profileView.labelFollow.alpha = 1
+            }
+        })
+        inTitleAnimator.scrubsLinearly = false
+        
+        // an animator for the title that is transitioning out of view
+        let outTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut, animations: {
+            switch state {
+            case .open:
+                self.profileView.labelFollow.alpha = 0
+            case .closed:
+                self.profileView.labelFollow.alpha = 0
+            }
+        })
+        outTitleAnimator.scrubsLinearly = false
+        
+        // start all animators
+        transitionAnimator.startAnimation()
+        inTitleAnimator.startAnimation()
+        outTitleAnimator.startAnimation()
+        
+        // keep track of all running animators
+        runningAnimators.append(transitionAnimator)
+        runningAnimators.append(inTitleAnimator)
+        runningAnimators.append(outTitleAnimator)
+        
+    }
+    
     
     
   
 
 }
 
-extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return data.count
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        guard let sectionData = data[section] else {
-            return 0
-        }
-        return sectionData.count
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Day " + String(describing: section + 1)
-    }
- 
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
+// MARK: - TableView for Timetable
 
-        // Configure the cell...
-        guard let sectionData = data[indexPath.section] else {
-            return cell
-        }
-        
-        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
-        var timelineFrontColor = UIColor.clear
-        if (indexPath.row > 0) {
-            timelineFrontColor = sectionData[indexPath.row - 1].1
-        }
-        cell.timelinePoint = timelinePoint
-        cell.timeline.frontColor = timelineFrontColor
-        cell.timeline.backColor = timelineBackColor
-        cell.titleLabel.text = title
-        cell.descriptionLabel.text = description
-        cell.lineInfoLabel.text = lineInfo
-        
-        if let thumbnails = thumbnails {
-            cell.viewsInStackView = thumbnails.map { thumbnail in
-                return UIImageView(image: UIImage(named: thumbnail))
-            }
-        }
-        else {
-            cell.viewsInStackView = []
-        }
-
-        if let illustration = illustration {
-            cell.illustrationImageView.image = UIImage(named: illustration)
-        }
-        else {
-            cell.illustrationImageView.image = nil
-        }
-   
-        return cell
-    }
+//extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let sectionData = data[indexPath.section] else {
-            return
-        }
-        
-        print(sectionData[indexPath.row])
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return data.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        // #warning Incomplete implementation, return the number of rows
+//        guard let sectionData = data[section] else {
+//            return 0
+//        }
+//        return sectionData.count
+//    }
+//
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        return "Day " + String(describing: section + 1)
+//    }
+//
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
+//
+//        // Configure the cell...
+//        guard let sectionData = data[indexPath.section] else {
+//            return cell
+//        }
+//
+//        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
+//        var timelineFrontColor = UIColor.clear
+//        if (indexPath.row > 0) {
+//            timelineFrontColor = sectionData[indexPath.row - 1].1
+//        }
+//        cell.timelinePoint = timelinePoint
+//        cell.timeline.frontColor = timelineFrontColor
+//        cell.timeline.backColor = timelineBackColor
+//        cell.titleLabel.text = title
+//        cell.descriptionLabel.text = description
+//        cell.lineInfoLabel.text = lineInfo
+//
+//        if let thumbnails = thumbnails {
+//            cell.viewsInStackView = thumbnails.map { thumbnail in
+//                return UIImageView(image: UIImage(named: thumbnail))
+//            }
+//        }
+//        else {
+//            cell.viewsInStackView = []
+//        }
+//
+//        if let illustration = illustration {
+//            cell.illustrationImageView.image = UIImage(named: illustration)
+//        }
+//        else {
+//            cell.illustrationImageView.image = nil
+//        }
+//
+//        return cell
+//    }
+//
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        guard let sectionData = data[indexPath.section] else {
+//            return
+//        }
+//
+//        print(sectionData[indexPath.row])
+//    }
+//
 
+//}
 
-}

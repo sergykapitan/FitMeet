@@ -34,13 +34,34 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     
   
     let categoryView = CategoryBroadcastCode()
-    @Inject var fitMeetStream: FitMeetStream
-    private var takeBroadcast: AnyCancellable?
-    var listBroadcast: [BroadcastResponce] = []
+    let actionSheetTransitionManager = ActionSheetTransitionManager()
+   
     var sortListCategory: [BroadcastResponce] = []
     var categoryid: Int?
     var categoryTitle: String?
-   // let viewModel = ViewModel()
+    var arrayIdUser = [Int]()
+    var ids = [Int]()
+    var watch = 0
+    
+    @Inject var fitMeetStream: FitMeetStream
+    private var takeBroadcast: AnyCancellable?
+    
+    @Inject var fitMeetApi: FitMeetApi
+    private var takeUser: AnyCancellable?
+    private var followBroad: AnyCancellable?
+    private var watcherMap: AnyCancellable?
+    
+    
+    
+    var listBroadcast: [BroadcastResponce] = []
+    private let refreshControl = UIRefreshControl()
+   // var  playerContainerView: PlayerContainerView?
+    var user: User?
+    var ar =  [User]()
+    
+    var index = 0
+    var url:String?
+    var usersd = [Int: User]()
 
     override  var shouldAutorotate: Bool {
         return false
@@ -94,9 +115,11 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                     let backButton = UIButton()
-                    backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+                    backButton.anchor(width:30,height: 30)
 
+        
                    let stackView = UIStackView(arrangedSubviews: [backButton ,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
@@ -169,9 +192,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         sortListCategory = listBroadcast.filter{ $0.followersCount ?? 0 > 1}
         self.categoryView.tableView.reloadData()
     }
-    @objc func editButtonTapped() -> Void {
-            print("Hello Edit Button")
-        }
+
     
     func binding(categoryId: Int) {
         takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId)
@@ -184,11 +205,68 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
                 }
         })
     }
+    func bindingUser(id: Int)  {
+        takeUser = fitMeetApi.getUserId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.username != nil  {
+                    self.user = response
+                    self.ar.append(self.user!)
+                }
+          })
+    }
+    func bindingUserMap(ids: [Int])  {
+        takeUser = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.usersd = response.data
+                   // self.homeView.tableView.reloadData()
+                }
+          })
+    }
+    func getMapWather(ids: [Int])   {
+        
+        watcherMap = fitMeetApi.getWatcherMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    print("ffffffffffffff ====\(ids)")
+                    print("WATCHER======\(response.data)")
+                  //  let watcher  = Int(response.data.values.first)
+                  //  guard let watch = response.data["\(ids.first!)"] else { return watch}
+                    self.watch = response.data["\(ids.first!)"]!
+             
+                }
+          })
+    }
+    func followBroadcast(id: Int) {
+        followBroad = fitMeetStream.followBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil {
+                }
+          })
+    }
+    func unFollowBroadcast(id: Int) {
+        followBroad = fitMeetStream.unFollowBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil {
+                }
+         })
+    }
 
     private func makeTableView() {
         categoryView.tableView.dataSource = self
         categoryView.tableView.delegate = self
         categoryView.tableView.register(CategoryBroadcastCell.self, forCellReuseIdentifier: CategoryBroadcastCell.reuseID)
+        categoryView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+    }
+    func connectUser (broadcastId:String?,channellId: String?) {
+        guard let broadID = broadcastId,let id = channellId else { return }     
+        SocketWatcher.sharedInstance.getTokenChat()
+        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
     }
 
 }

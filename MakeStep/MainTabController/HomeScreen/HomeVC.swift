@@ -41,6 +41,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     
     var ids = [Int]()
+    var complishionHandler: ((Bool) -> Void)?
+    var watch = 0
 
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
@@ -180,18 +182,12 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
         })
     }
-    var complishionHandler: ((Bool) -> Void)?
-    var watch = 0
+
     func getMapWather(ids: [Int])   {
-        
         watcherMap = fitMeetApi.getWatcherMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    print("ffffffffffffff ====\(ids)")
-                    print("WATCHER======\(response.data)")
-                  //  let watcher  = Int(response.data.values.first)
-                  //  guard let watch = response.data["\(ids.first!)"] else { return watch}
                     self.watch = response.data["\(ids.first!)"]!
              
                 }
@@ -262,6 +258,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        homeView.tableView.separatorStyle = .none
     }
     func connectUser (broadcastId:String?,channellId: String?) {
         

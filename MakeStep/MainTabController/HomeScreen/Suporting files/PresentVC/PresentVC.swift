@@ -29,6 +29,7 @@ extension State {
 class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate{
 
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    private let popupOffset: CGFloat = -350
     private var bottomConstraint = NSLayoutConstraint()
     
     private var topConstraint = NSLayoutConstraint()
@@ -42,6 +43,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private var topWelcomLabelConstant = NSLayoutConstraint()
     private var leftWelcomeLabelConstant = NSLayoutConstraint()
     private var centerWelcomeLabelConstant = NSLayoutConstraint()
+    private var rightWelcomLabel = NSLayoutConstraint()
     
     private var topOverlayConstant = NSLayoutConstraint()
     private var rightLandscape = NSLayoutConstraint()
@@ -50,6 +52,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private var leftbuttonSubscribeConstant = NSLayoutConstraint()
     private var rightbuttonSubscribeConstant = NSLayoutConstraint()
     private var centerbuttonSubscribeConstant = NSLayoutConstraint()
+    
+    private var bottomButtonChatConstant = NSLayoutConstraint()
+    
+ 
     
     
        private func layout() {
@@ -78,33 +84,26 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         view.addSubview(homeView.labelINTFolowers)
         view.addSubview(homeView.labelFolowers)
         view.addSubview(homeView.labelDescription)
+
         
-        self.homeView.buttonSubscribe.isHidden = false
-        self.homeView.buttonFollow.isHidden = true
-        self.homeView.buttonInstagram.isHidden = true
-        self.homeView.buttonTwiter.isHidden = true
-        self.homeView.buttonfaceBook.isHidden = true
-        self.homeView.labelINTVideo.isHidden = true
-        self.homeView.labelVideo.isHidden = true
-        self.homeView.labelINTFollows.isHidden = true
-        self.homeView.labelFollows.isHidden = true
-        self.homeView.labelINTFolowers.isHidden = true
-        self.homeView.labelFolowers.isHidden = true
-        self.homeView.labelDescription.isHidden = true
         
 
         homeView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         homeView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomConstraint = homeView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: -400)
+        bottomConstraint = homeView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
         bottomConstraint.isActive = true
-        homeView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        homeView.viewTop.heightAnchor.constraint(equalToConstant: 450).isActive = true
 
         homeView.labelFollow.bottomAnchor.constraint(equalTo: homeView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-        homeView.labelFollow.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
+        homeView.labelFollow.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
         
 
-        topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
+       // topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
+        topWelcomLabelConstant = homeView.welcomeLabel.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor, constant: 0)
         topWelcomLabelConstant.isActive = true
+        
+        rightWelcomLabel = homeView.welcomeLabel.trailingAnchor.constraint(equalTo: homeView.buttonSubscribe.leadingAnchor, constant: -5)
+        rightWelcomLabel.isActive = true
         
         leftWelcomeLabelConstant = homeView.welcomeLabel.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15)
         leftWelcomeLabelConstant.isActive = true
@@ -130,7 +129,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         heightConstant.isActive = true
         widthConstant = homeView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
         widthConstant.isActive = true
-        
+
         
         topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
         topbuttonSubscribeConstant.isActive = false
@@ -162,30 +161,42 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonfaceBook.centerY(inView: homeView.buttonInstagram)
         
         
+ 
+       // homeView.labelVideo.alpha = 0
+        self.homeView.buttonFollow.alpha = 0
+        self.homeView.buttonInstagram.alpha = 0
+        self.homeView.buttonTwiter.alpha = 0
+        self.homeView.buttonfaceBook.alpha = 0
+        self.homeView.labelINTVideo.alpha = 0
+        self.homeView.labelVideo.alpha = 0
+        self.homeView.labelINTFollows.alpha = 0
+        self.homeView.labelFollows.alpha = 0
+        self.homeView.labelINTFolowers.alpha = 0
+        self.homeView.labelFolowers.alpha = 0
+        self.homeView.labelDescription.alpha = 0
+       
+        
         homeView.labelINTVideo.anchor(top: homeView.buttonSubscribe.bottomAnchor, left: homeView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
-        
-        homeView.labelVideo.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+         
+         homeView.labelVideo.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
         homeView.labelVideo.centerX(inView: homeView.labelINTVideo)
-        
         
         
         homeView.labelINTFollows.anchor(top: homeView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
         homeView.labelINTFollows.centerX(inView: homeView.buttonFollow)
         
         
-        homeView.labelFollows.anchor(top: homeView.labelINTFollows.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+        homeView.labelFollows.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
         homeView.labelFollows.centerX(inView: homeView.viewTop)
         
-        
-        
-        
+  
         homeView.labelINTFolowers.anchor(top: homeView.buttonSubscribe.bottomAnchor, right: homeView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
         
         homeView.labelFolowers.anchor(top: homeView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
         homeView.labelFolowers.centerX(inView: homeView.labelINTFolowers)
         
         
-        homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.cardView.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
+        homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
         
         homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
         homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
@@ -201,73 +212,69 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     /// The progress of each animator. This array is parallel to the `runningAnimators` array.
     private var animationProgress = [CGFloat]()
     
-    private lazy var tapRecognizer: UITapGestureRecognizer = {
-           let recognizer = UITapGestureRecognizer()
-           recognizer.addTarget(self, action: #selector(popupViewTapped(recognizer:)))
-           return recognizer
-       }()
-    
+
     private lazy var panRecognizer: InstantPanGestureRecognizer = {
         let recognizer = InstantPanGestureRecognizer()
         recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
         return recognizer
     }()
     @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            
-            // start the animations
-            animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
-            
-            // pause all animations, since the next event may be a pan changed
-            runningAnimators.forEach { $0.pauseAnimation() }
-            
-            // keep track of each animator's progress
-            animationProgress = runningAnimators.map { $0.fractionComplete }
-            
-        case .changed:
-            
-            // variable setup
-            let translation = recognizer.translation(in: homeView.viewTop)
-            var fraction = -translation.y / 400
-            
-            // adjust the fraction for the current state and reversed state
-            if currentState == .open { fraction *= -1 }
-            if runningAnimators[0].isReversed { fraction *= -1 }
-            
-            // apply the new fraction
-            for (index, animator) in runningAnimators.enumerated() {
-                animator.fractionComplete = fraction + animationProgress[index]
-            }
-            
-        case .ended:
-            
-            // variable setup
-            let yVelocity = recognizer.velocity(in: homeView.viewTop).y
-            let shouldClose = yVelocity > 0
-            
-            // if there is no motion, continue all animations and exit early
-            if yVelocity == 0 {
+        
+            switch recognizer.state {
+            case .began:
+                
+                // start the animations
+                animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
+                
+                // pause all animations, since the next event may be a pan changed
+                runningAnimators.forEach { $0.pauseAnimation() }
+                
+                // keep track of each animator's progress
+                animationProgress = runningAnimators.map { $0.fractionComplete }
+                
+            case .changed:
+                
+                // variable setup
+                let translation = recognizer.translation(in: homeView.viewTop)
+                var fraction = -translation.y / popupOffset
+                
+                // adjust the fraction for the current state and reversed state
+                if currentState == .open { fraction *= -1 }
+                if runningAnimators[0].isReversed { fraction *= -1 }
+                
+                // apply the new fraction
+                for (index, animator) in runningAnimators.enumerated() {
+                    animator.fractionComplete = fraction + animationProgress[index]
+                }
+                
+            case .ended:
+                
+                // variable setup
+                let yVelocity = recognizer.velocity(in: homeView.viewTop).y
+                let shouldClose = yVelocity < 0
+                
+                // if there is no motion, continue all animations and exit early
+                if yVelocity == 0 {
+                    runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+                    break
+                }
+                
+                // reverse the animations based on their current state and pan motion
+                switch currentState {
+                case .open:
+                    if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                    if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                case .closed:
+                    if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                    if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                }
+                
+                // continue all animations
                 runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-                break
+                
+            default:
+                ()
             }
-            
-            // reverse the animations based on their current state and pan motion
-            switch currentState {
-            case .open:
-                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            case .closed:
-                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            }
-            
-            // continue all animations
-            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-            
-        default:
-            ()
-        }
     }
     /// Animates the transition, if the animation is not already running.
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
@@ -279,78 +286,54 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
-                print("OPEN First")
-                self.bottomConstraint.constant = -400
-                self.heightConstant.constant = 70
-                self.widthConstant.constant = 70
-                self.topConstraint.isActive = false
-                self.centerConstant.isActive = false
-                self.leftConstant.isActive = true
-                self.botConstant.isActive = true
-                self.topWelcomLabelConstant.isActive = true
-                self.leftWelcomeLabelConstant.isActive = true
-                self.topWelcomLabelConstant.constant = 0
-                self.centerWelcomeLabelConstant.isActive = false
-                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                self.homeView.labelFollow.isHidden = false
+                print("OPEN FIRST")
                 
                 self.rightbuttonSubscribeConstant.isActive = false
                 self.centerbuttonSubscribeConstant.isActive = false
                 self.topbuttonSubscribeConstant.isActive = true
                 self.leftbuttonSubscribeConstant.isActive = true
-                
-             self.homeView.imageLogoProfile.makeRounded()
-             
-            // self.homeView.buttonSubscribe.isHidden = true
-             self.homeView.buttonFollow.isHidden = true
-             self.homeView.buttonInstagram.isHidden = true
-             self.homeView.buttonTwiter.isHidden = true
-             self.homeView.buttonfaceBook.isHidden = true
-             self.homeView.labelINTVideo.isHidden = true
-             self.homeView.labelVideo.isHidden = true
-             self.homeView.labelINTFollows.isHidden = true
-             self.homeView.labelFollows.isHidden = true
-             self.homeView.labelINTFolowers.isHidden = true
-             self.homeView.labelFolowers.isHidden = true
-             self.homeView.labelDescription.isHidden = true
-             
+
+                   self.heightConstant.constant = 90
+                   self.widthConstant.constant = 90
+                   self.bottomConstraint.constant = -100
+                   self.centerConstant.isActive = true
+                   self.topConstraint.isActive = true
+                   self.leftConstant.isActive = false
+                   self.botConstant.isActive = false
+                   self.leftWelcomeLabelConstant.isActive = false
+                   self.topWelcomLabelConstant.constant = 80
+                   self.rightWelcomLabel.isActive = false
+                   self.centerWelcomeLabelConstant.isActive = true
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                   self.homeView.labelFollow.isHidden = true
+                self.homeView.imageLogoProfile.makeRounded()
+
             case .closed:
-                print("close First")
-                self.heightConstant.constant = 90
-                self.widthConstant.constant = 90
-                self.bottomConstraint.constant = -100
-                self.centerConstant.isActive = true
-                self.topConstraint.isActive = true
-                self.leftConstant.isActive = false
-                self.botConstant.isActive = false
-                self.leftWelcomeLabelConstant.isActive = false
-                self.topWelcomLabelConstant.constant = 105
-                self.centerWelcomeLabelConstant.isActive = true
-                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                self.homeView.labelFollow.isHidden = true
+                print("CLOSE FIRST")
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
                 
-                self.rightbuttonSubscribeConstant.isActive = false
-                self.centerbuttonSubscribeConstant.isActive = false
-                self.topbuttonSubscribeConstant.isActive = true
-                self.leftbuttonSubscribeConstant.isActive = true
+                self.bottomConstraint.constant = self.popupOffset
+                   self.heightConstant.constant = 70
+                   self.widthConstant.constant = 70
+                   self.topConstraint.isActive = false
+                   self.centerConstant.isActive = false
+                   self.leftConstant.isActive = true
+                   self.botConstant.isActive = true
+                   self.rightWelcomLabel.isActive = true
+                   self.topWelcomLabelConstant.isActive = true
+                   self.leftWelcomeLabelConstant.isActive = true
+                   self.topWelcomLabelConstant.constant = 0
+                   self.centerWelcomeLabelConstant.isActive = false
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                   self.homeView.labelFollow.isHidden = false
                 
                 
                 
-                
-             self.homeView.imageLogoProfile.makeRounded()
-             //self.homeView.buttonSubscribe.isHidden = false
-             self.homeView.buttonFollow.isHidden = false
-             self.homeView.buttonInstagram.isHidden = false
-             self.homeView.buttonTwiter.isHidden = false
-             self.homeView.buttonfaceBook.isHidden = false
-             self.homeView.labelINTVideo.isHidden = false
-             self.homeView.labelVideo.isHidden = false
-             self.homeView.labelINTFollows.isHidden = false
-             self.homeView.labelFollows.isHidden = false
-             self.homeView.labelINTFolowers.isHidden = false
-             self.homeView.labelFolowers.isHidden = false
-             self.homeView.labelDescription.isHidden = false
-             
+                self.homeView.imageLogoProfile.makeRounded()
+     
             }
             self.view.layoutIfNeeded()
         })
@@ -371,73 +354,55 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             // manually reset the constraint positions
             switch self.currentState {
             case .open:
-                self.bottomConstraint.constant = -400
-                self.heightConstant.constant = 70
-                self.widthConstant.constant = 70
-                self.topConstraint.isActive = false
-                self.centerConstant.isActive = false
-                self.leftConstant.isActive = true
-                self.botConstant.isActive = true
-                self.topWelcomLabelConstant.isActive = true
-                self.leftWelcomeLabelConstant.isActive = true
-                self.topWelcomLabelConstant.constant = 0
-                self.centerWelcomeLabelConstant.isActive = false
-                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                self.homeView.labelFollow.isHidden = false
+                print("OPEN SECOND")
                 
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+
+                   self.heightConstant.constant = 90
+                   self.widthConstant.constant = 90
+                   self.bottomConstraint.constant = -100
+                   self.centerConstant.isActive = true
+                   self.topConstraint.isActive = true
+                   self.leftConstant.isActive = false
+                   self.botConstant.isActive = false
+                   self.leftWelcomeLabelConstant.isActive = false
+                   self.rightWelcomLabel.isActive = false
+                   self.topWelcomLabelConstant.constant = 80
+                   self.centerWelcomeLabelConstant.isActive = true
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                   self.homeView.labelFollow.isHidden = true
+                self.homeView.imageLogoProfile.makeRounded()
+
+             
+            case .closed:
+                print("CLOSE SECOND")
                 self.rightbuttonSubscribeConstant.isActive = true
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
                 
-             self.homeView.imageLogoProfile.makeRounded()
-             
-            // self.homeView.buttonSubscribe.isHidden = true
-             self.homeView.buttonFollow.isHidden = true
-             self.homeView.buttonInstagram.isHidden = true
-             self.homeView.buttonTwiter.isHidden = true
-             self.homeView.buttonfaceBook.isHidden = true
-             self.homeView.labelINTVideo.isHidden = true
-             self.homeView.labelVideo.isHidden = true
-             self.homeView.labelINTFollows.isHidden = true
-             self.homeView.labelFollows.isHidden = true
-             self.homeView.labelINTFolowers.isHidden = true
-             self.homeView.labelFolowers.isHidden = true
-             self.homeView.labelDescription.isHidden = true
-             
-            case .closed:
-                self.heightConstant.constant = 90
-                self.widthConstant.constant = 90
-                self.bottomConstraint.constant = -100
-                self.centerConstant.isActive = true
-                self.topConstraint.isActive = true
-                self.leftConstant.isActive = false
-                self.botConstant.isActive = false
-                self.leftWelcomeLabelConstant.isActive = false
-                self.topWelcomLabelConstant.constant = 105
-                self.centerWelcomeLabelConstant.isActive = true
-                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                self.homeView.labelFollow.isHidden = true
+                self.bottomConstraint.constant = self.popupOffset
+                   self.heightConstant.constant = 70
+                   self.widthConstant.constant = 70
+                   self.topConstraint.isActive = false
+                   self.centerConstant.isActive = false
+                   self.leftConstant.isActive = true
+                   self.botConstant.isActive = true
+                   self.rightWelcomLabel.isActive = true
+                   self.topWelcomLabelConstant.isActive = true
+                   self.leftWelcomeLabelConstant.isActive = true
+                   self.topWelcomLabelConstant.constant = 0
+                   self.centerWelcomeLabelConstant.isActive = false
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                   self.homeView.labelFollow.isHidden = false
                 
-                self.topbuttonSubscribeConstant.isActive = true
-                self.leftbuttonSubscribeConstant.isActive = true
-                self.rightbuttonSubscribeConstant.isActive = false
-                self.centerbuttonSubscribeConstant.isActive = false
                 
-           //  self.homeView.imageLogoProfile.makeRounded()
-            // self.homeView.buttonSubscribe.isHidden = false
-             self.homeView.buttonFollow.isHidden = false
-             self.homeView.buttonInstagram.isHidden = false
-             self.homeView.buttonTwiter.isHidden = false
-             self.homeView.buttonfaceBook.isHidden = false
-             self.homeView.labelINTVideo.isHidden = false
-             self.homeView.labelVideo.isHidden = false
-             self.homeView.labelINTFollows.isHidden = false
-             self.homeView.labelFollows.isHidden = false
-             self.homeView.labelINTFolowers.isHidden = false
-             self.homeView.labelFolowers.isHidden = false
-             self.homeView.labelDescription.isHidden = false
-             
+                
+                self.homeView.imageLogoProfile.makeRounded()
+     
             }
             
             // remove all running animators
@@ -449,9 +414,38 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let inTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeIn, animations: {
             switch state {
             case .open:
-                self.homeView.labelVideo.alpha = 1
+                print("OPEN FIR")
+               // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.buttonFollow.alpha = 0
+                self.homeView.buttonInstagram.alpha = 0
+                self.homeView.buttonTwiter.alpha = 0
+                self.homeView.buttonfaceBook.alpha = 0
+                self.homeView.labelINTVideo.alpha = 0
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.labelINTFollows.alpha = 0
+                self.homeView.labelFollows.alpha = 0
+                self.homeView.labelINTFolowers.alpha = 0
+                self.homeView.labelFolowers.alpha = 0
+                self.homeView.labelDescription.alpha = 0
+                
+               
             case .closed:
-                self.homeView.labelVideo.alpha = 1
+                print("Close FIR")
+              //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.buttonFollow.alpha = 0
+                self.homeView.buttonInstagram.alpha = 0
+                self.homeView.buttonTwiter.alpha = 0
+                self.homeView.buttonfaceBook.alpha = 0
+                self.homeView.labelINTVideo.alpha = 0
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.labelINTFollows.alpha = 0
+                self.homeView.labelFollows.alpha = 0
+                self.homeView.labelINTFolowers.alpha = 0
+                self.homeView.labelFolowers.alpha = 0
+                self.homeView.labelDescription.alpha = 0
+        
             }
         })
         inTitleAnimator.scrubsLinearly = false
@@ -460,193 +454,55 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let outTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut, animations: {
             switch state {
             case .open:
-                self.homeView.labelVideo.alpha = 0
+                print("OPEN Sec")
+              //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.buttonFollow.alpha = 1
+                self.homeView.buttonInstagram.alpha = 1
+                self.homeView.buttonTwiter.alpha = 1
+                self.homeView.buttonfaceBook.alpha = 1
+                self.homeView.labelINTVideo.alpha = 1
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.labelINTFollows.alpha = 1
+                self.homeView.labelFollows.alpha = 1
+                self.homeView.labelINTFolowers.alpha = 1
+                self.homeView.labelFolowers.alpha = 1
+                self.homeView.labelDescription.alpha = 1
+         
             case .closed:
+                print("Close sec")
+               // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                 self.homeView.labelVideo.alpha = 0
+                self.homeView.buttonFollow.alpha = 0
+                self.homeView.buttonInstagram.alpha = 0
+                self.homeView.buttonTwiter.alpha = 0
+                self.homeView.buttonfaceBook.alpha = 0
+                self.homeView.labelINTVideo.alpha = 0
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.labelINTFollows.alpha = 0
+                self.homeView.labelFollows.alpha = 0
+                self.homeView.labelINTFolowers.alpha = 0
+                self.homeView.labelFolowers.alpha = 0
+                self.homeView.labelDescription.alpha = 0
+               
             }
         })
         outTitleAnimator.scrubsLinearly = false
         
         // start all animators
         transitionAnimator.startAnimation()
+        
         inTitleAnimator.startAnimation()
         outTitleAnimator.startAnimation()
         
         // keep track of all running animators
         runningAnimators.append(transitionAnimator)
+        
         runningAnimators.append(inTitleAnimator)
         runningAnimators.append(outTitleAnimator)
         
     }
-    
-       @objc private func popupViewTapped(recognizer: UITapGestureRecognizer) {
-           let state = currentState.opposite
-           let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-               switch state {
-               
-               case .open:
-                print("OPEN First")
-                self.rightbuttonSubscribeConstant.isActive = true
-                self.centerbuttonSubscribeConstant.isActive = true
-                self.topbuttonSubscribeConstant.isActive = false
-                self.leftbuttonSubscribeConstant.isActive = false
-                
-                   self.bottomConstraint.constant = -400
-                   self.heightConstant.constant = 70
-                   self.widthConstant.constant = 70
-                   self.topConstraint.isActive = false
-                   self.centerConstant.isActive = false
-                   self.leftConstant.isActive = true
-                   self.botConstant.isActive = true
-                   self.topWelcomLabelConstant.isActive = true
-                   self.leftWelcomeLabelConstant.isActive = true
-                   self.topWelcomLabelConstant.constant = 0
-                   self.centerWelcomeLabelConstant.isActive = false
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                   self.homeView.labelFollow.isHidden = false
-                
-                
-                
-                self.homeView.imageLogoProfile.makeRounded()
-                
-
-                self.homeView.buttonFollow.isHidden = true
-                self.homeView.buttonInstagram.isHidden = true
-                self.homeView.buttonTwiter.isHidden = true
-                self.homeView.buttonfaceBook.isHidden = true
-                self.homeView.labelINTVideo.isHidden = true
-                self.homeView.labelVideo.isHidden = true
-                self.homeView.labelINTFollows.isHidden = true
-                self.homeView.labelFollows.isHidden = true
-                self.homeView.labelINTFolowers.isHidden = true
-                self.homeView.labelFolowers.isHidden = true
-                self.homeView.labelDescription.isHidden = true
-                
-               case .closed:
-                print("close First")
-                
-                self.rightbuttonSubscribeConstant.isActive = false
-                self.centerbuttonSubscribeConstant.isActive = false
-                self.topbuttonSubscribeConstant.isActive = true
-                self.leftbuttonSubscribeConstant.isActive = true
-
-                   self.heightConstant.constant = 90
-                   self.widthConstant.constant = 90
-                   self.bottomConstraint.constant = -100
-                   self.centerConstant.isActive = true
-                   self.topConstraint.isActive = true
-                   self.leftConstant.isActive = false
-                   self.botConstant.isActive = false
-                   self.leftWelcomeLabelConstant.isActive = false
-                   self.topWelcomLabelConstant.constant = 105
-                   self.centerWelcomeLabelConstant.isActive = true
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                   self.homeView.labelFollow.isHidden = true
-                self.homeView.imageLogoProfile.makeRounded()
-                self.homeView.buttonFollow.isHidden = false
-                self.homeView.buttonInstagram.isHidden = false
-                self.homeView.buttonTwiter.isHidden = false
-                self.homeView.buttonfaceBook.isHidden = false
-                self.homeView.labelINTVideo.isHidden = false
-                self.homeView.labelVideo.isHidden = false
-                self.homeView.labelINTFollows.isHidden = false
-                self.homeView.labelFollows.isHidden = false
-                self.homeView.labelINTFolowers.isHidden = false
-                self.homeView.labelFolowers.isHidden = false
-                self.homeView.labelDescription.isHidden = false
-                
-                
-                
-               }
-               self.view.layoutIfNeeded()
-           })
-           transitionAnimator.addCompletion { position in
-               switch position {
-               case .start:
-                   self.currentState = state.opposite
-               case .end:
-                   self.currentState = state
-               case .current:
-                   ()
-               @unknown default:
-                print("Defoult")
-               }
-               switch self.currentState {
-               
-               case .open:
-                print("OPEN Second")
-                self.rightbuttonSubscribeConstant.isActive = true
-                self.centerbuttonSubscribeConstant.isActive = true
-                self.topbuttonSubscribeConstant.isActive = false
-                self.leftbuttonSubscribeConstant.isActive = false
-                
-                   self.bottomConstraint.constant = -400
-                   self.topConstraint.isActive = false
-                   self.centerConstant.isActive = false
-                   self.leftConstant.isActive = true
-                   self.botConstant.isActive = true
-                   self.heightConstant.constant = 70
-                   self.widthConstant.constant = 70
-                   self.topWelcomLabelConstant.isActive = true
-                   self.leftWelcomeLabelConstant.isActive = true
-                   self.topWelcomLabelConstant.constant = 0
-                   self.centerWelcomeLabelConstant.isActive = false
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                   self.homeView.labelFollow.isHidden = false
-                self.homeView.imageLogoProfile.makeRounded()
-               
-                self.homeView.buttonFollow.isHidden = true
-                self.homeView.buttonInstagram.isHidden = true
-                self.homeView.buttonTwiter.isHidden = true
-                self.homeView.buttonfaceBook.isHidden = true
-                self.homeView.labelINTVideo.isHidden = true
-                self.homeView.labelVideo.isHidden = true
-                self.homeView.labelINTFollows.isHidden = true
-                self.homeView.labelFollows.isHidden = true
-                self.homeView.labelINTFolowers.isHidden = true
-                self.homeView.labelFolowers.isHidden = true
-                self.homeView.labelDescription.isHidden = true
-                
-               
-               case .closed:
-                print("close Second")
-                self.rightbuttonSubscribeConstant.isActive = false
-                self.centerbuttonSubscribeConstant.isActive = false
-                self.topbuttonSubscribeConstant.isActive = true
-                self.leftbuttonSubscribeConstant.isActive = true
-
-                   self.bottomConstraint.constant = -100
-                   self.heightConstant.constant = 90
-                   self.widthConstant.constant = 90
-                   self.centerConstant.isActive = true
-                   self.topConstraint.isActive = true
-                   self.leftConstant.isActive = false
-                   self.botConstant.isActive = false
-                   self.leftWelcomeLabelConstant.isActive = false
-                   self.topWelcomLabelConstant.constant = 105
-                   self.centerWelcomeLabelConstant.isActive = false
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                   self.homeView.labelFollow.isHidden = true
-                self.homeView.imageLogoProfile.makeRounded()
-                self.homeView.buttonFollow.isHidden = false
-                self.homeView.buttonInstagram.isHidden = false
-                self.homeView.buttonTwiter.isHidden = false
-                self.homeView.buttonfaceBook.isHidden = false
-                self.homeView.labelINTVideo.isHidden = false
-                self.homeView.labelVideo.isHidden = false
-                self.homeView.labelINTFollows.isHidden = false
-                self.homeView.labelFollows.isHidden = false
-                self.homeView.labelINTFolowers.isHidden = false
-                self.homeView.labelFolowers.isHidden = false
-                self.homeView.labelDescription.isHidden = false
-                
-                
-               }
-           }
-           transitionAnimator.startAnimation()
-       }
-
-    
+ 
     func changeButton() {
         AppUtility.lockOrientation(.all)
         homeView.buttonChatUser.isHidden = false
@@ -654,7 +510,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
     }
     
-    
+    var frame: CGRect?
     var button = UIButton()
     
     func change(to index: Int) {
@@ -666,7 +522,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.labelCategory.isHidden = false
             homeView.labelStreamInfo.isHidden = false
             homeView.labelStreamDescription.isHidden = false
-            homeView.tableView.isHidden = true
+           // homeView.tableView.isHidden = true
         }
         if index == 1 {
             homeView.buttonOnline.isHidden = true
@@ -676,7 +532,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.labelCategory.isHidden = true
             homeView.labelStreamInfo.isHidden = true
             homeView.labelStreamDescription.isHidden = true
-            homeView.tableView.isHidden = false
+           // homeView.tableView.isHidden = false
         }
     }
     func changeBackgroundColor() {
@@ -758,46 +614,50 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     //MARK - LifeCicle
     override func loadView() {
         view = homeView
+
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.homeView.imageLogoProfile.makeRounded()
-       // layout()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.homeView.imageLogoProfile.makeRounded()
-      // layout()
+
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
+       
         homeView.buttonChatUser.isHidden = true
         loadPlayer()
-        makeNavItem()
+        
         homeView.imageLogoProfile.makeRounded()
         guard let id = id ,let _ = follow else { return }
         
         bindingUser(id: id)
         guard let  broadId = broadId else { return }
         getMapWather(ids: [broadId])
+       // print("VIEW FRAME ==== \(view.frame)")
+       // frame = self.homeView.cardView.frame
        
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("viewWillAppear")
-       // layout()
+        self.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+        makeNavItem()
+        frame = self.view.frame
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        self.navigationController?.popViewController(animated: true)
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
     }
@@ -813,10 +673,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.view.addSubview(self.homeView.viewChat)
         SocketIOManager.sharedInstance.getTokenChat()
         layout()
-        homeView.viewTop.addGestureRecognizer(tapRecognizer)
-       // homeView.viewTop.addGestureRecognizer(panRecognizer)
+        homeView.viewTop.addGestureRecognizer(panRecognizer)
 
-        
         _ = UserDefaults.standard.string(forKey: "tokenChat")
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
@@ -825,16 +683,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         guard let broadcast = broadcast else { return }        
         homeView.labelStreamDescription.text = broadcast.description
-        
-//        let swipeGestureRecognizerDown = UISwipeGestureRecognizer(target: self, action:#selector(popupViewTapped(recognizer:)))
-//        swipeGestureRecognizerDown.direction = .down
-//        homeView.viewTop.addGestureRecognizer(swipeGestureRecognizerDown)
-//
-////        let UPswipeGestureRecognizerDown = UISwipeGestureRecognizer(target: self, action:#selector(popupViewTapped(recognizer:)))
-//        swipeGestureRecognizerDown.direction = .up
-//        homeView.viewTop.addGestureRecognizer(swipeGestureRecognizerDown)
+
+        bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -80)
+        bottomButtonChatConstant.isActive = true
 
     }
+
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
@@ -844,55 +698,13 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
-        homeView.buttonMore.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
-        homeView.buttonLike.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
+        homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
+        homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         
 
     }
 
-    // MARK: - Helper Methods
- 
-    
-//    private func createSwipeGestureRecognizer(for direction: UISwipeGestureRecognizer.Direction) -> UISwipeGestureRecognizer {
-//        let swipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(viewTopPresent))
-//        swipeGestureRecognizer.direction = direction
-//        return swipeGestureRecognizer
-//    }
-//    let presenter: Presentr = {
-//        let presenter = Presentr(presentationType: .topHalf)
-//        return presenter
-//    }()
-    //MARK: - Selectors
-//    @objc func viewTopPresent(_ sender: UISwipeGestureRecognizer) {
-//        switch sender.direction {
-//        case .up:
-//
-//         print("U{PPPPP")
-//        case .down:
-//
-//        print("~Down")
-//        default:
-//            break
-//        }
-//
-//        UIView.animate(withDuration: 0.25) {
-//
-//
-//          //  self.homeView.viewTop.frame = frame
-//          //  self.homeView.viewTop.transform = CGAffineTransform(scaleX: x, y: y)
-//        }
-//        presenter.transitionType = TransitionType.coverVerticalFromTop
-//        presenter.transitionType = nil
-//        presenter.dismissTransitionType = nil
-//        presenter.dismissOnSwipe = true
-//        presenter.dismissAnimated = true
-//        presenter.roundCorners = true
-//
-//        let vc = Coach()
-//        vc.user = self.user
-//        customPresentViewController(presenter, viewController: vc, animated: true)
-//
-//    }
+
     @objc func actionOnline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -902,14 +714,16 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelStreamDescription.isHidden = false
         homeView.labelStreamInfo.isHidden = false
         homeView.buttonChat.isHidden = false
+        homeView.buttonLike.isHidden = false
+        homeView.buttonMore.isHidden  = false
 
     }
     @objc func actionLike() {
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
-            homeView.buttonLike.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
+            homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
-            homeView.buttonLike.setImage(#imageLiteral(resourceName: "iconlove"), for: .normal)
+            homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
 
     }
@@ -927,14 +741,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         if homeView.buttonSubscribe.isSelected {
             homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-            let detailViewController = SubscribeVC()
+            homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
 
-            detailViewController.modalPresentationStyle = .custom
-            detailViewController.transitioningDelegate = actionSheetTransitionManager
-            
-            present(detailViewController, animated: true)
+//            let detailViewController = SubscribeVC()
+//            detailViewController.modalPresentationStyle = .custom
+//            actionChatTransitionManager.intHeight = 0.3
+//            actionChatTransitionManager.intWidth = 1
+//            detailViewController.transitioningDelegate = actionSheetTransitionManager
+//            present(detailViewController, animated: true)
         } else {
             homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
+            homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         }
 
@@ -949,6 +766,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
         homeView.buttonChat.isHidden = true
+        homeView.buttonLike.isHidden = true
+        homeView.buttonMore.isHidden  = true
 
     }
     @objc func actionComming() {
@@ -961,6 +780,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
         homeView.buttonChat.isHidden = true
+        homeView.buttonLike.isHidden = true
+        homeView.buttonMore.isHidden  = true
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
@@ -979,13 +800,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             button.isHidden = true
             isButton = false
         } else {
-            button.isHidden = false
-            homeView.buttonChat.isHidden = false
+          //  button.isHidden = false
+           // homeView.buttonChat.isHidden = false
             homeView.buttonChatUser.isHidden = false
             if isLand {
                 self.button.isHidden = false
+                self.homeView.buttonChat.isHidden = true
             } else {
                 self.button.isHidden = true
+                self.homeView.buttonChat.isHidden = false
             }
             
             homeView.overlay.isHidden = false
@@ -1015,8 +838,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     backButto.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                     
                     let backButton = UIButton()
-                    backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                   // backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+                    backButton.anchor(width:40,height: 40)
 
                    let stackView = UIStackView(arrangedSubviews: [backButton,backButto,titleLabel])
                    stackView.distribution = .equalSpacing
@@ -1052,7 +877,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.homeView.welcomeLabel.text = user.fullName
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
-        self.homeView.labelDescription.text = "Welcome to my channel!My name is \(user.fullName!)"
+        self.homeView.labelDescription.text = " Welcome to my channel!\n My name is \(user.fullName!)"
        
     }
     // MARK: - LoadPlayer
@@ -1085,13 +910,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         rightLandscape = homeView.buttonLandScape.trailingAnchor.constraint(equalTo: homeView.imagePromo.trailingAnchor, constant: -40)
         rightLandscape.isActive = true
         homeView.buttonLandScape.anchor(bottom: homeView.imagePromo.bottomAnchor, paddingBottom: 20,width: 30,height: 30)
-            
-        
-           //   homeView.addSubview(homeView.buttonSetting)
-           //   homeView.buttonSetting.anchor( right: homeView.buttonLandScape.leftAnchor, bottom: homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25,width: 30,height: 30)
-        
+ 
         homeView.addSubview(homeView.buttonChatUser)
-        homeView.buttonChatUser.anchor( right: homeView.buttonLandScape.leftAnchor, paddingRight: 5, width: 30, height: 30)
+        homeView.buttonChatUser.anchor( right: homeView.buttonLandScape.leftAnchor, paddingRight: 5, width: 40, height: 40)
         homeView.buttonChatUser.centerY(inView: homeView.buttonLandScape)
         
              homeView.imagePromo.addSubview(homeView.labelTimer)
@@ -1121,13 +942,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addSubview(homeView.labelEye)
         homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
         homeView.labelEye.centerY(inView: homeView.overlay)
-        
-        if isLand {
-            //button
-        } else {
-            
-        }
-       
+  
         
                let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
                print("TIM=====\(tim)")
@@ -1141,7 +956,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
             playPauseButton.updateUI()
            
-        
+        print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
             isFullSize = true
@@ -1200,24 +1015,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.button.setImage( #imageLiteral(resourceName: "Group1-1"), for: .normal)
 
                 },completion: nil)
+           // print
   
             isPlaying = true
             isLandscape = true
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
             
            } else {
-               print("Portrait")
-
             isLand = false
             button.isHidden = true
             self.homeView.buttonChat.isHidden = false
-
-           // self.homeView.buttonLandScape.removeFromSuperview()
-           // self.homeView.buttonChat.removeFromSuperview()
             isLandscape = false
             
-            
-                
+          
             if self.isFullSize {
                     let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                     self.topOverlayConstant.constant = 50
@@ -1225,20 +1035,23 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.labelChat.textColor = .white
                     self.homeView.imageChat.image = #imageLiteral(resourceName: "arrow")
                     self.rightLandscape.constant = -8
-//
-//
-                    self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,
-                                                    bottom: self.playerViewController?.view.bottomAnchor,
-                                                    paddingLeft: 10, paddingBottom: 20,width: 80, height: 30)
-                    self.homeView.buttonChat.centerY(inView: self.homeView.buttonLandScape)
+
+                        self.bottomButtonChatConstant.constant = -20
+                        if self.view.frame.origin.y == 0.0 {
+                            print("FRAME ==== \(self.view.frame.origin.y)")
+                        }else {
+                            print("FRAME ==== \(self.view.frame.origin.y)")
+                        }
+        //let gg =  self.homeView.buttonChat.anchor(bottom:self.view.bottomAnchor,paddingBottom: 20)
+
                     self.view.layoutIfNeeded()
                     })
                 transitionAnimator.startAnimation()
     } else {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                self.homeView.buttonChat.anchor(left:self.view.leftAnchor,
-                                                bottom: self.view.bottomAnchor,
-                                                 paddingLeft: 10,paddingBottom: 80,width: 80, height: 30)
+//                self.homeView.buttonChat.anchor(left:self.view.leftAnchor,
+//                                                bottom: self.view.bottomAnchor,
+//                                                 paddingLeft: 10,paddingBottom: 80,width: 80, height: 30)
                 self.homeView.labelChat.text = "Comments"
                 self.homeView.labelChat.textColor = .black
                 self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
@@ -1247,50 +1060,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             transitionAnimator.startAnimation()
             }
             
-            
-
-            UIView.animate(withDuration: 1.0,
-                delay: 0.0,
-                options: [],
-                animations: {
-                    
-                   // self.view.setNeedsLayout()
-                    
-                 //   self.homeView.cardView.addSubview(self.homeView.buttonChat)
-                    
-                    
-                    
-                    if self.isPortraiteFull {
-  //                      self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,
- //                                                       bottom: self.homeView.imagePromo.bottomAnchor,
- //                                                       paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
-//                        self.homeView.labelChat.text = "Comments"
-//                        self.homeView.labelChat.textColor = .white
-//                        self.homeView.imageChat.image = #imageLiteral(resourceName: "arrow")
-                    } else if self.isPortraiteFull == false {
-                        
-//                        self.homeView.buttonChat.anchor(left:self.homeView.cardView.leftAnchor,
-//                                                        bottom: self.homeView.cardView.bottomAnchor,
-//                                                        paddingLeft: 10,paddingBottom: 20,width: 80, height: 30)
-//                        self.homeView.labelChat.text = "Comments"
-//                        self.homeView.labelChat.textColor = .black
-//                        self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
-                    }
-                    
-                                       
-//                    self.homeView.buttonChat.addSubview(self.homeView.imageChat)
-//                    self.homeView.imageChat.anchor(left: self.homeView.buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)
-//                    self.homeView.imageChat.centerY(inView: self.homeView.buttonChat)
-       
-//                    self.homeView.imagePromo.addSubview(self.homeView.buttonLandScape)
-//                    self.homeView.buttonLandScape.anchor( right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 24, paddingBottom: 20,width: 45,height: 45)
-                    
-//                    self.homeView.imagePromo.addSubview(self.homeView.buttonSetting)
-//                    self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingRight: 5, paddingBottom: 25 ,width: 30,height: 30)
-//
-//                    self.view.setNeedsLayout()
-
-                },completion: nil)
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
 
            }
@@ -1314,13 +1083,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
         if isPlaying {
             isFullSize = false
-            print("FulSize === \(isFullSize)")
             isPlaying = false
             isPortraiteFull = false
+            guard let frame = frame else { return }
+     
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-               
-                    self.topOverlayConstant.constant = 8
-            
+                self.topOverlayConstant.constant = 8
+                self.view.frame = frame
+                self.bottomButtonChatConstant.constant = -80
                 self.view.layoutIfNeeded()
             
             })
@@ -1337,8 +1107,33 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             self.homeView.buttonOffline.isHidden = false
             self.homeView.labelFollow.isHidden = false
             self.homeView.buttonHelpCoach.isHidden = false
-    
+            self.homeView.welcomeLabel.isHidden = false
             self.homeView.viewTop.isHidden = false
+            self.homeView.buttonSubscribe.isHidden = false
+            self.homeView.buttonFollow.isHidden = false
+            self.homeView.buttonInstagram.isHidden = false
+            self.homeView.buttonTwiter.isHidden = false
+            self.homeView.buttonfaceBook.isHidden = false
+            self.homeView.labelINTVideo.isHidden = false
+            self.homeView.labelVideo.isHidden = false
+            self.homeView.labelINTFollows.isHidden = false
+            self.homeView.labelFollows.isHidden = false
+            self.homeView.labelINTFolowers.isHidden = false
+            self.homeView.labelFolowers.isHidden = false
+            self.homeView.labelDescription.isHidden = false
+            self.homeView.labelFollow.isHidden = false
+            
+            self.homeView.buttonChat.isHidden = false
+            
+            self.homeView.imagePromo.isHidden = false
+          //  self.homeView.imagePromo.backgroundColor  = .red
+          //  self.playerViewController?.view.isHidden = true
+            
+            self.homeView.labelChat.textColor = .black
+            self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
+           
+            
+            
             self.homeView.imagePromo.removeFromSuperview()
             self.homeView.labelCategory.removeFromSuperview()
             self.homeView.labelStreamInfo.removeFromSuperview()
@@ -1347,27 +1142,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             self.homeView.buttonChatUser.removeFromSuperview()
             self.homeView.imageChat.removeFromSuperview()
             self.homeView.labelChat.removeFromSuperview()
-            self.homeView.labelChat.textColor = .black
-            self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
-            self.homeView.viewTop.removeFromSuperview()
-            self.homeView.imageLogoProfile.removeFromSuperview()
-            self.homeView.welcomeLabel.removeFromSuperview()
-            self.homeView.welcomeLabel.isHidden = false
-            self.homeView.labelFollow.removeFromSuperview()
             self.homeView.buttonLandScape.removeFromSuperview()
-            self.homeView.buttonMore.removeFromSuperview()
-            self.homeView.buttonLike.removeFromSuperview()
-            self.homeView.buttonChat.isHidden = false
+            
             UIView.animate(withDuration: 1.0,
                 delay: 0.0,
                 options: [],
                 animations: {
-
+                   
                     self.homeView.cardView.addSubview(self.homeView.imagePromo)
                     self.homeView.imagePromo.anchor(top: self.homeView.buttonComing.bottomAnchor,
-                                                  left: self.homeView.cardView.leftAnchor,
-                                                  right: self.homeView.cardView.rightAnchor,
-                                                  paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+                                                    left: self.homeView.cardView.leftAnchor,
+                                                    right: self.homeView.cardView.rightAnchor,
+                                      paddingTop: 15, paddingLeft: 0, paddingRight: 0,height: 208 )
+                 
 
                     self.view.addSubview(self.homeView.buttonLandScape)
                     self.rightLandscape = self.homeView.buttonLandScape.trailingAnchor.constraint(equalTo: self.homeView.imagePromo.trailingAnchor, constant: -20)
@@ -1388,15 +1175,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                                                                 left: self.homeView.cardView.leftAnchor,
                                                                 right: self.homeView.cardView.rightAnchor,
                                                   paddingTop: 4, paddingLeft: 16, paddingRight: 16)
-                    
+
                     self.homeView.cardView.addSubview(self.homeView.buttonMore)
                     self.homeView.buttonMore.anchor(top: self.homeView.imagePromo.bottomAnchor,right: self.homeView.cardView.rightAnchor, paddingTop: 11, paddingRight: 20, width: 30, height: 30)
-                    
+
                     self.homeView.cardView.addSubview(self.homeView.buttonLike)
                     self.homeView.buttonLike.anchor(top: self.homeView.imagePromo.bottomAnchor,right: self.homeView.buttonMore.leftAnchor, paddingTop: 11, paddingRight: 10, width: 30, height: 30)
-                    
+                    //,bottom: self.view.bottomAnchor//,paddingBottom: 80
                     self.homeView.cardView.addSubview(self.homeView.buttonChat)
-                    self.homeView.buttonChat.anchor(left:self.view.leftAnchor,bottom: self.view.bottomAnchor, paddingLeft: 15,paddingBottom: 80,width: 80, height: 30)
+                    self.homeView.buttonChat.anchor(left:self.view.leftAnchor, paddingLeft: 15,width: 80, height: 30)
+                    self.bottomButtonChatConstant =  self.homeView.buttonChat.bottomAnchor.constraint(equalTo: self.homeView.cardView.bottomAnchor, constant: -80)
+                    self.bottomButtonChatConstant.isActive = true
                
                     self.homeView.labelChat.text = "Comments"
                     self.homeView.labelChat.textColor = .black
@@ -1410,10 +1199,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.buttonChat.addSubview(self.homeView.labelChat)
                     self.homeView.labelChat.anchor( left: self.homeView.imageChat.rightAnchor, paddingLeft: 10)
                     self.homeView.labelChat.centerY(inView: self.homeView.buttonChat)
-                    
-                    self.setConstranteTopView()
-                         
-                  
+  
                     AppUtility.lockOrientation(.all, andRotateTo: .portrait)
                     self.isPortraiteFull = false
                     self.view.layoutIfNeeded()
@@ -1477,8 +1263,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
-        self.button.isHidden = true
-        self.homeView.buttonChatUser.isHidden = true
+       // self.button.isHidden = true
+       // self.homeView.buttonChatUser.isHidden = true
         if isPlaying {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
@@ -1486,10 +1272,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
            // homeView.buttonSetting.isHidden = true
-            homeView.buttonLandScape.isHidden = true
+          //  homeView.buttonLandScape.isHidden = true
             playPauseButton.isHidden = true
             isButton = false
-            homeView.buttonChat.isHidden = true
+          //  homeView.buttonChat.isHidden = true
             
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
@@ -1503,6 +1289,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 actionChatTransitionManager.intHeight = 1
                 actionChatTransitionManager.isLandscape = isLand
                // detailViewController.chatView.buttonChat.isHidden = true
+                detailViewController.color = .white
                 detailViewController.chatView.buttonComm.isHidden = true
                 detailViewController.chatView.buttonCloseChat.isHidden = false
                 present(detailViewController, animated: true)
@@ -1511,9 +1298,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 actionChatTransitionManager.intWidth = 1
                 actionChatTransitionManager.intHeight = 0.7
                 actionChatTransitionManager.isLandscape = isLand
+                detailViewController.color = .white
                // detailViewController.chatView.buttonChat.isHidden = false
-                detailViewController.chatView.buttonComm.isHidden = false
-                detailViewController.chatView.buttonCloseChat.isHidden = true
+                detailViewController.chatView.buttonComm.isHidden = true
+                //detailViewController.chatView.buttonCloseChat.isHidden = true
                 present(detailViewController, animated: true)
             }
             
@@ -1571,150 +1359,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 }
             })
        }
-    
-    private func setConstranteTopView() {
-        
-        self.homeView.viewTop.translatesAutoresizingMaskIntoConstraints = false
-        self.homeView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
-        self.homeView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.homeView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
-       
-       // self.homeView.cardView.addSubview(self.homeView.viewTop)
-        self.homeView.viewTop.addSubview(self.homeView.imageLogoProfile)
-        
-        self.view.addSubview(self.homeView.viewTop)
-       // self.view.addSubview(self.homeView.imageLogoProfile)
-        
-        self.view.addSubview(self.homeView.welcomeLabel)
-        self.view.addSubview(self.homeView.labelFollow)
-        self.homeView.viewTop.addSubview(homeView.buttonSubscribe)
-        view.addSubview(homeView.buttonFollow)
-        view.addSubview(homeView.buttonInstagram)
-        view.addSubview(homeView.buttonTwiter)
-        view.addSubview(homeView.buttonfaceBook)
-        view.addSubview(homeView.labelINTVideo)
-        view.addSubview(homeView.labelVideo)
-        view.addSubview(homeView.labelINTFollows)
-        view.addSubview(homeView.labelFollows)
-        view.addSubview(homeView.labelINTFolowers)
-        view.addSubview(homeView.labelFolowers)
-        view.addSubview(homeView.labelDescription)
-        
-       // self.homeView.buttonSubscribe.isHidden = true
-        self.homeView.buttonFollow.isHidden = true
-        self.homeView.buttonInstagram.isHidden = true
-        self.homeView.buttonTwiter.isHidden = true
-        self.homeView.buttonfaceBook.isHidden = true
-        self.homeView.labelINTVideo.isHidden = true
-        self.homeView.labelVideo.isHidden = true
-        self.homeView.labelINTFollows.isHidden = true
-        self.homeView.labelFollows.isHidden = true
-        self.homeView.labelINTFolowers.isHidden = true
-        self.homeView.labelFolowers.isHidden = true
-        self.homeView.labelDescription.isHidden = true
-       
-        self.homeView.viewTop.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-        self.homeView.viewTop.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        if isPortraiteFull {
-            self.bottomConstraint = self.homeView.viewTop.topAnchor.constraint(equalTo:self.homeView.cardView.topAnchor, constant: -400)
-        }
-       
-        self.bottomConstraint.isActive = true
-        self.homeView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
-        
-        
-        
-
-        homeView.labelFollow.bottomAnchor.constraint(equalTo: homeView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-        homeView.labelFollow.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
-        
-
-        topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
-        topWelcomLabelConstant.isActive = true
-        
-        leftWelcomeLabelConstant = homeView.welcomeLabel.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15)
-        leftWelcomeLabelConstant.isActive = true
-        
-        centerWelcomeLabelConstant = homeView.welcomeLabel.centerXAnchor.constraint(equalTo: homeView.cardView.centerXAnchor)
-        centerWelcomeLabelConstant.isActive = false
-        
-
-        leftConstant = homeView.imageLogoProfile.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 20)
-        leftConstant.isActive = true
-        
-        
-        botConstant = homeView.imageLogoProfile.bottomAnchor.constraint(equalTo: homeView.viewTop.bottomAnchor, constant: -20)
-        botConstant.isActive = true
-        
-        topConstraint = homeView.imageLogoProfile.topAnchor.constraint(equalTo: homeView.cardView.topAnchor, constant: 20)
-        topConstraint.isActive = false
-        
-        centerConstant = homeView.imageLogoProfile.centerXAnchor.constraint(equalTo: homeView.cardView.centerXAnchor)
-        centerConstant.isActive = false
-        
-        heightConstant = homeView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
-        heightConstant.isActive = true
-        widthConstant = homeView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
-        widthConstant.isActive = true
-       
-        topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
-        topbuttonSubscribeConstant.isActive = false
-        leftbuttonSubscribeConstant = homeView.buttonSubscribe.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 18)
-        leftbuttonSubscribeConstant.isActive = false
-        rightbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -10)
-        rightbuttonSubscribeConstant.isActive = true
-        centerbuttonSubscribeConstant = homeView.buttonSubscribe.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor)
-        centerbuttonSubscribeConstant.isActive = true
-        
-        
-        homeView.buttonSubscribe.anchor( width: 100, height: 28)
-        
-        homeView.buttonFollow.anchor(top: homeView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
-        homeView.buttonFollow.centerX(inView: homeView.viewTop)
- 
-       
-        homeView.buttonInstagram.anchor(  right: homeView.cardView.rightAnchor,paddingRight: 17, width: 28, height: 28)
-        homeView.buttonInstagram.centerY(inView: homeView.buttonSubscribe)
-        
-        
-        
-        homeView.buttonTwiter.anchor(right: homeView.buttonInstagram.leftAnchor,paddingRight: 8,  width: 28, height: 28)
-        homeView.buttonTwiter.centerY(inView: homeView.buttonInstagram)
-
-        
-        homeView.buttonfaceBook.anchor( right: homeView.buttonTwiter.leftAnchor, paddingRight: 8, width: 28, height: 28)
-        homeView.buttonfaceBook.centerY(inView: homeView.buttonInstagram)
-        
-        
-        homeView.labelINTVideo.anchor(top: homeView.buttonSubscribe.bottomAnchor, left: homeView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
-        
-        homeView.labelVideo.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        homeView.labelVideo.centerX(inView: homeView.labelINTVideo)
-        
-        
-        
-        homeView.labelINTFollows.anchor(top: homeView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
-        homeView.labelINTFollows.centerX(inView: homeView.buttonFollow)
-        
-        
-        homeView.labelFollows.anchor(top: homeView.labelINTFollows.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        homeView.labelFollows.centerX(inView: homeView.viewTop)
-        
-        
-        
-        
-        homeView.labelINTFolowers.anchor(top: homeView.buttonSubscribe.bottomAnchor, right: homeView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
-        
-        homeView.labelFolowers.anchor(top: homeView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        homeView.labelFolowers.centerX(inView: homeView.labelINTFolowers)
-        
-        
-        homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
-        
-        homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
-        homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
-        
-    }
     
 }
 

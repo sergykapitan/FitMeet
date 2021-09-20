@@ -63,6 +63,7 @@ class SendCoach: UIViewController,UITabBarControllerDelegate {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(SendCoachCell.self, forCellReuseIdentifier: SendCoachCell.reuseID)
+        self.tableView.separatorStyle = .none
     }
 }
 

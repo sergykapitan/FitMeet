@@ -9,10 +9,7 @@ import UIKit
 import SwiftUI
 
 class MainTabBarViewController: UITabBarController {
-    
-    
-   
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,11 +20,11 @@ class MainTabBarViewController: UITabBarController {
         
         
         //HomeUI
-        var home = HomeUI()
-        home.videos = Video.allVideos()
-        let hostVC = UIHostingController(rootView: home)
-        hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
-        hostVC.tabBarItem.title = ""
+//        var home = HomeUI()
+//        home.videos = Video.allVideos()
+//        let hostVC = UIHostingController(rootView: home)
+//        hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
+//        hostVC.tabBarItem.title = ""
     
         var profile: UIViewController?
         var streamView : UIViewController?

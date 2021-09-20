@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Like.png",
+      "filename" : "Open Chat1.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Like@2x.png",
+      "filename" : "Open Chat@2x.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Like@3x.png",
+      "filename" : "Open Chat@3x.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }

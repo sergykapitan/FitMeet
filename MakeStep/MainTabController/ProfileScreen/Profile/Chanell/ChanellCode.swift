@@ -29,10 +29,8 @@ final class ChanellCode: UIView {
         view.radiusLowerRightCorner = 20
         view.radiusUpperLeftCorner = 0
         view.radiusUpperRightCorner = 0
-       // view.stroke = 2
-      //  view.strokeColor = .black
         view.fillColor = .white
-        view.backgroundColor = UIColor(hexString: "#F6F6F6")
+        view.backgroundColor = .clear// UIColor(hexString: "#F6F6F6")
         return view
     }()
     var imageLogoProfile: UIImageView = {
@@ -62,7 +60,7 @@ final class ChanellCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Online", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -70,7 +68,7 @@ final class ChanellCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Offline", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -78,7 +76,7 @@ final class ChanellCode: UIView {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
         button.setTitle("Coming", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
     }()
@@ -133,25 +131,10 @@ final class ChanellCode: UIView {
         
        // addSubview(cardView)
         cardView.fillFull(for: self)
-        
-       
-        
-       
-        cardView.addSubview(viewTop)
-        viewTop.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0,  height: 100)
-        
-        viewTop.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor( left: viewTop.leftAnchor, paddingLeft: 15,width: 70, height: 70)
-        imageLogoProfile.centerY(inView: viewTop)
-        
-        viewTop.addSubview(welcomeLabel)
-        welcomeLabel.anchor(top: imageLogoProfile.centerYAnchor, left: imageLogoProfile.rightAnchor, paddingTop: -20, paddingLeft: 20)
-        
-        viewTop.addSubview(labelFollow)
-        labelFollow.anchor(top: welcomeLabel.bottomAnchor, left: imageLogoProfile.rightAnchor, paddingTop: 5, paddingLeft: 20)
+
  
         cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: viewTop.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, height: 30)
+        segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 20, height: 30)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)

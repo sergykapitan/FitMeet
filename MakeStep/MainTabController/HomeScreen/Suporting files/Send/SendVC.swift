@@ -63,6 +63,7 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         self.tableView.dataSource = self
         self.tableView.delegate = self
         self.tableView.register(SendVCCell.self, forCellReuseIdentifier: SendVCCell.reuseID)
+        self.tableView.separatorStyle = .none
     }
 }
 

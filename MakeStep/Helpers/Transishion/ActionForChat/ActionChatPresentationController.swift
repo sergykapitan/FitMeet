@@ -43,7 +43,7 @@ final class ActionChatPresentationController: UIPresentationController {
         let targetHeight = containerView.bounds.height * height//0.7
         
       //  let originX: CGFloat = .zero
-        let originX: CGFloat =  containerView.bounds.width - targetWidth
+        let originX: CGFloat = 0// containerView.bounds.width - targetWidth
         let originY: CGFloat = containerView.bounds.height - targetHeight
         
         return CGRect(

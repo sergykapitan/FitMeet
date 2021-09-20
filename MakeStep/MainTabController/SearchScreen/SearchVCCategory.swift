@@ -40,7 +40,7 @@ class SearchVCCategory: UITableViewCell {
     }()
     let buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
     var titleLabel: UILabel =  {

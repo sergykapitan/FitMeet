@@ -16,16 +16,15 @@ final class SearchVCCode: UIView {
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.clipsToBounds = true
-            return view
+        return view
         }()
     var tableView: UITableView = {
         let table = UITableView()
         return table
     }()
-    var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
+    var segmentControll: SegmentControlSearch = {
+        let segment = SegmentControlSearch()
         return segment
-        
     }()
    
     //MARK: - initial
@@ -41,13 +40,13 @@ final class SearchVCCode: UIView {
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillFull(for: self)
-        cardView.addSubview(segmentControll)
+       // cardView.fillSuperview()
+        addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-
     }
 
     

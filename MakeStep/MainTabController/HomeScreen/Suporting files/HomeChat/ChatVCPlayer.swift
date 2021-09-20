@@ -58,19 +58,22 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         self.view.backgroundColor = UIColor.white
         self.textView.delegate = self
                
-        self.textView.layer.borderColor = UIColor.gray.withAlphaComponent(0.5).cgColor
-        self.textView.layer.borderWidth = 1.0
-        self.textView.layer.cornerRadius = 8
+        self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
+        
+        //UIColor.gray.withAlphaComponent(0.5).cgColor
+        self.textView.layer.borderWidth = 1.5
+        self.textView.layer.cornerRadius = 20
         self.textView.clipsToBounds = true
-  
+        self.textView.font =  UIFont.systemFont(ofSize: 18)
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
-        self.textView.easy.layout(Left(10),Right(10).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
+        
+        self.textView.easy.layout(Left(5),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
         self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
+        textView.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
         self.textView.delegate = self
-        //textView.anchor(height: 40)
-       // self.chatView.sendMessage.centerY(inView: textView)
+ 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -175,6 +178,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     func actionButton() {
         chatView.sendMessage.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         chatView.buttonCloseChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
+        chatView.buttonComm.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
     }
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
@@ -279,6 +283,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: ChatCell.reuseID)
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.receiverCellId)
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.senderCellId)
+        chatView.tableView.separatorStyle  =  .none
         
    
     }
@@ -337,12 +342,7 @@ extension ChatVCPlayer: UITextFieldDelegate {
             }
             return true
         }
-    func textViewDidChange(textView: UITextView) {
-
-        if textView.contentSize.height >= maxHeight {
-                    isOversized = true
-                }
-           }
+   
     
 }
 extension ChatVCPlayer: UITableViewDataSource {
@@ -391,6 +391,12 @@ if senderNickname == nic {
     }
     
     // MARK: UITextViewDelegate Methods
+    func textViewDidChange(textView: UITextView) {
+
+           if textView.contentSize.height >= maxHeight {
+                       isOversized = true
+                   }
+              }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if token != nil {
@@ -398,6 +404,7 @@ if senderNickname == nic {
         }
         return true
     }
+
 
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let returnedView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.size.width, height: 0))

@@ -54,7 +54,7 @@ final class PresentCode: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     var labelFollow : UILabel = {
@@ -160,14 +160,20 @@ final class PresentCode: UIView {
     }()
     var buttonChatUser: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
+       // button.setImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
+       // button.setImage(UIImage(named: "Open"), for: .normal)
+        button.imageView?.clipsToBounds = true
+        button.imageView?.contentMode = .scaleToFill
         return button
     }()
+    
+    // Tableview for Timetable
   
-    var tableView: UITableView = {
-        let table = UITableView()
-        return table
-    }()    
+//    var tableView: UITableView = {
+//        let table = UITableView()
+//        return table
+//    }()
     var overlay : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
@@ -299,12 +305,12 @@ final class PresentCode: UIView {
     }()
     var buttonLike: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "iconlove"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
     var buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
     
@@ -331,12 +337,14 @@ final class PresentCode: UIView {
                                left: cardView.leftAnchor,
                                paddingTop: 115, paddingLeft: 20, height: 30)
         
-        cardView.addSubview(tableView)
-        tableView.anchor(top: segmentControll.bottomAnchor,
-                         left: cardView.leftAnchor,
-                         right: cardView.rightAnchor,
-                         bottom: cardView.bottomAnchor,
-                         paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        // Tableview for Timetable
+        
+//        cardView.addSubview(tableView)
+//        tableView.anchor(top: segmentControll.bottomAnchor,
+//                         left: cardView.leftAnchor,
+//                         right: cardView.rightAnchor,
+//                         bottom: cardView.bottomAnchor,
+//                         paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                
 
         cardView.addSubview(buttonOnline)
@@ -356,17 +364,17 @@ final class PresentCode: UIView {
                             left: buttonOffline.rightAnchor,
                             paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
-        cardView.addSubview(imagePromoN)
-        imagePromoN.anchor(top: buttonComing.bottomAnchor,
-                          left: cardView.leftAnchor,
-                          right: cardView.rightAnchor,
-                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+//        cardView.addSubview(imagePromoN)
+//        imagePromoN.anchor(top: buttonComing.bottomAnchor,
+//                          left: cardView.leftAnchor,
+//                          right: cardView.rightAnchor,
+//                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
         
         cardView.addSubview(imagePromo)
         imagePromo.anchor(top: buttonComing.bottomAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
-                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
+                          paddingTop: 15, paddingLeft: 0, paddingRight: 0,height: 208 )//
         
         
         
@@ -377,10 +385,10 @@ final class PresentCode: UIView {
                              left: cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
         
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 20, width: 40, height: 20)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 0, width: 40, height: 24)
         
         cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 10, width: 20, height: 20)
+        buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 0, width: 24, height: 24)
         
         
         
@@ -396,7 +404,9 @@ final class PresentCode: UIView {
                                       paddingTop: 4, paddingLeft: 16, paddingRight: 16)
         
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(left:cardView.leftAnchor,bottom: cardView.bottomAnchor, paddingLeft: 15,paddingBottom: 80,width: 80, height: 30)
+  //      , bottom: cardView.bottomAnchor,paddingBottom: 80
+//
+        buttonChat.anchor(left:cardView.leftAnchor,paddingLeft: 15,width: 80, height: 30)
         
         buttonChat.addSubview(imageChat)
         imageChat.anchor(left: buttonChat.leftAnchor,  paddingLeft: 10,width: 15,height: 15)

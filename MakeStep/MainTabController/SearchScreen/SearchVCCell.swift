@@ -38,7 +38,7 @@ class SearchVCCell: UITableViewCell {
     }()
     let buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
     var titleLabel: UILabel =  {
@@ -97,7 +97,7 @@ class SearchVCCell: UITableViewCell {
                                 right: cardView.rightAnchor,
                                 paddingTop: 8, paddingLeft: 8 ,paddingRight: 8)
         
-        cardView.addSubview(buttonMore)
+        addSubview(buttonMore)
         buttonMore.anchor(right: cardView.rightAnchor ,
                           bottom: cardView.bottomAnchor,
                           paddingRight: 30,paddingBottom: 10)

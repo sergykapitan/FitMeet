@@ -24,7 +24,7 @@ final class HomeVCCode: UIView {
         return table
     }()
     var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()    
+        let segment = CustomSegmentedControl()
         return segment
         
     }()

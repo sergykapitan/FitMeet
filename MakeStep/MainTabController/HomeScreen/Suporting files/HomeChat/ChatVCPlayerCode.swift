@@ -50,24 +50,16 @@ final class ChatVCPlayerCode: UIView {
     }()
     var textView: UITextView = {
         let text = UITextView()
-        text.layer.cornerRadius = 20
-        text.layer.borderWidth = 1
         text.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         text.backgroundColor = UIColor(hexString: "#F6F6F6")
         text.textColor = .lightGray
-       // text.textContainerInset = UIEdgeInsets(top: 5, left: 10, bottom: 0, right: 0)
-        
-        text.font = UIFont.systemFont(ofSize: 18)
-       // text.sizeToFit()
-       // text.layoutIfNeeded ()
-       // text.isScrollEnabled = false
-        //text.isScrollEnabled = false
-        //text.clipsToBounds = false
+        //text.setLeftPaddingPoints(20)
         return text
     }()
     var sendMessage: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Frame"), for: .normal)
+        //button.setImage(#imageLiteral(resourceName: "Frame"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "Frame"), for: .normal)
         return button
     }()
     var buttonCloseChat: UIButton = {
@@ -104,13 +96,13 @@ final class ChatVCPlayerCode: UIView {
         labelComm.centerY(inView: buttonComm)
         
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 10, paddingBottom: 15,width: 70 ,height: 60)
+        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 60 ,height: 60)
         
 //        cardView.addSubview(textView)
 //        textView.anchor(left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10)//,height: 40
  
         cardView.addSubview(buttonCloseChat)
-        buttonCloseChat.anchor( top: cardView.topAnchor,paddingTop: 5,width: 30, height: 30)
+        buttonCloseChat.anchor( top: cardView.topAnchor,paddingTop: 5,width: 40, height: 30)
         buttonCloseChat.centerX(inView: cardView)
         
         cardView.addSubview(tableView)

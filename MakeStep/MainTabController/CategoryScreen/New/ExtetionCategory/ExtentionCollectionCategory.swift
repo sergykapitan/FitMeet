@@ -34,6 +34,15 @@ extension CategoryVC: UICollectionViewDataSource {
         } else {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
+        if filtredBroadcast[indexPath.row].isPopular {
+            cell.viewOverlay.isHidden = false
+            cell.textOverlay.text = "Popular"
+            cell.textOverlay.textColor = .red
+            
+        } else {
+            cell.viewOverlay.isHidden = true
+        }
+
     
         cell.contentView.layer.cornerRadius = 8
         cell.contentView.layer.borderWidth = 1.0
@@ -65,10 +74,7 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
         
         let width = (self.view.frame.size.width - 12 * 4) / 2 //some width
         let height = width * 1.4 //ratio
-        
-        //collectionView.bounds.width * 0.45
-        //UIScreen.main.bounds.width * 0.55
-      
+
       return CGSize(width: width,
                     height: height)
     }

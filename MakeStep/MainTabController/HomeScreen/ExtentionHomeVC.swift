@@ -53,9 +53,9 @@ extension HomeVC: UITableViewDataSource {
        
         
         if listBroadcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
-            cell.buttonLike.setImage(UIImage(named: "iconlove"), for: .normal)
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
     
         print("SELF US ==== \(us.count)")
@@ -80,18 +80,14 @@ extension HomeVC: UITableViewDataSource {
     }
 
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        if sender.currentImage == UIImage(named: "iconlove") {
-            sender.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
+        if sender.currentImage == UIImage(named: "LikeNot") {
+            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
            guard let id = listBroadcast[sender.tag].id else { return }
             self.followBroadcast(id: id)
-          //  binding()
-           // self.homeView.tableView.reloadData()
         } else {
-            sender.setImage(UIImage(named: "iconlove"), for: .normal)
+            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
            guard let id = listBroadcast[sender.tag].id else { return }
             self.unFollowBroadcast(id: id)
-           // binding()
-          //  self.homeView.tableView.reloadData()
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
@@ -119,12 +115,12 @@ extension HomeVC: UITableViewDelegate {
         let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.listBroadcast[indexPath.row].userId
         let follow = self.listBroadcast[indexPath.row].followersCount
-        print("ID BROAD === \(self.listBroadcast[indexPath.row].id)")
-        print("ChanellId ==== \(self.listBroadcast[indexPath.row].channelIds)")
+   
         
     
          
-        guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+        guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,
+              let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
       
        
         

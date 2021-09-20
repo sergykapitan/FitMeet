@@ -116,6 +116,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
         homeView.tableView.delegate = self
         homeView.tableView.register(UserCell.self, forCellReuseIdentifier: UserCell.reuseID)
         homeView.tableView.isHidden = false
+        homeView.tableView.separatorStyle  = .none
     }
     
     func bindingUserMap(ids: [Int])  {

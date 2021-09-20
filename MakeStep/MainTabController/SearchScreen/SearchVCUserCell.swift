@@ -37,7 +37,7 @@ class SearchVCUserCell: UITableViewCell {
     }()
     let buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
     var titleLabel: UILabel =  {
