@@ -202,8 +202,13 @@ final class HomeCell: UITableViewCell {
     override func prepareForReuse() {
            super.prepareForReuse()
         self.backgroundImage.image = nil
+        self.logoUserImage.image = nil
         self.titleLabel.text = nil
         self.logoUserImage.image = nil
+      //  self.labelEye.text = nil
+       // self.imageEye.image = nil
+      //  self.labelLive.text = nil
+      //  self.imageLive.image = nil
         
         
         

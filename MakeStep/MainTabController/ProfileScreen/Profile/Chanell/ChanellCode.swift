@@ -108,6 +108,7 @@ final class ChanellCode: UIView {
     }()
     var tableView: UITableView = {
         let table = UITableView()
+        table.backgroundColor = UIColor(hexString: "#F6F6F6")
         return table
     }()
     
@@ -136,13 +137,14 @@ final class ChanellCode: UIView {
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 20, height: 30)
         
+        cardView.addSubview(buttonOnline)
+               buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
+               
         cardView.addSubview(tableView)
-        tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: buttonOnline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                
 
-        cardView.addSubview(buttonOnline)
-        buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
-        
+       
         cardView.addSubview(buttonOffline)
         buttonOffline.anchor(top: segmentControll.bottomAnchor, left: buttonOnline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
@@ -164,11 +166,12 @@ final class ChanellCode: UIView {
     
 
     }
-    func setImage(image:String,imagepromo: String) {
+    //,imagepromo: String
+    func setImage(image:String) {
         let url = URL(string: image)
-        let urlPromo = URL(string: imagepromo)
+    //    let urlPromo = URL(string: imagepromo)
         imageLogoProfile.kf.setImage(with: url)
-        imagePromo.kf.setImage(with: urlPromo)
+     //   imagePromo.kf.setImage(with: urlPromo)
     }
     func setLabel(description: String,category: String) {
         labelCategory.text = category

@@ -36,14 +36,14 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         
         print("segmentedControl index changed to \(index)")
         if index == 0 {
-            profileView.buttonOnline.isHidden = false
-            profileView.buttonOffline.isHidden = false
-            profileView.buttonComing.isHidden = false
-            profileView.imagePromo.isHidden = false
-            profileView.labelCategory.isHidden = false
-            profileView.labelStreamInfo.isHidden = false
-            profileView.labelStreamDescription.isHidden = false
-            profileView.tableView.isHidden = true
+//            profileView.buttonOnline.isHidden = false
+//            profileView.buttonOffline.isHidden = false
+//            profileView.buttonComing.isHidden = false
+//            profileView.imagePromo.isHidden = false
+//            profileView.labelCategory.isHidden = false
+//            profileView.labelStreamInfo.isHidden = false
+//            profileView.labelStreamDescription.isHidden = false
+//            profileView.tableView.isHidden = true
         }
         if index == 1 {
             profileView.buttonOnline.isHidden = true
@@ -90,7 +90,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     @Inject var firMeetChanell: FitMeetChannels
     @Inject var fitMeetSream: FitMeetStream
     var user: Users?
-    var brodcast: BroadcastResponce?
+    var brodcast: [BroadcastResponce] = []
+    var indexButton: Int = 0
 
     override  var shouldAutorotate: Bool {
         return false
@@ -102,24 +103,45 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         super.loadView()
         view = profileView
     }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.profileView.imageLogoProfile.makeRounded()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.profileView.imageLogoProfile.makeRounded()
+
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
         profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         profileView.segmentControll.delegate = self
-        profileView.tableView.isHidden = true
+       // profileView.tableView.isHidden = true
         actionOnline()
         layout()
         profileView.viewTop.addGestureRecognizer(panRecognizer)
-       // profileView.tableView.dataSource = self
-       // profileView.tableView.delegate = self
-        bindingChanell(status: "ONLINE")
-        let bundle = Bundle(for: TimelineTableViewCell.self)
-        let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
-        let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell",
-            bundle: Bundle(url: nibUrl!)!)
-        self.profileView.tableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
+        makeTableView()
+      //  profileView.tableView.dataSource = self
+      //  profileView.tableView.delegate = self
+      //  profileView.buttonOnline.isHidden = true
+       // profileView.buttonOffline.isHidden = true
+      //  profileView.buttonComing.isHidden = true
+        profileView.imagePromo.isHidden = true
+        profileView.labelCategory.isHidden = true
+        profileView.labelStreamInfo.isHidden = true
+        profileView.labelStreamDescription.isHidden = true
+        profileView.tableView.isHidden = false
+        
+      //  let bundle = Bundle(for: TimelineTableViewCell.self)
+      //  let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
+      //  let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell",
+      //      bundle: Bundle(url: nibUrl!)!)
+      //  self.profileView.tableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "ONLINE", userId: "\(userId)")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -130,6 +152,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.layoutIfNeeded()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
+       
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -275,7 +298,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
  
     func setUserProfile() {
        // bindingUser()
-        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),
+              let userId = UserDefaults.standard.string(forKey: Constants.userID) else { return }
      
         let name: String?
         if user?.fullName != nil {
@@ -284,13 +308,20 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         guard let n = name ,let imageUser = user?.avatarPath else { return }
         profileView.welcomeLabel.text =  n
         profileView.labelFollow.text = "Followers:" + "\(user?.channelSubscribeCount ?? 30)"
-        profileView.setImage(image: imageUser,
-        imagepromo: brodcast?.previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        profileView.labelStreamDescription.text = brodcast?.description
+        profileView.setImage(image: imageUser)
+      //  profileView.labelStreamDescription.text = brodcast.description
       //  profileView.setLabel(description: brodcast?.description, category: brodcast?.createdAt)
       //  profileView.setLabel(description: brodcast?.deleted, category: brodcast?.categories)
         
     }
+    
+    private func makeTableView() {
+        profileView.tableView.dataSource = self
+        profileView.tableView.delegate = self
+        profileView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        profileView.tableView.separatorStyle = .none
+    }
+    
     func actionButtonContinue() {
         profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
         profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
@@ -301,15 +332,21 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        bindingChanell(status: "ONLINE")
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "ONLINE", userId: "\(userId)")
         setUserProfile()
+        indexButton = 0
+        self.profileView.tableView.reloadData()
     }
     @objc func actionOffline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        bindingChanell(status: "OFFLINE")
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "OFFLINE", userId: "\(userId)")
         setUserProfile()
+        indexButton = 1
+        self.profileView.tableView.reloadData()
     
 
     }
@@ -317,8 +354,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
-        bindingChanell(status: "PLANNED")
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "PLANNED", userId: "\(userId)")
         setUserProfile()
+        indexButton = 2
+        self.profileView.tableView.reloadData()
 
     }
 //    func bindingUser() {
@@ -331,13 +371,12 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
 //            })
 //        }
     
-    func bindingChanell(status: String) {
-        takeChanell = fitMeetSream.getBroadcast(status: status)
+    func bindingChanell(status: String,userId: String) {
+        takeChanell = fitMeetSream.getBroadcastPrivate(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.brodcast = response.data?.last
-                    print(self.brodcast)
+                    self.brodcast = response.data!
                     self.profileView.reloadInputViews()
                 }
            })

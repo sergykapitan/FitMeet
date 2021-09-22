@@ -73,6 +73,7 @@
 		B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8EC26837CC400D75BE8 /* EditProfileCode.swift */; };
 		B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8F12684512900D75BE8 /* BaseViewController.swift */; };
 		B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A71263A80A500EC276B /* LiveStreamViewController.swift */; };
+		B48868FB26FB2F3800DD12A9 /* ExChanellVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */; };
 		B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */; };
 		B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */; };
 		B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */; };
@@ -272,6 +273,7 @@
 		B484E8EC26837CC400D75BE8 /* EditProfileCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileCode.swift; sourceTree = "<group>"; };
 		B484E8F12684512900D75BE8 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		B4858A71263A80A500EC276B /* LiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamViewController.swift; sourceTree = "<group>"; };
+		B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExChanellVC.swift; sourceTree = "<group>"; };
 		B48D8291262DAD4400F5A0D9 /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCode.swift; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 			children = (
 				B4163829268B09BB005BAA46 /* ChanellVC.swift */,
 				B416382D268B09CF005BAA46 /* ChanellCode.swift */,
+				B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */,
 			);
 			path = Chanell;
 			sourceTree = "<group>";
@@ -1367,6 +1370,7 @@
 				B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */,
 				B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
+				B48868FB26FB2F3800DD12A9 /* ExChanellVC.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,

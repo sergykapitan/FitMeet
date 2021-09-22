@@ -82,23 +82,16 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-    //    setupSearchBar()
+       setupSearchBar()
       //  self.searchController.searchBar.isTranslucent = false
        
-        searchView.segmentControll.anchor(top: self.view.topAnchor, left: searchView.cardView.leftAnchor, paddingTop: sizeSearchBar  ?? 140, paddingLeft: 20, height: 30)
+        
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        print("searchBAr === \(self.navigationItem.searchController?.searchBar.frame)")
         sizeSearchBar = self.navigationItem.searchController?.searchBar.frame.height
-        //
-//        view.addSubview(searchView.segmentControll)
-        
-   //     searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-//               view.addSubview(searchView.tableView)
-//               searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-
+        searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
 
     }
 
@@ -109,7 +102,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainView()
-        setupSearchBar()
+       // setupSearchBar()
         makeTableView()
         makeNavItem()
         binding(name: "a")

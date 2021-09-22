@@ -190,10 +190,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        print("let chanelId = \(listChanell.last?.id) \n ,let name = \(authView.textFieldName.text ) \n, let description = \(authView.textFieldDescription.text)   \n ,let planedDate = \(authView.textFieldStartDate.text)")
-        
-        
-        
+
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
@@ -329,13 +326,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.fetchStream(id: self.broadcast?.id, name: name)
                     
                     self.authView.textFieldName.text = ""
-                   // self.authView.textFieldStartDate.text = ""
                     self.authView.textFieldFree.text = ""
                     self.authView.textFieldAviable.text = ""
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
-                   // self.authView.imageButton.imageView?.image = nil
-                  //  self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
                     self.authView.imageButton.setImage(nil, for: .normal)
 
                 }
@@ -375,9 +369,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                         }
                     } else {
                         let channelVC = ChanellVC()
-                        self.present(channelVC, animated: true) {
-                            self.authView.textFieldStartDate.text = ""
-                        }
+                        self.navigationController?.pushViewController(channelVC, animated: true)
+                    
+//                        {
+//                            self.authView.textFieldStartDate.text = ""
+//                        }
+//             self.present(channelVC, animated: true) {
+//
+//                        }
                     }
                })
            }

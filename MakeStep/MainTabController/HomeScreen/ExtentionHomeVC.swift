@@ -27,7 +27,8 @@ extension HomeVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.setImage(image: listBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
-        
+        cell.imageEye.isHidden = false
+        cell.labelEye.isHidden = false
         
         
         cell.titleLabel.text = listBroadcast[indexPath.row].name
@@ -163,8 +164,8 @@ extension HomeVC: TagListViewDelegate {
         for i in self.listCategory {
             if i.title == st {
                 let detailVC = CategoryBroadcast()
-                detailVC.categoryid = i.id//filtredBroadcast[indexPath.row].id
-                detailVC.categoryTitle = i.title// filtredBroadcast[indexPath.row].title
+                detailVC.categoryid = i.id
+                detailVC.categoryTitle = i.title
                 navigationController?.pushViewController(detailVC, animated: true)
                 print("TITLe === \(i.title)\n ID == \(i.id) STSTSTSTST == \(st) ")
             }

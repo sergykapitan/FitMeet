@@ -10,7 +10,7 @@ import Kingfisher
 import AVFoundation
 import AVKit
 import UIKit
-
+import TagListView
 
 extension CategoryBroadcast: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -53,8 +53,13 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.labelEye.text = "\(self.watch)"
  
         let categorys = sortListCategory[indexPath.row].categories
-        let s = categorys!.map{$0.title!}.reduce("") { $0.title + " \u{0023}" + $1.title }  //
-        cell.labelCategory.text = s
+        let s = categorys!.map{$0.title!}
+        let arr = s.map { String("\u{0023}" + $0)}
+        cell.tagView.removeAllTags()
+        cell.tagView.addTags(arr)
+        cell.tagView.delegate = self
+        cell.tagView.isUserInteractionEnabled = true
+        cell.tagView.tag = indexPath.row
 
        
         
@@ -139,4 +144,17 @@ extension CategoryBroadcast: UITableViewDelegate {
 
     }
 
+}
+extension CategoryBroadcast: TagListViewDelegate {
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        print("Tag pressed: \(title), \(sender)")
+
+        for ta in sender.tagViews {
+        if ta.titleLabel?.text == title {
+        ta.isSelected = !ta.isSelected
+        }else{
+        ta.isSelected = false
+        }
+      }
+    }
 }
