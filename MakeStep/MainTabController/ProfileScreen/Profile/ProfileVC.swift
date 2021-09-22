@@ -15,7 +15,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     private var take: AnyCancellable?
  
     @Inject var fitMeetApi: FitMeetApi
-    var user: User?
+    var user: Users?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -103,6 +103,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     @objc func actionChanell() {
         let channelUs = ChanellVC()
       //  let channelUs = PresentVC()
+        channelUs.user = self.user
         channelUs.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(channelUs, animated: true)
     }

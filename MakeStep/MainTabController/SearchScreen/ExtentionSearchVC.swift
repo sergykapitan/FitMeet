@@ -122,9 +122,19 @@ extension SearchVC: UITableViewDelegate {
             
         } else if index == 1 {
             url = ""
-            return
+            let user = listUsers[indexPath.row]
+            print("USER ==== \(user)")
+            let channelUs = ChanellVC()
+            channelUs.user = user
+            channelUs.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(channelUs, animated: true)
+         
         } else if index == 2 {
             url = ""
+            let detailVC = CategoryBroadcast()
+            detailVC.categoryid = listCategory[indexPath.row].id
+            detailVC.categoryTitle = listCategory[indexPath.row].title
+            navigationController?.pushViewController(detailVC, animated: true)
             return
         }
 

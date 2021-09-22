@@ -19,6 +19,7 @@ target 'MakeStep' do
   pod 'Socket.IO-Client-Swift', '~> 16.0.1'
   pod 'Presentr'
   pod "EasyPeasy"
+  pod 'TagListView', '~> 1.0'
 
   # Pods for FitMeet
 

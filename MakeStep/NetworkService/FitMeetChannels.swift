@@ -91,7 +91,16 @@ class FitMeetChannels {
             .eraseToAnyPublisher()
     }
     
-    
+    public func getChannelsId(id: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)", method: .get, encoding: JSONEncoding.default)
+            //.validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ChannelResponce.self)
+            .value()
+            .print("getChannelsUserName")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     
     
     

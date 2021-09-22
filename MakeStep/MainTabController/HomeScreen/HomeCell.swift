@@ -7,6 +7,7 @@
 
 import UIKit
 import Kingfisher
+import TagListView
 
 //protocol NewsfeedCodeCellDelegate: AnyObject {
 //    func reavalPost(for cell: HomeCell)
@@ -66,6 +67,7 @@ final class HomeCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 2
+        label.isUserInteractionEnabled = true
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
@@ -104,6 +106,16 @@ final class HomeCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
+    }()
+    var tagView: TagListView = {
+        let tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 14)
+        tag.tagBackgroundColor = .clear
+        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        tag.selectedTextColor = .black
+       // tag.alignment = .center // possible values are [.leading, .trailing, .left, .center, .right]
+       // tag.minWidth = 57
+        return tag
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -148,8 +160,11 @@ final class HomeCell: UITableViewCell {
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         
-        bottomView.addSubview(labelCategory)
-        labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
+//        bottomView.addSubview(labelCategory)
+//        labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
+        
+        contentView.addSubview(tagView)
+        tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
         
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,

@@ -22,7 +22,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     
     
     
-    var user: User?
+    var user: Users?
     var imagePicker: ImagePicker!
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

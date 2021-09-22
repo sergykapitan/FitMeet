@@ -38,7 +38,7 @@ class CategoryBroadcastCell: UITableViewCell {
     }()
     let buttonLike: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
     let buttonMore: UIButton = {

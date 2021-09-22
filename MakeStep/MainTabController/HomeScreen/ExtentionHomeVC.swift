@@ -10,6 +10,8 @@ import Kingfisher
 import AVFoundation
 import AVKit
 import UIKit
+import TagListView
+//import
 
 
 extension HomeVC: UITableViewDataSource {
@@ -47,8 +49,21 @@ extension HomeVC: UITableViewDataSource {
         cell.labelEye.text = "\(self.watch)"
  
         let categorys = listBroadcast[indexPath.row].categories
-        let s = categorys!.map{$0.title!}.reduce("") { $0.title + " \u{0023}" + $1.title }  //
-        cell.labelCategory.text = s
+        let s = categorys!.map{$0.title!}
+        //let arrarID = categorys!.map{$0.id!}
+        //let fullStack = Dictionary(uniqueKeysWithValues: zip(s, arrarID))
+        //fullStack.tag = indexPath.row
+        //.reduce("") { $0.title +  + $1.title }
+        //let array = s.components(separatedBy: " ")
+        let arr = s.map { String("\u{0023}" + $0)}
+        cell.tagView.removeAllTags()
+        cell.tagView.addTags(arr)
+        cell.tagView.delegate = self
+        cell.tagView.isUserInteractionEnabled = true
+        cell.tagView.tag = indexPath.row
+  
+     
+        
 
        
         
@@ -101,8 +116,6 @@ extension HomeVC: UITableViewDataSource {
 
     }
     
-    
-    
 }
 extension HomeVC: UITableViewDelegate {
     
@@ -138,3 +151,31 @@ extension HomeVC: UITableViewDelegate {
 }
 
 
+extension HomeVC: TagListViewDelegate {
+    func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
+        print("Tag pressed: \(title), \(sender)")
+
+
+
+        var st = title
+        st.remove(at: st.startIndex)
+        
+        for i in self.listCategory {
+            if i.title == st {
+                let detailVC = CategoryBroadcast()
+                detailVC.categoryid = i.id//filtredBroadcast[indexPath.row].id
+                detailVC.categoryTitle = i.title// filtredBroadcast[indexPath.row].title
+                navigationController?.pushViewController(detailVC, animated: true)
+                print("TITLe === \(i.title)\n ID == \(i.id) STSTSTSTST == \(st) ")
+            }
+        }
+
+        for ta in sender.tagViews {
+        if ta.titleLabel?.text == title {
+        ta.isSelected = !ta.isSelected
+        }else{
+        ta.isSelected = false
+        }
+      }
+    }
+}

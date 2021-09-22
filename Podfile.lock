@@ -53,6 +53,7 @@ PODS:
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
   - Starscream (4.0.4)
+  - TagListView (1.4.1)
   - TimelineTableViewCell (2.2.2)
 
 DEPENDENCIES:
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - "MaterialComponents/Tabs+ColorThemer"
   - Presentr
   - Socket.IO-Client-Swift (~> 16.0.1)
+  - TagListView (~> 1.0)
   - TimelineTableViewCell
 
 SPEC REPOS:
@@ -89,6 +91,7 @@ SPEC REPOS:
     - Presentr
     - Socket.IO-Client-Swift
     - Starscream
+    - TagListView
     - TimelineTableViewCell
 
 SPEC CHECKSUMS:
@@ -108,8 +111,9 @@ SPEC CHECKSUMS:
   Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
+  TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: 7afb71d62d0f336d74b6a29f03d14ad8fca1f312
+PODFILE CHECKSUM: b31e91f8e08f8e654798ae273f0531670f1a1bdb
 
 COCOAPODS: 1.10.1

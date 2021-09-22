@@ -194,6 +194,16 @@ class FitMeetStream {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    public func getCategory() -> AnyPublisher<CategoryResponce,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+           // .validate(statusCode: 200..<25500)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: CategoryResponce.self)
+            .value()
+            .print("getCategory")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     
     
     

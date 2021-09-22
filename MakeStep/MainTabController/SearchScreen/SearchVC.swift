@@ -17,6 +17,11 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     private var takeBroadcast: AnyCancellable?
     private var takeUser: AnyCancellable?
     private var takeCategory: AnyCancellable?
+    
+    @Inject var makeStepChannel: FitMeetChannels
+    private var takeChannel: AnyCancellable?
+    
+    
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     
     var listBroadcast: [BroadcastResponce] = []
@@ -25,6 +30,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     var filterListUser:[Users] = []
     var listCategory: [Datum] = []
     var filerlistCategory: [Datum] = []
+    
+    var channelUser: ChannelResponce?
     
     var index: Int = 0
     var searchActive : Bool = false
@@ -60,7 +67,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
    
     
     let searchView = SearchVCCode()
- 
+    var sizeSearchBar: CGFloat?
     
     
     private let refreshControl = UIRefreshControl()
@@ -78,15 +85,16 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     //    setupSearchBar()
       //  self.searchController.searchBar.isTranslucent = false
        
+        searchView.segmentControll.anchor(top: self.view.topAnchor, left: searchView.cardView.leftAnchor, paddingTop: sizeSearchBar  ?? 140, paddingLeft: 20, height: 30)
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         print("searchBAr === \(self.navigationItem.searchController?.searchBar.frame)")
+        sizeSearchBar = self.navigationItem.searchController?.searchBar.frame.height
         //
 //        view.addSubview(searchView.segmentControll)
-        searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
-
+        
    //     searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
 //               view.addSubview(searchView.tableView)
 //               searchView.tableView.anchor(top: searchView.segmentControll.bottomAnchor, left: searchView.cardView.leftAnchor, right: searchView.cardView.rightAnchor, bottom: searchView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
@@ -132,6 +140,16 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 if response.data != nil  {
                     self.listUsers = response.data
                     self.searchView.tableView.reloadData()
+                   
+                }
+             })
+    }
+    func getChanell(id: Int) {
+        takeChannel = makeStepChannel.getChannelsId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.channelUser = response
                    
                 }
              })

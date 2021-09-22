@@ -11,7 +11,7 @@ import UIKit
 
 
 
-class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate {
+class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate{
     
     func change(to index: Int) {
         if index == 0 {
@@ -19,6 +19,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
            // guard let token =  self.token else { return }
             if token != nil {
                 binding()
+               // bindingCategory()
             } else {
                 bindingNotAuht()
             }
@@ -26,6 +27,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         if index == 1 {
             self.index = index
             bindingRecomandate()
+           // bindingCategory()
         }
         if index == 2 {
             self.index = index
@@ -49,7 +51,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
-    
+   // var fullStack = Dictionary<String, Int>().self
+   // var FULL = [[String :Int]].self
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
@@ -61,6 +64,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     
     
     var listBroadcast: [BroadcastResponce] = []
+    var listCategory: [Datum] = []
     private let refreshControl = UIRefreshControl()
    // var  playerContainerView: PlayerContainerView?
     var user: User?
@@ -95,7 +99,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
        // guard let token =  self.token else { return }
-        
+       // bindingCategory()
         if token != nil {
             binding()
         } else {
@@ -105,7 +109,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-
+        
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -168,6 +172,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.listBroadcast = response.data!
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
+                    self.bindingCategory()
                 }
         })
     }
@@ -252,6 +257,16 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.refreshControl.endRefreshing()
                 }
          })
+    }
+    func bindingCategory() {
+        takeBroadcast = fitMeetStream.getCategory()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listCategory = response.data!
+  
+                }
+        })
     }
         
     private func makeTableView() {

@@ -200,6 +200,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
         homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
+        homeView.buttonHelpCoach.isUserInteractionEnabled = false
        
        }
     
@@ -653,6 +654,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
         frame = self.view.frame
+        print("viewWillAppear ======= \(frame)")
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -1089,6 +1091,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
      
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 self.topOverlayConstant.constant = 8
+                print("FRAME ==== \(frame)")
                 self.view.frame = frame
                 self.bottomButtonChatConstant.constant = -80
                 self.view.layoutIfNeeded()

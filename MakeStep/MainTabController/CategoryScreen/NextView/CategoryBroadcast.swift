@@ -262,6 +262,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         categoryView.tableView.delegate = self
         categoryView.tableView.register(CategoryBroadcastCell.self, forCellReuseIdentifier: CategoryBroadcastCell.reuseID)
         categoryView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        categoryView.tableView.separatorStyle = .none
     }
     func connectUser (broadcastId:String?,channellId: String?) {
         guard let broadID = broadcastId,let id = channellId else { return }     

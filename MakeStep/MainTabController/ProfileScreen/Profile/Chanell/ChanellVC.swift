@@ -89,7 +89,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
     @Inject var fitMeetSream: FitMeetStream
-    var user: User?
+    var user: Users?
     var brodcast: BroadcastResponce?
 
     override  var shouldAutorotate: Bool {
@@ -123,18 +123,24 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
-        self.navigationController?.navigationBar.isHidden = false
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
         self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
+        self.navigationController?.navigationBar.isHidden = false
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
         profileView.imageLogoProfile.makeRounded()
+        //layout()
         setUserProfile()
+        
+        
+       
+
     }
     private func layout() {
         profileView.viewTop.translatesAutoresizingMaskIntoConstraints = false
@@ -186,6 +192,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
      heightConstant.isActive = true
      widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
      widthConstant.isActive = true
+     
 
     
     }
@@ -267,7 +274,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
    
  
     func setUserProfile() {
-        bindingUser()
+       // bindingUser()
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
      
         let name: String?
@@ -276,7 +283,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         } else { name = userName }
         guard let n = name ,let imageUser = user?.avatarPath else { return }
         profileView.welcomeLabel.text =  n
-        profileView.labelFollow.text = "Followers:" + "\(user?.channelFollowCount)"
+        profileView.labelFollow.text = "Followers:" + "\(user?.channelSubscribeCount ?? 30)"
         profileView.setImage(image: imageUser,
         imagepromo: brodcast?.previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         profileView.labelStreamDescription.text = brodcast?.description
@@ -314,15 +321,15 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         setUserProfile()
 
     }
-    func bindingUser() {
-        take = fitMeetApi.getUser()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
-                }
-            })
-        }
+//    func bindingUser() {
+//        take = fitMeetApi.getUser()
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.username != nil  {
+//                    self.user = response
+//                }
+//            })
+//        }
     
     func bindingChanell(status: String) {
         takeChanell = fitMeetSream.getBroadcast(status: status)
@@ -352,7 +359,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                   //  backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:40,height: 40)
+                    backButton.anchor(width:30,height: 30)
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
