@@ -15,6 +15,7 @@ struct ResponceLogin: Codable,Identifiable {
     let token: Token?
     let statusCode: Int?
     let message: String?
+    let messages: [String]?
     let error: String?
 }
 

@@ -10,6 +10,11 @@ import UIKit
 import Combine
 import Alamofire
 
+protocol CodeErrorDelegate: class {
+    
+    func codeError()
+
+}
 
 
 class NewPassword: UIViewController {
@@ -19,10 +24,10 @@ class NewPassword: UIViewController {
     private var takeUser: AnyCancellable?
     
     let signUpView = NewPasswordCode()
-    
+    weak var delegate: SignUpDelegate?
     
     typealias CompletionHandler = ( _ success:Bool) -> Void
-    weak var delegate: SignUpDelegate?
+    weak var delegateCode: CodeErrorDelegate?
     
     var userPhoneOreEmail: String?
     var verCode: String?
@@ -86,6 +91,12 @@ class NewPassword: UIViewController {
         if password1 == password2 {
             takePassword = fitMeetApi.resetOldPassword(code: code, resetOld: ResetOldPassword(password: password1, phone: phone, hash: hash))
                         .mapError({ (error) -> Error in
+                                    print("Erorrrorororro == \(error.localizedDescription)")
+                            if error.localizedDescription == "The operation couldn’t be completed. (MakeStep.FitMeetApi.DifferentError error 0.)" {
+                                print("!@#$%%^^&*&*(")
+                                self.delegateCode?.codeError()
+                                self.dismiss(animated: true, completion: nil)
+                            }
                                     return error })
                         .sink(receiveCompletion: { _ in }, receiveValue: { response in
                             if response {

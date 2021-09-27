@@ -13,8 +13,12 @@ import SwiftUI
 class FoggotPasswordViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
-    let passwordView = FoggotPasswordViewControllerCode()
     private var userSubscriber: AnyCancellable?
+    
+    let passwordView = FoggotPasswordViewControllerCode()
+    
+    
+    
     override  var shouldAutorotate: Bool {
         return false
     }
@@ -32,6 +36,8 @@ class FoggotPasswordViewController: UIViewController {
         passwordView.textFieldLogin.delegate = self
         passwordView.buttonContinue.isUserInteractionEnabled = false
         actionButtonContinue()
+        self.passwordView.alertImage.isHidden = true
+        self.passwordView.alertLabel.isHidden = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -51,21 +57,6 @@ class FoggotPasswordViewController: UIViewController {
     }
     private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
-
-//        userSubscriber = fitMeetApi.requestSecurityCode(phone: Phone(phone: phone  ))
-//            .mapError({ (error) -> Error in
-//                print(error)
-//                return error
-//            })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                print(response)
-//                if response {
-//                    let securityCode = SecurityCodeVC()
-//                    securityCode.userPhoneOreEmail = phone
-//                    self.present(securityCode, animated: true, completion: nil)
-//
-//                }
-//        })
  //       -------------------------------------------------------------------------------------------------
             userSubscriber = fitMeetApi.resetPassword(phone: Phone(phone: phone  ))
                 .mapError({ (error) -> Error in
@@ -80,6 +71,38 @@ class FoggotPasswordViewController: UIViewController {
                         securityCode.userPhoneOreEmail = phone
                         self.present(securityCode, animated: true, completion: nil)
 
+                    } else if response.message == "phone must be a valid phone number" {
+                        print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
+                        if self.passwordView.buttonContinue.frame.origin.y == 223.0 {
+                         
+                         UIView.animate(withDuration: 0.5) {
+                           self.passwordView.buttonContinue.frame.origin.y += 15
+                           self.passwordView.labelAccount.frame.origin.y += 15
+                           self.passwordView.buttonSignUp.frame.origin.y += 15
+                         } completion: { (bool) in
+                             if bool {
+                                 self.passwordView.alertImage.isHidden = false
+                                 self.passwordView.alertLabel.text = "phone must be a valid phone number"
+                                 self.passwordView.alertLabel.isHidden = false
+                             }
+                         }
+                      }
+                    } else if response.message == "error.user.notFound" {
+                        print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
+                        if self.passwordView.buttonContinue.frame.origin.y == 223.0 {
+                         
+                         UIView.animate(withDuration: 0.5) {
+                           self.passwordView.buttonContinue.frame.origin.y += 15
+                           self.passwordView.labelAccount.frame.origin.y += 15
+                           self.passwordView.buttonSignUp.frame.origin.y += 15
+                         } completion: { (bool) in
+                             if bool {
+                                 self.passwordView.alertImage.isHidden = false
+                                 self.passwordView.alertLabel.text = "This username is taken, please choose diffrent."
+                                 self.passwordView.alertLabel.isHidden = false
+                             }
+                         }
+                      }
                     }
             })
     }

@@ -22,6 +22,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     var broadcastId: String?
     var chanellId: String?
     var nickname: String?
+    var isLand:Bool = false
     
     weak var delegate: ClassUserDelegate?
     
@@ -53,7 +54,17 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
+        if isLand {
+            homeView.cardView.backgroundColor = .white
+        } else {
+            homeView.cardView.backgroundColor = .clear
+            homeView.cardView.layer.cornerRadius = 8
+            homeView.cardView.layer.borderWidth = 0.8
+            homeView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+        }
+        
+        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate

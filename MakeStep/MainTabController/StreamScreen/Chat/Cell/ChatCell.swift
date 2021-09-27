@@ -22,40 +22,40 @@ class ChatCell: BaseCell {
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
+      //  view.backgroundColor = .clear
             return view
         }()
     
     var bgView: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
-        v.backgroundColor = .clear
+      //  v.backgroundColor = .clear
         return v
     }()
     var topLabel: UILabel = {
         let v = UILabel()
-        v.backgroundColor = .clear
+       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var bottomLabel: UILabel = {
         let v = UILabel()
-        v.backgroundColor = .clear
+       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var statusLabel: UILabel = {
         let v = UILabel()
-        v.backgroundColor = .clear
+       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var textView: UITextView = {
         let v = UITextView()
-        v.backgroundColor = .clear
+       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()

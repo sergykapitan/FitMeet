@@ -57,8 +57,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
    
     }
-    private let popupOffset: CGFloat = -400
-    
+    private let popupOffset: CGFloat = -350
     private var bottomConstraint = NSLayoutConstraint()
     
     private var topConstraint = NSLayoutConstraint()
@@ -72,6 +71,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     private var topWelcomLabelConstant = NSLayoutConstraint()
     private var leftWelcomeLabelConstant = NSLayoutConstraint()
     private var centerWelcomeLabelConstant = NSLayoutConstraint()
+    private var rightWelcomLabel = NSLayoutConstraint()
     
     private var topOverlayConstant = NSLayoutConstraint()
     private var rightLandscape = NSLayoutConstraint()
@@ -81,17 +81,24 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     private var rightbuttonSubscribeConstant = NSLayoutConstraint()
     private var centerbuttonSubscribeConstant = NSLayoutConstraint()
     
+    private var bottomButtonChatConstant = NSLayoutConstraint()
+    
     
     let profileView = ChanellCode()
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
- 
+    private var followBroad: AnyCancellable?
+    
+    
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
-    @Inject var fitMeetSream: FitMeetStream
+    @Inject var fitMeetStream: FitMeetStream
     var user: Users?
     var brodcast: [BroadcastResponce] = []
     var indexButton: Int = 0
+    let actionSheetTransitionManager = ActionSheetTransitionManager()
+    var url: String?
+    var usersd = [Int: User]()
 
     override  var shouldAutorotate: Bool {
         return false
@@ -170,52 +177,181 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
         profileView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
         profileView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
-    // homeView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
-   //  homeView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
+        profileView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
+        profileView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
      
      view.addSubview(profileView.viewTop)
      view.addSubview(profileView.imageLogoProfile)
      view.addSubview(profileView.welcomeLabel)
      view.addSubview(profileView.labelFollow)
+        
+        view.addSubview(profileView.buttonHelpCoach)
+        
+        view.addSubview(profileView.buttonSubscribe)
+        view.addSubview(profileView.buttonFollow)
+        view.addSubview(profileView.buttonInstagram)
+        view.addSubview(profileView.buttonTwiter)
+        view.addSubview(profileView.buttonfaceBook)
+        view.addSubview(profileView.labelINTVideo)
+        view.addSubview(profileView.labelVideo)
+        view.addSubview(profileView.labelINTFollows)
+        view.addSubview(profileView.labelFollows)
+        view.addSubview(profileView.labelINTFolowers)
+        view.addSubview(profileView.labelFolowers)
+        view.addSubview(profileView.labelDescription)
 
+//        profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+//        profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+//     bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: -400)
+//     bottomConstraint.isActive = true
+//        profileView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
+//
+//        profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
+//        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
+//
+//
+//     topWelcomLabelConstant = profileView.welcomeLabel.topAnchor.constraint(equalTo: profileView.imageLogoProfile.topAnchor, constant: 0)
+//     topWelcomLabelConstant.isActive = true
+//
+//     leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
+//     leftWelcomeLabelConstant.isActive = true
+//
+//     centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
+//     centerWelcomeLabelConstant.isActive = false
+//
+//
+//     leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
+//     leftConstant.isActive = true
+//
+//
+//     botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
+//     botConstant.isActive = true
+//
+//     topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
+//     topConstraint.isActive = false
+//
+//     centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
+//     centerConstant.isActive = false
+//
+//     heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
+//     heightConstant.isActive = true
+//     widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
+//     widthConstant.isActive = true
         profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-     bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: -400)
-     bottomConstraint.isActive = true
-        profileView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
+        bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
+        bottomConstraint.isActive = true
+        profileView.viewTop.heightAnchor.constraint(equalToConstant: 450).isActive = true
 
         profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
-     
+        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
+        
 
-     topWelcomLabelConstant = profileView.welcomeLabel.topAnchor.constraint(equalTo: profileView.imageLogoProfile.topAnchor, constant: 0)
-     topWelcomLabelConstant.isActive = true
-     
-     leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
-     leftWelcomeLabelConstant.isActive = true
-     
-     centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
-     centerWelcomeLabelConstant.isActive = false
-     
+       // topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
+        topWelcomLabelConstant = profileView.welcomeLabel.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor, constant: 0)
+        topWelcomLabelConstant.isActive = true
+        
+        rightWelcomLabel = profileView.welcomeLabel.trailingAnchor.constraint(equalTo: profileView.buttonSubscribe.leadingAnchor, constant: -5)
+        rightWelcomLabel.isActive = true
+        
+        leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
+        leftWelcomeLabelConstant.isActive = true
+        
+        centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
+        centerWelcomeLabelConstant.isActive = false
+        
 
-     leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
-     leftConstant.isActive = true
-     
-     
-     botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
-     botConstant.isActive = true
-     
-     topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
-     topConstraint.isActive = false
-     
-     centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
-     centerConstant.isActive = false
-     
-     heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
-     heightConstant.isActive = true
-     widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
-     widthConstant.isActive = true
-     
+        leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
+        leftConstant.isActive = true
+        
+        
+        botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
+        botConstant.isActive = true
+        
+        topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
+        topConstraint.isActive = false
+        
+        centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
+        centerConstant.isActive = false
+        
+        heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
+        heightConstant.isActive = true
+        widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
+        widthConstant.isActive = true
+
+        
+        topbuttonSubscribeConstant = profileView.buttonSubscribe.topAnchor.constraint(equalTo: profileView.welcomeLabel.bottomAnchor, constant: 20)
+        topbuttonSubscribeConstant.isActive = false
+        leftbuttonSubscribeConstant = profileView.buttonSubscribe.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 18)
+        leftbuttonSubscribeConstant.isActive = false
+        
+        rightbuttonSubscribeConstant = profileView.buttonSubscribe.trailingAnchor.constraint(equalTo: profileView.trailingAnchor, constant: -10)
+        rightbuttonSubscribeConstant.isActive = true
+        centerbuttonSubscribeConstant = profileView.buttonSubscribe.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor)
+        centerbuttonSubscribeConstant.isActive = true
+        
+        
+        profileView.buttonSubscribe.anchor( width: 90, height: 28)
+        profileView.buttonFollow.anchor( width: 90, height: 28)
+        
+        
+        profileView.buttonFollow.anchor(top: profileView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
+        profileView.buttonFollow.centerX(inView: profileView.viewTop)
+ 
+       
+        profileView.buttonInstagram.anchor(  right: profileView.cardView.rightAnchor,paddingRight: 17, width: 28, height: 28)
+        profileView.buttonInstagram.centerY(inView: profileView.buttonSubscribe)
+        
+        
+        
+        profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 8,  width: 28, height: 28)
+        profileView.buttonTwiter.centerY(inView: profileView.buttonInstagram)
+
+        
+        profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 8, width: 28, height: 28)
+        profileView.buttonfaceBook.centerY(inView: profileView.buttonInstagram)
+        
+        
+ 
+       // homeView.labelVideo.alpha = 0
+        self.profileView.buttonFollow.alpha = 0
+        self.profileView.buttonInstagram.alpha = 0
+        self.profileView.buttonTwiter.alpha = 0
+        self.profileView.buttonfaceBook.alpha = 0
+        self.profileView.labelINTVideo.alpha = 0
+        self.profileView.labelVideo.alpha = 0
+        self.profileView.labelINTFollows.alpha = 0
+        self.profileView.labelFollows.alpha = 0
+        self.profileView.labelINTFolowers.alpha = 0
+        self.profileView.labelFolowers.alpha = 0
+        self.profileView.labelDescription.alpha = 0
+       
+        
+        profileView.labelINTVideo.anchor(top: profileView.buttonSubscribe.bottomAnchor, left: profileView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
+         
+        profileView.labelVideo.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+        profileView.labelVideo.centerX(inView: profileView.labelINTVideo)
+        
+        
+        profileView.labelINTFollows.anchor(top: profileView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
+        profileView.labelINTFollows.centerX(inView: profileView.buttonFollow)
+        
+        
+        profileView.labelFollows.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+        profileView.labelFollows.centerX(inView: profileView.viewTop)
+        
+  
+        profileView.labelINTFolowers.anchor(top: profileView.buttonSubscribe.bottomAnchor, right: profileView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
+        
+        profileView.labelFolowers.anchor(top: profileView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+        profileView.labelFolowers.centerX(inView: profileView.labelINTFolowers)
+        
+        
+        profileView.labelDescription.anchor(top: profileView.labelFollows.bottomAnchor, left: profileView.viewTop.leftAnchor, right: profileView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
+        
+        profileView.buttonHelpCoach.anchor(bottom:profileView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
+        profileView.buttonHelpCoach.centerX(inView: profileView.viewTop)
+        profileView.buttonHelpCoach.isUserInteractionEnabled = false
 
     
     }
@@ -294,25 +430,45 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             ()
         }
     }
-   
+    @objc func actionSubscribe() {
+        profileView.buttonSubscribe.isSelected.toggle()
+        
+        if profileView.buttonSubscribe.isSelected {
+            profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
+            profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+            profileView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+
+        } else {
+            profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
+            profileView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+            profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        }
+
+    }
+    @objc func actionFollow() {
+        profileView.buttonFollow.isSelected.toggle()
+        
+        if profileView.buttonFollow.isSelected {
+            profileView.buttonFollow.backgroundColor = UIColor(hexString: "#3B58A4")
+            profileView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+
+        } else {
+            profileView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
+            profileView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        }
+
+    }
  
     func setUserProfile() {
-       // bindingUser()
-        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),
-              let userId = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-     
-        let name: String?
-        if user?.fullName != nil {
-            name = user?.fullName
-        } else { name = userName }
-        guard let n = name ,let imageUser = user?.avatarPath else { return }
-        profileView.welcomeLabel.text =  n
-        profileView.labelFollow.text = "Followers:" + "\(user?.channelSubscribeCount ?? 30)"
-        profileView.setImage(image: imageUser)
-      //  profileView.labelStreamDescription.text = brodcast.description
-      //  profileView.setLabel(description: brodcast?.description, category: brodcast?.createdAt)
-      //  profileView.setLabel(description: brodcast?.deleted, category: brodcast?.categories)
-        
+
+        profileView.setImage(image: user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+        guard let follow = user?.channelFollowCount,let fullName = user?.fullName!,let sub = user?.channelSubscribeCount!  else { return }
+        profileView.labelFollow.text = "Followers:" + "\(follow)"
+        self.profileView.welcomeLabel.text = fullName
+        self.profileView.labelINTFollows.text = "\(follow)"
+        self.profileView.labelINTFolowers.text = "\(sub)"
+        self.profileView.labelDescription.text = " Welcome to my channel!\n My name is \(fullName)"
+ 
     }
     
     private func makeTableView() {
@@ -326,27 +482,36 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
         profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
+        profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+        
+        
 
     }
     @objc func actionOnline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+       
         guard let userId = user?.id else { return }
         bindingChanell(status: "ONLINE", userId: "\(userId)")
         setUserProfile()
         indexButton = 0
-        self.profileView.tableView.reloadData()
+        
+      //  self.profileView.tableView.reloadData()
     }
     @objc func actionOffline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+       
         guard let userId = user?.id else { return }
         bindingChanell(status: "OFFLINE", userId: "\(userId)")
         setUserProfile()
         indexButton = 1
-        self.profileView.tableView.reloadData()
+        
+      //  self.profileView.tableView.reloadData()
     
 
     }
@@ -354,33 +519,55 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
+        
+        
         guard let userId = user?.id else { return }
         bindingChanell(status: "PLANNED", userId: "\(userId)")
         setUserProfile()
         indexButton = 2
-        self.profileView.tableView.reloadData()
+        
+       // self.profileView.tableView.reloadData()
 
     }
-//    func bindingUser() {
-//        take = fitMeetApi.getUser()
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.username != nil  {
-//                    self.user = response
-//                }
-//            })
-//        }
-    
+
     func bindingChanell(status: String,userId: String) {
-        takeChanell = fitMeetSream.getBroadcastPrivate(status: status, userId: userId)
+        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.brodcast = []
                     self.brodcast = response.data!
-                    self.profileView.reloadInputViews()
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.profileView.tableView.reloadData()
                 }
            })
        }
+    func followBroadcast(id: Int) {
+        followBroad = fitMeetStream.followBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.categories != nil {
+                }
+          })
+    }
+    func unFollowBroadcast(id: Int) {
+        followBroad = fitMeetStream.unFollowBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+             
+         })
+    }
+    func bindingUserMap(ids: [Int])  {
+        take = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.usersd = response.data
+                    self.profileView.tableView.reloadData()
+                }
+          })
+    }
  
     @objc func actionEditProfile() {
 
@@ -438,15 +625,53 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
-                self.bottomConstraint.constant = -100
-              
-                self.profileView.labelFollow.transform = CGAffineTransform(scaleX: 1.6, y: 1.6).concatenating(CGAffineTransform(translationX: 0, y: 15))
-                self.profileView.labelFollow.transform = .identity
+                print("OPEN FIRST")
+                
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+
+                   self.heightConstant.constant = 90
+                   self.widthConstant.constant = 90
+                   self.bottomConstraint.constant = -100
+                   self.centerConstant.isActive = true
+                   self.topConstraint.isActive = true
+                   self.leftConstant.isActive = false
+                   self.botConstant.isActive = false
+                   self.leftWelcomeLabelConstant.isActive = false
+                   self.topWelcomLabelConstant.constant = 80
+                   self.rightWelcomLabel.isActive = false
+                   self.centerWelcomeLabelConstant.isActive = true
+                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                   self.profileView.labelFollow.isHidden = true
+                self.profileView.imageLogoProfile.makeRounded()
+
             case .closed:
+                print("CLOSE FIRST")
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
+                
                 self.bottomConstraint.constant = self.popupOffset
-               
-                self.profileView.labelFollow.transform = .identity
-                self.profileView.labelFollow.transform = CGAffineTransform(scaleX: 0.65, y: 0.65).concatenating(CGAffineTransform(translationX: 0, y: -15))
+                   self.heightConstant.constant = 70
+                   self.widthConstant.constant = 70
+                   self.topConstraint.isActive = false
+                   self.centerConstant.isActive = false
+                   self.leftConstant.isActive = true
+                   self.botConstant.isActive = true
+                   self.rightWelcomLabel.isActive = true
+                   self.topWelcomLabelConstant.isActive = true
+                   self.leftWelcomeLabelConstant.isActive = true
+                   self.topWelcomLabelConstant.constant = 0
+                   self.centerWelcomeLabelConstant.isActive = false
+                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                   self.profileView.labelFollow.isHidden = false
+                
+                
+                
+                self.profileView.imageLogoProfile.makeRounded()
             }
             self.view.layoutIfNeeded()
         })
@@ -467,9 +692,55 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             // manually reset the constraint positions
             switch self.currentState {
             case .open:
-                self.bottomConstraint.constant = -100
+                print("OPEN SECOND")
+                
+                self.rightbuttonSubscribeConstant.isActive = false
+                self.centerbuttonSubscribeConstant.isActive = false
+                self.topbuttonSubscribeConstant.isActive = true
+                self.leftbuttonSubscribeConstant.isActive = true
+
+                   self.heightConstant.constant = 90
+                   self.widthConstant.constant = 90
+                   self.bottomConstraint.constant = -100
+                   self.centerConstant.isActive = true
+                   self.topConstraint.isActive = true
+                   self.leftConstant.isActive = false
+                   self.botConstant.isActive = false
+                   self.leftWelcomeLabelConstant.isActive = false
+                   self.rightWelcomLabel.isActive = false
+                   self.topWelcomLabelConstant.constant = 80
+                   self.centerWelcomeLabelConstant.isActive = true
+                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                   self.profileView.labelFollow.isHidden = true
+                self.profileView.imageLogoProfile.makeRounded()
+
+             
             case .closed:
+                print("CLOSE SECOND")
+                self.rightbuttonSubscribeConstant.isActive = true
+                self.centerbuttonSubscribeConstant.isActive = true
+                self.topbuttonSubscribeConstant.isActive = false
+                self.leftbuttonSubscribeConstant.isActive = false
+                
                 self.bottomConstraint.constant = self.popupOffset
+                   self.heightConstant.constant = 70
+                   self.widthConstant.constant = 70
+                   self.topConstraint.isActive = false
+                   self.centerConstant.isActive = false
+                   self.leftConstant.isActive = true
+                   self.botConstant.isActive = true
+                   self.rightWelcomLabel.isActive = true
+                   self.topWelcomLabelConstant.isActive = true
+                   self.leftWelcomeLabelConstant.isActive = true
+                   self.topWelcomLabelConstant.constant = 0
+                   self.centerWelcomeLabelConstant.isActive = false
+                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                   self.profileView.labelFollow.isHidden = false
+                
+                
+                
+                self.profileView.imageLogoProfile.makeRounded()
+     
             }
             
             // remove all running animators
@@ -481,9 +752,35 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         let inTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeIn, animations: {
             switch state {
             case .open:
-                self.profileView.labelFollow.alpha = 1
+                print("OPEN FIR")
+                self.profileView.labelVideo.alpha = 0
+                self.profileView.buttonFollow.alpha = 0
+                self.profileView.buttonInstagram.alpha = 0
+                self.profileView.buttonTwiter.alpha = 0
+                self.profileView.buttonfaceBook.alpha = 0
+                self.profileView.labelINTVideo.alpha = 0
+                self.profileView.labelVideo.alpha = 0
+                self.profileView.labelINTFollows.alpha = 0
+                self.profileView.labelFollows.alpha = 0
+                self.profileView.labelINTFolowers.alpha = 0
+                self.profileView.labelFolowers.alpha = 0
+                self.profileView.labelDescription.alpha = 0
+                
+               
             case .closed:
-                self.profileView.labelFollow.alpha = 1
+                print("Close FIR")
+                self.profileView.labelVideo.alpha = 0
+                self.profileView.buttonFollow.alpha = 0
+                self.profileView.buttonInstagram.alpha = 0
+                self.profileView.buttonTwiter.alpha = 0
+                self.profileView.buttonfaceBook.alpha = 0
+                self.profileView.labelINTVideo.alpha = 0
+                self.profileView.labelVideo.alpha = 0
+                self.profileView.labelINTFollows.alpha = 0
+                self.profileView.labelFollows.alpha = 0
+                self.profileView.labelINTFolowers.alpha = 0
+                self.profileView.labelFolowers.alpha = 0
+                self.profileView.labelDescription.alpha = 0
             }
         })
         inTitleAnimator.scrubsLinearly = false
@@ -491,12 +788,38 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         // an animator for the title that is transitioning out of view
         let outTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut, animations: {
             switch state {
-            case .open:
-                self.profileView.labelFollow.alpha = 0
-            case .closed:
-                self.profileView.labelFollow.alpha = 0
-            }
-        })
+                case .open:
+                    print("OPEN Sec")
+                    self.profileView.labelVideo.alpha = 1
+                    self.profileView.buttonFollow.alpha = 1
+                    self.profileView.buttonInstagram.alpha = 1
+                    self.profileView.buttonTwiter.alpha = 1
+                    self.profileView.buttonfaceBook.alpha = 1
+                    self.profileView.labelINTVideo.alpha = 1
+                    self.profileView.labelVideo.alpha = 1
+                    self.profileView.labelINTFollows.alpha = 1
+                    self.profileView.labelFollows.alpha = 1
+                    self.profileView.labelINTFolowers.alpha = 1
+                    self.profileView.labelFolowers.alpha = 1
+                    self.profileView.labelDescription.alpha = 1
+             
+                case .closed:
+                    print("Close sec")
+                    self.profileView.labelVideo.alpha = 0
+                    self.profileView.buttonFollow.alpha = 0
+                    self.profileView.buttonInstagram.alpha = 0
+                    self.profileView.buttonTwiter.alpha = 0
+                    self.profileView.buttonfaceBook.alpha = 0
+                    self.profileView.labelINTVideo.alpha = 0
+                    self.profileView.labelVideo.alpha = 0
+                    self.profileView.labelINTFollows.alpha = 0
+                    self.profileView.labelFollows.alpha = 0
+                    self.profileView.labelINTFolowers.alpha = 0
+                    self.profileView.labelFolowers.alpha = 0
+                    self.profileView.labelDescription.alpha = 0
+                   
+                }
+            })
         outTitleAnimator.scrubsLinearly = false
         
         // start all animators

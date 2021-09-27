@@ -14,11 +14,11 @@ final class ChatVCPlayerCode: UIView {
     
     let cardView: UIView = {
         let view = UIView()
-        view.backgroundColor = .clear
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 0.8
-        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+//        view.layer.cornerRadius = 8
+//        view.layer.borderWidth = 0.8
+//        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         return view
         }()
     var tableView: UITableView = {
@@ -96,7 +96,7 @@ final class ChatVCPlayerCode: UIView {
         labelComm.centerY(inView: buttonComm)
         
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 60 ,height: 60)
+        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
         
 //        cardView.addSubview(textView)
 //        textView.anchor(left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 10)//,height: 40

@@ -9,6 +9,8 @@ import Foundation
 
 struct ResetPassword: Codable {
     let hash: String?
+    let messages: [String]?
+    let message: String?
 }
 
 

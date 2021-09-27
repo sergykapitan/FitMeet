@@ -32,18 +32,17 @@ extension HomeVC: UITableViewDataSource {
         
         
         cell.titleLabel.text = listBroadcast[indexPath.row].name
-        guard let category = listBroadcast[indexPath.row].categories?.first?.title,
-              let category2 = listBroadcast[indexPath.row].categories?.last?.title,
+        guard 
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
-              else { return cell}
+        else { return cell}
 
-        self.arrayIdUser.append(id)
+      //  self.arrayIdUser.append(id)
        // self.bindingUserMap(ids: arrayIdUser)
-        self.bindingUser(id: id)
-        let us = usersd.map { key,user in
-            return user
-        }
+      //  self.bindingUser(id: id)
+      //  let us = usersd.map { key,user in
+      //      return user
+      //  }
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
@@ -51,33 +50,23 @@ extension HomeVC: UITableViewDataSource {
  
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
-        //let arrarID = categorys!.map{$0.id!}
-        //let fullStack = Dictionary(uniqueKeysWithValues: zip(s, arrarID))
-        //fullStack.tag = indexPath.row
-        //.reduce("") { $0.title +  + $1.title }
-        //let array = s.components(separatedBy: " ")
+
+
         let arr = s.map { String("\u{0023}" + $0)}
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
-  
-     
-        
-
-       
+      
         
         if listBroadcast[indexPath.row].isFollow ?? false {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
-    
-        print("SELF US ==== \(us.count)")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
-        }
+  
+        
        
         self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         
@@ -89,8 +78,8 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        
-        
+        cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+
         
         return cell
     }
@@ -144,8 +133,10 @@ extension HomeVC: UITableViewDelegate {
         vc.id = id
         vc.Url = Url
         vc.broadcast = self.listBroadcast[indexPath.row]
+        print("Url === \(url)")
         vc.follow = "\(follow)"
         vc.broadId = broadcastID
+        print("ID ===== \(id) \n URLLLLL ==== \(Url) \n Brpadcast ==== \(self.listBroadcast[indexPath.row]) \n Follow ====== \(follow)\n broadID === \(broadcastID)\n CHanelll ==== \(channelId)")
         navigationController?.pushViewController(vc, animated: true)
 
     }

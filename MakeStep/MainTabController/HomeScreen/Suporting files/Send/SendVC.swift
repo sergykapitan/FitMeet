@@ -43,10 +43,10 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
   //.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 10),
-            butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
-            butH.heightAnchor.constraint(equalToConstant:15),
-            butH.widthAnchor.constraint(equalToConstant: 32),
+            butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
+            butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 5),
+            butH.heightAnchor.constraint(equalToConstant:35),
+            butH.widthAnchor.constraint(equalToConstant: 45),
             
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),

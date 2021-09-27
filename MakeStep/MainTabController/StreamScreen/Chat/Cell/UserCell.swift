@@ -27,7 +27,7 @@ class UserCell: BaseCell {
     var titleLabel: UILabel =  {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(hexString: "#FFFFFF")        
+        label.textColor = .black //UIColor(hexString: "#FFFFFF")        
         return label
     }()
 

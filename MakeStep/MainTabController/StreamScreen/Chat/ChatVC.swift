@@ -7,6 +7,7 @@
 
 import Combine
 import UIKit
+import EasyPeasy
 
 
 protocol ClassBVCDelegate: class {
@@ -23,16 +24,27 @@ class CellIds {
 }
 
 
-class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
+class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
       
     let chatView = ChatVCCode()
     var nickname: String?
     var chatMessages = [[String: String]]()
     var bannerLabelTimer: Timer!
     var messHistory: [Datums]?
+    var isLand:Bool = false
     
-    var color: UIColor?
-    var tint: UIColor?
+   // var color: UIColor?
+  //  var tint: UIColor?
+    
+    private lazy var textView = UITextView(frame: CGRect.zero)
+    private var isOversized = false {
+            didSet {
+                self.textView.easy.reload()
+                self.textView.isScrollEnabled = isOversized
+            }
+        }
+        
+        private let maxHeight: CGFloat = 100
     
     //MARK: step 2 Create a delegate property here.
     weak var delegate: ClassBVCDelegate?
@@ -53,6 +65,24 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     //MARK - LifeCicle
     override func loadView() {
         view = chatView
+        
+        self.textView.delegate = self
+               
+        self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
+        
+        //UIColor.gray.withAlphaComponent(0.5).cgColor
+        self.textView.layer.borderWidth = 1.5
+        self.textView.layer.cornerRadius = 20
+        self.textView.clipsToBounds = true
+        self.textView.font =  UIFont.systemFont(ofSize: 18)
+        self.view.addSubview(self.textView)
+        self.textView.clipsToBounds = true
+        self.textView.isScrollEnabled = false
+        
+        self.textView.easy.layout(Left(5),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
+        self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
+        textView.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
+        self.textView.delegate = self
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -78,8 +108,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        chatView.backgroundColor =  .clear
-       // makeTableView()
+        chatView.backgroundColor =  .white
         makeNavItem()
         actionButton()
         chatView.tableView.refreshControl = refreshControl
@@ -87,7 +116,14 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         chatView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
         // Do any additional setup after loading the view.
-        
+        if isLand {
+            chatView.cardView.backgroundColor = .white
+        } else {
+           // chatView.cardView.backgroundColor = .clear
+            chatView.cardView.layer.cornerRadius = 8
+            chatView.cardView.layer.borderWidth = 0.8
+            chatView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+        }
         registerForKeyboardNotifications()
         
         NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
@@ -99,7 +135,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        chatView.backgroundColor = color
+       // chatView.backgroundColor = color
 
         guard let broadId = broadcastId,let channelId = chanellId else { return }
             SocketIOManager.sharedInstance.getTokenChat()
@@ -149,14 +185,14 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
       
-        
-        if chatView.textView.text.count > 0 {
-            SocketIOManager.sharedInstance.sendMessage( message: ["text" : chatView.textView.text!], withNickname: "\(name)")
+        print("CHATCOUNR = == == =  ==\( chatView.textView.text.count)")
+        if textView.text.count > 0 {
+            SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
             self.nickname = name
            // self.chatMessages.append(["nickname":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
-            chatView.textView.text = ""
-            chatView.textView.resignFirstResponder()
+            textView.text = ""
+            textView.resignFirstResponder()
             SocketIOManager.sharedInstance.getChatMessage { (old) in
                print( "OLD ====== \(old)")
             }
@@ -243,6 +279,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         chatView.tableView.estimatedRowHeight = 90.0
         chatView.tableView.rowHeight = UITableView.automaticDimension
         chatView.tableView.tableFooterView = UIView(frame: .zero)
+        chatView.tableView.separatorStyle = .none
     }
     
     func registerForKeyboardNotifications() {
@@ -250,29 +287,28 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     NotificationCenter.default.addObserver(self, selector:
     #selector(keyboardWillBeHidden(_:)),name: UIResponder.keyboardWillHideNotification, object: nil)
     }
+    
+    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
         let info = notificiation.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-
+        
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            if self.chatView.cardView.frame.origin.y == 0{
-            self.chatView.cardView.frame.origin.y -= keyboardFrame.size.height
+            self.textView.easy.layout(Bottom(keyboardFrame.size.height + 10))
             self.view.layoutIfNeeded()
-            }
-            })
+
+        })
     }
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
        // write source code handle when keyboard will be hidden
-        let info = notification.userInfo!
-        let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-
-        
-        UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            self.chatView.cardView.frame.origin.y += keyboardFrame.height
-            self.view.layoutIfNeeded()
-            })
+         let info = notification.userInfo!
+         UIView.animate(withDuration: 0.1, animations: { () -> Void in
+             self.textView.easy.layout(Bottom(20))
+            // self.textView.frame.origin.y = 587.0//keyboardFrame.size.height
+             self.view.layoutIfNeeded()
+             })
       
     }
 
@@ -393,8 +429,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
 extension ChatVC: UITextFieldDelegate {
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            if textField == chatView.textView {
-                self.chatView.textView.resignFirstResponder()
+            if textField == textView {
+                self.textView.resignFirstResponder()
             }
             return true
         }
@@ -426,7 +462,7 @@ extension ChatVC: UITableViewDataSource {
 if senderNickname == nic {
           if let cell = tableView.dequeueReusableCell(withIdentifier: "senderCellId", for: indexPath) as? ChatCell {
                 cell.selectionStyle = .none
-                cell.backgroundColor = .clear
+            cell.backgroundColor = .clear
                 cell.topLabel.text = senderNickname
                 cell.textView.text = message
                 cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
@@ -458,7 +494,7 @@ if senderNickname == nic {
     // MARK: UIGestureRecognizerDelegate Methods
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                let headerView = UIView()
-               headerView.backgroundColor = .clear
+              // headerView.backgroundColor = .clear
                return headerView
            }
 

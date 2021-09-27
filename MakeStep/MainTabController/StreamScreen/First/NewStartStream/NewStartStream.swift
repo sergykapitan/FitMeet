@@ -37,6 +37,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var image: String?
     
     var name: String = "JOPE"
+    var user: Users?
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
@@ -103,6 +104,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         super.viewDidLoad()
         makeNavItem()
         bindingChanell()
+        bindingUser()
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -300,6 +302,16 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
+    func bindingUser() {
+        take = fitMeetApi.getUser()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.username != nil  {
+                    self.user = response
+                    
+                }
+        })
+    }
     func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
 
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
@@ -369,6 +381,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                         }
                     } else {
                         let channelVC = ChanellVC()
+                        channelVC.user = self.user
                         self.navigationController?.pushViewController(channelVC, animated: true)
                     
 //                        {

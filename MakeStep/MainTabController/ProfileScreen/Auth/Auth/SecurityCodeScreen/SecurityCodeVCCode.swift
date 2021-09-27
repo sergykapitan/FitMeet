@@ -54,6 +54,19 @@ final class SecurityCodeVCCode: UIView {
         button.layer.cornerRadius = 19
         return button
     }()
+    let alertImage: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "alert-triangle")
+        return image
+    }()    
+    let alertLabel: UILabel = {
+        let label = UILabel()
+       // label.text = "This phone number is taken, please choose diffrent"
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = .red//UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
+    }()
    
     // MARK: - Init
     init() {
@@ -90,6 +103,13 @@ final class SecurityCodeVCCode: UIView {
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 20, paddingLeft: 10, paddingRight: 10, height: 39)
+        textFieldCode.addSubview(alertImage)
+        alertImage.anchor( right: textFieldCode.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldCode)
+        
+        cardView.addSubview(alertLabel)
+        alertLabel.anchor(top: textFieldCode.bottomAnchor, paddingTop: 5)
+        alertLabel.centerX(inView: cardView)
         
         cardView.addSubview(buttonSendCode)
         buttonSendCode.anchor(top: textFieldCode.bottomAnchor,

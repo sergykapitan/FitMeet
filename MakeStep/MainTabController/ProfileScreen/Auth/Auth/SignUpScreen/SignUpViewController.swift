@@ -14,6 +14,7 @@ protocol SignUpDelegate: class {
     
     func changeAlert()
     func changeMail()
+    func changePhone()
 
 }
 
@@ -104,7 +105,11 @@ class SignUpViewController: UIViewController {
                 } else if response.message == "error.user.emailExist" {
                     self.delegate?.changeMail()
                     self.dismiss(animated: true, completion: nil)
-                }else if response.message == "error.user.usernameExist"{
+                } else if response.message == "phone must be a valid phone number" {
+                    self.delegate?.changePhone()
+                    self.dismiss(animated: true, completion: nil)
+                }
+                else if response.message == "error.user.usernameExist"{
                     
                     print("HHHH ==\(self.signUpView.textFieldPassword.frame.origin.y)")
                     

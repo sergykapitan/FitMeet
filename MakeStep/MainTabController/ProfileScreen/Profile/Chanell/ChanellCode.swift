@@ -41,6 +41,7 @@ final class ChanellCode: UIView {
     var welcomeLabel: UILabel = {
         let label = UILabel()
         label.textColor = .black
+        label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -111,8 +112,105 @@ final class ChanellCode: UIView {
         table.backgroundColor = UIColor(hexString: "#F6F6F6")
         return table
     }()
-    
-    
+    var buttonHelpCoach: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
+        return button
+    }()
+    var buttonSubscribe: UIButton = {
+        var button = UIButton()
+        button.setTitle("Subscribers", for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = .white //UIColor(hexString: "#DADADA")
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    var buttonFollow: UIButton = {
+        var button = UIButton()
+        button.setTitle("Follow", for: .normal)
+        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = .white//UIColor(hexString: "#DADADA")
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    var buttonTwiter: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-3"), for: .normal)
+        return button
+    }()
+    var buttonfaceBook: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-2"), for: .normal)
+        return button
+    }()
+    var buttonInstagram: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Vector1-4"), for: .normal)
+        return button
+    }()
+    var labelVideo : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "Video"
+        label.textAlignment = .center
+        return label
+    }()
+    var labelINTVideo : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.text  = "2"
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelFollows : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.textAlignment = .center
+        label.text = "Followers"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    var labelINTFollows : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelFolowers : UILabel  = {
+        let label  = UILabel()
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.textAlignment = .center
+        label.text = "Following"
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        return label
+    }()
+    var labelINTFolowers : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.textAlignment = .center
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
+    var labelDescription : UILabel  = {
+        let label  = UILabel()
+        label.textColor = .black
+        label.numberOfLines = 0
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
     
     //MARK: - initial
     init() {

@@ -11,6 +11,7 @@ import Foundation
 import UIKit
 import HHCustomCorner
 import Kingfisher
+import TagListView
 
 final class PresentCode: UIView {
 
@@ -117,12 +118,13 @@ final class PresentCode: UIView {
         return label
     }()
     
-    var labelCategory: UILabel = {
-        var label = UILabel()
-        label.textColor = UIColor(hexString: "#727272")
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.text = "Yoga" + " \u{2665} " + "Meditation"
-        return label
+    var labelCategory: TagListView = {
+        var tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 14)
+        tag.tagBackgroundColor = .clear
+        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        tag.selectedTextColor = .black
+        return tag
     }()
     var labelStreamInfo: UILabel = {
         var label = UILabel()
@@ -166,6 +168,12 @@ final class PresentCode: UIView {
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleToFill
         return button
+    }()
+    var labelNameBroadcast: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        return label
     }()
     
     // Tableview for Timetable
@@ -376,19 +384,26 @@ final class PresentCode: UIView {
                           right: cardView.rightAnchor,
                           paddingTop: 15, paddingLeft: 0, paddingRight: 0,height: 208 )//
         
-        
-        
-        
-        
-        cardView.addSubview(labelCategory)
-        labelCategory.anchor(top: imagePromo.bottomAnchor,
-                             left: cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
-        
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 0, width: 40, height: 24)
-        
+                buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 0, width: 40, height: 24)
+
         cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 0, width: 24, height: 24)
+                buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 0, width: 24, height: 24)
+        
+        cardView.addSubview(labelNameBroadcast)
+        labelNameBroadcast.anchor(top: imagePromo.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: buttonLike.rightAnchor,
+                             paddingTop: 11, paddingLeft: 16,paddingRight: 10)
+        cardView.addSubview(labelCategory)
+        labelCategory.anchor(top: labelNameBroadcast.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: buttonLike.rightAnchor,
+                             paddingTop: 5, paddingLeft: 16,paddingRight: 10)
+        
+        
+        
+        
         
         
         
@@ -442,7 +457,7 @@ final class PresentCode: UIView {
         imageLogoProfile.kf.setImage(with: url)
     }
     func setLabel(description: String,category: String) {
-        labelCategory.text = category
+       // labelCategory.text = category
         labelStreamDescription.text = description
     }
     

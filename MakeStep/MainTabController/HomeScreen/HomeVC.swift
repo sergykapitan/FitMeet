@@ -56,6 +56,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
+    
+    
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
     private var followBroad: AnyCancellable?
@@ -78,6 +80,15 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     //MARK - LifeCicle
     override func loadView() {
         view = homeView
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+//        if token != nil {
+//            binding()
+//        } else {
+//            bindingNotAuht()
+//        }
+//        self.index == 0
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -170,6 +181,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    let arrayUserId = self.listBroadcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                     self.bindingCategory()
@@ -182,6 +195,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    let arrayUserId = self.listBroadcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                 }
@@ -204,6 +219,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    let arrayUserId = self.listBroadcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                 }
@@ -220,12 +237,14 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
           })
     }
     func bindingUserMap(ids: [Int])  {
+        
         takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.usersd = response.data
-                   // self.homeView.tableView.reloadData()
+                    print("ResponceData ===== \(self.usersd)")
+                    self.homeView.tableView.reloadData()
                 }
           })
     }
@@ -253,6 +272,9 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil {
                     self.listBroadcast = response.data!
+                    let arrayUserId = self.listBroadcast.map{$0.id!}
+                    print("ARRAY ==== \(self.listBroadcast)")
+                    self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                 }

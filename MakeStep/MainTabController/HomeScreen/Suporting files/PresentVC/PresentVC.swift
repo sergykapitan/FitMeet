@@ -10,6 +10,7 @@ import Combine
 import UIKit
 import AVKit
 import Presentr
+import TagListView
 
 private enum State {
     case closed
@@ -26,7 +27,7 @@ extension State {
 }
 
 
-class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate{
+class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate, TagListViewDelegate{
 
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     private let popupOffset: CGFloat = -350
@@ -141,7 +142,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         centerbuttonSubscribeConstant.isActive = true
         
         
-        homeView.buttonSubscribe.anchor( width: 100, height: 28)
+        homeView.buttonSubscribe.anchor( width: 90, height: 28)
+        homeView.buttonFollow.anchor( width: 90, height: 28)
         
         
         homeView.buttonFollow.anchor(top: homeView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
@@ -505,7 +507,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
  
     func changeButton() {
-        AppUtility.lockOrientation(.all)
+       // AppUtility.lockOrientation(.all)
         homeView.buttonChatUser.isHidden = false
         homeView.buttonChat.isHidden = false
 
@@ -521,6 +523,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.buttonComing.isHidden = false
             homeView.imagePromo.isHidden = false
             homeView.labelCategory.isHidden = false
+            homeView.labelNameBroadcast.isHidden = false
+            
             homeView.labelStreamInfo.isHidden = false
             homeView.labelStreamDescription.isHidden = false
            // homeView.tableView.isHidden = true
@@ -531,13 +535,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.buttonComing.isHidden = true
             homeView.imagePromo.isHidden = true
             homeView.labelCategory.isHidden = true
+            homeView.labelNameBroadcast.isHidden = true
             homeView.labelStreamInfo.isHidden = true
             homeView.labelStreamDescription.isHidden = true
            // homeView.tableView.isHidden = false
         }
     }
     func changeBackgroundColor() {
-        AppUtility.lockOrientation(.all)
+       // AppUtility.lockOrientation(.all)
         isLandscape = false
         
         if isLandscape {
@@ -632,7 +637,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         super.viewDidAppear(true)
        
         homeView.buttonChatUser.isHidden = true
-        loadPlayer()
+        
         
         homeView.imageLogoProfile.makeRounded()
         guard let id = id ,let _ = follow else { return }
@@ -654,7 +659,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
         frame = self.view.frame
-        print("viewWillAppear ======= \(frame)")
+        guard let broadcast = broadcast else { return }
+        homeView.labelStreamDescription.text = broadcast.description
+        let categorys = broadcast.categories
+        let s = categorys!.map{$0.title!}
+        let arr = s.map { String("\u{0023}" + $0)}
+        homeView.labelCategory.addTags(arr)
+        homeView.labelCategory.delegate = self
+        homeView.labelNameBroadcast.text = broadcast.name
+        loadPlayer()
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -667,6 +680,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         navigationItem.largeTitleDisplayMode = .always
+        
         homeView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         homeView.segmentControll.delegate = self
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
@@ -683,9 +697,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
-        guard let broadcast = broadcast else { return }        
-        homeView.labelStreamDescription.text = broadcast.description
-
         bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -80)
         bottomButtonChatConstant.isActive = true
 
@@ -698,7 +709,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+        
         homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)
+        
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
@@ -713,6 +727,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.imagePromo.isHidden = false
         homeView.labelCategory.isHidden = false
+        homeView.labelNameBroadcast.isHidden = false
         homeView.labelStreamDescription.isHidden = false
         homeView.labelStreamInfo.isHidden = false
         homeView.buttonChat.isHidden = false
@@ -745,16 +760,25 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
             homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
 
-//            let detailViewController = SubscribeVC()
-//            detailViewController.modalPresentationStyle = .custom
-//            actionChatTransitionManager.intHeight = 0.3
-//            actionChatTransitionManager.intWidth = 1
-//            detailViewController.transitioningDelegate = actionSheetTransitionManager
-//            present(detailViewController, animated: true)
         } else {
             homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
             homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        }
+
+    }
+    @objc func actionFollow() {
+        homeView.buttonFollow.isSelected.toggle()
+        
+        if homeView.buttonFollow.isSelected {
+            homeView.buttonFollow.backgroundColor = UIColor(hexString: "#3B58A4")
+            homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+           // homeView.buttonFollow.setTitle("Subscribe", for: .normal)
+
+        } else {
+            homeView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
+           // homeView.buttonFollow.setTitle("Subscribers", for: .normal)
+            homeView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         }
 
     }
@@ -765,6 +789,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
       
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
+        homeView.labelNameBroadcast.isHidden = true
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
         homeView.buttonChat.isHidden = true
@@ -779,6 +804,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
      
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
+        homeView.labelNameBroadcast.isHidden = true
         homeView.labelStreamDescription.isHidden = true
         homeView.labelStreamInfo.isHidden = true
         homeView.buttonChat.isHidden = true
@@ -872,7 +898,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     func setUserProfile(user: User) {
         
-        homeView.welcomeLabel.text =  user.fullName
+      //  homeView.welcomeLabel.text =  user.fullName
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         guard let follow = user.channelFollowCount else { return }
         homeView.labelFollow.text = "Followers:" + "\(follow)"
@@ -884,6 +910,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
+        print("URL ===== \(Url)")
         guard let url = Url else { return }
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
@@ -891,7 +918,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
              
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
-        player.rate = 1 
+        player.rate = 1
+      //  player.play()
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -961,6 +989,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
+            AppUtility.lockOrientation(.allButUpsideDown)
             isFullSize = true
             homeView.buttonChatUser.isHidden = true
             isLand = true
@@ -1028,9 +1057,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             button.isHidden = true
             self.homeView.buttonChat.isHidden = false
             isLandscape = false
-            
-          
+   
+
             if self.isFullSize {
+                
+                AppUtility.lockOrientation(.landscapeLeft)
                     let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                     self.topOverlayConstant.constant = 50
                     self.homeView.labelChat.text = "Comments"
@@ -1139,6 +1170,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             
             self.homeView.imagePromo.removeFromSuperview()
             self.homeView.labelCategory.removeFromSuperview()
+            self.homeView.labelNameBroadcast.removeFromSuperview()
             self.homeView.labelStreamInfo.removeFromSuperview()
             self.homeView.labelStreamDescription.removeFromSuperview()
             self.homeView.buttonChat.removeFromSuperview()
@@ -1163,10 +1195,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.rightLandscape = self.homeView.buttonLandScape.trailingAnchor.constraint(equalTo: self.homeView.imagePromo.trailingAnchor, constant: -20)
                     self.rightLandscape.isActive = true
                     self.homeView.buttonLandScape.anchor(bottom: self.homeView.imagePromo.bottomAnchor, paddingBottom: 20,width: 40,height: 40)
+                    
+                    self.homeView.cardView.addSubview(self.homeView.labelNameBroadcast)
+                    self.homeView.labelNameBroadcast.anchor(top: self.homeView.imagePromo.bottomAnchor,
+                                         left: self.homeView.cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
 
                     self.homeView.cardView.addSubview(self.homeView.labelCategory)
-                    self.homeView.labelCategory.anchor(top: self.homeView.imagePromo.bottomAnchor,
-                                         left: self.homeView.cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
+                    self.homeView.labelCategory.anchor(top: self.homeView.labelNameBroadcast.bottomAnchor,
+                                         left: self.homeView.cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
 
                     self.homeView.cardView.addSubview(self.homeView.labelStreamInfo)
                     self.homeView.labelStreamInfo.anchor(top: self.homeView.labelCategory.bottomAnchor,
@@ -1235,12 +1271,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelLive.isHidden = true
         homeView.imageEye.isHidden = true
         homeView.labelEye.isHidden = true
-       // homeView.buttonSetting.isHidden = true
-        homeView.buttonLandScape.isHidden = true
         playPauseButton.isHidden = true
-        isButton = false
-        homeView.buttonChat.isHidden = true
-        homeView.buttonChatUser.isHidden = true
 
         let chatVC = UserVC()
         guard let id = broadcast?.id,let channel = broadcast?.channelIds?.first  else { return }
@@ -1251,11 +1282,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         if isLand {
-            button.isHidden = true
+          //  button.isHidden = true
+            homeView.buttonChat.isHidden = true
+            chatVC.isLand = true
             actionChatTransitionManager.intWidth = 0.5
             actionChatTransitionManager.intHeight = 1
             present(chatVC, animated: true, completion: nil)
         } else {
+            homeView.buttonChat.isHidden = false
+            chatVC.isLand = false
             actionChatTransitionManager.intWidth = 1
             actionChatTransitionManager.intHeight = 0.7
             actionChatTransitionManager.isLandscape = isLandscape
@@ -1285,9 +1320,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             detailViewController.transitioningDelegate = actionChatTransitionManager
             detailViewController.broadcast = broadcast
             detailViewController.delegate = self
-            detailViewController.color = .clear
+            detailViewController.color = .white
 
             if isLand {
+                detailViewController.isLand = true
                 actionChatTransitionManager.intWidth = 0.5
                 actionChatTransitionManager.intHeight = 1
                 actionChatTransitionManager.isLandscape = isLand
@@ -1298,6 +1334,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 present(detailViewController, animated: true)
                 //transitionVc(vc: detailViewController, duration: 0.5, type: .fromRight)
             } else {
+                detailViewController.isLand = false
                 actionChatTransitionManager.intWidth = 1
                 actionChatTransitionManager.intHeight = 0.7
                 actionChatTransitionManager.isLandscape = isLand

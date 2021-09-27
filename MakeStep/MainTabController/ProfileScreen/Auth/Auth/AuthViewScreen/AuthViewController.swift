@@ -23,6 +23,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
         } completion: { (bool) in
             if bool {
                 self.authView.alertImage.isHidden = false
+                self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
                 self.authView.alertLabel.isHidden = false
             }
         }
@@ -40,6 +41,22 @@ class AuthViewController: UIViewController,SignUpDelegate {
              if bool {
                  self.authView.alertMailLabel.isHidden = false
                  self.authView.alertImage.isHidden = false
+             }
+         }
+       }
+    }
+    func changePhone() {
+        if self.authView.buttonContinue.frame.origin.y == 263.0 {
+         
+         UIView.animate(withDuration: 0.5) {
+           self.authView.buttonContinue.frame.origin.y += 15
+           self.authView.labelAccount.frame.origin.y += 15
+           self.authView.buttonSignIn.frame.origin.y += 15
+         } completion: { (bool) in
+             if bool {
+                 self.authView.alertImage.isHidden = false
+                 self.authView.alertLabel.text = "phone must be a valid phone number"
+                 self.authView.alertLabel.isHidden = false
              }
          }
        }

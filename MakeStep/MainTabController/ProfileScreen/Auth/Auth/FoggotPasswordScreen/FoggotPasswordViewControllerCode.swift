@@ -73,6 +73,19 @@ final class FoggotPasswordViewControllerCode: UIView {
         let view = UIView()
         return view
     }()
+    let alertImage: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "alert-triangle")
+        return image
+    }()    
+    let alertLabel: UILabel = {
+        let label = UILabel()
+        label.text = "phone must be a valid phone number"
+        label.font = UIFont.systemFont(ofSize: 8)
+        label.textColor = UIColor(hexString: "#FF0000")
+        label.textAlignment = .center
+        return label
+    }()
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -108,6 +121,13 @@ final class FoggotPasswordViewControllerCode: UIView {
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 20, paddingLeft: 10, paddingRight: 10, height: 39)
+        textFieldLogin.addSubview(alertImage)
+        alertImage.anchor( right: textFieldLogin.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldLogin)
+        
+        cardView.addSubview(alertLabel)
+        alertLabel.anchor(top: textFieldLogin.bottomAnchor, paddingTop: 5)
+        alertLabel.centerX(inView: cardView)
         
         cardView.addSubview(buttonContinue)
         buttonContinue.anchor(top: textFieldLogin.bottomAnchor,

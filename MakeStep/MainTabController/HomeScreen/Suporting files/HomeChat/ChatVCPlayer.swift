@@ -19,6 +19,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     let chatView = ChatVCPlayerCode()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     var nickname: String?
+    var isLand:Bool = false
     
     var chatMessages = [[String: String]]()
     var bannerLabelTimer: Timer!
@@ -109,6 +110,14 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         chatView.tableView.delegate = self
         registerForKeyboardNotifications()
+        if isLand {
+            chatView.cardView.backgroundColor = .white
+        } else {
+            chatView.cardView.backgroundColor = .clear
+            chatView.cardView.layer.cornerRadius = 8
+            chatView.cardView.layer.borderWidth = 0.8
+            chatView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+        }
 
         NotificationCenter.default.addObserver(self,selector: Selector(("handleConnectedUserUpdateNotification")), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         
@@ -303,10 +312,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
       // write source code handle when keyboard will show
         let info = notificiation.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
-
+        var size:CGFloat = 5
+        if keyboardFrame.size.height == 303 {
+            size = 48
+        }
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
             print("KEY ====\( self.textView.frame.origin.y)")
-            self.textView.easy.layout(Bottom(keyboardFrame.size.height + 10))
+            print("VIEW ======= \(self.view.frame)")
+            print("Keyword ====== \(keyboardFrame.size.height)")
+            self.textView.easy.layout(Bottom(keyboardFrame.size.height + size))
 
             self.view.layoutIfNeeded()
 //            }

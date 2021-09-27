@@ -10,7 +10,26 @@ import Combine
 import UIKit
 import Alamofire
 
-class SecurityCodeVC: UIViewController {
+class SecurityCodeVC: UIViewController, CodeErrorDelegate {
+    
+    func codeError() {
+        print("FRAMECode ===== \(self.securityView.buttonSendCode.frame.origin.y)")
+        if self.securityView.buttonSendCode.frame.origin.y == 194.5 {
+         
+         UIView.animate(withDuration: 0.5) {
+           self.securityView.buttonSendCode.frame.origin.y += 15
+           self.securityView.alertLabel.text = "The security code is incorrect."
+           self.securityView.alertImage.isHidden = false
+           self.securityView.alertLabel.isHidden = false
+            
+         } completion: { (bool) in
+             if bool {
+                 
+             }
+         }
+       }
+    }
+    
     
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetchannel: FitMeetChannels
@@ -41,10 +60,13 @@ class SecurityCodeVC: UIViewController {
         securityView.textFieldCode.keyboardType = .numberPad
         securityView.buttonSendCode.isUserInteractionEnabled = true
         actionButtonContinue()
+        self.securityView.alertImage.isHidden = true
+        self.securityView.alertLabel.isHidden = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+        
         
     }
     func actionButtonContinue() {
@@ -69,6 +91,7 @@ class SecurityCodeVC: UIViewController {
             vc.verCode = code
             vc.userPhoneOreEmail = phone
             vc.getHash = hash
+            vc.delegateCode = self
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
             

@@ -217,21 +217,20 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     @objc func openChat() {
         
         let chatVC = ChatVC()
-        chatVC.color = .clear
-        chatVC.tint = .white
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         chatVC.delegate = self
         guard let id = idBroad,let channel = channelId else { return }
-        
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = channel
         
         if isLandscape {
+            chatVC.isLand = true
             actionChatTransitionManager.intWidth = 0.5
             actionChatTransitionManager.intHeight = 1
             present(chatVC, animated: true, completion: nil)
         } else {
+            chatVC.isLand = false
             actionChatTransitionManager.intWidth = 1
             actionChatTransitionManager.intHeight = 0.7
             actionChatTransitionManager.isLandscape = isLandscape
@@ -267,11 +266,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         if isLandscape {
+            chatVC.isLand = true
             actionChatTransitionManager.intWidth = 0.5
             actionChatTransitionManager.intHeight = 1
             
             present(chatVC, animated: true, completion: nil)
         } else {
+            chatVC.isLand = false
             actionChatTransitionManager.intWidth = 1
             actionChatTransitionManager.intHeight = 0.7
             actionChatTransitionManager.isLandscape = isLandscape

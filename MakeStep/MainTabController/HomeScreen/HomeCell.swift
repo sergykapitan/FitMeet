@@ -102,7 +102,7 @@ final class HomeCell: UITableViewCell {
     }()
     var labelEye: UILabel = {
         let label = UILabel()
-        label.text = "123"
+        label.text = "0"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         return label
@@ -200,11 +200,12 @@ final class HomeCell: UITableViewCell {
        
     }
     override func prepareForReuse() {
-           super.prepareForReuse()
+          // super.prepareForReuse()
+        self.accessoryType = .none
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
-        self.titleLabel.text = nil
-        self.logoUserImage.image = nil
+       // self.titleLabel.text = nil
+       // self.logoUserImage.image = nil
       //  self.labelEye.text = nil
        // self.imageEye.image = nil
       //  self.labelLive.text = nil

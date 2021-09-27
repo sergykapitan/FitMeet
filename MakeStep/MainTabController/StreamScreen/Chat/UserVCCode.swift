@@ -17,10 +17,10 @@ final class UserVCCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .clear
-        view.layer.cornerRadius = 8
-        view.layer.borderWidth = 0.8
-        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
+//        view.backgroundColor = .clear
+//        view.layer.cornerRadius = 8
+//        view.layer.borderWidth = 0.8
+//        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         return view
         }()
     var tableView: UITableView = {
@@ -29,7 +29,7 @@ final class UserVCCode: UIView {
     }()
     var buttonChat: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Back1-2"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
        // button.backgroundColor = .blue
         return button
     }()
@@ -54,7 +54,7 @@ final class UserVCCode: UIView {
 //        buttonChat.centerX(inView: cardView)
 //        
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 12,height: 12)
+        buttonChat.anchor(top: cardView.topAnchor, paddingTop: 5,width: 45,height: 30)
         buttonChat.centerX(inView: cardView)
         
         cardView.addSubview(tableView)

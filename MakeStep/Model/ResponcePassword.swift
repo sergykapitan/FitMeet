@@ -28,6 +28,7 @@ struct Users: Codable {
     let createdAt: String?
     let birthDate, nameLastUpdateDate, usernameLastUpdateDate: String?
     let channelSubscribeCount: Int?
+    let channelFollowCount: Int?
 }
 // MARK: - Token
 struct Tokens: Codable {
