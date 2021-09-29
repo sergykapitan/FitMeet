@@ -117,6 +117,15 @@ final class HomeCell: UITableViewCell {
        // tag.minWidth = 57
         return tag
     }()
+    var buttonstartStream: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.setTitle("StartStream", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 13
+        button.isHidden = true
+        return button
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -186,6 +195,10 @@ final class HomeCell: UITableViewCell {
         contentView.addSubview(labelEye)
         labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
         labelEye.centerY(inView: overlay)
+        
+        contentView.addSubview(buttonstartStream)
+        buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 30, width: 100, height: 26)
+        buttonstartStream.centerX(inView: backgroundImage)
         
         
         

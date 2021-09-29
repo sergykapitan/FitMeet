@@ -53,7 +53,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-        print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
+
         bindingUser()
         let name: String?
         if user?.fullName != nil { name = user?.fullName
@@ -66,9 +66,24 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         
     }
     func actionButtonContinue() {
-       profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
-       profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
-       profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
+        profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
+        profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
+        profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
+        
+     //1
+     //   profileView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
+     //2
+     //   profileView.buttonPartners
+     //3
+      profileView.buttonCommunityGuidelines.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
+     //4
+      profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
+     //5
+      profileView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
+     //6
+      profileView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
+     //7
+     // profileView.buttonTerms.addTarget(self, action: #selector(actionTerms), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -84,6 +99,43 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
     }
+    //1
+    @objc func actionAbout() {
+        let helpWebViewController = WebViewController()
+      //  helpWebViewController.url = Constants.webViewPwa + "about"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    //3
+       @objc func actionTerms() {
+           let helpWebViewController = WebViewController()
+           helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
+           self.navigationController?.pushViewController(helpWebViewController, animated: true)
+       }
+    //4
+    @objc func actionPrivacyPolicy() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    //5
+    @objc func actionDMCA() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "dmca"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    //6
+    @objc func actionDisclaimer() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "disclaimer"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+   
+    
+    
+    
+    
+    
+    
     func bindingUser() {
         take = fitMeetApi.getUser()
             .mapError({ (error) -> Error in return error })

@@ -176,12 +176,12 @@ final class PresentCode: UIView {
         return label
     }()
     
-    // Tableview for Timetable
+   
   
-//    var tableView: UITableView = {
-//        let table = UITableView()
-//        return table
-//    }()
+    var tableView: UITableView = {
+        let table = UITableView()
+        return table
+    }()
     var overlay : UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
@@ -345,14 +345,9 @@ final class PresentCode: UIView {
                                left: cardView.leftAnchor,
                                paddingTop: 115, paddingLeft: 20, height: 30)
         
-        // Tableview for Timetable
+      
         
-//        cardView.addSubview(tableView)
-//        tableView.anchor(top: segmentControll.bottomAnchor,
-//                         left: cardView.leftAnchor,
-//                         right: cardView.rightAnchor,
-//                         bottom: cardView.bottomAnchor,
-//                         paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+       
                
 
         cardView.addSubview(buttonOnline)
@@ -371,6 +366,14 @@ final class PresentCode: UIView {
         buttonComing.anchor(top: segmentControll.bottomAnchor,
                             left: buttonOffline.rightAnchor,
                             paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
+        
+        cardView.addSubview(tableView)
+               tableView.anchor(top: buttonOnline.bottomAnchor,
+                                left: cardView.leftAnchor,
+                                right: cardView.rightAnchor,
+                                bottom: cardView.bottomAnchor,
+                                paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
         
 //        cardView.addSubview(imagePromoN)
 //        imagePromoN.anchor(top: buttonComing.bottomAnchor,

@@ -27,7 +27,7 @@ final class FoggotPasswordViewControllerCode: UIView {
     }()
     let labelText: UILabel = {
         let label = UILabel()
-        label.text = "Enter the email address you used when registering and we will send you instructions on how to change your password or enter your phone number and we will send you an SMS with a code"
+        label.text = "Enter  your phone number and we will send you an SMS with a code"
         label.textColor = UIColor(hexString: "999999")
         label.textAlignment = .center
         label.numberOfLines = 0
@@ -39,7 +39,7 @@ final class FoggotPasswordViewControllerCode: UIView {
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Phone Number or Email", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+            NSAttributedString(string: "Phone Number ", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1

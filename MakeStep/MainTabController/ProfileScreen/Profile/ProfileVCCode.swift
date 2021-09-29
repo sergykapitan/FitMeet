@@ -239,7 +239,7 @@ final class ProfileVCCode: UIView {
     
     var labelPartners: UILabel = {
         let label = UILabel()
-        label.text = "Partners"
+        label.text = "How it works"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -251,7 +251,7 @@ final class ProfileVCCode: UIView {
     
     var labelCommunityGuidelines: UILabel = {
         let label = UILabel()
-        label.text = "Community Guidelines"
+        label.text = "Terms of service"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -263,7 +263,7 @@ final class ProfileVCCode: UIView {
     
     var labelCookiePolicy: UILabel = {
         let label = UILabel()
-        label.text = "Cookie Policy"
+        label.text = "Privacy Policy"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -275,7 +275,7 @@ final class ProfileVCCode: UIView {
     
     var labelPrivacyPolicy: UILabel = {
         let label = UILabel()
-        label.text = "Privacy Policy"
+        label.text = "DMCA"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -287,7 +287,7 @@ final class ProfileVCCode: UIView {
     
     var labelSecurity: UILabel = {
         let label = UILabel()
-        label.text = "Security"
+        label.text = "Disclaimer"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -299,7 +299,7 @@ final class ProfileVCCode: UIView {
     
     var labelTerms: UILabel = {
         let label = UILabel()
-        label.text = "Terms"
+        label.text = "Contact us"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -474,7 +474,7 @@ final class ProfileVCCode: UIView {
         
         
         scroll.addSubview(buttonCommunityGuidelines)
-        buttonCommunityGuidelines.anchor(top: buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
+        buttonCommunityGuidelines.anchor(top: buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonCommunityGuidelines.addSubview(labelCommunityGuidelines)
         labelCommunityGuidelines.anchor(left: buttonCommunityGuidelines.leftAnchor,paddingLeft: 5)
         labelCommunityGuidelines.centerY(inView: buttonCommunityGuidelines)
@@ -499,7 +499,7 @@ final class ProfileVCCode: UIView {
         
         
         scroll.addSubview(buttonTerms)
-        buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
+        buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonTerms.addSubview(labelTerms)
         labelTerms.anchor(left: buttonTerms.leftAnchor,paddingLeft: 5)
         labelTerms.centerY(inView: buttonTerms)

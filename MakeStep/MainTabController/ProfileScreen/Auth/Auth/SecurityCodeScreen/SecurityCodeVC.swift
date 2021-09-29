@@ -94,26 +94,9 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
             vc.delegateCode = self
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
+
             
-//        userSubscriber =  fitMeetApi.requestLogin(phoneCode: PhoneCode(phone: phone, verifyCode: code))
-//            .mapError({ (error) -> Error in
-//                print(error)
-//                return error
-//            })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if let token = response.token?.token {
-//                    UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
-//                    UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
-//                    UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-//
-//
-//
-//
-//                   // self.openProfileViewController()
-//             }
-//        })
-            
-        } else {
+     //   } else {
             
         }
     }

@@ -88,6 +88,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
+    private var taskStream: AnyCancellable?
+    private var startStream: AnyCancellable?
     
     
     @Inject var fitMeetApi: FitMeetApi
@@ -99,6 +101,12 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     var url: String?
     var usersd = [Int: User]()
+    var userID = UserDefaults.standard.string(forKey: Constants.userID)
+    var broadcast:  BroadcastResponce?
+    
+   // var url: String? ??????????????
+    var myuri: String?
+    var myPublish: String?
 
     override  var shouldAutorotate: Bool {
         return false
@@ -106,6 +114,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
     override func loadView() {
         super.loadView()
         view = profileView
@@ -304,11 +313,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         
         
         
-        profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 8,  width: 28, height: 28)
+        profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
         profileView.buttonTwiter.centerY(inView: profileView.buttonInstagram)
 
         
-        profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 8, width: 28, height: 28)
+        profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
         profileView.buttonfaceBook.centerY(inView: profileView.buttonInstagram)
         
         
@@ -462,7 +471,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     func setUserProfile() {
 
         profileView.setImage(image: user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = user?.channelFollowCount,let fullName = user?.fullName!,let sub = user?.channelSubscribeCount!  else { return }
+        guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
         profileView.labelFollow.text = "Followers:" + "\(follow)"
         self.profileView.welcomeLabel.text = fullName
         self.profileView.labelINTFollows.text = "\(follow)"
@@ -833,8 +842,62 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         runningAnimators.append(outTitleAnimator)
         
     }
+    func nextView(broadcastId: Int )  {
+
+        startStream = fitMeetStream.startBroadcastId(id: broadcastId)
+
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let id = response.id  {
+                    self.broadcast = response
+                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+                    self.fetchStream(id: self.broadcast?.id, name: response.name)
+ 
+
+                }
+             })
+         
+         }
+    func fetchStream(id:Int?,name: String?) {
+        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+        guard let id = id , let name = name , let userId = UserId  else{ return }
+        let usId = Int(userId)
+        guard let usID = usId else { return }
+        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
+            .mapError({ (error) -> Error in
+                  print(error)
+                   return error })
+                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    guard let url = response.url else { return }
+                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
+                    let twoString = self.removeUrl(url: url)
+                    self.myuri = twoString.0
+                    self.myPublish = twoString.1
+                    self.url = url
+                    print(response)
+                  
+                    
+                    
+                        let navVC = LiveStreamViewController()
+                        navVC.modalPresentationStyle = .fullScreen
+                        navVC.idBroad = id
+                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+                        navVC.myuri = myuris
+                        navVC.myPublish = myPublishh
+                        self.present(navVC, animated: true, completion: nil)
+                       // self.present(navVC, animated: true) {
+                           
+                      //  }
+                    })
+                }
+
     
-    
+    func removeUrl(url: String) -> (url:String,publish: String) {
+        let fullUrlArr = url.components(separatedBy: "/")
+        let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
+        let myPublish = fullUrlArr[4]
+        return (myuri,myPublish)
+    }
     
   
 

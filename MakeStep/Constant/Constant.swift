@@ -14,6 +14,7 @@ class Constants {
     #else
     ///URL Address of production api server
     static let apiEndpoint = "https://dev.fitliga.com/api/v0"
+    static let webViewPwa = "https://dev.fitliga.com/api/v0/legal/legals/text/"
     #endif
     
     /// Citizen API User access token

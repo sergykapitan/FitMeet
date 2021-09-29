@@ -154,7 +154,7 @@ final class StartScreenCode: UIView {
     
     var labelPartners: UILabel = {
         let label = UILabel()
-        label.text = "Partners"
+        label.text = "How it works"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -166,7 +166,7 @@ final class StartScreenCode: UIView {
     
     var labelCommunityGuidelines: UILabel = {
         let label = UILabel()
-        label.text = "Community Guidelines"
+        label.text = "Terms of service"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -178,7 +178,7 @@ final class StartScreenCode: UIView {
     
     var labelCookiePolicy: UILabel = {
         let label = UILabel()
-        label.text = "Cookie Policy"
+        label.text = "Privacy Policy"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -190,7 +190,7 @@ final class StartScreenCode: UIView {
     
     var labelPrivacyPolicy: UILabel = {
         let label = UILabel()
-        label.text = "Privacy Policy"
+        label.text = "DMCA"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -202,7 +202,7 @@ final class StartScreenCode: UIView {
     
     var labelSecurity: UILabel = {
         let label = UILabel()
-        label.text = "Security"
+        label.text = "Disclaimer"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -214,7 +214,7 @@ final class StartScreenCode: UIView {
     
     var labelTerms: UILabel = {
         let label = UILabel()
-        label.text = "Terms"
+        label.text = "Contact us"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 16)
         return label
@@ -242,9 +242,9 @@ final class StartScreenCode: UIView {
     private func initUI() {
         
         
-      addSubview(cardView)
-     // scroll.fillFull(for: self)
-     // scroll.addSubview(cardView)
+      addSubview(scroll)
+      scroll.fillSuperview()
+      scroll.addSubview(cardView)
        
     }
     
@@ -254,66 +254,60 @@ final class StartScreenCode: UIView {
         
         
        // addSubview(cardView)
-        cardView.fillSuperview()
+        //  cardView.fillSuperview()
+        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
 
       //  cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
         
         
-        cardView.addSubview(welcomeLabel)
+        scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20)
         
-        cardView.addSubview(segmentControll)
+        scroll.addSubview(segmentControll)
         segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
 
-        cardView.addSubview(firstLine)
+        scroll.addSubview(firstLine)
         firstLine.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonHistory)
+        scroll.addSubview(buttonHistory)
         buttonHistory.anchor(top: firstLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
         buttonHistory.addSubview(imageLogo)
         imageLogo.anchor(top: buttonHistory.topAnchor, left: buttonHistory.leftAnchor,  bottom: buttonHistory.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
         buttonHistory.addSubview(labelHistory)
         labelHistory.anchor(left: imageLogo.rightAnchor,paddingLeft: 5)
         labelHistory.centerY(inView: buttonHistory)
         
-        cardView.addSubview(secondLine)
+        scroll.addSubview(secondLine)
         secondLine.anchor(top: buttonHistory.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonWallet)
+        scroll.addSubview(buttonWallet)
         buttonWallet.anchor(top: secondLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
         buttonWallet.addSubview(imageWallet)
         imageWallet.anchor(top: buttonWallet.topAnchor, left: buttonWallet.leftAnchor,  bottom: buttonWallet.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        
         buttonWallet.addSubview(labelWallet)
         labelWallet.anchor(left: imageWallet.rightAnchor,paddingLeft: 5)
         labelWallet.centerY(inView: buttonWallet)
         
-        cardView.addSubview(buttonSetting)
+        scroll.addSubview(buttonSetting)
         buttonSetting.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
         buttonSetting.addSubview(imageSettinh)
         imageSettinh.anchor(top: buttonSetting.topAnchor, left: buttonSetting.leftAnchor,  bottom: buttonSetting.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        
         buttonSetting.addSubview(labelSetting)
         labelSetting.anchor(left: imageSettinh.rightAnchor,paddingLeft: 5)
         labelSetting.centerY(inView: buttonSetting)
         
-        cardView.addSubview(buttonLanguage)
+        scroll.addSubview(buttonLanguage)
         buttonLanguage.anchor(top: buttonSetting.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
         buttonLanguage.addSubview(imageLanguage)
         imageLanguage.anchor(top: buttonLanguage.topAnchor, left: buttonLanguage.leftAnchor,  bottom: buttonLanguage.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        
         buttonLanguage.addSubview(labelLanguage)
         labelLanguage.anchor(left: imageLanguage.rightAnchor,paddingLeft: 5)
         labelLanguage.centerY(inView: buttonLanguage)
         
-        cardView.addSubview(treeLine)
+        scroll.addSubview(treeLine)
         treeLine.anchor(top: buttonLanguage.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonHelp)
+        scroll.addSubview(buttonHelp)
         buttonHelp.anchor(top: treeLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         buttonHelp.addSubview(imageHelp)
@@ -323,50 +317,50 @@ final class StartScreenCode: UIView {
         labelHelp.anchor(left: imageHelp.rightAnchor,paddingLeft: 5)
         labelHelp.centerY(inView: buttonHelp)
         
-        cardView.addSubview(fourLine)
+        scroll.addSubview(fourLine)
         fourLine.anchor(top: buttonHelp.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        cardView.addSubview(buttonAbout)
+        scroll.addSubview(buttonAbout)
         buttonAbout.anchor(top: fourLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
         buttonAbout.addSubview(labelAbout)
         labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
         labelAbout.centerY(inView: buttonAbout)
         
         
-        cardView.addSubview(buttonPartners)
+        scroll.addSubview(buttonPartners)
         buttonPartners.anchor(top: buttonAbout.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonPartners.addSubview(labelPartners)
         labelPartners.anchor(left: buttonPartners.leftAnchor,paddingLeft: 5)
         labelPartners.centerY(inView: buttonPartners)
         
         
-        cardView.addSubview(buttonCommunityGuidelines)
-        buttonCommunityGuidelines.anchor(top: buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
+        scroll.addSubview(buttonCommunityGuidelines)
+        buttonCommunityGuidelines.anchor(top: buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonCommunityGuidelines.addSubview(labelCommunityGuidelines)
         labelCommunityGuidelines.anchor(left: buttonCommunityGuidelines.leftAnchor,paddingLeft: 5)
         labelCommunityGuidelines.centerY(inView: buttonCommunityGuidelines)
         
-        cardView.addSubview(buttonCookiePolicy)
+        scroll.addSubview(buttonCookiePolicy)
         buttonCookiePolicy.anchor(top: buttonCommunityGuidelines.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonCookiePolicy.addSubview(labelCookiePolicy)
         labelCookiePolicy.anchor(left: buttonCookiePolicy.leftAnchor,paddingLeft: 5)
         labelCookiePolicy.centerY(inView: buttonCookiePolicy)
         
-        cardView.addSubview(buttonPrivacyPolicy)
+        scroll.addSubview(buttonPrivacyPolicy)
         buttonPrivacyPolicy.anchor(top: buttonCookiePolicy.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonPrivacyPolicy.addSubview(labelPrivacyPolicy)
         labelPrivacyPolicy.anchor(left: buttonPrivacyPolicy.leftAnchor,paddingLeft: 5)
         labelPrivacyPolicy.centerY(inView: buttonPrivacyPolicy)
         
-        cardView.addSubview(buttonSecurity)
+        scroll.addSubview(buttonSecurity)
         buttonSecurity.anchor(top: buttonPrivacyPolicy.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
         buttonSecurity.addSubview(labelSecurity)
         labelSecurity.anchor(left: buttonSecurity.leftAnchor,paddingLeft: 5)
         labelSecurity.centerY(inView: buttonSecurity)
         
         
-        cardView.addSubview(buttonTerms)
-        buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
+        scroll.addSubview(buttonTerms)
+        buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonTerms.addSubview(labelTerms)
         labelTerms.anchor(left: buttonTerms.leftAnchor,paddingLeft: 5)
         labelTerms.centerY(inView: buttonTerms)

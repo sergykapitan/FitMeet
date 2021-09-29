@@ -1,14 +1,14 @@
 //
-//  ExChanellVC.swift
+//  ExPresenVC.swift
 //  MakeStep
 //
-//  Created by novotorica on 22.09.2021.
+//  Created by novotorica on 27.09.2021.
 //
 
-import Foundation
+
 import UIKit
 
-extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
+extension PresentVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
@@ -76,7 +76,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
-      
+    
  
        
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
@@ -89,22 +89,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
+
         
-        
-        cell.buttonstartStream.tag = indexPath.row
-        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
-        cell.buttonstartStream.isUserInteractionEnabled = true
-        cell.buttonstartStream.isHidden = true
-
-        guard let coachID = user?.id,let userID = userID,let plan = brodcast[indexPath.row].isPlanned else { return cell }
-
-            
-        if plan && coachID == Int(userID)! && indexButton == 2 {
-            cell.buttonstartStream.isHidden = false
-        } else {
-            cell.buttonstartStream.isHidden = true
-        }
-
         
         return cell
     }
@@ -120,32 +106,16 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-
-        guard let coachID = user?.id,let userID = userID else { return }
         
-        if coachID == Int(userID)! {
-            let detailViewController = SendCoach()
-            actionSheetTransitionManager.height = 0.3
-            detailViewController.modalPresentationStyle = .custom
-            detailViewController.transitioningDelegate = actionSheetTransitionManager
-            detailViewController.url = self.url
-            present(detailViewController, animated: true)
-        } else {
-            let detailViewController = SendVC()
-            actionSheetTransitionManager.height = 0.2
-            detailViewController.modalPresentationStyle = .custom
-            detailViewController.transitioningDelegate = actionSheetTransitionManager
-            detailViewController.url = self.url
-            present(detailViewController, animated: true)
-        }
+        let detailViewController = SendVC()
+        actionSheetTransitionManager.height = 0.2
+        detailViewController.modalPresentationStyle = .custom
+        detailViewController.transitioningDelegate = actionSheetTransitionManager
+        detailViewController.url = self.url
+        present(detailViewController, animated: true)
 
     }
     
-    @objc func actionStartStream(_ sender: UIButton) {
-        
-        print("Broadcast \(brodcast[sender.tag].id)")
-        guard let broadcastID = brodcast[sender.tag].id else { return }
-        self.nextView(broadcastId: broadcastID)
-    }
+    
     
 }

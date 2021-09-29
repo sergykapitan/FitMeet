@@ -211,6 +211,14 @@ final class ChanellCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+//    var buttonstartStream: UIButton = {
+//        var button = UIButton()
+//        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        button.setTitle("StartStream", for: .normal)
+//        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+//        button.layer.cornerRadius = 13
+//        return button
+//    }()
     
     //MARK: - initial
     init() {
@@ -260,6 +268,10 @@ final class ChanellCode: UIView {
         
         cardView.addSubview(labelStreamDescription)
         labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+        
+//        cardView.addSubview(buttonstartStream)
+//        buttonstartStream.anchor( bottom: imagePromo.bottomAnchor, paddingBottom: 30, width: 74, height: 26)
+//        buttonstartStream.centerX(inView: imagePromo)
         
     
 

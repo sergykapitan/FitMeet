@@ -73,7 +73,7 @@ class FoggotPasswordViewController: UIViewController {
 
                     } else if response.message == "phone must be a valid phone number" {
                         print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
-                        if self.passwordView.buttonContinue.frame.origin.y == 223.0 {
+                        if self.passwordView.buttonContinue.frame.origin.y == 209.0 {
                          
                          UIView.animate(withDuration: 0.5) {
                            self.passwordView.buttonContinue.frame.origin.y += 15
@@ -89,7 +89,7 @@ class FoggotPasswordViewController: UIViewController {
                       }
                     } else if response.message == "error.user.notFound" {
                         print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
-                        if self.passwordView.buttonContinue.frame.origin.y == 223.0 {
+                        if self.passwordView.buttonContinue.frame.origin.y == 209.0 {
                          
                          UIView.animate(withDuration: 0.5) {
                            self.passwordView.buttonContinue.frame.origin.y += 15

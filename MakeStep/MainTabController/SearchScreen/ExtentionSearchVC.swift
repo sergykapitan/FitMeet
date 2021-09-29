@@ -70,7 +70,7 @@ extension SearchVC: UITableViewDataSource {
         return cell
     }
     @objc func actionMore() {
-        let detailViewController = SendCoach()
+        let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.3
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
@@ -99,29 +99,8 @@ extension SearchVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-       // var url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
 
         if index == 0 {
-//            //url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-//            let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-//            let id = self.listBroadcast[indexPath.row].userId
-//            let follow = self.listBroadcast[indexPath.row].followersCount
-//
-//
-//            guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,
-//                  let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
-//
-//            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-//            let vc = PresentVC()
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.id = id
-//            vc.Url = Url
-//            vc.broadcast = self.listBroadcast[indexPath.row]
-//            vc.follow = "\(follow)"
-//            vc.broadId = broadcastID
-//
-//            print("ID ===== \(id) \n URLLLLL ==== \(Url) \n Brpadcast ==== \(self.listBroadcast[indexPath.row]) \n Follow ====== \(follow)\n broadID === \(broadcastID)\n CHanelll ==== \(channelId)")
-//            navigationController?.pushViewController(vc, animated: true)
             let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
             let id = self.listBroadcast[indexPath.row].userId
             let follow = self.listBroadcast[indexPath.row].followersCount
@@ -140,10 +119,8 @@ extension SearchVC: UITableViewDelegate {
             vc.id = id
             vc.Url = Url
             vc.broadcast = self.listBroadcast[indexPath.row]
-            print("Url === \(url)")
             vc.follow = "\(follow)"
             vc.broadId = broadcastID
-            print("ID ===== \(id) \n URLLLLL ==== \(Url) \n Brpadcast ==== \(self.listBroadcast[indexPath.row]) \n Follow ====== \(follow)\n broadID === \(broadcastID)\n CHanelll ==== \(channelId)")
             navigationController?.pushViewController(vc, animated: true)
      
             

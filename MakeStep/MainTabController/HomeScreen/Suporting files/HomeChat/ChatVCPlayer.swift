@@ -70,7 +70,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
         
-        self.textView.easy.layout(Left(5),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
+        self.textView.easy.layout(Left(20),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
         self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
         textView.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
         self.textView.delegate = self

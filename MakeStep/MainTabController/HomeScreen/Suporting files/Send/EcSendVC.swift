@@ -29,13 +29,10 @@ extension SendVC: UITableViewDataSource {
 extension SendVC: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Send  = \(indexPath.row)")
         if indexPath.row == 2 {
             guard let urlString = url else { return }
             urlString.share()
-           // "Data to share".share()
         }
-    
     }
 }
 

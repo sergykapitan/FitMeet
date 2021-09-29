@@ -13,7 +13,7 @@ final class ActionSheetPresentationController: UIPresentationController {
     
     // MARK: Constants
     private static let actionSheetCornerRadius: CGFloat = 30
-    private static let dimmingViewMaxAlpha: CGFloat = 1.0
+    private static let dimmingViewMaxAlpha: CGFloat = 0.7
     
     // MARK: Views
     private lazy var dimmingView: UIView = {

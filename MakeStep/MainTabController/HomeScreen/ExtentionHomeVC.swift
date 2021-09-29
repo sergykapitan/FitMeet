@@ -25,6 +25,7 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
+        
         cell.setImage(image: listBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
         cell.imageEye.isHidden = false
@@ -37,12 +38,7 @@ extension HomeVC: UITableViewDataSource {
               let broadcastID = self.listBroadcast[indexPath.row].id
         else { return cell}
 
-      //  self.arrayIdUser.append(id)
-       // self.bindingUserMap(ids: arrayIdUser)
-      //  self.bindingUser(id: id)
-      //  let us = usersd.map { key,user in
-      //      return user
-      //  }
+
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
@@ -79,6 +75,8 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
         cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+        
+       // print("ALLLLL === \(self.usersd[id]?.avatarPath)")
 
         
         return cell

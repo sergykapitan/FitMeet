@@ -13,8 +13,8 @@ import Combine
 class SignInViewController: UIViewController, SignInDelegate {
     
     func changeAlert() {
-        
-        if self.signUpView.buttonContinue.frame.origin.y == 263.0 {
+        print("234 ==== \(self.signUpView.buttonContinue.frame.origin.y)")
+        if self.signUpView.buttonContinue.frame.origin.y == 219.0 {
          
          UIView.animate(withDuration: 0.5) {
            self.signUpView.buttonContinue.frame.origin.y += 15
@@ -30,7 +30,8 @@ class SignInViewController: UIViewController, SignInDelegate {
     }
     
     func changeMail() {
-        if self.signUpView.buttonContinue.frame.origin.y == 263.0 {
+        print("234 ==== \(self.signUpView.buttonContinue.frame.origin.y)")
+        if self.signUpView.buttonContinue.frame.origin.y == 219.0 {
          
          UIView.animate(withDuration: 0.5) {
            self.signUpView.buttonContinue.frame.origin.y += 15

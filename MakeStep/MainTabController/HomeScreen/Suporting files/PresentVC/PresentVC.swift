@@ -155,11 +155,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         
         
         
-        homeView.buttonTwiter.anchor(right: homeView.buttonInstagram.leftAnchor,paddingRight: 8,  width: 28, height: 28)
+        homeView.buttonTwiter.anchor(right: homeView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
         homeView.buttonTwiter.centerY(inView: homeView.buttonInstagram)
 
         
-        homeView.buttonfaceBook.anchor( right: homeView.buttonTwiter.leftAnchor, paddingRight: 8, width: 28, height: 28)
+        homeView.buttonfaceBook.anchor( right: homeView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
         homeView.buttonfaceBook.centerY(inView: homeView.buttonInstagram)
         
         
@@ -603,6 +603,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     @Inject var fitMeetChannels: FitMeetChannels
     private var takeChannels: AnyCancellable?
     
+   
+    private var takeChanell: AnyCancellable?
+    private var followBroad: AnyCancellable?
+    
+    
+   
+  
+    var brodcast: [BroadcastResponce] = []
+    
     let screenSize:CGRect = UIScreen.main.bounds
     
     var listBroadcast: [BroadcastResponce] = []
@@ -616,6 +625,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var Url: String?
     var playPauseButton: PlayPauseButton!
     var user: User?
+    var usersd = [Int: User]()
+    var url: String?
 
     //MARK - LifeCicle
     override func loadView() {
@@ -680,7 +691,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         navigationItem.largeTitleDisplayMode = .always
-        
+        homeView.tableView.isHidden = true
+        makeTableView()
         homeView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         homeView.segmentControll.delegate = self
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
@@ -699,9 +711,28 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -80)
         bottomButtonChatConstant.isActive = true
-
+        
     }
 
+    func deviceOrientationDidChange() {
+           //2
+           switch UIDevice.current.orientation {
+           case .faceDown:
+               print("Face down")
+           case .faceUp:
+               print("Face up")
+           case .unknown:
+               print("Unknown")
+           case .landscapeLeft:
+               print("Landscape left")
+           case .landscapeRight:
+               print("Landscape right")
+           case .portrait:
+               print("Portrait")
+           case .portraitUpsideDown:
+               print("Portrait upside down")
+           }
+       }
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
@@ -733,6 +764,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonChat.isHidden = false
         homeView.buttonLike.isHidden = false
         homeView.buttonMore.isHidden  = false
+        homeView.tableView.isHidden = true
+        homeView.buttonLandScape.isHidden = false
 
     }
     @objc func actionLike() {
@@ -745,12 +778,42 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
     }
     @objc func actionMore() {
-        let detailViewController = SendCoach()
-        actionSheetTransitionManager.height = 0.3
+        let detailViewController = SendVC()
+        actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
+        detailViewController.url = broadcast?.url//self.url
         present(detailViewController, animated: true)
 
+    }
+    private func makeTableView() {
+        homeView.tableView.dataSource = self
+        homeView.tableView.delegate = self
+        homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        homeView.tableView.separatorStyle = .none
+    }
+    func bindingChanell(status: String,userId: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.brodcast = []
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingUserMap(ids: [Int])  {
+        take = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.usersd = response.data
+                    self.homeView.tableView.reloadData()
+                }
+          })
     }
     @objc func actionSubscribe() {
         homeView.buttonSubscribe.isSelected.toggle()
@@ -782,11 +845,30 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         }
 
     }
+    
+    func followBroadcast(id: Int) {
+        followBroad = fitMeetStream.followBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.categories != nil {
+                }
+          })
+    }
+    func unFollowBroadcast(id: Int) {
+        followBroad = fitMeetStream.unFollowBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+             
+         })
+    }
     @objc func actionOffline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-      
+        
+        print("USeer odfjd == \(user?.id)")
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "OFFLINE", userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -795,13 +877,16 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonChat.isHidden = true
         homeView.buttonLike.isHidden = true
         homeView.buttonMore.isHidden  = true
+        homeView.tableView.isHidden = false
+        homeView.buttonLandScape.isHidden = true
 
     }
     @objc func actionComming() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
-     
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "PLANNED", userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -810,6 +895,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonChat.isHidden = true
         homeView.buttonLike.isHidden = true
         homeView.buttonMore.isHidden  = true
+        homeView.buttonLandScape.isHidden = true
+        homeView.tableView.isHidden = false
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
@@ -985,11 +1072,18 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            super.viewWillTransition(to: size, with: coordinator)
         
             playPauseButton.updateUI()
-           
+        deviceOrientationDidChange()
         print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
+        if UIDevice.current.orientation.isFlat {
+            print("isFlat")
+        }
+        if UIDevice.current.orientation.isValidInterfaceOrientation{
+            print("isValidInterfaceOrientation")
+        }
            if UIDevice.current.orientation.isLandscape {
             print("Landscape")
-            AppUtility.lockOrientation(.allButUpsideDown)
+          //  AppUtility.lockOrientation(.allButUpsideDown)
+            AppUtility.lockOrientation(.portrait)
             isFullSize = true
             homeView.buttonChatUser.isHidden = true
             isLand = true

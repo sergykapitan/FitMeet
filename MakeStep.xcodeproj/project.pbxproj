@@ -132,6 +132,8 @@
 		B4C5A962267DD2DA00010F88 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A961267DD2D900010F88 /* Task.swift */; };
 		B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB869263B19BD00015380 /* NullEncodable.swift */; };
 		B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB86D263B2B8300015380 /* OptionalView.swift */; };
+		B4CD87E827021CD100D065ED /* ExPresenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD87E727021CD100D065ED /* ExPresenVC.swift */; };
+		B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD87E92704539300D065ED /* WebViewController.swift */; };
 		B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93A26E78E880080E7E3 /* Coach.swift */; };
 		B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */; };
 		B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */; };
@@ -332,6 +334,8 @@
 		B4C5A961267DD2D900010F88 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 		B4CBB869263B19BD00015380 /* NullEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NullEncodable.swift; sourceTree = "<group>"; };
 		B4CBB86D263B2B8300015380 /* OptionalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionalView.swift; sourceTree = "<group>"; };
+		B4CD87E727021CD100D065ED /* ExPresenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPresenVC.swift; sourceTree = "<group>"; };
+		B4CD87E92704539300D065ED /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		B4D2B93A26E78E880080E7E3 /* Coach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coach.swift; sourceTree = "<group>"; };
 		B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoachCode.swift; sourceTree = "<group>"; };
 		B4D2B93F26E7C7BE0080E7E3 /* SwipeableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeableView.swift; sourceTree = "<group>"; };
@@ -444,6 +448,7 @@
 			children = (
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
+				B4CD87E727021CD100D065ED /* ExPresenVC.swift */,
 				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
 				B4D2B93A26E78E880080E7E3 /* Coach.swift */,
 				B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */,
@@ -1059,6 +1064,7 @@
 			isa = PBXGroup;
 			children = (
 				B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */,
+				B4CD87E92704539300D065ED /* WebViewController.swift */,
 				B475A94626BA7A4B00EF96A4 /* NavBar */,
 				B4D9D7D4262DA7A4007CFB71 /* HomeScreen */,
 				B4D9D7D5262DA7B8007CFB71 /* SearchScreen */,
@@ -1305,6 +1311,7 @@
 				B404923626D8F23D00A2F417 /* SocketWatcher.swift in Sources */,
 				B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */,
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
+				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
@@ -1377,6 +1384,7 @@
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
+				B4CD87E827021CD100D065ED /* ExPresenVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
 				B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */,
@@ -1618,7 +1626,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1644,7 +1652,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 22;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

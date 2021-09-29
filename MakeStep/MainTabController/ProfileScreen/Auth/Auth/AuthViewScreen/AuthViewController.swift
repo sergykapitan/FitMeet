@@ -14,7 +14,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
     
     func changeAlert() {
   
-       if self.authView.buttonContinue.frame.origin.y == 263.0 {
+       if self.authView.buttonContinue.frame.origin.y == 219.0 {
         
         UIView.animate(withDuration: 0.5) {
           self.authView.buttonContinue.frame.origin.y += 15
@@ -31,7 +31,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
     }
     func changeMail() {
         
-        if self.authView.buttonContinue.frame.origin.y == 263.0 {
+        if self.authView.buttonContinue.frame.origin.y == 219.0 {
          
          UIView.animate(withDuration: 0.5) {
            self.authView.buttonContinue.frame.origin.y += 15
@@ -46,7 +46,10 @@ class AuthViewController: UIViewController,SignUpDelegate {
        }
     }
     func changePhone() {
-        if self.authView.buttonContinue.frame.origin.y == 263.0 {
+        
+        print("4444 ===== \(self.authView.buttonContinue.frame.origin.y)")
+        
+        if self.authView.buttonContinue.frame.origin.y == 219.0 {
          
          UIView.animate(withDuration: 0.5) {
            self.authView.buttonContinue.frame.origin.y += 15
@@ -101,7 +104,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
-        authView.buttonSocialNetwork.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+       // authView.buttonSocialNetwork.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         let userPhoneOreMail = authView.textFieldLogin.text
