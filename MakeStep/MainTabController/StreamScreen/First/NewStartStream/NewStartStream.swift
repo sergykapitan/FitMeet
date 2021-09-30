@@ -99,6 +99,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         super.viewWillAppear(animated)
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        self.authView.buttonOK.setTitle("OK", for: .normal)
+        self.authView.textFieldStartDate.text = ""
     }
     override func viewDidLoad() {
         super.viewDidLoad()
