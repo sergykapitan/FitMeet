@@ -129,6 +129,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             detailViewController.modalPresentationStyle = .custom
             detailViewController.transitioningDelegate = actionSheetTransitionManager
             detailViewController.url = self.url
+            print("Broadcast === \(brodcast[sender.tag])")
+            detailViewController.broadcast = brodcast[sender.tag]
             present(detailViewController, animated: true)
         } else {
             let detailViewController = SendVC()

@@ -139,11 +139,11 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     //MARK: - edit BroadcastId//PUT//AUTH
-    public func editBroadcastId(id:Int) -> AnyPublisher<ResponceLogin, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?id=\(id)", method: .put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+    public func editBroadcastId(id:Int, broadcast: EditBroadcast) -> AnyPublisher<BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)", method: .put, parameters: broadcast.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .publishDecodable(type: ResponceLogin.self)
+            .publishDecodable(type: BroadcastResponce.self)
             .value()
             .print("editBroadcastId")
             .mapError{ DifferentError.alamofire(wrapped: $0)}

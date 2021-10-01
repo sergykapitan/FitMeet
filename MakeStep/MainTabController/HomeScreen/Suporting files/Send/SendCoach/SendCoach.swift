@@ -17,6 +17,7 @@ class SendCoach: UIViewController,UITabBarControllerDelegate {
 
     var list = ["Share with...","Copy link","Available for...","Edit","Delete stream"]
     var url: String?
+    var broadcast: BroadcastResponce?
     
     // MARK: Views
     var butH: UIButton = {

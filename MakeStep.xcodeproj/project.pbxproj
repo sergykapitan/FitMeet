@@ -52,6 +52,9 @@
 		B46CF7C52678B90500EA0741 /* SearchVCCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */; };
 		B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C72678C1EF00EA0741 /* UserList.swift */; };
 		B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7E5267A427D00EA0741 /* TabySegmentedControl.swift */; };
+		B470790A2705B69500921821 /* EditStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47079092705B69500921821 /* EditStreamVC.swift */; };
+		B470790C2705B6A300921821 /* EditStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B470790B2705B6A300921821 /* EditStreamCode.swift */; };
+		B470790E2705F06700921821 /* EdetBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B470790D2705F06700921821 /* EdetBroadcast.swift */; };
 		B471E65A26EA0C3A007B63BE /* NewPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65926EA0C3A007B63BE /* NewPassword.swift */; };
 		B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65B26EA0C49007B63BE /* NewPasswordCode.swift */; };
 		B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B471E65D26EA1CF4007B63BE /* ResetPassword.swift */; };
@@ -254,6 +257,9 @@
 		B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCategory.swift; sourceTree = "<group>"; };
 		B46CF7C72678C1EF00EA0741 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
 		B46CF7E5267A427D00EA0741 /* TabySegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabySegmentedControl.swift; sourceTree = "<group>"; };
+		B47079092705B69500921821 /* EditStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStreamVC.swift; sourceTree = "<group>"; };
+		B470790B2705B6A300921821 /* EditStreamCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditStreamCode.swift; sourceTree = "<group>"; };
+		B470790D2705F06700921821 /* EdetBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetBroadcast.swift; sourceTree = "<group>"; };
 		B471E65926EA0C3A007B63BE /* NewPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPassword.swift; sourceTree = "<group>"; };
 		B471E65B26EA0C49007B63BE /* NewPasswordCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewPasswordCode.swift; sourceTree = "<group>"; };
 		B471E65D26EA1CF4007B63BE /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
@@ -569,6 +575,15 @@
 			path = NextView;
 			sourceTree = "<group>";
 		};
+		B47079082705B64800921821 /* Edit stream */ = {
+			isa = PBXGroup;
+			children = (
+				B47079092705B69500921821 /* EditStreamVC.swift */,
+				B470790B2705B6A300921821 /* EditStreamCode.swift */,
+			);
+			path = "Edit stream";
+			sourceTree = "<group>";
+		};
 		B471E65826EA0C19007B63BE /* NewPassword */ = {
 			isa = PBXGroup;
 			children = (
@@ -630,6 +645,7 @@
 				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
 				B4163828268B099D005BAA46 /* Chanell */,
 				B484E8E726837C8500D75BE8 /* EditProfile */,
+				B47079082705B64800921821 /* Edit stream */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -993,6 +1009,7 @@
 				B404923926DE799000A2F417 /* HistoryChat.swift */,
 				B471E65D26EA1CF4007B63BE /* ResetPassword.swift */,
 				B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */,
+				B470790D2705F06700921821 /* EdetBroadcast.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1297,6 +1314,7 @@
 				B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */,
+				B470790C2705B6A300921821 /* EditStreamCode.swift in Sources */,
 				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
 				B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */,
 				B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */,
@@ -1367,6 +1385,7 @@
 				B4E88E5326D3E3D3003E6B16 /* SendVCCell.swift in Sources */,
 				B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */,
 				B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */,
+				B470790E2705F06700921821 /* EdetBroadcast.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
@@ -1445,6 +1464,7 @@
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */,
 				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
+				B470790A2705B69500921821 /* EditStreamVC.swift in Sources */,
 				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
@@ -1626,7 +1646,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1652,7 +1672,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 25;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

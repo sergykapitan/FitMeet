@@ -131,10 +131,8 @@ extension HomeVC: UITableViewDelegate {
         vc.id = id
         vc.Url = Url
         vc.broadcast = self.listBroadcast[indexPath.row]
-        print("Url === \(url)")
         vc.follow = "\(follow)"
         vc.broadId = broadcastID
-        print("ID ===== \(id) \n URLLLLL ==== \(Url) \n Brpadcast ==== \(self.listBroadcast[indexPath.row]) \n Follow ====== \(follow)\n broadID === \(broadcastID)\n CHanelll ==== \(channelId)")
         navigationController?.pushViewController(vc, animated: true)
 
     }
@@ -156,7 +154,6 @@ extension HomeVC: TagListViewDelegate {
                 detailVC.categoryid = i.id
                 detailVC.categoryTitle = i.title
                 navigationController?.pushViewController(detailVC, animated: true)
-                print("TITLe === \(i.title)\n ID == \(i.id) STSTSTSTST == \(st) ")
             }
         }
 

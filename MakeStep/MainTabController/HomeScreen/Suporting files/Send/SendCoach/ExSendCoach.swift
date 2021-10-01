@@ -35,6 +35,11 @@ extension SendCoach: UITableViewDelegate {
            // urlString.share()
             "Data to share".share()
         }
+        if indexPath.row == 3 {
+            let vc = EditStreamVC()
+            vc.broadcast = self.broadcast
+            self.present(vc, animated: true, completion: nil)
+        }
     
     }
 }
