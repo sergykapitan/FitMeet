@@ -312,7 +312,6 @@ final class ProfileVCCode: UIView {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.contentSize.height = 1000
-       // scroll.contentSize.width = 400
         scroll.backgroundColor = .white
         return scroll
     }()
@@ -334,10 +333,7 @@ final class ProfileVCCode: UIView {
        
     }
     func createCardViewLayer() {
-        
-       // addSubview(cardView)
-       // cardView.fillFull(for: self)
-
+ 
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
         
         scroll.addSubview(imageLogoProfile)
@@ -348,11 +344,6 @@ final class ProfileVCCode: UIView {
         
         scroll.addSubview(segmentControll)
         segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
-        
-       
-        
-        
-        
         
         scroll.addSubview(firstLine)
         firstLine.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
@@ -503,9 +494,6 @@ final class ProfileVCCode: UIView {
         buttonTerms.addSubview(labelTerms)
         labelTerms.anchor(left: buttonTerms.leftAnchor,paddingLeft: 5)
         labelTerms.centerY(inView: buttonTerms)
-        
-        
-        
         
 
     }

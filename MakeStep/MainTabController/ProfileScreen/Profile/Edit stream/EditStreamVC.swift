@@ -119,7 +119,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeNavItem()
+       
 
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -254,30 +254,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.imagePicker.present(from: sender)
 
     }
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Start Stream"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
+   
     @objc func timeHandAction() {
         print("timeHandAction")
         let tvc = Timetable()
@@ -290,19 +267,16 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     
     
-    
-    
-    
-    func bindingChanell() {
-        takeChannel = fitMeetChanell.listChannels()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listChanell = response.data
-                    print("ListChanel = ==== \(self.listChanell.last)")
-                }
-        })
-    }
+//    func bindingChanell() {
+//        takeChannel = fitMeetChanell.listChannels()
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.listChanell = response.data
+//                    print("ListChanel = ==== \(self.listChanell.last)")
+//                }
+//        })
+//    }
     func bindingImage(image: UIImage) {
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
@@ -315,16 +289,16 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 }
         })
     }
-    func bindingUser() {
-        take = fitMeetApi.getUser()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
-                    
-                }
-        })
-    }
+//    func bindingUser() {
+//        take = fitMeetApi.getUser()
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.username != nil  {
+//                    self.user = response
+//
+//                }
+//        })
+//    }
     func nextView(
                   name: String ,
                   description: String,
@@ -437,11 +411,11 @@ extension EditStreamVC: UITextFieldDelegate {
         if textField == authView.textFieldStartDate {
             if fullString == "NOW" {
                // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-                authView.buttonOK.setTitle("OK", for: .normal)
+               // authView.buttonOK.setTitle("OK", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             } else {
               //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-                authView.buttonOK.setTitle("Planned", for: .normal)
+               // authView.buttonOK.setTitle("Planned", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             }
         }

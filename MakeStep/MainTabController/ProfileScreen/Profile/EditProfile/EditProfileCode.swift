@@ -27,7 +27,6 @@ final class EditProfileCode: UIView {
     
     var imageButton: UIButton = {
         let button = UIButton()
-       // button.setImage(#imageLiteral(resourceName: "Group 17091"), for: .normal)
         button.imageView?.contentMode = .scaleAspectFill
         button.layer.borderWidth = 0.2
         button.layer.masksToBounds = false
@@ -227,7 +226,6 @@ final class EditProfileCode: UIView {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.contentSize.height = 1000
-       // scroll.contentSize.width = 400
         scroll.backgroundColor = .white
         return scroll
     }()

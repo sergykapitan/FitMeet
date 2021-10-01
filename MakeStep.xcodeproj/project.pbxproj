@@ -124,6 +124,8 @@
 		B4B113C8269868790006CA5A /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C7269868790006CA5A /* PresentVC.swift */; };
 		B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */; };
 		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
+		B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BF4768270757380013FC13 /* DeleteStreamVC.swift */; };
+		B4BF476B270757480013FC13 /* DeleteStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BF476A270757480013FC13 /* DeleteStreamCode.swift */; };
 		B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */; };
 		B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C49970263ADC3F00BFD1EE /* CoreDataManager.swift */; };
 		B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A938267C81F700010F88 /* VCcontroller.swift */; };
@@ -329,6 +331,8 @@
 		B4B113C7269868790006CA5A /* PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentVC.swift; sourceTree = "<group>"; };
 		B4BAAD5A2639B3DC00D2D6AE /* StreamViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamViewModel.swift; sourceTree = "<group>"; };
 		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
+		B4BF4768270757380013FC13 /* DeleteStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStreamVC.swift; sourceTree = "<group>"; };
+		B4BF476A270757480013FC13 /* DeleteStreamCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStreamCode.swift; sourceTree = "<group>"; };
 		B4C4996C263ADB9600BFD1EE /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		B4C49970263ADC3F00BFD1EE /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		B4C5A938267C81F700010F88 /* VCcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCcontroller.swift; sourceTree = "<group>"; };
@@ -645,6 +649,7 @@
 				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
 				B4163828268B099D005BAA46 /* Chanell */,
 				B484E8E726837C8500D75BE8 /* EditProfile */,
+				B4BF4767270757110013FC13 /* DeleteStream */,
 				B47079082705B64800921821 /* Edit stream */,
 			);
 			path = Profile;
@@ -794,6 +799,15 @@
 				B404922B26D78ADC00A2F417 /* PresentVC */,
 			);
 			path = "Suporting files";
+			sourceTree = "<group>";
+		};
+		B4BF4767270757110013FC13 /* DeleteStream */ = {
+			isa = PBXGroup;
+			children = (
+				B4BF4768270757380013FC13 /* DeleteStreamVC.swift */,
+				B4BF476A270757480013FC13 /* DeleteStreamCode.swift */,
+			);
+			path = DeleteStream;
 			sourceTree = "<group>";
 		};
 		B4C4996A263ADB6A00BFD1EE /* CoreData */ = {
@@ -1327,6 +1341,7 @@
 				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
 				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
 				B404923626D8F23D00A2F417 /* SocketWatcher.swift in Sources */,
+				B4BF476B270757480013FC13 /* DeleteStreamCode.swift in Sources */,
 				B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */,
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
@@ -1471,6 +1486,7 @@
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
+				B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */,
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,

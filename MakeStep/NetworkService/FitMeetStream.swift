@@ -162,12 +162,12 @@ class FitMeetStream {
     }
     //MARK: - Stop BroadcastId//PUT//AUTH
     public func stopBroadcastId(id:Int) -> AnyPublisher<ResponceLogin, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?id=\(id)/stop", method: .put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)/stop", method: .put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ResponceLogin.self)
             .value()
-            .print("startBroadcastId")
+            .print("stopBroadcastId")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

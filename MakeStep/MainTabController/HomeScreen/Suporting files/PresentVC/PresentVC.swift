@@ -627,6 +627,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     var user: User?
     var usersd = [Int: User]()
     var url: String?
+    var heightBar: CGFloat?
 
     //MARK - LifeCicle
     override func loadView() {
@@ -707,10 +708,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
         
-        
+        heightBar = tabBarController?.tabBar.frame.height
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
-        bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -80)
+        bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -(heightBar ?? 80))//-80
         bottomButtonChatConstant.isActive = true
+       
+        print("Height = =+++++++++++++++++++++++++++++++++++++++++++++++++++++\(heightBar)")
         
     }
 
@@ -1317,7 +1320,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     //,bottom: self.view.bottomAnchor//,paddingBottom: 80
                     self.homeView.cardView.addSubview(self.homeView.buttonChat)
                     self.homeView.buttonChat.anchor(left:self.view.leftAnchor, paddingLeft: 15,width: 80, height: 30)
-                    self.bottomButtonChatConstant =  self.homeView.buttonChat.bottomAnchor.constraint(equalTo: self.homeView.cardView.bottomAnchor, constant: -80)
+                    self.bottomButtonChatConstant =  self.homeView.buttonChat.bottomAnchor.constraint(equalTo: self.homeView.cardView.bottomAnchor, constant: -(self.heightBar ?? 80))//-80
                     self.bottomButtonChatConstant.isActive = true
                
                     self.homeView.labelChat.text = "Comments"
