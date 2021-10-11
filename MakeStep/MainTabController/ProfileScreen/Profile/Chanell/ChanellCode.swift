@@ -119,7 +119,7 @@ final class ChanellCode: UIView {
     }()
     var buttonSubscribe: UIButton = {
         var button = UIButton()
-        button.setTitle("Subscribers", for: .normal)
+        button.setTitle("Edit Channel", for: .normal)
         button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.backgroundColor = .white //UIColor(hexString: "#DADADA")
@@ -127,7 +127,7 @@ final class ChanellCode: UIView {
         button.layer.masksToBounds = false
         button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
         button.clipsToBounds = true
-        button.layer.cornerRadius = 12
+        button.layer.cornerRadius = 14
         return button
     }()
     var buttonFollow: UIButton = {

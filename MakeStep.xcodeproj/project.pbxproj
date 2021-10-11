@@ -650,6 +650,7 @@
 				B4163828268B099D005BAA46 /* Chanell */,
 				B484E8E726837C8500D75BE8 /* EditProfile */,
 				B4BF4767270757110013FC13 /* DeleteStream */,
+				B4AA691127145616007EAEF1 /* Edit Channel */,
 				B47079082705B64800921821 /* Edit stream */,
 			);
 			path = Profile;
@@ -737,6 +738,13 @@
 				B4AE7AE7263D782A0033F78F /* Old */,
 			);
 			path = First;
+			sourceTree = "<group>";
+		};
+		B4AA691127145616007EAEF1 /* Edit Channel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "Edit Channel";
 			sourceTree = "<group>";
 		};
 		B4AE7AE6263D780A0033F78F /* Stream */ = {

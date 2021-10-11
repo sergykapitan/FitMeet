@@ -163,8 +163,6 @@ final class PresentCode: UIView {
     var buttonChatUser: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
-       // button.setImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
-       // button.setImage(UIImage(named: "Open"), for: .normal)
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleToFill
         return button
@@ -337,18 +335,12 @@ final class PresentCode: UIView {
     }
     func createCardViewLayer() {
 
-      //  cardView.fillSuperview()
         cardView.fillFull(for: self)
  
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor,
                                left: cardView.leftAnchor,
                                paddingTop: 115, paddingLeft: 20, height: 30)
-        
-      
-        
-       
-               
 
         cardView.addSubview(buttonOnline)
         buttonOnline.anchor(top: segmentControll.bottomAnchor,
@@ -373,14 +365,7 @@ final class PresentCode: UIView {
                                 right: cardView.rightAnchor,
                                 bottom: cardView.bottomAnchor,
                                 paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-        
-        
-//        cardView.addSubview(imagePromoN)
-//        imagePromoN.anchor(top: buttonComing.bottomAnchor,
-//                          left: cardView.leftAnchor,
-//                          right: cardView.rightAnchor,
-//                          paddingTop: 15, paddingLeft: 0, paddingRight: 0, height: 208)
-        
+
         cardView.addSubview(imagePromo)
         imagePromo.anchor(top: buttonComing.bottomAnchor,
                           left: cardView.leftAnchor,
@@ -404,12 +389,6 @@ final class PresentCode: UIView {
                              right: buttonLike.rightAnchor,
                              paddingTop: 5, paddingLeft: 16,paddingRight: 10)
         
-        
-        
-        
-        
-        
-        
         cardView.addSubview(labelStreamInfo)
         labelStreamInfo.anchor(top: labelCategory.bottomAnchor,
                                left: cardView.leftAnchor,
@@ -422,8 +401,6 @@ final class PresentCode: UIView {
                                       paddingTop: 4, paddingLeft: 16, paddingRight: 16)
         
         cardView.addSubview(buttonChat)
-  //      , bottom: cardView.bottomAnchor,paddingBottom: 80
-//
         buttonChat.anchor(left:cardView.leftAnchor,paddingLeft: 15,width: 80, height: 30)
         
         buttonChat.addSubview(imageChat)

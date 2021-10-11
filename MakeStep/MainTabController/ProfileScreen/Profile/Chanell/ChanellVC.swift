@@ -57,31 +57,30 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
    
     }
-    private let popupOffset: CGFloat = -350
-    private var bottomConstraint = NSLayoutConstraint()
+    let popupOffset: CGFloat = -350
+    var bottomConstraint = NSLayoutConstraint()
     
-    private var topConstraint = NSLayoutConstraint()
-    private var leftConstant = NSLayoutConstraint()
-    private var botConstant = NSLayoutConstraint()
-    private var centerConstant = NSLayoutConstraint()
+     var topConstraint = NSLayoutConstraint()
+     var leftConstant = NSLayoutConstraint()
+     var botConstant = NSLayoutConstraint()
+     var centerConstant = NSLayoutConstraint()
     
-    private var heightConstant = NSLayoutConstraint()
-    private var widthConstant = NSLayoutConstraint()
+    var heightConstant = NSLayoutConstraint()
+    var widthConstant = NSLayoutConstraint()
     
-    private var topWelcomLabelConstant = NSLayoutConstraint()
-    private var leftWelcomeLabelConstant = NSLayoutConstraint()
-    private var centerWelcomeLabelConstant = NSLayoutConstraint()
-    private var rightWelcomLabel = NSLayoutConstraint()
+    var topWelcomLabelConstant = NSLayoutConstraint()
+    var leftWelcomeLabelConstant = NSLayoutConstraint()
+    var centerWelcomeLabelConstant = NSLayoutConstraint()
+    var rightWelcomLabel = NSLayoutConstraint()
     
-    private var topOverlayConstant = NSLayoutConstraint()
-    private var rightLandscape = NSLayoutConstraint()
+    var topOverlayConstant = NSLayoutConstraint()
+    var rightLandscape = NSLayoutConstraint()
+    var topbuttonSubscribeConstant = NSLayoutConstraint()
+    var leftbuttonSubscribeConstant = NSLayoutConstraint()
+    var rightbuttonSubscribeConstant = NSLayoutConstraint()
+    var centerbuttonSubscribeConstant = NSLayoutConstraint()
     
-    private var topbuttonSubscribeConstant = NSLayoutConstraint()
-    private var leftbuttonSubscribeConstant = NSLayoutConstraint()
-    private var rightbuttonSubscribeConstant = NSLayoutConstraint()
-    private var centerbuttonSubscribeConstant = NSLayoutConstraint()
-    
-    private var bottomButtonChatConstant = NSLayoutConstraint()
+    var bottomButtonChatConstant = NSLayoutConstraint()
     
     
     let profileView = ChanellCode()
@@ -181,189 +180,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
        
 
     }
-    private func layout() {
-        profileView.viewTop.translatesAutoresizingMaskIntoConstraints = false
-        profileView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
-        profileView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        profileView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
-        profileView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
-        profileView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
-     
-     view.addSubview(profileView.viewTop)
-     view.addSubview(profileView.imageLogoProfile)
-     view.addSubview(profileView.welcomeLabel)
-     view.addSubview(profileView.labelFollow)
-        
-        view.addSubview(profileView.buttonHelpCoach)
-        
-        view.addSubview(profileView.buttonSubscribe)
-        view.addSubview(profileView.buttonFollow)
-        view.addSubview(profileView.buttonInstagram)
-        view.addSubview(profileView.buttonTwiter)
-        view.addSubview(profileView.buttonfaceBook)
-        view.addSubview(profileView.labelINTVideo)
-        view.addSubview(profileView.labelVideo)
-        view.addSubview(profileView.labelINTFollows)
-        view.addSubview(profileView.labelFollows)
-        view.addSubview(profileView.labelINTFolowers)
-        view.addSubview(profileView.labelFolowers)
-        view.addSubview(profileView.labelDescription)
 
-//        profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//        profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//     bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: -400)
-//     bottomConstraint.isActive = true
-//        profileView.viewTop.heightAnchor.constraint(equalToConstant: 500).isActive = true
-//
-//        profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-//        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 12).isActive = true
-//
-//
-//     topWelcomLabelConstant = profileView.welcomeLabel.topAnchor.constraint(equalTo: profileView.imageLogoProfile.topAnchor, constant: 0)
-//     topWelcomLabelConstant.isActive = true
-//
-//     leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
-//     leftWelcomeLabelConstant.isActive = true
-//
-//     centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
-//     centerWelcomeLabelConstant.isActive = false
-//
-//
-//     leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
-//     leftConstant.isActive = true
-//
-//
-//     botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
-//     botConstant.isActive = true
-//
-//     topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
-//     topConstraint.isActive = false
-//
-//     centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
-//     centerConstant.isActive = false
-//
-//     heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
-//     heightConstant.isActive = true
-//     widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
-//     widthConstant.isActive = true
-        profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
-        bottomConstraint.isActive = true
-        profileView.viewTop.heightAnchor.constraint(equalToConstant: 450).isActive = true
-
-        profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
-        
-
-       // topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
-        topWelcomLabelConstant = profileView.welcomeLabel.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor, constant: 0)
-        topWelcomLabelConstant.isActive = true
-        
-        rightWelcomLabel = profileView.welcomeLabel.trailingAnchor.constraint(equalTo: profileView.buttonSubscribe.leadingAnchor, constant: -5)
-        rightWelcomLabel.isActive = true
-        
-        leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
-        leftWelcomeLabelConstant.isActive = true
-        
-        centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
-        centerWelcomeLabelConstant.isActive = false
-        
-
-        leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
-        leftConstant.isActive = true
-        
-        
-        botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
-        botConstant.isActive = true
-        
-        topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
-        topConstraint.isActive = false
-        
-        centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
-        centerConstant.isActive = false
-        
-        heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
-        heightConstant.isActive = true
-        widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
-        widthConstant.isActive = true
-
-        
-        topbuttonSubscribeConstant = profileView.buttonSubscribe.topAnchor.constraint(equalTo: profileView.welcomeLabel.bottomAnchor, constant: 20)
-        topbuttonSubscribeConstant.isActive = false
-        leftbuttonSubscribeConstant = profileView.buttonSubscribe.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 18)
-        leftbuttonSubscribeConstant.isActive = false
-        
-        rightbuttonSubscribeConstant = profileView.buttonSubscribe.trailingAnchor.constraint(equalTo: profileView.trailingAnchor, constant: -10)
-        rightbuttonSubscribeConstant.isActive = true
-        centerbuttonSubscribeConstant = profileView.buttonSubscribe.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor)
-        centerbuttonSubscribeConstant.isActive = true
-        
-        
-        profileView.buttonSubscribe.anchor( width: 90, height: 28)
-        profileView.buttonFollow.anchor( width: 90, height: 28)
-        
-        
-        profileView.buttonFollow.anchor(top: profileView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
-        profileView.buttonFollow.centerX(inView: profileView.viewTop)
- 
-       
-        profileView.buttonInstagram.anchor(  right: profileView.cardView.rightAnchor,paddingRight: 17, width: 28, height: 28)
-        profileView.buttonInstagram.centerY(inView: profileView.buttonSubscribe)
-        
-        
-        
-        profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
-        profileView.buttonTwiter.centerY(inView: profileView.buttonInstagram)
-
-        
-        profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
-        profileView.buttonfaceBook.centerY(inView: profileView.buttonInstagram)
-        
-        
- 
-       // homeView.labelVideo.alpha = 0
-        self.profileView.buttonFollow.alpha = 0
-        self.profileView.buttonInstagram.alpha = 0
-        self.profileView.buttonTwiter.alpha = 0
-        self.profileView.buttonfaceBook.alpha = 0
-        self.profileView.labelINTVideo.alpha = 0
-        self.profileView.labelVideo.alpha = 0
-        self.profileView.labelINTFollows.alpha = 0
-        self.profileView.labelFollows.alpha = 0
-        self.profileView.labelINTFolowers.alpha = 0
-        self.profileView.labelFolowers.alpha = 0
-        self.profileView.labelDescription.alpha = 0
-       
-        
-        profileView.labelINTVideo.anchor(top: profileView.buttonSubscribe.bottomAnchor, left: profileView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
-         
-        profileView.labelVideo.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelVideo.centerX(inView: profileView.labelINTVideo)
-        
-        
-        profileView.labelINTFollows.anchor(top: profileView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
-        profileView.labelINTFollows.centerX(inView: profileView.buttonFollow)
-        
-        
-        profileView.labelFollows.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelFollows.centerX(inView: profileView.viewTop)
-        
-  
-        profileView.labelINTFolowers.anchor(top: profileView.buttonSubscribe.bottomAnchor, right: profileView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
-        
-        profileView.labelFolowers.anchor(top: profileView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelFolowers.centerX(inView: profileView.labelINTFolowers)
-        
-        
-        profileView.labelDescription.anchor(top: profileView.labelFollows.bottomAnchor, left: profileView.viewTop.leftAnchor, right: profileView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
-        
-        profileView.buttonHelpCoach.anchor(bottom:profileView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
-        profileView.buttonHelpCoach.centerX(inView: profileView.viewTop)
-        profileView.buttonHelpCoach.isUserInteractionEnabled = false
-
-    
-    }
     
     // MARK: - Animation
     
@@ -445,29 +262,15 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         if profileView.buttonSubscribe.isSelected {
             profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
             profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-            profileView.buttonSubscribe.setTitle("Subscribe", for: .normal)
 
         } else {
             profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
-            profileView.buttonSubscribe.setTitle("Subscribers", for: .normal)
             profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+           
         }
 
     }
-    @objc func actionFollow() {
-        profileView.buttonFollow.isSelected.toggle()
-        
-        if profileView.buttonFollow.isSelected {
-            profileView.buttonFollow.backgroundColor = UIColor(hexString: "#3B58A4")
-            profileView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
 
-        } else {
-            profileView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
-            profileView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-        }
-
-    }
- 
     func setUserProfile() {
 
         profileView.setImage(image: user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
@@ -492,7 +295,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
-        profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
         
         
 
@@ -763,7 +566,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             case .open:
                 print("OPEN FIR")
                 self.profileView.labelVideo.alpha = 0
-                self.profileView.buttonFollow.alpha = 0
                 self.profileView.buttonInstagram.alpha = 0
                 self.profileView.buttonTwiter.alpha = 0
                 self.profileView.buttonfaceBook.alpha = 0
@@ -779,7 +581,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             case .closed:
                 print("Close FIR")
                 self.profileView.labelVideo.alpha = 0
-                self.profileView.buttonFollow.alpha = 0
                 self.profileView.buttonInstagram.alpha = 0
                 self.profileView.buttonTwiter.alpha = 0
                 self.profileView.buttonfaceBook.alpha = 0
@@ -800,7 +601,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 case .open:
                     print("OPEN Sec")
                     self.profileView.labelVideo.alpha = 1
-                    self.profileView.buttonFollow.alpha = 1
                     self.profileView.buttonInstagram.alpha = 1
                     self.profileView.buttonTwiter.alpha = 1
                     self.profileView.buttonfaceBook.alpha = 1
@@ -815,7 +615,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 case .closed:
                     print("Close sec")
                     self.profileView.labelVideo.alpha = 0
-                    self.profileView.buttonFollow.alpha = 0
                     self.profileView.buttonInstagram.alpha = 0
                     self.profileView.buttonTwiter.alpha = 0
                     self.profileView.buttonfaceBook.alpha = 0
@@ -902,75 +701,3 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
   
 
 }
-
-// MARK: - TableView for Timetable
-
-//extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
-    
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return data.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        // #warning Incomplete implementation, return the number of rows
-//        guard let sectionData = data[section] else {
-//            return 0
-//        }
-//        return sectionData.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return "Day " + String(describing: section + 1)
-//    }
-//
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
-//
-//        // Configure the cell...
-//        guard let sectionData = data[indexPath.section] else {
-//            return cell
-//        }
-//
-//        let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
-//        var timelineFrontColor = UIColor.clear
-//        if (indexPath.row > 0) {
-//            timelineFrontColor = sectionData[indexPath.row - 1].1
-//        }
-//        cell.timelinePoint = timelinePoint
-//        cell.timeline.frontColor = timelineFrontColor
-//        cell.timeline.backColor = timelineBackColor
-//        cell.titleLabel.text = title
-//        cell.descriptionLabel.text = description
-//        cell.lineInfoLabel.text = lineInfo
-//
-//        if let thumbnails = thumbnails {
-//            cell.viewsInStackView = thumbnails.map { thumbnail in
-//                return UIImageView(image: UIImage(named: thumbnail))
-//            }
-//        }
-//        else {
-//            cell.viewsInStackView = []
-//        }
-//
-//        if let illustration = illustration {
-//            cell.illustrationImageView.image = UIImage(named: illustration)
-//        }
-//        else {
-//            cell.illustrationImageView.image = nil
-//        }
-//
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        guard let sectionData = data[indexPath.section] else {
-//            return
-//        }
-//
-//        print(sectionData[indexPath.row])
-//    }
-//
-
-//}
-
