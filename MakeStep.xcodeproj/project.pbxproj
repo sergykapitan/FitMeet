@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		51E4AAD435C30FE4FAD5E133 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */; };
+		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
 		B404922926D6456600A2F417 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
 		B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */; };
 		B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923026D7970200A2F417 /* ActionChatPresentationController.swift */; };
@@ -214,7 +214,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
+		56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTransishionChatManadger.swift; sourceTree = "<group>"; };
 		B404923026D7970200A2F417 /* ActionChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionChatPresentationController.swift; sourceTree = "<group>"; };
@@ -411,8 +413,6 @@
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B4FCCF0D26BEC15800C25304 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
-		DAFC849543649BF7FBEF05D4 /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
-		FA4DB2B64A5CB7250CB4B688 /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -420,28 +420,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				51E4AAD435C30FE4FAD5E133 /* Pods_MakeStep.framework in Frameworks */,
+				839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		059B0ADA41663AEBA0AF57D8 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				64E1BC0864E4834A92C31B2B /* Pods_MakeStep.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		7A73FD9EA921833CA615049F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				FA4DB2B64A5CB7250CB4B688 /* Pods-MakeStep.debug.xcconfig */,
-				DAFC849543649BF7FBEF05D4 /* Pods-MakeStep.release.xcconfig */,
+				42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */,
+				65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		A91686760454E5B22AB8EF6D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		B404922A26D78A9300A2F417 /* HomeChat */ = {
@@ -879,8 +879,8 @@
 				B4D2B94A26E909880080E7E3 /* share */,
 				B4D9D71C26257D8C007CFB71 /* Products */,
 				7A73FD9EA921833CA615049F /* Pods */,
-				059B0ADA41663AEBA0AF57D8 /* Frameworks */,
 				B4E88E5726D4F1E7003E6B16 /* Utilities */,
+				A91686760454E5B22AB8EF6D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1215,12 +1215,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B4D9D72F26257D8F007CFB71 /* Build configuration list for PBXNativeTarget "MakeStep" */;
 			buildPhases = (
-				8591A959A651716A0E434D78 /* [CP] Check Pods Manifest.lock */,
+				C95E095DC515E87E95C8371D /* [CP] Check Pods Manifest.lock */,
 				B4D9D71726257D8C007CFB71 /* Sources */,
 				B4D9D71826257D8C007CFB71 /* Frameworks */,
 				B4D9D71926257D8C007CFB71 /* Resources */,
-				9C04A03CF6B1258867032E6E /* [CP] Embed Pods Frameworks */,
 				B4D2B95726E909880080E7E3 /* Embed App Extensions */,
+				16A6108AFD8FE3FA37EDC89F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1278,7 +1278,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		8591A959A651716A0E434D78 /* [CP] Check Pods Manifest.lock */ = {
+		16A6108AFD8FE3FA37EDC89F /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C95E095DC515E87E95C8371D /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1298,23 +1315,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9C04A03CF6B1258867032E6E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-MakeStep/Pods-MakeStep-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1654,7 +1654,7 @@
 		};
 		B4D9D73026257D8F007CFB71 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = FA4DB2B64A5CB7250CB4B688 /* Pods-MakeStep.debug.xcconfig */;
+			baseConfigurationReference = 42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1680,7 +1680,7 @@
 		};
 		B4D9D73126257D8F007CFB71 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DAFC849543649BF7FBEF05D4 /* Pods-MakeStep.release.xcconfig */;
+			baseConfigurationReference = 65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;

@@ -20,7 +20,7 @@ open class DropDown : UITextField{
 
     @IBInspectable public var rowHeight: CGFloat = 30
     @IBInspectable public var rowBackgroundColor: UIColor = .white
-    @IBInspectable public var selectedRowColor: UIColor = .lightGray
+    @IBInspectable public var selectedRowColor: UIColor = .cyan
     @IBInspectable public var hideOptionsWhenSelect = true
     @IBInspectable  public var isSearchEnable: Bool = true {
         didSet{
@@ -136,7 +136,7 @@ open class DropDown : UITextField{
         let arrowContainerView = UIView(frame: rightView.frame)
         self.rightView?.addSubview(arrowContainerView)
         let center = arrowContainerView.center
-        arrow = Arrow(origin: CGPoint(x: center.x - arrowSize/2 - 20,y: center.y - arrowSize/2),size: arrowSize  )
+        arrow = Arrow(origin: CGPoint(x: center.x - arrowSize/2,y: center.y - arrowSize/2),size: arrowSize  )
         arrowContainerView.addSubview(arrow)
 
         self.backgroundView = UIView(frame: .zero)
@@ -451,7 +451,7 @@ enum Position {
 
 class Arrow: UIView {
     let shapeLayer = CAShapeLayer()
-    var arrowColor:UIColor = .clear {
+    var arrowColor:UIColor = .black {
         didSet{
             shapeLayer.fillColor = arrowColor.cgColor
         }
@@ -490,22 +490,23 @@ class Arrow: UIView {
     override func draw(_ rect: CGRect) {
 
         // Get size
-        let size = self.layer.frame.width * 0.6
+        let size = self.layer.frame.width
+
+        // Create path
+        let bezierPath = UIBezierPath()
 
         // Draw points
         let qSize = size/4
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: qSize)) //StartPoint
-        path.addLine(to: CGPoint(x: size/2, y: qSize*3)) //EndPoint of First Line and StartPoint for Second Line
-        path.addLine(to: CGPoint(x: size, y: qSize)) //EndPoint of Second Line
+
+        bezierPath.move(to: CGPoint(x: 0, y: qSize))
+        bezierPath.addLine(to: CGPoint(x: size, y: qSize))
+        bezierPath.addLine(to: CGPoint(x: size/2, y: qSize*3))
+        bezierPath.addLine(to: CGPoint(x: 0, y: qSize))
+        bezierPath.close()
 
         // Mask to path
-       // shapeLayer.path = bezierPath.cgPath
-        shapeLayer.path = path.cgPath
-        shapeLayer.fillColor = arrowColor.cgColor
-        shapeLayer.strokeColor = UIColor.lightGray.cgColor
-        shapeLayer.lineWidth = 1.0
+        shapeLayer.path = bezierPath.cgPath
+      //  shapeLayer.fillColor = arrowColor.cgColor
        
         if #available(iOS 12.0, *) {
             self.layer.addSublayer (shapeLayer)
@@ -519,13 +520,13 @@ extension UIView {
 
     func dropShadow(scale: Bool = true) {
         layer.masksToBounds = false
-       // layer.shadowColor = UIColor.clear.cgColor
-       // layer.shadowOpacity = 0.5
-       // layer.shadowOffset = CGSize(width: 1, height: 1)
-       // layer.shadowRadius = 2
-      //  layer.shadowPath = UIBezierPath(rect: bounds).cgPath
-     //   layer.shouldRasterize = true
-      //  layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.5
+        layer.shadowOffset = CGSize(width: 1, height: 1)
+        layer.shadowRadius = 2
+        layer.shadowPath = UIBezierPath(rect: bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
     }
 
     var parentViewController: UIViewController? {
