@@ -16,11 +16,9 @@ final class ChatVCPlayerCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 8
-//        view.layer.borderWidth = 0.8
-//        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         return view
         }()
+    
     var tableView: UITableView = {
         let table = UITableView()
         return table

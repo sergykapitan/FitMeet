@@ -243,16 +243,18 @@ final class ChanellCode: UIView {
         cardView.addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 20, height: 30)
         
-        cardView.addSubview(buttonOnline)
-               buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
+    //    cardView.addSubview(buttonOnline)
+     //          buttonOnline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
                
+        cardView.addSubview(buttonOffline)
+        buttonOffline.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
+        
         cardView.addSubview(tableView)
-        tableView.anchor(top: buttonOnline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: buttonOffline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                
 
        
-        cardView.addSubview(buttonOffline)
-        buttonOffline.anchor(top: segmentControll.bottomAnchor, left: buttonOnline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
+        
         
         cardView.addSubview(buttonComing)
         buttonComing.anchor(top: segmentControll.bottomAnchor, left: buttonOffline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)

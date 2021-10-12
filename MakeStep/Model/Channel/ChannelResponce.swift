@@ -25,6 +25,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let updatedAt: String?
     let description: String?
     let activeBroadcast: ActivBroadCast?
+    let favoriteCategories: [Int]?
 }
 struct ActivBroadCast: Codable,Hashable,Identifiable {
     let createdAt: String?

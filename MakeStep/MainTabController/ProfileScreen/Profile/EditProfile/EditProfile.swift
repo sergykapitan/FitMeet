@@ -138,6 +138,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         })
     }
     func makeNavItem() {
+        
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
                     let titleLabel = UILabel()

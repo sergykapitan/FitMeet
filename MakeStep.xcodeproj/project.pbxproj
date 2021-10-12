@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
+		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
+		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
+		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
 		B404922926D6456600A2F417 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
 		B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */; };
 		B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923026D7970200A2F417 /* ActionChatPresentationController.swift */; };
@@ -217,6 +220,9 @@
 		42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 		56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
+		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
+		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
+		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
 		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTransishionChatManadger.swift; sourceTree = "<group>"; };
 		B404923026D7970200A2F417 /* ActionChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionChatPresentationController.swift; sourceTree = "<group>"; };
@@ -436,6 +442,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A5D2E0A327147CDB00986BAE /* Edit Channel */ = {
+			isa = PBXGroup;
+			children = (
+				A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */,
+				A5D2E0A627147D1200986BAE /* EditChannelCode.swift */,
+			);
+			path = "Edit Channel";
+			sourceTree = "<group>";
+		};
 		A91686760454E5B22AB8EF6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -649,8 +664,8 @@
 				B48D82A4262DAE1300F5A0D9 /* ProfileVCCode.swift */,
 				B4163828268B099D005BAA46 /* Chanell */,
 				B484E8E726837C8500D75BE8 /* EditProfile */,
+				A5D2E0A327147CDB00986BAE /* Edit Channel */,
 				B4BF4767270757110013FC13 /* DeleteStream */,
-				B4AA691127145616007EAEF1 /* Edit Channel */,
 				B47079082705B64800921821 /* Edit stream */,
 			);
 			path = Profile;
@@ -738,13 +753,6 @@
 				B4AE7AE7263D782A0033F78F /* Old */,
 			);
 			path = First;
-			sourceTree = "<group>";
-		};
-		B4AA691127145616007EAEF1 /* Edit Channel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Edit Channel";
 			sourceTree = "<group>";
 		};
 		B4AE7AE6263D780A0033F78F /* Stream */ = {
@@ -1032,6 +1040,7 @@
 				B471E65D26EA1CF4007B63BE /* ResetPassword.swift */,
 				B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */,
 				B470790D2705F06700921821 /* EdetBroadcast.swift */,
+				A591C3662715AB910015B0E6 /* ChangeChannel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1364,6 +1373,7 @@
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
+				A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */,
 				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */,
@@ -1413,6 +1423,7 @@
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,
+				A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */,
 				B4CBB86A263B19BD00015380 /* NullEncodable.swift in Sources */,
 				B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */,
 				B4E88E4D26D3DB79003E6B16 /* Usermap.swift in Sources */,
@@ -1496,6 +1507,7 @@
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */,
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
+				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
@@ -1670,7 +1682,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1696,7 +1708,7 @@
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 26;
 				DEVELOPMENT_TEAM = 9ZZ8R4WK5N;
 				INFOPLIST_FILE = MakeStep/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

@@ -337,16 +337,12 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             })
       
     }
-
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             view.endEditing(true)
 
         }
-    
-
-
-}
+    }
 
 extension ChatVCPlayer: UITextFieldDelegate {
 

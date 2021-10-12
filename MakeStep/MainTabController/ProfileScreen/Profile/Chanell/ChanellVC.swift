@@ -106,6 +106,12 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
    // var url: String? ??????????????
     var myuri: String?
     var myPublish: String?
+    
+    private var takeChannel: AnyCancellable?
+    private var channels: AnyCancellable?
+ 
+    @Inject var fitMeetChannel: FitMeetChannels
+    var channel: ChannelResponce?
 
     override  var shouldAutorotate: Bool {
         return false
@@ -134,27 +140,15 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         makeNavItem()
         profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
         profileView.segmentControll.delegate = self
-       // profileView.tableView.isHidden = true
         actionOnline()
         layout()
         profileView.viewTop.addGestureRecognizer(panRecognizer)
         makeTableView()
-      //  profileView.tableView.dataSource = self
-      //  profileView.tableView.delegate = self
-      //  profileView.buttonOnline.isHidden = true
-       // profileView.buttonOffline.isHidden = true
-      //  profileView.buttonComing.isHidden = true
         profileView.imagePromo.isHidden = true
         profileView.labelCategory.isHidden = true
         profileView.labelStreamInfo.isHidden = true
         profileView.labelStreamDescription.isHidden = true
         profileView.tableView.isHidden = false
-        
-      //  let bundle = Bundle(for: TimelineTableViewCell.self)
-      //  let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
-      //  let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell",
-      //      bundle: Bundle(url: nibUrl!)!)
-      //  self.profileView.tableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
         guard let userId = user?.id else { return }
         bindingChanell(status: "ONLINE", userId: "\(userId)")
     }
@@ -167,20 +161,26 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.layoutIfNeeded()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
+        bindingChannel()
+   
        
         
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         profileView.imageLogoProfile.makeRounded()
-        //layout()
         setUserProfile()
-        
-        
-       
-
+        actionOffline()
     }
-
+    func bindingChannel() {
+        takeChanell = fitMeetChannel.listChannels()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.channel = response.data.last
+                }
+        })
+    }
     
     // MARK: - Animation
     
@@ -257,18 +257,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
     }
     @objc func actionSubscribe() {
-        profileView.buttonSubscribe.isSelected.toggle()
         
-        if profileView.buttonSubscribe.isSelected {
-            profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
-            profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-
-        } else {
-            profileView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
-            profileView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-           
-        }
-
+        let vc = EdetChannelVC()
+        vc.modalPresentationStyle = .fullScreen
+        self.navigationController?.pushViewController(vc, animated: true)
+ 
     }
 
     func setUserProfile() {
@@ -279,7 +272,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.profileView.welcomeLabel.text = fullName
         self.profileView.labelINTFollows.text = "\(follow)"
         self.profileView.labelINTFolowers.text = "\(sub)"
-        self.profileView.labelDescription.text = " Welcome to my channel!\n My name is \(fullName)"
+        self.profileView.labelDescription.text = channel?.description //" Welcome to my channel!\n My name is \(fullName)"
  
     }
     
@@ -291,7 +284,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
     
     func actionButtonContinue() {
-        profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
+       // profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
         profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)

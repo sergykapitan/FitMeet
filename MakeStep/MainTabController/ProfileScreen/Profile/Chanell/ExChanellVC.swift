@@ -22,16 +22,10 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.setImage(image: brodcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         }
-        
-        
-        
-        
-        
+  
         cell.labelDescription.text = brodcast[indexPath.row].description
-        
-        
-        
         cell.titleLabel.text = brodcast[indexPath.row].name
+        
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
@@ -46,23 +40,12 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
         }
-//        self.arrayIdUser.append(id)
-//       // self.bindingUserMap(ids: arrayIdUser)
-//        self.bindingUser(id: id)
-//        let us = usersd.map { key,user in
-//            return user
-//        }
-        
-//        self.ids.append(broadcastID)
-//        self.getMapWather(ids: [broadcastID])
-//        cell.labelEye.text = "\(self.watch)"
- 
+
         let categorys = brodcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
-       // cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
   
@@ -129,7 +112,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             detailViewController.modalPresentationStyle = .custom
             detailViewController.transitioningDelegate = actionSheetTransitionManager
             detailViewController.url = self.url
-            print("Broadcast === \(brodcast[sender.tag])")
             detailViewController.broadcast = brodcast[sender.tag]
             present(detailViewController, animated: true)
         } else {
@@ -140,16 +122,12 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             detailViewController.url = self.url
             present(detailViewController, animated: true)
         }
-
     }
     
     @objc func actionStartStream(_ sender: UIButton) {
-        
-        print("Broadcast \(brodcast[sender.tag].id)")
         guard let broadcastID = brodcast[sender.tag].id else { return }
         self.nextView(broadcastId: broadcastID)
     }
-    
 }
 
 extension ChanellVC {
@@ -234,26 +212,17 @@ extension ChanellVC {
         centerbuttonSubscribeConstant = profileView.buttonSubscribe.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor)
         centerbuttonSubscribeConstant.isActive = true
         
-        
         profileView.buttonSubscribe.anchor( width: 100, height: 28)
-      //  profileView.buttonFollow.anchor( width: 90, height: 28)
 
         profileView.buttonInstagram.anchor(  right: profileView.viewTop.centerXAnchor,paddingRight: 17, width: 28, height: 28)
         profileView.buttonInstagram.centerY(inView: profileView.buttonSubscribe)
         
-        
-        
         profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
         profileView.buttonTwiter.centerY(inView: profileView.buttonInstagram)
-
         
         profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
         profileView.buttonfaceBook.centerY(inView: profileView.buttonInstagram)
-        
-        
- 
-       // homeView.labelVideo.alpha = 0
-      //  self.profileView.buttonFollow.alpha = 0
+
         self.profileView.buttonInstagram.alpha = 0
         self.profileView.buttonTwiter.alpha = 0
         self.profileView.buttonfaceBook.alpha = 0
@@ -264,7 +233,6 @@ extension ChanellVC {
         self.profileView.labelINTFolowers.alpha = 0
         self.profileView.labelFolowers.alpha = 0
         self.profileView.labelDescription.alpha = 0
-       
         
         profileView.labelINTVideo.anchor(top: profileView.buttonSubscribe.bottomAnchor, left: profileView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
          
@@ -291,9 +259,6 @@ extension ChanellVC {
         profileView.buttonHelpCoach.anchor(bottom:profileView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
         profileView.buttonHelpCoach.centerX(inView: profileView.viewTop)
         profileView.buttonHelpCoach.isUserInteractionEnabled = false
-
     
     }
-    
-    
 }
