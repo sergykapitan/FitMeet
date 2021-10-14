@@ -20,6 +20,7 @@ target 'MakeStep' do
   pod 'Presentr'
   pod "EasyPeasy"
   pod 'TagListView', '~> 1.0'
+  pod 'MMPlayerView'
 
   # Pods for FitMeet
 

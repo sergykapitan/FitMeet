@@ -11,6 +11,8 @@ import UIKit.UIGestureRecognizerSubclass
 import Combine
 import ContextMenuSwift
 import TimelineTableViewCell
+import MMPlayerView
+import AVFoundation
 
 
 // MARK: - State
@@ -31,6 +33,17 @@ extension State {
 
 class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
     
+    var offsetObservation: NSKeyValueObservation?
+    
+    lazy var mmPlayerLayer: MMPlayerLayer = {
+        let l = MMPlayerLayer()
+        l.cacheType = .memory(count: 5)
+        l.coverFitType = .fitToPlayerView
+        l.videoGravity = AVLayerVideoGravity.resizeAspect
+        l.replace(cover: CoverA.instantiateFromNib())
+        l.repeatWhenEnd = true
+        return l
+    }()
     
     func change(to index: Int) {
         
@@ -151,6 +164,41 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.tableView.isHidden = false
         guard let userId = user?.id else { return }
         bindingChanell(status: "ONLINE", userId: "\(userId)")
+        
+        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
+            
+        })
+        offsetObservation = profileView.tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
+            guard let self = self, self.presentedViewController == nil else {return}
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.2)
+        }
+        profileView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.updateByContentOffset()
+            self?.startLoading()
+        }
+        
+        mmPlayerLayer.getStatusBlock { [weak self] (status) in
+            switch status {
+            case .failed(let err):
+                let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+            case .ready:
+                print("Ready to Play")
+            case .playing:
+                print("Playing")
+            case .pause:
+                print("Pause")
+            case .end:
+                print("End")
+            default: break
+            }
+        }
+        mmPlayerLayer.getOrientationChange { (status) in
+            print("Player OrientationChange \(status)")
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -181,7 +229,50 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 }
         })
     }
+    @objc fileprivate func startLoading() {
+        self.updateByContentOffset()
+        if self.presentedViewController != nil {
+            return
+        }
+        // start loading video
+        mmPlayerLayer.resume()
+    }
+    fileprivate func updateByContentOffset() {
+        if mmPlayerLayer.isShrink {
+            return
+        }
+        
+        if let path = findCurrentPath(),
+            self.presentedViewController == nil {
+            self.updateCell(at: path)
+            //Demo SubTitle
+            if path.row == 0, self.mmPlayerLayer.subtitleSetting.subtitleType == nil {
+                let subtitleStr = Bundle.main.path(forResource: "srtDemo", ofType: "srt")!
+                if let str = try? String.init(contentsOfFile: subtitleStr) {
+                    self.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
+                    self.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
+                    self.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
+                }
+            }
+        }
+    }
+    func findCurrentPath() -> IndexPath? {
+        let p = CGPoint(x: profileView.tableView.frame.width/2, y: profileView.tableView.contentOffset.y + profileView.tableView.frame.width/2)
+        return profileView.tableView.indexPathForRow(at: p)//.indexPathForItem(at: p)
+    }
     
+    func findCurrentCell(path: IndexPath) -> UITableViewCell {
+        return profileView.tableView.cellForRow(at: path)!//.cellForItem(at: path)!
+    }
+    fileprivate func updateCell(at indexPath: IndexPath) {
+        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.play_Url {
+            // this thumb use when transition start and your video dosent start
+            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image//.imgView.image
+            // set video where to play
+            mmPlayerLayer.playView = cell.backgroundImage//.imgView
+            mmPlayerLayer.set(url: playURL)
+        }
+    }
     // MARK: - Animation
     
     /// The current state of the animation. This variable is changed only when an animation completes.
@@ -280,6 +371,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.tableView.dataSource = self
         profileView.tableView.delegate = self
         profileView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
         profileView.tableView.separatorStyle = .none
     }
     
@@ -697,4 +789,28 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     
   
 
+}
+extension ChanellVC: MMPlayerFromProtocol {
+    // when second controller pop or dismiss, this help to put player back to where you want
+    // original was player last view ex. it will be nil because of this view on reuse view
+    func backReplaceSuperView(original: UIView?) -> UIView? {
+        guard let path = self.findCurrentPath() else {
+            return original
+        }
+        
+        let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+        return cell.backgroundImage
+    }
+
+    // add layer to temp view and pass to another controller
+    var passPlayer: MMPlayerLayer {
+        return self.mmPlayerLayer
+    }
+    func transitionWillStart() {
+    }
+    // show cell.image
+    func transitionCompleted() {
+        self.updateByContentOffset()
+        self.startLoading()
+    }
 }

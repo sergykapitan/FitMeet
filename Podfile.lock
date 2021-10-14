@@ -49,6 +49,7 @@ PODS:
     - MaterialComponents/private/Application
     - MaterialComponents/private/Math
   - MDFInternationalization (2.0.0)
+  - MMPlayerView (6.0.2)
   - Presentr (1.9)
   - Socket.IO-Client-Swift (16.0.1):
     - Starscream (~> 4.0)
@@ -68,6 +69,7 @@ DEPENDENCIES:
   - Kingfisher (~> 6.0)
   - Loaf
   - "MaterialComponents/Tabs+ColorThemer"
+  - MMPlayerView
   - Presentr
   - Socket.IO-Client-Swift (~> 16.0.1)
   - TagListView (~> 1.0)
@@ -88,6 +90,7 @@ SPEC REPOS:
     - Logboard
     - MaterialComponents
     - MDFInternationalization
+    - MMPlayerView
     - Presentr
     - Socket.IO-Client-Swift
     - Starscream
@@ -108,12 +111,13 @@ SPEC CHECKSUMS:
   Logboard: 0ab6bbd984ed032b3f0b615cef06779a73445c80
   MaterialComponents: 2a8b6fb1bf6655d3e2254dadae5edbb05559e1d7
   MDFInternationalization: 010097556d6b09d2c4ea38e0820ea6d37be6a314
+  MMPlayerView: e28bace82369bcfbfbe29f9dcd30eeb641a46754
   Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   Socket.IO-Client-Swift: c116d6dc9fd6be9c259bacfe143f8725bce7d79e
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: b31e91f8e08f8e654798ae273f0531670f1a1bdb
+PODFILE CHECKSUM: b31be90b6ee1be75ce59c35b0e6f1b4c31274f7f
 
 COCOAPODS: 1.11.2

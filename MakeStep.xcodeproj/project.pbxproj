@@ -9,6 +9,13 @@
 /* Begin PBXBuildFile section */
 		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
+		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
+		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
+		A5B635B027185C010097A127 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
+		A5B635B127185C010097A127 /* CoverA.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635AF27185C010097A127 /* CoverA.swift */; };
+		A5B635B427185E6E0097A127 /* PlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635B327185E6E0097A127 /* PlayerCell.swift */; };
+		A5B635B6271863EF0097A127 /* DemoSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635B5271863EF0097A127 /* DemoSource.swift */; };
+		A5B635B8271866280097A127 /* srtDemo.srt in Resources */ = {isa = PBXBuildFile; fileRef = A5B635B7271866280097A127 /* srtDemo.srt */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
 		B404922926D6456600A2F417 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
@@ -221,6 +228,13 @@
 		56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
+		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
+		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
+		A5B635AE27185C010097A127 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
+		A5B635AF27185C010097A127 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
+		A5B635B327185E6E0097A127 /* PlayerCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerCell.swift; sourceTree = "<group>"; };
+		A5B635B5271863EF0097A127 /* DemoSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoSource.swift; sourceTree = "<group>"; };
+		A5B635B7271866280097A127 /* srtDemo.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = srtDemo.srt; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
 		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
@@ -442,6 +456,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A5B635AD27185C010097A127 /* CoverView */ = {
+			isa = PBXGroup;
+			children = (
+				A5B635AE27185C010097A127 /* CoverA.xib */,
+				A5B635AF27185C010097A127 /* CoverA.swift */,
+			);
+			path = CoverView;
+			sourceTree = "<group>";
+		};
+		A5B635B227185E6E0097A127 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A5B635B327185E6E0097A127 /* PlayerCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		A5D2E0A327147CDB00986BAE /* Edit Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -624,8 +655,14 @@
 		B47828A126CFF3D20068292A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A5B635B5271863EF0097A127 /* DemoSource.swift */,
+				A5B635B7271866280097A127 /* srtDemo.srt */,
+				A5B635B227185E6E0097A127 /* Cell */,
+				A5B635AD27185C010097A127 /* CoverView */,
 				B4D2B93E26E7C7970080E7E3 /* SwipbleView */,
 				B47828A226CFF3E30068292A /* Transishion */,
+				A5B635A7271836120097A127 /* PlayerView.swift */,
+				A5B635A9271836890097A127 /* PlayerViewCell.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1285,8 +1322,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5B635B8271866280097A127 /* srtDemo.srt in Resources */,
 				B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
+				A5B635B027185C010097A127 /* CoverA.xib in Resources */,
 				B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */,
 				B4D9D72826257D8E007CFB71 /* Assets.xcassets in Resources */,
 			);
@@ -1361,6 +1400,7 @@
 				B4BF476B270757480013FC13 /* DeleteStreamCode.swift in Sources */,
 				B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */,
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
+				A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
@@ -1399,6 +1439,7 @@
 				B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */,
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
 				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
+				A5B635B427185E6E0097A127 /* PlayerCell.swift in Sources */,
 				B4E88E5926D4F216003E6B16 /* AppUtility.swift in Sources */,
 				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
@@ -1434,6 +1475,7 @@
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
+				A5B635A8271836120097A127 /* PlayerView.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
@@ -1455,6 +1497,7 @@
 				B47828A526CFF40C0068292A /* ActionSheetTransitionManager.swift in Sources */,
 				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
+				A5B635B6271863EF0097A127 /* DemoSource.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
 				B4497D5926A8370200321AB8 /* PickerStyle.swift in Sources */,
@@ -1506,6 +1549,7 @@
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */,
+				A5B635B127185C010097A127 /* CoverA.swift in Sources */,
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
