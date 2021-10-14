@@ -40,7 +40,6 @@ final class SearchVCCode: UIView {
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillFull(for: self)
-       // cardView.fillSuperview()
         addSubview(segmentControll)
         segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
         

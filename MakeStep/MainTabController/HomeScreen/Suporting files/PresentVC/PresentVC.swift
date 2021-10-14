@@ -1487,12 +1487,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                   // print("WATCHERPresent======\(response.data["\(ids.first!)"]!)")
                     guard let watchers = response.data["\(ids.first!)"] else { return }
-                   // self.loadPlayer()
-                    self.homeView.labelEye.text = "\(watchers)"
-                   // print("WATCH RETURN = \(self.watch)")
-                        
+                    self.homeView.labelEye.text = "\(watchers)"                        
                 }
             })
        }

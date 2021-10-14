@@ -32,7 +32,7 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/channel/channels/my", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .publishDecodable(type: ChannelModel.self)
                  .value()
-                 .print("listChannels")
+                // .print("listChannels")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }

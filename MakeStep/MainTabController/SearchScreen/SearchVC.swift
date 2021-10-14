@@ -21,6 +21,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     @Inject var makeStepChannel: FitMeetChannels
     private var takeChannel: AnyCancellable?
     
+
+    
     
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     
@@ -30,6 +32,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     var filterListUser:[Users] = []
     var listCategory: [Datum] = []
     var filerlistCategory: [Datum] = []
+    
+    var broadcast:BroadcastResponce?
     
     var channelUser: ChannelResponce?
     
@@ -158,16 +162,22 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 }
              })
     }
+    func getBroadcast(userId: String) {
+        takeBroadcast = fitMeetStream.getBroadcastPrivateVOD(userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    let arrayBroadcast = response.data?.filter{ $0.status == "OFFLINE"}
+                    self.broadcast = arrayBroadcast?.first
+                }
+         })
+    }
     private func setupSearchBar() {
         navigationItem.searchController = searchController
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
         self.searchController.searchBar.isTranslucent = false
-      //  self.searchController.searchBar.backgroundImage = UIImage()
-      //  self.searchController.searchBar.barTintColor = .white
-       // self.searchController.searchBar.tintColor = .white
-       // UISearchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
     }
     private func setupMainView() {        
         searchView.tableView.refreshControl = refreshControl

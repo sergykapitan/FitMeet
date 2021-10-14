@@ -313,6 +313,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
        
         guard let userId = user?.id else { return }
         bindingChanell(status: "OFFLINE", userId: "\(userId)")
+        //STANDART_VOD
         setUserProfile()
         indexButton = 1
         
@@ -340,8 +341,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                
                     self.brodcast = []
                     self.brodcast = response.data!
+                    let type = self.brodcast.map{$0.type}
+                    print("Type === \(type)")
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.profileView.tableView.reloadData()
