@@ -126,12 +126,12 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
 
-    override  var shouldAutorotate: Bool {
-        return false
-    }
-    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
+//    override  var shouldAutorotate: Bool {
+//        return false
+//    }
+//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .portrait
+//    }
     
     override func loadView() {
         super.loadView()
@@ -178,6 +178,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             self?.updateByContentOffset()
             self?.startLoading()
         }
+       // mmPlayerLayer.fullScreenWhenLandscape = true
+      //  mmPlayerLayer.setOrientation(.landscapeLeft)
         
         mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
@@ -241,7 +243,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         if mmPlayerLayer.isShrink {
             return
         }
-        
+
         if let path = findCurrentPath(),
             self.presentedViewController == nil {
             self.updateCell(at: path)
@@ -260,17 +262,20 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         let p = CGPoint(x: profileView.tableView.frame.width/2, y: profileView.tableView.contentOffset.y + profileView.tableView.frame.width/2)
         return profileView.tableView.indexPathForRow(at: p)//.indexPathForItem(at: p)
     }
-    
+
     func findCurrentCell(path: IndexPath) -> UITableViewCell {
-        return profileView.tableView.cellForRow(at: path)!//.cellForItem(at: path)!
+       
+        return profileView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
-        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.play_Url {
+        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.hlsPlaylistUrl {
             // this thumb use when transition start and your video dosent start
-            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image//.imgView.image
+            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
-            mmPlayerLayer.playView = cell.backgroundImage//.imgView
-            mmPlayerLayer.set(url: playURL)
+            mmPlayerLayer.playView = cell.backgroundImage
+            print("URL +++++++++++ \(playURL)")
+            let url = URL(string: "https://stm.makestep.com/qaVOD/streams/291676060059918912905621.mp4")
+            mmPlayerLayer.set(url: url)
         }
     }
     // MARK: - Animation
@@ -429,14 +434,14 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
 
     func bindingChanell(status: String,userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: "\(userId)")//20
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                 
                     self.brodcast = []
                     self.brodcast = response.data!
-                    let type = self.brodcast.map{$0.type}
+                    let type = response.data!.map{$0.type}
                     print("Type === \(type)")
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)

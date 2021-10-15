@@ -112,6 +112,7 @@ final class ChanellCode: UIView {
         table.backgroundColor = UIColor(hexString: "#F6F6F6")
         return table
     }()
+ 
     var buttonHelpCoach: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)

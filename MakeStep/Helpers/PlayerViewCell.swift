@@ -15,10 +15,12 @@ import TagListView
 final class PlayerViewCell: UITableViewCell {
     static let reuseID = "PlayerViewCell"
 
-        var data:DataObj? {
+        var data:BroadcastResponce? {
             didSet {
-                self.backgroundImage.image = data?.image
-               // self.labTitle.text = data?.title
+                guard let Url = data?.previewPath else { return }
+                let url = URL(string: Url)
+                self.backgroundImage.kf.setImage(with: url)
+                       // self.logoUserImage.kf.setImage(with: )
             }
         }
     
@@ -131,12 +133,18 @@ final class PlayerViewCell: UITableViewCell {
         button.isHidden = true
         return button
     }()
+    let buttonLandscape: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        return button
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.initialize()
         selectionStyle = .none
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -185,6 +193,10 @@ final class PlayerViewCell: UITableViewCell {
                        left: contentView.leftAnchor,
                        paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
+        contentView.addSubview(buttonLandscape)
+        buttonLandscape.anchor(top:contentView.topAnchor, left:contentView.leftAnchor,paddingTop: 60,paddingLeft: 50)
+      //  buttonLandscape.centerY(inView: overlay)
+        
         contentView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
@@ -219,7 +231,7 @@ final class PlayerViewCell: UITableViewCell {
     }
     override func prepareForReuse() {
            super.prepareForReuse()
-        self.accessoryType = .none
+       // self.accessoryType = .none
       //  self.backgroundImage.playerLayer.player = nil
         self.logoUserImage.image = nil
 

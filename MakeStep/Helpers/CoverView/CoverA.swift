@@ -34,15 +34,19 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     }
     
     @IBAction func btnLandscapeAction(_ sender: Any) {
-        let ch = ChanellVC()
-    
-        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
-            guard let self = self, let path = ch.findCurrentPath() else {return nil}
-            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
-            ch.mmPlayerLayer.set(url: cell.data!.play_Url)
-            ch.mmPlayerLayer.resume()
-            return cell.backgroundImage
-        }
+     //   let ch = ChanellVC()
+      //  self.playLayer?.playView?.fillSuperview()
+     //   ch.view.insertSubview((self.playLayer?.playView)!, aboveSubview: ch.view)
+  //      self.playLayer?.playView?.anchor(top: superview?.topAnchor, left: superview?.leftAnchor, right: superview?.rightAnchor, bottom: superview?.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+//
+//        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
+//            guard let self = self, let path = ch.findCurrentPath() else {return nil}
+//            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
+//            ch.mmPlayerLayer.set(url: cell.data!.play_Url)
+//            ch.mmPlayerLayer.resume()
+//            return cell.backgroundImage
+//        }
     }
     func currentPlayer(status: PlayStatus) {
         switch status {
