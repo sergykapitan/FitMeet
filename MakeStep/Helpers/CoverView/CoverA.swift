@@ -9,6 +9,7 @@
 import UIKit
 import MMPlayerView
 import AVFoundation
+import EasyPeasy
 
 class CoverA: UIView, MMPlayerCoverViewProtocol {
     weak var playLayer: MMPlayerLayer?
@@ -34,26 +35,26 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     }
     
     @IBAction func btnLandscapeAction(_ sender: Any) {
-     //   let ch = ChanellVC()
-      //  self.playLayer?.playView?.fillSuperview()
-     //   ch.view.insertSubview((self.playLayer?.playView)!, aboveSubview: ch.view)
-  //      self.playLayer?.playView?.anchor(top: superview?.topAnchor, left: superview?.leftAnchor, right: superview?.rightAnchor, bottom: superview?.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        let ch = ChanellVC()
         
-//
-//        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
-//            guard let self = self, let path = ch.findCurrentPath() else {return nil}
-//            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
-//            ch.mmPlayerLayer.set(url: cell.data!.play_Url)
-//            ch.mmPlayerLayer.resume()
-//            return cell.backgroundImage
-//        }
+        self.playLayer?.playView?.fillSuperview()
+      
+        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
+            guard let self = self, let path = ch.findCurrentPath() else {return nil}
+            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
+          //  cell.backgroundImage.easy.layout(Top(0).to(cell.contentView),Left(10).to(cell.contentView),Right(10).to(cell.contentView))
+            let url = URL(string: "https://stm.makestep.com/qaVOD/streams/291676060059918912905621.mp4")
+            ch.mmPlayerLayer.set(url: url)
+            ch.mmPlayerLayer.resume()
+            return cell.backgroundImage
+        }
     }
     func currentPlayer(status: PlayStatus) {
         switch status {
         case .playing:
-            self.btnPlay.setImage(#imageLiteral(resourceName: "ic_pause_circle_filled"), for: .normal)
+            self.btnPlay.setImage(#imageLiteral(resourceName: "Play"), for: .normal)//
         default:
-            self.btnPlay.setImage(#imageLiteral(resourceName: "ic_play_circle_filled"), for: .normal)
+            self.btnPlay.setImage(#imageLiteral(resourceName: "PlayLand"), for: .normal)
         }
     }
     

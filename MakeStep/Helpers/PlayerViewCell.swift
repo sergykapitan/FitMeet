@@ -20,7 +20,7 @@ final class PlayerViewCell: UITableViewCell {
                 guard let Url = data?.previewPath else { return }
                 let url = URL(string: Url)
                 self.backgroundImage.kf.setImage(with: url)
-                       // self.logoUserImage.kf.setImage(with: )
+                       
             }
         }
     
@@ -120,8 +120,6 @@ final class PlayerViewCell: UITableViewCell {
         tag.tagBackgroundColor = .clear
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
-       // tag.alignment = .center // possible values are [.leading, .trailing, .left, .center, .right]
-       // tag.minWidth = 57
         return tag
     }()
     var buttonstartStream: UIButton = {
@@ -135,7 +133,8 @@ final class PlayerViewCell: UITableViewCell {
     }()
     let buttonLandscape: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "fullscreen"), for: .normal)
+        button.tintColor = .lightGray
         return button
     }()
     
@@ -194,9 +193,10 @@ final class PlayerViewCell: UITableViewCell {
                        paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
         contentView.addSubview(buttonLandscape)
-        buttonLandscape.anchor(top:contentView.topAnchor, left:contentView.leftAnchor,paddingTop: 60,paddingLeft: 50)
-      //  buttonLandscape.centerY(inView: overlay)
-        
+        buttonLandscape.anchor(right : backgroundImage.rightAnchor,
+                               bottom: backgroundImage.bottomAnchor,
+                               paddingRight: 60, paddingBottom:2,width:30, height: 30)
+              
         contentView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
@@ -222,7 +222,7 @@ final class PlayerViewCell: UITableViewCell {
     }
     func setImage(image:String) {
         let url = URL(string: image)
-       // backgroundImage.kf.setImage(with: url)
+        backgroundImage.kf.setImage(with: url)
     }
     func setImageLogo(image:String) {
         let url = URL(string: image)
@@ -231,8 +231,8 @@ final class PlayerViewCell: UITableViewCell {
     }
     override func prepareForReuse() {
            super.prepareForReuse()
-       // self.accessoryType = .none
-      //  self.backgroundImage.playerLayer.player = nil
+        self.accessoryType = .none
+        self.backgroundImage.image = nil
         self.logoUserImage.image = nil
 
        } 

@@ -4,6 +4,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,14 +37,15 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rs-Pf-Qte">
-                            <rect key="frame" x="78" y="0.0" width="219" height="41"/>
+                        <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rs-Pf-Qte">
+                            <rect key="frame" x="78" y="0.0" width="140" height="41"/>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                             <connections>
                                 <action selector="sliderValueChangeWithSlider:" destination="iN0-l3-epB" eventType="valueChanged" id="Az0-Yn-u2e"/>
                             </connections>
                         </slider>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU0-0h-Akc">
-                            <rect key="frame" x="295" y="0.0" width="80" height="40"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU0-0h-Akc">
+                            <rect key="frame" x="214" y="0.0" width="81" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="sHy-3B-xBE"/>
                             </constraints>
@@ -51,34 +53,39 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV7-wD-JXO">
+                            <rect key="frame" x="335" y="0.0" width="40" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="40" id="23O-EN-YE5"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="ApI-PF-3ka"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="JOM-HG-tIx"/>
+                                <constraint firstAttribute="height" constant="40" id="Rjd-QQ-D9C"/>
+                            </constraints>
+                            <color key="tintColor" systemColor="opaqueSeparatorColor"/>
+                            <state key="normal" title="Button"/>
+                            <buttonConfiguration key="configuration" style="plain" image="airplay"/>
+                            <connections>
+                                <action selector="btnLandscapeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="OJi-sf-Cdt"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.24906357020547945" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="2UM-8g-Rje" firstAttribute="leading" secondItem="cL1-gE-GwQ" secondAttribute="leading" id="8VP-Iv-K5W"/>
                         <constraint firstItem="2UM-8g-Rje" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="A4m-mw-NHR"/>
                         <constraint firstItem="PU0-0h-Akc" firstAttribute="leading" secondItem="7rs-Pf-Qte" secondAttribute="trailing" id="OZQ-Gg-ek9"/>
+                        <constraint firstAttribute="trailing" secondItem="VV7-wD-JXO" secondAttribute="trailing" id="VQw-Bx-S9K"/>
+                        <constraint firstItem="VV7-wD-JXO" firstAttribute="leading" secondItem="PU0-0h-Akc" secondAttribute="trailing" constant="80" id="W0K-ya-P5C"/>
                         <constraint firstItem="PU0-0h-Akc" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="Y9h-Aj-vVh"/>
                         <constraint firstAttribute="bottom" secondItem="2UM-8g-Rje" secondAttribute="bottom" id="ZWu-j5-azi"/>
                         <constraint firstItem="7rs-Pf-Qte" firstAttribute="leading" secondItem="2UM-8g-Rje" secondAttribute="trailing" id="eKC-Ir-MsV"/>
                         <constraint firstItem="7rs-Pf-Qte" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="hNU-KL-XYu"/>
                         <constraint firstAttribute="height" constant="40" id="iNX-hG-cOX"/>
-                        <constraint firstAttribute="trailing" secondItem="PU0-0h-Akc" secondAttribute="trailing" id="igA-p2-4va"/>
                         <constraint firstAttribute="bottom" secondItem="PU0-0h-Akc" secondAttribute="bottom" id="oR0-cl-9yE"/>
+                        <constraint firstItem="VV7-wD-JXO" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="pc7-nu-0Cv"/>
                         <constraint firstAttribute="bottom" secondItem="7rs-Pf-Qte" secondAttribute="bottom" id="yxY-X5-fac"/>
                     </constraints>
                 </view>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV7-wD-JXO">
-                    <rect key="frame" x="319" y="20" width="40" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="40" id="PsD-cT-I30"/>
-                        <constraint firstAttribute="height" constant="40" id="b2R-Ec-152"/>
-                    </constraints>
-                    <state key="normal" title="Button"/>
-                    <buttonConfiguration key="configuration" style="plain" image="enlarge"/>
-                    <connections>
-                        <action selector="btnLandscapeAction:" destination="iN0-l3-epB" eventType="touchUpInside" id="OJi-sf-Cdt"/>
-                    </connections>
-                </button>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
@@ -86,8 +93,6 @@
                 <constraint firstItem="aGp-h6-xFS" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Uii-al-3GE"/>
                 <constraint firstItem="cL1-gE-GwQ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ZEm-sX-vTk"/>
                 <constraint firstAttribute="trailing" secondItem="cL1-gE-GwQ" secondAttribute="trailing" id="b6Q-Rm-dmh"/>
-                <constraint firstAttribute="trailing" secondItem="VV7-wD-JXO" secondAttribute="trailing" constant="16" id="hKc-Zf-Gyh"/>
-                <constraint firstItem="VV7-wD-JXO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="20" symbolic="YES" id="l9p-dc-pVJ"/>
                 <constraint firstAttribute="bottom" secondItem="cL1-gE-GwQ" secondAttribute="bottom" id="sNY-4y-Vk4"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
@@ -98,11 +103,14 @@
                 <outlet property="labTotal" destination="PU0-0h-Akc" id="iiS-f4-foc"/>
                 <outlet property="playSlider" destination="7rs-Pf-Qte" id="MF8-I7-TWJ"/>
             </connections>
-            <point key="canvasLocation" x="31.199999999999999" y="104.34782608695653"/>
+            <point key="canvasLocation" x="21.600000000000001" y="104.34782608695653"/>
         </view>
     </objects>
     <resources>
-        <image name="enlarge" width="100" height="101"/>
+        <image name="airplay" width="36" height="36"/>
         <image name="ic_play_circle_filled" width="36" height="36"/>
+        <systemColor name="opaqueSeparatorColor">
+            <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
     </resources>
 </document>

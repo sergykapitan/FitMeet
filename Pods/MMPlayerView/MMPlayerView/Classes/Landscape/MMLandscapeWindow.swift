@@ -74,9 +74,9 @@ extension MMLandscapeWindow {
             UIView.animate(withDuration: 0.3) {
                 if !isLand {
                     let transform = CATransform3DRotate(CATransform3DIdentity, parameter*CGFloat.pi/2, 0, 0, 1)
-                    self.rootViewController?.view.layer.transform = transform
+                  //  self.rootViewController?.view.layer.transform = transform
                 } else {
-                    self.rootViewController?.view.layer.transform = CATransform3DIdentity
+                  //  self.rootViewController?.view.layer.transform = CATransform3DIdentity
                 }
                 self.rootViewController?.view.frame = UIScreen.main.bounds
             }

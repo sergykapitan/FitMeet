@@ -13,6 +13,7 @@ import ContextMenuSwift
 import TimelineTableViewCell
 import MMPlayerView
 import AVFoundation
+import EasyPeasy
 
 
 // MARK: - State
@@ -103,6 +104,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     private var taskStream: AnyCancellable?
     private var startStream: AnyCancellable?
     
+    var myCell: PlayerViewCell?
+    
     
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
@@ -125,6 +128,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
  
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
+    
+    var isButtton: Bool = false
 
 //    override  var shouldAutorotate: Bool {
 //        return false
@@ -178,9 +183,9 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             self?.updateByContentOffset()
             self?.startLoading()
         }
-       // mmPlayerLayer.fullScreenWhenLandscape = true
-      //  mmPlayerLayer.setOrientation(.landscapeLeft)
-        
+       
+       // mmPlayerLayer.fullScreenWhenLandscape = false
+       // mmPlayerLayer.coverView?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
             case .failed(let err):
@@ -222,6 +227,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         setUserProfile()
         actionOffline()
     }
+    deinit {
+        offsetObservation?.invalidate()
+        offsetObservation = nil
+        print("ViewController deinit")
+    }
     func bindingChannel() {
         takeChanell = fitMeetChannel.listChannels()
             .mapError({ (error) -> Error in return error })
@@ -231,6 +241,29 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 }
         })
     }
+    @objc func actionBut(sender: UITapGestureRecognizer) {
+        
+        guard let path = findCurrentPath() else { return }
+        let cell = profileView.tableView.cellForRow(at: path) as? PlayerViewCell
+        if isButtton {
+            cell?.buttonLandscape.isHidden =  true
+            isButtton = false
+        } else {
+            isButtton = true
+            cell?.buttonLandscape.isHidden =  true
+        }
+        
+    }
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+ 
+            } else {
+      
+            }
+        }
+    
+    
     @objc fileprivate func startLoading() {
         self.updateByContentOffset()
         if self.presentedViewController != nil {
@@ -264,7 +297,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
 
     func findCurrentCell(path: IndexPath) -> UITableViewCell {
-       
+
         return profileView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {

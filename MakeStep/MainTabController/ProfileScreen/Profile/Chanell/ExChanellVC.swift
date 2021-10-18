@@ -83,6 +83,10 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
         
+        cell.backgroundImage.tag = indexPath.row
+        cell.backgroundImage.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
+        cell.backgroundImage.isUserInteractionEnabled = true
+       // cell.buttonLandscape.isHidden = true
         
         cell.buttonstartStream.tag = indexPath.row
         cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
@@ -115,38 +119,48 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     @objc func editButtonLandscape(_ sender: UIButton) -> Void {
         
-        guard let path = self.findCurrentPath() else {
-                   return
-               }
-               let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+       
         sender.isSelected.toggle()
+        
         if sender.isSelected {
-            guard let view = self.mmPlayerLayer.playView else { return }
+            guard let path = self.findCurrentPath() else { return }
+            let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+            myCell = cell
+
+           guard let viewss = self.mmPlayerLayer.playView else { return }
             cell.overlay.removeFromSuperview()
             cell.labelLive.removeFromSuperview()
             cell.imageLive.removeFromSuperview()
-            
+            AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
+
             UIView.animate(withDuration: 0.3) {
-                self.view.insertSubview(view, aboveSubview: self.view)
-                view.easy.layout(Top(10),Left(10),Right(10),Bottom(10))
-                view.layoutIfNeeded()
+                self.view.insertSubview(viewss, aboveSubview: self.view)
+                viewss.easy.layout(Top(0),Left(0),Right(0),Bottom(0))
+                self.mmPlayerLayer.playView = cell.backgroundImage
+                self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
+                cell.buttonLandscape.anchor(right:self.mmPlayerLayer.playView?.rightAnchor,bottom: self.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
+                self.view.layoutIfNeeded()
             }
-            self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
-            cell.buttonLandscape.centerY(inView: cell.backgroundImage)
-            cell.buttonLandscape.centerX(inView: cell.backgroundImage)
+ 
             profileView.tableView.isUserInteractionEnabled = true
       self.tabBarController?.tabBar.isHidden = true
       self.navigationController?.isNavigationBarHidden = true
-      cell.backgroundImage.clipsToBounds = true
+     
         } else {
-            self.profileView.tableView.reloadData()
+          
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
             UIView.animate(withDuration: 0.3) {
-                guard let view = self.mmPlayerLayer.playView else { return }
-                view.easy.layout(Top(0).to(cell.contentView),Left(10).to(cell.contentView),Right(10).to(cell.contentView))
+                guard let view = self.mmPlayerLayer.playView , let cell = self.myCell else { return }
+                self.mmPlayerLayer.playView = nil
+                cell.backgroundImage.removeFromSuperview()
+                cell.buttonLandscape.removeFromSuperview()
                 view.layoutIfNeeded()
             }
-           
-       }
+            self.profileView.tableView.scrollToRow(at: IndexPath(row: sender.tag, section: 0), at: .top, animated: true)
+            self.profileView.tableView.reloadData()
+            self.tabBarController?.tabBar.isHidden = false
+            self.navigationController?.isNavigationBarHidden = false
+        }
     }
 
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {

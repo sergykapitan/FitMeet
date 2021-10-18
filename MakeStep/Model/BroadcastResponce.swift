@@ -35,6 +35,7 @@ struct BroadcastResponce:Codable {
     let followersCount: Int?
     let channelIds: [Int]?
     let isFollow: Bool?
+    
   
 }
 
@@ -61,4 +62,5 @@ struct Stream: Codable {
     let gcoreId, gcoreClientId: Int?
     let hlsPlaylistUrl: String?
     let dashURL: String?
+    let  vodUrl: String?
 }
