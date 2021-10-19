@@ -14,6 +14,8 @@ import Foundation
 import Combine
 import Loaf
 
+
+
 final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
     static let `default` = ExampleRecorderDelegate()
 
@@ -130,12 +132,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         rtmpStream.captureSettings = [
             .sessionPreset: AVCaptureSession.Preset.hd1280x720,
             .continuousAutofocus: true,
-            .continuousExposure: true
-            //.preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
+            .continuousExposure: true,
+           // .preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
         ]
         rtmpStream.videoSettings = [
             .width: 720,
-            .height: 1280
+            .height: 1280,
+            .bitrate: 1000 * 1000,
+            //.profileLevel: kVTProfileLevel_H264_Baseline_3_1,
         ]
         
         rtmpStream.captureSettings[.fps] = 60.0

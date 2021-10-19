@@ -184,7 +184,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             self?.startLoading()
         }
        
-       // mmPlayerLayer.fullScreenWhenLandscape = false
+        mmPlayerLayer.fullScreenWhenLandscape = false
        // mmPlayerLayer.coverView?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
@@ -217,7 +217,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
         bindingChannel()
-   
+        AppUtility.lockOrientation(.portrait)
        
         
     }
@@ -246,11 +246,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         guard let path = findCurrentPath() else { return }
         let cell = profileView.tableView.cellForRow(at: path) as? PlayerViewCell
         if isButtton {
-            cell?.buttonLandscape.isHidden =  true
+          //  cell?.buttonLandscape.isHidden =  true
             isButtton = false
         } else {
             isButtton = true
-            cell?.buttonLandscape.isHidden =  true
+          //  cell?.buttonLandscape.isHidden =  true
         }
         
     }
@@ -301,13 +301,13 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         return profileView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
-        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.hlsPlaylistUrl {
+        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
             // this thumb use when transition start and your video dosent start
             mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             mmPlayerLayer.playView = cell.backgroundImage
-            print("URL +++++++++++ \(playURL)")
-            let url = URL(string: "https://stm.makestep.com/qaVOD/streams/291676060059918912905621.mp4")
+           // guard let filter = broadcast?.streams?.first?.vodUrl else { return }
+            let url = URL(string: playURL)
             mmPlayerLayer.set(url: url)
         }
     }
@@ -442,13 +442,10 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
        
         guard let userId = user?.id else { return }
-        bindingChanell(status: "OFFLINE", userId: "\(userId)")
-        //STANDART_VOD
+       // bindingChanell(status: "OFFLINE", userId: "\(userId)")
+        bindingChanellVOD(userId: "\(userId)")
         setUserProfile()
         indexButton = 1
-        
-      //  self.profileView.tableView.reloadData()
-    
 
     }
     @objc func actionComming() {
@@ -473,9 +470,25 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 if response.data != nil  {
                 
                     self.brodcast = []
+                   // let filter = response.data?.filter{$0.type == "STANDART_VOD"}
+                   // guard let fil = filter else { return }
                     self.brodcast = response.data!
-                    let type = response.data!.map{$0.type}
-                    print("Type === \(type)")
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.profileView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingChanellVOD(userId: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+
+                    self.brodcast = []
+                   // let filter = response.data?.filter{$0.type == "STANDART_VOD"}
+                   // guard let fil = filter else { return }
+                    self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.profileView.tableView.reloadData()

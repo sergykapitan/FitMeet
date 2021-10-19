@@ -36,13 +36,9 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     
     @IBAction func btnLandscapeAction(_ sender: Any) {
         let ch = ChanellVC()
-        
-        self.playLayer?.playView?.fillSuperview()
-      
         self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
             guard let self = self, let path = ch.findCurrentPath() else {return nil}
             let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
-          //  cell.backgroundImage.easy.layout(Top(0).to(cell.contentView),Left(10).to(cell.contentView),Right(10).to(cell.contentView))
             let url = URL(string: "https://stm.makestep.com/qaVOD/streams/291676060059918912905621.mp4")
             ch.mmPlayerLayer.set(url: url)
             ch.mmPlayerLayer.resume()

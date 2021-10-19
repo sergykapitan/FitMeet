@@ -123,8 +123,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    let filtredResponce =  response.data?.filter{$0.type == "STANDART_VOD"}
-                    print("Filtred ==== \(filtredResponce)")
+                  
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = self.listBroadcast
                     self.searchView.tableView.reloadData()
@@ -165,12 +164,12 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
              })
     }
     func getBroadcast(userId: String) {
-        takeBroadcast = fitMeetStream.getBroadcastPrivateVOD(userId: userId)
+        takeBroadcast = fitMeetStream.getBroadcastPrivate(status: "ONLINE", userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    let arrayBroadcast = response.data?.filter{ $0.status == "OFFLINE"}
-                    self.broadcast = arrayBroadcast?.first
+                    let arrayBroadcast = response.data?.filter{ $0.status == "ONLINE"}
+                    self.broadcast = response.data?.first
                 }
          })
     }

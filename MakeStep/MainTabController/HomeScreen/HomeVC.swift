@@ -181,8 +181,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
-                    let filtred = response.data?.filter{$0.type == "STANDART_VOD"}
-                    print("Broad === \(filtred)")
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()

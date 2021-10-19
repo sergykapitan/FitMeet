@@ -23,8 +23,7 @@ class SocketIOManager: NSObject {
     func establishConnection(broadcastId: String,chanelId: String) {
         
         guard let token = UserDefaults.standard.string(forKey: "tokenChat") else { return }
-        print("token Chat = \(token)")
-        
+  
         self.manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
                                                                     .log(true),
                                                                     .compress,
@@ -43,18 +42,11 @@ class SocketIOManager: NSObject {
         
         
         self.socket = manager.defaultSocket
-        
-//        
-//        socket.on("connection") {data, ack in
-//         print("DATTTTTTAAA ---- \(data)")
-//        }
-//   
         socket.connect()
 
     }
         
-    func closeConnection() {
-        socket.disconnect()
+    func closeConnection() {        socket.disconnect()
     }
     
     func saveToken(tokenChat: String) {

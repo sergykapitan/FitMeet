@@ -73,7 +73,7 @@ class FitMeetStream {
         
            }
     public func getBroadcastPrivateVOD(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&sort=userId&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&sort=userId&userId=\(userId)&type=STANDART_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  //.validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)

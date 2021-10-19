@@ -86,7 +86,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.backgroundImage.tag = indexPath.row
         cell.backgroundImage.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         cell.backgroundImage.isUserInteractionEnabled = true
-       // cell.buttonLandscape.isHidden = true
+        cell.buttonLandscape.isHidden = true
         
         cell.buttonstartStream.tag = indexPath.row
         cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
@@ -132,16 +132,19 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.labelLive.removeFromSuperview()
             cell.imageLive.removeFromSuperview()
             AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
+            
 
             UIView.animate(withDuration: 0.3) {
                 self.view.insertSubview(viewss, aboveSubview: self.view)
                 viewss.easy.layout(Top(0),Left(0),Right(0),Bottom(0))
                 self.mmPlayerLayer.playView = cell.backgroundImage
+               
                 self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
                 cell.buttonLandscape.anchor(right:self.mmPlayerLayer.playView?.rightAnchor,bottom: self.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
                 self.view.layoutIfNeeded()
             }
- 
+            print("Frame = \(self.mmPlayerLayer.playView?.frame)")
+            
             profileView.tableView.isUserInteractionEnabled = true
       self.tabBarController?.tabBar.isHidden = true
       self.navigationController?.isNavigationBarHidden = true
@@ -157,7 +160,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
                 view.layoutIfNeeded()
             }
             self.profileView.tableView.scrollToRow(at: IndexPath(row: sender.tag, section: 0), at: .top, animated: true)
-            self.profileView.tableView.reloadData()
+          //  self.profileView.tableView.reloadData()
             self.tabBarController?.tabBar.isHidden = false
             self.navigationController?.isNavigationBarHidden = false
         }

@@ -134,7 +134,7 @@ final class PlayerViewCell: UITableViewCell {
     let buttonLandscape: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "fullscreen"), for: .normal)
-        button.tintColor = .lightGray
+        button.tintColor = .opaqueSeparator
         return button
     }()
     
@@ -194,8 +194,8 @@ final class PlayerViewCell: UITableViewCell {
         
         contentView.addSubview(buttonLandscape)
         buttonLandscape.anchor(right : backgroundImage.rightAnchor,
-                               bottom: backgroundImage.bottomAnchor,
-                               paddingRight: 60, paddingBottom:2,width:30, height: 30)
+                               paddingRight: 16,width:30, height: 30)
+        buttonLandscape.centerY(inView: overlay)
               
         contentView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)

@@ -759,6 +759,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+        guard let userId = user?.id else { return }
+        bindingChanell(status: "ONLINE", userId: "\(userId)")
+
+        
         homeView.imagePromo.isHidden = false
         homeView.labelCategory.isHidden = false
         homeView.labelNameBroadcast.isHidden = false
@@ -769,6 +774,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonMore.isHidden  = false
         homeView.tableView.isHidden = true
         homeView.buttonLandScape.isHidden = false
+        
 
     }
     @objc func actionLike() {
@@ -797,6 +803,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     func bindingChanell(status: String,userId: String) {
         takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.brodcast = []
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingChanellVOD(userId: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
@@ -868,10 +887,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        print("USeer odfjd == \(user?.id)")
+ 
         guard let userId = user?.id else { return }
-        bindingChanell(status: "OFFLINE", userId: "\(userId)")
+        //bindingChanell(status: "OFFLINE", userId: "\(userId)")
+        bindingChanellVOD(userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true

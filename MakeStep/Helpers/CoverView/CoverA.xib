@@ -20,7 +20,7 @@
                         <constraint firstAttribute="width" constant="70" id="1Hu-po-mqW"/>
                         <constraint firstAttribute="height" constant="70" id="3E3-ib-sYM"/>
                     </constraints>
-                    <state key="normal" image="ic_play_circle_filled"/>
+                    <state key="normal" image="PlayLand"/>
                     <connections>
                         <action selector="btnAction" destination="iN0-l3-epB" eventType="touchUpInside" id="y95-rK-BPr"/>
                     </connections>
@@ -37,15 +37,15 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <slider opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rs-Pf-Qte">
-                            <rect key="frame" x="78" y="0.0" width="140" height="41"/>
+                        <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="7rs-Pf-Qte">
+                            <rect key="frame" x="78" y="0.0" width="184" height="41"/>
                             <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                             <connections>
                                 <action selector="sliderValueChangeWithSlider:" destination="iN0-l3-epB" eventType="valueChanged" id="Az0-Yn-u2e"/>
                             </connections>
                         </slider>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU0-0h-Akc">
-                            <rect key="frame" x="214" y="0.0" width="81" height="40"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PU0-0h-Akc">
+                            <rect key="frame" x="260" y="0.0" width="80" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="80" id="sHy-3B-xBE"/>
                             </constraints>
@@ -54,12 +54,12 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VV7-wD-JXO">
-                            <rect key="frame" x="335" y="0.0" width="40" height="40"/>
+                            <rect key="frame" x="340" y="5" width="30" height="30"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="40" id="23O-EN-YE5"/>
+                                <constraint firstAttribute="width" constant="30" id="23O-EN-YE5"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="30" id="ApI-PF-3ka"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="JOM-HG-tIx"/>
-                                <constraint firstAttribute="height" constant="40" id="Rjd-QQ-D9C"/>
+                                <constraint firstAttribute="height" constant="30" id="Rjd-QQ-D9C"/>
                             </constraints>
                             <color key="tintColor" systemColor="opaqueSeparatorColor"/>
                             <state key="normal" title="Button"/>
@@ -73,16 +73,16 @@
                     <constraints>
                         <constraint firstItem="2UM-8g-Rje" firstAttribute="leading" secondItem="cL1-gE-GwQ" secondAttribute="leading" id="8VP-Iv-K5W"/>
                         <constraint firstItem="2UM-8g-Rje" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="A4m-mw-NHR"/>
+                        <constraint firstItem="VV7-wD-JXO" firstAttribute="leading" secondItem="PU0-0h-Akc" secondAttribute="trailing" id="JAW-30-6WS"/>
                         <constraint firstItem="PU0-0h-Akc" firstAttribute="leading" secondItem="7rs-Pf-Qte" secondAttribute="trailing" id="OZQ-Gg-ek9"/>
-                        <constraint firstAttribute="trailing" secondItem="VV7-wD-JXO" secondAttribute="trailing" id="VQw-Bx-S9K"/>
-                        <constraint firstItem="VV7-wD-JXO" firstAttribute="leading" secondItem="PU0-0h-Akc" secondAttribute="trailing" constant="80" id="W0K-ya-P5C"/>
+                        <constraint firstAttribute="trailing" secondItem="VV7-wD-JXO" secondAttribute="trailing" constant="5" id="VQw-Bx-S9K"/>
                         <constraint firstItem="PU0-0h-Akc" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="Y9h-Aj-vVh"/>
                         <constraint firstAttribute="bottom" secondItem="2UM-8g-Rje" secondAttribute="bottom" id="ZWu-j5-azi"/>
                         <constraint firstItem="7rs-Pf-Qte" firstAttribute="leading" secondItem="2UM-8g-Rje" secondAttribute="trailing" id="eKC-Ir-MsV"/>
                         <constraint firstItem="7rs-Pf-Qte" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="hNU-KL-XYu"/>
                         <constraint firstAttribute="height" constant="40" id="iNX-hG-cOX"/>
                         <constraint firstAttribute="bottom" secondItem="PU0-0h-Akc" secondAttribute="bottom" id="oR0-cl-9yE"/>
-                        <constraint firstItem="VV7-wD-JXO" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" id="pc7-nu-0Cv"/>
+                        <constraint firstItem="VV7-wD-JXO" firstAttribute="top" secondItem="cL1-gE-GwQ" secondAttribute="top" constant="5" id="pc7-nu-0Cv"/>
                         <constraint firstAttribute="bottom" secondItem="7rs-Pf-Qte" secondAttribute="bottom" id="yxY-X5-fac"/>
                     </constraints>
                 </view>
@@ -107,8 +107,8 @@
         </view>
     </objects>
     <resources>
+        <image name="PlayLand" width="40" height="40"/>
         <image name="airplay" width="36" height="36"/>
-        <image name="ic_play_circle_filled" width="36" height="36"/>
         <systemColor name="opaqueSeparatorColor">
             <color red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

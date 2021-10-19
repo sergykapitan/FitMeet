@@ -113,7 +113,7 @@ extension SearchVC: UITableViewDelegate {
           
            
             
-            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+           // self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
             let vc = PresentVC()
             vc.modalPresentationStyle = .fullScreen
             vc.id = id
@@ -130,9 +130,7 @@ extension SearchVC: UITableViewDelegate {
             
             DispatchQueue(label: "getPhotos").sync {
                 self.getBroadcast(userId: "\(ids)")
-//                DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) { // Change `2.0` to the desired number of seconds.
-//                   // Code you want to be delayed
-//                }
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                     guard let broadcastt = self.broadcast else { return }
                     let url = broadcastt.streams?.first?.hlsPlaylistUrl
@@ -148,7 +146,7 @@ extension SearchVC: UITableViewDelegate {
                                self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
                                let vc = PresentVC()
                                vc.modalPresentationStyle = .fullScreen
-                               vc.id = id
+                               vc.id = ids//self.listUser[indexPath.row].id
                                vc.Url = url
                                vc.broadcast = self.listBroadcast[indexPath.row]
                                vc.follow = "\(follow)"
