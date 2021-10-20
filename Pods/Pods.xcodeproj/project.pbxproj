@@ -365,7 +365,7 @@
 		9A5F269A972A4177723FEBE8FDEDDD98 /* Collection+Easy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27962D1606EFF70D08A7F0923AA05113 /* Collection+Easy.swift */; };
 		9B118D0A20654581E1F8BB7685F812D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 854842AC230E16881BE6E3E3D3592039 /* Foundation.framework */; };
 		9B428B896CC15D34E6E9F426E5E58976 /* WSEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC6BE05264D68C901D4A63B0B3DADA3 /* WSEngine.swift */; };
-		9B4ADE799CF34F57D7369BD75B6D218D /* TimelineTableViewCell-TimelineTableViewCell in Resources */ = {isa = PBXBuildFile; fileRef = 8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell-TimelineTableViewCell */; };
+		9B4ADE799CF34F57D7369BD75B6D218D /* TimelineTableViewCell.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell.bundle */; };
 		9BFF656C8FEB135CDFFB389EB7CD42E2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 854842AC230E16881BE6E3E3D3592039 /* Foundation.framework */; };
 		9C0BE8FA0030B2BC1DF7C159FA059389 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 854842AC230E16881BE6E3E3D3592039 /* Foundation.framework */; };
 		9CF6B9B38051BDAE346145946585E9C8 /* KingfisherError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF78B8EC0C7BC293BA516F7F9DC1D956 /* KingfisherError.swift */; };
@@ -817,7 +817,7 @@
 		0E6C10F749D06103932D7F8BF41B5306 /* UIApplication+AppExtensions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIApplication+AppExtensions.m"; path = "components/private/Application/src/UIApplication+AppExtensions.m"; sourceTree = "<group>"; };
 		0F16CD32DBF7539AC25FC7ABF1912B18 /* VideoIOComponent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoIOComponent.swift; path = Sources/Media/VideoIOComponent.swift; sourceTree = "<group>"; };
 		0F4300A5307ABC05F06EC790D1DF562D /* DiskStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiskStorage.swift; path = Sources/Cache/DiskStorage.swift; sourceTree = "<group>"; };
-		0F448A78CFA396272728E0CA5F22C38C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "Montserrat-Regular.ttf"; path = "Presentr/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		0F448A78CFA396272728E0CA5F22C38C /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "Montserrat-Regular.ttf"; path = "Presentr/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		0F76635DDBE2B460A13BD32C229BB89F /* Logboard-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Logboard-dummy.m"; sourceTree = "<group>"; };
 		0FC6DB78E317391C38DA79A07C3D1498 /* MMPlayerPassViewPushTransition.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MMPlayerPassViewPushTransition.swift; path = MMPlayerView/Classes/Transition/Navigation/ShowPassView/MMPlayerPassViewPushTransition.swift; sourceTree = "<group>"; };
 		0FD354BCCDCF5D423C23141E8D23B017 /* UIFontDescriptor+MaterialTypography.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIFontDescriptor+MaterialTypography.m"; path = "components/Typography/src/UIFontDescriptor+MaterialTypography.m"; sourceTree = "<group>"; };
@@ -857,7 +857,7 @@
 		217DEC7C54BFAB224855FADA938D33D7 /* MDCInkGestureRecognizer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCInkGestureRecognizer.h; path = components/Ink/src/MDCInkGestureRecognizer.h; sourceTree = "<group>"; };
 		222C2908316DC7E0851247D1E44A3336 /* EasyPeasy-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "EasyPeasy-Info.plist"; sourceTree = "<group>"; };
 		2496278D4C4BCA2440114E8B79695000 /* MaterialTabs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MaterialTabs.h; path = components/Tabs/src/MaterialTabs.h; sourceTree = "<group>"; };
-		24B36CE5A3F6EE3018569E1F88214322 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; name = "SourceSansPro-Regular.ttf"; path = "Presentr/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
+		24B36CE5A3F6EE3018569E1F88214322 /* SourceSansPro-Regular.ttf */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file; name = "SourceSansPro-Regular.ttf"; path = "Presentr/SourceSansPro-Regular.ttf"; sourceTree = "<group>"; };
 		24FB7B9090C98A53ED8C46FC8B116554 /* MDCShadowLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCShadowLayer.h; path = components/ShadowLayer/src/MDCShadowLayer.h; sourceTree = "<group>"; };
 		258F787783D32C6C5704807C713A268B /* Loaf-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Loaf-Info.plist"; sourceTree = "<group>"; };
 		25BFFBE6D90519C6BE2EBFA4D388AED0 /* HaishinKit */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = HaishinKit; path = HaishinKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1146,7 +1146,7 @@
 		8D21AE1C92EE799C137E5FAC2F96BAB9 /* LogboardAppender.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LogboardAppender.swift; path = Sources/Logboard/LogboardAppender.swift; sourceTree = "<group>"; };
 		8DEDB413F4326837D256DBE4443D344A /* MDCTabBarUnderlineIndicatorTemplate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MDCTabBarUnderlineIndicatorTemplate.m; path = components/Tabs/src/MDCTabBarUnderlineIndicatorTemplate.m; sourceTree = "<group>"; };
 		8E82880E1498651E38FA97DEA12E1627 /* Alamofire-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Alamofire-dummy.m"; sourceTree = "<group>"; };
-		8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell-TimelineTableViewCell */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "TimelineTableViewCell-TimelineTableViewCell"; path = TimelineTableViewCell.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TimelineTableViewCell.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F6F6C4C9AF16078A549DEFCE29C9106 /* ScreenCaptureSession.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScreenCaptureSession.swift; path = Platforms/iOS/ScreenCaptureSession.swift; sourceTree = "<group>"; };
 		8FCC64FC795E9979B7A5DE913B716877 /* CMAudioFormatDescription+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "CMAudioFormatDescription+Extension.swift"; path = "Sources/Extension/CMAudioFormatDescription+Extension.swift"; sourceTree = "<group>"; };
 		903BC235F17DA05DC801F6A8A2F80E22 /* Pods-MakeStep.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-MakeStep.modulemap"; sourceTree = "<group>"; };
@@ -1188,7 +1188,7 @@
 		9C5ADE900AF9484035B0FAC0B619F290 /* MDCFontTextStyle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MDCFontTextStyle.h; path = components/Typography/src/MDCFontTextStyle.h; sourceTree = "<group>"; };
 		9C81437AC733FC67CC45913F8DB928B3 /* PositionAttribute+UIKit.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "PositionAttribute+UIKit.swift"; path = "EasyPeasy/PositionAttribute+UIKit.swift"; sourceTree = "<group>"; };
 		9CC6BE05264D68C901D4A63B0B3DADA3 /* WSEngine.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WSEngine.swift; path = Sources/Engine/WSEngine.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9E092A1DDC934A26D1A60997B07DA717 /* FrameModifier.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FrameModifier.swift; path = MMPlayerView/Classes/SwiftUI/Modifier/FrameModifier.swift; sourceTree = "<group>"; };
 		9E3D5661C825AF567815F228FD92E6E3 /* UIView+MaterialElevationResponding.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIView+MaterialElevationResponding.m"; path = "components/Elevation/src/UIView+MaterialElevationResponding.m"; sourceTree = "<group>"; };
 		9E92543EC87AFB74D46E3D87C0C2E701 /* Starscream-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Starscream-Info.plist"; sourceTree = "<group>"; };
@@ -1712,7 +1712,6 @@
 				90BC60607D2A8F494CB0FEEC421825D4 /* WeakBox.swift */,
 				7874E9B3DD86B980E052EA9066BD2124 /* Support Files */,
 			);
-			name = MMPlayerView;
 			path = MMPlayerView;
 			sourceTree = "<group>";
 		};
@@ -1729,7 +1728,6 @@
 				FE25BAEBD083D77CD31340DD14F33E40 /* SocketAppender.swift */,
 				2A32E0C9969ADBD95CE1A4FDB84C9DAD /* Support Files */,
 			);
-			name = Logboard;
 			path = Logboard;
 			sourceTree = "<group>";
 		};
@@ -1844,7 +1842,6 @@
 				40713CEA0DD83D97E8BE3904AF55B3EA /* VTSessionPropertyKey.swift */,
 				D7FB80DD82C70CBE0FA63A1D2D5B9880 /* Support Files */,
 			);
-			name = HaishinKit;
 			path = HaishinKit;
 			sourceTree = "<group>";
 		};
@@ -1948,7 +1945,6 @@
 				49A032C5B61BB9026A3D31C2D61F286C /* SocketTypes.swift */,
 				53C1708034DD80952A32FCFD6E527665 /* Support Files */,
 			);
-			name = "Socket.IO-Client-Swift";
 			path = "Socket.IO-Client-Swift";
 			sourceTree = "<group>";
 		};
@@ -1969,7 +1965,6 @@
 				46B21345B6CCF662274112C059B13C8F /* Tabs+ColorThemer */,
 				3362ABD449694C5ACE9303245BFEE520 /* Typography */,
 			);
-			name = MaterialComponents;
 			path = MaterialComponents;
 			sourceTree = "<group>";
 		};
@@ -2000,7 +1995,6 @@
 				C6BAB4C38B14B062AB5D1D833510302D /* UIView+Easy.swift */,
 				0A6A2FE402B570129467F44DAE8CE021 /* Support Files */,
 			);
-			name = EasyPeasy;
 			path = EasyPeasy;
 			sourceTree = "<group>";
 		};
@@ -2027,7 +2021,6 @@
 				3F9725EEC7619A8070DDDFEE84EBA2CE /* UIImage+Hue.swift */,
 				57F008BDD988F7F5C4F260F7C17E55B3 /* Support Files */,
 			);
-			name = Hue;
 			path = Hue;
 			sourceTree = "<group>";
 		};
@@ -2094,7 +2087,6 @@
 				7BF7C7EBE04A9399EBBB9D1D851E0989 /* Validation.swift */,
 				A932EF42F1971B2D6909AC896130B861 /* Support Files */,
 			);
-			name = Alamofire;
 			path = Alamofire;
 			sourceTree = "<group>";
 		};
@@ -2139,7 +2131,6 @@
 				9CC6BE05264D68C901D4A63B0B3DADA3 /* WSEngine.swift */,
 				AF81AFC8E6E704CAC37A2A8D7E2AEEDC /* Support Files */,
 			);
-			name = Starscream;
 			path = Starscream;
 			sourceTree = "<group>";
 		};
@@ -2204,7 +2195,6 @@
 				E0E19AD0287BC359BCB444DE3DB4F5B0 /* HHCustomCornerView.swift */,
 				6DA295FDB41D02D3F3096833D3BC77A2 /* Support Files */,
 			);
-			name = HHCustomCorner;
 			path = HHCustomCorner;
 			sourceTree = "<group>";
 		};
@@ -2232,7 +2222,6 @@
 				034140696063FA16F6F34B5FB1D6614A /* Resources */,
 				3465FD42CACC0849E4D0DD0ABB54B1B2 /* Support Files */,
 			);
-			name = Presentr;
 			path = Presentr;
 			sourceTree = "<group>";
 		};
@@ -2327,7 +2316,6 @@
 				8BE62B79B265DA65E6E9AAEE01E6B70E /* ContextMenuSwift.h */,
 				8718D0702D903016A7CB1573A73DFF7F /* Support Files */,
 			);
-			name = ContextMenuSwift;
 			path = ContextMenuSwift;
 			sourceTree = "<group>";
 		};
@@ -2344,7 +2332,6 @@
 				698059C71FCDAD6A3CEA15347DEB6D3B /* BottomPopupViewController.swift */,
 				3BD5DFA78A2F0AAA9D225EABFAC86C8C /* Support Files */,
 			);
-			name = BottomPopup;
 			path = BottomPopup;
 			sourceTree = "<group>";
 		};
@@ -2425,7 +2412,6 @@
 				3CB7A2DE0270C10568C39309E7485441 /* UIView+MaterialRTL.m */,
 				F4DF6EDD6DF2D950E0EADF40D0EB1F53 /* Support Files */,
 			);
-			name = MDFInternationalization;
 			path = MDFInternationalization;
 			sourceTree = "<group>";
 		};
@@ -2452,7 +2438,7 @@
 				891B2270823847ED23F2ECFC28F935EC /* Starscream */,
 				85E4C71ED52304F1AB0503E80CD9CB1E /* TagListView */,
 				897DDFB32EB15CA77766485B088D913D /* TimelineTableViewCell */,
-				8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell-TimelineTableViewCell */,
+				8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2503,7 +2489,6 @@
 				6766BC5E991C325280588CEDD5DDABB4 /* TagView.swift */,
 				9E754C2A53DE5899B330A4667E384FB1 /* Support Files */,
 			);
-			name = TagListView;
 			path = TagListView;
 			sourceTree = "<group>";
 		};
@@ -2533,7 +2518,6 @@
 				B9F180CA448CC37B48273B2F90071749 /* Manager.swift */,
 				A001727E61F462308D8822DD5707C4C0 /* Support Files */,
 			);
-			name = Loaf;
 			path = Loaf;
 			sourceTree = "<group>";
 		};
@@ -2605,7 +2589,6 @@
 				98790F8A8553FA3A247BAD189140525D /* Resources */,
 				36B6469D92AA9A93B3BDECFCB28F3E47 /* Support Files */,
 			);
-			name = TimelineTableViewCell;
 			path = TimelineTableViewCell;
 			sourceTree = "<group>";
 		};
@@ -2781,7 +2764,6 @@
 				6F52D40D401F0C1CE273A2CC7C1419AD /* WKInterfaceImage+Kingfisher.swift */,
 				BFD43B48F9ADE6EF84B6B441FD8D0099 /* Support Files */,
 			);
-			name = Kingfisher;
 			path = Kingfisher;
 			sourceTree = "<group>";
 		};
@@ -2841,7 +2823,6 @@
 				C0793B9F8AB6CBFD2FB266184CBDBAA9 /* iOSDropDown.swift */,
 				1227DD1678D2BADE5135B5194DCEF00F /* Support Files */,
 			);
-			name = iOSDropDown;
 			path = iOSDropDown;
 			sourceTree = "<group>";
 		};
@@ -3282,7 +3263,7 @@
 			);
 			name = "TimelineTableViewCell-TimelineTableViewCell";
 			productName = TimelineTableViewCell;
-			productReference = 8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell-TimelineTableViewCell */;
+			productReference = 8F6433D6912D94AF674E50B3B07EE4CC /* TimelineTableViewCell.bundle */;
 			productType = "com.apple.product-type.bundle";
 		};
 		7AB385395597735698BB9CE5CEFC0EC3 /* EasyPeasy */ = {
@@ -3706,7 +3687,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B4ADE799CF34F57D7369BD75B6D218D /* TimelineTableViewCell-TimelineTableViewCell in Resources */,
+				9B4ADE799CF34F57D7369BD75B6D218D /* TimelineTableViewCell.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

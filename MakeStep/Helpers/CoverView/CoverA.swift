@@ -39,7 +39,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
         self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
             guard let self = self, let path = ch.findCurrentPath() else {return nil}
             let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
-            let url = URL(string: "https://stm.makestep.com/qaVOD/streams/291676060059918912905621.mp4")
+            let url = URL(string: (cell.data?.streams?.first?.vodUrl)!) 
             ch.mmPlayerLayer.set(url: url)
             ch.mmPlayerLayer.resume()
             return cell.backgroundImage

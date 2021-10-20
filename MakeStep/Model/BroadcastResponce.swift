@@ -62,5 +62,5 @@ struct Stream: Codable {
     let gcoreId, gcoreClientId: Int?
     let hlsPlaylistUrl: String?
     let dashURL: String?
-    let  vodUrl: String?
+    let vodUrl: String?
 }

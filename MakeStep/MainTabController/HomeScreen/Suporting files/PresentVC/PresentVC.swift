@@ -11,6 +11,7 @@ import UIKit
 import AVKit
 import Presentr
 import TagListView
+import MMPlayerView
 
 private enum State {
     case closed
@@ -28,6 +29,21 @@ extension State {
 
 
 class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate, TagListViewDelegate{
+    
+    
+    
+    var offsetObservation: NSKeyValueObservation?
+    
+    lazy var mmPlayerLayer: MMPlayerLayer = {
+        let l = MMPlayerLayer()
+        l.cacheType = .memory(count: 5)
+        l.coverFitType = .fitToPlayerView
+        l.videoGravity = AVLayerVideoGravity.resizeAspect
+        l.replace(cover: CoverA.instantiateFromNib())
+        l.repeatWhenEnd = true
+        return l
+    }()
+    var myCell: PlayerViewCell?
 
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     private let popupOffset: CGFloat = -350
@@ -515,9 +531,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     var frame: CGRect?
     var button = UIButton()
+    var indexTab: Int?
     
     func change(to index: Int) {
         if index == 0 {
+           
             homeView.buttonOnline.isHidden = false
             homeView.buttonOffline.isHidden = false
             homeView.buttonComing.isHidden = false
@@ -530,6 +548,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            // homeView.tableView.isHidden = true
         }
         if index == 1 {
+           
             homeView.buttonOnline.isHidden = true
             homeView.buttonOffline.isHidden = true
             homeView.buttonComing.isHidden = true
@@ -540,6 +559,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.labelStreamDescription.isHidden = true
            // homeView.tableView.isHidden = false
         }
+     
     }
     func changeBackgroundColor() {
        // AppUtility.lockOrientation(.all)
@@ -713,10 +733,49 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -(heightBar ?? 80))//-80
         bottomButtonChatConstant.isActive = true
        
-        print("Height = =+++++++++++++++++++++++++++++++++++++++++++++++++++++\(heightBar)")
+        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
+            
+        })
+        offsetObservation = homeView.tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
+            guard let self = self, self.presentedViewController == nil else {return}
+            NSObject.cancelPreviousPerformRequests(withTarget: self)
+            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.2)
+        }
+        homeView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+            self?.updateByContentOffset()
+            self?.startLoading()
+        }
+       
+        mmPlayerLayer.fullScreenWhenLandscape = false
+       // mmPlayerLayer.coverView?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
+        mmPlayerLayer.getStatusBlock { [weak self] (status) in
+            switch status {
+            case .failed(let err):
+                let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self?.present(alert, animated: true, completion: nil)
+            case .ready:
+                print("Ready to Play")
+            case .playing:
+                print("Playing")
+            case .pause:
+                print("Pause")
+            case .end:
+                print("End")
+            default: break
+            }
+        }
+        mmPlayerLayer.getOrientationChange { (status) in
+            print("Player OrientationChange \(status)")
+        }
         
     }
-
+    deinit {
+        offsetObservation?.invalidate()
+        offsetObservation = nil
+        print("ViewController deinit")
+    }
     func deviceOrientationDidChange() {
            //2
            switch UIDevice.current.orientation {
@@ -795,10 +854,58 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         present(detailViewController, animated: true)
 
     }
+    @objc fileprivate func startLoading() {
+        self.updateByContentOffset()
+        if self.presentedViewController != nil {
+            return
+        }
+        // start loading video
+        mmPlayerLayer.resume()
+    }
+    fileprivate func updateByContentOffset() {
+        if mmPlayerLayer.isShrink {
+            return
+        }
+
+        if let path = findCurrentPath(),
+            self.presentedViewController == nil {
+            self.updateCell(at: path)
+            //Demo SubTitle
+            if path.row == 0, self.mmPlayerLayer.subtitleSetting.subtitleType == nil {
+                let subtitleStr = Bundle.main.path(forResource: "srtDemo", ofType: "srt")!
+                if let str = try? String.init(contentsOfFile: subtitleStr) {
+                  //  self.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
+                  //  self.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
+                  //  self.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
+                }
+            }
+        }
+    }
+    func findCurrentPath() -> IndexPath? {
+        let p = CGPoint(x: homeView.tableView.frame.width/2, y: homeView.tableView.contentOffset.y + homeView.tableView.frame.width/2)
+        return homeView.tableView.indexPathForRow(at: p)//.indexPathForItem(at: p)
+    }
+
+    func findCurrentCell(path: IndexPath) -> UITableViewCell {
+
+        return homeView.tableView.cellForRow(at: path)!
+    }
+    fileprivate func updateCell(at indexPath: IndexPath) {
+        if let cell = homeView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
+            // this thumb use when transition start and your video dosent start
+            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
+            // set video where to play
+            mmPlayerLayer.playView = cell.backgroundImage
+          //  guard let filter = brodcast?.first?.streams?. else { return }
+            let url = URL(string: playURL)
+            mmPlayerLayer.set(url: url)
+        }
+    }
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
         homeView.tableView.separatorStyle = .none
     }
     func bindingChanell(status: String,userId: String) {
@@ -806,7 +913,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.brodcast = []
+                    self.brodcast.removeAll()
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -818,8 +925,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("VOD == responce")
                 if response.data != nil  {
-                    self.brodcast = []
+                    self.brodcast.removeAll()
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -858,11 +966,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         if homeView.buttonFollow.isSelected {
             homeView.buttonFollow.backgroundColor = UIColor(hexString: "#3B58A4")
             homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-           // homeView.buttonFollow.setTitle("Subscribe", for: .normal)
 
         } else {
             homeView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
-           // homeView.buttonFollow.setTitle("Subscribers", for: .normal)
             homeView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         }
 
@@ -887,7 +993,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
- 
+        indexTab = 1
         guard let userId = user?.id else { return }
         //bindingChanell(status: "OFFLINE", userId: "\(userId)")
         bindingChanellVOD(userId: "\(userId)")
@@ -907,8 +1013,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
+        indexTab = 2
         guard let userId = user?.id else { return }
+        
         bindingChanell(status: "PLANNED", userId: "\(userId)")
+        
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1093,7 +1202,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
         
-            playPauseButton.updateUI()
+        playPauseButton.updateUI()
         deviceOrientationDidChange()
         print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
         if UIDevice.current.orientation.isFlat {
@@ -1525,4 +1634,28 @@ class InstantPanGestureRecognizer: UIPanGestureRecognizer {
         self.state = UIGestureRecognizer.State.began
     }
     
+}
+extension PresentVC: MMPlayerFromProtocol {
+    // when second controller pop or dismiss, this help to put player back to where you want
+    // original was player last view ex. it will be nil because of this view on reuse view
+    func backReplaceSuperView(original: UIView?) -> UIView? {
+        guard let path = self.findCurrentPath() else {
+            return original
+        }
+        
+        let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+        return cell.backgroundImage
+    }
+
+    // add layer to temp view and pass to another controller
+    var passPlayer: MMPlayerLayer {
+        return self.mmPlayerLayer
+    }
+    func transitionWillStart() {
+    }
+    // show cell.image
+    func transitionCompleted() {
+        self.updateByContentOffset()
+        self.startLoading()
+    }
 }

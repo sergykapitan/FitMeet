@@ -164,11 +164,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
              })
     }
     func getBroadcast(userId: String) {
-        takeBroadcast = fitMeetStream.getBroadcastPrivate(status: "ONLINE", userId: userId)
+        takeBroadcast = fitMeetStream.getBroadcastPrivateID(userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     let arrayBroadcast = response.data?.filter{ $0.status == "ONLINE"}
+                  //  self.broadcast = []
+                    print("Broad ==== \(response.data)")
                     self.broadcast = response.data?.first
                 }
          })
