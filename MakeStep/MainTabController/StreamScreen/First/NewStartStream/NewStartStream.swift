@@ -107,6 +107,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         makeNavItem()
         bindingChanell()
         bindingUser()
+        self.hideKeyboardWhenTappedAround() 
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1

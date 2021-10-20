@@ -38,6 +38,7 @@ class FoggotPasswordViewController: UIViewController {
         actionButtonContinue()
         self.passwordView.alertImage.isHidden = true
         self.passwordView.alertLabel.isHidden = true
+        self.hideKeyboardWhenTappedAround() 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

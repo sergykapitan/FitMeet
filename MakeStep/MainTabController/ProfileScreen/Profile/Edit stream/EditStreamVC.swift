@@ -119,7 +119,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+        self.hideKeyboardWhenTappedAround() 
 
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1

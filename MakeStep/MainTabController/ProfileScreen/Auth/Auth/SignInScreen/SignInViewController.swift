@@ -66,6 +66,7 @@ class SignInViewController: UIViewController, SignInDelegate {
         signUpView.textFieldLogin.delegate = self
         signUpView.buttonContinue.isUserInteractionEnabled = false
         actionButtonContinue()
+        self.hideKeyboardWhenTappedAround() 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

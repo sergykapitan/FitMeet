@@ -56,6 +56,7 @@ class SignUpViewController: UIViewController {
         signUpView.textFieldPassword.textContentType = .password
         self.signUpView.textFieldPassword.isSecureTextEntry = true
         buttonSignUp()
+        self.hideKeyboardWhenTappedAround() 
 
     }
     override func viewWillAppear(_ animated: Bool) {

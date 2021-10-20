@@ -66,6 +66,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         actionButtonContinue()
         makeNavItem()
         profileView.scroll.delegate = self
+        self.hideKeyboardWhenTappedAround() 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

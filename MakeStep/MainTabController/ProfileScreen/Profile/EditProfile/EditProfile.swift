@@ -42,6 +42,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         actionButtonContinue()
         makeNavItem()
         profileView.scroll.delegate = self
+        self.hideKeyboardWhenTappedAround() 
         
         profileView.textFieldName.delegate = self
         profileView.textFieldUserName.delegate = self

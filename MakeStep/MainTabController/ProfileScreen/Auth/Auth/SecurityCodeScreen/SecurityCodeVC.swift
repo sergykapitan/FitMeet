@@ -62,6 +62,7 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
         actionButtonContinue()
         self.securityView.alertImage.isHidden = true
         self.securityView.alertLabel.isHidden = true
+        self.hideKeyboardWhenTappedAround() 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

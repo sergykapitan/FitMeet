@@ -86,6 +86,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
         authView.textFieldLogin.delegate = self
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
+        self.hideKeyboardWhenTappedAround() 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

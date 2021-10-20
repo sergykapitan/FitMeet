@@ -358,6 +358,18 @@ func transitionVc(vc: UIViewController, duration: CFTimeInterval, type: CATransi
     view.window!.layer.add(transition, forKey: kCATransition)
     present(customVcTransition, animated: false, completion: nil)
  }
+    
+}
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismisssKeyboard))
+        tap.cancelsTouchesInView = false
+        view.addGestureRecognizer(tap)
+    }
+    
+    @objc func dismisssKeyboard() {
+        view.endEditing(true)
+    }
 }
 public extension UIView {
     func round() {
