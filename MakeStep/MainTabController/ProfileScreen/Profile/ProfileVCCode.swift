@@ -134,7 +134,7 @@ final class ProfileVCCode: UIView {
     
     var labelWallet: UILabel = {
         let label = UILabel()
-        label.text = "Wallet"
+        label.text = "Monetization"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 18)
         return label
