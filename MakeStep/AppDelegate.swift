@@ -48,6 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             logger.error(error)
         }
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
         return true
     }
 

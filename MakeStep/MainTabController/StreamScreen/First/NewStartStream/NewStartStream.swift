@@ -107,7 +107,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         makeNavItem()
         bindingChanell()
         bindingUser()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -137,6 +139,21 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.buttonContinue.isUserInteractionEnabled = false
  
   
+    }
+    @objc func keyboardWillShow(notification:NSNotification){
+        var userInfo = notification.userInfo!
+        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+
+        var contentInset:UIEdgeInsets = self.authView.scroll.contentInset
+        contentInset.bottom = keyboardFrame.size.height
+        self.authView.scroll.contentInset = contentInset
+    }
+
+    @objc func keyboardWillHide(notification:NSNotification){
+
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        self.authView.scroll.contentInset = contentInset
     }
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)

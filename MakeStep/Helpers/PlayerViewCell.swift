@@ -234,6 +234,6 @@ final class PlayerViewCell: UITableViewCell {
         self.accessoryType = .none
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
-
+        data = nil
        } 
 }

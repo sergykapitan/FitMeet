@@ -30,12 +30,14 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
 
         cell.buttonLandscape.isHidden = true
         if indexTab == 1 {
+            
             cell.data = brodcast[indexPath.row]
             self.mmPlayerLayer.playView?.isHidden = false
+  
         }
         if indexTab == 2 {
             cell.data = nil
-            self.mmPlayerLayer.playView?.isHidden = true
+            self.mmPlayerLayer.playView?.isHidden = false
         }
         
 

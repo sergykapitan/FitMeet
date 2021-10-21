@@ -869,6 +869,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
         if let path = findCurrentPath(),
             self.presentedViewController == nil {
+          
             self.updateCell(at: path)
             //Demo SubTitle
             if path.row == 0, self.mmPlayerLayer.subtitleSetting.subtitleType == nil {
@@ -896,7 +897,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             mmPlayerLayer.playView = cell.backgroundImage
-          //  guard let filter = brodcast?.first?.streams?. else { return }
+            let j = brodcast.filter{$0.streams?.first?.vodUrl != nil }
+          //  guard let h = j else { return }
             let url = URL(string: playURL)
             mmPlayerLayer.set(url: url)
         }
@@ -915,9 +917,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 if response.data != nil  {
                     self.brodcast.removeAll()
                     self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
+                  //  let arrayUserId = self.brodcast.map{$0.userId!}
+                  //  self.bindingUserMap(ids: arrayUserId)
+                  //  self.homeView.tableView.reloadData()
+                    self.bindingChanellVOD(userId: userId)
                 }
            })
        }
@@ -925,7 +928,25 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("VOD == responce")
+                print("VOD == \(response)")
+                if response.data != nil  {
+                    //self.brodcast.removeAll()
+                  response.data!.forEach{
+                        self.brodcast.append($0)
+                    }
+                    //= response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.brodcast = self.brodcast.reversed()
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingChanellMulti(userId: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivateMulty( userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("Multy == \(response)")
                 if response.data != nil  {
                     self.brodcast.removeAll()
                     self.brodcast = response.data!
@@ -995,8 +1016,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         indexTab = 1
         guard let userId = user?.id else { return }
-        //bindingChanell(status: "OFFLINE", userId: "\(userId)")
-        bindingChanellVOD(userId: "\(userId)")
+       
+        bindingChanell(status: "OFFLINE", userId: "\(userId)")
+      //  bindingChanellVOD(userId: "\(userId)")
+       // bindingChanellMulti(userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true

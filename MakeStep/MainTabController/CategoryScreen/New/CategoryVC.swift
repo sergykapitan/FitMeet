@@ -46,6 +46,14 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+//        if #available(iOS 15.0, *) {
+//            let appearance = UITabBarAppearance()
+//            appearance.configureWithOpaqueBackground()
+//            appearance.backgroundColor = .white
+//            self.tabBarController?.tabBar.standardAppearance = appearance
+//            self.tabBarController?.tabBar.scrollEdgeAppearance = self.tabBarController?.tabBar.standardAppearance
+//        }
+
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)

@@ -83,21 +83,33 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        if token != nil {
-//            binding()
-//        } else {
-//            bindingNotAuht()
-//        }
-//        self.index == 0
+                if #available(iOS 15, *) {
+                    let appearance = UINavigationBarAppearance()
+                    appearance.configureWithOpaqueBackground()
+                    appearance.backgroundColor = .white
+                    UINavigationBar.appearance().standardAppearance = appearance
+                    UINavigationBar.appearance().scrollEdgeAppearance = appearance
+                }
+        
+        
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+
+        if #available(iOS 15, *) {
+                  let appearance = UINavigationBarAppearance()
+                  appearance.configureWithOpaqueBackground()
+                  appearance.backgroundColor = .white
+                  UINavigationBar.appearance().standardAppearance = appearance
+                  UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        } else {
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-    
+        }
     
     
     }
@@ -109,17 +121,15 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.segmentControll.delegate = self
         navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
-       // guard let token =  self.token else { return }
-       // bindingCategory()
         if token != nil {
             binding()
         } else {
             bindingNotAuht()
         }
-        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
+      
         
     }
     func makeNavItem() {
