@@ -68,6 +68,9 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         profileView.scroll.delegate = self
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -84,6 +87,24 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         self.navigationController?.navigationBar.layoutIfNeeded()
         
     }
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+             switch swipeGesture.direction {
+             case UISwipeGestureRecognizer.Direction.right:
+                 self.navigationController?.popViewController(animated: true)
+             case UISwipeGestureRecognizer.Direction.down:
+                 print("Swiped down")
+             case UISwipeGestureRecognizer.Direction.left:
+                 print("Swiped left")
+             case UISwipeGestureRecognizer.Direction.up:
+                 print("Swiped up")
+             default:
+                 break
+             }
+         }
+     }
     func registerForKeyboardNotifications() {
         
     NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),

@@ -206,7 +206,28 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         mmPlayerLayer.getOrientationChange { (status) in
             print("Player OrientationChange \(status)")
         }
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
     }
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+             switch swipeGesture.direction {
+             case UISwipeGestureRecognizer.Direction.right:
+                 self.navigationController?.popViewController(animated: true)
+             case UISwipeGestureRecognizer.Direction.down:
+                 print("Swiped down")
+             case UISwipeGestureRecognizer.Direction.left:
+                 print("Swiped left")
+             case UISwipeGestureRecognizer.Direction.up:
+                 print("Swiped up")
+             default:
+                 break
+             }
+         }
+     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isTranslucent = false

@@ -769,12 +769,33 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         mmPlayerLayer.getOrientationChange { (status) in
             print("Player OrientationChange \(status)")
         }
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
         
     }
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil
         print("ViewController deinit")
+    }
+   @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizer.Direction.right:
+                self.navigationController?.popViewController(animated: true)
+            case UISwipeGestureRecognizer.Direction.down:
+                print("Swiped down")
+            case UISwipeGestureRecognizer.Direction.left:
+                print("Swiped left")
+            case UISwipeGestureRecognizer.Direction.up:
+                print("Swiped up")
+            default:
+                break
+            }
+        }
     }
     func deviceOrientationDidChange() {
            //2

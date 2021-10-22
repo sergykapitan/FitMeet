@@ -93,8 +93,29 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
         actionButton()
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
+        swipeRight.direction = UISwipeGestureRecognizer.Direction.right
+        self.view.addGestureRecognizer(swipeRight)
 
     }
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+
+         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+
+             switch swipeGesture.direction {
+             case UISwipeGestureRecognizer.Direction.right:
+                 self.navigationController?.popViewController(animated: true)
+             case UISwipeGestureRecognizer.Direction.down:
+                 print("Swiped down")
+             case UISwipeGestureRecognizer.Direction.left:
+                 print("Swiped left")
+             case UISwipeGestureRecognizer.Direction.up:
+                 print("Swiped up")
+             default:
+                 break
+             }
+         }
+     }
     
     func actionButton() {
         categoryView.buttonAll.addTarget(self, action: #selector(actionAll), for: .touchUpInside)
