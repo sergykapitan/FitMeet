@@ -26,10 +26,26 @@ final class StartScreenCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 34)
         return label
     }()
-    var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
-        return segment
-        
+//    var segmentControll: CustomSegmentedControl = {
+//        let segment = CustomSegmentedControl()
+//        return segment
+//
+//    }()
+    var buttonSignIn: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle(" Sign In ", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 15
+        return button
+    }()
+    var buttonSignUp: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.setTitle(" Sign Up ", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 15
+        return button
     }()
     
     var scrollView: UIScrollView = {
@@ -69,7 +85,7 @@ final class StartScreenCode: UIView {
     
     var labelWallet: UILabel = {
         let label = UILabel()
-        label.text = "Wallet"
+        label.text = "Monetization"
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 18)
         return label
@@ -263,11 +279,20 @@ final class StartScreenCode: UIView {
         scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20)
         
-        scroll.addSubview(segmentControll)
-        segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
+//        scroll.addSubview(segmentControll)
+//        segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
+        
+        scroll.addSubview(buttonSignUp)
+        buttonSignUp.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20,width: 64, height: 30)
+        
+        scroll.addSubview(buttonSignIn)
+        buttonSignIn.anchor(top: welcomeLabel.bottomAnchor, left: buttonSignUp.rightAnchor, paddingTop: 5, paddingLeft: 10,width: 64, height: 30)
+        
+       
+        
 
         scroll.addSubview(firstLine)
-        firstLine.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        firstLine.anchor(top: buttonSignIn.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         scroll.addSubview(buttonHistory)
         buttonHistory.anchor(top: firstLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
