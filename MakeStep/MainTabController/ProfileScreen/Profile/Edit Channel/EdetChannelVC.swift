@@ -66,7 +66,8 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         actionButtonContinue()
         makeNavItem()
         profileView.scroll.delegate = self
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        registerForKeyboardNotifications()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -82,6 +83,33 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         
+    }
+    func registerForKeyboardNotifications() {
+        
+    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
+                                           name: UIResponder.keyboardWillShowNotification,
+                                           object: nil)
+    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
+                                           name: UIResponder.keyboardWillHideNotification,
+                                           object: nil)
+  }
+
+    @objc func keyboardWillShown(_ notificiation: NSNotification) {
+       
+      // write source code handle when keyboard will show
+        let info = notificiation.userInfo!
+         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+       
+        if self.textViewFavoriteCategories.isFirstResponder {
+            self.profileView.scroll.contentOffset.y = 120
+
+        }
+        if self.textViewTwitter.isFirstResponder {
+            self.profileView.scroll.contentOffset.y = 70
+       }
+    }
+    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+        self.profileView.scroll.contentOffset.y = 0
     }
  
     func setChannel() {
@@ -279,11 +307,11 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
                self.textViewInstagram.resignFirstResponder()
                self.textViewTwitter.resignFirstResponder()
                self.textViewFavoriteCategories.resignFirstResponder()
-               return false
+               return true
            }
            return true
        }
-   
+ 
 }
 
 

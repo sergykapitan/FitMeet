@@ -317,9 +317,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             size = 48
         }
         UIView.animate(withDuration: 0.1, animations: { () -> Void in
-            print("KEY ====\( self.textView.frame.origin.y)")
-            print("VIEW ======= \(self.view.frame)")
-            print("Keyword ====== \(keyboardFrame.size.height)")
+  
             self.textView.easy.layout(Bottom(keyboardFrame.size.height + size))
 
             self.view.layoutIfNeeded()

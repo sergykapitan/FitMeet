@@ -446,12 +446,20 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         if streamView.microfoneButton.isSelected {
            
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
-            self.rtmpStream.receiveAudio = false
+            self.rtmpStream.audioSettings = [
+                .muted: false,
+                .bitrate: 32 * 1000,
+            
+            ]
             
         } else {
             
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "notmicrofone"), for: [])
-            self.rtmpStream.receiveAudio = true
+            self.rtmpStream.audioSettings = [
+                .muted: true,
+                .bitrate: 32 * 1000,
+            
+            ]
             
         }
     }

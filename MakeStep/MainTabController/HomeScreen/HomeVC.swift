@@ -83,33 +83,18 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-                if #available(iOS 15, *) {
-                    let appearance = UINavigationBarAppearance()
-                    appearance.configureWithOpaqueBackground()
-                    appearance.backgroundColor = .white
-                    UINavigationBar.appearance().standardAppearance = appearance
-                    UINavigationBar.appearance().scrollEdgeAppearance = appearance
-                }
-        
         
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
 
-        if #available(iOS 15, *) {
-                  let appearance = UINavigationBarAppearance()
-                  appearance.configureWithOpaqueBackground()
-                  appearance.backgroundColor = .white
-                  UINavigationBar.appearance().standardAppearance = appearance
-                  UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        } else {
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        }
+
     
     
     }

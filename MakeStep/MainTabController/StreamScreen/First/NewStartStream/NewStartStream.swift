@@ -108,8 +108,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         bindingChanell()
         bindingUser()
         self.hideKeyboardWhenTappedAround()
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        registerForKeyboardNotifications()
+      //  NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
+      //  NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -140,21 +141,30 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
  
   
     }
-    @objc func keyboardWillShow(notification:NSNotification){
-        var userInfo = notification.userInfo!
-        var keyboardFrame:CGRect = (userInfo[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-        keyboardFrame = self.view.convert(keyboardFrame, from: nil)
+    func registerForKeyboardNotifications() {
+        
+    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
+                                           name: UIResponder.keyboardWillShowNotification,
+                                           object: nil)
+    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
+                                           name: UIResponder.keyboardWillHideNotification,
+                                           object: nil)
+  }
 
-        var contentInset:UIEdgeInsets = self.authView.scroll.contentInset
-        contentInset.bottom = keyboardFrame.size.height
-        self.authView.scroll.contentInset = contentInset
+    @objc func keyboardWillShown(_ notificiation: NSNotification) {
+       
+      // write source code handle when keyboard will show
+        let info = notificiation.userInfo!
+         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+            if authView.textFieldDescription.isFirstResponder {
+                self.authView.scroll.contentOffset.y = 100
+        }
     }
-
-    @objc func keyboardWillHide(notification:NSNotification){
-
-        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
-        self.authView.scroll.contentInset = contentInset
+    
+    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+        self.authView.scroll.contentOffset.y = 0
     }
+    
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone

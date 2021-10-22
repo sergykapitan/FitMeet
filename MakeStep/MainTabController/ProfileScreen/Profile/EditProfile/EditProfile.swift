@@ -43,7 +43,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         makeNavItem()
         profileView.scroll.delegate = self
         self.hideKeyboardWhenTappedAround() 
-        
+        registerForKeyboardNotifications()
         profileView.textFieldName.delegate = self
         profileView.textFieldUserName.delegate = self
         profileView.textGender.delegate = self
@@ -60,6 +60,33 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
         
         
+    }
+    func registerForKeyboardNotifications() {
+        
+    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
+                                           name: UIResponder.keyboardWillShowNotification,
+                                           object: nil)
+    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
+                                           name: UIResponder.keyboardWillHideNotification,
+                                           object: nil)
+  }
+
+    @objc func keyboardWillShown(_ notificiation: NSNotification) {
+       
+      // write source code handle when keyboard will show
+        let info = notificiation.userInfo!
+         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+            if profileView.textPhoneNumber.isFirstResponder {
+                self.profileView.scroll.contentOffset.y = 150
+
+        }
+        if profileView.textEmail.isFirstResponder {
+            self.profileView.scroll.contentOffset.y = 75
+    }
+    }
+    
+    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+        self.profileView.scroll.contentOffset.y = 0
     }
 
     override func viewWillAppear(_ animated: Bool) {

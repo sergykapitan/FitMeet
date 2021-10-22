@@ -350,40 +350,40 @@ final class EditProfileCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        scroll.addSubview(labelSoshial)
-        labelSoshial.anchor(top: textPhoneNumber.bottomAnchor,
-                     left: cardView.leftAnchor,
-                     paddingTop: 15, paddingLeft: 10)
-
-        scroll.addSubview(buttonTwitter)
-        buttonTwitter.anchor(top: labelSoshial.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        buttonTwitter.addSubview(imageTwitter)
-        imageTwitter.anchor(left: buttonTwitter.leftAnchor, paddingLeft: 30)
-        imageTwitter.centerY(inView: buttonTwitter)
-        
-        scroll.addSubview(buttonFacebook)
-        buttonFacebook.anchor(top: buttonTwitter.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        buttonFacebook.addSubview(imageFacebook)
-        imageFacebook.anchor(left: buttonFacebook.leftAnchor, paddingLeft: 30)
-        imageFacebook.centerY(inView: buttonFacebook)
-        
-        scroll.addSubview(buttonGoogle)
-        buttonGoogle.anchor(top: buttonFacebook.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        buttonGoogle.addSubview(imageGoogle)
-        imageGoogle.anchor(left: buttonGoogle.leftAnchor, paddingLeft: 30)
-        imageGoogle.centerY(inView: buttonGoogle)
+//        scroll.addSubview(labelSoshial)
+//        labelSoshial.anchor(top: textPhoneNumber.bottomAnchor,
+//                     left: cardView.leftAnchor,
+//                     paddingTop: 15, paddingLeft: 10)
+//
+//        scroll.addSubview(buttonTwitter)
+//        buttonTwitter.anchor(top: labelSoshial.bottomAnchor,
+//                              left: cardView.leftAnchor,
+//                              right: cardView.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        buttonTwitter.addSubview(imageTwitter)
+//        imageTwitter.anchor(left: buttonTwitter.leftAnchor, paddingLeft: 30)
+//        imageTwitter.centerY(inView: buttonTwitter)
+//
+//        scroll.addSubview(buttonFacebook)
+//        buttonFacebook.anchor(top: buttonTwitter.bottomAnchor,
+//                              left: cardView.leftAnchor,
+//                              right: cardView.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        buttonFacebook.addSubview(imageFacebook)
+//        imageFacebook.anchor(left: buttonFacebook.leftAnchor, paddingLeft: 30)
+//        imageFacebook.centerY(inView: buttonFacebook)
+//
+//        scroll.addSubview(buttonGoogle)
+//        buttonGoogle.anchor(top: buttonFacebook.bottomAnchor,
+//                              left: cardView.leftAnchor,
+//                              right: cardView.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        buttonGoogle.addSubview(imageGoogle)
+//        imageGoogle.anchor(left: buttonGoogle.leftAnchor, paddingLeft: 30)
+//        imageGoogle.centerY(inView: buttonGoogle)
         
         scroll.addSubview(buttonSave)
-        buttonSave.anchor(top: buttonGoogle.bottomAnchor, paddingTop: 30, width: 137)
+        buttonSave.anchor(top: textPhoneNumber.bottomAnchor, paddingTop: 30, width: 137)
         buttonSave.centerX(inView: cardView)
 
         

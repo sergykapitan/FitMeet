@@ -107,7 +107,7 @@ final class EditChannelCode: UIView {
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.contentSize.height = 800
+        scroll.contentSize.height = 1000
         scroll.backgroundColor = .white
         return scroll
     }()
