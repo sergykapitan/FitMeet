@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import HHCustomCorner
 import Kingfisher
+import MMPlayerView
+import AVFoundation
 
 final class ChanellCode: UIView {
 
@@ -212,6 +214,15 @@ final class ChanellCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+        lazy var mmPlayerLayer: MMPlayerLayer = {
+            let l = MMPlayerLayer()
+            l.cacheType = .memory(count: 5)
+            l.coverFitType = .fitToPlayerView
+            l.videoGravity = AVLayerVideoGravity.resizeAspect
+            l.replace(cover: CoverA.instantiateFromNib())
+            l.repeatWhenEnd = true
+            return l
+        }()
 //    var buttonstartStream: UIButton = {
 //        var button = UIButton()
 //        button.backgroundColor = UIColor(hexString: "#BBBCBC")

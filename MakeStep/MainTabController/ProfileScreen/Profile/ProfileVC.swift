@@ -58,32 +58,18 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         let name: String?
         if user?.fullName != nil { name = user?.fullName
         } else { name = userName }
-        print("IMAGE === \(self.user?.avatarPath)")
         guard let n = name else { return }
-        //print("IMAGE3333 === \(image)")
         profileView.welcomeLabel.text = "Hi! " + n
-        //profileView.setImageLogo(image: image)
         
     }
     func actionButtonContinue() {
         profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
         profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
-        
-     //1
-     //   profileView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
-     //2
-     //   profileView.buttonPartners
-     //3
-      profileView.buttonCommunityGuidelines.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
-     //4
-      profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
-     //5
-      profileView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
-     //6
-      profileView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
-     //7
-     // profileView.buttonTerms.addTarget(self, action: #selector(actionTerms), for: .touchUpInside)
+        profileView.buttonCommunityGuidelines.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
+        profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
+        profileView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
+        profileView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)

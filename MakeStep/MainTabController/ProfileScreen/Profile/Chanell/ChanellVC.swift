@@ -36,15 +36,15 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     
     var offsetObservation: NSKeyValueObservation?
     
-    lazy var mmPlayerLayer: MMPlayerLayer = {
-        let l = MMPlayerLayer()
-        l.cacheType = .memory(count: 5)
-        l.coverFitType = .fitToPlayerView
-        l.videoGravity = AVLayerVideoGravity.resizeAspect
-        l.replace(cover: CoverA.instantiateFromNib())
-        l.repeatWhenEnd = true
-        return l
-    }()
+//    lazy var mmPlayerLayer: MMPlayerLayer = {
+//        let l = MMPlayerLayer()
+//        l.cacheType = .memory(count: 5)
+//        l.coverFitType = .fitToPlayerView
+//        l.videoGravity = AVLayerVideoGravity.resizeAspect
+//        l.replace(cover: CoverA.instantiateFromNib())
+//        l.repeatWhenEnd = true
+//        return l
+//    }()
     
     func change(to index: Int) {
         
@@ -184,9 +184,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             self?.startLoading()
         }
        
-        mmPlayerLayer.fullScreenWhenLandscape = false
-       // mmPlayerLayer.coverView?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
-        mmPlayerLayer.getStatusBlock { [weak self] (status) in
+        profileView.mmPlayerLayer.fullScreenWhenLandscape = false
+        profileView.mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
             case .failed(let err):
                 let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
@@ -203,7 +202,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             default: break
             }
         }
-        mmPlayerLayer.getOrientationChange { (status) in
+        profileView.mmPlayerLayer.getOrientationChange { (status) in
             print("Player OrientationChange \(status)")
         }
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
@@ -291,10 +290,10 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             return
         }
         // start loading video
-        mmPlayerLayer.resume()
+        profileView.mmPlayerLayer.resume()
     }
     fileprivate func updateByContentOffset() {
-        if mmPlayerLayer.isShrink {
+        if profileView.mmPlayerLayer.isShrink {
             return
         }
 
@@ -302,12 +301,12 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             self.presentedViewController == nil {
             self.updateCell(at: path)
             //Demo SubTitle
-            if path.row == 0, self.mmPlayerLayer.subtitleSetting.subtitleType == nil {
+            if path.row == 0, self.profileView.mmPlayerLayer.subtitleSetting.subtitleType == nil {
                 let subtitleStr = Bundle.main.path(forResource: "srtDemo", ofType: "srt")!
                 if let str = try? String.init(contentsOfFile: subtitleStr) {
-                    self.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
-                    self.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
-                    self.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
+                  //  self.profileView.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
+                  //  self.profileView.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
+                  //  self.profileView.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
                 }
             }
         }
@@ -322,14 +321,15 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         return profileView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
+       guard  let filter = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
         if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
             // this thumb use when transition start and your video dosent start
-            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
+            profileView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
-            mmPlayerLayer.playView = cell.backgroundImage
-           // guard let filter = broadcast?.streams?.first?.vodUrl else { return }
+            profileView.mmPlayerLayer.playView = cell.backgroundImage
+            ///.first?.vodUrl else { return }
             let url = URL(string: playURL)
-            mmPlayerLayer.set(url: url)
+            profileView.mmPlayerLayer.set(url: url)
         }
     }
     // MARK: - Animation
@@ -474,7 +474,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
         
-        
+        profileView.mmPlayerLayer.invalidate()
         guard let userId = user?.id else { return }
         bindingChanell(status: "PLANNED", userId: "\(userId)")
         setUserProfile()
@@ -490,9 +490,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                 
-                    self.brodcast = []
-                   // let filter = response.data?.filter{$0.type == "STANDART_VOD"}
-                   // guard let fil = filter else { return }
+                    self.brodcast.removeAll()// = []
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -506,9 +504,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
 
-                    self.brodcast = []
-                   // let filter = response.data?.filter{$0.type == "STANDART_VOD"}
-                   // guard let fil = filter else { return }
+                    self.brodcast.removeAll()// = []
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -876,7 +872,7 @@ extension ChanellVC: MMPlayerFromProtocol {
 
     // add layer to temp view and pass to another controller
     var passPlayer: MMPlayerLayer {
-        return self.mmPlayerLayer
+        return self.profileView.mmPlayerLayer
     }
     func transitionWillStart() {
     }

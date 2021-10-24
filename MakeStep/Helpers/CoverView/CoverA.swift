@@ -40,8 +40,8 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
             guard let self = self, let path = ch.findCurrentPath() else {return nil}
             let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
             let url = URL(string: (cell.data?.streams?.first?.vodUrl)!) 
-            ch.mmPlayerLayer.set(url: url)
-            ch.mmPlayerLayer.resume()
+            ch.profileView.mmPlayerLayer.set(url: url)
+            ch.profileView.mmPlayerLayer.resume()
             return cell.backgroundImage
         }
     }

@@ -17,9 +17,10 @@ final class PlayerViewCell: UITableViewCell {
 
         var data:BroadcastResponce? {
             didSet {
-                guard let Url = data?.previewPath else { return }
+                guard let Url = data?.previewPath, let urlVOD = data?.streams?.first?.vodUrl else { return }
                 let url = URL(string: Url)
                 self.backgroundImage.kf.setImage(with: url)
+                
                        
             }
         }
@@ -234,6 +235,7 @@ final class PlayerViewCell: UITableViewCell {
         self.accessoryType = .none
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
+       // self.backgroundImage
         data = nil
        } 
 }

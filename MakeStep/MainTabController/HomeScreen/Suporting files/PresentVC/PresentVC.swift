@@ -839,7 +839,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
+        self.mmPlayerLayer.invalidate()
         guard let userId = user?.id else { return }
         bindingChanell(status: "ONLINE", userId: "\(userId)")
 
@@ -913,6 +913,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         return homeView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
+        guard  let filter = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
         if let cell = homeView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
             // this thumb use when transition start and your video dosent start
             mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
@@ -938,10 +939,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 if response.data != nil  {
                     self.brodcast.removeAll()
                     self.brodcast = response.data!
-                  //  let arrayUserId = self.brodcast.map{$0.userId!}
-                  //  self.bindingUserMap(ids: arrayUserId)
-                  //  self.homeView.tableView.reloadData()
-                    self.bindingChanellVOD(userId: userId)
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.homeView.tableView.reloadData()
+                  //  self.bindingChanellVOD(userId: userId)
                 }
            })
        }
@@ -1038,8 +1039,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         indexTab = 1
         guard let userId = user?.id else { return }
        
-        bindingChanell(status: "OFFLINE", userId: "\(userId)")
-      //  bindingChanellVOD(userId: "\(userId)")
+      //  bindingChanell(status: "OFFLINE", userId: "\(userId)")
+        bindingChanellVOD(userId: "\(userId)")
        // bindingChanellMulti(userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
@@ -1059,7 +1060,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
         indexTab = 2
         guard let userId = user?.id else { return }
-        
+        self.mmPlayerLayer.invalidate()
         bindingChanell(status: "PLANNED", userId: "\(userId)")
         
         homeView.imagePromo.isHidden = true

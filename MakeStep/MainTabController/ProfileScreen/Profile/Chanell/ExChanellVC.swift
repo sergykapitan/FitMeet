@@ -127,7 +127,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             let cell = self.findCurrentCell(path: path) as! PlayerViewCell
             myCell = cell
 
-           guard let viewss = self.mmPlayerLayer.playView else { return }
+            guard let viewss = self.profileView.mmPlayerLayer.playView else { return }
             cell.overlay.removeFromSuperview()
             cell.labelLive.removeFromSuperview()
             cell.imageLive.removeFromSuperview()
@@ -137,13 +137,13 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             UIView.animate(withDuration: 0.3) {
                 self.view.insertSubview(viewss, aboveSubview: self.view)
                 viewss.easy.layout(Top(0),Left(0),Right(0),Bottom(0))
-                self.mmPlayerLayer.playView = cell.backgroundImage
+                self.profileView.mmPlayerLayer.playView = cell.backgroundImage
                
                 self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
-                cell.buttonLandscape.anchor(right:self.mmPlayerLayer.playView?.rightAnchor,bottom: self.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
+                cell.buttonLandscape.anchor(right:self.profileView.mmPlayerLayer.playView?.rightAnchor,bottom: self.profileView.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
                 self.view.layoutIfNeeded()
             }
-            print("Frame = \(self.mmPlayerLayer.playView?.frame)")
+            print("Frame = \(self.profileView.mmPlayerLayer.playView?.frame)")
             
             profileView.tableView.isUserInteractionEnabled = true
       self.tabBarController?.tabBar.isHidden = true
@@ -153,8 +153,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
           
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
             UIView.animate(withDuration: 0.3) {
-                guard let view = self.mmPlayerLayer.playView , let cell = self.myCell else { return }
-                self.mmPlayerLayer.playView = nil
+                guard let view = self.profileView.mmPlayerLayer.playView , let cell = self.myCell else { return }
+                self.profileView.mmPlayerLayer.playView = nil
                 cell.backgroundImage.removeFromSuperview()
                 cell.buttonLandscape.removeFromSuperview()
                 view.layoutIfNeeded()
