@@ -13,9 +13,13 @@ import EasyPeasy
 
 extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.profileView.mmPlayerLayer.isShrink { return }
+        self.destrtoyMMPlayerInstance()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
-       // return DemoSource.shared.demoData.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -84,7 +88,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.isUserInteractionEnabled = true
         
         cell.backgroundImage.tag = indexPath.row
-        cell.backgroundImage.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
         cell.backgroundImage.isUserInteractionEnabled = true
         cell.buttonLandscape.isHidden = true
         
@@ -119,7 +122,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     @objc func editButtonLandscape(_ sender: UIButton) -> Void {
         
-       
+        self.profileView.mmPlayerLayer.playView = nil
         sender.isSelected.toggle()
         
         if sender.isSelected {

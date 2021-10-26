@@ -261,28 +261,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 }
         })
     }
-    @objc func actionBut(sender: UITapGestureRecognizer) {
-        
-        guard let path = findCurrentPath() else { return }
-        let cell = profileView.tableView.cellForRow(at: path) as? PlayerViewCell
-        if isButtton {
-          //  cell?.buttonLandscape.isHidden =  true
-            isButtton = false
-        } else {
-            isButtton = true
-          //  cell?.buttonLandscape.isHidden =  true
-        }
-        
-    }
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
-           super.viewWillTransition(to: size, with: coordinator)
-        if UIDevice.current.orientation.isLandscape {
- 
-            } else {
-      
-            }
-        }
-    
+   
     
     @objc fileprivate func startLoading() {
         self.updateByContentOffset()
@@ -300,20 +279,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         if let path = findCurrentPath(),
             self.presentedViewController == nil {
             self.updateCell(at: path)
-            //Demo SubTitle
-            if path.row == 0, self.profileView.mmPlayerLayer.subtitleSetting.subtitleType == nil {
-                let subtitleStr = Bundle.main.path(forResource: "srtDemo", ofType: "srt")!
-                if let str = try? String.init(contentsOfFile: subtitleStr) {
-                  //  self.profileView.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
-                  //  self.profileView.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
-                  //  self.profileView.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
-                }
-            }
         }
     }
     func findCurrentPath() -> IndexPath? {
         let p = CGPoint(x: profileView.tableView.frame.width/2, y: profileView.tableView.contentOffset.y + profileView.tableView.frame.width/2)
-        return profileView.tableView.indexPathForRow(at: p)//.indexPathForItem(at: p)
+        return profileView.tableView.indexPathForRow(at: p)
     }
 
     func findCurrentCell(path: IndexPath) -> UITableViewCell {
@@ -321,16 +291,18 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         return profileView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
-       guard  let filter = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
         if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
             // this thumb use when transition start and your video dosent start
             profileView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             profileView.mmPlayerLayer.playView = cell.backgroundImage
-            ///.first?.vodUrl else { return }
             let url = URL(string: playURL)
             profileView.mmPlayerLayer.set(url: url)
         }
+    }
+    func destrtoyMMPlayerInstance() {
+        self.profileView.mmPlayerLayer.player?.pause()
+        self.profileView.mmPlayerLayer.playView = nil
     }
     // MARK: - Animation
     
