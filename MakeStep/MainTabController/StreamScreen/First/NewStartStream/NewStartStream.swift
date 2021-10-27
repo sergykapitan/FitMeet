@@ -262,9 +262,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
               let sponsor = onlyForSponsors,
               let sub = onlyForSubscribers else { return }
         
-        print("isP = \(isP)\n  d == \(d) \n  sponsor == \(sponsor) \n SUB === \(sub)\n  CHANELLID == \(chanelId) \n NAME  == \(name)")
+      
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: [25,30])
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: [30,35])
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {

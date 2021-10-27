@@ -15,6 +15,7 @@ extension MMPlayerShrinkControl {
     }
     
     static var defaultSize = CGSize(width: 150, height: 100)
+    static var defaultLandSize = CGSize(width: 900, height: 500)
 }
 public class MMPlayerShrinkControl {
     private var currentQuadrant: VideoPositionType = .rightBottom
@@ -22,6 +23,10 @@ public class MMPlayerShrinkControl {
     private var onVC: UIViewController?
     private var isHiddenVC: Bool = true
     private var maxWidth: CGFloat = 150
+    
+    private var maxLandWidth: CGFloat = 400
+    private var maxLandHeight: CGFloat = 900
+    
     private var completed: (()->UIView?)?
     private var videoRectObserver: NSKeyValueObservation?
     public private(set) var isShrink = false
@@ -35,7 +40,16 @@ public class MMPlayerShrinkControl {
         view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
         return view
     }()
+    lazy var landPlayView: UIView = {
+        let view = UIView(frame: CGRect.init(origin: .zero, size: CGSize(width: maxLandWidth, height: maxLandHeight)))
+       // view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
+        return view
+    }()
+    
+    
     weak var originalPlayView:UIView?
+    weak var originalLandPlayView:UIView?
+    
     unowned let mmPlayerLayer: MMPlayerLayer
     init(mmPlayerLayer: MMPlayerLayer) {
         self.mmPlayerLayer = mmPlayerLayer
@@ -52,6 +66,7 @@ public class MMPlayerShrinkControl {
         self.onVC = onVC
         self.isHiddenVC = isHiddenVC
         self.maxWidth = maxWidth
+       
 
         self.onVC?.presentationController?.containerView?.isUserInteractionEnabled = false
         self.shrinkPlayView.alpha = 1.0
@@ -70,9 +85,39 @@ public class MMPlayerShrinkControl {
             self?.setFrameWith(quadrant: current, dismissVideo: false)
         })
     }
+    public func landView(onVC: UIViewController, isHiddenVC: Bool, maxWidth: CGFloat,maxHeight: CGFloat, completedToView: (()->UIView?)?) {
+        if self.isShrink {
+            return
+        }
+        self.completed = completedToView
+        self.onVC = onVC
+        self.isHiddenVC = isHiddenVC
+        self.maxLandWidth = maxWidth
+        self.maxLandHeight = maxHeight
+        
+
+        self.onVC?.presentationController?.containerView?.isUserInteractionEnabled = false
+        self.shrinkPlayView.alpha = 1.0
+        if isHiddenVC {
+            onVC.view.alpha = 0.0
+        }
+        mmPlayerLayer.setCoverView(enable: true)
+        originalLandPlayView = mmPlayerLayer.playView
+        
+        UIApplication.shared.keyWindow?.addSubview(landPlayView)
+        mmPlayerLayer.playView = landPlayView
+        isShrink = true
+        videoRectObserver = mmPlayerLayer.observe(\.videoRect, options: [.new, .old, .initial], changeHandler: { [weak self] (_, value) in
+            guard let current = self?.currentQuadrant, let new = value.newValue, (new != value.oldValue), !new.isEmpty else {
+                return
+            }
+            self?.setFrameWith(quadrant: current, dismissVideo: false)
+        })
+    }
     
     public func dismissShrink() {
         self.setFrameWith(quadrant: self.currentQuadrant, dismissVideo: true)
+        landPlayView.removeFromSuperview()
     }
     
     @objc func pan(gesture: UIPanGestureRecognizer) {

@@ -10,6 +10,10 @@ import UIKit
 import EasyPeasy
 
 extension PresentVC: UITableViewDataSource, UITableViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if self.mmPlayerLayer.isShrink { return }
+        self.destrtoyMMPlayerInstance()
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count

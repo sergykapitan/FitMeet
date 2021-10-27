@@ -185,6 +185,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
        
         profileView.mmPlayerLayer.fullScreenWhenLandscape = false
+      
         profileView.mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
             case .failed(let err):
@@ -296,7 +297,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
             profileView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             profileView.mmPlayerLayer.playView = cell.backgroundImage
-            let url = URL(string: playURL)
+            let url = URL(string: playURL)////"http://mirrors.standaloneinstaller.com/video-sample/jellyfish-25-mbps-hd-hevc.mp4"
+            //playURL
             profileView.mmPlayerLayer.set(url: url)
         }
     }
@@ -385,6 +387,27 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.pushViewController(vc, animated: true)
  
     }
+    func landscape(_ sender: UIButton) {
+   //
+   //     self.editButtonLandscape(sender)
+//        MMLandscapeWindow..shared.makeKey(root: LandscapeVC(), playLayer: profileView.mmPlayerLayer) {
+//                   
+//               }
+       // self.editButtonLandscape(sender)
+      //  AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
+      //  guard let viewss = self.profileView.mmPlayerLayer else { return }
+
+        UIView.animate(withDuration: 0.3) {
+          //  self.view.insertSubview(self.profileView.mmPlayerLayer.playView, aboveSubview: self.view)
+            self.profileView.mmPlayerLayer.playView?.easy.layout(Top(0),Left(0),Right(0))
+          //  self.profileView.mmPlayerLayer.playView = cell.backgroundImage
+           // self.profileView.mmPlayerLayer.playView = self.view //self.profileView.cardView
+          //  self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
+          //  cell.buttonLandscape.anchor(right:self.profileView.mmPlayerLayer.playView?.rightAnchor,bottom: self.profileView.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
+            self.view.layoutIfNeeded()
+        }
+        
+    }
 
     func setUserProfile() {
 
@@ -463,7 +486,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 if response.data != nil  {
                 
                     self.brodcast.removeAll()// = []
-                    self.brodcast = response.data!
+                    self.brodcast = response.data!.reversed()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.profileView.tableView.reloadData()

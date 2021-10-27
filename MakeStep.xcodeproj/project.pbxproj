@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
+		A57BBFE52728084B00734A28 /* LandscapeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* LandscapeVC.swift */; };
+		A57BBFE72728085900734A28 /* LandscapeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* LandscapeVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
@@ -227,6 +229,8 @@
 		42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 		56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
+		A57BBFE42728084B00734A28 /* LandscapeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeVC.swift; sourceTree = "<group>"; };
+		A57BBFE62728085900734A28 /* LandscapeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
@@ -456,6 +460,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A57BBFE32728082A00734A28 /* LandscapeVC */ = {
+			isa = PBXGroup;
+			children = (
+				A57BBFE42728084B00734A28 /* LandscapeVC.swift */,
+				A57BBFE62728085900734A28 /* LandscapeVCCode.swift */,
+			);
+			path = LandscapeVC;
+			sourceTree = "<group>";
+		};
 		A5B635AD27185C010097A127 /* CoverView */ = {
 			isa = PBXGroup;
 			children = (
@@ -558,6 +571,7 @@
 				B4163829268B09BB005BAA46 /* ChanellVC.swift */,
 				B416382D268B09CF005BAA46 /* ChanellCode.swift */,
 				B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */,
+				A57BBFE32728082A00734A28 /* LandscapeVC */,
 			);
 			path = Chanell;
 			sourceTree = "<group>";
@@ -1547,6 +1561,7 @@
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
+				A57BBFE72728085900734A28 /* LandscapeVCCode.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */,
 				A5B635B127185C010097A127 /* CoverA.swift in Sources */,
@@ -1559,6 +1574,7 @@
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
+				A57BBFE52728084B00734A28 /* LandscapeVC.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
 				B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */,
@@ -1732,7 +1748,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1759,7 +1775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

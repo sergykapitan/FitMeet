@@ -193,10 +193,7 @@ final class PlayerViewCell: UITableViewCell {
                        left: contentView.leftAnchor,
                        paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
-        contentView.addSubview(buttonLandscape)
-        buttonLandscape.anchor(right : backgroundImage.rightAnchor,
-                               paddingRight: 16,width:30, height: 30)
-        buttonLandscape.centerY(inView: overlay)
+       
               
         contentView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)

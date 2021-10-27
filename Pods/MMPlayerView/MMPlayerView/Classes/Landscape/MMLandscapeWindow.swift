@@ -17,7 +17,12 @@ private class WindowViewController: UIViewController {
 }
 
 public class MMLandscapeWindow: UIWindow {
+    
+   
+    
     unowned let playerLayer: MMPlayerLayer
+    let play = MMPlayerLayer()
+  //  public static let shared =  MMLandscapeWindow()
     weak var originalPlayView: UIView?
     var completed: (()->Void)?
     
@@ -27,7 +32,8 @@ public class MMLandscapeWindow: UIWindow {
         self.setup()
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required  init?(coder aDecoder: NSCoder) {
+       
         fatalError("init(coder:) has not been implemented")
     }
 

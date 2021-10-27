@@ -840,6 +840,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         self.mmPlayerLayer.invalidate()
+        self.indexTab = 0
         guard let userId = user?.id else { return }
         bindingChanell(status: "ONLINE", userId: "\(userId)")
 
@@ -924,6 +925,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             let url = URL(string: playURL)
             mmPlayerLayer.set(url: url)
         }
+    }
+    func destrtoyMMPlayerInstance() {
+        self.mmPlayerLayer.player?.pause()
+        self.mmPlayerLayer.playView = nil
     }
     private func makeTableView() {
         homeView.tableView.dataSource = self
@@ -1243,10 +1248,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
     }
 
-    
+    //MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
-        
+        if  indexTab == 1 { return }
         playPauseButton.updateUI()
         deviceOrientationDidChange()
         print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
@@ -1257,6 +1262,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             print("isValidInterfaceOrientation")
         }
            if UIDevice.current.orientation.isLandscape {
+              
             print("Landscape")
           //  AppUtility.lockOrientation(.allButUpsideDown)
             AppUtility.lockOrientation(.portrait)
