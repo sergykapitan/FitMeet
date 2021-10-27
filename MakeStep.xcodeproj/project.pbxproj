@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
-		A57BBFE52728084B00734A28 /* LandscapeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* LandscapeVC.swift */; };
-		A57BBFE72728085900734A28 /* LandscapeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* LandscapeVCCode.swift */; };
+		A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */; };
+		A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
+		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
+		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
@@ -229,8 +231,10 @@
 		42CA9701A4E9AA677977D77C /* Pods-MakeStep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.debug.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.debug.xcconfig"; sourceTree = "<group>"; };
 		56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
-		A57BBFE42728084B00734A28 /* LandscapeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeVC.swift; sourceTree = "<group>"; };
-		A57BBFE62728085900734A28 /* LandscapeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeVCCode.swift; sourceTree = "<group>"; };
+		A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVC.swift; sourceTree = "<group>"; };
+		A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVCode.swift; sourceTree = "<group>"; };
+		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
+		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
@@ -460,13 +464,23 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
-		A57BBFE32728082A00734A28 /* LandscapeVC */ = {
+		A5457E9C27298CD1006A8F2D /* Monetezation */ = {
 			isa = PBXGroup;
 			children = (
-				A57BBFE42728084B00734A28 /* LandscapeVC.swift */,
-				A57BBFE62728085900734A28 /* LandscapeVCCode.swift */,
+				A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */,
+				A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */,
+				A57BBFE32728082A00734A28 /* MyTariff */,
 			);
-			path = LandscapeVC;
+			path = Monetezation;
+			sourceTree = "<group>";
+		};
+		A57BBFE32728082A00734A28 /* MyTariff */ = {
+			isa = PBXGroup;
+			children = (
+				A57BBFE42728084B00734A28 /* MyTariff.swift */,
+				A57BBFE62728085900734A28 /* MytariffVCCode.swift */,
+			);
+			path = MyTariff;
 			sourceTree = "<group>";
 		};
 		A5B635AD27185C010097A127 /* CoverView */ = {
@@ -571,7 +585,6 @@
 				B4163829268B09BB005BAA46 /* ChanellVC.swift */,
 				B416382D268B09CF005BAA46 /* ChanellCode.swift */,
 				B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */,
-				A57BBFE32728082A00734A28 /* LandscapeVC */,
 			);
 			path = Chanell;
 			sourceTree = "<group>";
@@ -718,6 +731,7 @@
 				A5D2E0A327147CDB00986BAE /* Edit Channel */,
 				B4BF4767270757110013FC13 /* DeleteStream */,
 				B47079082705B64800921821 /* Edit stream */,
+				A5457E9C27298CD1006A8F2D /* Monetezation */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1434,10 +1448,12 @@
 				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */,
 				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
+				A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */,
 				B4D9D7732626D593007CFB71 /* AuthorizationRequest.swift in Sources */,
 				B4C5A95D267C968C00010F88 /* DropDownCell.swift in Sources */,
 				B41DCB7C268F4D8D007096AB /* UserVC.swift in Sources */,
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
+				A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */,
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
@@ -1561,7 +1577,7 @@
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
-				A57BBFE72728085900734A28 /* LandscapeVCCode.swift in Sources */,
+				A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */,
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */,
 				A5B635B127185C010097A127 /* CoverA.swift in Sources */,
@@ -1574,7 +1590,7 @@
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
-				A57BBFE52728084B00734A28 /* LandscapeVC.swift in Sources */,
+				A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
 				B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */,

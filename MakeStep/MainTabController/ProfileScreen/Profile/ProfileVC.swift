@@ -70,6 +70,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
         profileView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
         profileView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
+        profileView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -83,6 +84,11 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         viewController.selectedIndex = 4
         let mySceneDelegate = (self.view.window?.windowScene)!
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
+
+    }
+    @objc func actionMonetezation() {
+        let vc = MonetezeitionVC()
+        self.navigationController?.pushViewController(vc, animated: true)
 
     }
     //1

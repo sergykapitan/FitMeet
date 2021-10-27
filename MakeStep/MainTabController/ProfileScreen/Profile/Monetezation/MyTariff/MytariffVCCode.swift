@@ -10,17 +10,20 @@ import Foundation
 import UIKit
 
 
-final class LandscapeVCCode: UIView {
+final class MytariffVCCode: UIView {
     
     //MARK: - UI
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
         return view
     }()
-  
-    
+    let buttonAddNewMonet: UIButton = {
+        let btn = UIButton()
+        btn.setBackgroundImage(UIImage(named: "AddNewMonet"), for: .normal)
+        return btn
+    }()
+ 
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -35,6 +38,9 @@ final class LandscapeVCCode: UIView {
     private func initUI() {
         addSubview(cardView)
         cardView.fillSuperview()
+        
+        cardView.addSubview(buttonAddNewMonet)
+        buttonAddNewMonet.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
  
     }
    
