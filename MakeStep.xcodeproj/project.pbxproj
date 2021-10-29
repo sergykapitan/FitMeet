@@ -10,6 +10,10 @@
 		839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
 		A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */; };
 		A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
+		A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */; };
+		A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */; };
+		A5457EA7272AAE51006A8F2D /* AddMonetezationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */; };
+		A5457EA9272C0F8A006A8F2D /* TarrifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
@@ -233,6 +237,10 @@
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVC.swift; sourceTree = "<group>"; };
 		A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVCode.swift; sourceTree = "<group>"; };
+		A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExMytariff.swift; sourceTree = "<group>"; };
+		A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationVC.swift; sourceTree = "<group>"; };
+		A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationCode.swift; sourceTree = "<group>"; };
+		A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarrifCell.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
@@ -474,11 +482,23 @@
 			path = Monetezation;
 			sourceTree = "<group>";
 		};
+		A5457EA3272AADEC006A8F2D /* Add Monetezation */ = {
+			isa = PBXGroup;
+			children = (
+				A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */,
+				A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */,
+			);
+			path = "Add Monetezation";
+			sourceTree = "<group>";
+		};
 		A57BBFE32728082A00734A28 /* MyTariff */ = {
 			isa = PBXGroup;
 			children = (
 				A57BBFE42728084B00734A28 /* MyTariff.swift */,
 				A57BBFE62728085900734A28 /* MytariffVCCode.swift */,
+				A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */,
+				A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */,
+				A5457EA3272AADEC006A8F2D /* Add Monetezation */,
 			);
 			path = MyTariff;
 			sourceTree = "<group>";
@@ -1433,6 +1453,7 @@
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
+				A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */,
 				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
@@ -1521,6 +1542,7 @@
 				B4D9D76F2626D511007CFB71 /* User.swift in Sources */,
 				B4D9D7AA262965E8007CFB71 /* SecurityCodeVC.swift in Sources */,
 				B47828A726CFF4270068292A /* ActionSheetPresentationController.swift in Sources */,
+				A5457EA7272AAE51006A8F2D /* AddMonetezationCode.swift in Sources */,
 				B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */,
 				B481862D26300DB9009B715A /* HomeUI.swift in Sources */,
 				B4F204DA266F50BA00ED11B5 /* ExtentionCollectionCategory.swift in Sources */,
@@ -1545,6 +1567,7 @@
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
 				B43A6C7726F24DEE009E6DDE /* SendCoachCell.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
+				A5457EA9272C0F8A006A8F2D /* TarrifCell.swift in Sources */,
 				B471E65A26EA0C3A007B63BE /* NewPassword.swift in Sources */,
 				B416382E268B09CF005BAA46 /* ChanellCode.swift in Sources */,
 				B46CF7A02672355D00EA0741 /* CategoryBroadcastCode.swift in Sources */,
@@ -1603,6 +1626,7 @@
 				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
 				B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
+				A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 				B43A6C7B26F4DFFF009E6DDE /* SegmentControlSearch.swift in Sources */,

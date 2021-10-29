@@ -46,7 +46,9 @@ class SocketIOManager: NSObject {
 
     }
         
-    func closeConnection() {        socket.disconnect()
+    func closeConnection() {
+        guard let socket = socket else { return }
+        socket.disconnect()
     }
     
     func saveToken(tokenChat: String) {

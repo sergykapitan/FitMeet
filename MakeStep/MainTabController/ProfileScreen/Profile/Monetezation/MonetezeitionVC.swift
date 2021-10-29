@@ -11,7 +11,8 @@ class MonetezeitionVC: UIViewController {
     
     let monetView = MonetezeitionVCode()
     let loadingVC = MyTariff()
-    
+    let ch = ProfileVC()
+
     
     override func loadView() {
         super.loadView()
@@ -20,9 +21,10 @@ class MonetezeitionVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1)
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         makeNavItem()
         actionButton()
+        actionBtnTariff()
 
       
     }
@@ -31,11 +33,17 @@ class MonetezeitionVC: UIViewController {
         self.monetView.buttonIncomecalculator.addTarget(self, action: #selector(actionBtnCalculate), for: .touchUpInside)
     }
     @objc func actionBtnTariff() {
-        configureChildViewController(childController: loadingVC, onView:monetView.selfView )
+        self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#3B58A4")
+        self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#BBBCBC")
+        removeAllChildViewController(ch)
+        configureChildViewController(loadingVC, onView:monetView.selfView )
+        
     }
     @objc func actionBtnCalculate() {
-        let ch = ProfileVC()
-        configureChildViewController(childController: ch, onView:monetView.selfView )
+        self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#3B58A4")
+        self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#BBBCBC")
+        removeAllChildViewController(loadingVC)
+        configureChildViewController(ch, onView:monetView.selfView )
     }
  
     func makeNavItem() {

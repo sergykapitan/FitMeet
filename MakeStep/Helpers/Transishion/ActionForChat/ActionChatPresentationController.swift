@@ -59,7 +59,15 @@ final class ActionChatPresentationController: UIPresentationController {
         presentedView?.frame = frameOfPresentedViewInContainerView
         dimmingView.frame = containerView?.bounds ?? .zero
     }
-    
+    override func preferredContentSizeDidChange(forChildContentContainer container: UIContentContainer) {
+        super.preferredContentSizeDidChange(forChildContentContainer: container)
+        guard let containerView = containerView else {
+               return
+           }
+           
+           containerView.setNeedsLayout()
+           containerView.layoutIfNeeded()
+    }
     override func presentationTransitionWillBegin() {
         super.presentationTransitionWillBegin()
         guard

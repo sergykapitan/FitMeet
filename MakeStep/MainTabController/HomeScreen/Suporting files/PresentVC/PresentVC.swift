@@ -1173,7 +1173,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.homeView.welcomeLabel.text = user.fullName
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
-        self.homeView.labelDescription.text = " Welcome to my channel!\n My name is \(user.fullName!)"
+        self.homeView.labelDescription.text = " Welcome to my channel!\n My name is \(user.fullName)"
        
     }
     // MARK: - LoadPlayer

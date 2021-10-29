@@ -7,36 +7,68 @@
 
 import Foundation
 import UIKit
+import Combine
 
-class MyTariff: UIViewController {
+class MyTariff: UIViewController,AddFrame {
     
+    func addFrame() {
+        bindingChannel()
+    }
+    
+    var intHeight = 0.5
     let landscapeView = MytariffVCCode()
+    let actionChatTransitionManager = ActionTransishionChatManadger()
+    var channel: ChannelResponce?
+    
+    private var take: AnyCancellable?
+    @Inject var fitMeetApi: FitMeetChannels
  
     override func loadView() {
         super.loadView()
         view = landscapeView
-     
-       
     }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        let spinner = UIActivityIndicatorView(style: .gray)
-               spinner.translatesAutoresizingMaskIntoConstraints = false
-               spinner.startAnimating()
-               view.addSubview(spinner)
-
-               // Center our spinner both horizontally & vertically
-               NSLayoutConstraint.activate([
-                   spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                   spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-               ])
-           }
+        actionButton()
+        bindingChannel()
+        createTableView()
       
+    }
+    private func actionButton() {
+        landscapeView.buttonAddNewMonet.addTarget(self, action: #selector(actionAddMonnet) , for: .touchUpInside)
+    }
+    @objc func actionAddMonnet() {
+        let detailViewController = AddMonetezationVC()
+        detailViewController.modalPresentationStyle = .custom
+        actionChatTransitionManager.intHeight = intHeight
+        actionChatTransitionManager.intWidth = 1
+        detailViewController.transitioningDelegate = actionChatTransitionManager
+        detailViewController.color = .white
+        detailViewController.delagateFrame = self
+        detailViewController.channelId = self.channel?.id
+        present(detailViewController, animated: true)
+    }
+      
+    private func createTableView() {
+        landscapeView.tableView.dataSource = self
+        landscapeView.tableView.delegate = self
+        landscapeView.tableView.register(TarrifCell.self, forCellReuseIdentifier: TarrifCell.reuseID)
+        landscapeView.tableView.separatorStyle = .none
+    }
 
-    
  
     //MARK: - Selectors
-
+    func bindingChannel() {
+        take = fitMeetApi.listChannels()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if  response.data.last != nil {
+                    
+                    self.channel = response.data.last
+                    self.landscapeView.tableView.reloadData()
+                    print(self.channel)
+                }
+        })
+    }
 }
 

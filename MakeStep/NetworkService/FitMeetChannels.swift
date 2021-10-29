@@ -17,10 +17,7 @@ class FitMeetChannels {
    
     //MARK: - create channel
     public func createChannel(channel: ChannelRequest) -> AnyPublisher<ChannelResponce, DifferentError> {
-        print(channel.asDictionary())
         return AF.request(Constants.apiEndpoint + "/channel/channels", method: .post, parameters: channel.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                // .validate(statusCode: 200..<300)
-                // .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
                  .print("createChannel")
@@ -32,11 +29,18 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/channel/channels/my", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .publishDecodable(type: ChannelModel.self)
                  .value()
-                // .print("listChannels")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-
+    
+    //MARK: - MonetezationChannnel
+    public func monnetChannels(id: Int,sub: NewSub) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/monetization", method: .post,parameters: sub.asDictionary(),encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .publishDecodable(type: ChannelResponce.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     //MARK: - requestSecurityCode
     public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)

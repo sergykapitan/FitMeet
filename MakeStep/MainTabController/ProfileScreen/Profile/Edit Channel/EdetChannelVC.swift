@@ -209,11 +209,12 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
                 self.textViewNameChannel.layer.borderWidth = 1.5
                 self.textViewNameChannel.layer.cornerRadius = 20
                 self.textViewNameChannel.clipsToBounds = true
-                
                 self.textViewNameChannel.font =  UIFont.systemFont(ofSize: 18)
+        
                 self.view.addSubview(self.textViewNameChannel)
                 self.textViewNameChannel.isScrollEnabled = false
                 self.textViewNameChannel.easy.layout(Left(16),Right(16),Height(maxHeight).when({[unowned self] in self.isOversized}))
+        
                 self.textViewNameChannel.anchor(top:profileView.labelNameOfChannel.bottomAnchor,
                                      left: profileView.cardView.leftAnchor,
                                      paddingTop: 8,paddingLeft: 16)

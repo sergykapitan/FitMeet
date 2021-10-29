@@ -15,7 +15,7 @@ final class MonetezeitionVCode: UIView {
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(hexString: "#F9FAFC")
         return view
     }()
     let selfView: UIView = {
@@ -57,13 +57,13 @@ final class MonetezeitionVCode: UIView {
         cardView.fillSuperview()
         
         cardView.addSubview(buttonMytariffs)
-        buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 20)
+        buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 95,height: 30)
         
         cardView.addSubview(buttonIncomecalculator)
-        buttonIncomecalculator.anchor(top: cardView.topAnchor, left: buttonMytariffs.rightAnchor, paddingTop: 20, paddingLeft: 14)
+        buttonIncomecalculator.anchor(top: cardView.topAnchor, left: buttonMytariffs.rightAnchor, paddingTop: 20, paddingLeft: 14,width: 153,height: 30)
         
         cardView.addSubview(selfView)
-        selfView.anchor(top: buttonMytariffs.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 20, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        selfView.anchor(top: buttonMytariffs.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
  
     }
    

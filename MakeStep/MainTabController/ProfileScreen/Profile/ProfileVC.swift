@@ -34,6 +34,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         actionButtonContinue()
         makeNavItem()
         profileView.scroll.delegate = self
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

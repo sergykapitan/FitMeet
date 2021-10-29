@@ -417,16 +417,26 @@ extension UIViewController {
     }
 }
 extension UIViewController {
-    func configureChildViewController(childController: UIViewController, onView: UIView?) {
-        var holderView = self.view
-        if let onView = onView {
-            holderView = onView
+    /// Taken from this great StackOverflow post by Phani Sai: https://stackoverflow.com/a/35473300/78336
+        func configureChildViewController(_ childController: UIViewController, onView: UIView?) {
+            var holderView = self.view
+            if let onView = onView {
+                holderView = onView
+            }
+            addChild(childController)
+            holderView?.addSubview(childController.view)
+            holderView?.constrainViewEqual(childController.view)
+            childController.didMove(toParent: self)
         }
-        addChild(childController)
-        holderView?.addSubview(childController.view)
-        constrainViewEqual(holderView: holderView!, view: childController.view)
-        childController.didMove(toParent: self)
-    }
+    func removeAllChildViewController(_ childController: UIViewController) {
+        childController.willMove(toParent: nil)
+
+        // Then, remove the child from its parent
+        childController.removeFromParent()
+
+        // Finally, remove the child’s view from the parent’s
+        childController.view.removeFromSuperview()
+        }
 
 
     func constrainViewEqual(holderView: UIView, view: UIView) {
@@ -442,5 +452,19 @@ extension UIViewController {
                                       toItem: holderView, attribute: .right, multiplier: 1.0, constant: 0)
 
         holderView.addConstraints([pinTop, pinBottom, pinLeft, pinRight])
+    }
+}
+extension UIView {
+    fileprivate func constrainViewEqual(_ view: UIView) {
+        view.translatesAutoresizingMaskIntoConstraints = false
+        let pinTop = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal,
+                                        toItem: self, attribute: .top, multiplier: 1.0, constant: 0)
+        let pinBottom = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal,
+                                           toItem: self, attribute: .bottom, multiplier: 1.0, constant: 0)
+        let pinLeft = NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal,
+                                         toItem: self, attribute: .left, multiplier: 1.0, constant: 0)
+        let pinRight = NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal,
+                                          toItem: self, attribute: .right, multiplier: 1.0, constant: 0)
+        self.addConstraints([pinTop, pinBottom, pinLeft, pinRight])
     }
 }

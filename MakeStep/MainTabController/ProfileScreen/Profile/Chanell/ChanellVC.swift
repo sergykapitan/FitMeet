@@ -387,27 +387,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.pushViewController(vc, animated: true)
  
     }
-    func landscape(_ sender: UIButton) {
-   //
-   //     self.editButtonLandscape(sender)
-//        MMLandscapeWindow..shared.makeKey(root: LandscapeVC(), playLayer: profileView.mmPlayerLayer) {
-//                   
-//               }
-       // self.editButtonLandscape(sender)
-      //  AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
-      //  guard let viewss = self.profileView.mmPlayerLayer else { return }
 
-        UIView.animate(withDuration: 0.3) {
-          //  self.view.insertSubview(self.profileView.mmPlayerLayer.playView, aboveSubview: self.view)
-            self.profileView.mmPlayerLayer.playView?.easy.layout(Top(0),Left(0),Right(0))
-          //  self.profileView.mmPlayerLayer.playView = cell.backgroundImage
-           // self.profileView.mmPlayerLayer.playView = self.view //self.profileView.cardView
-          //  self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
-          //  cell.buttonLandscape.anchor(right:self.profileView.mmPlayerLayer.playView?.rightAnchor,bottom: self.profileView.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
-            self.view.layoutIfNeeded()
-        }
-        
-    }
+    
 
     func setUserProfile() {
 
