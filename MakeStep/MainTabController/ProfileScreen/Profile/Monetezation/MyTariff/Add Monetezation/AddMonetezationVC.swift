@@ -89,7 +89,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         
         self.chatView.textFieldPrice.delegate = self
         self.chatView.textFieldPrice.isSearchEnable = false
-        self.chatView.textFieldPrice.optionArray = ["1 Month","6 Months","1 Year"]
+        self.chatView.textFieldPrice.optionArray = ["5.99"]
 
         
         
@@ -129,11 +129,13 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
     @objc func actionSave() {
         guard let channelId = self.channelId,
               let name = self.chatView.textViewName.text,
+              let periodType = self.chatView.textFieldPeriodType.text,
               let price = self.chatView.textFieldPrice.text,
               let description = self.chatView.textViewDescription.text else { return }
         
-        let components = price.components(separatedBy: " ")
-        bindingChannel(id: channelId, sub: NewSub(newPlans: [NewPlan(price: 300,
+        let components = periodType.components(separatedBy: " ")
+        
+        bindingChannel(id: channelId, sub: NewSub(newPlans: [NewPlan(price: 599,
                                                                      periodType: components[1],
                                                                      periodCount: Int(components[0]),
                                                                      name: name,description: description )]))

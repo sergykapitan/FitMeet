@@ -25,7 +25,17 @@ extension MyTariff : UITableViewDataSource, UITableViewDelegate {
         let arr = monetPlan[indexPath.section]
         cell.nameMonetezationLabel.text = arr.name
         cell.descriptionLabel.text = arr.description
-        cell.priceLabel.text = "\(arr.periodCount)" + "\(arr.periodType)" 
+        guard let periodCount = arr.periodCount,let periodType = arr.periodType else { return cell}
+        cell.priceLabel.text = "\(periodCount)" + " " + "\(periodType)" + "/"
+        
+        cell.buttonDelete.tag = indexPath.section
+        cell.buttonDelete.addTarget(self, action: #selector(deleteCell), for: .touchUpInside)
+        cell.buttonDelete.isUserInteractionEnabled = true
+        
+        
+        
+        cell.selectionStyle = .none
+        
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 20
         cell.clipsToBounds = true
@@ -33,7 +43,7 @@ extension MyTariff : UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
            let headerView = UIView()
-        headerView.backgroundColor = UIColor(hexString: "#F9FAFC")// UIColor(red: 0.961, green: 0.961, blue: 0.961, alpha: 1)
+            headerView.backgroundColor = UIColor(hexString: "#F9FAFC")
            return headerView
        }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

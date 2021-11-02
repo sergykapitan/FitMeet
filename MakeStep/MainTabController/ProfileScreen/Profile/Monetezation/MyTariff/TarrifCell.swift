@@ -40,6 +40,13 @@ static let reuseID = "AllSaveWorkoutViewCell"
         label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
+    var buttonDelete: UIButton = {
+        let btn = UIButton()
+        btn.setImage( UIImage(named: "x1"), for: .normal)
+        btn.setImage(UIImage(named: "Vector1"), for: .selected) 
+        btn.tintColor = .black
+        return btn
+    }()
 
 override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -66,21 +73,25 @@ override func prepareForReuse() {
       self.priceLabel.text = nil
    }
     private func initUI() {
-        addSubview(cardView)
-        cardView.fillSuperview()
+       //addSubview(cardView)
+       // cardView.fillSuperview()
        
-        cardView.addSubview(nameMonetezationLabel)
-        nameMonetezationLabel.anchor(top:cardView.topAnchor,left: cardView.leftAnchor,
+        contentView.addSubview(nameMonetezationLabel)
+        nameMonetezationLabel.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,
                                  paddingTop: 16,paddingLeft: 16, height: 20)
+        
+        contentView.addSubview(buttonDelete)
+        buttonDelete.anchor(top: contentView.topAnchor,  right: contentView.rightAnchor,
+                            paddingTop: 16,paddingRight: 16, width: 18, height: 18)
        
         
-        cardView.addSubview(descriptionLabel)
-        descriptionLabel.anchor(top:nameMonetezationLabel.bottomAnchor,left: cardView.leftAnchor,
+        contentView.addSubview(descriptionLabel)
+        descriptionLabel.anchor(top:nameMonetezationLabel.bottomAnchor,left: contentView.leftAnchor,
                        paddingTop: 10, paddingLeft: 16, height: 20)
         
-        cardView.addSubview(priceLabel)
-        priceLabel.anchor( left: cardView.leftAnchor,
-                            bottom: cardView.bottomAnchor,
+        contentView.addSubview(priceLabel)
+        priceLabel.anchor( left: contentView.leftAnchor,
+                            bottom: contentView.bottomAnchor,
                             paddingLeft: 16, paddingBottom: 59,height: 20)
     }
 }

@@ -14,6 +14,7 @@
 		A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */; };
 		A5457EA7272AAE51006A8F2D /* AddMonetezationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */; };
 		A5457EA9272C0F8A006A8F2D /* TarrifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */; };
+		A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54F9B85273156B5008E7E60 /* StoreKit.framework */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
@@ -241,6 +242,7 @@
 		A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationVC.swift; sourceTree = "<group>"; };
 		A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationCode.swift; sourceTree = "<group>"; };
 		A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarrifCell.swift; sourceTree = "<group>"; };
+		A54F9B85273156B5008E7E60 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
@@ -457,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				839D27D98E644C564AB48A83 /* Pods_MakeStep.framework in Frameworks */,
+				A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +535,7 @@
 		A91686760454E5B22AB8EF6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A54F9B85273156B5008E7E60 /* StoreKit.framework */,
 				56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */,
 			);
 			name = Frameworks;

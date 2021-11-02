@@ -54,6 +54,11 @@ class MyTariff: UIViewController,AddFrame {
         landscapeView.tableView.delegate = self
         landscapeView.tableView.register(TarrifCell.self, forCellReuseIdentifier: TarrifCell.reuseID)
         landscapeView.tableView.separatorStyle = .none
+        landscapeView.tableView.showsVerticalScrollIndicator = false
+    }
+    
+    @objc func deleteCell(_ sender: UIButton) -> Void  {
+        print(sender.tag)
     }
 
  
@@ -66,7 +71,7 @@ class MyTariff: UIViewController,AddFrame {
                     
                     self.channel = response.data.last
                     self.landscapeView.tableView.reloadData()
-                    print(self.channel)
+              
                 }
         })
     }
