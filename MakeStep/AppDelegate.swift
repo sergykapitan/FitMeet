@@ -55,6 +55,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+        IAPManager.shared.setupPurchases { success in
+            if success {
+                print("can make payments")
+                IAPManager.shared.getProducts()
+            }
+        }
         return true
     }
 
