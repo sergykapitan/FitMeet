@@ -36,8 +36,11 @@ class FitMeetChannels {
     //MARK: - MonetezationChannnel
     public func monnetChannels(id: Int,sub: NewSub) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/monetization", method: .post,parameters: sub.asDictionary(),encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
+                 .print("MonnetChanell")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }

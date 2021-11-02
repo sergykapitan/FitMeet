@@ -85,7 +85,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         
         self.chatView.textFieldPeriodType.delegate = self
         self.chatView.textFieldPeriodType.isSearchEnable = false        
-        self.chatView.textFieldPeriodType.optionArray = ["1 Month","6 Months","1 Year"]
+        self.chatView.textFieldPeriodType.optionArray = ["1 month","6 month","1 year"]
         
         self.chatView.textFieldPrice.delegate = self
         self.chatView.textFieldPrice.isSearchEnable = false
@@ -132,11 +132,11 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
               let price = self.chatView.textFieldPrice.text,
               let description = self.chatView.textViewDescription.text else { return }
         
-        
+        let components = price.components(separatedBy: " ")
         bindingChannel(id: channelId, sub: NewSub(newPlans: [NewPlan(price: 300,
-                                                                     periodType: "day",
-                                                                     periodCount: 30,
-                                                                     name: name, description: description)]))
+                                                                     periodType: components[1],
+                                                                     periodCount: Int(components[0]),
+                                                                     name: name,description: description )]))
       
        
     }
@@ -149,7 +149,8 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         take = fitMeetApi.monnetChannels(id: id, sub: sub)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.name != nil {
+                print("responce = \(response)")
+                if response.message == nil {
                     self.dismiss(animated: true) {
                         self.delagateFrame?.addFrame()
                     }
