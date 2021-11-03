@@ -15,8 +15,9 @@
 		A5457EA7272AAE51006A8F2D /* AddMonetezationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */; };
 		A5457EA9272C0F8A006A8F2D /* TarrifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */; };
 		A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54F9B85273156B5008E7E60 /* StoreKit.framework */; };
-		A54F9B8927315C4C008E7E60 /* INAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8827315C4C008E7E60 /* INAPProducts.swift */; };
+		A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8827315C4C008E7E60 /* IAPProducts.swift */; };
 		A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
+		A54F9B8E27327EE1008E7E60 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8D27327EE1008E7E60 /* Purchases.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
@@ -245,8 +246,9 @@
 		A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationCode.swift; sourceTree = "<group>"; };
 		A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarrifCell.swift; sourceTree = "<group>"; };
 		A54F9B85273156B5008E7E60 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
-		A54F9B8827315C4C008E7E60 /* INAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = INAPProducts.swift; sourceTree = "<group>"; };
+		A54F9B8827315C4C008E7E60 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
 		A54F9B8B27315CF8008E7E60 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
+		A54F9B8D27327EE1008E7E60 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
@@ -501,7 +503,7 @@
 		A54F9B8727315C26008E7E60 /* IAPProducts */ = {
 			isa = PBXGroup;
 			children = (
-				A54F9B8827315C4C008E7E60 /* INAPProducts.swift */,
+				A54F9B8827315C4C008E7E60 /* IAPProducts.swift */,
 			);
 			path = IAPProducts;
 			sourceTree = "<group>";
@@ -510,6 +512,7 @@
 			isa = PBXGroup;
 			children = (
 				A54F9B8B27315CF8008E7E60 /* IAPManager.swift */,
+				A54F9B8D27327EE1008E7E60 /* Purchases.swift */,
 			);
 			path = IAPManager;
 			sourceTree = "<group>";
@@ -1460,6 +1463,7 @@
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */,
 				B470790C2705B6A300921821 /* EditStreamCode.swift in Sources */,
+				A54F9B8E27327EE1008E7E60 /* Purchases.swift in Sources */,
 				B4D9D7592625FFC3007CFB71 /* SignUpViewControllerCode.swift in Sources */,
 				B4D9D77A2626D9BF007CFB71 /* Constant.swift in Sources */,
 				B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */,
@@ -1645,7 +1649,7 @@
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
 				B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */,
 				B4E88E5626D3E6B3003E6B16 /* EcSendVC.swift in Sources */,
-				A54F9B8927315C4C008E7E60 /* INAPProducts.swift in Sources */,
+				A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
@@ -1847,7 +1851,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_COMPILATION_MODE = singlefile;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

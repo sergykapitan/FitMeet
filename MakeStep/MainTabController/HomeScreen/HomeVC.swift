@@ -16,10 +16,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     func change(to index: Int) {
         if index == 0 {
             self.index = index
-           // guard let token =  self.token else { return }
             if token != nil {
                 binding()
-               // bindingCategory()
             } else {
                 bindingNotAuht()
             }
@@ -27,7 +25,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         if index == 1 {
             self.index = index
             bindingRecomandate()
-           // bindingCategory()
         }
         if index == 2 {
             self.index = index
@@ -51,8 +48,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
-   // var fullStack = Dictionary<String, Int>().self
-   // var FULL = [[String :Int]].self
+
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
@@ -142,7 +138,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
-        print("timeHandAction")
         let tvc = Timetable()
         tvc.modalPresentationStyle = .fullScreen
         navigationController?.pushViewController(tvc, animated: true)
@@ -154,10 +149,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
  
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        print("refrech")
         if index == 0 {
-           // guard let token =  self.token else { return }
-            
             if token != nil {
                 binding()
             } else {
@@ -233,16 +225,16 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
           })
     }
     func bindingUserMap(ids: [Int])  {
-        
+        if ids.isEmpty { return } else {
         takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
+                if response.data.count != 0 {
                     self.usersd = response.data
-                    print("ResponceData ===== \(self.usersd)")
                     self.homeView.tableView.reloadData()
                 }
           })
+       }
     }
 
     func followBroadcast(id: Int) {
@@ -269,7 +261,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 if response.data != nil {
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.id!}
-                    print("ARRAY ==== \(self.listBroadcast)")
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()

@@ -31,11 +31,10 @@ class FitMeetStream {
 
     public func getListBroadcast(status:String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=\(status)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                // .validate(statusCode: 200..<300)
-                // .validate(contentType: ["application/json"])
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                 .print("getListBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -49,7 +48,7 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    //&status=ONLINE
+   
     public func getBroadcast(status: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=\(status)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -234,35 +233,29 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: Bool.self)
             .value()
-            .print("getCategoryPrivate")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-    
-    ///api/v0/stream/broadcastCategories/private
+
     public func getCategoryPrivate() -> AnyPublisher<CategoryResponce,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<25500)
+            .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
             .value()
-            .print("getCategoryPrivate")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     public func getCategory() -> AnyPublisher<CategoryResponce,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-           // .validate(statusCode: 200..<25500)
+            .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
             .value()
-            .print("getCategory")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-    
-    
-    
+        
     //MARK: - Get Broadcast Category//GET
     public func getBroadcastCategory(name: String) -> AnyPublisher<CategoryResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40&titleLike=\(name)", method:.get, parameters: [:])

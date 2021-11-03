@@ -106,7 +106,6 @@ extension SegmentControlSearch {
     
     private func configSelectorView() {
         let selectorWidth = frame.width / CGFloat(self.buttonTitles.count)/3
-        print("SelectorFrame === \(selectorWidth)")
         selectorView = UIView(frame: CGRect(x: 0, y: self.frame.height , width: selectorWidth, height: 2))
         selectorView.backgroundColor = selectorViewColor
         addSubview(selectorView)

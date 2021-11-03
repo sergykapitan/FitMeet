@@ -27,6 +27,7 @@ class IAPManager: NSObject {
     public func getProducts() {
         let identifiers: Set = [
             IAPProducts.nonRenewable.rawValue,
+            IAPProducts.autoMonthSubscription.rawValue,
         ]
         
         let productRequest = SKProductsRequest(productIdentifiers: identifiers)
@@ -46,7 +47,7 @@ extension IAPManager: SKPaymentTransactionObserver {
 extension IAPManager: SKProductsRequestDelegate {
     func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
         self.products = response.products
-        products.forEach { print($0.localizedTitle) }
+        products.forEach { print($0) }
     }
 }
 

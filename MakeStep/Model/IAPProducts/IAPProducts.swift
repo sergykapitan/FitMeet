@@ -9,4 +9,5 @@ import Foundation
 
 enum IAPProducts: String {
     case nonRenewable = "month_subscription"
+    case autoMonthSubscription = "com.makestep.month.auto"
 }
