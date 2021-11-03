@@ -241,16 +241,14 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil {
-                }
+          
           })
     }
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil {
-                }
+            
          })
     }
     

@@ -708,6 +708,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
     }
+    // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
@@ -830,9 +831,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
+      
         
 
     }
+ 
 
 
     @objc func actionOnline() {
@@ -994,18 +997,25 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           })
     }
     @objc func actionSubscribe() {
-        homeView.buttonSubscribe.isSelected.toggle()
+      //  homeView.buttonSubscribe.isSelected.toggle()
         
-        if homeView.buttonSubscribe.isSelected {
+      //  if homeView.buttonSubscribe.isSelected {
             homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
             homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+            let subscribe = SubscribeVC()
+        subscribe.modalPresentationStyle = .custom
+        actionChatTransitionManager.intHeight = 0.4
+        actionChatTransitionManager.intWidth = 1
+        subscribe.transitioningDelegate = actionChatTransitionManager
+        present(subscribe, animated: true)
+        
 
-        } else {
-            homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
-            homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
-            homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-        }
+     //   } else {
+     //       homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
+     //       homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+      //      homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+     //   }
 
     }
     @objc func actionFollow() {

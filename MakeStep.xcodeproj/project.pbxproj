@@ -18,6 +18,7 @@
 		A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8827315C4C008E7E60 /* IAPProducts.swift */; };
 		A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
 		A54F9B8E27327EE1008E7E60 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8D27327EE1008E7E60 /* Purchases.swift */; };
+		A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
@@ -249,6 +250,7 @@
 		A54F9B8827315C4C008E7E60 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
 		A54F9B8B27315CF8008E7E60 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		A54F9B8D27327EE1008E7E60 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
+		A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeVCCode.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
@@ -764,6 +766,7 @@
 			isa = PBXGroup;
 			children = (
 				B47828A926CFF48C0068292A /* SubscribeVC.swift */,
+				A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */,
 			);
 			path = SubscribeVC;
 			sourceTree = "<group>";
@@ -1531,6 +1534,7 @@
 				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
+				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,

@@ -30,7 +30,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var orientationLock = UIInterfaceOrientationMask.all
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Purchases.default.initialize()
+        // Purchases.default.initialize()
         // Initialise the Audio Session, you should do this in your AppDelegate.swift
         let session = AVAudioSession.sharedInstance()
         do {
