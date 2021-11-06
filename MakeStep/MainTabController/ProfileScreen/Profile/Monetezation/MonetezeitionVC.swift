@@ -11,7 +11,7 @@ class MonetezeitionVC: UIViewController {
     
     let monetView = MonetezeitionVCode()
     let loadingVC = MyTariff()
-    let ch = ProfileVC()
+    let ch = CalculateVC()
 
     
     override func loadView() {

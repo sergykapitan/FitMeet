@@ -1,0 +1,6 @@
+framework module iLabeledSeekSlider {
+  umbrella header "iLabeledSeekSlider-umbrella.h"
+
+  export *
+  module * { export * }
+}

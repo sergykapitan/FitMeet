@@ -21,6 +21,9 @@ target 'MakeStep' do
   pod "EasyPeasy"
   pod 'TagListView', '~> 1.0'
   pod 'MMPlayerView'
+  pod 'iLabeledSeekSlider', '~> 1.0.2'
+
+
 
   # Pods for FitMeet
 

@@ -7,6 +7,7 @@ PODS:
     - Logboard (~> 2.2.1)
   - HHCustomCorner (0.1.3)
   - Hue (5.0.0)
+  - iLabeledSeekSlider (1.0.2)
   - iOSDropDown (0.3.4)
   - Kingfisher (6.0.1)
   - Loaf (0.7.0)
@@ -65,6 +66,7 @@ DEPENDENCIES:
   - HaishinKit (~> 1.1.4)
   - HHCustomCorner
   - Hue (~> 5.0.0)
+  - iLabeledSeekSlider (~> 1.0.2)
   - iOSDropDown
   - Kingfisher (~> 6.0)
   - Loaf
@@ -84,6 +86,7 @@ SPEC REPOS:
     - HaishinKit
     - HHCustomCorner
     - Hue
+    - iLabeledSeekSlider
     - iOSDropDown
     - Kingfisher
     - Loaf
@@ -105,6 +108,7 @@ SPEC CHECKSUMS:
   HaishinKit: 361dfd7d5feaa358946cff681833f7c747fbc37b
   HHCustomCorner: d7817fc58b894347245363dd8a0d0beafd474bcd
   Hue: c129cb67be7d093a82bbbc30ce8a96757bf6f37a
+  iLabeledSeekSlider: 9f77e27357049229a392aa527c5b505830954b0a
   iOSDropDown: c10a761f9a00c3f1cc9d3bce43ae504628e2f692
   Kingfisher: adde87a4f74f6a3845395769354efff593581740
   Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
@@ -118,6 +122,6 @@ SPEC CHECKSUMS:
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
 
-PODFILE CHECKSUM: b31be90b6ee1be75ce59c35b0e6f1b4c31274f7f
+PODFILE CHECKSUM: da0e2770461e04b8a94410d1fe8d22f5eabd4ec5
 
 COCOAPODS: 1.11.2
