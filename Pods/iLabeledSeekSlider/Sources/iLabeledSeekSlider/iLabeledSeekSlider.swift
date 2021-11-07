@@ -521,7 +521,7 @@ public class iLabeledSeekSlider: UIView {
             NSAttributedString.Key.foregroundColor : isDisabled ? disabledRegularTextColor : titleTextColor
         ]
         title.draw(
-            at: CGPoint(x: sidePadding, y: getTitleLabelTextVerticalOffset()),
+            at: CGPoint(x: sidePadding, y: 80 ),//getTitleLabelTextVerticalOffset()
             withAttributes: attributes
         )
         titleTextSize = title.size(withAttributes: attributes)
@@ -586,7 +586,7 @@ public class iLabeledSeekSlider: UIView {
     }
     
     private func getTitleLabelTextVerticalOffset() -> CGFloat {
-        return bubbleHeight - topPadding - 20
+        return bubbleHeight - topPadding - 2
     }
     
     private func getRangeTextVerticalOffset() -> CGFloat {

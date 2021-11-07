@@ -58,8 +58,8 @@ struct ActivBroadCast: Codable,Hashable,Identifiable {
 }
 struct NewSub: Codable {
     let newPlans: [NewPlan]?
-   // let editSubscriptionPrices: [EditSubscriptionPrice]? = nil
-   // let disableSubscriptionPriceIds: [Int]? = nil
+    let editSubscriptionPrices: [EditSubscriptionPrice]?
+    let disableSubscriptionPriceIds: [Int]?
 
 }
 
@@ -67,6 +67,10 @@ struct NewSub: Codable {
 struct EditSubscriptionPrice: Codable {
     let id: Int?
     let name: String?
+    let price: Int?
+    let periodType: String?
+    let periodCount: Int?
+    let description: String?
 }
 
 // MARK: - NewPlan

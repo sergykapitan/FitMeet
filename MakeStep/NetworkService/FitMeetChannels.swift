@@ -44,6 +44,16 @@ class FitMeetChannels {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func delMonnetChannels(id: Int,tarifId: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/monetization", method: .post,parameters: tarifId.asDictionary(),encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+                 .publishDecodable(type: ChannelResponce.self)
+                 .value()
+                 .print("DelMonnetChanell")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     //MARK: - requestSecurityCode
     public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)

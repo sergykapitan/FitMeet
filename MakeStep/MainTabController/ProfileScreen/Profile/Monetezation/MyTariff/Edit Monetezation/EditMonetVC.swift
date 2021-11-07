@@ -1,9 +1,10 @@
 //
-//  AddMonetezationVC.swift
+//  EditMonetVC.swift
 //  MakeStep
 //
-//  Created by Sergey on 28.10.2021.
+//  Created by Sergey on 07.11.2021.
 //
+
 
 import Foundation
 import Combine
@@ -12,14 +13,11 @@ import EasyPeasy
 import iOSDropDown
 import Loaf
 
-protocol AddFrame: class {
-   func addFrame()
-}
 
 
-class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelegate {
+class EditMonetVC: UIViewController ,UITextViewDelegate, UITextFieldDelegate {
       
-    let chatView = AddMonetezationCode()
+    let chatView = EditMonetVCCode()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
   
     
@@ -78,6 +76,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         super.viewDidLoad()
         actionButton()
         registerForKeyboardNotifications()
+        setMonnetezation()
         self.chatView.textViewName.delegate = self
         self.chatView.textViewName.easy.layout(Left(16),Right(16),Height(maxHeight).when({[unowned self] in self.isOversized}))
         
@@ -85,12 +84,12 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         self.chatView.textViewDescription.easy.layout(Left(16),Right(16),Bottom(40).to(chatView.buttonSave),Height(maxHeight).when({[unowned self] in self.isOversized}))
         
         self.chatView.textFieldPeriodType.delegate = self
-        self.chatView.textFieldPeriodType.isSearchEnable = false        
+        self.chatView.textFieldPeriodType.isSearchEnable = false
         self.chatView.textFieldPeriodType.optionArray = ["1 month"]
         
         self.chatView.textFieldPrice.delegate = self
         self.chatView.textFieldPrice.isSearchEnable = false
-        self.chatView.textFieldPrice.optionArray = ["5.99"]
+        self.chatView.textFieldPrice.optionArray = ["$5.99"]
 
 
         
@@ -103,9 +102,21 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
 
         
     }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Loaf.dismiss(sender: EditMonetVC())
+    }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         
+
+    }
+    private func setMonnetezation() {
+        guard let id = id else { return }
+        chatView.textViewName.text = id.name
+        chatView.textFieldPeriodType.text = "1 month"
+        chatView.textViewDescription.text = id.description
+        chatView.textFieldPrice.text = "$5.99"
 
     }
  
@@ -131,14 +142,14 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
               let name = self.chatView.textViewName.text,
               let periodType = self.chatView.textFieldPeriodType.text,
               let price = self.chatView.textFieldPrice.text,
-              let description = self.chatView.textViewDescription.text else { return }
+              let description = self.chatView.textViewDescription.text,
+              let id = self.id?.subscriptionPriceId  else { return }
         
+       
         let components = periodType.components(separatedBy: " ")
         
-        bindingChannel(id: channelId, sub: NewSub(newPlans: [NewPlan(price: 599,
-                                                                     periodType: components[1],
-                                                                     periodCount: Int(components[0]),
-                                                                     name: name,description: description )], editSubscriptionPrices: nil, disableSubscriptionPriceIds: nil))
+        bindingChannel(id: channelId, sub: NewSub(newPlans: nil,
+                                                  editSubscriptionPrices: [EditSubscriptionPrice(id: id, name: name, price: 599, periodType: components[0], periodCount: Int(components[1]), description: description)], disableSubscriptionPriceIds: nil))
       
        
     }
@@ -157,14 +168,15 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         take = fitMeetApi.monnetChannels(id: id, sub: sub)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("responce = \(response)")
                 var loafStyle = Loaf.State.info
                 loafStyle = Loaf.State.success
-                guard let ids = self.chatView.textViewName.text else { return  }
-                
+                guard let ids = self.id?.name else { return  }
+
                 if response.message == nil {
                     self.view.endEditing(true)
                     DispatchQueue.main.async {
-                    Loaf(" Saved" + " in \(ids)", state: loafStyle, location: .top, sender:  self).show(.short) { disType in
+                    Loaf(" Saved" + " in \(ids)", state: loafStyle, location: .bottom, sender:  self).show(.short) { disType in
                             switch disType {
                                      case .tapped: print("Tapped!")
                                      case .timedOut: self.dismiss(animated: true) {
@@ -173,11 +185,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
                         }
                     }
                 }
-                } else {
-                    DispatchQueue.main.async {
-                        Loaf("\(response.message)", state: Loaf.State.error, location: .top, sender:  self).show(.short)
-                    }
-              }
+            }
         })
     }
   
@@ -229,16 +237,16 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         }
 
     func textViewDidBeginEditing(_ textView: UITextView) {
-        if self.chatView.textViewName.text == "Name" {
-            self.chatView.textViewName.text = ""
-            self.chatView.textViewName.textColor = UIColor.black
-            self.chatView.textViewName.font = UIFont.systemFont(ofSize: 18)
-            }
-        if self.chatView.textViewDescription.text == "Description" {
-            self.chatView.textViewDescription.text = ""
-            self.chatView.textViewDescription.textColor = UIColor.black
-            self.chatView.textViewDescription.font = UIFont.systemFont(ofSize: 18)
-            }
+//        if self.chatView.textViewName.text == "Name" {
+//            self.chatView.textViewName.text = ""
+//            self.chatView.textViewName.textColor = UIColor.black
+//            self.chatView.textViewName.font = UIFont.systemFont(ofSize: 18)
+//            }
+//        if self.chatView.textViewDescription.text == "Description" {
+//            self.chatView.textViewDescription.text = ""
+//            self.chatView.textViewDescription.textColor = UIColor.black
+//            self.chatView.textViewDescription.font = UIFont.systemFont(ofSize: 18)
+//            }
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if self.chatView.textViewName.text == "" {

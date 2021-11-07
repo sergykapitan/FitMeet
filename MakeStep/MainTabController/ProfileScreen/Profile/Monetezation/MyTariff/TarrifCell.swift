@@ -23,7 +23,7 @@ static let reuseID = "AllSaveWorkoutViewCell"
     var nameMonetezationLabel : UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .black//UIColor(hexString: "367BF8")
+        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
@@ -31,13 +31,21 @@ static let reuseID = "AllSaveWorkoutViewCell"
         let label = UILabel()
         label.textColor = UIColor(hexString: "#868686")
         label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 3
         return label
     }()
     var priceLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .left
-        label.textColor = .black// UIColor(hexString: "2E3A48")
+        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
+    var priceLabelright: UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        label.textColor = UIColor(hexString: "#3B58A4")
+        label.font = UIFont.boldSystemFont(ofSize: 26)
         return label
     }()
     var buttonDelete: UIButton = {
@@ -47,6 +55,35 @@ static let reuseID = "AllSaveWorkoutViewCell"
         btn.tintColor = .black
         return btn
     }()
+    var imageEdit:UIImageView = {
+        let image = UIImageView()
+        image.image =  #imageLiteral(resourceName: "edit 1-1")
+        image.setImageColor(color: UIColor.black)
+        return image
+        }()
+    var labelEdit: UILabel = {
+        let label = UILabel()
+        label.text = "Edit"
+        label.textColor = .black
+        label.font = UIFont.systemFont(ofSize: 14)
+        return label
+    }()
+    var buttonEdit: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#DADADA")
+        button.layer.cornerRadius = 14
+        return button
+    }()
+    var buttonDisable: UIButton = {
+        let button = UIButton()
+        button.setTitle("Disable", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor(hexString: "#EE0000")
+        button.layer.cornerRadius = 14
+        return button
+    }()
+    
 
 override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -73,25 +110,40 @@ override func prepareForReuse() {
       self.priceLabel.text = nil
    }
     private func initUI() {
-       //addSubview(cardView)
-       // cardView.fillSuperview()
-       
+
         contentView.addSubview(nameMonetezationLabel)
         nameMonetezationLabel.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,
                                  paddingTop: 16,paddingLeft: 16, height: 20)
         
         contentView.addSubview(buttonDelete)
         buttonDelete.anchor(top: contentView.topAnchor,  right: contentView.rightAnchor,
-                            paddingTop: 16,paddingRight: 16, width: 18, height: 18)
+                            paddingTop: 8,paddingRight: 8, width: 40, height: 40)
        
         
         contentView.addSubview(descriptionLabel)
-        descriptionLabel.anchor(top:nameMonetezationLabel.bottomAnchor,left: contentView.leftAnchor,
-                       paddingTop: 10, paddingLeft: 16, height: 20)
+        descriptionLabel.anchor(top:nameMonetezationLabel.bottomAnchor,left: contentView.leftAnchor,right: contentView.rightAnchor, paddingTop: 10, paddingLeft: 16,paddingRight: 16)
         
         contentView.addSubview(priceLabel)
         priceLabel.anchor( left: contentView.leftAnchor,
                             bottom: contentView.bottomAnchor,
                             paddingLeft: 16, paddingBottom: 59,height: 20)
+        contentView.addSubview(priceLabelright)
+        priceLabelright.anchor( right: contentView.rightAnchor, paddingRight: 16)
+        priceLabelright.centerY(inView: priceLabel)
+        
+        contentView.addSubview(buttonEdit)
+        buttonEdit.anchor(right: contentView.rightAnchor,bottom: contentView.bottomAnchor, paddingRight: 16,paddingBottom: 16,width: 79,height: 29)
+        
+        buttonEdit.addSubview(imageEdit)
+        imageEdit.anchor( right: buttonEdit.rightAnchor, paddingRight: 15, width: 12, height: 12)
+        imageEdit.centerY(inView: buttonEdit)
+        
+        buttonEdit.addSubview(labelEdit)
+        labelEdit.anchor(right: imageEdit.leftAnchor,paddingRight: 5)
+        labelEdit.centerY(inView: buttonEdit)
+        
+        contentView.addSubview(buttonDisable)
+        buttonDisable.anchor(right: buttonEdit.leftAnchor, paddingRight: 10,paddingBottom: 16,width: 79,height: 29)
+        buttonDisable.centerY(inView: buttonEdit)
     }
 }

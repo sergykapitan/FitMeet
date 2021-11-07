@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 
 extension MyTariff : UITableViewDataSource, UITableViewDelegate {
+    
     func numberOfSections(in tableView: UITableView) -> Int {
-        guard let count = self.channel?.subscriptionPlans?.count else { return 3}
+        guard let count = self.channel?.subscriptionPlans?.count else { return 0}
         return count
     }
  
@@ -21,21 +22,31 @@ extension MyTariff : UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: TarrifCell.reuseID, for: indexPath) as! TarrifCell
+     
         guard let monetPlan = self.channel?.subscriptionPlans else { return cell}
         let arr = monetPlan[indexPath.section]
         cell.nameMonetezationLabel.text = arr.name
         cell.descriptionLabel.text = arr.description
-        guard let periodCount = arr.periodCount,let periodType = arr.periodType else { return cell}
+        guard let periodCount = arr.periodCount,let periodType = arr.periodType,let price = arr.price else { return cell}
         cell.priceLabel.text = "\(periodCount)" + " " + "\(periodType)" + "/"
+        let f = Float(price) / 100
+        cell.priceLabelright.text = "$ \(f)"
         
         cell.buttonDelete.tag = indexPath.section
         cell.buttonDelete.addTarget(self, action: #selector(deleteCell), for: .touchUpInside)
         cell.buttonDelete.isUserInteractionEnabled = true
         
+        cell.buttonEdit.tag = indexPath.section
+        cell.buttonEdit.addTarget(self, action: #selector(actionEditMonnet), for: .touchUpInside)
+        cell.buttonEdit.isUserInteractionEnabled = true
+        
+        cell.buttonDisable.tag = indexPath.section
+        cell.buttonDisable.addTarget(self, action: #selector(actionisableonnet), for: .touchUpInside)
+        cell.buttonDisable.isUserInteractionEnabled = true
+        
         
         
         cell.selectionStyle = .none
-        
         cell.backgroundColor = .white
         cell.layer.cornerRadius = 20
         cell.clipsToBounds = true

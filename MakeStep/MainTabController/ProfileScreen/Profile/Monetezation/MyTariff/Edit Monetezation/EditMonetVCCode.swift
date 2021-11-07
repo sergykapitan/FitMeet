@@ -1,20 +1,20 @@
 //
-//  AddMonetezationCode.swift
+//  EditMonetVCCode.swift
 //  MakeStep
 //
-//  Created by Sergey on 28.10.2021.
+//  Created by Sergey on 07.11.2021.
 //
 
 import UIKit
 import iOSDropDown
 import Kingfisher
 
-final class AddMonetezationCode: UIView {
+final class EditMonetVCCode: UIView {
 
     //MARK: - First layer in TopView
     
     let cardView: UIView = {
-        let view = UIView()     
+        let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .clear
         view.layer.cornerRadius = 20
@@ -28,7 +28,7 @@ final class AddMonetezationCode: UIView {
     }()
     var titleLabel: UILabel = {
         var label = UILabel()
-        label.text = "Add New +"
+        label.text = "Edit"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
@@ -38,7 +38,7 @@ final class AddMonetezationCode: UIView {
         tv.layer.borderWidth = 1.5
         tv.layer.cornerRadius = 20
         tv.text = "Name"
-        tv.textColor = UIColor.lightGray
+        tv.textColor = UIColor.black
         tv.returnKeyType = .done
         tv.clipsToBounds = true
         tv.font =  UIFont.systemFont(ofSize: 18)
@@ -74,7 +74,7 @@ final class AddMonetezationCode: UIView {
         tv.layer.borderWidth = 1.5
         tv.layer.cornerRadius = 20
         tv.text = "Description"
-        tv.textColor = UIColor.lightGray
+        tv.textColor = UIColor.black
         tv.returnKeyType = .done
         tv.clipsToBounds = true
         tv.font =  UIFont.systemFont(ofSize: 18)
@@ -85,7 +85,7 @@ final class AddMonetezationCode: UIView {
     var buttonSave: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#3B58A4")
-        button.setTitle(" Create ", for: .normal)
+        button.setTitle("Save", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.titleLabel?.textColor = .white
         button.layer.cornerRadius = 15
@@ -93,7 +93,7 @@ final class AddMonetezationCode: UIView {
     }()
     var buttonCancel: UIButton = {
         var button = UIButton()
-        button.setTitle(" Cancel ", for: .normal)
+        button.setTitle("Cancel", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.setTitleColor(UIColor.init(hexString: "#3B58A4"), for: .normal)
         button.layer.cornerRadius = 15

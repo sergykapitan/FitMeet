@@ -8,8 +8,14 @@
 import Foundation
 import UIKit
 import Combine
+import AudioToolbox
 
-class MyTariff: UIViewController,AddFrame {
+class MyTariff: UIViewController,AddFrame, ReloadTable {
+    
+    func reloadTable() {
+        bindingChannel()
+    }
+    
     
     func addFrame() {
         bindingChannel()
@@ -32,7 +38,10 @@ class MyTariff: UIViewController,AddFrame {
         actionButton()
         bindingChannel()
         createTableView()
-      
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       
     }
     private func actionButton() {
         landscapeView.buttonAddNewMonet.addTarget(self, action: #selector(actionAddMonnet) , for: .touchUpInside)
@@ -58,7 +67,47 @@ class MyTariff: UIViewController,AddFrame {
     }
     
     @objc func deleteCell(_ sender: UIButton) -> Void  {
-        print(sender.tag)
+        vibrate()
+        guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
+        let detailViewController = DeleteTariffVC()
+        detailViewController.modalPresentationStyle = .custom
+        actionChatTransitionManager.intHeight = 0.25
+        actionChatTransitionManager.intWidth = 1
+        detailViewController.transitioningDelegate = actionChatTransitionManager
+        detailViewController.color = .white
+        detailViewController.idSub = id.subscriptionPriceId
+        detailViewController.delagateReload = self
+        present(detailViewController, animated: true)
+
+    }
+    @objc func actionEditMonnet(_ sender: UIButton) {
+        vibrate()
+        guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
+        let detailViewController = EditMonetVC()
+        detailViewController.modalPresentationStyle = .custom
+        actionChatTransitionManager.intHeight = intHeight
+        actionChatTransitionManager.intWidth = 1
+        detailViewController.transitioningDelegate = actionChatTransitionManager
+        detailViewController.color = .white
+        detailViewController.delagateFrame = self
+        detailViewController.channelId = self.channel?.id
+        detailViewController.id = id
+        present(detailViewController, animated: true)
+    }
+    @objc func actionisableonnet(_ sender: UIButton) -> Void {
+        vibrate()
+        guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
+        let detailViewController = DeleteTariffVC()
+        detailViewController.modalPresentationStyle = .custom
+        actionChatTransitionManager.intHeight = 0.25
+        actionChatTransitionManager.intWidth = 1
+        detailViewController.transitioningDelegate = actionChatTransitionManager
+        detailViewController.color = .white
+        detailViewController.deleteView.titleLabel.text = "Disable tariff"
+        detailViewController.deleteView.descriptionLabel.text = "Are you sure you want to disable the tariff?"
+        detailViewController.idSub = id.subscriptionPriceId
+        detailViewController.delagateReload = self
+        present(detailViewController, animated: true)
     }
 
  
@@ -67,13 +116,21 @@ class MyTariff: UIViewController,AddFrame {
         take = fitMeetApi.listChannels()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if  response.data.last != nil {
-                    
+                if  response.data.last != nil {                    
                     self.channel = response.data.last
                     self.landscapeView.tableView.reloadData()
               
                 }
         })
+    }
+    private func vibrate() {
+        if #available(iOS 10.0, *) {
+            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+            impactFeedbackgenerator.prepare()
+            impactFeedbackgenerator.impactOccurred()
+        } else {
+            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
+        }
     }
 }
 
