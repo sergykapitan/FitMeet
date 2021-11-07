@@ -28,6 +28,7 @@
 		A5950E582737D5AA002C1500 /* DeleteTariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E572737D5AA002C1500 /* DeleteTariffVCCode.swift */; };
 		A5950E5B273815CF002C1500 /* EditMonetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5A273815CF002C1500 /* EditMonetVC.swift */; };
 		A5950E5D273815DC002C1500 /* EditMonetVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */; };
+		A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5E27384EE5002C1500 /* SliderFloat.swift */; };
 		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
 		A5B635B027185C010097A127 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
@@ -266,6 +267,7 @@
 		A5950E572737D5AA002C1500 /* DeleteTariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTariffVCCode.swift; sourceTree = "<group>"; };
 		A5950E5A273815CF002C1500 /* EditMonetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVC.swift; sourceTree = "<group>"; };
 		A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVCCode.swift; sourceTree = "<group>"; };
+		A5950E5E27384EE5002C1500 /* SliderFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderFloat.swift; sourceTree = "<group>"; };
 		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
 		A5B635AE27185C010097A127 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
@@ -1353,6 +1355,7 @@
 			isa = PBXGroup;
 			children = (
 				B4E88E5826D4F216003E6B16 /* AppUtility.swift */,
+				A5950E5E27384EE5002C1500 /* SliderFloat.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1586,6 +1589,7 @@
 				B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				B4E88E5326D3E3D3003E6B16 /* SendVCCell.swift in Sources */,
+				A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */,
 				B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */,
 				B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */,
 				B470790E2705F06700921821 /* EdetBroadcast.swift in Sources */,

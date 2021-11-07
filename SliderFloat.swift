@@ -1,16 +1,20 @@
 //
-//  iLabeledSeekSlider.swift
-//  iLabeledSeekSlider
+//  SliderFloat.swift
+//  MakeStep
 //
-//  Created by Edgar Žigis on 2021-10-20.
-//  Copyright © 2021 Edgar Žigis. All rights reserved.
+//  Created by Sergey on 07.11.2021.
 //
 
+import Foundation
 import UIKit
 import AudioToolbox
 
+public enum UnitPosition {
+    case front
+    case back
+}
 @IBDesignable
-public class iLabeledSeekSlider: UIView {
+public class SliderFloat: UIView {
     
     //  MARK: - Open variables -
     
@@ -18,7 +22,7 @@ public class iLabeledSeekSlider: UIView {
      *  Lower range value also displayed in the left corner
      */
     @IBInspectable
-    open var minValue: Int = 0 {
+    open var minValue: Float = 0 {
         didSet {
             if oldValue != minValue {
                 actualXPosition = nil
@@ -33,7 +37,7 @@ public class iLabeledSeekSlider: UIView {
      *  Upper range value also displayed in the right corner
      */
     @IBInspectable
-    open var maxValue: Int = 100 {
+    open var maxValue: Float = 100 {
         didSet {
             if oldValue != maxValue {
                 actualXPosition = nil
@@ -44,12 +48,11 @@ public class iLabeledSeekSlider: UIView {
             setNeedsDisplay()
         }
     }
-    open var boolValue: Bool = true
     /**
      *  Default value which will be displayed during the initial draw
      */
     @IBInspectable
-    open var defaultValue: Int {
+    open var defaultValue: Float {
         set {
             if _defaultValue != newValue || _defaultValue != getDisplayValue() {
                 actualXPosition = nil
@@ -67,7 +70,7 @@ public class iLabeledSeekSlider: UIView {
      *  Max sliding value, must be larger than @param minValue and smaller than @param maxValue
      *  Won't be applicable if null
     */
-    open var limitValue: Int? = nil {
+    open var limitValue: Float? = nil {
         didSet {
             if oldValue != limitValue {
                 actualXPosition = nil
@@ -268,27 +271,27 @@ public class iLabeledSeekSlider: UIView {
      *  For example if min is 1, max is 5 and valuesToSkip has 3 and 4
      *  Only 1, 2 and 5 will be displayed and emitted to the user.
     */
-    open var valuesToSkip: Array<Int> = []
+    open var valuesToSkip: Array<Float> = []
     /**
      *  Sliding interval value.
      *  For example if set to 50, sliding values will be 0, 50, 100 etc.
     */
     @IBInspectable
-    open var slidingInterval: Int = 1
+    open var slidingInterval: Float = 1
     /**
      *  Callback reporting changed values upstream
     */
-    open var onValueChanged: (Int)->() = { value in }
+    open var onValueChanged: (Float)->() = { value in }
     /**
      *  Read-only parameter for fetching current slider value
     */
-    open private(set) var currentValue: Int = 50
+    open private(set) var currentValue: Float = 50
     
     //  MARK: - Private variables -
     
-    private var _defaultValue: Int = 50
+    private var _defaultValue: Float = 50
     
-    private var actualFractionalValue: Int = 50
+    private var actualFractionalValue: Float = 50
     private var actualXPosition: CGFloat? = nil
     private var lastSliderLocation: CGFloat = 0
     
@@ -447,9 +450,9 @@ public class iLabeledSeekSlider: UIView {
             tailStart = bubblePathWidth / 2 + min(sidePadding / 2 + thumbSliderRadius + 1, comparatorVar1 - comparatorVar3)
         }
         
-        context.addLine(to: CGPoint(x: horizontalOffset + round(tailStart + 8 / 2), y: bubbleHeight - bubbleStrokeWidth))
-        context.addLine(to: CGPoint(x: horizontalOffset + round(tailStart), y: bubbleHeight - bubbleStrokeWidth + 4))
-        context.addLine(to: CGPoint(x: horizontalOffset + round(tailStart - 8 / 2), y: bubbleHeight - bubbleStrokeWidth))
+        context.addLine(to: CGPoint(x: horizontalOffset + Darwin.round(tailStart + 8 / 2), y: bubbleHeight - bubbleStrokeWidth))
+        context.addLine(to: CGPoint(x: horizontalOffset + Darwin.round(tailStart), y: bubbleHeight - bubbleStrokeWidth + 4))
+        context.addLine(to: CGPoint(x: horizontalOffset + Darwin.round(tailStart - 8 / 2), y: bubbleHeight - bubbleStrokeWidth))
         
         //  Draw second 1/2 of the bubble
         
@@ -546,13 +549,8 @@ public class iLabeledSeekSlider: UIView {
     
     private func drawMaxRangeText(in rect: CGRect, context: CGContext) {
         context.saveGState()
-        var text:NSString = ""
-        if boolValue {
-             text = getUnitValue(value: maxValue)
-        } else {
-             text = "1 Year"
-        }
         
+        let text = getUnitValue(value: maxValue)
         let attributes = [
             NSAttributedString.Key.font : rangeValueTextFont,
             NSAttributedString.Key.foregroundColor : isDisabled ? disabledRegularTextColor : titleTextColor
@@ -567,28 +565,20 @@ public class iLabeledSeekSlider: UIView {
         context.restoreGState()
     }
     
-    private func getUnitValue(value: Int) -> NSString {
-        if boolValue {
-            if unitPosition == .front {
-                        return "\(unit) \(value)" as NSString
-                    }
-                    return "\(value) \(unit)" as NSString
-        } else {
-            if unitPosition == .front {
-                        return "Months \(value)" as NSString
-                    }
-                    return "\(value) Month" as NSString
+    private func getUnitValue(value: Float) -> NSString {
+        if unitPosition == .front {
+            return "\(unit) \(value)" as NSString
         }
-        
+        return "\(value) \(unit)" as NSString
     }
     
-    private func getDisplayValue() -> Int {
+    private func getDisplayValue() -> Float {
         return (actualFractionalValue / slidingInterval) * slidingInterval
     }
     
     //  MARK: - Margin methods -
     
-    private func getActiveX(in rect: CGRect, currentValue: Int) -> CGFloat {
+    private func getActiveX(in rect: CGRect, currentValue: Float) -> CGFloat {
         let slidingAreaWidth = rect.width - sidePadding - thumbSliderRadius
         let progress = CGFloat(currentValue - minValue) / CGFloat(maxValue - minValue)
         return slidingAreaWidth * progress
@@ -666,7 +656,7 @@ public class iLabeledSeekSlider: UIView {
             maxValue,
             max(
                 minValue,
-                minValue + Int(round(Double(CGFloat((maxValue - minValue)) * (relativeX / slidingAreaWidth))))
+                minValue + Float(Darwin.round(Double(CGFloat((maxValue - minValue)) * (relativeX / slidingAreaWidth))))
             )
         )
         
