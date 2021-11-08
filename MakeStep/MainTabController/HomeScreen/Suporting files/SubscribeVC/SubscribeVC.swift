@@ -48,10 +48,12 @@ class SubscribeVC: UIViewController {
     }
     
     @objc func actionPay() {
+        if subscribeView.labelTotal.text == "Total payable $ 0.0" { return } else {
         let product = iapManager.products.first
         print("Product = \(String(describing: product?.price))")
         guard  let identifier = iapManager.products.first?.productIdentifier else { return }
         iapManager.purchase(productWith: identifier)
+        }
     }
 }
 

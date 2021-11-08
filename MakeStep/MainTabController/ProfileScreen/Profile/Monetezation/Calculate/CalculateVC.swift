@@ -28,7 +28,30 @@ class CalculateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
+        print( self.view.bounds.height)
        
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+       
+    }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        if view.bounds.height <= 488 {
+                    
+                   calculateView.sliderA.anchor(height:100)
+                   calculateView.sliderB.anchor(height:100)
+                   calculateView.sliderC.anchor(height:100)
+                   calculateView.labelComision.isHidden = true
+                   view.layoutIfNeeded()
+               } else {
+                   calculateView.sliderA.anchor(height:120)
+                   calculateView.sliderB.anchor(height:120)
+                   calculateView.sliderC.anchor(height:120)
+                   calculateView.labelComision.isHidden = false
+               }
     }
     private func actionButton() {
         calculateView.sliderA.onValueChanged = { value in

@@ -139,6 +139,7 @@ final class CalculateVCCode: UIView {
         return label
     }()
    
+   
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
@@ -153,13 +154,13 @@ final class CalculateVCCode: UIView {
     private func initUI() {
         addSubview(cardView)
         cardView.fillSuperview()
-        
+    
+       
         cardView.addSubview(sliderA)
         sliderA.anchor(top: cardView.topAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,
-                       height: 120)
+                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,height: 120)
         cardView.addSubview(sliderB)
         sliderB.anchor(top: sliderA.bottomAnchor,
                        left: cardView.leftAnchor,
@@ -172,11 +173,13 @@ final class CalculateVCCode: UIView {
                        right: cardView.rightAnchor,
                        paddingTop: 20, paddingLeft: 16, paddingRight: 16,
                        height: 120)
+        
         cardView.addSubview(fourAndLine)
         fourAndLine.anchor(top: sliderC.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingTop: 10, paddingLeft: 16, paddingRight: 16 )
-        
+
         cardView.addSubview(labelTot)
         labelTot.anchor( left: cardView.leftAnchor, bottom: cardView.bottomAnchor,  paddingLeft: 16, paddingBottom: 64)
+        
         cardView.addSubview(labelTotal)
         labelTotal.anchor( right: cardView.rightAnchor,  paddingRight: 16 )
         labelTotal.centerY(inView: labelTot)

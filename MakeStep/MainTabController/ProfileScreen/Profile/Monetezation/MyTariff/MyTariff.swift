@@ -49,7 +49,12 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
     @objc func actionAddMonnet() {
         let detailViewController = AddMonetezationVC()
         detailViewController.modalPresentationStyle = .custom
-        actionChatTransitionManager.intHeight = intHeight
+        if view.bounds.height <= 488 {
+            actionChatTransitionManager.intHeight = 0.6
+        } else {
+            actionChatTransitionManager.intHeight = 0.5
+        }
+        
         actionChatTransitionManager.intWidth = 1
         detailViewController.transitioningDelegate = actionChatTransitionManager
         detailViewController.color = .white
@@ -71,7 +76,11 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = DeleteTariffVC()
         detailViewController.modalPresentationStyle = .custom
-        actionChatTransitionManager.intHeight = 0.25
+        if view.bounds.height <= 488 {
+            actionChatTransitionManager.intHeight = 0.35
+        } else {
+            actionChatTransitionManager.intHeight = 0.25
+        }
         actionChatTransitionManager.intWidth = 1
         detailViewController.transitioningDelegate = actionChatTransitionManager
         detailViewController.color = .white
@@ -85,7 +94,11 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = EditMonetVC()
         detailViewController.modalPresentationStyle = .custom
-        actionChatTransitionManager.intHeight = intHeight
+        if view.bounds.height <= 488 {
+            actionChatTransitionManager.intHeight = 0.6
+        } else {
+            actionChatTransitionManager.intHeight = 0.5
+        }
         actionChatTransitionManager.intWidth = 1
         detailViewController.transitioningDelegate = actionChatTransitionManager
         detailViewController.color = .white
@@ -99,7 +112,11 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = DeleteTariffVC()
         detailViewController.modalPresentationStyle = .custom
-        actionChatTransitionManager.intHeight = 0.25
+        if view.bounds.height <= 488 {
+            actionChatTransitionManager.intHeight = 0.35
+        } else {
+            actionChatTransitionManager.intHeight = 0.25
+        }
         actionChatTransitionManager.intWidth = 1
         detailViewController.transitioningDelegate = actionChatTransitionManager
         detailViewController.color = .white
