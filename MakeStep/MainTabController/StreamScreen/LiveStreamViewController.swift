@@ -138,7 +138,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         rtmpStream.videoSettings = [
             .width: 720,
             .height: 1280,
-            .bitrate: 1000 * 1000,
+            .bitrate: 14 * 1000,
             //.profileLevel: kVTProfileLevel_H264_Baseline_3_1,
         ]
         

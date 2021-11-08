@@ -28,31 +28,44 @@ class CalculateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
-        calculateView.sliderA.onValueChanged = { value in
-            if value == 0 || value <= 500 {
-                self.calculateView.sliderA.slidingInterval = 1
-                self.calculateView.sliderA.maxValue = 10000
-        } else  if value > 500 {
-            self.calculateView.sliderA.slidingInterval = 1000
-            self.calculateView.sliderA.maxValue = 100000
-        }
-            print("Slider value: \(value)")
-            self.valueA = Float(value)
-            self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
-        }
-        calculateView.sliderB.onValueChanged = { value in
-            print("Slider value: \(value)")
-            self.valueB = Float(value)
-            self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
-        }
-        calculateView.sliderC.onValueChanged = { value in
-            print("Slider value: \(value)")
-            self.ValueC = Float(value)
-            self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
-        }
+       
     }
     private func actionButton() {
-       
+        calculateView.sliderA.onValueChanged = { value in
+                if value == 0 || value <= 1000 {
+                       self.calculateView.sliderA.slidingInterval = 1
+                       self.calculateView.sliderA.maxValue = 5000
+               }
+               if value > 1000  {
+                   self.calculateView.sliderA.slidingInterval = 100
+                   self.calculateView.sliderA.maxValue = 10000
+               }
+               if value > 5000 {
+                   self.calculateView.sliderA.slidingInterval = 200
+                   self.calculateView.sliderA.maxValue = 20000
+               }
+               if value > 10000  {
+                   self.calculateView.sliderA.slidingInterval = 500
+                   self.calculateView.sliderA.maxValue = 50000
+               }
+              if value > 20000 {
+                   self.calculateView.sliderA.slidingInterval = 1000
+                   self.calculateView.sliderA.maxValue = 100000
+               }
+                   print("Slider value: \(value)")
+                   self.valueA = Float(value)
+                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+               }
+               calculateView.sliderB.onValueChanged = { value in
+                   print("Slider value: \(value)")
+                   self.valueB = Float(value)
+                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+               }
+               calculateView.sliderC.onValueChanged = { value in
+                   print("Slider value: \(value)")
+                   self.ValueC = Float(value)
+                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+               }
     }
     private func calculate() -> Float {
       let price = valueA * valueB * ValueC
@@ -60,7 +73,7 @@ class CalculateVC: UIViewController {
       return value
     }
     //Calucate percentage based on given values
-    private func calculatePercentage(value:Float,percentageVal:Float)->Float{
+    private func calculatePercentage(value:Float,percentageVal:Float) -> Float { 
         let val = value * percentageVal
         return val / 100.0
     }
