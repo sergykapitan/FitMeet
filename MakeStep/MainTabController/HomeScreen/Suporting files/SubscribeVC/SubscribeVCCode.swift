@@ -41,21 +41,37 @@ final class SubscribeVCCode: UIView {
         return label
     }()
    
-    var buttonSave: UIButton = {
+    var buttonProduct: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#BBBCBC")
-        button.setTitle(" Create ", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.cornerRadius = 15
+        button.backgroundColor = UIColor(hexString: "#F4F4F4")
+        button.layer.cornerRadius = 30
         return button
     }()
-    var buttonCancel: UIButton = {
+    var labelProduct: UILabel = {
+        var label = UILabel()
+        label.text = "1 Month"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        return label
+    }()
+    var labelProductPrice: UILabel = {
+        var label = UILabel()
+        label.text = "$ 5.99"
+        label.font = UIFont.boldSystemFont(ofSize: 22)
+        return label
+    }()
+    var buttonPay: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#BBBCBC")
-        button.setTitle(" Cancel ", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.cornerRadius = 15
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.setTitle(" Pay ", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        button.layer.cornerRadius = 30
         return button
+    }()
+    var labelTotal: UILabel = {
+        var label = UILabel()
+        label.font = UIFont.boldSystemFont(ofSize: 24)
+        label.text = "Total payable $ 0.0"
+        return label
     }()
 
     //MARK: - initial
@@ -87,14 +103,25 @@ final class SubscribeVCCode: UIView {
         descriptionLabel.centerX(inView: cardView)
         
         
-        cardView.addSubview(buttonCancel)
-        buttonCancel.anchor(bottom: cardView.bottomAnchor, paddingBottom: 10, width: 102, height: 30)
-        buttonCancel.centerX(inView: cardView)
+        cardView.addSubview(buttonProduct)
+        buttonProduct.anchor(top: descriptionLabel.bottomAnchor,left:cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 16,paddingLeft:16,paddingRight: 16,height: 61)
+        buttonProduct.centerX(inView: cardView)
+        
+        buttonProduct.addSubview(labelProduct)
+        labelProduct.anchor(left: buttonProduct.leftAnchor, paddingLeft: 30)
+        labelProduct.centerY(inView: buttonProduct)
+        
+        buttonProduct.addSubview(labelProductPrice)
+        labelProductPrice.anchor( right: buttonProduct.rightAnchor, paddingRight: 30)
+        labelProductPrice.centerY(inView: buttonProduct)
         
         
-        cardView.addSubview(buttonSave)
-        buttonSave.anchor(bottom: buttonCancel.topAnchor, paddingBottom: 10, width: 102, height: 30)
-        buttonSave.centerX(inView: cardView)
+        cardView.addSubview(buttonPay)
+        buttonPay.anchor(left:cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor,paddingLeft:16, paddingRight: 16, paddingBottom: 16, height: 61)
+        buttonPay.centerX(inView: cardView)
+        
+        cardView.addSubview(labelTotal)
+        labelTotal.anchor( right: cardView.rightAnchor, bottom: buttonPay.topAnchor, paddingRight: 16, paddingBottom: 16 )
         
         
     }

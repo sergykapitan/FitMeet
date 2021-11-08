@@ -14,6 +14,7 @@ class IAPManager: NSObject {
     private override init() {}
     
     var products: [SKProduct] = []
+    let paymentQueue = SKPaymentQueue.default()
     
     public func setupPurchases(callback: @escaping(Bool) -> ()) {
         if SKPaymentQueue.canMakePayments() {
@@ -34,13 +35,30 @@ class IAPManager: NSObject {
         productRequest.delegate = self
         productRequest.start()
     }
+    public func purchase(productWith identifier: String) {
+        guard let product = products.filter({ $0.productIdentifier == identifier }).first else { return }
+        let payment = SKPayment(product: product)
+        paymentQueue.add(payment)
+    }
     
 }
 
 
 extension IAPManager: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        
+        func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+            for transaction in transactions {
+                switch transaction.transactionState {
+                case .deferred: break
+                case .purchasing: break
+                case .failed: print("failed")
+                case .purchased: print("purchased")
+                case .restored: print("restored")
+                @unknown default:
+                    print("fatal eror")
+                }
+            }
+        }
     }
 }
 
