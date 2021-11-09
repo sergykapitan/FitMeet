@@ -23,8 +23,14 @@ class SocketIOManager: NSObject {
     func establishConnection(broadcastId: String,chanelId: String) {
         
         guard let token = UserDefaults.standard.string(forKey: "tokenChat") else { return }
+        
+#if QA
+ let url = "https://dev.fitliga.com"
+#elseif DEBUG
+ let url = "https://api.makestep.com"
+#endif
   
-        self.manager = SocketManager(socketURL: URL(string:"https://dev.fitliga.com")!, config: [
+        self.manager = SocketManager(socketURL: URL(string:url)!, config: [
                                                                     .log(true),
                                                                     .compress,
                                                                     .forceNew(true),

@@ -262,9 +262,15 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
               let sponsor = onlyForSponsors,
               let sub = onlyForSubscribers else { return }
         
-      
+       
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: [30,35])
+        #if QA
+         let category = [30,35]
+        #elseif DEBUG
+         let category = [3,4]
+        #endif
+        
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: category)
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {
@@ -395,8 +401,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.myuri = twoString.0
                     self.myPublish = twoString.1
                     self.url = url
-                    print(response)
-                    print("chat === \(self.authView.textFieldStartDate.text)")
+     
                     
                     if self.authView.textFieldStartDate.text == "NOW" {
                         let navVC = LiveStreamViewController()

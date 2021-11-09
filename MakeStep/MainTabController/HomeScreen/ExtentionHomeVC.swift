@@ -66,6 +66,26 @@ extension HomeVC: UITableViewDataSource {
        
         self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         
+        if listBroadcast[indexPath.row].status == "OFFLINE" {
+            cell.imageLive.setImageColor(color: .gray)
+            cell.labelLive.text = "Offline"
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.overlay.anchor( width: 75)
+        } else if listBroadcast[indexPath.row].status == "ONLINE" {
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.labelLive.text = "Live"
+            cell.imageEye.isHidden = false
+            cell.labelEye.isHidden = false
+            cell.overlay.anchor( width: 90)
+        }
+//        if self.url == nil {
+//            cell.labelLive.text = "Ofline"
+//            cell.imageLive.setImageColor(color: .gray)
+//            cell.labelEye.text = ""
+//            cell.imageEye.image = nil
+//            cell.overlay.anchor( width: 70)
+//        }
         
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -75,10 +95,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
         cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
-        
-       // print("ALLLLL === \(self.usersd[id]?.avatarPath)")
 
-        
         return cell
     }
 
@@ -113,14 +130,15 @@ extension HomeVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
      
-        let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+      //  let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.listBroadcast[indexPath.row].userId
         let follow = self.listBroadcast[indexPath.row].followersCount
    
         
     
-         
-        guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,
+         //
+        //let Url = url
+        guard let broadcastID = self.listBroadcast[indexPath.row].id,
               let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
       
        
@@ -129,7 +147,7 @@ extension HomeVC: UITableViewDelegate {
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
-        vc.Url = Url
+        vc.Url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         vc.broadcast = self.listBroadcast[indexPath.row]
         vc.follow = "\(follow)"
         vc.broadId = broadcastID
