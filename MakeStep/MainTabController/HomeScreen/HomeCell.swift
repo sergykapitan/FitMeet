@@ -113,8 +113,6 @@ final class HomeCell: UITableViewCell {
         tag.tagBackgroundColor = .clear
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
-       // tag.alignment = .center // possible values are [.leading, .trailing, .left, .center, .right]
-       // tag.minWidth = 57
         return tag
     }()
     var buttonstartStream: UIButton = {

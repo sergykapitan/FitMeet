@@ -32,6 +32,13 @@ class FitMeetChannels {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func listChannelsPrivate() -> AnyPublisher<ChannelModel, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/private?&sort=id&userId=29", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .publishDecodable(type: ChannelModel.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     
     //MARK: - MonetezationChannnel
     public func monnetChannels(id: Int,sub: NewSub) -> AnyPublisher<ChannelResponce, DifferentError> {

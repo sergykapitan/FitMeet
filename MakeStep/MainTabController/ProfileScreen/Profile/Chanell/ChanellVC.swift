@@ -129,6 +129,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
     
+   
+    
     var isButtton: Bool = false
 
 //    override  var shouldAutorotate: Bool {
@@ -254,11 +256,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         print("ViewController deinit")
     }
     func bindingChannel() {
-        takeChanell = fitMeetChannel.listChannels()
+        takeChanell = fitMeetChannel.listChannelsPrivate()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
-                    self.channel = response.data.last
+                if response != nil  {                    
+                    self.channel = response.data.first
                 }
         })
     }
@@ -418,9 +420,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         profileView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
         profileView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
-      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
-        
-        
+      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)     
 
     }
     @objc func actionTwitter() {
@@ -441,6 +441,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
     }
+
     @objc func actionOnline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")

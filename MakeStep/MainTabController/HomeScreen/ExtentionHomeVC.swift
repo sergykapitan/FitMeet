@@ -79,13 +79,7 @@ extension HomeVC: UITableViewDataSource {
             cell.labelEye.isHidden = false
             cell.overlay.anchor( width: 90)
         }
-//        if self.url == nil {
-//            cell.labelLive.text = "Ofline"
-//            cell.imageLive.setImageColor(color: .gray)
-//            cell.labelEye.text = ""
-//            cell.imageEye.image = nil
-//            cell.overlay.anchor( width: 70)
-//        }
+
         
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)

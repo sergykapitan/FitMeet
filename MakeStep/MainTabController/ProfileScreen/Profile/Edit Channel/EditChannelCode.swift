@@ -8,6 +8,8 @@
 
 import Foundation
 import UIKit
+import TagListView
+import iOSDropDown
 
 
 final class EditChannelCode: UIView {
@@ -92,8 +94,16 @@ final class EditChannelCode: UIView {
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
-    let textViewFavoriteCategories: UITextView = {
-        let tv = UITextView()
+    let textViewFavoriteCategories: DropDown = {
+        let tv = DropDown()
+        tv.layer.cornerRadius = 19
+        tv.backgroundColor = UIColor(hexString: "F9F9F9")
+        tv.attributedPlaceholder =
+            NSAttributedString(string: "Available for...", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        tv.setLeftPaddingPoints(25)
+        tv.textColor = .black
+        tv.layer.borderWidth = 1
+        tv.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         return tv
     }()
 
@@ -110,6 +120,20 @@ final class EditChannelCode: UIView {
         scroll.contentSize.height = 1000
         scroll.backgroundColor = .white
         return scroll
+    }()
+    var tagView: TagListView = {
+        let tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 18)
+        tag.cornerRadius = 15
+        tag.enableRemoveButton = true
+        tag.removeIconLineColor = .black
+        tag.removeButtonIconSize = 10
+        tag.tagBackgroundColor = UIColor(hexString: "#E5E5E5")
+        tag.textColor = .black
+        tag.paddingX = 10
+        tag.paddingY = 5
+        tag.selectedTextColor = .black
+        return tag
     }()
     
     // MARK: - Init
@@ -148,6 +172,7 @@ final class EditChannelCode: UIView {
         scroll.addSubview(textViewTwitter)
         scroll.addSubview(labelFavoriteCategories)
         scroll.addSubview(textViewFavoriteCategories)
+        scroll.addSubview(tagView)
         scroll.addSubview(buttonOK)
 
     }

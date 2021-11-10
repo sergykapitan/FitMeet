@@ -10,15 +10,18 @@ import UIKit
 import Combine
 import EasyPeasy
 import Loaf
+import TagListView
+import iOSDropDown
 
-class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate {
+class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate, TagListViewDelegate, UITextFieldDelegate {
     
     private lazy var textViewNameChannel = UITextView(frame: CGRect.zero)
     private lazy var textViewDescription = UITextView(frame: CGRect.zero)
     private lazy var textViewFacebook = UITextView(frame: CGRect.zero)
     private lazy var textViewInstagram = UITextView(frame: CGRect.zero)
     private lazy var textViewTwitter = UITextView(frame: CGRect.zero)
-    private lazy var textViewFavoriteCategories = UITextView(frame: CGRect.zero)
+    private lazy var textViewFavoriteCategories = DropDown(frame: CGRect.zero)
+    private lazy var tagView = TagListView(frame: CGRect.zero)
     
     private var isOversized = false {
             didSet {
@@ -34,7 +37,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
                 self.textViewFacebook.isScrollEnabled = isOversized
                 self.textViewInstagram.isScrollEnabled = isOversized
                 self.textViewTwitter.isScrollEnabled = isOversized
-                self.textViewFavoriteCategories.isScrollEnabled = isOversized
+             //   self.textViewFavoriteCategories.isScrollEnabled = isOversized
       
             }
         }
@@ -47,6 +50,11 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
  
     @Inject var fitMeetApi: FitMeetChannels
     var channel: ChannelResponce?
+    
+    @Inject var fitMeetStream: FitMeetStream
+    private var takeBroadcast: AnyCancellable?
+    
+    var categore: CategoryResponce?
     
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -69,9 +77,20 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         profileView.scroll.delegate = self
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
+        profileView.tagView.delegate = self
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+        textViewFavoriteCategories.isSearchEnable = false
+        var arr = ["Yoga","Fitness"]
+        profileView.tagView.addTags(arr)
+        textViewFavoriteCategories.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
+        textViewFavoriteCategories.didSelect { (ff, _, _) in
+            self.profileView.tagView.addTag(ff)
+            self.profileView.tagView.layoutSubviews()
+            self.textViewFavoriteCategories.text = ""
+            
+        }
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -81,6 +100,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         setChannel()
+        print(profileView.tagView.frame.width)
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
@@ -88,6 +108,11 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         self.navigationController?.navigationBar.layoutIfNeeded()
         
     }
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.textViewFavoriteCategories.text = ""
+    }
+
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -135,13 +160,21 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
     }
  
     func setChannel() {
+       
         self.textViewNameChannel.text = channel?.name
         self.textViewDescription.text = channel?.description
         self.textViewFacebook.text = channel?.facebookLink
         self.textViewInstagram.text = channel?.instagramLink
         self.textViewTwitter.text = channel?.twitterLink
         guard let categories = channel?.favoriteCategories else { return }
-        self.textViewFavoriteCategories.text = "\(categories)"
+        categories.forEach {bindingcategory(categoryId: $0)}
+      
+      //  arr[0].title.si
+    //    print(w)
+       
+      
+
+       // self.textViewFavoriteCategories.text = "\(categories)"
                 
     }
     func actionButtonContinue() {
@@ -150,11 +183,20 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
     }
 
     func bindingUser() {
-        take = fitMeetApi.listChannels()
+        take = fitMeetApi.listChannelsPrivate()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
-                    self.channel = response.data.last
+                if response.data.first?.name != nil  {
+                    self.channel = response.data.first
+                }
+        })
+    }
+    func bindingcategory(categoryId: Int) {
+        takeBroadcast = fitMeetStream.getCategoryId(id: categoryId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.categore = response
                 }
         })
     }
@@ -164,7 +206,9 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         channels = fitMeetApi.changeChannels(id: id, changeChannel: ChageChannel(
             name: self.textViewNameChannel.text,
             description: self.textViewDescription.text,
-            facebookLink: self.textViewFacebook.text,
+            addFavoriteCategoryIds: [29],
+           // removeFavoriteCategoryIds: [3,0],
+            facebookLink:self.textViewFacebook.text,
             instagramLink: self.textViewInstagram.text,
             twitterLink: self.textViewTwitter.text))
             .mapError({ (error) -> Error in return error })
@@ -209,6 +253,10 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
     }
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+           print("Tag Remove pressed: \(title), \(sender)")
+           sender.removeTagView(tagView)
+       }
     
     private func setUI() {
                 profileView.labelNameOfChannel.anchor(top: profileView.cardView.topAnchor,
@@ -315,12 +363,26 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
 
         self.textViewFavoriteCategories.font =  UIFont.systemFont(ofSize: 18)
         self.view.addSubview(self.textViewFavoriteCategories)
-        self.textViewFavoriteCategories.isScrollEnabled = false
+      //  self.textViewFavoriteCategories.isScrollEnabled = false
         self.textViewFavoriteCategories.easy.layout(Left(16),Right(16),Height(maxHeight).when({[unowned self] in self.isOversized}))
         self.textViewFavoriteCategories.anchor(top:profileView.labelFavoriteCategories.bottomAnchor,
                      left: profileView.cardView.leftAnchor,
-                     paddingTop: 8,paddingLeft: 16)
-        textViewFavoriteCategories.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
+                    // right: profileView.scroll.rightAnchor,
+                     paddingTop: 8,paddingLeft: 16,paddingRight: 16)
+       
+        self.textViewFavoriteCategories.layer.cornerRadius = 19
+    //    self.textViewFavoriteCategories.backgroundColor = UIColor(hexString: "F9F9F9")
+//        self.textViewFavoriteCategories.attributedPlaceholder =
+//            NSAttributedString(string: "Available for...", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        self.textViewFavoriteCategories.setLeftPaddingPoints(25)
+        self.textViewFavoriteCategories.textColor = .black
+        self.textViewFavoriteCategories.layer.borderWidth = 1
+        self.textViewFavoriteCategories.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+      //  textViewFavoriteCategories.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
+        view.addSubview(profileView.tagView)
+       
+        profileView.tagView.anchor(top:textViewFavoriteCategories.topAnchor, left: textViewFavoriteCategories.leftAnchor, right: textViewFavoriteCategories.rightAnchor, paddingTop: 5,paddingLeft: 10, paddingRight: 40)
+        profileView.tagView.centerY(inView: textViewFavoriteCategories)
         
         profileView.buttonOK.anchor(top: textViewFavoriteCategories.bottomAnchor,
                                     left: view.leftAnchor,
@@ -330,6 +392,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
         
 
     }
+    
     
     internal func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
            if(text == "\n") {

@@ -54,7 +54,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-
+        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
         bindingUser()
         let name: String?
         if user?.fullName != nil { name = user?.fullName
@@ -136,7 +136,6 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
                 if response.username != nil  {
                     self.user = response
                     self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
-                    print(self.user)
                 }
         })
     }
@@ -147,7 +146,6 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     @objc func actionChanell() {
         let channelUs = ChanellVC()
-      //  let channelUs = PresentVC()
         channelUs.user = self.user
         channelUs.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(channelUs, animated: true)
