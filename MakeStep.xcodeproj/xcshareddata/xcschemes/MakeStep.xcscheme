@@ -64,15 +64,6 @@
             ReferencedContainer = "container:MakeStep.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "B4D9D71A26257D8C007CFB71"
-            BuildableName = "FitMeet.app"
-            BlueprintName = "FitMeet"
-            ReferencedContainer = "container:FitMeet.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "OS_ACTIVITY_MODE"
