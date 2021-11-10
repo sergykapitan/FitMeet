@@ -171,7 +171,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
 
         let usr = UserRequest( fullName: self.profileView.textFieldName.text,
                                username: self.profileView.textFieldUserName.text,
-                               birthDate: self.profileView.textBirthday.text,//"1985-12-20"
+                               birthDate: self.profileView.textBirthday.text,
                                gender: self.profileView.textGender.text,
                                avatarPath: self.imageUpload?.data?.first?.filename)
         
@@ -233,6 +233,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         style.pickerMode = .date
         style.titleString = "Please Сhoose Birhday Date"
         style.returnDateFormat = .d_m_yyyy
+        style.minimumDate = "1970-01-01".getFormattedDateR(format: "yyyy-MM-dd")
         style.maximumDate = Date()
         style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
     

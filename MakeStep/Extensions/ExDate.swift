@@ -57,17 +57,21 @@ public extension String {
     }
     func getFormattedDateR(format: String) -> Date {
 
-        let isoDateFormatter = ISO8601DateFormatter()
-        isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
-        isoDateFormatter.formatOptions = [
-            .withFullDate,
-            .withFullTime,
-            .withDashSeparatorInDate,
-            .withFractionalSeconds]
+//        let isoDateFormatter = ISO8601DateFormatter()
+//        isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+//        isoDateFormatter.formatOptions = [
+//            .withFullDate,
+//            .withFullTime,
+//            .withDashSeparatorInDate,
+//            .withFractionalSeconds]
+        let dateformat = DateFormatter()
+        dateformat.dateFormat = format
+        guard let date = dateformat.date(from: self) else { return Date()}
+        return date
 
-        guard let realDate = isoDateFormatter.date(from: self) else { return Date()}
-            print("Got it: \(realDate)")
-           return  realDate
+//        guard let realDate = isoDateFormatter.date(from: self) else { return Date()}
+//            print("Got it: \(realDate)")
+//           return  realDate
         
         
     }
