@@ -25,6 +25,12 @@ final class EditProfileCode: UIView {
         return image
     }()
     
+    let imageRed: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "redProfile")
+        image.clipsToBounds = false
+        return image
+    }()
     var imageButton: UIButton = {
         let button = UIButton()
         button.imageView?.contentMode = .scaleAspectFill
@@ -251,13 +257,15 @@ final class EditProfileCode: UIView {
        
     }
     private func initLayout() {
-       // cardView.fillSuperview()
-       // cardView.fillFull(for: self)
+    
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
 
         scroll.addSubview(imageButton)
         imageButton.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
                                 paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
+        
+        scroll.addSubview(imageRed)
+        imageRed.anchor( right: imageButton.rightAnchor, bottom: imageButton.bottomAnchor, paddingRight: -5, paddingBottom: -5, width: 30, height: 30)
         
         scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(left: imageButton.rightAnchor, paddingLeft: 10)
