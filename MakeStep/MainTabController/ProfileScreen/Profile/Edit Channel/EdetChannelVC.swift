@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import Combine
 import EasyPeasy
+import Loaf
 
 class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate {
     
@@ -119,7 +120,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
        
       // write source code handle when keyboard will show
         let info = notificiation.userInfo!
-         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+        _ = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
        
         if self.textViewFavoriteCategories.isFirstResponder {
             self.profileView.scroll.contentOffset.y = 120
@@ -145,6 +146,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
     }
     func actionButtonContinue() {
         profileView.buttonOK.addTarget(self, action: #selector(changeChannel), for: .touchUpInside)
+        
     }
 
     func bindingUser() {
@@ -168,8 +170,17 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate 
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil  {
-                    self.navigationController?.popViewController(animated: true)
+                    DispatchQueue.main.async {
+                        Loaf("Saved in \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                            switch disType {
+                                     case .tapped:  self.navigationController?.popViewController(animated: true)
+                                     case .timedOut: self.navigationController?.popViewController(animated: true)
+                        }
+                    }
                 }
+            } else {
+                Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            }
         })
     }
     

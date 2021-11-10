@@ -415,10 +415,31 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
         profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
         profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        profileView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
+        profileView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
+        profileView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
       //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
         
         
 
+    }
+    @objc func actionTwitter() {
+        guard let link = self.channel?.twitterLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+    }
+    @objc func actionInstagram() {
+        guard let link = self.channel?.instagramLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+    }
+    @objc func actionFacebook() {
+        guard let link = self.channel?.facebookLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
     }
     @objc func actionOnline() {
         profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
