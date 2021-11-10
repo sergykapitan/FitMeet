@@ -28,10 +28,7 @@ import Foundation
 //    10:41:02.112                      --> HH:mm:ss.SSS
 
 public extension Date {
-  //  let date = Date()
-  //  let formate = date.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss") // Set output formate
- //  "MMM d"
-  
+
        func getFormattedDate(format: String) -> String {
             let dateformat = DateFormatter()
             dateformat.dateFormat = format
@@ -41,13 +38,9 @@ public extension Date {
 }
 
 public extension String {
-  //  let date = Date()
-  //  let formate = date.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss") // Set output formate
- //  "MMM d"
-  
+
     func getFormattedDate(format: String) -> String {
         
-       // let isoDate = "2021-08-03T13:06:52.026Z"
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         isoDateFormatter.formatOptions = [
@@ -63,8 +56,7 @@ public extension String {
         
     }
     func getFormattedDateR(format: String) -> Date {
-        
-       // let isoDate = "2021-08-03T13:06:52.026Z"
+
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
         isoDateFormatter.formatOptions = [

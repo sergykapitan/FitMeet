@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import Combine
+import Loaf
 
 class EditProfile: UIViewController, UIScrollViewDelegate {
     
@@ -41,6 +42,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
+        changeData()
         profileView.scroll.delegate = self
         self.hideKeyboardWhenTappedAround() 
         registerForKeyboardNotifications()
@@ -50,7 +52,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         profileView.textBirthday.delegate = self
         profileView.textEmail.delegate = self
         profileView.textPhoneNumber.delegate = self
-        
+
         profileView.textGender.isSearchEnable = false        
         profileView.textGender.optionArray = ["MALE", "FEMALE"]
         
@@ -130,7 +132,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
    
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-        print("token ====== \(UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults))")
         
     }
     func actionButtonContinue() {
@@ -159,11 +160,10 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     self.profileView.textFieldName.text = self.user?.fullName
                     self.profileView.textFieldUserName.text = self.user?.username
                     self.profileView.textGender.text = self.user?.gender
-                    self.profileView.textBirthday.text = self.user?.birthDate
+                    self.profileView.textBirthday.text = self.user?.birthDate?.getFormattedDate(format: "yyyy-MM-dd")
                     self.profileView.textEmail.text = self.user?.email
                     self.profileView.textPhoneNumber.text = self.user?.phone
                     self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
-                    print(response.avatarPath)
                 }
         })
     }
@@ -171,17 +171,24 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
 
         let usr = UserRequest( fullName: self.profileView.textFieldName.text,
                                username: self.profileView.textFieldUserName.text,
-                               birthDate: "1985-12-20",
+                               birthDate: self.profileView.textBirthday.text,//"1985-12-20"
                                gender: self.profileView.textGender.text,
                                avatarPath: self.imageUpload?.data?.first?.filename)
         
         putUser = fitMeetApi.putUser(user: usr)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RES === \(response)")
                 if response.username != nil  {
-                    print(self.user)
-                    self.navigationController?.popViewController(animated: true)
+                    DispatchQueue.main.async {
+                        Loaf("Saved in \(response.username!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                            switch disType {
+                                     case .tapped:  self.navigationController?.popViewController(animated: true)
+                                     case .timedOut: self.navigationController?.popViewController(animated: true)
+                        }
+                    }
+                }
+                } else {
+                    Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
                 }
         })
     }
@@ -196,7 +203,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                    let backButton = UIButton()
-                 //  backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                    backButton.anchor(width:40,height: 40)
@@ -215,8 +221,30 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
+    func changeData() {
+        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .touchDown)
+       }
+    @objc func myTargetFunction(textField: UITextField) {
+               showPicker()
+              }
+    private func showPicker() {
+        var style = DefaultStyle()
+        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
+        style.pickerMode = .date
+        style.titleString = "Please Сhoose Birhday Date"
+        style.returnDateFormat = .d_m_yyyy
+        style.maximumDate = Date()
+        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
+    
+        style.textColor = UIColor(hexString: "#3B58A4")
+        let pick:PresentedViewController = PresentedViewController()
+        pick.style = style
+        pick.block = { [weak self] (date) in
+            self?.profileView.textBirthday.text = date
+        }
+        self.present(pick, animated: true, completion: nil)
+    }
     @objc func timeHandAction() {
-        print("timeHandAction")
         let tvc = Timetable()
         navigationController?.present(tvc, animated: true, completion: nil)
         
@@ -233,20 +261,17 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
 
 extension EditProfile: UITextFieldDelegate {
     
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if textField == self.profileView.textBirthday {
+            return false
+        }
+        return true
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let fullString = (textField.text ?? "") + string
-        
-        let string = "formate"
-        //textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
-//        if textField == profileView.textFieldName {
-//        if fullString == "" {
-//            profileView.buttonSave.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-//            profileView.buttonSave.isUserInteractionEnabled = false
-//        } else {
-//            profileView.buttonSave.backgroundColor = UIColor(hexString: "0099AE")
-//            profileView.buttonSave.isUserInteractionEnabled = true
-//          }
-//        }
+
+ 
+
         return true
     }
     
@@ -287,7 +312,6 @@ extension EditProfile: UITextFieldDelegate {
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RESPONSE======\(response)")
                 if response != nil  {
                     self.imageUpload = response
                     
@@ -302,7 +326,7 @@ extension EditProfile: ImagePickerDelegate {
         
     self.profileView.imageButton.setImage(image, for: .normal)
         guard let imagee = image else { return }
-    bindingImage(image: imagee)
+        bindingImage(image: imagee)
         let imageData:Data = imagee.pngData()!
         let imageStr = imageData.base64EncodedString()
       

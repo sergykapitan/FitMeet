@@ -27,7 +27,7 @@ enum DateFormat:String{
     /** 日期格式：yyyy/MM/dd */
     case yyyy_m_d = "yyyy/MM/dd"
     /** 日期格式：dd/MM/yyyy */
-    case d_m_yyyy = "dd/MM/yyyy"
+    case d_m_yyyy = "yyyy-MM-dd"//"dd-MM-yyyy"
     /** 日期格式：MM/dd/yy */
     case m_d_yy = "MM/dd/yy"
     /** 日期格式：d-MMMM-yy */
