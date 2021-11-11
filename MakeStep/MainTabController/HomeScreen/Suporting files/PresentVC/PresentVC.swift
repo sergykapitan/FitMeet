@@ -825,9 +825,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
-        
-        homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)
-        
+        homeView.buttonChatUser.addTarget(self, action: #selector(actionUserOnline), for: .touchUpInside)        
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
@@ -997,25 +995,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           })
     }
     @objc func actionSubscribe() {
-      //  homeView.buttonSubscribe.isSelected.toggle()
         
-      //  if homeView.buttonSubscribe.isSelected {
+
             homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
             homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
             homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
             let subscribe = SubscribeVC()
         subscribe.modalPresentationStyle = .custom
+        subscribe.id = user?.id
         actionChatTransitionManager.intHeight = 0.4
         actionChatTransitionManager.intWidth = 1
         subscribe.transitioningDelegate = actionChatTransitionManager
         present(subscribe, animated: true)
-        
-
-     //   } else {
-     //       homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "FFFFFF")
-     //       homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
-      //      homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-     //   }
+  
 
     }
     @objc func actionFollow() {
@@ -1188,8 +1180,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
-        print("URL ===== \(Url)")
         guard let url = Url else { return }
+        print("URL === \(url)")
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
@@ -1197,7 +1189,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
         player.rate = 1
-      //  player.play()
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
@@ -1264,7 +1255,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         if  indexTab == 1 { return }
         playPauseButton.updateUI()
         deviceOrientationDidChange()
-        print("FrameView ===  \(self.view.frame)\n FrameCardView =========  \(self.homeView.cardView)")
+       
         if UIDevice.current.orientation.isFlat {
             print("isFlat")
         }
@@ -1332,7 +1323,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.button.setImage( #imageLiteral(resourceName: "Group1-1"), for: .normal)
 
                 },completion: nil)
-           // print
   
             isPlaying = true
             isLandscape = true
@@ -1361,16 +1351,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                         }else {
                             print("FRAME ==== \(self.view.frame.origin.y)")
                         }
-        //let gg =  self.homeView.buttonChat.anchor(bottom:self.view.bottomAnchor,paddingBottom: 20)
 
                     self.view.layoutIfNeeded()
                     })
                 transitionAnimator.startAnimation()
     } else {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-//                self.homeView.buttonChat.anchor(left:self.view.leftAnchor,
-//                                                bottom: self.view.bottomAnchor,
-//                                                 paddingLeft: 10,paddingBottom: 80,width: 80, height: 30)
                 self.homeView.labelChat.text = "Comments"
                 self.homeView.labelChat.textColor = .black
                 self.homeView.imageChat.image = #imageLiteral(resourceName: "icons8-expand-arrow-100")
@@ -1587,19 +1573,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
-       // self.button.isHidden = true
-       // self.homeView.buttonChatUser.isHidden = true
+
         if isPlaying {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
-           // homeView.buttonSetting.isHidden = true
-          //  homeView.buttonLandScape.isHidden = true
             playPauseButton.isHidden = true
             isButton = false
-          //  homeView.buttonChat.isHidden = true
             
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
@@ -1613,21 +1595,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 actionChatTransitionManager.intWidth = 0.5
                 actionChatTransitionManager.intHeight = 1
                 actionChatTransitionManager.isLandscape = isLand
-               // detailViewController.chatView.buttonChat.isHidden = true
                 detailViewController.color = .white
                 detailViewController.chatView.buttonComm.isHidden = true
                 detailViewController.chatView.buttonCloseChat.isHidden = false
                 present(detailViewController, animated: true)
-                //transitionVc(vc: detailViewController, duration: 0.5, type: .fromRight)
             } else {
                 detailViewController.isLand = false
                 actionChatTransitionManager.intWidth = 1
                 actionChatTransitionManager.intHeight = 0.7
                 actionChatTransitionManager.isLandscape = isLand
                 detailViewController.color = .white
-               // detailViewController.chatView.buttonChat.isHidden = false
                 detailViewController.chatView.buttonComm.isHidden = true
-                //detailViewController.chatView.buttonCloseChat.isHidden = true
                 present(detailViewController, animated: true)
             }
             
@@ -1668,8 +1646,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 }
             })
         }
-    
-    
+   
     
     func getMapWather(ids: [Int])  {
         watcherMap = fitMeetApi.getWatcherMap(ids: ids)

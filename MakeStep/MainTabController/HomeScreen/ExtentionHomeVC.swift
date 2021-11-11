@@ -77,7 +77,7 @@ extension HomeVC: UITableViewDataSource {
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
-            cell.overlay.anchor( width: 90)
+            cell.overlay.anchor( width: 100)
         }
 
         

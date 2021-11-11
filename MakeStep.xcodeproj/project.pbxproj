@@ -229,6 +229,10 @@
 		A51294E0273A6EB7000CBBD9 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
 		A51294E1273A6EB7000CBBD9 /* videoPlayerContainerNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */; };
 		A51294E2273A6EB7000CBBD9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4D9D72726257D8E007CFB71 /* Assets.xcassets */; };
+		A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294EA273D1C54000CBBD9 /* AppleProduct.swift */; };
+		A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294EA273D1C54000CBBD9 /* AppleProduct.swift */; };
+		A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */; };
+		A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */; };
 		A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */; };
 		A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
 		A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */; };
@@ -480,6 +484,8 @@
 		65FCBC89AF7F83FC9FA3363D /* Pods-MakeStep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MakeStep.release.xcconfig"; path = "Target Support Files/Pods-MakeStep/Pods-MakeStep.release.xcconfig"; sourceTree = "<group>"; };
 		A51294E8273A6EB7000CBBD9 /* MakeStepQA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MakeStepQA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A51294E9273A6EB8000CBBD9 /* MakeStep copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MakeStep copy-Info.plist"; path = "/Users/SERGEY/Developer/fitmeet_ios/MakeStep copy-Info.plist"; sourceTree = "<absolute>"; };
+		A51294EA273D1C54000CBBD9 /* AppleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleProduct.swift; sourceTree = "<group>"; };
+		A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateProduct.swift; sourceTree = "<group>"; };
 		A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVC.swift; sourceTree = "<group>"; };
 		A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVCode.swift; sourceTree = "<group>"; };
 		A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExMytariff.swift; sourceTree = "<group>"; };
@@ -763,6 +769,8 @@
 			isa = PBXGroup;
 			children = (
 				A54F9B8827315C4C008E7E60 /* IAPProducts.swift */,
+				A51294EA273D1C54000CBBD9 /* AppleProduct.swift */,
+				A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */,
 			);
 			path = IAPProducts;
 			sourceTree = "<group>";
@@ -1935,6 +1943,7 @@
 				A5129472273A6EB7000CBBD9 /* CalculateVC.swift in Sources */,
 				A5129473273A6EB7000CBBD9 /* UploadImage.swift in Sources */,
 				A5129474273A6EB7000CBBD9 /* CustomPresentationController.swift in Sources */,
+				A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				A5129475273A6EB7000CBBD9 /* ResetOldPassword.swift in Sources */,
 				A5129476273A6EB7000CBBD9 /* SearchVCUserCell.swift in Sources */,
 				A5129477273A6EB7000CBBD9 /* ChatVCPlayer.swift in Sources */,
@@ -2012,6 +2021,7 @@
 				A51294BF273A6EB7000CBBD9 /* ChangeChannel.swift in Sources */,
 				A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */,
 				A51294C1273A6EB7000CBBD9 /* VCControllerCode.swift in Sources */,
+				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
@@ -2155,6 +2165,7 @@
 				A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
+				A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */,
@@ -2232,6 +2243,7 @@
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
+				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,

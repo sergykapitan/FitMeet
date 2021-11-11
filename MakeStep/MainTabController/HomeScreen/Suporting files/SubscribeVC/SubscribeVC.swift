@@ -7,11 +7,22 @@
 
 import Foundation
 import UIKit
+import Combine
 
 class SubscribeVC: UIViewController {
     
     let subscribeView = SubscribeVCCode()
     let iapManager = IAPManager.shared
+    
+    @Inject var fitMeetApi: FitMeetApi
+    private var takeProduct: AnyCancellable?
+    
+    @Inject var fitMeetChannel: FitMeetChannels
+    private var take: AnyCancellable?
+    
+    var channel: ChannelResponce?
+    
+    var id: Int?
     
     override func loadView() {
         view = subscribeView
@@ -30,8 +41,9 @@ class SubscribeVC: UIViewController {
     @objc private func selectProduct() {
         subscribeView.buttonProduct.isSelected.toggle()
         if subscribeView.buttonProduct.isSelected {
-            
-        
+        guard let id = id else { return  }
+
+        bindingUser(id: id)
         subscribeView.buttonProduct.layer.borderWidth = 1
         subscribeView.buttonProduct.layer.masksToBounds = false
         subscribeView.buttonProduct.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
@@ -48,12 +60,32 @@ class SubscribeVC: UIViewController {
     }
     
     @objc func actionPay() {
+        guard let id = channel?.id else { return }
         if subscribeView.labelTotal.text == "Total payable $ 0.0" { return } else {
         let product = iapManager.products.first
-        print("Product = \(String(describing: product?.price))")
         guard  let identifier = iapManager.products.first?.productIdentifier else { return }
-        iapManager.purchase(productWith: identifier)
+            iapManager.purchase(productWith: identifier, channelId: "\(id)")
         }
     }
+    func bindingUser(id: Int) {
+        take = fitMeetChannel.listChannelsPrivate(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data.first?.name != nil  {
+                    self.channel = response.data.first
+                }
+        })
+    }
+    func bindingAppleProduct() {
+        takeProduct = fitMeetApi.getAppProduct()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data.first != nil  {
+                    print("Responce = \(response)")
+                        
+                }
+            })
+        }
+    
 }
 

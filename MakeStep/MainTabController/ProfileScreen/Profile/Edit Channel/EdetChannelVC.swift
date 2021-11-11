@@ -55,6 +55,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     private var takeBroadcast: AnyCancellable?
     
     var categore: CategoryResponce?
+    var user: Users?
     
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
@@ -95,7 +96,8 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = false
-        bindingUser()
+        guard let id = user?.id else { return }
+        bindingUser(id: id)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -169,21 +171,14 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         guard let categories = channel?.favoriteCategories else { return }
         categories.forEach {bindingcategory(categoryId: $0)}
       
-      //  arr[0].title.si
-    //    print(w)
-       
-      
-
-       // self.textViewFavoriteCategories.text = "\(categories)"
-                
     }
     func actionButtonContinue() {
         profileView.buttonOK.addTarget(self, action: #selector(changeChannel), for: .touchUpInside)
         
     }
 
-    func bindingUser() {
-        take = fitMeetApi.listChannelsPrivate()
+    func bindingUser(id: Int) {
+        take = fitMeetApi.listChannelsPrivate(idUser: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data.first?.name != nil  {

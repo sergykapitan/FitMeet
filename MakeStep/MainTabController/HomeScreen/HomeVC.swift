@@ -17,6 +17,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         if index == 0 {
             self.index = index
             if token != nil {
+                self.homeView.tableView.reloadData()
                 binding()
             } else {
                 bindingNotAuht()

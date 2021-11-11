@@ -221,4 +221,29 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    // MARK: - Apple
+    ///api/v0/appPurchase/appleProducts
+    public func getAppProduct() -> AnyPublisher<AppleProduct,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/appPurchase/appleProducts", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .response(completionHandler: { ggg in print("GGGGG====\(ggg)")   })
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: AppleProduct.self)
+            .value()
+            .print("GetAppleProduct")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+ 
+    // MARK: - Subscribe
+    public func subscribeApp(id:String,product:ValidateProduct) -> AnyPublisher<Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/subscribe", method: .put,parameters: product.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+           // .validate(statusCode: 200..<300)
+          //  .validate(contentType: ["application/json"])
+            .publishDecodable(type: Bool.self)
+            .value()
+            .print("changeChannels")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
 }

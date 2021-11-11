@@ -239,7 +239,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.layoutIfNeeded()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
-        bindingChannel()
+        guard let id = user?.id else { return }
+        bindingChannel(userId: id)
         AppUtility.lockOrientation(.portrait)
        
         
@@ -255,8 +256,9 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         offsetObservation = nil
         print("ViewController deinit")
     }
-    func bindingChannel() {
-        takeChanell = fitMeetChannel.listChannelsPrivate()
+    func bindingChannel(userId: Int?) {
+        guard let id = userId else { return }
+        takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil  {                    
@@ -386,6 +388,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         
         let vc = EdetChannelVC()
         vc.modalPresentationStyle = .fullScreen
+        vc.user = self.user
         self.navigationController?.pushViewController(vc, animated: true)
  
     }

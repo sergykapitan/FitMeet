@@ -30,6 +30,8 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+        print("Token = \(token)")
         setUserProfile()
         actionButtonContinue()
         makeNavItem()
@@ -54,7 +56,6 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
  
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
-        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
         bindingUser()
         let name: String?
         if user?.fullName != nil { name = user?.fullName
