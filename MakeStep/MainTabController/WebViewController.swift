@@ -46,8 +46,11 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate  {
             loadPage(url: webPageUrl)
         }
         self.navigationItem.hidesBackButton = true
-        let newBackButton = UIBarButtonItem(image: #imageLiteral(resourceName: "Back1"), style: .plain, target: self, action: #selector(back))
+        let newBackButton = UIBarButtonItem(image: #imageLiteral(resourceName: "backButton"), style: .plain, target: self, action: #selector(back))
         self.navigationItem.leftBarButtonItem = newBackButton
+        guard let url = url else { return }
+
+        self.navigationItem.title = self.separateURL(url: url)
         
         keyValueObservations.append(webKitView.observe(\.title, options: [.new]) { [weak self] _, change in
             guard let urlTitle = change.newValue else { return }
@@ -67,11 +70,13 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate  {
         }
     
     private func loadPage(url: URL) {
-        let urlRequest = URLRequest.init(url: url, cachePolicy:  .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30)
+        let urlRequest = URLRequest.init(url: url, cachePolicy: .reloadIgnoringLocalAndRemoteCacheData, timeoutInterval: 30)
         webKitView.load(urlRequest)
     }
     
-    
-    
-    
+    private func separateURL(url:String) -> String {
+        let items = url.components(separatedBy: "/")
+        guard let title = items.last else { return ""}
+        return title
+    }
 }

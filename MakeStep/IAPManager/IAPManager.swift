@@ -82,7 +82,19 @@ extension IAPManager: SKPaymentTransactionObserver {
         
         guard let id = channelID,let idProduct =  products.first?.productIdentifier ,let trans = transaction.transactionIdentifier else { return }
         validateProduct(id: id, product: ValidateProduct(appleProductId:idProduct , applePurchaseId: trans ))
-        
+        if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
+            FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
+
+            do {
+                let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
+                print(receiptData)
+
+                let receiptString = receiptData.base64EncodedString(options: [])
+
+                // Read receiptData
+            }
+            catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
+        }
         
         
         paymentQueue.finishTransaction(transaction)

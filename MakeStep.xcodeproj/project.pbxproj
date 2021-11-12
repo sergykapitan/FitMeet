@@ -233,6 +233,8 @@
 		A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294EA273D1C54000CBBD9 /* AppleProduct.swift */; };
 		A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */; };
 		A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */; };
+		A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294F0273E72A5000CBBD9 /* ProductResponce.swift */; };
+		A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294F0273E72A5000CBBD9 /* ProductResponce.swift */; };
 		A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */; };
 		A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
 		A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */; };
@@ -486,6 +488,7 @@
 		A51294E9273A6EB8000CBBD9 /* MakeStep copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "MakeStep copy-Info.plist"; path = "/Users/SERGEY/Developer/fitmeet_ios/MakeStep copy-Info.plist"; sourceTree = "<absolute>"; };
 		A51294EA273D1C54000CBBD9 /* AppleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleProduct.swift; sourceTree = "<group>"; };
 		A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateProduct.swift; sourceTree = "<group>"; };
+		A51294F0273E72A5000CBBD9 /* ProductResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponce.swift; sourceTree = "<group>"; };
 		A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVC.swift; sourceTree = "<group>"; };
 		A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVCode.swift; sourceTree = "<group>"; };
 		A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExMytariff.swift; sourceTree = "<group>"; };
@@ -771,6 +774,7 @@
 				A54F9B8827315C4C008E7E60 /* IAPProducts.swift */,
 				A51294EA273D1C54000CBBD9 /* AppleProduct.swift */,
 				A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */,
+				A51294F0273E72A5000CBBD9 /* ProductResponce.swift */,
 			);
 			path = IAPProducts;
 			sourceTree = "<group>";
@@ -2022,6 +2026,7 @@
 				A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */,
 				A51294C1273A6EB7000CBBD9 /* VCControllerCode.swift in Sources */,
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
+				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
@@ -2244,6 +2249,7 @@
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
+				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
