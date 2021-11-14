@@ -606,6 +606,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
     let homeView = PresentCode()
     var playerViewController: AVPlayerViewController?
+    @Inject var fitMeetChannel: FitMeetChannels
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
@@ -677,9 +678,19 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         bindingUser(id: id)
         guard let  broadId = broadId else { return }
         getMapWather(ids: [broadId])
-       // print("VIEW FRAME ==== \(view.frame)")
-       // frame = self.homeView.cardView.frame
-       
+  
+//        guard let channel = channel else { return }
+//               if channel.isSubscribe {
+//
+//                   homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+//                   homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+//                   homeView.buttonSubscribe.backgroundColor = .white //UIColor(hexString: "#DADADA")
+//               } else {
+//                   homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
+//                   homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+//                   homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+//               }
+              
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -700,6 +711,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.labelCategory.delegate = self
         homeView.labelNameBroadcast.text = broadcast.name
         loadPlayer()
+        guard let idU = user?.id else { return }
+        bindingChannel(id: idU)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -773,6 +786,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+       
+
+        
+       
         
     }
     deinit {
@@ -948,7 +965,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
-                  //  self.bindingChanellVOD(userId: userId)
                 }
            })
        }
@@ -956,13 +972,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("VOD == \(response)")
                 if response.data != nil  {
-                    //self.brodcast.removeAll()
                   response.data!.forEach{
                         self.brodcast.append($0)
                     }
-                    //= response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.brodcast = self.brodcast.reversed()
@@ -995,20 +1008,18 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           })
     }
     @objc func actionSubscribe() {
-        
-
-            homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
-            homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-            homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
-            let subscribe = SubscribeVC()
+        guard let channel = channel else { return }
+        if channel.isSubscribe {
+            
+        } else {
+        let subscribe = SubscribeVC()
         subscribe.modalPresentationStyle = .custom
         subscribe.id = user?.id
         actionChatTransitionManager.intHeight = 0.4
         actionChatTransitionManager.intWidth = 1
         subscribe.transitioningDelegate = actionChatTransitionManager
         present(subscribe, animated: true)
-  
-
+        }
     }
     @objc func actionFollow() {
         homeView.buttonFollow.isSelected.toggle()
@@ -1166,6 +1177,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
+    var channel: ChannelResponce?
     func setUserProfile(user: User) {
         
       //  homeView.welcomeLabel.text =  user.fullName
@@ -1176,12 +1188,34 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
         self.homeView.labelDescription.text = " Welcome to my channel!\n My name is \(user.fullName)"
-       
+        guard let id = user.id else { return }
+        bindingChannel(id: id)
+    }
+    
+    func bindingChannel(id: Int) {
+        take = fitMeetChannel.listChannelsPrivate(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data.first?.name != nil  {
+                    self.channel = response.data.first
+                    guard let channel = self.channel else { return }
+                    if channel.isSubscribe {
+                        
+                        self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+                        self.homeView.buttonSubscribe.backgroundColor = .white //UIColor(hexString: "#DADADA")
+                    } else {
+                        self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                    }
+                }
+           })
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = Url else { return }
-        print("URL === \(url)")
+        
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()

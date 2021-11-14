@@ -20,7 +20,7 @@ protocol AddFrame: class {
 class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelegate {
       
     let chatView = AddMonetezationCode()
-    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+   
   
     
     var color: UIColor?
@@ -30,7 +30,8 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
     private let maxHeight: CGFloat = 100
     var channelId: Int?
     var id: SubPlan?
-    
+    var product: AppleProduct?
+    let userId = UserDefaults.standard.string(forKey: Constants.userID)
     
     weak var delagateFrame: AddFrame?
     
@@ -45,7 +46,10 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         }
            
     private var take: AnyCancellable?
-    @Inject var fitMeetApi: FitMeetChannels
+    @Inject var fitMeetChannel: FitMeetChannels
+    
+    private var takeProduct: AnyCancellable?
+    @Inject var fitMeetApi: FitMeetApi
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -91,6 +95,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
         self.chatView.textFieldPrice.delegate = self
         self.chatView.textFieldPrice.isSearchEnable = false
         self.chatView.textFieldPrice.optionArray = ["5.99"]
+        bindingProduct()
 
 
         
@@ -131,14 +136,15 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
               let name = self.chatView.textViewName.text,
               let periodType = self.chatView.textFieldPeriodType.text,
               let price = self.chatView.textFieldPrice.text,
-              let description = self.chatView.textViewDescription.text else { return }
+              let description = self.chatView.textViewDescription.text,
+              let productId = product?.data.first?.id else { return }
         
         let components = periodType.components(separatedBy: " ")
         
         bindingChannel(id: channelId, sub: NewSub(newPlans: [NewPlan(price: 599,
                                                                      periodType: components[1],
                                                                      periodCount: Int(components[0]),
-                                                                     name: name,description: description )], editSubscriptionPrices: nil, disableSubscriptionPriceIds: nil))
+                                                                     name: name,description: description,appProductId: productId )], editSubscriptionPrices: nil, disableSubscriptionPriceIds: nil))
       
        
     }
@@ -154,7 +160,7 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
     }
     
     func bindingChannel(id:Int,sub:NewSub) {
-        take = fitMeetApi.monnetChannels(id: id, sub: sub)
+        take = fitMeetChannel.monnetChannels(id: id, sub: sub)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 var loafStyle = Loaf.State.info
@@ -179,9 +185,18 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
                     }
               }
         })
+        
     }
   
-    
+    func bindingProduct() {
+                takeProduct = fitMeetApi.getAppProduct()
+                    .mapError({ (error) -> Error in return error })
+                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                        self.product = response
+                  
+                })
+            }
+
   
     
     func registerForKeyboardNotifications() {

@@ -27,7 +27,7 @@ extension MyTariff : UITableViewDataSource, UITableViewDelegate {
         let arr = monetPlan[indexPath.section]
         cell.nameMonetezationLabel.text = arr.name
         cell.descriptionLabel.text = arr.description
-        guard let periodCount = arr.periodCount,let periodType = arr.periodType,let price = arr.price else { return cell}
+        guard let periodCount = arr.periodCount,let periodType = arr.periodType,let price = arr.applePrice else { return cell}
         cell.priceLabel.text = "\(periodCount)" + " " + "\(periodType)" + "/"
         let f = Float(price) / 100
         cell.priceLabelright.text = "$ \(f)"

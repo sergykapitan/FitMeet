@@ -237,12 +237,12 @@ class FitMeetApi {
  
     // MARK: - Subscribe
     public func subscribeApp(id:String,product:ValidateProduct) -> AnyPublisher< ProducctResponce, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/subscribe", method: .post,parameters: product.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stripe/applePurchases/channels/\(id)", method: .post,parameters: product.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ProducctResponce.self)
             .value()
-            .print("changeChannels")
+            .print("Subscribe")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

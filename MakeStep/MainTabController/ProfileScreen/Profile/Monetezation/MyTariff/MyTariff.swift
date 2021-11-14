@@ -13,18 +13,21 @@ import AudioToolbox
 class MyTariff: UIViewController,AddFrame, ReloadTable {
     
     func reloadTable() {
-        bindingChannel()
+        guard let userId = userId else { return }
+        bindingChannel(userId: Int(userId)!)
     }
     
     
     func addFrame() {
-        bindingChannel()
+        guard let userId = userId else { return }
+        bindingChannel(userId: Int(userId)!)
     }
     
     var intHeight = 0.5
     let landscapeView = MytariffVCCode()
     let actionChatTransitionManager = ActionTransishionChatManadger()
     var channel: ChannelResponce?
+    let userId = UserDefaults.standard.string(forKey: Constants.userID)
     
     private var take: AnyCancellable?
     @Inject var fitMeetApi: FitMeetChannels
@@ -36,7 +39,8 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
-        bindingChannel()
+        guard let userId = userId else { return }
+        bindingChannel(userId: Int(userId)!)
         createTableView()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -129,12 +133,12 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
 
  
     //MARK: - Selectors
-    func bindingChannel() {
-        take = fitMeetApi.listChannels()
+    func bindingChannel(userId: Int) {
+        take = fitMeetApi.listChannelsPrivate(idUser: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if  response.data.last != nil {                    
-                    self.channel = response.data.last
+                    self.channel = response.data.first
                     self.landscapeView.tableView.reloadData()
               
                 }

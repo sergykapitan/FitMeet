@@ -9,7 +9,12 @@ import Foundation
 import UIKit
 import Combine
 
-class SubscribeVC: UIViewController {
+class SubscribeVC: UIViewController, VeritifProduct {
+    func addPurchase() {
+        print("Add")
+        dismiss(animated: true, completion: nil)
+    }
+    
     
     let subscribeView = SubscribeVCCode()
     let iapManager = IAPManager.shared
@@ -63,6 +68,7 @@ class SubscribeVC: UIViewController {
         guard let id = channel?.id else { return }
         if subscribeView.labelTotal.text == "Total payable $ 0.0" { return } else {
         let product = iapManager.products.first
+            IAPManager.shared.delagateFrame = self
         guard  let identifier = iapManager.products.first?.productIdentifier else { return }
             iapManager.purchase(productWith: identifier, channelId: "\(id)")
         }
@@ -71,6 +77,7 @@ class SubscribeVC: UIViewController {
         take = fitMeetChannel.listChannelsPrivate(idUser: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print(response)
                 if response.data.first?.name != nil  {
                     self.channel = response.data.first
                 }
@@ -85,7 +92,6 @@ class SubscribeVC: UIViewController {
                         
                 }
             })
-        }
-    
+        }    
 }
 

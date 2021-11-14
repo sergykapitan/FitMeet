@@ -34,8 +34,11 @@ class FitMeetChannels {
            }
     public func listChannelsPrivate(idUser: Int) -> AnyPublisher<ChannelModel, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/private?&sort=id&userId=\(idUser)", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelModel.self)
                  .value()
+                 .print("listChannelprivate")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -43,8 +46,8 @@ class FitMeetChannels {
     //MARK: - MonetezationChannnel
     public func monnetChannels(id: Int,sub: NewSub) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/monetization", method: .post,parameters: sub.asDictionary(),encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
                  .print("MonnetChanell")
@@ -53,8 +56,8 @@ class FitMeetChannels {
            }
     public func delMonnetChannels(id: Int,tarifId: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/monetization", method: .post,parameters: tarifId.asDictionary(),encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+                .validate(statusCode: 200..<300)
+                .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
                  .print("DelMonnetChanell")
@@ -127,8 +130,8 @@ class FitMeetChannels {
     //MARK: - Change Channels
     public func changeChannels(id: Int,changeChannel: ChageChannel) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)", method: .put,parameters: changeChannel.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            //.validate(statusCode: 200..<300)
-           // .validate(contentType: ["application/json"])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
             .print("changeChannels")

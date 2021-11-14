@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Welcome8
 struct ChannelResponce: Codable,Hashable,Identifiable{
-    let statusCode: Int? 
+    let statusCode: Int?
     let message: String?
     let error: String?
     let createdAt: String?
@@ -27,6 +27,8 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let activeBroadcast: ActivBroadCast?
     let favoriteCategories: [Int]?
     let subscriptionPlans: [SubPlan]?
+    let isSubscribe: Bool
+  //  let subscriptionPlan: [PurpleSubscriptionPlan]
 }
 struct SubPlan: Codable,Hashable {
     let subscriptionPriceId: Int?
@@ -35,6 +37,7 @@ struct SubPlan: Codable,Hashable {
     let periodCount: Int?
     let name : String?
     let description: String?
+    let applePrice: Int?
 }
 struct ActivBroadCast: Codable,Hashable,Identifiable {
     let createdAt: String?
@@ -80,4 +83,12 @@ struct NewPlan: Codable {
     let periodCount: Int?
     let name: String?
     let description: String?
+    let appProductId: Int?
 }
+//struct PurpleSubscriptionPlan: Codable{
+//    let createdAt, deleted: String?
+//    let channelId, userId: Int?
+//    let endDate: String?
+//    let autoProlongation: Bool?
+//
+//}

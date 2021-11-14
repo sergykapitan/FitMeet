@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A5129401273A6EB7000CBBD9"
-               BuildableName = "MakeStep copy.app"
+               BuildableName = "MakeStepQA.app"
                BlueprintName = "MakeStepQA"
                ReferencedContainer = "container:MakeStep.xcodeproj">
             </BuildableReference>
@@ -62,7 +62,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A5129401273A6EB7000CBBD9"
-            BuildableName = "MakeStep copy.app"
+            BuildableName = "MakeStepQA.app"
             BlueprintName = "MakeStepQA"
             ReferencedContainer = "container:MakeStep.xcodeproj">
          </BuildableReference>

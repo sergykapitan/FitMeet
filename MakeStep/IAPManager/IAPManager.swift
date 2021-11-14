@@ -9,6 +9,11 @@ import Foundation
 import StoreKit
 import Combine
 
+protocol VeritifProduct: class {
+   func addPurchase()
+}
+
+
 class IAPManager: NSObject {
     
     static let shared = IAPManager()
@@ -16,6 +21,8 @@ class IAPManager: NSObject {
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeProduct: AnyCancellable?
+    
+    weak var delagateFrame: VeritifProduct?
     
     var channelID: String?
     
@@ -81,23 +88,21 @@ extension IAPManager: SKPaymentTransactionObserver {
     private func completed(transaction: SKPaymentTransaction) {
         
         guard let id = channelID,let idProduct =  products.first?.productIdentifier ,let trans = transaction.transactionIdentifier else { return }
-        validateProduct(id: id, product: ValidateProduct(appleProductId:idProduct , applePurchaseId: trans ))
+        
         if let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
             FileManager.default.fileExists(atPath: appStoreReceiptURL.path) {
 
             do {
                 let receiptData = try Data(contentsOf: appStoreReceiptURL, options: .alwaysMapped)
-                print(receiptData)
-
                 let receiptString = receiptData.base64EncodedString(options: [])
-
-                // Read receiptData
+                validateProduct(id: id, product: ValidateProduct(appleProductId:idProduct , applePurchaseId: receiptString))
+                paymentQueue.finishTransaction(transaction)
             }
             catch { print("Couldn't read receipt data with error: " + error.localizedDescription) }
         }
         
         
-        paymentQueue.finishTransaction(transaction)
+       
     }
     
     private func restored(transaction: SKPaymentTransaction) {
@@ -107,9 +112,9 @@ extension IAPManager: SKPaymentTransactionObserver {
         takeProduct = fitMeetApi.subscribeApp(id: id, product: product)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil {
-                    
-                }
+                if response.verified ?? false  {
+                    self.delagateFrame?.addPurchase()
+            }
         })
     }
 }

@@ -217,10 +217,11 @@ final class PresentCode: UIView {
     }()
     var buttonSubscribe: UIButton = {
         var button = UIButton()
-        button.setTitle("Subscribers", for: .normal)
-        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = .white //UIColor(hexString: "#DADADA")
+      //  button.setTitle("Subscribers", for: .normal)
+      //  button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+       // button.backgroundColor = .white //UIColor(hexString: "#DADADA")
+        
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)       
         button.layer.borderWidth = 1
         button.layer.masksToBounds = false
         button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
