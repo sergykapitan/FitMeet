@@ -35,7 +35,7 @@ struct BroadcastResponce:Codable {
     let followersCount: Int?
     let channelIds: [Int]?
     let isFollow: Bool?
-    let isSubscriber: Bool
+    let isSubscriber: Bool?
     
   
 }

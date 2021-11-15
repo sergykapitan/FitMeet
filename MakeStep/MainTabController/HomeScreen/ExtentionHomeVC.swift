@@ -130,7 +130,7 @@ extension HomeVC: UITableViewDelegate {
      
       //  let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.listBroadcast[indexPath.row].userId
-        let follow = self.listBroadcast[indexPath.row].followersCount
+       // let follow = self.listBroadcast[indexPath.row].followersCount
    
         
     
@@ -145,10 +145,10 @@ extension HomeVC: UITableViewDelegate {
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
-        vc.Url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        vc.broadcast = self.listBroadcast[indexPath.row]
-        vc.follow = "\(follow)"
-        vc.broadId = broadcastID
+      //  vc.Url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+      //  vc.broadcast = self.listBroadcast[indexPath.row]
+      //  vc.follow = "\(follow)"
+      //  vc.broadId = broadcastID
         navigationController?.pushViewController(vc, animated: true)
 
     }

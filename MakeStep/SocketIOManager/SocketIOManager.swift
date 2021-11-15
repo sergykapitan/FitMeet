@@ -115,6 +115,7 @@ class SocketIOManager: NSObject {
                      "messageType": "TEXT_MESSAGE",
                      "targetUserId": nil,
                      "targetMessageId": nil] as [String : Any?]
+        guard let socket = socket else { return }
         socket.emit("message", dict)
 
     }
@@ -124,19 +125,11 @@ class SocketIOManager: NSObject {
         guard let socket = socket else { return }
         socket.on("message") { (dataArray, socketAck) -> Void in
             
-            print("CHAT ===\(dataArray)")
-            
             var messageDictionary = [String: String]()
-            
-
             let dict = dataArray[0] as? [String: Any]
-            
             let user = dict!["user"] as? [String: Any]
-            
             let message = dict!["payload"] as? [String: Any]
-            
             let text = message!["message"] as? [String: Any]
-            print(user)
             
             
             messageDictionary["username"] = user!["fullName"] as! String
@@ -167,6 +160,7 @@ class SocketIOManager: NSObject {
     }
     
     func sendStartTypingMessage(nickname: String) {
+        guard let socket = socket else { return }
         socket.emit("connectUser", nickname)
     }
     

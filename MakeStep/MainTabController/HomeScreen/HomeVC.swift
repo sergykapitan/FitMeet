@@ -53,6 +53,9 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
+    @Inject var fitMeetChannel: FitMeetChannels
+    private var takeChannel: AnyCancellable?
+    
     
     
     @Inject var fitMeetApi: FitMeetApi
@@ -257,8 +260,11 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         followBroad = fitMeetStream.getBroadcastSubscription()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                self.listBroadcast.removeAll()
+                self.homeView.tableView.reloadData()
                 if response.data != nil {
-                    self.listBroadcast = response.data!.filter{ $0.isSubscriber}
+                   
+                    self.listBroadcast = response.data!.filter{ $0.isSubscriber ?? true}
                     let arrayUserId = self.listBroadcast.map{$0.id!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()

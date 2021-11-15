@@ -86,14 +86,16 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        searchController.isActive = true
        setupSearchBar()
-      //  self.searchController.searchBar.isTranslucent = false
+      
        
         
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
+        searchController.isActive = true
         sizeSearchBar = self.navigationItem.searchController?.searchBar.frame.height
         searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
 
@@ -168,8 +170,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     let arrayBroadcast = response.data?.filter{ $0.status == "ONLINE"}
-                  //  self.broadcast = []
-                    print("Broad ==== \(response.data)")
                     self.broadcast = response.data?.first
                 }
          })
@@ -179,6 +179,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.isActive = false
         self.searchController.searchBar.isTranslucent = false
     }
     private func setupMainView() {        

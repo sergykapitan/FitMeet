@@ -830,11 +830,31 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
+        homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
+        homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
+        homeView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
       
         
 
     }
- 
+    @objc func actionTwitter() {
+        guard let link = self.channel?.twitterLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+    }
+    @objc func actionInstagram() {
+        guard let link = self.channel?.instagramLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+    }
+    @objc func actionFacebook() {
+        guard let link = self.channel?.facebookLink else { return }
+        if let url = URL(string: link) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                }
+    }
 
 
     @objc func actionOnline() {
@@ -943,8 +963,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                self.brodcast.removeAll()
                 if response.data != nil  {
-                    self.brodcast.removeAll()
+                    
+                    self.homeView.tableView.reloadData()
                     self.brodcast = response.data!
                     guard let broadcast = self.brodcast.first else { return }
                     self.broadcast = broadcast
@@ -957,6 +979,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.labelNameBroadcast.text = self.broadcast?.name
                     self.Url = self.broadcast?.streams?.first?.hlsPlaylistUrl
                     self.loadPlayer()
+                    SocketIOManager.sharedInstance.getTokenChat()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
@@ -968,6 +991,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.brodcast.removeAll()
                   response.data!.forEach{
                         self.brodcast.append($0)
                     }
@@ -1060,6 +1084,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         guard let userId = user?.id else { return }
        
         bindingChanellVOD(userId: "\(userId)")
+       // bindingChanell(status: "PLANNED", userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1077,7 +1102,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
         indexTab = 2
-        guard let userId = user?.id else { return }
+        guard let userId = id else { return }
         self.mmPlayerLayer.invalidate()
         bindingChanell(status: "PLANNED", userId: "\(userId)")
         
@@ -1103,10 +1128,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
-            playPauseButton.isHidden = true
+            
             homeView.buttonChat.isHidden = true
             homeView.buttonChatUser.isHidden = true
             button.isHidden = true
+            if playPauseButton == nil {
+                
+            } else {
+                playPauseButton.isHidden = true
+            }
+           
+            
             isButton = false
         } else {
    
@@ -1125,7 +1157,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.imageEye.isHidden = false
             homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
-            playPauseButton.isHidden = false
+            if playPauseButton == nil {
+                
+            } else {
+                playPauseButton.isHidden = false
+            }
+           
             isButton = true
         }
 
@@ -1286,6 +1323,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
         if  indexTab == 1 { return }
+        guard let url = Url else { return }
         playPauseButton.updateUI()
         deviceOrientationDidChange()
        
