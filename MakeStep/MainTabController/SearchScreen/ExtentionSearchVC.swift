@@ -132,33 +132,30 @@ extension SearchVC: UITableViewDelegate {
                 self.getBroadcast(userId: "\(ids)")
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                    guard let broadcastt = self.broadcast else { return }
-                    let url = broadcastt.streams?.first?.hlsPlaylistUrl
-                    let id = broadcastt.userId
-                    let follow = broadcastt.followersCount
+                  //  guard let broadcastt = self.broadcast else { return }
+                  //  let url = broadcastt.streams?.first?.hlsPlaylistUrl
+                   // let id = broadcastt.userId
+                  //  let follow = broadcastt.followersCount
                           
 
-                    guard let broadcastID = broadcastt.id,
-                          let channelId = broadcastt.channelIds else { return }
+                  //  guard let broadcastID = broadcastt.id,
+                   //       let channelId = broadcastt.channelIds else { return }
                              
                               
                                
-                               self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+                              // self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
                                let vc = PresentVC()
                                vc.modalPresentationStyle = .fullScreen
                                vc.id = ids//self.listUser[indexPath.row].id
-                               vc.Url = url
-                               vc.broadcast = self.listBroadcast[indexPath.row]
-                               vc.follow = "\(follow)"
-                               vc.broadId = broadcastID
+                             //  vc.Url = url
+                           //    vc.broadcast = self.listBroadcast[indexPath.row]
+                           //    vc.follow = "\(follow)"
+                           //    vc.broadId = broadcastID
                    self.navigationController?.pushViewController(vc, animated: true)
 
                }
-            }
-
-         
+            }         
         } else if index == 2 {
-            //url = ""
             let detailVC = CategoryBroadcast()
             detailVC.categoryid = listCategory[indexPath.row].id
             detailVC.categoryTitle = listCategory[indexPath.row].title

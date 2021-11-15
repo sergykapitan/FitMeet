@@ -254,11 +254,11 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     
     func onlyFollowBroadcast(follow: Bool) {
-        followBroad = fitMeetStream.getListFollowBroadcast(status: "ONLINE", follow: true)
+        followBroad = fitMeetStream.getBroadcastSubscription()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil {
-                    self.listBroadcast = response.data!
+                    self.listBroadcast = response.data!.filter{ $0.isSubscriber}
                     let arrayUserId = self.listBroadcast.map{$0.id!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()

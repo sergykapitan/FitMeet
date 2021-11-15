@@ -71,13 +71,15 @@ extension HomeVC: UITableViewDataSource {
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
-            cell.overlay.anchor( width: 75)
+      
+            
+             
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
-            cell.overlay.anchor( width: 100)
+
         }
 
         
@@ -92,6 +94,7 @@ extension HomeVC: UITableViewDataSource {
 
         return cell
     }
+
 
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
         if sender.currentImage == UIImage(named: "LikeNot") {
@@ -117,6 +120,7 @@ extension HomeVC: UITableViewDataSource {
     
 }
 extension HomeVC: UITableViewDelegate {
+    
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 330

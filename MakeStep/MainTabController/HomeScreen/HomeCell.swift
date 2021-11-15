@@ -167,9 +167,6 @@ final class HomeCell: UITableViewCell {
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         
-//        bottomView.addSubview(labelCategory)
-//        labelCategory.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
-        
         contentView.addSubview(tagView)
         tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
         

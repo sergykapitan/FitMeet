@@ -1012,13 +1012,20 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         if channel.isSubscribe {
             
         } else {
-        let subscribe = SubscribeVC()
-        subscribe.modalPresentationStyle = .custom
-        subscribe.id = user?.id
-        actionChatTransitionManager.intHeight = 0.4
-        actionChatTransitionManager.intWidth = 1
-        subscribe.transitioningDelegate = actionChatTransitionManager
-        present(subscribe, animated: true)
+            guard let subPlans = channel.subscriptionPlans else { return }
+            if subPlans.isEmpty {
+                
+            } else {
+                
+                let subscribe = SubscribeVC()
+                       subscribe.modalPresentationStyle = .custom
+                       subscribe.id = user?.id
+                       actionChatTransitionManager.intHeight = 0.4
+                       actionChatTransitionManager.intWidth = 1
+                       subscribe.transitioningDelegate = actionChatTransitionManager
+                       present(subscribe, animated: true)
+            }
+       
         }
     }
     @objc func actionFollow() {

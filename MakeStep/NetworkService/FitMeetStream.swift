@@ -40,8 +40,8 @@ class FitMeetStream {
            }
     public func getListFollowBroadcast(status:String,follow: Bool) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=\(status)&isFollow=\(follow)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                // .validate(statusCode: 200..<300)
-                // .validate(contentType: ["application/json"])
+                  .validate(statusCode: 200..<300)
+                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
                  .print("getListBroadcast")
@@ -134,7 +134,7 @@ class FitMeetStream {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                // .print("getRecomandateBroadcast")
+                 .print("getRecomandateBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
