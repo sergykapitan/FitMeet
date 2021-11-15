@@ -119,17 +119,16 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     
     // MARK: - Metods
     func binding(name: String) {
-        takeBroadcast = fitMeetStream.getAllBroadcast(name: name)
+        takeBroadcast = fitMeetStream.getAllBroadcastPrivate(name: name)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                  
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = self.listBroadcast
                     self.searchView.tableView.reloadData()
                  
                 }
-             })
+          })
     }
     func getUsers(name: String) {
         takeUser = fitMeetStream.getListUser(name: name)
@@ -140,7 +139,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                     self.searchView.tableView.reloadData()
                    
                 }
-             })
+          })
     }
     func getChanell(id: Int) {
         takeChannel = makeStepChannel.getChannelsId(id: id)

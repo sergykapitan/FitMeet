@@ -670,27 +670,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         super.viewDidAppear(true)
        
         homeView.buttonChatUser.isHidden = true
-        
-        
         homeView.imageLogoProfile.makeRounded()
-        guard let id = id ,let _ = follow else { return }
-        
+        guard let id = id  else { return }
         bindingUser(id: id)
         guard let  broadId = broadId else { return }
         getMapWather(ids: [broadId])
-  
-//        guard let channel = channel else { return }
-//               if channel.isSubscribe {
-//
-//                   homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
-//                   homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-//                   homeView.buttonSubscribe.backgroundColor = .white //UIColor(hexString: "#DADADA")
-//               } else {
-//                   homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
-//                   homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-//                   homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
-//               }
-              
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -962,6 +946,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 if response.data != nil  {
                     self.brodcast.removeAll()
                     self.brodcast = response.data!
+                    guard let broadcast = self.brodcast.first else { return }
+                    self.broadcast = broadcast
+                    self.homeView.labelStreamDescription.text = self.broadcast?.description
+                    let categorys = self.broadcast?.categories
+                    let s = categorys!.map{$0.title!}
+                    let arr = s.map { String("\u{0023}" + $0)}
+                    self.homeView.labelCategory.addTags(arr)
+                    self.homeView.labelCategory.delegate = self
+                    self.homeView.labelNameBroadcast.text = self.broadcast?.name
+                    self.Url = self.broadcast?.streams?.first?.hlsPlaylistUrl
+                    self.loadPlayer()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
@@ -1064,9 +1059,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         indexTab = 1
         guard let userId = user?.id else { return }
        
-      //  bindingChanell(status: "OFFLINE", userId: "\(userId)")
         bindingChanellVOD(userId: "\(userId)")
-       // bindingChanellMulti(userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1116,8 +1109,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             button.isHidden = true
             isButton = false
         } else {
-          //  button.isHidden = false
-           // homeView.buttonChat.isHidden = false
+   
             homeView.buttonChatUser.isHidden = false
             if isLand {
                 self.button.isHidden = false
@@ -1684,6 +1676,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 if response.username != nil  {
                         self.user = response
                         self.setUserProfile(user: self.user!)
+                    guard let id = self.user?.id else { return }
+                    self.bindingChanell(status: "ONLINE", userId: "\(id)")
                 }
             })
         }

@@ -177,7 +177,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
         })
     }
-    //20//6 cha
+   
     func bindingNotAuht() {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
