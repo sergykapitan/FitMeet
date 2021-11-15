@@ -56,7 +56,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     
     var categore: CategoryResponce?
     var user: Users?
-    
+    var listBroadcast: [Datum] = []
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -85,7 +85,10 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         textViewFavoriteCategories.isSearchEnable = false
         var arr = ["Yoga","Fitness"]
         profileView.tagView.addTags(arr)
-        textViewFavoriteCategories.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
+        
+        
+        
+       
         textViewFavoriteCategories.didSelect { (ff, _, _) in
             self.profileView.tagView.addTag(ff)
             self.profileView.tagView.layoutSubviews()
@@ -98,16 +101,21 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         self.navigationController?.navigationBar.isHidden = false
         guard let id = user?.id else { return }
         bindingUser(id: id)
+        binding()
+      
+
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         setChannel()
-        print(profileView.tagView.frame.width)
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        
+        let list = listBroadcast.flatMap{$0.title}
+        textViewFavoriteCategories.optionArray = list
         
     }
     override func viewWillLayoutSubviews() {
@@ -142,6 +150,15 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: nil)
   }
+    func binding() {
+        takeBroadcast = fitMeetStream.getCategoryPrivate()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast = response.data!
+                }
+        })
+    }
 
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
