@@ -29,7 +29,13 @@ extension State {
 }
 
 
-class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate, TagListViewDelegate{
+class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegate, ClassBVCDelegate, ClassUserDelegate, CustomSegmentedFullControlDelegate, TagListViewDelegate, VeritiPurchase{
+    
+    func addPurchase() {
+        guard let userId = user?.id else { return }
+        self.bindingChannel(id: userId)
+    }
+    
     
     
     
@@ -72,7 +78,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private var centerbuttonSubscribeConstant = NSLayoutConstraint()
     
     private var bottomButtonChatConstant = NSLayoutConstraint()
-    
+    private var heightViewTop = NSLayoutConstraint()
  
     
     
@@ -110,7 +116,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = homeView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
         bottomConstraint.isActive = true
-        homeView.viewTop.heightAnchor.constraint(equalToConstant: 450).isActive = true
+        heightViewTop = homeView.viewTop.heightAnchor.constraint(equalToConstant: 450)
+        heightViewTop.isActive = true
 
         homeView.labelFollow.bottomAnchor.constraint(equalTo: homeView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
         homeView.labelFollow.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
@@ -312,7 +319,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerbuttonSubscribeConstant.isActive = false
                 self.topbuttonSubscribeConstant.isActive = true
                 self.leftbuttonSubscribeConstant.isActive = true
-
+                self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
                    self.bottomConstraint.constant = -100
@@ -334,7 +341,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
-                
+                self.heightViewTop.constant = 450
                 self.bottomConstraint.constant = self.popupOffset
                    self.heightConstant.constant = 70
                    self.widthConstant.constant = 70
@@ -384,6 +391,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
                    self.bottomConstraint.constant = -100
+                   self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
                    self.centerConstant.isActive = true
                    self.topConstraint.isActive = true
                    self.leftConstant.isActive = false
@@ -407,6 +415,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.bottomConstraint.constant = self.popupOffset
                    self.heightConstant.constant = 70
                    self.widthConstant.constant = 70
+                   self.heightViewTop.constant = 450
                    self.topConstraint.isActive = false
                    self.centerConstant.isActive = false
                    self.leftConstant.isActive = true
@@ -975,6 +984,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                         let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
                         self.homeView.imageBack.kf.setImage(with: url)
                         return }
+                    self.homeView.labelINTVideo.text = "\(self.brodcast.count)"
                     self.broadcast = broadcast
                     self.homeView.labelStreamDescription.text = self.broadcast?.description
                     let categorys = self.broadcast?.categories
@@ -1001,6 +1011,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                   response.data!.forEach{
                         self.brodcast.append($0)
                     }
+                  
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.brodcast = self.brodcast.reversed()
@@ -1045,6 +1056,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 let subscribe = SubscribeVC()
                        subscribe.modalPresentationStyle = .custom
                        subscribe.id = user?.id
+                       subscribe.delagatePurchase = self
                        actionChatTransitionManager.intHeight = 0.4
                        actionChatTransitionManager.intWidth = 1
                        subscribe.transitioningDelegate = actionChatTransitionManager
@@ -1090,7 +1102,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         guard let userId = user?.id else { return }
        
         bindingChanellVOD(userId: "\(userId)")
-       // bindingChanell(status: "PLANNED", userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1229,7 +1240,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.homeView.welcomeLabel.text = user.fullName
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
-        self.homeView.labelDescription.text = " Welcome to my channel!\n My name is \(user.fullName)"
         guard let id = user.id else { return }
         bindingChannel(id: id)
     }
@@ -1240,12 +1250,17 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data.first?.name != nil  {
                     self.channel = response.data.first
-                    guard let channel = self.channel else { return }
+                    guard let channel = self.channel,let description = channel.description else { return }
+                    self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
+                   
+                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
+                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                    
                     if channel.isSubscribe! {
                         
                         self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-                        self.homeView.buttonSubscribe.backgroundColor = .white //UIColor(hexString: "#DADADA")
+                        self.homeView.buttonSubscribe.backgroundColor = .white
                     } else {
                         self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)

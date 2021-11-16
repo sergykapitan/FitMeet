@@ -59,6 +59,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     var user: Users?
     var listCategory: [Datum] = []
     var IdCategory = [Int]()
+    var removeIdCategory = [Int]()
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -225,7 +226,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
             name: self.textViewNameChannel.text,
             description: self.textViewDescription.text,
             addFavoriteCategoryIds: self.IdCategory,
-           // removeFavoriteCategoryIds: [3,0],
+           // removeFavoriteCategoryIds: self.removeIdCategory,
             facebookLink:self.textViewFacebook.text,
             instagramLink: self.textViewInstagram.text,
             twitterLink: self.textViewTwitter.text))
@@ -274,6 +275,9 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            print("Tag Remove pressed: \(title), \(sender)")
            sender.removeTagView(tagView)
+        let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
+        print(p)
+        self.removeIdCategory.append(contentsOf: p)
        }
     
     private func setUI() {

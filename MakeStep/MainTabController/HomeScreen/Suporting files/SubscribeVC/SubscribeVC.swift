@@ -9,10 +9,17 @@ import Foundation
 import UIKit
 import Combine
 
+protocol VeritiPurchase: class {
+   func addPurchase()
+}
+
 class SubscribeVC: UIViewController, VeritifProduct {
+    
     func addPurchase() {
         print("Add")
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.delagatePurchase?.addPurchase()
+        }
     }
     
     
@@ -26,7 +33,7 @@ class SubscribeVC: UIViewController, VeritifProduct {
     private var take: AnyCancellable?
     
     var channel: ChannelResponce?
-    
+    weak var delagatePurchase: VeritiPurchase?
     var id: Int?
     
     override func loadView() {
@@ -38,6 +45,7 @@ class SubscribeVC: UIViewController, VeritifProduct {
         actionButton()
       
     }
+    
     private func actionButton() {
         subscribeView.buttonProduct.addTarget(self, action: #selector(selectProduct), for: .touchUpInside)
         subscribeView.buttonPay.addTarget(self, action: #selector(actionPay), for: .touchUpInside)

@@ -140,8 +140,8 @@ class FitMeetChannels {
     //MARK: - Change Channels
     public func changeChannels(id: Int,changeChannel: ChageChannel) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)", method: .put,parameters: changeChannel.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+           // .validate(statusCode: 200..<300)
+           // .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
             .print("changeChannels")
