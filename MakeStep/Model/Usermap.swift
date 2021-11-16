@@ -11,5 +11,7 @@ import Foundation
 struct UploadMapUser: Codable {
     let data: [Int: User]
 }
-
+struct UploadMapCategores: Codable {
+    let data: [Int: Datum]
+}
 

@@ -1028,7 +1028,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     @objc func actionSubscribe() {
         guard let channel = channel else { return }
-        if channel.isSubscribe {
+        if channel.isSubscribe! {
             
         } else {
             guard let subPlans = channel.subscriptionPlans else { return }
@@ -1235,7 +1235,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 if response.data.first?.name != nil  {
                     self.channel = response.data.first
                     guard let channel = self.channel else { return }
-                    if channel.isSubscribe {
+                    if channel.isSubscribe! {
                         
                         self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
@@ -1250,7 +1250,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
-        guard let url = Url else { return }
+        guard let url = Url else {
+            
+            return }
         
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)

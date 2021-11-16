@@ -27,7 +27,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let activeBroadcast: ActivBroadCast?
     let favoriteCategories: [Int]?
     let subscriptionPlans: [SubPlan]?
-    let isSubscribe: Bool
+    let isSubscribe: Bool?
   //  let subscriptionPlan: [PurpleSubscriptionPlan]
 }
 struct SubPlan: Codable,Hashable {

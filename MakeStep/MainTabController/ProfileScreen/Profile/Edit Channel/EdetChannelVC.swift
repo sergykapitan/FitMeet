@@ -54,9 +54,11 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     
-    var categore: CategoryResponce?
+    var categore: [Datum] = []
+    var arrayCategory: [CategoryResponce] = []
     var user: Users?
-    var listBroadcast: [Datum] = []
+    var listCategory: [Datum] = []
+    var IdCategory = [Int]()
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -83,19 +85,18 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
         textViewFavoriteCategories.isSearchEnable = false
-        var arr = ["Yoga","Fitness"]
-        profileView.tagView.addTags(arr)
-        
-        
-        
+
        
         textViewFavoriteCategories.didSelect { (ff, _, _) in
             self.profileView.tagView.addTag(ff)
+            let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+            self.IdCategory.append(contentsOf: p)
             self.profileView.tagView.layoutSubviews()
             self.textViewFavoriteCategories.text = ""
             
         }
     }
+   
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = false
@@ -114,8 +115,9 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         
-        let list = listBroadcast.flatMap{$0.title}
+        let list = listCategory.compactMap{$0.title}
         textViewFavoriteCategories.optionArray = list
+       
         
     }
     override func viewWillLayoutSubviews() {
@@ -155,7 +157,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listBroadcast = response.data!
+                    self.listCategory = response.data!
                 }
         })
     }
@@ -186,7 +188,9 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         self.textViewInstagram.text = channel?.instagramLink
         self.textViewTwitter.text = channel?.twitterLink
         guard let categories = channel?.favoriteCategories else { return }
-        categories.forEach {bindingcategory(categoryId: $0)}
+        self.IdCategory = categories
+        self.bindingMapCategory(categoryId: categories)
+  
       
     }
     func actionButtonContinue() {
@@ -203,13 +207,15 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
                 }
         })
     }
-    func bindingcategory(categoryId: Int) {
-        takeBroadcast = fitMeetStream.getCategoryId(id: categoryId)
+
+    func bindingMapCategory(categoryId: [Int]) {
+        takeBroadcast = fitMeetStream.getCategoryIdS(ids: categoryId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.categore = response
-                }
+                self.categore = response.data.compactMap{$0.value}
+                self.profileView.tagView.addTags(self.categore.compactMap{$0.title})
+                
+               
         })
     }
     @objc func changeChannel() {
@@ -218,7 +224,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         channels = fitMeetApi.changeChannels(id: id, changeChannel: ChageChannel(
             name: self.textViewNameChannel.text,
             description: self.textViewDescription.text,
-            addFavoriteCategoryIds: [29],
+            addFavoriteCategoryIds: self.IdCategory,
            // removeFavoriteCategoryIds: [3,0],
             facebookLink:self.textViewFacebook.text,
             instagramLink: self.textViewInstagram.text,
