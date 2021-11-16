@@ -12,6 +12,7 @@ import AVKit
 import Presentr
 import TagListView
 import MMPlayerView
+import Kingfisher
 
 private enum State {
     case closed
@@ -968,7 +969,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     
                     self.homeView.tableView.reloadData()
                     self.brodcast = response.data!
-                    guard let broadcast = self.brodcast.first else { return }
+                    guard let broadcast = self.brodcast.first else {
+                        self.homeView.imagePromo.addSubview(self.homeView.imageBack)
+                        self.homeView.imageBack.anchor(top: self.homeView.imagePromo.topAnchor, left: self.homeView.imagePromo.leftAnchor, right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                        let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
+                        self.homeView.imageBack.kf.setImage(with: url)
+                        return }
                     self.broadcast = broadcast
                     self.homeView.labelStreamDescription.text = self.broadcast?.description
                     let categorys = self.broadcast?.categories
@@ -1250,9 +1256,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
-        guard let url = Url else {
-            
-            return }
+        guard let url = Url else { return }
         
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)

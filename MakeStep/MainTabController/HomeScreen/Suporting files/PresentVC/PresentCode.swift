@@ -101,6 +101,10 @@ final class PresentCode: UIView {
         var image = UIView()
         return image
     }()
+    var imageBack: UIImageView = {
+        var image = UIImageView()
+        return image
+    }()
     var buttonLandScape: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
