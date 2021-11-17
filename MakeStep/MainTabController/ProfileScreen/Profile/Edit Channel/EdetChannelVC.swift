@@ -204,7 +204,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data.first?.name != nil  {
-                    self.channel = response.data.first
+                    self.channel = response.data.last
                 }
         })
     }

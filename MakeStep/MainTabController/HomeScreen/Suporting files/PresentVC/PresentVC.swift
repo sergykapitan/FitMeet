@@ -387,6 +387,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerbuttonSubscribeConstant.isActive = false
                 self.topbuttonSubscribeConstant.isActive = true
                 self.leftbuttonSubscribeConstant.isActive = true
+                self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
 
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
@@ -411,6 +412,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
+                self.heightViewTop.constant = 450
                 
                 self.bottomConstraint.constant = self.popupOffset
                    self.heightConstant.constant = 70
@@ -1046,9 +1048,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     @objc func actionSubscribe() {
         guard let channel = channel else { return }
         if channel.isSubscribe! {
-            
+           
         } else {
-            guard let subPlans = channel.subscriptionPlans else { return }
+          guard let subPlans = channel.subscriptionPlans else { return }
             if subPlans.isEmpty {
                 
             } else {
@@ -1249,7 +1251,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data.first?.name != nil  {
-                    self.channel = response.data.first
+                    self.channel = response.data.last
                     guard let channel = self.channel,let description = channel.description else { return }
                     self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
                    

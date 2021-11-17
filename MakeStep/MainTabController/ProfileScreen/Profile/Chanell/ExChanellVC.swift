@@ -182,7 +182,8 @@ extension ChanellVC {
         profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
         bottomConstraint.isActive = true
-        profileView.viewTop.heightAnchor.constraint(equalToConstant: 450).isActive = true
+        heightViewTop = profileView.viewTop.heightAnchor.constraint(equalToConstant: 450)
+        heightViewTop.isActive = true
 
         profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
         profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true

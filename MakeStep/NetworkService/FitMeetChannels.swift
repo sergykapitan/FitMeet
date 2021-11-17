@@ -33,7 +33,7 @@ class FitMeetChannels {
                  .eraseToAnyPublisher()
            }
     public func listChannelsPrivate(idUser: Int) -> AnyPublisher<ChannelModel, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/channel/channels/private?&sort=id&userId=\(idUser)", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/channel/channels/private?&sort=lastBroadcastDate&userId=\(idUser)", method: .get,encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelModel.self)

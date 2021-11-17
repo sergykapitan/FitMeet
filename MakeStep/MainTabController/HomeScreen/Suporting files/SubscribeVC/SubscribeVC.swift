@@ -49,6 +49,8 @@ class SubscribeVC: UIViewController, VeritifProduct {
     private func actionButton() {
         subscribeView.buttonProduct.addTarget(self, action: #selector(selectProduct), for: .touchUpInside)
         subscribeView.buttonPay.addTarget(self, action: #selector(actionPay), for: .touchUpInside)
+        subscribeView.buttonTermsServise.addTarget(self, action: #selector(actionTerms), for: .touchUpInside)
+        subscribeView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
     }
     
     @objc private func selectProduct() {
@@ -100,6 +102,17 @@ class SubscribeVC: UIViewController, VeritifProduct {
                         
                 }
             })
-        }    
+        }
+    @objc func actionTerms() {
+        
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
+        present(helpWebViewController, animated: true, completion: nil)       
+    }
+    @objc func actionPrivacyPolicy() {
+       let helpWebViewController = WebViewController()
+       helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
+       present(helpWebViewController, animated: true, completion: nil)
+    }
 }
 

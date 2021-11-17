@@ -24,14 +24,14 @@ final class MonetezeitionVCode: UIView {
         view.backgroundColor = .white
         return view
     }()
-    var buttonMytariffs: UIButton = {
-        var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#BBBCBC")
-        button.setTitle(" My tariffs ", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.cornerRadius = 15
-        return button
-    }()
+//    var buttonMytariffs: UIButton = {
+//        var button = UIButton()
+//        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        button.setTitle(" My tariffs ", for: .normal)
+//        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+//        button.layer.cornerRadius = 15
+//        return button
+//    }()
     var buttonIncomecalculator: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -56,14 +56,14 @@ final class MonetezeitionVCode: UIView {
         addSubview(cardView)
         cardView.fillSuperview()
         
-        cardView.addSubview(buttonMytariffs)
-        buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 95,height: 30)
+      //  cardView.addSubview(buttonMytariffs)
+      //  buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 95,height: 30)
         
         cardView.addSubview(buttonIncomecalculator)
-        buttonIncomecalculator.anchor(top: cardView.topAnchor, left: buttonMytariffs.rightAnchor, paddingTop: 20, paddingLeft: 14,width: 153,height: 30)
+        buttonIncomecalculator.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 153,height: 30)
         
         cardView.addSubview(selfView)
-        selfView.anchor(top: buttonMytariffs.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        selfView.anchor(top: buttonIncomecalculator.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
  
     }
    

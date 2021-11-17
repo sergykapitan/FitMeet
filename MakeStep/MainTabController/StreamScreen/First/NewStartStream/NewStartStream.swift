@@ -92,6 +92,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+       
 
     
     }
@@ -131,7 +132,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         
         authView.textFieldCategory.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
         authView.textFieldStartDate.optionArray = ["NOW", "Later"]
-        authView.textFieldAviable.optionArray = ["All","Subscribers", "Only Sponsors"]
+        
+        authView.textFieldAviable.optionArray = ["All"]
+        
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         
         changeData()
@@ -322,7 +325,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listChanell = response.data
-                    print("ListChanel = ==== \(self.listChanell.last)")
+                    guard let sub = self.listChanell.last?.isSubscribe else { return }
+                    if sub {
+                        self.authView.textFieldAviable.optionArray = ["All","Subscribers"]//,"Only Sponsors"
+                    }
                 }
         })
     }

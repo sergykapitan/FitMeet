@@ -25,10 +25,12 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         }
         if index == 1 {
             self.index = index
+            self.homeView.tableView.reloadData()
             bindingRecomandate()
         }
         if index == 2 {
             self.index = index
+            self.homeView.tableView.reloadData()
             onlyFollowBroadcast(follow: true)
         }
     }
@@ -171,6 +173,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -210,6 +213,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -264,8 +268,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 self.homeView.tableView.reloadData()
                 if response.data != nil {
                    
-                    self.listBroadcast = response.data!.filter{ $0.isSubscriber ?? true}
-                    let arrayUserId = self.listBroadcast.map{$0.id!}
+                    self.listBroadcast = response.data!
+                    let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()

@@ -138,7 +138,7 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if  response.data.last != nil {                    
-                    self.channel = response.data.first
+                    self.channel = response.data.last
                     self.landscapeView.tableView.reloadData()
               
                 }
