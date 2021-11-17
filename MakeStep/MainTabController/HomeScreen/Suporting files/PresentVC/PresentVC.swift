@@ -313,7 +313,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
-                print("OPEN FIRST")
                 
                 self.rightbuttonSubscribeConstant.isActive = false
                 self.centerbuttonSubscribeConstant.isActive = false
@@ -331,12 +330,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.topWelcomLabelConstant.constant = 80
                    self.rightWelcomLabel.isActive = false
                    self.centerWelcomeLabelConstant.isActive = true
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                 //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                    self.homeView.labelFollow.isHidden = true
                 self.homeView.imageLogoProfile.makeRounded()
 
             case .closed:
-                print("CLOSE FIRST")
                 self.rightbuttonSubscribeConstant.isActive = true
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
@@ -354,7 +352,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.leftWelcomeLabelConstant.isActive = true
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                  // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
                    self.homeView.labelFollow.isHidden = false
                 
                 
@@ -381,7 +379,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             // manually reset the constraint positions
             switch self.currentState {
             case .open:
-                print("OPEN SECOND")
                 
                 self.rightbuttonSubscribeConstant.isActive = false
                 self.centerbuttonSubscribeConstant.isActive = false
@@ -401,13 +398,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.rightWelcomLabel.isActive = false
                    self.topWelcomLabelConstant.constant = 80
                    self.centerWelcomeLabelConstant.isActive = true
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                 //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                    self.homeView.labelFollow.isHidden = true
                 self.homeView.imageLogoProfile.makeRounded()
 
              
             case .closed:
-                print("CLOSE SECOND")
                 self.rightbuttonSubscribeConstant.isActive = true
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
@@ -427,7 +423,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                    self.leftWelcomeLabelConstant.isActive = true
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
-                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                  // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
                    self.homeView.labelFollow.isHidden = false
                 
                 
@@ -442,28 +438,26 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         }
         
         // an animator for the title that is transitioning into view
-        let inTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeIn, animations: {
+        let inTitleAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeIn, animations: {
             switch state {
             case .open:
-                print("OPEN FIR")
-               // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
-                self.homeView.labelVideo.alpha = 0
-                self.homeView.buttonFollow.alpha = 0
-                self.homeView.buttonInstagram.alpha = 0
-                self.homeView.buttonTwiter.alpha = 0
-                self.homeView.buttonfaceBook.alpha = 0
-                self.homeView.labelINTVideo.alpha = 0
-                self.homeView.labelVideo.alpha = 0
-                self.homeView.labelINTFollows.alpha = 0
-                self.homeView.labelFollows.alpha = 0
-                self.homeView.labelINTFolowers.alpha = 0
-                self.homeView.labelFolowers.alpha = 0
-                self.homeView.labelDescription.alpha = 0
+                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.buttonFollow.alpha = 1
+                self.homeView.buttonInstagram.alpha = 1
+                self.homeView.buttonTwiter.alpha = 1
+                self.homeView.buttonfaceBook.alpha = 1
+                self.homeView.labelINTVideo.alpha = 1
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.labelINTFollows.alpha = 1
+                self.homeView.labelFollows.alpha = 1
+                self.homeView.labelINTFolowers.alpha = 1
+                self.homeView.labelFolowers.alpha = 1
+                self.homeView.labelDescription.alpha = 1
                 
                
             case .closed:
-                print("Close FIR")
-              //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                 self.homeView.labelVideo.alpha = 0
                 self.homeView.buttonFollow.alpha = 0
                 self.homeView.buttonInstagram.alpha = 0
@@ -482,11 +476,10 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         inTitleAnimator.scrubsLinearly = false
         
         // an animator for the title that is transitioning out of view
-        let outTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut, animations: {
+        let outTitleAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
             switch state {
             case .open:
-                print("OPEN Sec")
-              //  self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                 self.homeView.labelVideo.alpha = 1
                 self.homeView.buttonFollow.alpha = 1
                 self.homeView.buttonInstagram.alpha = 1
@@ -501,8 +494,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 self.homeView.labelDescription.alpha = 1
          
             case .closed:
-                print("Close sec")
-               // self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
+                self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 14)
                 self.homeView.labelVideo.alpha = 0
                 self.homeView.buttonFollow.alpha = 0
                 self.homeView.buttonInstagram.alpha = 0

@@ -625,6 +625,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 self.centerbuttonSubscribeConstant.isActive = true
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
+                self.heightViewTop.constant = 450
                 
                 self.bottomConstraint.constant = self.popupOffset
                    self.heightConstant.constant = 70
@@ -723,21 +724,21 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
         
         // an animator for the title that is transitioning into view
-        let inTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeIn, animations: {
+        let inTitleAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeIn, animations: {
             switch state {
             case .open:
                 print("OPEN FIR")
-                self.profileView.labelVideo.alpha = 0
-                self.profileView.buttonInstagram.alpha = 0
-                self.profileView.buttonTwiter.alpha = 0
-                self.profileView.buttonfaceBook.alpha = 0
-                self.profileView.labelINTVideo.alpha = 0
-                self.profileView.labelVideo.alpha = 0
-                self.profileView.labelINTFollows.alpha = 0
-                self.profileView.labelFollows.alpha = 0
-                self.profileView.labelINTFolowers.alpha = 0
-                self.profileView.labelFolowers.alpha = 0
-                self.profileView.labelDescription.alpha = 0
+                self.profileView.labelVideo.alpha = 1
+                self.profileView.buttonInstagram.alpha = 1
+                self.profileView.buttonTwiter.alpha = 1
+                self.profileView.buttonfaceBook.alpha = 1
+                self.profileView.labelINTVideo.alpha = 1
+                self.profileView.labelVideo.alpha = 1
+                self.profileView.labelINTFollows.alpha = 1
+                self.profileView.labelFollows.alpha = 1
+                self.profileView.labelINTFolowers.alpha = 1
+                self.profileView.labelFolowers.alpha = 1
+                self.profileView.labelDescription.alpha = 1
                 
                
             case .closed:
@@ -758,7 +759,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         inTitleAnimator.scrubsLinearly = false
         
         // an animator for the title that is transitioning out of view
-        let outTitleAnimator = UIViewPropertyAnimator(duration: duration, curve: .easeOut, animations: {
+        let outTitleAnimator = UIViewPropertyAnimator(duration: 0.2, curve: .easeOut, animations: {
             switch state {
                 case .open:
                     print("OPEN Sec")
