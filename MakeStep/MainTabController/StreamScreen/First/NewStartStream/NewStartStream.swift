@@ -12,8 +12,12 @@ import AuthenticationServices
 import Combine
 import BottomPopup
 import Alamofire
+import EasyPeasy
+import Loaf
+import TagListView
+import iOSDropDown
 
-class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate {
+class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate, TagListViewDelegate {
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
@@ -69,8 +73,18 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
    // let request: URLRequest?
     
     private var dropDown: DropDownTextField!
-    private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
+    var listCategory: [Datum] = []
+    var IdCategory = [Int]()
     
+    private var isOversized = false {
+            didSet {
+                self.authView.textFieldCategory.easy.reload()
+              //  self.authView.textFieldCategory.isScrollEnabled = isOversized
+           
+            }
+        }
+        
+    private let maxHeight: CGFloat = 100
     
     override  var shouldAutorotate: Bool {
         return false
@@ -92,6 +106,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        authView.tagView.removeAllTags()
        
 
     
@@ -108,10 +123,11 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         makeNavItem()
         bindingChanell()
         bindingUser()
+        bindingCategory()
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
-      //  NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow), name: UIResponder.keyboardWillShowNotification, object: nil)
-      //  NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
+        authView.tagView.delegate = self
+    
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -130,7 +146,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
         
-        authView.textFieldCategory.optionArray = ["Yoga", "Dance","Meditation","Muscular endurance","Flexibility","Stretching","Power","Workshop","tennis","Category 661","Category 671"]
+       // self.authView.textFieldCategory.easy.layout(Left(10),Right(10),Height(maxHeight).when({[unowned self] in self.isOversized}))
+      
         authView.textFieldStartDate.optionArray = ["NOW", "Later"]
         
         authView.textFieldAviable.optionArray = ["All"]
@@ -141,9 +158,23 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
- 
-  
+        
+            authView.textFieldCategory.didSelect { (ff, _, _) in
+            self.authView.tagView.addTag(ff)
+            let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+            self.IdCategory.append(contentsOf: p)
+            self.authView.tagView.layoutSubviews()
+            self.authView.textFieldCategory.placeholder = ""
+                        
+        }
+        authView.textFieldCategory.easy.layout(Height(>=39))
     }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        self.authView.textFieldCategory.text = ""
+    }
+
     func registerForKeyboardNotifications() {
         
     NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
@@ -267,13 +298,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         
        
         
-        #if QA
-         let category = [30,35]
-        #elseif DEBUG
-         let category = [3,4]
-        #endif
+     
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: category)
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {
@@ -315,7 +342,17 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         print("notificationHandAction")
     }
     
-    
+    func bindingCategory() {
+        takeBroadcast = fitMeetStream.getCategoryPrivate()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listCategory = response.data!
+                    let list = self.listCategory.compactMap{$0.title}
+                    self.authView.textFieldCategory.optionArray = list
+                }
+        })
+    }
     
     
     

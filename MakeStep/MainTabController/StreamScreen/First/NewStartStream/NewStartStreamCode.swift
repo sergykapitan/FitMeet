@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import iOSDropDown
+import TagListView
 
 final class NewStartStreamCode: UIView {
     
@@ -40,14 +41,17 @@ final class NewStartStreamCode: UIView {
     }()
     let textFieldCategory: DropDown = {
         let textField = DropDown()
+      
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
+        NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.setLeftPaddingPoints(25)      
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.clipsToBounds = true
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldStartDate: DropDown = {
@@ -118,9 +122,23 @@ final class NewStartStreamCode: UIView {
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.contentSize.height = 800
+        scroll.contentSize.height = 1000
         scroll.backgroundColor = .white
         return scroll
+    }()
+    var tagView: TagListView = {
+        let tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 18)
+        tag.cornerRadius = 15
+        tag.enableRemoveButton = true
+        tag.removeIconLineColor = .black
+        tag.removeButtonIconSize = 10
+        tag.tagBackgroundColor = UIColor(hexString: "#E5E5E5")
+        tag.textColor = .black
+        tag.paddingX = 10
+        tag.paddingY = 5
+        tag.selectedTextColor = .black
+        return tag
     }()
     
     // MARK: - Init
@@ -160,7 +178,7 @@ final class NewStartStreamCode: UIView {
         textFieldCategory.anchor(top: textFieldName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10)
         
         scroll.addSubview(textFieldStartDate)
         textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
@@ -191,6 +209,13 @@ final class NewStartStreamCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        textFieldCategory.addSubview(tagView)
+        tagView.anchor(top:textFieldCategory.topAnchor,
+                       left: textFieldCategory.leftAnchor,
+                       right: textFieldCategory.rightAnchor,
+                       bottom: textFieldCategory.bottomAnchor,
+                       paddingTop: 5,paddingLeft: 10, paddingRight: 40,paddingBottom: 5)
+      //  tagView.centerY(inView: textFieldCategory)
 
         
     }

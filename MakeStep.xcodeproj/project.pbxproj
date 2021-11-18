@@ -248,6 +248,8 @@
 		A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
+		A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E293F27466EC100CC39BB /* PaddingLabel.swift */; };
+		A58E294127466EC100CC39BB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E293F27466EC100CC39BB /* PaddingLabel.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5027371A2F002C1500 /* CalculateVC.swift */; };
 		A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5227371A40002C1500 /* CalculateVCCode.swift */; };
@@ -502,6 +504,7 @@
 		A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeVCCode.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
+		A58E293F27466EC100CC39BB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A5950E5027371A2F002C1500 /* CalculateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVC.swift; sourceTree = "<group>"; };
 		A5950E5227371A40002C1500 /* CalculateVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVCCode.swift; sourceTree = "<group>"; };
@@ -1037,6 +1040,7 @@
 				B47828A226CFF3E30068292A /* Transishion */,
 				A5B635A7271836120097A127 /* PlayerView.swift */,
 				A5B635A9271836890097A127 /* PlayerViewCell.swift */,
+				A58E293F27466EC100CC39BB /* PaddingLabel.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -1912,6 +1916,7 @@
 				A512944F273A6EB7000CBBD9 /* SubscribeVCCode.swift in Sources */,
 				A5129450273A6EB7000CBBD9 /* ExSendCoach.swift in Sources */,
 				A5129451273A6EB7000CBBD9 /* CustomActionSheetContainer.swift in Sources */,
+				A58E294127466EC100CC39BB /* PaddingLabel.swift in Sources */,
 				A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */,
 				A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */,
 				A5129454273A6EB7000CBBD9 /* SignUpViewController.swift in Sources */,
@@ -2135,6 +2140,7 @@
 				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
+				A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
