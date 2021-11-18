@@ -174,6 +174,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         super.viewWillLayoutSubviews()
         self.authView.textFieldCategory.text = ""
     }
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+           print("Tag Remove pressed: \(title), \(sender)")
+           sender.removeTagView(tagView)
+           let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
+       
+       }
 
     func registerForKeyboardNotifications() {
         
@@ -410,6 +416,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
+                    
                     print("greate broadcast")
                     guard let usId = self.userId else { return }
                     self.broadcast = response
@@ -423,6 +430,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.authView.textFieldCategory.text = ""
                     self.authView.imageButton.setImage(nil, for: .normal)
 
+                } else {
+                    Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
                 }
              })
          
@@ -439,38 +448,70 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                    return error })
                  .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     guard let url = response.url else { return }
-                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
-                    let twoString = self.removeUrl(url: url)
-                    self.myuri = twoString.0
-                    self.myPublish = twoString.1
-                    self.url = url
-     
-                    
-                    if self.authView.textFieldStartDate.text == "NOW" {
-                        let navVC = LiveStreamViewController()
-                        navVC.modalPresentationStyle = .fullScreen
-                        navVC.idBroad = id
-                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-                        navVC.myuri = myuris
-                        navVC.myPublish = myPublishh
-                       // self.present(navVC, animated: true, completion: nil)
-                        self.present(navVC, animated: true) {
-                            self.authView.textFieldStartDate.text = ""
-                        }
-                    } else {
-                        let channelVC = ChanellVC()
-                        channelVC.user = self.user
-                        self.navigationController?.pushViewController(channelVC, animated: true)
-                    
-//                        {
+                     if url != nil {
+                     DispatchQueue.main.async {
+                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                             switch disType {
+                             case .tapped:  self.startStream(id: id, url: url)
+                            case .timedOut: self.startStream(id: id, url: url)
+                         }
+                     }
+                 }
+             } else {
+                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+             }
+//                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
+//                    let twoString = self.removeUrl(url: url)
+//                    self.myuri = twoString.0
+//                    self.myPublish = twoString.1
+//                    self.url = url
+//
+//
+//                    if self.authView.textFieldStartDate.text == "NOW" {
+//                        let navVC = LiveStreamViewController()
+//                        navVC.modalPresentationStyle = .fullScreen
+//                        navVC.idBroad = id
+//                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+//                        navVC.myuri = myuris
+//                        navVC.myPublish = myPublishh
+//                       // self.present(navVC, animated: true, completion: nil)
+//                        self.present(navVC, animated: true) {
 //                            self.authView.textFieldStartDate.text = ""
 //                        }
-//             self.present(channelVC, animated: true) {
+//                    } else {
+//                        let channelVC = ChanellVC()
+//                        channelVC.user = self.user
+//                        self.navigationController?.pushViewController(channelVC, animated: true)
 //
-//                        }
-                    }
+//                    }
                })
            }
+    private func startStream(id : Int, url : String) {
+        UserDefaults.standard.set(url, forKey: Constants.urlStream)
+        let twoString = self.removeUrl(url: url)
+        self.myuri = twoString.0
+        self.myPublish = twoString.1
+        self.url = url
+
+        
+        if self.authView.textFieldStartDate.text == "NOW" {
+            let navVC = LiveStreamViewController()
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.idBroad = id
+            guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+            navVC.myuri = myuris
+            navVC.myPublish = myPublishh
+           // self.present(navVC, animated: true, completion: nil)
+            self.present(navVC, animated: true) {
+                self.authView.textFieldStartDate.text = ""
+            }
+        } else {
+            let channelVC = ChanellVC()
+            channelVC.user = self.user
+            self.navigationController?.pushViewController(channelVC, animated: true)
+
+        }
+    }
 
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
