@@ -59,6 +59,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        binding()
     }
 
     override func loadView() {
@@ -68,7 +69,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainView()
-        binding()
+       
         actionButton()
 
     }
@@ -126,7 +127,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-
+        binding()
         filtredBroadcast = listBroadcast
         self.searchView.collectionView.reloadData()
     }
@@ -163,9 +164,8 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
-        
-        filtredBroadcast = listBroadcast.filter { $0.isFollow ?? false}
-        self.searchView.collectionView.reloadData()
+        bindingLikes()
+       
     }
     @objc func actionViewers() {
         
@@ -205,14 +205,12 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             guard let id = filtredBroadcast[sender.tag].id else { return }
             followCategory(id: id)
-           // binding()
-           // self.searchView.collectionView.reloadData()
+           
         } else {
             sender.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
             guard let id = filtredBroadcast[sender.tag].id else { return }
             unFollowCategory(id: id)
-           // binding()
-           // self.searchView.collectionView.reloadData()
+        
         }
         
         }
@@ -224,6 +222,17 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = response.data!
+                    self.searchView.collectionView.reloadData()
+                }
+        })
+    }
+    func bindingLikes() {
+        takeBroadcast = fitMeetStream.getCategoryPrivate()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.filtredBroadcast.removeAll()
+                    self.filtredBroadcast = response.data!.filter { $0.isFollow ?? false}
                     self.searchView.collectionView.reloadData()
                 }
         })
