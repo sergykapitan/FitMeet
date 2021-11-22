@@ -242,9 +242,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil {
-                    print("goodFolow")
-                   // self.searchView.collectionView.reloadData()
-                  
+       
             }
         })
     }
@@ -253,9 +251,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil {
-                    print("goodFolow")
-                   // self.searchView.collectionView.reloadData()
-                  
+    
             }
         })
     }
