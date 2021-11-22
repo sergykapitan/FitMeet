@@ -379,8 +379,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RESPONSE======\(response)")
-                if response != nil  {
+                if response.data != nil  {
                     self.imageUpload = response
                     
                   
@@ -460,32 +459,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
              } else {
                  Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
              }
-//                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
-//                    let twoString = self.removeUrl(url: url)
-//                    self.myuri = twoString.0
-//                    self.myPublish = twoString.1
-//                    self.url = url
-//
-//
-//                    if self.authView.textFieldStartDate.text == "NOW" {
-//                        let navVC = LiveStreamViewController()
-//                        navVC.modalPresentationStyle = .fullScreen
-//                        navVC.idBroad = id
-//                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-//                        navVC.myuri = myuris
-//                        navVC.myPublish = myPublishh
-//                       // self.present(navVC, animated: true, completion: nil)
-//                        self.present(navVC, animated: true) {
-//                            self.authView.textFieldStartDate.text = ""
-//                        }
-//                    } else {
-//                        let channelVC = ChanellVC()
-//                        channelVC.user = self.user
-//                        self.navigationController?.pushViewController(channelVC, animated: true)
-//
-//                    }
-               })
-           }
+        })
+    }
+    
     private func startStream(id : Int, url : String) {
         UserDefaults.standard.set(url, forKey: Constants.urlStream)
         let twoString = self.removeUrl(url: url)

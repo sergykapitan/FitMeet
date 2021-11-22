@@ -56,14 +56,17 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
        
         if index == 0 {
             self.index = index
+            binding(name: "a")
             self.searchView.tableView.reloadData()
         }
         if index == 1 {
             self.index = index
+            getUsers(name: "a")
             self.searchView.tableView.reloadData()
         }
         if index == 2 {
             self.index = index
+            getCategory(name: "a")
             self.searchView.tableView.reloadData()
         }
     }
@@ -86,16 +89,14 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        searchController.isActive = true
-       setupSearchBar()
-      
+        setupSearchBar()
+        binding(name: "a")
        
         
 
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        searchController.isActive = true
         sizeSearchBar = self.navigationItem.searchController?.searchBar.frame.height
         searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
 
@@ -108,7 +109,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainView()
-       // setupSearchBar()
+        setupSearchBar()
         makeTableView()
         makeNavItem()
         binding(name: "a")
