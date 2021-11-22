@@ -54,6 +54,8 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    private var takePlan: AnyCancellable?
+    private var takeOff: AnyCancellable?
     
     @Inject var fitMeetChannel: FitMeetChannels
     private var takeChannel: AnyCancellable?
@@ -158,6 +160,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         if index == 0 {
             if token != nil {
                 binding()
+               
             } else {
                 bindingNotAuht()
             }
@@ -169,7 +172,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         
        }
     func binding() {
-        takeBroadcast = fitMeetStream.getListAllBroadcast()
+        takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
@@ -177,15 +180,40 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.homeView.label.isHidden = true
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
+                    self.bindingPlanned()
+                  
+                } else {
+                    self.listBroadcast.removeAll()
+                    self.bindingPlanned()
+                }
+        })
+    }
+    func bindingPlanned() {
+        takePlan = fitMeetStream.getListPlanBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast.append(contentsOf: response.data!)
+                    self.bindingOff()
+                } else {
+                    self.bindingOff()
+                }
+            })
+    }
+    func bindingOff() {
+        takeOff = fitMeetStream.getOffBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast.append(contentsOf: response.data!)
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
                     self.bindingCategory()
                 }
-        })
+            })
     }
-   
     func bindingNotAuht() {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })

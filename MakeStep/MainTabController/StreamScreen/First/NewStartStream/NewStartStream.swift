@@ -430,7 +430,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.authView.imageButton.setImage(nil, for: .normal)
 
                 } else {
-                    Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+                    guard let mess = response.message else { return }
+                    Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
                 }
              })
          

@@ -11,12 +11,9 @@ import AVFoundation
 import AVKit
 import UIKit
 import TagListView
-//import
 
 
 extension HomeVC: UITableViewDataSource {
-    
-   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return listBroadcast.count
@@ -132,27 +129,15 @@ extension HomeVC: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
      
-      //  let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.listBroadcast[indexPath.row].userId
-       // let follow = self.listBroadcast[indexPath.row].followersCount
-   
-        
-    
-         //
-        //let Url = url
+
         guard let broadcastID = self.listBroadcast[indexPath.row].id,
               let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
-      
-       
-        
+
         self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
-      //  vc.Url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-      //  vc.broadcast = self.listBroadcast[indexPath.row]
-      //  vc.follow = "\(follow)"
-      //  vc.broadId = broadcastID
         navigationController?.pushViewController(vc, animated: true)
 
     }

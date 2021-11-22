@@ -991,6 +991,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.loadPlayer()
                     SocketIOManager.sharedInstance.getTokenChat()
                     let arrayUserId = self.brodcast.map{$0.userId!}
+                    let  broadId = self.brodcast.compactMap{$0.id}
+                    self.getMapWather(ids: broadId)
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                 }
@@ -1017,7 +1019,6 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         takeChanell = fitMeetStream.getBroadcastPrivateMulty( userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("Multy == \(response)")
                 if response.data != nil  {
                     self.brodcast.removeAll()
                     self.brodcast = response.data!
