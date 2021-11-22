@@ -69,7 +69,6 @@ extension CategoryBroadcast: UITableViewDataSource {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
     
-        print("SELF US ==== \(us.count)")
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
         }
@@ -120,14 +119,14 @@ extension CategoryBroadcast: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
+    //    let url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.sortListCategory[indexPath.row].userId
-        let follow = self.sortListCategory[indexPath.row].followersCount
+     //   let follow = self.sortListCategory[indexPath.row].followersCount
    
         
     
-         
-        guard let Url = url,let broadcastID = self.sortListCategory[indexPath.row].id,
+       //let Url = url,
+        guard let broadcastID = self.sortListCategory[indexPath.row].id,
               let channelId = self.sortListCategory[indexPath.row].channelIds else { return }
       
        
@@ -136,10 +135,10 @@ extension CategoryBroadcast: UITableViewDelegate {
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
-        vc.Url = Url
-        vc.broadcast = self.sortListCategory[indexPath.row]
-        vc.follow = "\(follow)"
-        vc.broadId = broadcastID
+//        vc.Url = Url
+//        vc.broadcast = self.sortListCategory[indexPath.row]
+//        vc.follow = "\(follow)"
+//        vc.broadId = broadcastID
         navigationController?.pushViewController(vc, animated: true)
 
     }

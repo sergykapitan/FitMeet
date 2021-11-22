@@ -71,17 +71,21 @@ extension HomeVC: UITableViewDataSource {
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
-      
-            
-             
+   
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
 
-        }
+        } else if listBroadcast[indexPath.row].status == "PLANNED" {
+            cell.imageLive.setImageColor(color: .gray)
+            cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
 
+        }
+        
         
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
