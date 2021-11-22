@@ -13,7 +13,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     
     let profileView = ProfileVCCode()
     private var take: AnyCancellable?
- 
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     @Inject var fitMeetApi: FitMeetApi
     var user: Users?
     
@@ -30,8 +30,8 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
-        print("Token = \(token)")
+       
+       
         setUserProfile()
         actionButtonContinue()
         makeNavItem()
@@ -51,7 +51,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        
+        print("Token = \(token)")
     }
  
     func setUserProfile() {

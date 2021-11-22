@@ -109,7 +109,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainView()
-        setupSearchBar()
         makeTableView()
         makeNavItem()
         binding(name: "a")

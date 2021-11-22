@@ -20,7 +20,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     
     @Inject var fitMeetApi: FitMeetApi
     var imageUpload: UploadImage?
-    
+   
     
     
     var user: Users?

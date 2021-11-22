@@ -169,10 +169,12 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         
        }
     func binding() {
-        takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
+        takeBroadcast = fitMeetStream.getListAllBroadcast()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.homeView.tableView.isHidden = false
+                    self.homeView.label.isHidden = true
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
@@ -212,13 +214,19 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         takeBroadcast = fitMeetStream.getRecomandateBroadcast()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
+                if response.data?.first?.id != nil  {
+                    self.homeView.tableView.isHidden = false
+                    self.homeView.label.isHidden = true
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
+                } else {
+                    self.homeView.tableView.isHidden = true
+                    self.homeView.label.isHidden = false
+                    self.homeView.label.text = "there are no suitable broadcasts"
                 }
           })
     }
@@ -266,13 +274,17 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 self.listBroadcast.removeAll()
                 self.homeView.tableView.reloadData()
-                if response.data != nil {
+                if response.data?.first?.id != nil {
                    
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
+                } else {
+                    self.homeView.tableView.isHidden = true
+                    self.homeView.label.isHidden = false
+                    self.homeView.label.text = "no subscriptions"
                 }
          })
     }

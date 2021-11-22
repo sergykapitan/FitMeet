@@ -124,19 +124,19 @@ final class CategoryCode: UIView {
 
           
         cardView.addSubview(buttonAll)
-        buttonAll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+        buttonAll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 15, paddingLeft: 16, width: 74, height: 26)
 
-        cardView.addSubview(buttonPopular)
-        buttonPopular.anchor(top: cardView.topAnchor, left: buttonAll.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+     //   cardView.addSubview(buttonPopular)
+     //   buttonPopular.anchor(top: cardView.topAnchor, left: buttonAll.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
 
-        cardView.addSubview(buttonNew)
-        buttonNew.anchor(top: cardView.topAnchor, left: buttonPopular.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+     //   cardView.addSubview(buttonNew)
+     //   buttonNew.anchor(top: cardView.topAnchor, left: buttonPopular.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
 
         cardView.addSubview(buttonLikes)
-        buttonLikes.anchor(top: cardView.topAnchor, left: buttonNew.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+        buttonLikes.anchor(top: cardView.topAnchor, left: buttonAll.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
 
-        cardView.addSubview(buttonViewers)
-        buttonViewers.anchor(top: cardView.topAnchor, left: buttonLikes.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
+     //   cardView.addSubview(buttonViewers)
+     //   buttonViewers.anchor(top: cardView.topAnchor, left: buttonLikes.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
 
                 
         cardView.addSubview(collectionView)

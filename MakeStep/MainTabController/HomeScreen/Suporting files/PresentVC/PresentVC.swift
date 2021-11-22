@@ -1051,7 +1051,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                        subscribe.modalPresentationStyle = .custom
                        subscribe.id = user?.id
                        subscribe.delagatePurchase = self
-                       actionChatTransitionManager.intHeight = 0.4
+                if view.bounds.height <= 603 {
+                    actionChatTransitionManager.intHeight = 0.5
+                } else {
+                    actionChatTransitionManager.intHeight = 0.4
+                }
+                    //   actionChatTransitionManager.intHeight = 0.4
                        actionChatTransitionManager.intWidth = 1
                        subscribe.transitioningDelegate = actionChatTransitionManager
                        present(subscribe, animated: true)

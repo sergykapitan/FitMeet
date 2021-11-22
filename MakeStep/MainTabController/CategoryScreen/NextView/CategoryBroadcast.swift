@@ -252,10 +252,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    print("ffffffffffffff ====\(ids)")
-                    print("WATCHER======\(response.data)")
-                  //  let watcher  = Int(response.data.values.first)
-                  //  guard let watch = response.data["\(ids.first!)"] else { return watch}
+                 
                     self.watch = response.data["\(ids.first!)"]!
              
                 }
@@ -265,7 +262,9 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                
                 if response != nil {
+                    print(response)
                 }
           })
     }

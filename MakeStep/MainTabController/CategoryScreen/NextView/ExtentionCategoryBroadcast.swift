@@ -64,7 +64,7 @@ extension CategoryBroadcast: UITableViewDataSource {
        
         
         if sortListCategory[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "iconlovered"), for: .normal)
+            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
@@ -92,11 +92,11 @@ extension CategoryBroadcast: UITableViewDataSource {
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
+           guard let id = sortListCategory[sender.tag].id else { return }
             self.followBroadcast(id: id)
         } else {
             sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
+           guard let id = sortListCategory[sender.tag].id else { return }
             self.unFollowBroadcast(id: id)
         }
     }
