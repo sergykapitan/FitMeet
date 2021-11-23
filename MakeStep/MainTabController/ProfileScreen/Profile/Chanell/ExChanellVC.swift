@@ -40,7 +40,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
         if brodcast[indexPath.row].status == "OFFLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "fiber_manual_record_24px1")
+            cell.imageLive.image = #imageLiteral(resourceName: "slider")
+            cell.imageLive.setImageColor(color: .gray)
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
@@ -49,6 +50,12 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
+        } else if brodcast[indexPath.row].status == "PLANNED" {
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+
         }
 
         let categorys = brodcast[indexPath.row].categories

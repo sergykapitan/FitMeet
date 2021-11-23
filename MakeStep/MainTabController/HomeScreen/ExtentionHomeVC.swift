@@ -64,6 +64,7 @@ extension HomeVC: UITableViewDataSource {
         self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         
         if listBroadcast[indexPath.row].status == "OFFLINE" {
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
@@ -76,7 +77,8 @@ extension HomeVC: UITableViewDataSource {
             cell.labelEye.isHidden = false
 
         } else if listBroadcast[indexPath.row].status == "PLANNED" {
-            cell.imageLive.setImageColor(color: .gray)
+          //  cell.imageLive.setImageColor(color: .gray)
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
