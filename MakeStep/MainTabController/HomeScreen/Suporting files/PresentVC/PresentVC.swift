@@ -736,50 +736,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         bottomButtonChatConstant =  homeView.buttonChat.bottomAnchor.constraint(equalTo: homeView.cardView.bottomAnchor, constant: -(heightBar ?? 80))//-80
         bottomButtonChatConstant.isActive = true
        
-        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
-            
-        })
-        offsetObservation = homeView.tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
-            guard let self = self, self.presentedViewController == nil else {return}
-            NSObject.cancelPreviousPerformRequests(withTarget: self)
-            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.2)
-        }
-        homeView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.updateByContentOffset()
-            self?.startLoading()
-        }
-       
-        mmPlayerLayer.fullScreenWhenLandscape = false
-       // mmPlayerLayer.coverView?.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
-        mmPlayerLayer.getStatusBlock { [weak self] (status) in
-            switch status {
-            case .failed(let err):
-                let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alert, animated: true, completion: nil)
-            case .ready:
-                print("Ready to Play")
-            case .playing:
-                print("Playing")
-            case .pause:
-                print("Pause")
-            case .end:
-                print("End")
-            default: break
-            }
-        }
-        mmPlayerLayer.getOrientationChange { (status) in
-            print("Player OrientationChange \(status)")
-        }
+     
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
-       
 
-        
-       
-        
     }
     deinit {
         offsetObservation?.invalidate()
@@ -881,60 +842,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         present(detailViewController, animated: true)
 
     }
-    @objc fileprivate func startLoading() {
-        self.updateByContentOffset()
-        if self.presentedViewController != nil {
-            return
-        }
-        // start loading video
-        mmPlayerLayer.resume()
-    }
-    fileprivate func updateByContentOffset() {
-        if mmPlayerLayer.isShrink {
-            return
-        }
-
-        if let path = findCurrentPath(),
-            self.presentedViewController == nil {
-          
-            self.updateCell(at: path)
-            //Demo SubTitle
-            if path.row == 0, self.mmPlayerLayer.subtitleSetting.subtitleType == nil {
-                let subtitleStr = Bundle.main.path(forResource: "srtDemo", ofType: "srt")!
-                if let str = try? String.init(contentsOfFile: subtitleStr) {
-                  //  self.mmPlayerLayer.subtitleSetting.subtitleType = .srt(info: str)
-                  //  self.mmPlayerLayer.subtitleSetting.defaultTextColor = .red
-                  //  self.mmPlayerLayer.subtitleSetting.defaultFont = UIFont.boldSystemFont(ofSize: 20)
-                }
-            }
-        }
-    }
-    func findCurrentPath() -> IndexPath? {
-        let p = CGPoint(x: homeView.tableView.frame.width/2, y: homeView.tableView.contentOffset.y + homeView.tableView.frame.width/2)
-        return homeView.tableView.indexPathForRow(at: p)//.indexPathForItem(at: p)
-    }
-
-    func findCurrentCell(path: IndexPath) -> UITableViewCell {
-
-        return homeView.tableView.cellForRow(at: path)!
-    }
-    fileprivate func updateCell(at indexPath: IndexPath) {
-        guard  let filter = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
-        if let cell = homeView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
-            // this thumb use when transition start and your video dosent start
-            mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
-            // set video where to play
-            mmPlayerLayer.playView = cell.backgroundImage
-            let j = brodcast.filter{$0.streams?.first?.vodUrl != nil }
-          //  guard let h = j else { return }
-            let url = URL(string: playURL)
-            mmPlayerLayer.set(url: url)
-        }
-    }
-    func destrtoyMMPlayerInstance() {
-        self.mmPlayerLayer.player?.pause()
-        self.mmPlayerLayer.playView = nil
-    }
+ 
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
@@ -1797,28 +1705,4 @@ class InstantPanGestureRecognizer: UIPanGestureRecognizer {
         self.state = UIGestureRecognizer.State.began
     }
     
-}
-extension PresentVC: MMPlayerFromProtocol {
-    // when second controller pop or dismiss, this help to put player back to where you want
-    // original was player last view ex. it will be nil because of this view on reuse view
-    func backReplaceSuperView(original: UIView?) -> UIView? {
-        guard let path = self.findCurrentPath() else {
-            return original
-        }
-        
-        let cell = self.findCurrentCell(path: path) as! PlayerViewCell
-        return cell.backgroundImage
-    }
-
-    // add layer to temp view and pass to another controller
-    var passPlayer: MMPlayerLayer {
-        return self.mmPlayerLayer
-    }
-    func transitionWillStart() {
-    }
-    // show cell.image
-    func transitionCompleted() {
-        self.updateByContentOffset()
-        self.startLoading()
-    }
 }

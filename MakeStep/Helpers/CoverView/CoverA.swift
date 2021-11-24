@@ -38,23 +38,25 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     
     @IBAction func btnLandTwo(_ sender: UIButton) {
         let ch = ChanellVC()
+        let cc = ButtonOffline()
         sender.isSelected.toggle()
         
         if sender.isSelected {
         AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
-            self.btnLand.imageView?.image = nil
-        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        let key = keyWindow?.rootViewController
-        guard let bound = key?.view.bounds else { return }
+      //      self.btnLand.imageView?.image = nil
+      //      let keyWindow = UIApplication.shared.windows.first//filter {$0.isKeyWindow}.first
+      //  let key = keyWindow?.rootViewController
+      //  guard let bound = key?.view.bounds else { return }
+      //      guard let height = self.superview?.frame.height,let width = self.superview?.frame.width else { return }
 
-        self.playLayer!.landView(onVC: ch, isHiddenVC: false, maxWidth: bound.width, maxHeight: bound.height) { [weak self] () -> UIView? in
+            self.playLayer!.landView(isHiddenVC: false, maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height) { [weak self] () -> UIView? in
             
-                   guard let self = self, let path = ch.findCurrentPath() else {return nil}
-            
-                   let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
+                   guard  let path = cc.findCurrentPath() else {return nil}
+
+                   let cell = cc.findCurrentCell(path: path) as! PlayerViewCell
                    let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
-                   ch.profileView.mmPlayerLayer.set(url: url)
-                   ch.profileView.mmPlayerLayer.resume()
+                   cc.offlineView.mmPlayerLayer.set(url: url)
+                   cc.offlineView.mmPlayerLayer.resume()
                    return cell.backgroundImage
                }
         } else {

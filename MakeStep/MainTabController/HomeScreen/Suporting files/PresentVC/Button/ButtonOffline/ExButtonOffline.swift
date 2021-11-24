@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import EasyPeasy
+import MMPlayerView
 
 extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
     
@@ -96,10 +97,12 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
            guard let id = brodcast[sender.tag].id else { return }
+            self.vibrate()
             self.followBroadcast(id: id)
         } else {
             sender.setImage(UIImage(named: "LikeNot"), for: .normal)
            guard let id = brodcast[sender.tag].id else { return }
+            self.vibrate()
             self.unFollowBroadcast(id: id)
         }
     }
@@ -114,4 +117,28 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
 
     }
   
+}
+extension ButtonOffline: MMPlayerFromProtocol {
+    // when second controller pop or dismiss, this help to put player back to where you want
+    // original was player last view ex. it will be nil because of this view on reuse view
+    func backReplaceSuperView(original: UIView?) -> UIView? {
+        guard let path = self.findCurrentPath() else {
+            return original
+        }
+        
+        let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+        return cell.backgroundImage
+    }
+
+    // add layer to temp view and pass to another controller
+    var passPlayer: MMPlayerLayer {
+        return self.offlineView.mmPlayerLayer
+    }
+    func transitionWillStart() {
+    }
+    // show cell.image
+    func transitionCompleted() {
+        self.updateByContentOffset()
+        self.startLoading()
+    }
 }

@@ -37,6 +37,7 @@ class ButtonOffline: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         createTableView()
+       
         self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
             
         })
@@ -76,8 +77,12 @@ class ButtonOffline: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.bindingChanellVOD(userId: "\(userId)")
+      //  self.bindingChanellVOD(userId: "\(userId)")
      
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.bindingChanellVOD(userId: "\(userId)")
     }
  
       
@@ -89,7 +94,7 @@ class ButtonOffline: UIViewController {
         offlineView.tableView.showsVerticalScrollIndicator = false
     }
     
-    @objc fileprivate func startLoading() {
+    @objc  func startLoading() {
         self.updateByContentOffset()
         if self.presentedViewController != nil {
             return
@@ -97,7 +102,7 @@ class ButtonOffline: UIViewController {
         // start loading video
         offlineView.mmPlayerLayer.resume()
     }
-    fileprivate func updateByContentOffset() {
+    func updateByContentOffset() {
         if offlineView.mmPlayerLayer.isShrink {
             return
         }
@@ -159,25 +164,26 @@ class ButtonOffline: UIViewController {
           })
     }
     func followBroadcast(id: Int) {
-        vibrate()
+       
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.categories != nil {
+                    
                 }
           })
     }
     func unFollowBroadcast(id: Int) {
-        vibrate()
+        
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-             
+               
          })
     }
-    private func vibrate() {
+    internal func vibrate() {
         if #available(iOS 10.0, *) {
-            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
+            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
             impactFeedbackgenerator.prepare()
             impactFeedbackgenerator.impactOccurred()
         } else {

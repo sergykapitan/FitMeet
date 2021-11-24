@@ -42,7 +42,7 @@ public class MMPlayerShrinkControl {
     }()
     lazy var landPlayView: UIView = {
         let view = UIView(frame: CGRect.init(origin: .zero, size: CGSize(width: maxLandWidth, height: maxLandHeight)))
-       // view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
+        view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
         return view
     }()
     
@@ -85,33 +85,31 @@ public class MMPlayerShrinkControl {
             self?.setFrameWith(quadrant: current, dismissVideo: false)
         })
     }
-    public func landView(onVC: UIViewController, isHiddenVC: Bool, maxWidth: CGFloat,maxHeight: CGFloat, completedToView: (()->UIView?)?) {
+    public func landView( isHiddenVC: Bool, maxWidth: CGFloat,maxHeight: CGFloat, completedToView: (()->UIView?)?) {
         if self.isShrink {
             return
         }
         self.completed = completedToView
-        self.onVC = onVC
         self.isHiddenVC = isHiddenVC
         self.maxLandWidth = maxWidth
         self.maxLandHeight = maxHeight
         
 
-        self.onVC?.presentationController?.containerView?.isUserInteractionEnabled = false
-        self.shrinkPlayView.alpha = 1.0
-        if isHiddenVC {
-            onVC.view.alpha = 0.0
-        }
+     //   self.onVC?.presentationController?.containerView?.isUserInteractionEnabled = false
+        self.landPlayView.alpha = 1.0
+      
         mmPlayerLayer.setCoverView(enable: true)
         originalLandPlayView = mmPlayerLayer.playView
         
-        UIApplication.shared.keyWindow?.addSubview(landPlayView)
+   //     UIApplication.shared.keyWindow?.addSubview(landPlayView)
+        UIApplication.shared.windows.last?.addSubview(landPlayView)
         mmPlayerLayer.playView = landPlayView
         isShrink = true
         videoRectObserver = mmPlayerLayer.observe(\.videoRect, options: [.new, .old, .initial], changeHandler: { [weak self] (_, value) in
             guard let current = self?.currentQuadrant, let new = value.newValue, (new != value.oldValue), !new.isEmpty else {
                 return
             }
-            self?.setFrameWith(quadrant: current, dismissVideo: false)
+            self?.setFrameWithLand(quadrant: current, dismissVideo: false)
         })
     }
     
@@ -194,7 +192,8 @@ public class MMPlayerShrinkControl {
                     self.onVC?.view.alpha = 1.0
                 }
             }
-            self.shrinkPlayView.frame = rect
+            //CGRect(origin: CGPoint(x: 100, y: 100), size: CGSize(width: 84.375, height: 150))
+            self.shrinkPlayView.frame = rect//(origin = (x = 801.625, y = 254), size = (width = 84.375, height = 150))
         }) { [unowned self] (_) in
             if dismissVideo {
                 CATransaction.setDisableActions(true)
@@ -204,6 +203,64 @@ public class MMPlayerShrinkControl {
                 self.mmPlayerLayer.setCoverView(enable: true)
                 self.mmPlayerLayer.playView = self.completed?() ?? self.originalPlayView
                 self.shrinkPlayView.frame.origin = .zero
+                CATransaction.setDisableActions(false)
+            }
+        }
+    }
+    fileprivate func setFrameWithLand(quadrant: VideoPositionType, dismissVideo: Bool) {
+        self.currentQuadrant = quadrant
+        var rect = landPlayView.frame
+        let maxWidth: CGFloat = self.maxWidth
+        let margin: CGFloat = 10.0
+        let size = UIScreen.main.bounds
+        let safe = UIApplication.shared.keyWindow?.safeAreaInsets ?? .zero
+        let safeTop: CGFloat = safe.top
+        let safeBottom: CGFloat = safe.bottom
+        let videoRectSize = mmPlayerLayer.videoRect.size
+        if videoRectSize != .zero {
+            if videoRectSize.width > videoRectSize.height {
+                let height = maxWidth*videoRectSize.height/videoRectSize.width
+                rect.size = CGSize(width: maxWidth, height: height)
+            } else {
+                let width = videoRectSize.width/videoRectSize.height*maxWidth
+                rect.size = CGSize(width: width, height: maxWidth)
+            }
+        } else {
+            rect.size = CGSize.init(width: 150, height: 100)
+        }
+        
+        switch quadrant {
+        case .leftTop:
+            rect.origin.x = dismissVideo ? -rect.size.width : margin
+            rect.origin.y = margin + safeTop
+        case .rightTop:
+            rect.origin.x = dismissVideo ? size.width : size.width-rect.size.width-margin
+            rect.origin.y = margin + safeTop
+        case .leftBottom:
+            rect.origin.x = dismissVideo ? -rect.size.width : margin
+            rect.origin.y = size.height-rect.size.height-margin-safeBottom
+        case .rightBottom:
+            rect.origin.x = 0//dismissVideo ? size.width : size.width-rect.size.width-margin
+            rect.origin.y = 0//size.height-rect.size.height-margin-safeBottom
+        }
+        UIView.animate(withDuration: 0.3, animations: {
+            if dismissVideo {
+                self.landPlayView.alpha = 0.0
+                if self.isHiddenVC {
+                 //   self.onVC?.view.alpha = 1.0
+                }
+            }
+            //
+            self.landPlayView.frame = CGRect(origin: CGPoint(x: 0, y:0), size: CGSize(width: size.width, height: size.height))//rect
+        }) { [unowned self] (_) in
+            if dismissVideo {
+                CATransaction.setDisableActions(true)
+               // self.onVC?.presentationController?.containerView?.isUserInteractionEnabled = true
+                self.isShrink = false
+                self.removeVideoRectObserver()
+                self.mmPlayerLayer.setCoverView(enable: true)
+                self.mmPlayerLayer.playView = self.completed?() ?? self.originalPlayView
+                self.landPlayView.frame.origin = .zero
                 CATransaction.setDisableActions(false)
             }
         }

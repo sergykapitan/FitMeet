@@ -313,8 +313,8 @@ extension MMPlayerLayer {
     public func shrinkView(onVC: UIViewController, isHiddenVC: Bool, maxWidth: CGFloat = 150.0, completedToView: (()->UIView?)?) {
         shrinkControl.shrinkView(onVC: onVC, isHiddenVC: isHiddenVC, maxWidth: maxWidth, completedToView: completedToView)
     }
-    public func landView(onVC: UIViewController, isHiddenVC: Bool, maxWidth: CGFloat,maxHeight: CGFloat, completedToView: (()->UIView?)?) {
-        shrinkControl.landView(onVC: onVC, isHiddenVC: isHiddenVC, maxWidth: maxWidth, maxHeight: maxHeight, completedToView: completedToView)
+    public func landView( isHiddenVC: Bool, maxWidth: CGFloat,maxHeight: CGFloat, completedToView: (()->UIView?)?) {
+        shrinkControl.landView( isHiddenVC: isHiddenVC, maxWidth: maxWidth, maxHeight: maxHeight, completedToView: completedToView)
     }
     public func dissmisLand(){
         shrinkControl.dismissShrink()

@@ -10,10 +10,7 @@ import UIKit
 import EasyPeasy
 
 extension PresentVC: UITableViewDataSource, UITableViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if self.mmPlayerLayer.isShrink { return }
-        self.destrtoyMMPlayerInstance()
-    }
+   
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
@@ -107,9 +104,9 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
 
-        cell.buttonLandscape.tag = indexPath.row
-        cell.buttonLandscape.addTarget(self, action: #selector(editButtonLandscape), for: .touchUpInside)
-        cell.buttonLandscape.isUserInteractionEnabled = true
+//        cell.buttonLandscape.tag = indexPath.row
+//        cell.buttonLandscape.addTarget(self, action: #selector(editButtonLandscape), for: .touchUpInside)
+//        cell.buttonLandscape.isUserInteractionEnabled = true
         
        return cell
     }
@@ -134,52 +131,52 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
         present(detailViewController, animated: true)
 
     }
-    @objc func editButtonLandscape(_ sender: UIButton) -> Void {
-     
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            guard let path = self.findCurrentPath() else { return }
-            let cell = self.findCurrentCell(path: path) as! PlayerViewCell
-            myCell = cell
-
-           guard let viewss = self.mmPlayerLayer.playView else { return }
-            cell.overlay.removeFromSuperview()
-            cell.labelLive.removeFromSuperview()
-            cell.imageLive.removeFromSuperview()
-            AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
-            
-
-            UIView.animate(withDuration: 0.3) {
-                self.view.insertSubview(viewss, aboveSubview: self.view)
-                viewss.easy.layout(Top(0),Left(0),Right(0),Bottom(0))
-                self.mmPlayerLayer.playView = cell.backgroundImage
-               
-                self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
-                cell.buttonLandscape.anchor(right:self.mmPlayerLayer.playView?.rightAnchor,bottom: self.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
-                self.view.layoutIfNeeded()
-            }
-            print("Frame = \(self.mmPlayerLayer.playView?.frame)")
-            
-            homeView.tableView.isUserInteractionEnabled = true
-      self.tabBarController?.tabBar.isHidden = true
-      self.navigationController?.isNavigationBarHidden = true
-     
-        } else {
-          
-            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-            UIView.animate(withDuration: 0.3) {
-                guard let view = self.mmPlayerLayer.playView , let cell = self.myCell else { return }
-                self.mmPlayerLayer.playView = nil
-                cell.backgroundImage.removeFromSuperview()
-                cell.buttonLandscape.removeFromSuperview()
-                view.layoutIfNeeded()
-            }
-            self.homeView.tableView.scrollToRow(at: IndexPath(row: sender.tag, section: 0), at: .top, animated: true)
-          //  self.profileView.tableView.reloadData()
-            self.tabBarController?.tabBar.isHidden = false
-            self.navigationController?.isNavigationBarHidden = false
-        }
-    }
+//    @objc func editButtonLandscape(_ sender: UIButton) -> Void {
+//
+//        sender.isSelected.toggle()
+//
+//        if sender.isSelected {
+//            guard let path = self.findCurrentPath() else { return }
+//            let cell = self.findCurrentCell(path: path) as! PlayerViewCell
+//            myCell = cell
+//
+//           guard let viewss = self.mmPlayerLayer.playView else { return }
+//            cell.overlay.removeFromSuperview()
+//            cell.labelLive.removeFromSuperview()
+//            cell.imageLive.removeFromSuperview()
+//            AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
+//
+//
+//            UIView.animate(withDuration: 0.3) {
+//                self.view.insertSubview(viewss, aboveSubview: self.view)
+//                viewss.easy.layout(Top(0),Left(0),Right(0),Bottom(0))
+//                self.mmPlayerLayer.playView = cell.backgroundImage
+//
+//                self.view.insertSubview(cell.buttonLandscape, aboveSubview: self.view)
+//                cell.buttonLandscape.anchor(right:self.mmPlayerLayer.playView?.rightAnchor,bottom: self.mmPlayerLayer.playView?.bottomAnchor,paddingRight: 40,paddingBottom: 2)
+//                self.view.layoutIfNeeded()
+//            }
+//            print("Frame = \(self.mmPlayerLayer.playView?.frame)")
+//
+//            homeView.tableView.isUserInteractionEnabled = true
+//      self.tabBarController?.tabBar.isHidden = true
+//      self.navigationController?.isNavigationBarHidden = true
+//
+//        } else {
+//
+//            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+//            UIView.animate(withDuration: 0.3) {
+//                guard let view = self.mmPlayerLayer.playView , let cell = self.myCell else { return }
+//                self.mmPlayerLayer.playView = nil
+//                cell.backgroundImage.removeFromSuperview()
+//                cell.buttonLandscape.removeFromSuperview()
+//                view.layoutIfNeeded()
+//            }
+//            self.homeView.tableView.scrollToRow(at: IndexPath(row: sender.tag, section: 0), at: .top, animated: true)
+//          //  self.profileView.tableView.reloadData()
+//            self.tabBarController?.tabBar.isHidden = false
+//            self.navigationController?.isNavigationBarHidden = false
+//        }
+//    }
  
 }
