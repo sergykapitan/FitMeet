@@ -47,27 +47,32 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
 
         cell.labelDescription.text = brodcast[indexPath.row].description
         cell.titleLabel.text = brodcast[indexPath.row].name
-
+       
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
-        if brodcast[indexPath.row].status == "OFFLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "slider")
+        if brodcast[indexPath.row].status == "PLANNED" {
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+
+        } else if brodcast[indexPath.row].status == "ONLINE" {
+            cell.imageLive.image =  #imageLiteral(resourceName: "slider")
+            cell.labelLive.text = "Live"
+            cell.imageEye.isHidden = false
+            cell.labelEye.isHidden = false
+          
+          
+        } else if brodcast[indexPath.row].status == "OFFLINE" {
+            cell.imageLive.image =  #imageLiteral(resourceName: "slider")
             cell.imageLive.setImageColor(color: .gray)
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
-        } else if brodcast[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
-        } else if brodcast[indexPath.row].status == "PLANNED" {
-            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-
+           
+         
         }
 
         let categorys = brodcast[indexPath.row].categories

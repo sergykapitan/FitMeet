@@ -52,7 +52,7 @@ final class HomeCell: UITableViewCell {
     }()
     var titleLabel: UILabel =  {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
+        label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
@@ -109,10 +109,11 @@ final class HomeCell: UITableViewCell {
     }()
     var tagView: TagListView = {
         let tag = TagListView()
-        tag.textFont = UIFont.systemFont(ofSize: 14)
+        tag.textFont = UIFont.systemFont(ofSize: 12)
         tag.tagBackgroundColor = .clear
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
+        tag.paddingX = 0
         return tag
     }()
     var buttonstartStream: UIButton = {
@@ -156,7 +157,8 @@ final class HomeCell: UITableViewCell {
         logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 36,height: 36)
         
         bottomView.addSubview(titleLabel)
-        titleLabel.anchor(top: bottomView.topAnchor, left: logoUserImage.rightAnchor, paddingTop: 8, paddingLeft: 8)
+        titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8)
+        titleLabel.centerY(inView: logoUserImage)
         
         bottomView.addSubview(buttonMore)
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
@@ -168,7 +170,7 @@ final class HomeCell: UITableViewCell {
         labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
         
         contentView.addSubview(tagView)
-        tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 8, paddingLeft: 8,paddingRight: 8)
+        tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 0, paddingLeft: 8,paddingRight: 8)
         
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,

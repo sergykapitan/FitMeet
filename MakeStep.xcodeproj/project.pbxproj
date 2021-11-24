@@ -235,6 +235,15 @@
 		A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */; };
 		A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294F0273E72A5000CBBD9 /* ProductResponce.swift */; };
 		A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = A51294F0273E72A5000CBBD9 /* ProductResponce.swift */; };
+		A542778D274D22710063BBEE /* ButtonComming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2943274D1BB500CC39BB /* ButtonComming.swift */; };
+		A542778E274D22740063BBEE /* ButtonCommingCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2945274D1BC500CC39BB /* ButtonCommingCode.swift */; };
+		A542778F274D22780063BBEE /* ExButtonComming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2947274D1BD500CC39BB /* ExButtonComming.swift */; };
+		A5427792274E44BC0063BBEE /* ButtonOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427791274E44BC0063BBEE /* ButtonOffline.swift */; };
+		A5427793274E44BC0063BBEE /* ButtonOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427791274E44BC0063BBEE /* ButtonOffline.swift */; };
+		A5427795274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427794274E44CE0063BBEE /* ButtonOfflineCode.swift */; };
+		A5427796274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427794274E44CE0063BBEE /* ButtonOfflineCode.swift */; };
+		A5427798274E44DC0063BBEE /* ExButtonOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427797274E44DC0063BBEE /* ExButtonOffline.swift */; };
+		A5427799274E44DC0063BBEE /* ExButtonOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5427797274E44DC0063BBEE /* ExButtonOffline.swift */; };
 		A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */; };
 		A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
 		A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */; };
@@ -250,6 +259,9 @@
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E293F27466EC100CC39BB /* PaddingLabel.swift */; };
 		A58E294127466EC100CC39BB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E293F27466EC100CC39BB /* PaddingLabel.swift */; };
+		A58E2944274D1BB500CC39BB /* ButtonComming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2943274D1BB500CC39BB /* ButtonComming.swift */; };
+		A58E2946274D1BC500CC39BB /* ButtonCommingCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2945274D1BC500CC39BB /* ButtonCommingCode.swift */; };
+		A58E2948274D1BD500CC39BB /* ExButtonComming.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E2947274D1BD500CC39BB /* ExButtonComming.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5027371A2F002C1500 /* CalculateVC.swift */; };
 		A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5227371A40002C1500 /* CalculateVCCode.swift */; };
@@ -491,6 +503,9 @@
 		A51294EA273D1C54000CBBD9 /* AppleProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleProduct.swift; sourceTree = "<group>"; };
 		A51294ED273D7A9F000CBBD9 /* ValidateProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateProduct.swift; sourceTree = "<group>"; };
 		A51294F0273E72A5000CBBD9 /* ProductResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductResponce.swift; sourceTree = "<group>"; };
+		A5427791274E44BC0063BBEE /* ButtonOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOffline.swift; sourceTree = "<group>"; };
+		A5427794274E44CE0063BBEE /* ButtonOfflineCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonOfflineCode.swift; sourceTree = "<group>"; };
+		A5427797274E44DC0063BBEE /* ExButtonOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExButtonOffline.swift; sourceTree = "<group>"; };
 		A5457E9D27298CFB006A8F2D /* MonetezeitionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVC.swift; sourceTree = "<group>"; };
 		A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonetezeitionVCode.swift; sourceTree = "<group>"; };
 		A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExMytariff.swift; sourceTree = "<group>"; };
@@ -505,6 +520,9 @@
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A58E293F27466EC100CC39BB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		A58E2943274D1BB500CC39BB /* ButtonComming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonComming.swift; sourceTree = "<group>"; };
+		A58E2945274D1BC500CC39BB /* ButtonCommingCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonCommingCode.swift; sourceTree = "<group>"; };
+		A58E2947274D1BD500CC39BB /* ExButtonComming.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExButtonComming.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A5950E5027371A2F002C1500 /* CalculateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVC.swift; sourceTree = "<group>"; };
 		A5950E5227371A40002C1500 /* CalculateVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVCCode.swift; sourceTree = "<group>"; };
@@ -751,6 +769,26 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		A5427790274E447F0063BBEE /* ButtonComming */ = {
+			isa = PBXGroup;
+			children = (
+				A58E2943274D1BB500CC39BB /* ButtonComming.swift */,
+				A58E2945274D1BC500CC39BB /* ButtonCommingCode.swift */,
+				A58E2947274D1BD500CC39BB /* ExButtonComming.swift */,
+			);
+			path = ButtonComming;
+			sourceTree = "<group>";
+		};
+		A542779A274E45570063BBEE /* ButtonOffline */ = {
+			isa = PBXGroup;
+			children = (
+				A5427791274E44BC0063BBEE /* ButtonOffline.swift */,
+				A5427794274E44CE0063BBEE /* ButtonOfflineCode.swift */,
+				A5427797274E44DC0063BBEE /* ExButtonOffline.swift */,
+			);
+			path = ButtonOffline;
+			sourceTree = "<group>";
+		};
 		A5457E9C27298CD1006A8F2D /* Monetezation */ = {
 			isa = PBXGroup;
 			children = (
@@ -803,6 +841,15 @@
 				A5950E59273815B1002C1500 /* Edit Monetezation */,
 			);
 			path = MyTariff;
+			sourceTree = "<group>";
+		};
+		A58E2942274D1B3100CC39BB /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				A5427790274E447F0063BBEE /* ButtonComming */,
+				A542779A274E45570063BBEE /* ButtonOffline */,
+			);
+			path = Button;
 			sourceTree = "<group>";
 		};
 		A5950E4F273719E8002C1500 /* Calculate */ = {
@@ -882,6 +929,7 @@
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
 				B4CD87E727021CD100D065ED /* ExPresenVC.swift */,
+				A58E2942274D1B3100CC39BB /* Button */,
 				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
 				B4D2B93A26E78E880080E7E3 /* Coach.swift */,
 				B4D2B93C26E78EA00080E7E3 /* CoachCode.swift */,
@@ -1898,6 +1946,7 @@
 				A512943D273A6EB7000CBBD9 /* TokenWatcher.swift in Sources */,
 				A512943E273A6EB7000CBBD9 /* Timetable.swift in Sources */,
 				A512943F273A6EB7000CBBD9 /* PresentVC.swift in Sources */,
+				A5427793274E44BC0063BBEE /* ButtonOffline.swift in Sources */,
 				A5129440273A6EB7000CBBD9 /* StreamResponce.swift in Sources */,
 				A5129441273A6EB7000CBBD9 /* ParentViewController.swift in Sources */,
 				A5129442273A6EB7000CBBD9 /* ImagePicker.swift in Sources */,
@@ -1917,6 +1966,7 @@
 				A5129450273A6EB7000CBBD9 /* ExSendCoach.swift in Sources */,
 				A5129451273A6EB7000CBBD9 /* CustomActionSheetContainer.swift in Sources */,
 				A58E294127466EC100CC39BB /* PaddingLabel.swift in Sources */,
+				A5427799274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */,
 				A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */,
 				A5129454273A6EB7000CBBD9 /* SignUpViewController.swift in Sources */,
@@ -1970,6 +2020,7 @@
 				A5129483273A6EB7000CBBD9 /* ActionSheetTransitionManager.swift in Sources */,
 				A5129484273A6EB7000CBBD9 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				A5129485273A6EB7000CBBD9 /* ProfileVCCode.swift in Sources */,
+				A542778D274D22710063BBEE /* ButtonComming.swift in Sources */,
 				A5129486273A6EB7000CBBD9 /* DemoSource.swift in Sources */,
 				A5129487273A6EB7000CBBD9 /* MainTabBarViewController.swift in Sources */,
 				A5129488273A6EB7000CBBD9 /* StreamViewModel.swift in Sources */,
@@ -1980,6 +2031,7 @@
 				A512948D273A6EB7000CBBD9 /* SearchVC.swift in Sources */,
 				A512948E273A6EB7000CBBD9 /* NewStartStream.swift in Sources */,
 				A512948F273A6EB7000CBBD9 /* ChanellListViewModel.swift in Sources */,
+				A542778F274D22780063BBEE /* ExButtonComming.swift in Sources */,
 				A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */,
 				A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */,
 				A5129492273A6EB7000CBBD9 /* VCcontroller.swift in Sources */,
@@ -2033,9 +2085,11 @@
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
+				A5427796274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */,
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
+				A542778E274D22740063BBEE /* ButtonCommingCode.swift in Sources */,
 				A51294C6273A6EB7000CBBD9 /* BroadcastResponce.swift in Sources */,
 				A51294C7273A6EB7000CBBD9 /* MyTariff.swift in Sources */,
 				A51294C8273A6EB7000CBBD9 /* ChatCell.swift in Sources */,
@@ -2122,6 +2176,7 @@
 				B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */,
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
+				A5427792274E44BC0063BBEE /* ButtonOffline.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
 				B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */,
@@ -2141,6 +2196,7 @@
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
 				A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */,
+				A5427798274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
@@ -2194,6 +2250,7 @@
 				B47828A526CFF40C0068292A /* ActionSheetTransitionManager.swift in Sources */,
 				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
+				A58E2944274D1BB500CC39BB /* ButtonComming.swift in Sources */,
 				A5B635B6271863EF0097A127 /* DemoSource.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
 				B4BAAD5B2639B3DC00D2D6AE /* StreamViewModel.swift in Sources */,
@@ -2204,6 +2261,7 @@
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */,
 				B49376A72639956600D38EC3 /* ChanellListViewModel.swift in Sources */,
+				A58E2948274D1BD500CC39BB /* ExButtonComming.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */,
@@ -2257,9 +2315,11 @@
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
+				A5427795274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
+				A58E2946274D1BC500CC39BB /* ButtonCommingCode.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
 				A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,

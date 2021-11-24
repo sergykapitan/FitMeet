@@ -485,6 +485,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
        // self.profileView.tableView.reloadData()
 
     }
+ 
 
     func bindingChanell(status: String,userId: String) {
         takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: "\(userId)")//20
@@ -493,7 +494,9 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 if response.data != nil  {
                 
                     self.brodcast.removeAll()// = []
-                    self.brodcast = response.data!.reversed()
+                   // self.brodcast = response.data!.reversed()
+                    let convertedArray = response.data?.sorted{$0.scheduledStartDate?.compare($1.scheduledStartDate!) == .orderedDescending}
+                    self.brodcast = convertedArray!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.profileView.tableView.reloadData()
@@ -507,7 +510,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 if response.data != nil  {
 
                     self.brodcast.removeAll()// = []
-                    self.brodcast = response.data!
+                    self.brodcast = response.data!.reversed()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.profileView.tableView.reloadData()

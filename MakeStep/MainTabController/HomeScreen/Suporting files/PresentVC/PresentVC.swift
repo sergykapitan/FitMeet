@@ -721,6 +721,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         actionButton ()
+        actionOnline()
         self.view.addSubview(self.homeView.viewChat)
         SocketIOManager.sharedInstance.getTokenChat()
         layout()
@@ -861,29 +862,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
 
 
-    @objc func actionOnline() {
-        homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
-        homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        self.mmPlayerLayer.invalidate()
-        self.indexTab = 0
-        guard let userId = user?.id else { return }
-        bindingChanell(status: "ONLINE", userId: "\(userId)")
-
-        
-        homeView.imagePromo.isHidden = false
-        homeView.labelCategory.isHidden = false
-        homeView.labelNameBroadcast.isHidden = false
-        homeView.labelStreamDescription.isHidden = false
-        homeView.labelStreamInfo.isHidden = false
-        homeView.buttonChat.isHidden = false
-        homeView.buttonLike.isHidden = false
-        homeView.buttonMore.isHidden  = false
-        homeView.tableView.isHidden = true
-        homeView.buttonLandScape.isHidden = false
-        
-
-    }
+  
     @objc func actionLike() {
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
@@ -1094,14 +1073,55 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
              
          })
     }
+    let buttonOffline = ButtonOffline()
+    let buttonComming = ButtonCommingg()
+    let vv = EditProfile()
+
+    @objc func actionOnline() {
+          homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
+          homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
+          homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+        
+        
+          self.mmPlayerLayer.invalidate()
+          self.indexTab = 0
+          self.homeView.selfView.isHidden = true
+          guard let userId = user?.id else { return }
+          bindingChanell(status: "ONLINE", userId: "\(userId)")
+
+
+          homeView.imagePromo.isHidden = false
+          homeView.labelCategory.isHidden = false
+          homeView.labelNameBroadcast.isHidden = false
+          homeView.labelStreamDescription.isHidden = false
+          homeView.labelStreamInfo.isHidden = false
+          homeView.buttonChat.isHidden = false
+          homeView.buttonLike.isHidden = false
+          homeView.buttonMore.isHidden  = false
+          homeView.tableView.isHidden = true
+          homeView.buttonLandScape.isHidden = false
+        removeAllChildViewController(buttonComming)
+        removeAllChildViewController(buttonOffline)
+    //    configureChildViewController(vv, onView: homeView.selfView )
+
+      }
+    
     @objc func actionOffline() {
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        indexTab = 1
-        guard let userId = user?.id else { return }
-       
-        bindingChanellVOD(userId: "\(userId)")
+        
+        removeAllChildViewController(buttonComming)
+        removeAllChildViewController(vv)
+        configureChildViewController(buttonOffline, onView: homeView.selfView )
+        guard let userID = id else { return }
+        buttonOffline.userId = userID
+        buttonOffline.user = self.user
+//        indexTab = 1
+//        self.homeView.selfView.isHidden = true
+//        guard let userId = user?.id else { return }
+//
+ //       bindingChanellVOD(userId: "\(userId)")
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1110,19 +1130,29 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonChat.isHidden = true
         homeView.buttonLike.isHidden = true
         homeView.buttonMore.isHidden  = true
-        homeView.tableView.isHidden = false
+        homeView.tableView.isHidden = true
         homeView.buttonLandScape.isHidden = true
+        homeView.selfView.isHidden = false
 
     }
     @objc func actionComming() {
+        removeAllChildViewController(buttonOffline)
+        removeAllChildViewController(vv)
+        guard let userID = id else { return }
+        buttonComming.userId = userID
+        buttonComming.user = self.user
+        configureChildViewController(buttonComming, onView: homeView.selfView )
+        
+        
+        
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         homeView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
-        indexTab = 2
-        guard let userId = id else { return }
-        self.mmPlayerLayer.invalidate()
-        bindingChanell(status: "PLANNED", userId: "\(userId)")
-        
+//        indexTab = 2
+//        guard let userId = id else { return }
+//        self.mmPlayerLayer.invalidate()
+//        bindingChanell(status: "PLANNED", userId: "\(userId)")
+//
         homeView.imagePromo.isHidden = true
         homeView.labelCategory.isHidden = true
         homeView.labelNameBroadcast.isHidden = true
@@ -1132,7 +1162,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.buttonLike.isHidden = true
         homeView.buttonMore.isHidden  = true
         homeView.buttonLandScape.isHidden = true
-        homeView.tableView.isHidden = false
+        homeView.tableView.isHidden = true
+        homeView.selfView.isHidden = false
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {

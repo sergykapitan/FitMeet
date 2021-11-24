@@ -34,8 +34,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.data = brodcast[indexPath.row]
 
         cell.labelDescription.text = brodcast[indexPath.row].description
-        cell.titleLabel.text = brodcast[indexPath.row].name
-        
+        cell.titleLabel.text = self.user?.username//brodcast[indexPath.row].name
+        cell.buttonLike.isHidden = true
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}

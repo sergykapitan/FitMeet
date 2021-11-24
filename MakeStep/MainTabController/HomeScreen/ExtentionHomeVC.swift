@@ -29,7 +29,7 @@ extension HomeVC: UITableViewDataSource {
         cell.labelEye.isHidden = false
         
         
-        cell.titleLabel.text = listBroadcast[indexPath.row].name
+       // cell.titleLabel.text = listBroadcast[indexPath.row].name
         guard 
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
@@ -77,7 +77,6 @@ extension HomeVC: UITableViewDataSource {
             cell.labelEye.isHidden = false
 
         } else if listBroadcast[indexPath.row].status == "PLANNED" {
-          //  cell.imageLive.setImageColor(color: .gray)
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.imageEye.isHidden = true
@@ -94,6 +93,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
         cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
 
         return cell
     }

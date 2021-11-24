@@ -324,6 +324,12 @@ final class PresentCode: UIView {
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
+    let selfView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
     
     //MARK: - initial
     init() {
@@ -422,7 +428,8 @@ final class PresentCode: UIView {
                         right: cardView.rightAnchor,
                         bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        
+        cardView.addSubview(selfView)
+        selfView.anchor(top: buttonOnline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
         
         
