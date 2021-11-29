@@ -121,13 +121,13 @@ final class SignInViewControllerCode: UIView {
                            paddingTop: 46, height: 40)
         labelSignUp.centerX(inView: cardView)
         
-//        cardView.addSubview(buttonSocialNetwork)
-//        buttonSocialNetwork.anchor(top: labelSignUp.bottomAnchor,
-//                                   left: cardView.leftAnchor,
-//                                   right: cardView.rightAnchor,
-//                                   paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 39)
+        cardView.addSubview(buttonSocialNetwork)
+        buttonSocialNetwork.anchor(top: labelSignUp.bottomAnchor,
+                                   left: cardView.leftAnchor,
+                                   right: cardView.rightAnchor,
+                                   paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 39)
         cardView.addSubview(oneLine)
-        oneLine.anchor(top: labelSignUp.bottomAnchor,
+        oneLine.anchor(top: buttonSocialNetwork.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 25, paddingLeft: 10, paddingRight: 10, height: 39)

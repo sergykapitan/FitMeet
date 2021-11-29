@@ -105,7 +105,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
-       // authView.buttonSocialNetwork.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+        authView.buttonSocialNetwork.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
     }
     @objc func actionSignUp() {
         let userPhoneOreMail = authView.textFieldLogin.text
@@ -121,12 +121,16 @@ class AuthViewController: UIViewController,SignUpDelegate {
     @objc func actionSocialNetwork() {
        // authView.buttonSocialNetwork.isHidden = false
        // let share = ContextMenuItemWithImage(title: "Share", image: #imageLiteral(resourceName: "Settings"))
-       // let edit = "Edit"
-       // let delete = ContextMenuItemWithImage(title: "Delete", image: #imageLiteral(resourceName: "Settings"))
-        let button = ContextMenuItemWithImage(title: "Apple", image: #imageLiteral(resourceName: "Settings"))
+        let FaceBookButton = ContextMenuItemWithImage(title: "Facebook", image: #imageLiteral(resourceName: "facebook"))
+        let GoogleButton = ContextMenuItemWithImage(title: "Google", image: #imageLiteral(resourceName: "Google"))
+        let TwitterButton = ContextMenuItemWithImage(title: "Twitter", image: #imageLiteral(resourceName: "Vector1-3"))
+        let Applebutton = ContextMenuItemWithImage(title: "Apple", image: #imageLiteral(resourceName: "Apple"))
         
         
-        CM.items = [ button ]
+        CM.items = [ Applebutton,FaceBookButton,GoogleButton,TwitterButton ]
+        CM.MenuConstants.MenuWidth = self.authView.buttonSocialNetwork.frame.width
+        CM.MenuConstants.HorizontalMarginSpace = 17
+        CM.MenuConstants.LabelDefaultColor = UIColor(hexString: "#C4C4C4")
         CM.showMenu(viewTargeted: authView.buttonSocialNetwork, delegate: self,animated: true)
   
     }
@@ -179,18 +183,28 @@ extension AuthViewController: UITextFieldDelegate {
 extension AuthViewController : ContextMenuDelegate {
     func contextMenuDidSelect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) -> Bool {
        
-//        if index == 0 {
-//            //CM.onViewDismiss!(targetedView)
-//            let request = ASAuthorizationAppleIDProvider().createRequest()
-//            request.requestedScopes = [.fullName, .email]
-//
-//            let controller = ASAuthorizationController(authorizationRequests: [request])
-//            controller.delegate = self
-//            controller.presentationContextProvider = self
-//            controller.performRequests()
-//           // CM.closeAllViews()
-//            return false
-//        }
+        if index == 0 {
+            let request = ASAuthorizationAppleIDProvider().createRequest()
+            request.requestedScopes = [.fullName, .email]
+
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            controller.performRequests()
+            return false
+        }
+        if index == 1 {
+            print("Facebook")
+            return false
+        }
+        if index == 2 {
+            print("Google")
+            return false
+        }
+        if index == 3 {
+            print("Twitter")
+            return false
+        }
         return false
        
     }
