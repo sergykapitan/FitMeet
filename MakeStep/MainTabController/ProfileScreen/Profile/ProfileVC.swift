@@ -52,6 +52,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         print("Token = \(token)")
+        
     }
  
     func setUserProfile() {

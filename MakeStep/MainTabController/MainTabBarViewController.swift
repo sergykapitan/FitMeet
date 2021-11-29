@@ -17,15 +17,7 @@ class MainTabBarViewController: UITabBarController {
         self.tabBar.tintColor = UIColor(hexString: "#3B58A4")
       //  navigationVC.tabBarItem.image?.withTintColor(UIColor(hexString: "#3B58A4"))
         self.tabBar.barTintColor = .white
-        
-        
-        //HomeUI
-//        var home = HomeUI()
-//        home.videos = Video.allVideos()
-//        let hostVC = UIHostingController(rootView: home)
-//        hostVC.tabBarItem.image = #imageLiteral(resourceName: "Home")
-//        hostVC.tabBarItem.title = ""
-    
+
         var profile: UIViewController?
         var streamView : UIViewController?
         
@@ -55,7 +47,18 @@ class MainTabBarViewController: UITabBarController {
             appearance.configureWithOpaqueBackground()
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
+           
+
         }
+        if #available(iOS 15.0, *) {
+               let appearance2 = UITabBarAppearance()
+               appearance2.configureWithOpaqueBackground()
+               appearance2.backgroundColor = .white //or whatever your color is
+               
+               tabBar.scrollEdgeAppearance = appearance2
+               tabBar.standardAppearance = appearance2
+           }
+       
     }
     
     private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {

@@ -45,16 +45,12 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
               else { return cell}
       
        if brodcast[indexPath.row].status == "OFFLINE" {
-          
-          
            cell.imageLive.image =  #imageLiteral(resourceName: "slider")
            cell.imageLive.setImageColor(color: .gray)
            cell.labelLive.text = "Offline"
            cell.imageEye.isHidden = true
            cell.labelEye.isHidden = true
            cell.overlay.anchor(width: 75)
-      
-
         }
         
         let categorys = brodcast[indexPath.row].categories
@@ -69,13 +65,11 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
 
 
-
         if brodcast[indexPath.row].isFollow ?? false {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
-
 
 
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl

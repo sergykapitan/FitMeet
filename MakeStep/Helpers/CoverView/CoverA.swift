@@ -29,7 +29,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     }
     @IBAction func btnAction() {
         self.playLayer?.delayHideCover()
-        if playLayer?.player?.rate == 0{
+        if playLayer?.player?.rate == 0 {
             self.playLayer?.player?.play()
         } else {
             self.playLayer?.player?.pause()
@@ -43,11 +43,6 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
         
         if sender.isSelected {
         AppUtility.lockOrientation(.landscapeLeft, andRotateTo: .landscapeLeft)
-      //      self.btnLand.imageView?.image = nil
-      //      let keyWindow = UIApplication.shared.windows.first//filter {$0.isKeyWindow}.first
-      //  let key = keyWindow?.rootViewController
-      //  guard let bound = key?.view.bounds else { return }
-      //      guard let height = self.superview?.frame.height,let width = self.superview?.frame.width else { return }
 
             self.playLayer!.landView(isHiddenVC: false, maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height) { [weak self] () -> UIView? in
             
