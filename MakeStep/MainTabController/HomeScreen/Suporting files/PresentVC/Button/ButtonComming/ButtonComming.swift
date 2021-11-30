@@ -26,6 +26,8 @@ class ButtonCommingg: UIViewController {
     var url: String?
     var user: User?
     
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    
     var usersd = [Int: User]()
  
     override func loadView() {
@@ -38,7 +40,12 @@ class ButtonCommingg: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.bindingBroadcast(status: "PLANNED", userId: "\(userId)")
+        if token != nil {
+            self.bindingBroadcast(status: "PLANNED", userId: "\(userId)")
+        } else {
+            self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(userId)")
+        }
+       
      
     }
  
@@ -55,6 +62,19 @@ class ButtonCommingg: UIViewController {
 
     func bindingBroadcast(status: String,userId: String) {
         take = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                   
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.commingView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingBroadcastNotAuth(status: String,userId: String) {
+        take = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

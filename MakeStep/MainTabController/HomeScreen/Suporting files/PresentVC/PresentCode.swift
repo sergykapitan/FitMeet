@@ -124,10 +124,11 @@ final class PresentCode: UIView {
     
     var labelCategory: TagListView = {
         var tag = TagListView()
-        tag.textFont = UIFont.systemFont(ofSize: 14)
+        tag.textFont = UIFont.systemFont(ofSize: 12)
         tag.tagBackgroundColor = .clear
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
+        tag.paddingX = 0
         return tag
     }()
     var labelStreamInfo: UILabel = {
@@ -398,7 +399,7 @@ final class PresentCode: UIView {
         labelCategory.anchor(top: labelNameBroadcast.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: buttonLike.rightAnchor,
-                             paddingTop: 5, paddingLeft: 16,paddingRight: 10)
+                             paddingTop: 0, paddingLeft: 16,paddingRight: 10)
         
         cardView.addSubview(labelStreamInfo)
         labelStreamInfo.anchor(top: labelCategory.bottomAnchor,

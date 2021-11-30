@@ -17,6 +17,8 @@ class ButtonOffline: UIViewController {
     let offlineView = ButtonOfflineCode()
     var userId = 0
     var brodcast: [BroadcastResponce] = []
+    
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
 
     private var take: AnyCancellable?
     private var followBroad: AnyCancellable?
@@ -82,7 +84,12 @@ class ButtonOffline: UIViewController {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.bindingChanellVOD(userId: "\(userId)")
+        if token != nil {
+            self.bindingChanellVOD(userId: "\(userId)")
+        } else {
+            self.bindingChanellVODNotAuth(userId: "\(userId)")
+        }
+       
     }
  
       
@@ -141,6 +148,20 @@ class ButtonOffline: UIViewController {
 
     func bindingChanellVOD(userId: String) {
         take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.brodcast = self.brodcast.reversed()
+                    self.offlineView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingChanellVODNotAuth(userId: String) {
+        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

@@ -679,6 +679,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         bindingUser(id: id)
         guard let  broadId = broadId else { return }
         getMapWather(ids: [broadId])
+        
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -689,12 +690,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
+        actionOnline()
         frame = self.view.frame
         guard let broadcast = broadcast else { return }
         homeView.labelStreamDescription.text = broadcast.description
         let categorys = broadcast.categories
         let s = categorys!.map{$0.title!}
-        let arr = s.map { String("\u{0023}" + $0)}
+        var arr = [""]
+        arr = s.map { String("\u{0023}" + $0)}
+        homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
         homeView.labelNameBroadcast.text = broadcast.name
@@ -721,7 +725,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         actionButton ()
-        actionOnline()
+    //    actionOnline()
         self.view.addSubview(self.homeView.viewChat)
         SocketIOManager.sharedInstance.getTokenChat()
         layout()
@@ -885,6 +889,41 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                 }
            })
        }
+    func bindingChanellNotAutn(status: String,userId: String) {
+        takeChanell = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                self.brodcast.removeAll()
+                if response.data != nil  {
+                    
+                    self.homeView.tableView.reloadData()
+                    self.brodcast = response.data!
+                    guard let broadcast = self.brodcast.first else {
+                        self.homeView.imagePromo.addSubview(self.homeView.imageBack)
+                        self.homeView.imageBack.anchor(top: self.homeView.imagePromo.topAnchor, left: self.homeView.imagePromo.leftAnchor, right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                        let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
+                        self.homeView.imageBack.kf.setImage(with: url)
+                        return }
+                    self.homeView.labelINTVideo.text = "\(self.brodcast.count)"
+                    self.broadcast = broadcast
+                    self.homeView.labelStreamDescription.text = self.broadcast?.description
+                    let categorys = self.broadcast?.categories
+                    let s = categorys!.map{$0.title!}
+                    let arr = s.map { String("\u{0023}" + $0)}
+                    self.homeView.labelCategory.addTags(arr)
+                    self.homeView.labelCategory.delegate = self
+                    self.homeView.labelNameBroadcast.text = self.broadcast?.name
+                    self.Url = self.broadcast?.streams?.first?.hlsPlaylistUrl
+                    self.loadPlayer()
+                    SocketIOManager.sharedInstance.getTokenChat()
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    let  broadId = self.brodcast.compactMap{$0.id}
+                    self.getMapWather(ids: broadId)
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
     func bindingChanellVOD(userId: String) {
         takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
@@ -927,7 +966,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     @objc func actionSubscribe() {
         guard let channel = channel else { return }
-        if channel.isSubscribe! {
+        guard let subscribe = channel.isSubscribe else { return }
+        if subscribe {
            
         } else {
           guard let subPlans = channel.subscriptionPlans else { return }
@@ -994,8 +1034,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           self.mmPlayerLayer.invalidate()
           self.indexTab = 0
           self.homeView.selfView.isHidden = true
-          guard let userId = user?.id else { return }
-          bindingChanell(status: "ONLINE", userId: "\(userId)")
+          guard let userId = id else { return }
+        homeView.labelCategory.removeAllTags()
+        if token != nil {
+            bindingChanell(status: "ONLINE", userId: "\(userId)")
+        } else {
+            bindingChanellNotAutn(status: "ONLINE", userId: "\(userId)")
+        }
+          
 
 
           homeView.imagePromo.isHidden = false
@@ -1180,7 +1226,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
         guard let id = user.id else { return }
-        bindingChannel(id: id)
+        if token != nil {
+            bindingChannel(id: id)
+        } else {
+            bindingNotChannel(id: id)
+        }
+       
     }
     
     func bindingChannel(id: Int) {
@@ -1205,6 +1256,23 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
                         self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
                     }
+                }
+           })
+    }
+    func bindingNotChannel(id: Int) {
+        take = fitMeetChannel.listChannelsNotAuth(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data.first?.name != nil  {
+                    self.channel = response.data.last
+                    guard let channel = self.channel,let description = channel.description else { return }
+                    self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
+                   
+                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
+                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                    self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
+                    self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                    self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
                 }
            })
     }

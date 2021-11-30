@@ -121,6 +121,17 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
+    public func getBroadcastNotAuth(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=\(status)&sort=userId&userId=\(userId)", method: .get, encoding: JSONEncoding.default)
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcast")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
     public func getBroadcastPrivateID(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&sort=userId&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -136,6 +147,17 @@ class FitMeetStream {
     public func getBroadcastPrivateVOD(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=1&take=200&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  //.validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcast")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
+    public func getBroadcastPrivateVODNotAuth(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=1&take=200&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default)
+                 .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
