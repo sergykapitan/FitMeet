@@ -35,6 +35,8 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
   
     let categoryView = CategoryBroadcastCode()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
+    
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
    
     var sortListCategory: [BroadcastResponce] = []
     var categoryid: Int?
@@ -82,8 +84,13 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        binding(categoryId: categoryid ?? 30)
-       // title = categoryTitle
+        if token != nil {
+            binding(categoryId: categoryid ?? 30)
+        } else {
+            self.bindingNotAuth(categoryId: categoryid ?? 30)
+        }
+        
+        title = sortListCategory.first?.name
     
     }
     override func viewDidLoad() {
@@ -219,6 +226,17 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in           
+                if response.data != nil  {
+                    self.listBroadcast = response.data!
+                    self.sortListCategory = response.data!
+                    self.categoryView.tableView.reloadData()
+                }
+        })
+    }
+    func bindingNotAuth(categoryId: Int) {
+        takeBroadcast = fitMeetStream.getBroadcastCategoryIdNotAuth(categoryId: categoryId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.sortListCategory = response.data!

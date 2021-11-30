@@ -36,6 +36,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     
     private let refreshControl = UIRefreshControl()
     private let searchController = UISearchController(searchResultsController: nil)
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
     // MARK: - LifiCicle
     
@@ -46,20 +47,17 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        if #available(iOS 15.0, *) {
-//            let appearance = UITabBarAppearance()
-//            appearance.configureWithOpaqueBackground()
-//            appearance.backgroundColor = .white
-//            self.tabBarController?.tabBar.standardAppearance = appearance
-//            self.tabBarController?.tabBar.scrollEdgeAppearance = self.tabBarController?.tabBar.standardAppearance
-//        }
 
         self.navigationController?.navigationBar.isTranslucent = false
         navigationController?.navigationBar.backgroundColor = .white
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        binding()
+        if token != nil {
+            binding()
+        } else {
+            bindingNotAuth()
+        }
     }
 
     override func loadView() {
@@ -69,7 +67,6 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMainView()
-       
         actionButton()
 
     }
@@ -127,7 +124,12 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        binding()
+        if token != nil {
+            binding()
+        } else {
+            bindingNotAuth()
+        }
+        
         filtredBroadcast = listBroadcast
         self.searchView.collectionView.reloadData()
     }
@@ -163,8 +165,12 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#3B58A4")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
+        if token != nil {
+           bindingLikes()
+        } else {
+          bindingLikesNot()
+        }
         
-        bindingLikes()
        
     }
     @objc func actionViewers() {
@@ -226,8 +232,30 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
                 }
         })
     }
+    func bindingNotAuth() {
+        takeBroadcast = fitMeetStream.getCategory()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast = response.data!
+                    self.filtredBroadcast = response.data!
+                    self.searchView.collectionView.reloadData()
+                }
+        })
+    }
     func bindingLikes() {
         takeBroadcast = fitMeetStream.getCategoryPrivate()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.filtredBroadcast.removeAll()
+                    self.filtredBroadcast = response.data!.filter { $0.isFollow ?? false}
+                    self.searchView.collectionView.reloadData()
+                }
+        })
+    }
+    func bindingLikesNot() {
+        takeBroadcast = fitMeetStream.getCategory()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

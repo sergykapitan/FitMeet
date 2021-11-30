@@ -33,6 +33,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     var listCategory: [Datum] = []
     var filerlistCategory: [Datum] = []
     
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    
     var broadcast:BroadcastResponce?
     
     var channelUser: ChannelResponce?
@@ -56,7 +58,11 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
        
         if index == 0 {
             self.index = index
-            binding(name: "a")
+            if token != nil {
+                self.binding(name: "a")
+            } else {
+                self.bindingNotAuth(name: "a")
+            }
             self.searchView.tableView.reloadData()
         }
         if index == 1 {
@@ -90,7 +96,12 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         setupSearchBar()
-        binding(name: "a")
+        if token != nil {
+            self.binding(name: "a")
+        } else {
+            self.bindingNotAuth(name: "a")
+        }
+        
        
         
 
@@ -111,9 +122,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         setupMainView()
         makeTableView()
         makeNavItem()
-        binding(name: "a")
-        getUsers(name: "a")
-        getCategory(name: "a")
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
         searchView.segmentControll.delegate = self
 
@@ -122,6 +130,18 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     // MARK: - Metods
     func binding(name: String) {
         takeBroadcast = fitMeetStream.getAllBroadcastPrivate(name: name)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast = response.data!
+                    self.filtredBroadcast = self.listBroadcast
+                    self.searchView.tableView.reloadData()
+                 
+                }
+          })
+    }
+    func bindingNotAuth(name: String) {
+        takeBroadcast = fitMeetStream.getAllBroadcastNotAuth(name: name)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
@@ -229,7 +249,11 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        binding(name: "a")
+        if token != nil {
+            self.binding(name: "a")
+        } else {
+            self.bindingNotAuth(name: "a")
+        }
         stopSpiners()
        }
     private func makeTableView() {
@@ -282,7 +306,12 @@ extension SearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if index == 0 {
             let searchBar = searchController.searchBar
-            binding(name: searchBar.text!)
+          //  binding(name: searchBar.text!)
+            if token != nil {
+                self.binding(name: searchBar.text!)
+            } else {
+                self.bindingNotAuth(name: searchBar.text!)
+            }
             
         }
         if index == 1 {
