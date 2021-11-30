@@ -21,6 +21,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 binding()
             } else {
                 bindingNotAuht()
+                self.homeView.tableView.reloadData()
             }
         }
         if index == 1 {
@@ -219,13 +220,42 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
+                    self.homeView.tableView.isHidden = false
+                    self.homeView.label.isHidden = true
+                    self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
+                    self.bindingNotPlanned()
+                } else {
+                    self.listBroadcast.removeAll()
+                    self.bindingNotPlanned()
+                }
+        })
+    }
+    func bindingNotPlanned() {
+        takePlan = fitMeetStream.getNotPlanBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast.append(contentsOf: response.data!)
+                    self.bindingNotOff()
+                } else {
+                    self.bindingNotOff()
+                }
+            })
+    }
+    func bindingNotOff() {
+        takeOff = fitMeetStream.getNotOffBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast.append(contentsOf: response.data!)
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
                     self.refreshControl.endRefreshing()
+                    self.bindingCategory()
                 }
-        })
+            })
     }
 
     func getMapWather(ids: [Int])   {

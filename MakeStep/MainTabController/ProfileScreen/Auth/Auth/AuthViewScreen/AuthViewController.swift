@@ -119,15 +119,14 @@ class AuthViewController: UIViewController,SignUpDelegate {
         self.present(signUpVC, animated: true, completion: nil)
     }
     @objc func actionSocialNetwork() {
-       // authView.buttonSocialNetwork.isHidden = false
-       // let share = ContextMenuItemWithImage(title: "Share", image: #imageLiteral(resourceName: "Settings"))
-        let FaceBookButton = ContextMenuItemWithImage(title: "Facebook", image: #imageLiteral(resourceName: "facebook"))
-        let GoogleButton = ContextMenuItemWithImage(title: "Google", image: #imageLiteral(resourceName: "Google"))
-        let TwitterButton = ContextMenuItemWithImage(title: "Twitter", image: #imageLiteral(resourceName: "Vector1-3"))
-        let Applebutton = ContextMenuItemWithImage(title: "Apple", image: #imageLiteral(resourceName: "Apple"))
+     
+      //  let FaceBookButton = ContextMenuItemWithImage(title: "Facebook", image: #imageLiteral(resourceName: "facebook"))
+      //  let GoogleButton = ContextMenuItemWithImage(title: "Google", image: #imageLiteral(resourceName: "Google"))
+      //  let TwitterButton = ContextMenuItemWithImage(title: "Twitter", image: #imageLiteral(resourceName: "Vector1-3"))
+        let Applebutton = ContextMenuItemWithImage(title: "Sign in with Apple", image: #imageLiteral(resourceName: "Apple"))
         
         
-        CM.items = [ Applebutton,FaceBookButton,GoogleButton,TwitterButton ]
+        CM.items = [ Applebutton ]
         CM.MenuConstants.MenuWidth = self.authView.buttonSocialNetwork.frame.width
         CM.MenuConstants.HorizontalMarginSpace = 17
         CM.MenuConstants.LabelDefaultColor = UIColor(hexString: "#C4C4C4")
