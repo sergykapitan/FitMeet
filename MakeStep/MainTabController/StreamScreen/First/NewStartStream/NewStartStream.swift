@@ -160,7 +160,15 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.buttonContinue.isUserInteractionEnabled = false
         
             authView.textFieldCategory.didSelect { (ff, _, _) in
-            self.authView.tagView.addTag(ff)
+
+                let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
+                if j.isEmpty {
+                    self.authView.tagView.addTag(ff)
+                } else {
+                    Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+                }
+                
+                
             let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
             self.IdCategory.append(contentsOf: p)
             self.authView.tagView.layoutSubviews()

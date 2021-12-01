@@ -89,13 +89,22 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
 
        
         textViewFavoriteCategories.didSelect { (ff, _, _) in
-            self.profileView.tagView.addTag(ff)
+            
+            let j =  self.profileView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
+            
+            if j.isEmpty {
+                self.profileView.tagView.addTag(ff)
+            } else {
+                Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            }
+
             let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
             self.IdCategory.append(contentsOf: p)
             self.profileView.tagView.layoutSubviews()
             self.textViewFavoriteCategories.text = ""
             
         }
+        self.textViewFavoriteCategories.easy.layout(Height(>=39))
     }
    
     override func viewWillAppear(_ animated: Bool) {
@@ -385,22 +394,20 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
 
         self.textViewFavoriteCategories.font =  UIFont.systemFont(ofSize: 18)
         self.view.addSubview(self.textViewFavoriteCategories)
-      //  self.textViewFavoriteCategories.isScrollEnabled = false
-        self.textViewFavoriteCategories.easy.layout(Left(16),Right(16),Height(maxHeight).when({[unowned self] in self.isOversized}))
-        self.textViewFavoriteCategories.anchor(top:profileView.labelFavoriteCategories.bottomAnchor,
+        self.textViewFavoriteCategories.anchor(
+                     top:profileView.labelFavoriteCategories.bottomAnchor,
                      left: profileView.cardView.leftAnchor,
-                    // right: profileView.scroll.rightAnchor,
+                     right: profileView.scroll.rightAnchor,
                      paddingTop: 8,paddingLeft: 16,paddingRight: 16)
        
         self.textViewFavoriteCategories.layer.cornerRadius = 19
-    //    self.textViewFavoriteCategories.backgroundColor = UIColor(hexString: "F9F9F9")
-//        self.textViewFavoriteCategories.attributedPlaceholder =
-//            NSAttributedString(string: "Available for...", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        self.textViewFavoriteCategories.clipsToBounds = true
+        self.textViewFavoriteCategories.selectedRowColor = UIColor(hexString: "F9F9F9")
         self.textViewFavoriteCategories.setLeftPaddingPoints(25)
         self.textViewFavoriteCategories.textColor = .black
         self.textViewFavoriteCategories.layer.borderWidth = 1
         self.textViewFavoriteCategories.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-      //  textViewFavoriteCategories.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
+     
         view.addSubview(profileView.tagView)
        
         profileView.tagView.anchor(top:textViewFavoriteCategories.topAnchor, left: textViewFavoriteCategories.leftAnchor, right: textViewFavoriteCategories.rightAnchor, paddingTop: 5,paddingLeft: 10, paddingRight: 40)

@@ -104,6 +104,8 @@ final class EditChannelCode: UIView {
         tv.textColor = .black
         tv.layer.borderWidth = 1
         tv.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        tv.clipsToBounds = true
+        tv.selectedRowColor = UIColor(hexString: "F9F9F9")
         return tv
     }()
 
