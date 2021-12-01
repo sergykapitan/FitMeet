@@ -46,7 +46,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     private var taskStream: AnyCancellable?
     
     
-    let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+   // let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
     let userId = UserDefaults.standard.string(forKey: Constants.userID)
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
@@ -71,7 +71,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
    // let request: URLRequest?
     
     private var dropDown: DropDownTextField!
-    private var flavourOptions = ["Chocolate", "Vanilla", "Strawberry", "Banana", "Lime"]
+    
     
     
     override  var shouldAutorotate: Bool {
@@ -261,7 +261,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             onlyForSubscribers = false
         }
         
-        print("Guasrd2 === \(isPlan)\n \(date) \n \(onlyForSubscribers) \n \(onlyForSponsors)")
+       
         guard let isP = isPlan,
               let d = date,
               let sponsor = onlyForSponsors,
@@ -331,7 +331,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         takeChannel = fitMeetStream.editBroadcastId(id: id,
                                                     broadcast: EditBroadcast(
                                                         name: name,
-                                                        type: "STANDARD",
+                                                       // type: "STANDARD",
                                                         access: "ALL",
                                                         hasChat: true,
                                                         scheduledStartDate: date,

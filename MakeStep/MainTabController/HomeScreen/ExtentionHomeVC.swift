@@ -22,8 +22,8 @@ extension HomeVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-        
-        cell.setImage(image: listBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        //listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??
+        cell.setImage(image:  listBroadcast[indexPath.row].previewPath ??  "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
         cell.imageEye.isHidden = false
         cell.labelEye.isHidden = false

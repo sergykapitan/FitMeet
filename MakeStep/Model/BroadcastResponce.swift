@@ -36,8 +36,12 @@ struct BroadcastResponce:Codable {
     let channelIds: [Int]?
     let isFollow: Bool?
     let isSubscriber: Bool?
-    
+    let resizedPreview: [String: ResizedPreview]?
   
+}
+// MARK: - ResizedPreview
+struct ResizedPreview: Codable,Hashable {
+    let jpeg, png, webp: String?
 }
 
 // MARK: - Category

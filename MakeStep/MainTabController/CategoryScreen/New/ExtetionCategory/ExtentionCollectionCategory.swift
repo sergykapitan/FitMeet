@@ -21,7 +21,8 @@ extension CategoryVC: UICollectionViewDataSource {
  
         
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as? CategoryCell else { return CategoryCell()}
-        let newUrl = URL(string:filtredBroadcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_eee66711-a824-415f-a64e-3e0857e37956.jpeg")
+        let newUrl = URL(string:filtredBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_eee66711-a824-415f-a64e-3e0857e37956.jpeg")
+       
         guard let url = newUrl,
               let title = filtredBroadcast[indexPath.row].title else { return cell }
         

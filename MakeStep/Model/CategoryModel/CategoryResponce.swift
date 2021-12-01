@@ -20,6 +20,7 @@ struct Datum: Codable ,Hashable{
     let id: Int?
     let deleted, name, title, datumDescription: String?
     let previewPath: String?
+    let resizedPreview: [String: ResizedPreview]?
     let followersCount: Int
     let rate: Double?
     let isNew, isPopular : Bool
@@ -34,5 +35,9 @@ enum CreatedAt: String, Codable ,Hashable{
 enum Deleted: String, Codable ,Hashable{
     case notDeleted = "NOT_DELETED"
 }
+// MARK: - ResizedPreview
+//struct ResizedPreview: Codable,Hashable {
+//    let jpeg, png, webp: String?
+//}
 
 

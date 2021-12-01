@@ -9,7 +9,7 @@ import Foundation
 
 // MARK: - EditBroadcast
 struct EditBroadcast: Codable {
-    let name, type, access: String?
+    let name, access: String?
     let hasChat: Bool?
     let scheduledStartDate: String?
     let onlyForSponsors, onlyForSubscribers: Bool?
@@ -19,15 +19,4 @@ struct EditBroadcast: Codable {
     let description: String?
     let price: Int?
     
-
-//    enum CodingKeys: String, CodingKey {
-//        case name, type, access, hasChat, scheduledStartDate, onlyForSponsors, onlyForSubscribers
-//        case addCategoryIDS
-//        case removeCategoryIDS
-//        case previewPath, rate
-//        case editBroadcastDescription
-//        case price
-//        case description
-//    
-//    }
 }
