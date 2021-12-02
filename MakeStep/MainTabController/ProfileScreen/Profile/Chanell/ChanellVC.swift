@@ -35,17 +35,9 @@ extension State {
 class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
     
     var offsetObservation: NSKeyValueObservation?
-    
-//    lazy var mmPlayerLayer: MMPlayerLayer = {
-//        let l = MMPlayerLayer()
-//        l.cacheType = .memory(count: 5)
-//        l.coverFitType = .fitToPlayerView
-//        l.videoGravity = AVLayerVideoGravity.resizeAspect
-//        l.replace(cover: CoverA.instantiateFromNib())
-//        l.repeatWhenEnd = true
-//        return l
-//    }()
-    
+    let videoVC = VideosVC()
+    let timeTable = TimetableVC()
+
     func change(to index: Int) {
         
         print("segmentedControl index changed to \(index)")
@@ -58,16 +50,25 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
 //            profileView.labelStreamInfo.isHidden = false
 //            profileView.labelStreamDescription.isHidden = false
 //            profileView.tableView.isHidden = true
+            
+            removeAllChildViewController(timeTable)
+            configureChildViewController(videoVC, onView: profileView.selfView )
+            
+//            guard let userID = id else { return }
+//            buttonOffline.userId = userID
+//            buttonOffline.user = self.user
         }
         if index == 1 {
-            profileView.buttonOnline.isHidden = true
-            profileView.buttonOffline.isHidden = true
-            profileView.buttonComing.isHidden = true
-            profileView.imagePromo.isHidden = true
-            profileView.labelCategory.isHidden = true
-            profileView.labelStreamInfo.isHidden = true
-            profileView.labelStreamDescription.isHidden = true
-            profileView.tableView.isHidden = false
+//            profileView.buttonOnline.isHidden = true
+//            profileView.buttonOffline.isHidden = true
+//            profileView.buttonComing.isHidden = true
+//            profileView.imagePromo.isHidden = true
+//            profileView.labelCategory.isHidden = true
+//            profileView.labelStreamInfo.isHidden = true
+//            profileView.labelStreamDescription.isHidden = true
+//            profileView.tableView.isHidden = false
+            removeAllChildViewController(videoVC)
+            configureChildViewController(timeTable, onView: profileView.selfView )
         }
    
     }
@@ -159,8 +160,9 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
-        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
+        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"," Timetable"])//,
         profileView.segmentControll.delegate = self
+        
         actionOnline()
         layout()
         profileView.viewTop.addGestureRecognizer(panRecognizer)
@@ -240,10 +242,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.layoutIfNeeded()
         profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
+        
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         AppUtility.lockOrientation(.portrait)
-       
+        configureChildViewController(videoVC, onView: profileView.selfView )
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -251,6 +254,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         profileView.imageLogoProfile.makeRounded()
         setUserProfile()
         actionOffline()
+       
     }
     deinit {
         offsetObservation?.invalidate()

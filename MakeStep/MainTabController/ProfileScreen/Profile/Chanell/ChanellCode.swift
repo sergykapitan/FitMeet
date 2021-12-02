@@ -231,7 +231,12 @@ final class ChanellCode: UIView {
 //        button.layer.cornerRadius = 13
 //        return button
 //    }()
-    
+    let selfView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -265,9 +270,6 @@ final class ChanellCode: UIView {
         tableView.anchor(top: buttonOffline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                
 
-       
-        
-        
         cardView.addSubview(buttonComing)
         buttonComing.anchor(top: segmentControll.bottomAnchor, left: buttonOffline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
@@ -286,16 +288,15 @@ final class ChanellCode: UIView {
 //        cardView.addSubview(buttonstartStream)
 //        buttonstartStream.anchor( bottom: imagePromo.bottomAnchor, paddingBottom: 30, width: 74, height: 26)
 //        buttonstartStream.centerX(inView: imagePromo)
-        
+        cardView.addSubview(selfView)
+        selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
     
 
     }
-    //,imagepromo: String
+  
     func setImage(image:String) {
         let url = URL(string: image)
-    //    let urlPromo = URL(string: imagepromo)
         imageLogoProfile.kf.setImage(with: url)
-     //   imagePromo.kf.setImage(with: urlPromo)
     }
     func setLabel(description: String,category: String) {
         labelCategory.text = category

@@ -255,6 +255,16 @@
 		A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
 		A54F9B8E27327EE1008E7E60 /* Purchases.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8D27327EE1008E7E60 /* Purchases.swift */; };
 		A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */; };
+		A5671E892757A2AE00EE4191 /* VideosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E882757A2AE00EE4191 /* VideosVC.swift */; };
+		A5671E8B2757A2BF00EE4191 /* VideosVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E8A2757A2BF00EE4191 /* VideosVCCode.swift */; };
+		A5671E8C2757A2BF00EE4191 /* VideosVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E8A2757A2BF00EE4191 /* VideosVCCode.swift */; };
+		A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E882757A2AE00EE4191 /* VideosVC.swift */; };
+		A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E8E2757A2D500EE4191 /* TimetableVC.swift */; };
+		A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E8E2757A2D500EE4191 /* TimetableVC.swift */; };
+		A5671E922757A2E000EE4191 /* TimetableVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E912757A2E000EE4191 /* TimetableVCCode.swift */; };
+		A5671E932757A2E000EE4191 /* TimetableVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E912757A2E000EE4191 /* TimetableVCCode.swift */; };
+		A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E972757ACC100EE4191 /* ExTimetableVc.swift */; };
+		A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E972757ACC100EE4191 /* ExTimetableVc.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58E293F27466EC100CC39BB /* PaddingLabel.swift */; };
@@ -517,6 +527,11 @@
 		A54F9B8B27315CF8008E7E60 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
 		A54F9B8D27327EE1008E7E60 /* Purchases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Purchases.swift; sourceTree = "<group>"; };
 		A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribeVCCode.swift; sourceTree = "<group>"; };
+		A5671E882757A2AE00EE4191 /* VideosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosVC.swift; sourceTree = "<group>"; };
+		A5671E8A2757A2BF00EE4191 /* VideosVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideosVCCode.swift; sourceTree = "<group>"; };
+		A5671E8E2757A2D500EE4191 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
+		A5671E912757A2E000EE4191 /* TimetableVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVCCode.swift; sourceTree = "<group>"; };
+		A5671E972757ACC100EE4191 /* ExTimetableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExTimetableVc.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A58E293F27466EC100CC39BB /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
@@ -829,6 +844,25 @@
 			path = IAPManager;
 			sourceTree = "<group>";
 		};
+		A5671E862757A28200EE4191 /* Videos */ = {
+			isa = PBXGroup;
+			children = (
+				A5671E882757A2AE00EE4191 /* VideosVC.swift */,
+				A5671E8A2757A2BF00EE4191 /* VideosVCCode.swift */,
+			);
+			path = Videos;
+			sourceTree = "<group>";
+		};
+		A5671E872757A28D00EE4191 /* Timetable */ = {
+			isa = PBXGroup;
+			children = (
+				A5671E8E2757A2D500EE4191 /* TimetableVC.swift */,
+				A5671E912757A2E000EE4191 /* TimetableVCCode.swift */,
+				A5671E972757ACC100EE4191 /* ExTimetableVc.swift */,
+			);
+			path = Timetable;
+			sourceTree = "<group>";
+		};
 		A57BBFE32728082A00734A28 /* MyTariff */ = {
 			isa = PBXGroup;
 			children = (
@@ -983,6 +1017,8 @@
 				B4163829268B09BB005BAA46 /* ChanellVC.swift */,
 				B416382D268B09CF005BAA46 /* ChanellCode.swift */,
 				B48868FA26FB2F3800DD12A9 /* ExChanellVC.swift */,
+				A5671E872757A28D00EE4191 /* Timetable */,
+				A5671E862757A28200EE4191 /* Videos */,
 			);
 			path = Chanell;
 			sourceTree = "<group>";
@@ -1888,6 +1924,8 @@
 			files = (
 				A5129404273A6EB7000CBBD9 /* IAPManager.swift in Sources */,
 				A5129405273A6EB7000CBBD9 /* ChatVC.swift in Sources */,
+				A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */,
+				A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				A5129406273A6EB7000CBBD9 /* CustomActionSheet.swift in Sources */,
 				A5129407273A6EB7000CBBD9 /* SearchVCCell.swift in Sources */,
 				A5129408273A6EB7000CBBD9 /* Message.swift in Sources */,
@@ -1912,6 +1950,7 @@
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
 				A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */,
 				A512941D273A6EB7000CBBD9 /* EXDelegate.swift in Sources */,
+				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
 				A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */,
 				A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */,
 				A5129420273A6EB7000CBBD9 /* ChatVCPlayerCode.swift in Sources */,
@@ -1995,6 +2034,7 @@
 				A512946B273A6EB7000CBBD9 /* CalendarClass.swift in Sources */,
 				A512946C273A6EB7000CBBD9 /* PhoneCode.swift in Sources */,
 				A512946D273A6EB7000CBBD9 /* PlayerView.swift in Sources */,
+				A5671E932757A2E000EE4191 /* TimetableVCCode.swift in Sources */,
 				A512946E273A6EB7000CBBD9 /* HomeCell.swift in Sources */,
 				A512946F273A6EB7000CBBD9 /* SwipeableView.swift in Sources */,
 				A5129470273A6EB7000CBBD9 /* HomeVC.swift in Sources */,
@@ -2089,6 +2129,7 @@
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
+				A5671E8C2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
 				A542778E274D22740063BBEE /* ButtonCommingCode.swift in Sources */,
 				A51294C6273A6EB7000CBBD9 /* BroadcastResponce.swift in Sources */,
 				A51294C7273A6EB7000CBBD9 /* MyTariff.swift in Sources */,
@@ -2118,6 +2159,8 @@
 			files = (
 				A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */,
 				B4B113A7269739090006CA5A /* ChatVC.swift in Sources */,
+				A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */,
+				A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */,
@@ -2166,6 +2209,7 @@
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
+				A5671E8B2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
 				B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */,
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				A5950E5B273815CF002C1500 /* EditMonetVC.swift in Sources */,
@@ -2192,6 +2236,7 @@
 				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
+				A5671E892757A2AE00EE4191 /* VideosVC.swift in Sources */,
 				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
@@ -2224,6 +2269,7 @@
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
+				A5671E922757A2E000EE4191 /* TimetableVCCode.swift in Sources */,
 				A5B635A8271836120097A127 /* PlayerView.swift in Sources */,
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */,
