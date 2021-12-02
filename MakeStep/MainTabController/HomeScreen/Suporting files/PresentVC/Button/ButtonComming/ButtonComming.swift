@@ -19,14 +19,22 @@ class ButtonCommingg: UIViewController {
 
     private var take: AnyCancellable?
     private var followBroad: AnyCancellable?
+    private var taskStream: AnyCancellable?
+    private var startStream: AnyCancellable?
+    
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     var url: String?
     var user: User?
+    var broadcast:  BroadcastResponce?
+
+    var myuri: String?
+    var myPublish: String?
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     
     var usersd = [Int: User]()
  
@@ -111,6 +119,52 @@ class ButtonCommingg: UIViewController {
              
          })
     }
+    func nextView(broadcastId: Int )  {
+         startStream = fitMeetStream.startBroadcastId(id: broadcastId)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if let id = response.id  {
+                        self.broadcast = response
+                        UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+                        self.fetchStream(id: self.broadcast?.id, name: response.name)
+                    }
+            })
+    }
+    func fetchStream(id:Int?,name: String?) {
+            let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+            guard let id = id , let name = name , let userId = UserId  else{ return }
+            let usId = Int(userId)
+            guard let usID = usId else { return }
+            taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
+                .mapError({ (error) -> Error in
+                      print(error)
+                       return error })
+                     .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                        guard let url = response.url else { return }
+                        UserDefaults.standard.set(url, forKey: Constants.urlStream)
+                        let twoString = self.removeUrl(url: url)
+                        self.myuri = twoString.0
+                        self.myPublish = twoString.1
+                        self.url = url
+   
+                            let navVC = LiveStreamViewController()
+                            navVC.modalPresentationStyle = .fullScreen
+                            navVC.idBroad = id
+                            guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+                            navVC.myuri = myuris
+                            navVC.myPublish = myPublishh
+                            self.present(navVC, animated: true, completion: nil)
+                         
+                        })
+                    }
+    
+    
+    func removeUrl(url: String) -> (url:String,publish: String) {
+            let fullUrlArr = url.components(separatedBy: "/")
+            let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
+            let myPublish = fullUrlArr[4]
+            return (myuri,myPublish)
+        }
     private func vibrate() {
         if #available(iOS 10.0, *) {
             let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)

@@ -40,8 +40,8 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = self.user?.fullName
         
  
-        guard let id = brodcast[indexPath.row].userId,
-              let broadcastID = self.brodcast[indexPath.row].id
+        guard let id = brodcast[indexPath.row].userId
+             // let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
       
        if brodcast[indexPath.row].status == "OFFLINE" {
@@ -74,7 +74,10 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
 
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
 
-
+        if self.usersd[id]?.id == Int(selfId!) {
+            cell.buttonLike.isHidden = true
+        } else { cell.buttonLike.isHidden = false }
+        
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         cell.buttonLike.isUserInteractionEnabled = true
@@ -101,16 +104,24 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        
+        guard let coachID = user?.id,let userID = selfId else { return }
+        if coachID == Int(userID)! {
+            let detailViewController = SendCoach()
+            actionSheetTransitionManager.height = 0.3
+            detailViewController.modalPresentationStyle = .custom
+            detailViewController.transitioningDelegate = actionSheetTransitionManager
+            detailViewController.url = self.url
+            detailViewController.broadcast = brodcast[sender.tag]
+            present(detailViewController, animated: true)
+        } else {
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
         detailViewController.url = self.url
         present(detailViewController, animated: true)
-
+        }
     }
-  
 }
 extension ButtonOffline: MMPlayerFromProtocol {
     // when second controller pop or dismiss, this help to put player back to where you want

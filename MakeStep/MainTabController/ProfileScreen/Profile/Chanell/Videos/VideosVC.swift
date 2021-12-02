@@ -32,7 +32,7 @@ class VideosVC: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      
+        self.actionOffline()
     }
     func actionButton () {
        // videoView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
@@ -44,24 +44,28 @@ class VideosVC: UIViewController {
 
     //MARK: - Selectors
     @objc func actionOffline() {
-    
-        
+       // videoView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
+        videoView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
+        videoView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+        guard let userID = id else { return }
+               buttonOffline.userId = userID
+               buttonOffline.user = self.user
+
         removeAllChildViewController(buttonComming)
         configureChildViewController(buttonOffline, onView: videoView.selfView )
-        guard let userID = id else { return }
-        buttonOffline.userId = userID
-        buttonOffline.user = self.user
-
-
+       
     }
     @objc func actionComming() {
+        videoView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
+        videoView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
+        videoView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
+        guard let userID = id else { return }
+              buttonComming.userId = userID
+              buttonComming.user = self.user
+
         removeAllChildViewController(buttonOffline)
         configureChildViewController(buttonComming, onView: videoView.selfView )
         
-        guard let userID = id else { return }
-        buttonComming.userId = userID
-        buttonComming.user = self.user
-   
     }
     private func vibrate() {
         if #available(iOS 10.0, *) {

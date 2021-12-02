@@ -76,7 +76,13 @@ extension ButtonCommingg: UITableViewDataSource, UITableViewDelegate {
 
 
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-
+        if self.usersd[id]?.id == Int(selfId!) {
+            cell.buttonLike.isHidden = true
+            cell.buttonstartStream.isHidden = false
+        } else {
+            cell.buttonLike.isHidden = false
+            cell.buttonstartStream.isHidden = true
+        }
 
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -85,7 +91,11 @@ extension ButtonCommingg: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-
+        
+        cell.buttonstartStream.tag = indexPath.row
+        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
+        cell.buttonstartStream.isUserInteractionEnabled = true
+      
       
         
        return cell
@@ -102,6 +112,17 @@ extension ButtonCommingg: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
+                guard let coachID = user?.id,let userID = selfId else { return }
+        
+                if coachID == Int(userID)! {
+                    let detailViewController = SendCoach()
+                    actionSheetTransitionManager.height = 0.3
+                    detailViewController.modalPresentationStyle = .custom
+                    detailViewController.transitioningDelegate = actionSheetTransitionManager
+                    detailViewController.url = self.url
+                    detailViewController.broadcast = brodcast[sender.tag]
+                    present(detailViewController, animated: true)
+                } else {
         
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
@@ -109,7 +130,12 @@ extension ButtonCommingg: UITableViewDataSource, UITableViewDelegate {
         detailViewController.transitioningDelegate = actionSheetTransitionManager
         detailViewController.url = self.url
         present(detailViewController, animated: true)
+        }
 
+    }
+    @objc func actionStartStream(_ sender: UIButton) {
+        guard let broadcastID = brodcast[sender.tag].id else { return }
+            self.nextView(broadcastId: broadcastID)
     }
   
 }

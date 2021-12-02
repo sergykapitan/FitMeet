@@ -88,7 +88,7 @@ final class VideosVCCode: UIView {
         buttonComing.anchor(top: cardView.topAnchor, left: buttonOffline.rightAnchor, paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
         cardView.addSubview(selfView)
-        selfView.anchor(top: buttonOffline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        selfView.anchor(top: buttonOffline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 6, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
   
 
     }

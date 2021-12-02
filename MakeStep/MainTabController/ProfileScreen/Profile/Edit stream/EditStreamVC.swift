@@ -38,7 +38,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     var image: String?
     
     var name: String = "JOPE"
-    var user: Users?
+    var user: User?
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?

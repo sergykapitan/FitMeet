@@ -15,7 +15,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     private var take: AnyCancellable?
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     @Inject var fitMeetApi: FitMeetApi
-    var user: Users?
+    var user: User?
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {

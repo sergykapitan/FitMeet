@@ -19,7 +19,8 @@ class ButtonOffline: UIViewController {
     var brodcast: [BroadcastResponce] = []
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
-
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
+    
     private var take: AnyCancellable?
     private var followBroad: AnyCancellable?
     @Inject var fitMeetApi: FitMeetApi
@@ -79,8 +80,12 @@ class ButtonOffline: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-      //  self.bindingChanellVOD(userId: "\(userId)")
+       
      
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        destrtoyMMPlayerInstance()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -91,7 +96,11 @@ class ButtonOffline: UIViewController {
         }
        
     }
- 
+    deinit {
+        offsetObservation?.invalidate()
+        offsetObservation = nil
+        print("ViewController deinit")
+    }
       
     private func createTableView() {
         offlineView.tableView.dataSource = self
@@ -134,7 +143,7 @@ class ButtonOffline: UIViewController {
             offlineView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             offlineView.mmPlayerLayer.playView = cell.backgroundImage
-            let url = URL(string: playURL)////"http://mirrors.standaloneinstaller.com/video-sample/jellyfish-25-mbps-hd-hevc.mp4"
+            let url = URL(string: playURL)
             //playURL
             offlineView.mmPlayerLayer.set(url: url)
         }

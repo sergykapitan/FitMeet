@@ -62,13 +62,13 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     }
     
     @IBAction func btnLandscapeAction(_ sender: Any) {
-        let ch = ChanellVC()
+        let ch = ButtonOffline()
         self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
             guard let self = self, let path = ch.findCurrentPath() else {return nil}
             let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
             let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
-            ch.profileView.mmPlayerLayer.set(url: url)
-            ch.profileView.mmPlayerLayer.resume()
+            ch.offlineView.mmPlayerLayer.set(url: url)
+            ch.offlineView.mmPlayerLayer.resume()
             return cell.backgroundImage
         }
        

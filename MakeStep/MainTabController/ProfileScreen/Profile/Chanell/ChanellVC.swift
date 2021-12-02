@@ -34,41 +34,26 @@ extension State {
 
 class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
     
-    var offsetObservation: NSKeyValueObservation?
+ //  var offsetObservation: NSKeyValueObservation?
     let videoVC = VideosVC()
     let timeTable = TimetableVC()
 
     func change(to index: Int) {
-        
-        print("segmentedControl index changed to \(index)")
+  
         if index == 0 {
-//            profileView.buttonOnline.isHidden = false
-//            profileView.buttonOffline.isHidden = false
-//            profileView.buttonComing.isHidden = false
-//            profileView.imagePromo.isHidden = false
-//            profileView.labelCategory.isHidden = false
-//            profileView.labelStreamInfo.isHidden = false
-//            profileView.labelStreamDescription.isHidden = false
-//            profileView.tableView.isHidden = true
-            
             removeAllChildViewController(timeTable)
             configureChildViewController(videoVC, onView: profileView.selfView )
             
-//            guard let userID = id else { return }
-//            buttonOffline.userId = userID
-//            buttonOffline.user = self.user
+            guard let userID = self.user?.id else { return }
+            videoVC.id = userID
+            videoVC.user = self.user
         }
         if index == 1 {
-//            profileView.buttonOnline.isHidden = true
-//            profileView.buttonOffline.isHidden = true
-//            profileView.buttonComing.isHidden = true
-//            profileView.imagePromo.isHidden = true
-//            profileView.labelCategory.isHidden = true
-//            profileView.labelStreamInfo.isHidden = true
-//            profileView.labelStreamDescription.isHidden = true
-//            profileView.tableView.isHidden = false
             removeAllChildViewController(videoVC)
             configureChildViewController(timeTable, onView: profileView.selfView )
+            guard let userID = self.user?.id else { return }
+            videoVC.id = userID
+            videoVC.user = self.user
         }
    
     }
@@ -103,8 +88,8 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
-    private var taskStream: AnyCancellable?
-    private var startStream: AnyCancellable?
+//    private var taskStream: AnyCancellable?
+//    private var startStream: AnyCancellable?
     
     var myCell: PlayerViewCell?
     
@@ -112,18 +97,18 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
     @Inject var fitMeetStream: FitMeetStream
-    var user: Users?
+    var user: User?
     var brodcast: [BroadcastResponce] = []
     var indexButton: Int = 0
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     var url: String?
     var usersd = [Int: User]()
     var userID = UserDefaults.standard.string(forKey: Constants.userID)
-    var broadcast:  BroadcastResponce?
-    
-   // var url: String? ??????????????
-    var myuri: String?
-    var myPublish: String?
+//    var broadcast:  BroadcastResponce?
+//    
+//   // var url: String? ??????????????
+//    var myuri: String?
+//    var myPublish: String?
     
     private var takeChannel: AnyCancellable?
     private var channels: AnyCancellable?
@@ -162,55 +147,60 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         makeNavItem()
         profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"," Timetable"])//,
         profileView.segmentControll.delegate = self
+        removeAllChildViewController(timeTable)
+        configureChildViewController(videoVC, onView: profileView.selfView )
+        guard let userID = self.user?.id else { return }
+        videoVC.id = userID
+        videoVC.user = self.user
+      //  actionOnline()
         
-        actionOnline()
         layout()
         profileView.viewTop.addGestureRecognizer(panRecognizer)
-        makeTableView()
-        profileView.imagePromo.isHidden = true
-        profileView.labelCategory.isHidden = true
-        profileView.labelStreamInfo.isHidden = true
-        profileView.labelStreamDescription.isHidden = true
-        profileView.tableView.isHidden = false
-        guard let userId = user?.id else { return }
-        bindingChanell(status: "ONLINE", userId: "\(userId)")
-        
-        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
-            
-        })
-        offsetObservation = profileView.tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
-            guard let self = self, self.presentedViewController == nil else {return}
-            NSObject.cancelPreviousPerformRequests(withTarget: self)
-            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.2)
-        }
-        profileView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            self?.updateByContentOffset()
-            self?.startLoading()
-        }
-       
-        profileView.mmPlayerLayer.fullScreenWhenLandscape = false
-      
-        profileView.mmPlayerLayer.getStatusBlock { [weak self] (status) in
-            switch status {
-            case .failed(let err):
-                let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                self?.present(alert, animated: true, completion: nil)
-            case .ready:
-                print("Ready to Play")
-            case .playing:
-                print("Playing")
-            case .pause:
-                print("Pause")
-            case .end:
-                print("End")
-            default: break
-            }
-        }
-        profileView.mmPlayerLayer.getOrientationChange { (status) in
-            print("Player OrientationChange \(status)")
-        }
+//        makeTableView()
+//        profileView.imagePromo.isHidden = true
+//        profileView.labelCategory.isHidden = true
+//        profileView.labelStreamInfo.isHidden = true
+//        profileView.labelStreamDescription.isHidden = true
+//        profileView.tableView.isHidden = false
+//        guard let userId = user?.id else { return }
+//        bindingChanell(status: "ONLINE", userId: "\(userId)")
+//
+//        self.navigationController?.mmPlayerTransition.push.pass(setting: { (_) in
+//
+//        })
+//        offsetObservation = profileView.tableView.observe(\.contentOffset, options: [.new]) { [weak self] (_, value) in
+//            guard let self = self, self.presentedViewController == nil else {return}
+//            NSObject.cancelPreviousPerformRequests(withTarget: self)
+//            self.perform(#selector(self.startLoading), with: nil, afterDelay: 0.2)
+//        }
+//        profileView.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 200, right:0)
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
+//            self?.updateByContentOffset()
+//            self?.startLoading()
+//        }
+//
+//        profileView.mmPlayerLayer.fullScreenWhenLandscape = false
+//
+//        profileView.mmPlayerLayer.getStatusBlock { [weak self] (status) in
+//            switch status {
+//            case .failed(let err):
+//                let alert = UIAlertController(title: "err", message: err.description, preferredStyle: .alert)
+//                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//                self?.present(alert, animated: true, completion: nil)
+//            case .ready:
+//                print("Ready to Play")
+//            case .playing:
+//                print("Playing")
+//            case .pause:
+//                print("Pause")
+//            case .end:
+//                print("End")
+//            default: break
+//            }
+//        }
+//        profileView.mmPlayerLayer.getOrientationChange { (status) in
+//            print("Player OrientationChange \(status)")
+//        }
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -246,21 +236,21 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         AppUtility.lockOrientation(.portrait)
-        configureChildViewController(videoVC, onView: profileView.selfView )
+     //   configureChildViewController(videoVC, onView: profileView.selfView )
         
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         profileView.imageLogoProfile.makeRounded()
         setUserProfile()
-        actionOffline()
+      
        
     }
-    deinit {
-        offsetObservation?.invalidate()
-        offsetObservation = nil
-        print("ViewController deinit")
-    }
+//    deinit {
+//        offsetObservation?.invalidate()
+//        offsetObservation = nil
+//        print("ViewController deinit")
+//    }
     func bindingChannel(userId: Int?) {
         guard let id = userId else { return }
         takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
@@ -273,48 +263,48 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     }
    
     
-    @objc fileprivate func startLoading() {
-        self.updateByContentOffset()
-        if self.presentedViewController != nil {
-            return
-        }
-        // start loading video
-        profileView.mmPlayerLayer.resume()
-    }
-    fileprivate func updateByContentOffset() {
-        if profileView.mmPlayerLayer.isShrink {
-            return
-        }
-
-        if let path = findCurrentPath(),
-            self.presentedViewController == nil {
-            self.updateCell(at: path)
-        }
-    }
-    func findCurrentPath() -> IndexPath? {
-        let p = CGPoint(x: profileView.tableView.frame.width/2, y: profileView.tableView.contentOffset.y + profileView.tableView.frame.width/2)
-        return profileView.tableView.indexPathForRow(at: p)
-    }
-
-    func findCurrentCell(path: IndexPath) -> UITableViewCell {
-
-        return profileView.tableView.cellForRow(at: path)!
-    }
-    fileprivate func updateCell(at indexPath: IndexPath) {
-        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
-            // this thumb use when transition start and your video dosent start
-            profileView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
-            // set video where to play
-            profileView.mmPlayerLayer.playView = cell.backgroundImage
-            let url = URL(string: playURL)////"http://mirrors.standaloneinstaller.com/video-sample/jellyfish-25-mbps-hd-hevc.mp4"
-            //playURL
-            profileView.mmPlayerLayer.set(url: url)
-        }
-    }
-    func destrtoyMMPlayerInstance() {
-        self.profileView.mmPlayerLayer.player?.pause()
-        self.profileView.mmPlayerLayer.playView = nil
-    }
+//    @objc fileprivate func startLoading() {
+//        self.updateByContentOffset()
+//        if self.presentedViewController != nil {
+//            return
+//        }
+//        // start loading video
+//        profileView.mmPlayerLayer.resume()
+//    }
+//    fileprivate func updateByContentOffset() {
+//        if profileView.mmPlayerLayer.isShrink {
+//            return
+//        }
+//
+//        if let path = findCurrentPath(),
+//            self.presentedViewController == nil {
+//            self.updateCell(at: path)
+//        }
+//    }
+//    func findCurrentPath() -> IndexPath? {
+//        let p = CGPoint(x: profileView.tableView.frame.width/2, y: profileView.tableView.contentOffset.y + profileView.tableView.frame.width/2)
+//        return profileView.tableView.indexPathForRow(at: p)
+//    }
+//
+//    func findCurrentCell(path: IndexPath) -> UITableViewCell {
+//
+//        return profileView.tableView.cellForRow(at: path)!
+//    }
+//    fileprivate func updateCell(at indexPath: IndexPath) {
+//        if let cell = profileView.tableView.cellForRow(at: indexPath) as? PlayerViewCell, let playURL = cell.data?.streams?.first?.vodUrl {
+//            // this thumb use when transition start and your video dosent start
+//            profileView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
+//            // set video where to play
+//            profileView.mmPlayerLayer.playView = cell.backgroundImage
+//            let url = URL(string: playURL)////"http://mirrors.standaloneinstaller.com/video-sample/jellyfish-25-mbps-hd-hevc.mp4"
+//            //playURL
+//            profileView.mmPlayerLayer.set(url: url)
+//        }
+//    }
+//    func destrtoyMMPlayerInstance() {
+//        self.profileView.mmPlayerLayer.player?.pause()
+//        self.profileView.mmPlayerLayer.playView = nil
+//    }
     // MARK: - Animation
     
     /// The current state of the animation. This variable is changed only when an animation completes.
@@ -412,18 +402,16 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
  
     }
     
-    private func makeTableView() {
-        profileView.tableView.dataSource = self
-        profileView.tableView.delegate = self
-        profileView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
-        profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
-        profileView.tableView.separatorStyle = .none
-    }
+//    private func makeTableView() {
+//        profileView.tableView.dataSource = self
+//        profileView.tableView.delegate = self
+//        profileView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+//        profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
+//        profileView.tableView.separatorStyle = .none
+//    }
     
     func actionButtonContinue() {
-       // profileView.buttonOnline.addTarget(self, action: #selector(actionOnline), for: .touchUpInside)
-        profileView.buttonOffline.addTarget(self, action: #selector(actionOffline), for: .touchUpInside)
-        profileView.buttonComing.addTarget(self, action: #selector(actionComming), for: .touchUpInside)
+      
         profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         profileView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         profileView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
@@ -450,106 +438,106 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 }
     }
 
-    @objc func actionOnline() {
-        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
-        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-       
-        guard let userId = user?.id else { return }
-        bindingChanell(status: "ONLINE", userId: "\(userId)")
-        setUserProfile()
-        indexButton = 0
-        
-      //  self.profileView.tableView.reloadData()
-    }
-    @objc func actionOffline() {
-        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
-        profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
-       
-        guard let userId = user?.id else { return }
-       // bindingChanell(status: "OFFLINE", userId: "\(userId)")
-        bindingChanellVOD(userId: "\(userId)")
-        setUserProfile()
-        indexButton = 1
-
-    }
-    @objc func actionComming() {
-        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
-        profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
-        
-        profileView.mmPlayerLayer.invalidate()
-        guard let userId = user?.id else { return }
-        bindingChanell(status: "PLANNED", userId: "\(userId)")
-        setUserProfile()
-        indexButton = 2
-        
-       // self.profileView.tableView.reloadData()
-
-    }
+//    @objc func actionOnline() {
+//        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
+//        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+//
+//
+//        guard let userId = user?.id else { return }
+//        bindingChanell(status: "ONLINE", userId: "\(userId)")
+//        setUserProfile()
+//        indexButton = 0
+//
+//      //  self.profileView.tableView.reloadData()
+//    }
+//    @objc func actionOffline() {
+//        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
+//        profileView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
+//
+//        guard let userId = user?.id else { return }
+//       // bindingChanell(status: "OFFLINE", userId: "\(userId)")
+//        bindingChanellVOD(userId: "\(userId)")
+//        setUserProfile()
+//        indexButton = 1
+//
+//    }
+//    @objc func actionComming() {
+//        profileView.buttonOnline.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        profileView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
+//        profileView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
+//
+//        profileView.mmPlayerLayer.invalidate()
+//        guard let userId = user?.id else { return }
+//        bindingChanell(status: "PLANNED", userId: "\(userId)")
+//        setUserProfile()
+//        indexButton = 2
+//
+//       // self.profileView.tableView.reloadData()
+//
+//    }
  
 
-    func bindingChanell(status: String,userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: "\(userId)")//20
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                
-                    self.brodcast.removeAll()// = []
-                   // self.brodcast = response.data!.reversed()
-                    let convertedArray = response.data?.sorted{$0.scheduledStartDate?.compare($1.scheduledStartDate!) == .orderedDescending}
-                    self.brodcast = convertedArray!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.profileView.tableView.reloadData()
-                }
-           })
-       }
-    func bindingChanellVOD(userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-
-                    self.brodcast.removeAll()// = []
-                    self.brodcast = response.data!.reversed()
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.profileView.tableView.reloadData()
-                }
-           })
-       }
-    func followBroadcast(id: Int) {
-        followBroad = fitMeetStream.followBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.categories != nil {
-                }
-          })
-    }
-    func unFollowBroadcast(id: Int) {
-        followBroad = fitMeetStream.unFollowBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-             
-         })
-    }
-    func bindingUserMap(ids: [Int])  {
-        take = fitMeetApi.getUserIdMap(ids: ids)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.usersd = response.data
-                    self.profileView.tableView.reloadData()
-                }
-          })
-    }
- 
-    @objc func actionEditProfile() {
-
-    }
+//    func bindingChanell(status: String,userId: String) {
+//        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: "\(userId)")//20
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//
+//                    self.brodcast.removeAll()// = []
+//                   // self.brodcast = response.data!.reversed()
+//                    let convertedArray = response.data?.sorted{$0.scheduledStartDate?.compare($1.scheduledStartDate!) == .orderedDescending}
+//                    self.brodcast = convertedArray!
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+//                    self.profileView.tableView.reloadData()
+//                }
+//           })
+//       }
+//    func bindingChanellVOD(userId: String) {
+//        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//
+//                    self.brodcast.removeAll()// = []
+//                    self.brodcast = response.data!.reversed()
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+//                    self.profileView.tableView.reloadData()
+//                }
+//           })
+//       }
+//    func followBroadcast(id: Int) {
+//        followBroad = fitMeetStream.followBroadcast(id: id)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.categories != nil {
+//                }
+//          })
+//    }
+//    func unFollowBroadcast(id: Int) {
+//        followBroad = fitMeetStream.unFollowBroadcast(id: id)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//
+//         })
+//    }
+//    func bindingUserMap(ids: [Int])  {
+//        take = fitMeetApi.getUserIdMap(ids: ids)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.usersd = response.data
+//                    self.profileView.tableView.reloadData()
+//                }
+//          })
+//    }
+//
+//    @objc func actionEditProfile() {
+//
+//    }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
@@ -811,87 +799,62 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         runningAnimators.append(outTitleAnimator)
         
     }
-    func nextView(broadcastId: Int )  {
-
-        startStream = fitMeetStream.startBroadcastId(id: broadcastId)
-
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let id = response.id  {
-                    self.broadcast = response
-                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
-                    self.fetchStream(id: self.broadcast?.id, name: response.name)
- 
-
-                }
-             })
-         
-         }
-    func fetchStream(id:Int?,name: String?) {
-        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
-        guard let id = id , let name = name , let userId = UserId  else{ return }
-        let usId = Int(userId)
-        guard let usID = usId else { return }
-        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
-            .mapError({ (error) -> Error in
-                  print(error)
-                   return error })
-                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    guard let url = response.url else { return }
-                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
-                    let twoString = self.removeUrl(url: url)
-                    self.myuri = twoString.0
-                    self.myPublish = twoString.1
-                    self.url = url
-                    print(response)
-                  
-                    
-                    
-                        let navVC = LiveStreamViewController()
-                        navVC.modalPresentationStyle = .fullScreen
-                        navVC.idBroad = id
-                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-                        navVC.myuri = myuris
-                        navVC.myPublish = myPublishh
-                        self.present(navVC, animated: true, completion: nil)
-                       // self.present(navVC, animated: true) {
-                           
-                      //  }
-                    })
-                }
-
+//    func nextView(broadcastId: Int )  {
+//
+//        startStream = fitMeetStream.startBroadcastId(id: broadcastId)
+//
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if let id = response.id  {
+//                    self.broadcast = response
+//                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+//                    self.fetchStream(id: self.broadcast?.id, name: response.name)
+// 
+//
+//                }
+//             })
+//         
+//         }
+//    func fetchStream(id:Int?,name: String?) {
+//        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+//        guard let id = id , let name = name , let userId = UserId  else{ return }
+//        let usId = Int(userId)
+//        guard let usID = usId else { return }
+//        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
+//            .mapError({ (error) -> Error in
+//                  print(error)
+//                   return error })
+//                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                    guard let url = response.url else { return }
+//                    UserDefaults.standard.set(url, forKey: Constants.urlStream)
+//                    let twoString = self.removeUrl(url: url)
+//                    self.myuri = twoString.0
+//                    self.myPublish = twoString.1
+//                    self.url = url
+//                    print(response)
+//                  
+//                    
+//                    
+//                        let navVC = LiveStreamViewController()
+//                        navVC.modalPresentationStyle = .fullScreen
+//                        navVC.idBroad = id
+//                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+//                        navVC.myuri = myuris
+//                        navVC.myPublish = myPublishh
+//                        self.present(navVC, animated: true, completion: nil)
+//                       // self.present(navVC, animated: true) {
+//                           
+//                      //  }
+//                    })
+//                }
+//
+//    
+//    func removeUrl(url: String) -> (url:String,publish: String) {
+//        let fullUrlArr = url.components(separatedBy: "/")
+//        let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
+//        let myPublish = fullUrlArr[4]
+//        return (myuri,myPublish)
+//    }
     
-    func removeUrl(url: String) -> (url:String,publish: String) {
-        let fullUrlArr = url.components(separatedBy: "/")
-        let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
-        let myPublish = fullUrlArr[4]
-        return (myuri,myPublish)
-    }
-    
-  
-
 }
-extension ChanellVC: MMPlayerFromProtocol {
-    // when second controller pop or dismiss, this help to put player back to where you want
-    // original was player last view ex. it will be nil because of this view on reuse view
-    func backReplaceSuperView(original: UIView?) -> UIView? {
-        guard let path = self.findCurrentPath() else {
-            return original
-        }
-        
-        let cell = self.findCurrentCell(path: path) as! PlayerViewCell
-        return cell.backgroundImage
-    }
 
-    // add layer to temp view and pass to another controller
-    var passPlayer: MMPlayerLayer {
-        return self.profileView.mmPlayerLayer
-    }
-    func transitionWillStart() {
-    }
-    // show cell.image
-    func transitionCompleted() {
-        self.updateByContentOffset()
-        self.startLoading()
-    }
-}

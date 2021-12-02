@@ -56,7 +56,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     
     var categore: [Datum] = []
     var arrayCategory: [CategoryResponce] = []
-    var user: Users?
+    var user: User?
     var listCategory: [Datum] = []
     var IdCategory = [Int]()
     var removeIdCategory = [Int]()

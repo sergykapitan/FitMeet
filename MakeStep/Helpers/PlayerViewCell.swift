@@ -192,9 +192,7 @@ final class PlayerViewCell: UITableViewCell {
         contentView.addSubview(tagView)
         tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 0, paddingLeft: 8,paddingRight: 8)
         
-        contentView.addSubview(label)
-        label.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 20)
-        label.centerX(inView: backgroundImage)
+        
         
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,
@@ -220,9 +218,12 @@ final class PlayerViewCell: UITableViewCell {
         labelEye.centerY(inView: overlay)
         
         contentView.addSubview(buttonstartStream)
-        buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 30, width: 100, height: 26)
+        buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 10, width: 100, height: 26)
         buttonstartStream.centerX(inView: backgroundImage)
         
+        contentView.addSubview(label)
+        label.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 40)
+        label.centerX(inView: backgroundImage)
         
         
     }
