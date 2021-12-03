@@ -36,23 +36,23 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
 
     let videoVC = VideosVC()
     let timeTable = TimetableVC()
+    let time = Timetable()
 
     func change(to index: Int) {
   
         if index == 0 {
             removeAllChildViewController(timeTable)
-            configureChildViewController(videoVC, onView: profileView.selfView )
-            
+            configureChildViewController(videoVC, onView: profileView.selfView )            
             guard let userID = self.user?.id else { return }
             videoVC.id = userID
             videoVC.user = self.user
         }
         if index == 1 {
+            guard let user = self.user else { return }
+            timeTable.user = user
             removeAllChildViewController(videoVC)
-            configureChildViewController(timeTable, onView: profileView.selfView )
-            guard let userID = self.user?.id else { return }
-            videoVC.id = userID
-            videoVC.user = self.user
+            configureChildViewController(time, onView: profileView.selfView )
+           
         }
    
     }
@@ -138,7 +138,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
-        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos"," Timetable"])//,
+        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])//,
         profileView.segmentControll.delegate = self
         removeAllChildViewController(timeTable)
         configureChildViewController(videoVC, onView: profileView.selfView )
@@ -360,7 +360,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         timeTable.tintColor = UIColor(hexString: "#7C7C7C")
         
         
-       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+     //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     @objc func timeHandAction() {
         print("timeHandAction")

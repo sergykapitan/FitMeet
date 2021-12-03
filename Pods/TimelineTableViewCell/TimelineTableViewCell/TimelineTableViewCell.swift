@@ -17,6 +17,9 @@ open class TimelineTableViewCell: UITableViewCell {
     @IBOutlet weak internal var stackView: UIStackView!
     @IBOutlet weak open var illustrationImageView: UIImageView!
     
+    @IBOutlet weak open var labelDescription: UILabel!
+    @IBOutlet weak open var  imageLogo: UIImageView!
+    @IBOutlet weak open var viewBack: UIView!
     @IBOutlet weak var titleLabelLeftMargin: NSLayoutConstraint!
     @IBOutlet weak var lineInfoLabelRightMargin: NSLayoutConstraint!
     @IBOutlet weak var descriptionMargin: NSLayoutConstraint!
@@ -80,7 +83,7 @@ open class TimelineTableViewCell: UITableViewCell {
 
         descriptionLabel.sizeToFit()
 
-        timelinePoint.position = CGPoint(x: timeline.leftMargin, y: titleLabel.frame.origin.y + titleLabel.intrinsicContentSize.height / 2)
+        timelinePoint.position = CGPoint(x: timeline.leftMargin, y: descriptionLabel.frame.origin.y + descriptionLabel.intrinsicContentSize.height / 2)
 
         timeline.start = CGPoint(x: timeline.leftMargin, y: 0)
         timeline.middle = CGPoint(x: timeline.start.x, y: timelinePoint.position.y)

@@ -33,20 +33,22 @@ final class TimetableVCCode: UIView {
     init() {
         super.init(frame: CGRect.zero)
         initUI()
-        createCardViewLayer()
+       // createCardViewLayer()
         
     }
     
     //MARK: - constraint First Layer
     private func initUI() {
         addSubview(cardView)
+   
     }
     
     func createCardViewLayer() {
         
+        addSubview(cardView)
         cardView.fillFull(for: self)
         cardView.addSubview(tableView)
-        tableView.fillFull(for: cardView)
+        tableView.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
  
   
 

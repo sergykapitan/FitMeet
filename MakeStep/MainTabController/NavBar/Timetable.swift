@@ -9,21 +9,17 @@ import Foundation
 import TimelineTableViewCell
 import UIKit
 import Combine
+import Kingfisher
 
 
 class Timetable: UIViewController {
-    
-    
 
-    
     let profileView = TimeTableCode()
     
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
-    
-    
- 
+
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
     @Inject var fitMeetSream: FitMeetStream
@@ -37,47 +33,15 @@ class Timetable: UIViewController {
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-    
-    // TimelinePoint, Timeline back color, title, description, lineInfo, thumbnails, illustration
-    
-    var ddd:[String: Any]?
-    
-    var data:[Int: [(TimelinePoint, UIColor, String, String, String?, [String]?, String?)]]
-        
-        
-        = [0:[
-        (TimelinePoint(), UIColor.black, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-        (TimelinePoint(), UIColor.black, "15:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Sun"),
-            
-        (TimelinePoint(color: UIColor(hexString: "#3B58A4"), filled: true), UIColor(hexString: "#3B58A4"), "16:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "150 mins", ["Apple"], "Sun"),
-        (TimelinePoint(), UIColor.clear, "19:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", nil, nil, "Moon")
-        ], 1:[
-            (TimelinePoint(), UIColor.lightGray, "08:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "60 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "09:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "30 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "10:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "90 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "11:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "60 mins", nil, "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.red, "12:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "30 mins", ["Apple", "Apple", "Apple", "Apple"], "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.red, "13:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "120 mins", ["Apple", "Apple", "Apple", "Apple", "Apple"], "Sun"),
-            (TimelinePoint(color: UIColor.red, filled: true), UIColor.lightGray, "15:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", "150 mins", ["Apple", "Apple"], "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "17:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "60 mins", nil, "Sun"),
-            (TimelinePoint(), UIColor.lightGray, "18:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "60 mins", nil, "Moon"),
-            (TimelinePoint(), UIColor.lightGray, "19:30", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", "30 mins", nil, "Moon"),
-            (TimelinePoint(), backColor: UIColor.clear, "20:00", "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", nil, nil, "Moon")
-        ]]
-
     override func loadView() {
         super.loadView()
         view = profileView
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionButtonContinue()
-      //  makeNavItem()
-        
-       // navigationItem.largeTitleDisplayMode = .always
-     
         profileView.tableView.dataSource = self
         profileView.tableView.delegate = self
+        profileView.tableView.separatorStyle = .none
         
         let bundle = Bundle(for: TimelineTableViewCell.self)
         let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
@@ -87,8 +51,6 @@ class Timetable: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       // self.tabBarController?.tabBar.isHidden = false
-        makeNavItem()
         binding()
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -99,253 +61,124 @@ class Timetable: UIViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
     }
-   
- 
-    
-    func actionButtonContinue() {
-
-    }
 
     func binding() {
-        takeBroadcast = fitMeetSream.getBroadcast(status: "PLANNED")
+        takeBroadcast = fitMeetSream.getBroadcastPrivateTime(status: "PLANNED", userId: "29")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
-               // print("RESPONCE ====== \(response)")
                 if response.data != nil  {
                     self.brodcast = response
-                     
-                    guard let f = response.data?.first else { return }
-                    
-                    self.ddd = f.asDictionary()
-                   // print("HJBHBJJBJBJH++++++++\(ddd)")
-                    let key =  ddd?.values
-                  //  print(key?.debugDescription)
-                 //   let g = key
-//                    self.data = [0:[
-//
-//
-//                        (TimelinePoint(),
-//                              UIColor(hexString: "#3B58A4"),
-//                              f.scheduledStartDate!.getFormattedDate(format: "HH:mm:ss"),
-//                              f.name!,
-//                              f.scheduledStartDate?.getFormattedDate(format: "MMM d"),
-//                              ["aaa","ddd","fffff","fff????"],
-//                              "hhhhhhh?????")
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                    ]]
-
                     self.profileView.tableView.reloadData()
-                   // self.refreshControl.endRefreshing()
+                  
                 }
         })
     }
-    
-    @objc func actionEditProfile() {
-
-    }
-    
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "TimeTable"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let backButton = UIButton()
-                   backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                   backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-
-                   let stackView = UIStackView(arrangedSubviews: [backButton ,titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .horizontal
-
-        
-        let customTitles = UIBarButtonItem.init(customView: stackView)
-        self.navigationItem.leftBarButtonItems = [customTitles]
-        
-        
-        
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-        self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-
-    }
-    @objc func rightBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
-    @objc func timeHandAction() {
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
-    
-    
-    
-  
-
 }
 
 extension Timetable: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-       // return data.count
-       // return ddd?.count ?? 0
-        return 30
+        return 1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-       // guard let sectionData = data[section] else { return 0}
         guard let sectionData = brodcast?.data! else { return 0}
-       // guard let datas = ddd? else { return 0}
-        
-       // print("DATTTAS = \(datas)")
- 
-      //,let datas = ddd[section]
-     //   guard let sectionDatas = datas[section] else { return 0}
-     //   guard let d = datas[section] else { return 0}
-        
-       // return sectionData.count
-       return 7
-        
-      //  return ddd?.count ?? 0
+        return sectionData.count
+  
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    
-        let calendar = Calendar.current
-        
-//        let str = brodcast!.data!.first?.scheduledStartDate!.getFormattedDateR
-//        let end = brodcast!.data!.last?.scheduledStartDate!.getFormattedDateR
-//
-//        let ymd = calendar.dateComponents([ .month, .day], from:(brodcast!.data!.first?.scheduledStartDate!.getFormattedDateR)! , to: (brodcast!.data!.last?.scheduledStartDate!.getFormattedDateR)!)
-       // print("YYYYYY++++++\(ymd)")
-        return "Week " + String(describing: section + 1)
+        return ""
     }
  
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
 
-        // Configure the cell...
-        guard let sectionData = data[indexPath.section] else { return cell }
-       // guard let sectionData2 = ddd[indexPath.section] else { return cell}
         
-        
-        
-        guard let dataArr = ddd else { return cell}
-     //   print("KKKKKKKKKKK====\(dataArr["name"])")
-      
-        
-     //   let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = sectionData[indexPath.row]
-     //   let (timelinePoint, timelineBackColor, title, description, lineInfo, thumbnails, illustration) = (dataArr)[indexPath.row]
-        
-        
-      //  print("gknfdnvefnvenverono====\(sectionData2[indexPath.row])")
-        
-        var timelineFrontColor = UIColor.clear
-        
-        if (indexPath.row > 0) {
-           // timelineFrontColor = sectionData[indexPath.row - 1].1
-        }
-    //    let key = Array(dataArr)[indexPath.row].key
-    //    let array = dataArr[key]
-       // print(array)
-       // let value = array[indexPath.row]
-        
-    //    let gg =  Array(dataArr)// or .value
-        
-    //    print("GGGGGGG=\(gg[indexPath.section])")
-        
-    //    let ggg =  Array(dataArr)[indexPath.row] // or .value
-        
-   //     print("hhhhhhhhh=\(ggg)")
-        
-        
-//        var dict = [String: [Int]]()
-//
-//        dict.updateValue([1, 2, 3], forKey: "firstKey")
-//        dict.updateValue([3, 4, 5], forKey: "secondKey")
-//
-//        var keyIndex = ["firstKey": "firstKey", "secondKey": "secondKey"]
-//        var arr = [[String: [Int]]]()
-//
-//        for (key, value) in dict {
-//            arr.append([keyIndex[key]!: value])
-//        }
-//
-//        print(arr[0]) // ["firstKey": [1, 2, 3]]
-        
-        cell.timelinePoint = TimelinePoint(color: UIColor.red, filled: true)
-        cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
-        cell.timeline.backColor = UIColor(hexString: "#3B58A4")
-        cell.titleLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "MMM d")
-        cell.descriptionLabel.text = "\(brodcast!.data![indexPath.row].name!)/n" + "\(brodcast!.data![indexPath.row].description!)/n" + "\(brodcast!.data![indexPath.row].categories?.first?.description!)"
-        cell.descriptionLabel.backgroundColor = UIColor(hexString: "#3B58A4")
-        cell.descriptionLabel.layer.cornerRadius = 6
-        cell.descriptionLabel.layer.borderWidth = 1
-        cell.descriptionLabel.layer.borderColor = UIColor.black.cgColor
-        cell.descriptionLabel.layer.masksToBounds = true
+        let string = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "yyyy-MM-dd")
+        let dateFormat = "yyyy-MM-dd"
 
-        cell.lineInfoLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "HH:mm")
+        let dateFormatter = DateFormatter()
         
-//        if let thumbnails = "thumbnails" {
+        dateFormatter.timeStyle = .none
+        dateFormatter.dateFormat = dateFormat
+        let g = dateFormatter.date(from: string)!
+        let today = dateFormatter.date(from: Date().getFormattedDate(format: "yyyy-MM-dd"))
+        cell.backgroundColor = UIColor(hexString: "#F6F6F6")
+        
+       
+        cell.viewBack.layer.cornerRadius = 6
+        cell.viewBack.layer.borderWidth = 1
+        cell.viewBack.layer.borderColor = UIColor(hexString: "#B7B7B7").cgColor
+        cell.viewBack.layer.masksToBounds = true
+        cell.selectionStyle = .none
+        
+        cell.lineInfoLabel.textColor = UIColor(hexString: "#B7B7B7")
+        
+        if g < today! {
+            cell.titleLabel.textColor = UIColor(hexString: "#B7B7B7")
+            cell.labelDescription.textColor = UIColor(hexString: "#B7B7B7")
+            cell.imageLogo.isHidden = true
+            cell.titleLabel.textColor = UIColor(hexString: "#B7B7B7")
+            cell.viewBack.backgroundColor = UIColor(hexString: "#F6F6F6")
+            cell.timelinePoint = TimelinePoint(color: UIColor.clear, filled: true)
+            cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
+            cell.timeline.backColor = UIColor(hexString: "#3B58A4")
+        }
+        if g > today! {
+            cell.imageLogo.isHidden = true
+            cell.titleLabel.textColor = .black
+            cell.viewBack.backgroundColor = UIColor.white
+            cell.timelinePoint = TimelinePoint(color: UIColor.clear, filled: true)
+            cell.timeline.frontColor = UIColor.clear
+            cell.timeline.backColor = UIColor.clear
+        }
+        if g == today! {
+            cell.labelDescription.textColor = .white
+            cell.imageLogo.isHidden = false
+            cell.imageLogo.backgroundColor = .red
+            cell.imageLogo.makeRounded()
+            cell.titleLabel.textColor = UIColor(hexString: "#3B58A4")
+            cell.viewBack.backgroundColor = UIColor(hexString: "#3B58A4")
+            cell.timelinePoint = TimelinePoint(color: UIColor(hexString: "#3B58A4"), filled: true)
+            cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
+            cell.timeline.backColor = UIColor.clear
+            let url = URL(string: brodcast!.data![indexPath.row].previewPath!)
+            cell.imageLogo.kf.setImage(with: url)
+        }
+        
+        
+        cell.bubbleEnabled = false
+        cell.titleLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        cell.titleLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "MMMM d")
+        
+        cell.labelDescription.font = UIFont.systemFont(ofSize: 12)
+        cell.labelDescription.numberOfLines = 3
+        cell.labelDescription.text = "\(brodcast!.data![indexPath.row].name!)\n" + "\(brodcast!.data![indexPath.row].description!)"
+
+        cell.lineInfoLabel.text = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "h a")
+        
         
         cell.viewsInStackView = [UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail")),UIImageView(image: UIImage(named: "thumbnail"))]
-        
- //            thumbnails.map { thumbnail in
-  //              return UIImageView(image: UIImage(named: thumbnail))
-//            }
-//        }
-      //  else {
-            cell.viewsInStackView = []
-     //   }
 
-//        if let illustration = illustration {
+            cell.viewsInStackView = []
             cell.illustrationImageView.image = UIImage(named: "illustration")
-//        }
-//        else {
-  //          cell.illustrationImageView.image = nil
-      //  }
-   
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let sectionData = brodcast?.data?[indexPath.section] else {
-             
-            return
-        }
-       let g =  brodcast?.asDictionaryInt()
-        
-        for i in brodcast!.data! {
-            print("iiiiiiiii====\(i)")
-        }
-        let f = brodcast!.data![indexPath.row]
-        print("ffffffffffff======\(f)")
-        
-        print("Dict ==== \(g)")
-        
-        print(sectionData.name)
+        guard let sectionData = brodcast?.data?[indexPath.section] else { return }
+      
     }
-
-
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = UIColor.red
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.white
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 100
+    }
 }

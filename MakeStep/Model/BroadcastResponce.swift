@@ -8,7 +8,7 @@
 import Foundation
 
 struct BroadcastList: Codable {
-    let data: [BroadcastResponce]?
+    var data: [BroadcastResponce]?
 }
 
 struct BroadcastResponce:Codable {
