@@ -76,7 +76,8 @@ extension ButtonCommingg: UITableViewDataSource, UITableViewDelegate {
 
 
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        if self.usersd[id]?.id == Int(selfId!) {
+        guard let selfID = selfId else { return cell}
+        if self.usersd[id]?.id == Int(selfID) {
             cell.buttonLike.isHidden = true
             cell.buttonstartStream.isHidden = false
         } else {

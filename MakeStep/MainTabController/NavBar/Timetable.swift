@@ -51,7 +51,8 @@ class Timetable: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        binding()
+        guard let id = self.user?.id else { return }
+        binding(id: "\(id)")
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -60,10 +61,17 @@ class Timetable: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        guard let id = self.user?.id else { return }
+        binding(id: "\(id)")
+        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        print(self.user)
     }
 
-    func binding() {
-        takeBroadcast = fitMeetSream.getBroadcastPrivateTime(status: "PLANNED", userId: "29")
+    func binding(id: String) {
+        takeBroadcast = fitMeetSream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                 if response.data != nil  {

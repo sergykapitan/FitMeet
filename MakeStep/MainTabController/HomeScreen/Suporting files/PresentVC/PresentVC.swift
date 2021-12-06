@@ -13,6 +13,7 @@ import Presentr
 import TagListView
 import MMPlayerView
 import Kingfisher
+import TimelineTableViewCell
 
 private enum State {
     case closed
@@ -549,10 +550,34 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             
             homeView.labelStreamInfo.isHidden = false
             homeView.labelStreamDescription.isHidden = false
-           // homeView.tableView.isHidden = true
+            homeView.tableView.isHidden = true
+            
+            homeView.buttonLike.isHidden = false
+            homeView.buttonMore.isHidden = false
+            homeView.buttonChat.isHidden = false
+            
+            homeView.selfView.isHidden = false
+            homeView.labelNotToken.isHidden = true
+            if url != nil {
+                self.actionOnline()
+            } else {
+                self.actionOffline()
+            }
+           
         }
         if index == 1 {
+            
+            if token != nil {
+                homeView.labelNotToken.isHidden = true
+                guard let id = user?.id else { return }
+                self.binding(id: "\(id)")
+            } else {
+                homeView.labelNotToken.isHidden = false
+                homeView.labelNotToken.text = "This section will show the streaming timetable. To watch the timetable and be aware of the start of streams, please Sign in or Sign up"
+            }
+            
            
+            
             homeView.buttonOnline.isHidden = true
             homeView.buttonOffline.isHidden = true
             homeView.buttonComing.isHidden = true
@@ -561,7 +586,12 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             homeView.labelNameBroadcast.isHidden = true
             homeView.labelStreamInfo.isHidden = true
             homeView.labelStreamDescription.isHidden = true
-           // homeView.tableView.isHidden = false
+            homeView.tableView.isHidden = false
+            
+            homeView.buttonLike.isHidden = true
+            homeView.buttonMore.isHidden = true
+            homeView.buttonChat.isHidden = true
+            homeView.selfView.isHidden = true
         }
      
     }
@@ -636,6 +666,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
    
   
     var brodcast: [BroadcastResponce] = []
+    var brodcastTime: BroadcastList?
     
     let screenSize:CGRect = UIScreen.main.bounds
     
@@ -690,7 +721,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
-        actionOnline()
+
+            self.actionOnline()
+
         frame = self.view.frame
         guard let broadcast = broadcast else { return }
         homeView.labelStreamDescription.text = broadcast.description
@@ -720,12 +753,11 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         navigationItem.largeTitleDisplayMode = .always
         homeView.tableView.isHidden = true
         makeTableView()
-        homeView.segmentControll.setButtonTitles(buttonTitles: ["Videos"])//," Timetable"
+        homeView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])
         homeView.segmentControll.delegate = self
         homeView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         homeView.buttonOnline.backgroundColor = UIColor(hexString: "#3B58A4")
         actionButton ()
-    //    actionOnline()
         self.view.addSubview(self.homeView.viewChat)
         SocketIOManager.sharedInstance.getTokenChat()
         layout()
@@ -850,9 +882,29 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
-        homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
-        homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
+       // homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+       // homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
         homeView.tableView.separatorStyle = .none
+        
+    
+        
+        let bundle = Bundle(for: TimelineTableViewCell.self)
+        let nibUrl = bundle.url(forResource: "TimelineTableViewCell", withExtension: "bundle")
+        let timelineTableViewCellNib = UINib(nibName: "TimelineTableViewCell",
+            bundle: Bundle(url: nibUrl!)!)
+        self.homeView.tableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
+    }
+    
+    func binding(id: String) {
+        takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                if response.data != nil  {
+                    self.brodcastTime = response
+                    self.homeView.tableView.reloadData()
+                  
+               }
+        })
     }
     func bindingChanell(status: String,userId: String) {
         takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
@@ -864,6 +916,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.tableView.reloadData()
                     self.brodcast = response.data!
                     guard let broadcast = self.brodcast.first else {
+                        self.actionOffline()
                         self.homeView.imagePromo.addSubview(self.homeView.imageBack)
                         self.homeView.imageBack.anchor(top: self.homeView.imagePromo.topAnchor, left: self.homeView.imagePromo.leftAnchor, right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                         let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
@@ -886,6 +939,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.getMapWather(ids: broadId)
                     self.bindingUserMap(ids: arrayUserId)
                     self.homeView.tableView.reloadData()
+                } else {
+                    print("ADDDDDDDDD")
                 }
            })
        }
@@ -1278,7 +1333,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     }
     // MARK: - LoadPlayer
     func loadPlayer() {
-        guard let url = Url else { return }
+        guard let url = Url else {
+            actionOffline()
+            return }
         
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)

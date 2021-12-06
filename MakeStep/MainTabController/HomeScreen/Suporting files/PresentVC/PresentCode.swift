@@ -331,6 +331,14 @@ final class PresentCode: UIView {
         view.backgroundColor = .white
         return view
     }()
+    let labelNotToken: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = UIColor(red: 0.696, green: 0.696, blue: 0.696, alpha: 1)
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textAlignment = .center
+        return label
+    }()
     
     //MARK: - initial
     init() {
@@ -372,7 +380,7 @@ final class PresentCode: UIView {
                             paddingTop: 15, paddingLeft: 10, width: 74, height: 26)
         
         cardView.addSubview(tableView)
-               tableView.anchor(top: buttonOnline.bottomAnchor,
+               tableView.anchor(top: segmentControll.bottomAnchor,
                                 left: cardView.leftAnchor,
                                 right: cardView.rightAnchor,
                                 bottom: cardView.bottomAnchor,
@@ -432,7 +440,10 @@ final class PresentCode: UIView {
         cardView.addSubview(selfView)
         selfView.anchor(top: buttonOnline.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        
+        cardView.addSubview(labelNotToken)
+        labelNotToken.anchor( left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingLeft: 16, paddingRight: 16)
+        labelNotToken.centerY(inView: cardView)
+        labelNotToken.centerX(inView: cardView)
         
        
         

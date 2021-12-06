@@ -49,7 +49,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
         if index == 1 {
             guard let user = self.user else { return }
-            timeTable.user = user
+            time.user = user
             removeAllChildViewController(videoVC)
             configureChildViewController(time, onView: profileView.selfView )
            
