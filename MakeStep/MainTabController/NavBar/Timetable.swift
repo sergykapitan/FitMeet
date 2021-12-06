@@ -103,7 +103,9 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TimelineTableViewCell", for: indexPath) as! TimelineTableViewCell
-
+        
+        
+        
         
         let string = brodcast!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "yyyy-MM-dd")
         let dateFormat = "yyyy-MM-dd"
@@ -116,6 +118,8 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
         let today = dateFormatter.date(from: Date().getFormattedDate(format: "yyyy-MM-dd"))
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
         
+        let o = brodcast?.data?.sorted{ dateFormatter.date(from: ($0.scheduledStartDate?.getFormattedDate(format: "yyyy-MM-dd"))!)! > dateFormatter.date(from: ($1.scheduledStartDate?.getFormattedDate(format: "yyyy-MM-dd"))!)!}
+
        
         cell.viewBack.layer.cornerRadius = 6
         cell.viewBack.layer.borderWidth = 1
