@@ -36,6 +36,7 @@ struct User: Codable,Identifiable {
     let nameLastUpdateDate, usernameLastUpdateDate: String?
     let channelFollowCount: Int?
     let channelSubscribeCount: Int?
+    let resizedAvatar: [String: ResizedPreview]?
 }
 // MARK: - Token
 struct Token: Codable,Identifiable {

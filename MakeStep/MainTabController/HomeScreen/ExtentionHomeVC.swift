@@ -92,7 +92,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["m_avatar_48"]?.jpeg ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
 
         return cell
