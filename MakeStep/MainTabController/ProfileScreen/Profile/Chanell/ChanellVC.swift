@@ -49,6 +49,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         }
         if index == 1 {
             guard let user = self.user else { return }
+            
             time.user = user
             removeAllChildViewController(videoVC)
             configureChildViewController(time, onView: profileView.selfView )
@@ -194,6 +195,10 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         setUserProfile()
       
        
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
 
     func bindingChannel(userId: Int?) {

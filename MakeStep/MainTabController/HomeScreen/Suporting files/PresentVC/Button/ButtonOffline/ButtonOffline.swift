@@ -56,6 +56,7 @@ class ButtonOffline: UIViewController {
         }
        
         offlineView.mmPlayerLayer.fullScreenWhenLandscape = false
+        offlineView.mmPlayerLayer.repeatWhenEnd = false
 
         offlineView.mmPlayerLayer.getStatusBlock { [weak self] (status) in
             switch status {
@@ -85,7 +86,8 @@ class ButtonOffline: UIViewController {
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        destrtoyMMPlayerInstance()
+        self.offlineView.mmPlayerLayer.player?.pause()
+      
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)

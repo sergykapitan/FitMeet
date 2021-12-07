@@ -42,15 +42,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     var offsetObservation: NSKeyValueObservation?
     
-    lazy var mmPlayerLayer: MMPlayerLayer = {
-        let l = MMPlayerLayer()
-        l.cacheType = .memory(count: 5)
-        l.coverFitType = .fitToPlayerView
-        l.videoGravity = AVLayerVideoGravity.resizeAspect
-        l.replace(cover: CoverA.instantiateFromNib())
-        l.repeatWhenEnd = true
-        return l
-    }()
+//    lazy var mmPlayerLayer: MMPlayerLayer = {
+//        let l = MMPlayerLayer()
+//        l.cacheType = .memory(count: 5)
+//        l.coverFitType = .fitToPlayerView
+//        l.videoGravity = AVLayerVideoGravity.resizeAspect
+//        l.replace(cover: CoverA.instantiateFromNib())
+//        l.repeatWhenEnd = true
+//        return l
+//    }()
     var myCell: PlayerViewCell?
 
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
@@ -566,7 +566,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            
         }
         if index == 1 {
-            
+            buttonOffline.offlineView.mmPlayerLayer.player?.pause()
             if token != nil {
                 homeView.labelNotToken.isHidden = true
                 guard let id = user?.id else { return }
@@ -577,7 +577,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
             }
             
            
-            
+         
             homeView.buttonOnline.isHidden = true
             homeView.buttonOffline.isHidden = true
             homeView.buttonComing.isHidden = true
@@ -1086,7 +1086,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           homeView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         
         
-          self.mmPlayerLayer.invalidate()
+         
           self.indexTab = 0
           self.homeView.selfView.isHidden = true
           guard let userId = id else { return }
