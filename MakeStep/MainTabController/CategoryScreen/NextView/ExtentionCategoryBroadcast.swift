@@ -18,31 +18,20 @@ extension CategoryBroadcast: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryBroadcastCell", for: indexPath) as! CategoryBroadcastCell
-//       // let text = viewModel.shared()[indexPath.row].searchText
-//        cell.setImage(image: sortListCategory[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-//        cell.labelDescription.text = sortListCategory[indexPath.row].categories?.first?.description
-//        cell.titleLabel.text = sortListCategory[indexPath.row].name
-//        guard let category = sortListCategory[indexPath.row].categories?.first?.title else { return cell}
-//        cell.labelCategory.text = category
-//
-//        return cell
+
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-        cell.setImage(image: sortListCategory[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        cell.setImage(image: sortListCategory[indexPath.row].resizedPreview?["preview_l"]?.jpeg ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = sortListCategory[indexPath.row].description
         
         
         
         cell.titleLabel.text = sortListCategory[indexPath.row].name
-        guard let category = sortListCategory[indexPath.row].categories?.first?.title,
-              let category2 = sortListCategory[indexPath.row].categories?.last?.title,
+        guard
               let id = sortListCategory[indexPath.row].userId,
               let broadcastID = self.sortListCategory[indexPath.row].id
               else { return cell}
 
         self.arrayIdUser.append(id)
-       // self.bindingUserMap(ids: arrayIdUser)
         self.bindingUser(id: id)
         let us = usersd.map { key,user in
             return user
@@ -70,7 +59,7 @@ extension CategoryBroadcast: UITableViewDataSource {
         }
     
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            cell.setImageLogo(image: self.user?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+            cell.setImageLogo(image: self.user?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         }
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
@@ -119,26 +108,15 @@ extension CategoryBroadcast: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-    //    let url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         let id = self.sortListCategory[indexPath.row].userId
-     //   let follow = self.sortListCategory[indexPath.row].followersCount
-   
-        
-    
-       //let Url = url,
+
         guard let broadcastID = self.sortListCategory[indexPath.row].id,
               let channelId = self.sortListCategory[indexPath.row].channelIds else { return }
-      
-       
-        
+ 
         self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
         let vc = PresentVC()
         vc.modalPresentationStyle = .fullScreen
         vc.id = id
-//        vc.Url = Url
-//        vc.broadcast = self.sortListCategory[indexPath.row]
-//        vc.follow = "\(follow)"
-//        vc.broadId = broadcastID
         navigationController?.pushViewController(vc, animated: true)
 
     }

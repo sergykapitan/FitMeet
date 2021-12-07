@@ -137,7 +137,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
-                    self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
+                    self.profileView.setImageLogo(image: response.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
                 }
         })
     }

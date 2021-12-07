@@ -9,9 +9,6 @@ import UIKit
 import Kingfisher
 import TagListView
 
-//protocol NewsfeedCodeCellDelegate: AnyObject {
-//    func reavalPost(for cell: HomeCell)
-//}
 
 final class HomeCell: UITableViewCell {
     
@@ -201,8 +198,15 @@ final class HomeCell: UITableViewCell {
         
     }
     func setImage(image:String) {
-        let url = URL(string: image)        
-        backgroundImage.kf.setImage(with: url)
+        let url = URL(string: image)
+        let processor = DownsamplingImageProcessor(size: backgroundImage.bounds.size)
+        backgroundImage.kf.setImage(with: url,
+                                    options: [
+                                        .processor(processor),
+                                        .scaleFactor(UIScreen.main.scale),
+                                        .transition(.fade(0.25)),
+                                        .cacheOriginalImage
+                                    ])
     }
     func setImageLogo(image:String) {
         let url = URL(string: image)
@@ -210,19 +214,10 @@ final class HomeCell: UITableViewCell {
        
     }
     override func prepareForReuse() {
-          // super.prepareForReuse()
         self.accessoryType = .none
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
-       // self.titleLabel.text = nil
-       // self.logoUserImage.image = nil
-       self.labelEye.text = nil
-      //  self.imageEye.image = nil
-       // self.labelLive.text = nil
-      //  self.imageLive.image = nil
-        
-        
-        
+        self.labelEye.text = nil
+     
        }
-
 }

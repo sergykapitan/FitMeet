@@ -131,12 +131,10 @@ extension Timetable: UITableViewDataSource, UITableViewDelegate {
         let dateFormatTime = "yyyy-MM-dd HH:mm:ss"
 
         let dateFormatterTime = DateFormatter()
-        
-       // dateFormatterTime.dateStyle = .none
         dateFormatterTime.dateFormat = dateFormatTime
         
         let dateStartStreamTime = dateFormatterTime.date(from: str)
-        let todayTime = Date() //dateFormatterTime.date(from: Date().getFormattedDate(format: "yyyy-MM-dd"))
+        let todayTime = Date()
         
         cell.lineInfoLabel.textColor = UIColor(hexString: "#B7B7B7")
         

@@ -566,6 +566,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            
         }
         if index == 1 {
+            i = 0
             buttonOffline.offlineView.mmPlayerLayer.player?.pause()
             if token != nil {
                 homeView.labelNotToken.isHidden = true
@@ -662,7 +663,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
     
-    
+    var channel: ChannelResponce?
+   
    
   
     var brodcast: [BroadcastResponce] = []
@@ -674,6 +676,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     
     var broadcast: BroadcastResponce?
     var  broadId: Int?
+    var i : Int?
     
     private let refreshControl = UIRefreshControl()
    // var  playerContainerView: PlayerContainerView?
@@ -721,9 +724,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
-
-            self.actionOnline()
-
+        i = 0
+        self.actionOnline()
         frame = self.view.frame
         guard let broadcast = broadcast else { return }
         homeView.labelStreamDescription.text = broadcast.description
@@ -1270,10 +1272,9 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    var channel: ChannelResponce?
+    
+    
     func setUserProfile(user: User) {
-        
-      //  homeView.welcomeLabel.text =  user.fullName
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         guard let follow = user.channelFollowCount else { return }
         homeView.labelFollow.text = "Followers:" + "\(follow)"

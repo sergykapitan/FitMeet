@@ -163,7 +163,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     self.profileView.textBirthday.text = self.user?.birthDate?.getFormattedDate(format: "yyyy-MM-dd")
                     self.profileView.textEmail.text = self.user?.email
                     self.profileView.textPhoneNumber.text = self.user?.phone
-                    self.profileView.setImageLogo(image: response.avatarPath ?? "https://logodix.com/logo/1070633.png")
+                    self.profileView.setImageLogo(image: response.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
                 }
         })
     }

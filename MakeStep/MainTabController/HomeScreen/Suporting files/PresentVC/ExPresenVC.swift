@@ -219,6 +219,15 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
         
         cell.lineInfoLabel.textColor = UIColor(hexString: "#B7B7B7")
         
+        let str = brodcastTime!.data![indexPath.row].scheduledStartDate!.getFormattedDate(format: "yyyy-MM-dd HH:mm:ss")
+        let dateFormatTime = "yyyy-MM-dd HH:mm:ss"
+
+        let dateFormatterTime = DateFormatter()
+        dateFormatterTime.dateFormat = dateFormatTime
+        
+        let dateStartStreamTime = dateFormatterTime.date(from: str)
+        let todayTime = Date()
+        
         if g < today! {
             cell.titleLabel.textColor = UIColor(hexString: "#B7B7B7")
             cell.labelDescription.textColor = UIColor(hexString: "#B7B7B7")
@@ -238,17 +247,36 @@ extension PresentVC: UITableViewDataSource, UITableViewDelegate {
             cell.timeline.backColor = UIColor.clear
         }
         if g == today! {
+            if dateStartStreamTime! >= todayTime {
             cell.labelDescription.textColor = .white
             cell.imageLogo.isHidden = false
             cell.imageLogo.backgroundColor = .red
             cell.imageLogo.makeRounded()
             cell.titleLabel.textColor = UIColor(hexString: "#3B58A4")
             cell.viewBack.backgroundColor = UIColor(hexString: "#3B58A4")
-            cell.timelinePoint = TimelinePoint(color: UIColor(hexString: "#3B58A4"), filled: true)
-            cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
-            cell.timeline.backColor = UIColor.clear
+            if i == 0 {
+                    cell.timelinePoint = TimelinePoint(color: UIColor(hexString: "#3B58A4"), filled: true)
+                    cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
+                    cell.timeline.backColor = UIColor.clear
+                    i = 1
+            } else {
+                cell.timelinePoint = TimelinePoint(color: UIColor.clear, filled: true)
+                cell.timeline.frontColor = UIColor.clear
+                cell.timeline.backColor = UIColor.clear
+            }
+            
             let url = URL(string: brodcastTime!.data![indexPath.row].previewPath!)
             cell.imageLogo.kf.setImage(with: url)
+            } else {
+                cell.titleLabel.textColor = UIColor(hexString: "#B7B7B7")
+                cell.labelDescription.textColor = UIColor(hexString: "#B7B7B7")
+                cell.imageLogo.isHidden = true
+                cell.titleLabel.textColor = UIColor(hexString: "#B7B7B7")
+                cell.viewBack.backgroundColor = UIColor(hexString: "#F6F6F6")
+                cell.timelinePoint = TimelinePoint(color: UIColor.clear, filled: true)
+                cell.timeline.frontColor = UIColor(hexString: "#3B58A4")
+                cell.timeline.backColor = UIColor(hexString: "#3B58A4")
+            }
         }
         
         

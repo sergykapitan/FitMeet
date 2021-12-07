@@ -30,7 +30,7 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
             cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         } else {
-            cell.setImage(image: brodcast[indexPath.row].previewPath ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_m"]?.png ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         }
 
 
@@ -62,7 +62,7 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         cell.tagView.tag = indexPath.row
 
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
-        cell.setImageLogo(image: self.usersd[id]?.avatarPath ?? "https://logodix.com/logo/1070633.png")
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["m_avatar_48"]?.jpeg ?? "https://logodix.com/logo/1070633.png")
 
 
         if brodcast[indexPath.row].isFollow ?? false {

@@ -300,7 +300,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
 
     func setUserProfile() {
 
-        profileView.setImage(image: user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+        profileView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
         profileView.labelFollow.text = "Followers:" + "\(follow)"
         self.profileView.welcomeLabel.text = fullName
