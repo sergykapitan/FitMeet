@@ -10,7 +10,7 @@ import Foundation
 class Constants {
     #if QA
     ///URL Address of testing api server
-    static let apiEndpoint = "https://dev.fitliga.com/api/v0"
+    static let apiEndpoint = "https://api.collet.getsarafan.com/api/v1/"
     static let webViewPwa = "https://dev.fitliga.com/api/v0/legal/legals/html/"
     #elseif DEBUG
     ///URL Address of production api server

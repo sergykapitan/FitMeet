@@ -80,7 +80,7 @@ final class PresentCode: UIView {
     var buttonOffline: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
-        button.setTitle("Offline", for: .normal)
+        button.setTitle("Recording", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
@@ -88,7 +88,7 @@ final class PresentCode: UIView {
     var buttonComing: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
-        button.setTitle("Coming", for: .normal)
+        button.setTitle("Upcoming", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
         return button
