@@ -55,7 +55,7 @@ final class HomeCell: UITableViewCell {
     }()
     var labelDescription: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 3
+        label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
         return label
@@ -147,7 +147,7 @@ final class HomeCell: UITableViewCell {
                           left: contentView.leftAnchor,
                           right: contentView.rightAnchor,
                           bottom: contentView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 134)
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 110)
         
         
         bottomView.addSubview(logoUserImage)

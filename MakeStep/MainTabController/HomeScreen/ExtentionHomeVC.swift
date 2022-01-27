@@ -26,9 +26,7 @@ extension HomeVC: UITableViewDataSource {
         cell.labelDescription.text = listBroadcast[indexPath.row].description
         cell.imageEye.isHidden = false
         cell.labelEye.isHidden = false
-        
-        
-       // cell.titleLabel.text = listBroadcast[indexPath.row].name
+
         guard 
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
@@ -125,7 +123,7 @@ extension HomeVC: UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 330
+        return 310
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -147,10 +145,6 @@ extension HomeVC: UITableViewDelegate {
 
 extension HomeVC: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
-        print("Tag pressed: \(title), \(sender)")
-
-
-
         var st = title
         st.remove(at: st.startIndex)
         
