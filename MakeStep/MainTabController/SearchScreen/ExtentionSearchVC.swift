@@ -101,26 +101,10 @@ extension SearchVC: UITableViewDelegate {
         
 
         if index == 0 {
-           // let url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
             let id = self.listBroadcast[indexPath.row].userId
-           // let follow = self.listBroadcast[indexPath.row].followersCount
-       
-            
-        
-             
-         //   guard let Url = url,let broadcastID = self.listBroadcast[indexPath.row].id,
-         //         let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
-          
-           
-            
-           // self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
             let vc = PresentVC()
             vc.modalPresentationStyle = .fullScreen
             vc.id = id
-          //  vc.Url = Url
-         //   vc.broadcast = self.listBroadcast[indexPath.row]
-         //   vc.follow = "\(follow)"
-         //   vc.broadId = broadcastID
             navigationController?.pushViewController(vc, animated: true)
      
             
@@ -132,25 +116,9 @@ extension SearchVC: UITableViewDelegate {
                 self.getBroadcast(userId: "\(ids)")
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                  //  guard let broadcastt = self.broadcast else { return }
-                  //  let url = broadcastt.streams?.first?.hlsPlaylistUrl
-                   // let id = broadcastt.userId
-                  //  let follow = broadcastt.followersCount
-                          
-
-                  //  guard let broadcastID = broadcastt.id,
-                   //       let channelId = broadcastt.channelIds else { return }
-                             
-                              
-                               
-                              // self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
                                let vc = PresentVC()
                                vc.modalPresentationStyle = .fullScreen
-                               vc.id = ids//self.listUser[indexPath.row].id
-                             //  vc.Url = url
-                           //    vc.broadcast = self.listBroadcast[indexPath.row]
-                           //    vc.follow = "\(follow)"
-                           //    vc.broadId = broadcastID
+                               vc.id = ids
                    self.navigationController?.pushViewController(vc, animated: true)
 
                }

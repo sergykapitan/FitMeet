@@ -441,8 +441,20 @@ class FitMeetStream {
             .eraseToAnyPublisher()
     }
     //MARK: - Get List Users
+    ///&fullNameLike=\(name)&sort=fullName
+    ///&sort=fullName&searchLike=A
     public func getListUser(name: String) -> AnyPublisher<UserList,DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/user/users?take=100&fullNameLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/user/users?take=100&sort=fullName&searchLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: UserList.self)
+            .value()
+            .print("getListUser")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    public func getListReversUser(name: String) -> AnyPublisher<UserList,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/user/users?take=100&sort=fullName&searchLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UserList.self)

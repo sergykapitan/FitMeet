@@ -68,6 +68,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         if index == 1 {
             self.index = index
             getUsers(name: "a")
+            
             self.searchView.tableView.reloadData()
         }
         if index == 2 {
@@ -158,6 +159,18 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listUsers = response.data
+                    self.filterListUser = self.listUsers
+                    self.searchView.tableView.reloadData()
+                   
+                }
+          })
+    }
+    func getreversUsers(name: String) {
+        takeUser = fitMeetStream.getListReversUser(name: name)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listUsers = response.data.reversed()
                     self.searchView.tableView.reloadData()
                    
                 }
@@ -234,8 +247,9 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     }
     func filteringUser(_ searchText: String,category: Users? = nil) {
         
-        filterListUser = listUsers.filter { (candy: Users) -> Bool in
-            return (candy.fullName?.lowercased().contains(searchText.lowercased()) ?? true)
+        filterListUser = listUsers.filter { //(candy: Users) -> Bool in
+            print("CAndy == \($0.fullName?.contains(searchText))")
+            return ($0.fullName?.contains(searchText) ?? true)
           }
           
         searchView.tableView.reloadData()
@@ -306,7 +320,6 @@ extension SearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if index == 0 {
             let searchBar = searchController.searchBar
-          //  binding(name: searchBar.text!)
             if token != nil {
                 self.binding(name: searchBar.text!)
             } else {
@@ -316,7 +329,7 @@ extension SearchVC: UISearchResultsUpdating {
         }
         if index == 1 {
             let searchBar = searchController.searchBar
-            getUsers(name: searchBar.text!)
+            getreversUsers(name: searchBar.text!)
            
         }
         if index == 2 {
@@ -329,7 +342,6 @@ extension SearchVC: UISearchResultsUpdating {
     func connectUser (broadcastId:String?,channellId: String?) {
         
         guard let broadID = broadcastId,let id = channellId else { return }
-     
         SocketWatcher.sharedInstance.getTokenChat()
         SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
     }
