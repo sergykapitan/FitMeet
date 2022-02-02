@@ -34,11 +34,23 @@ final class PlayerViewCell: UITableViewCell {
     }()
     var logoUserImage: UIImageView = {
         let image = UIImageView()
+       // image.layer.borderWidth = 1
+        image.layer.masksToBounds = false
+       // image.layer.borderColor = UIColor.red.cgColor
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 18
+        return image
+        
+    }()
+    var logoUserOnline: UIView = {
+        let image = UIView()
         image.layer.borderWidth = 1
         image.layer.masksToBounds = false
         image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
-        image.layer.cornerRadius = 18
+        image.layer.cornerRadius = 4
+        image.backgroundColor = .red
+        image.isHidden = true
         return image
         
     }()
@@ -175,6 +187,9 @@ final class PlayerViewCell: UITableViewCell {
         
         bottomView.addSubview(logoUserImage)
         logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 36,height: 36)
+        
+        bottomView.addSubview(logoUserOnline)
+        logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
         
         bottomView.addSubview(titleLabel)
         titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8)

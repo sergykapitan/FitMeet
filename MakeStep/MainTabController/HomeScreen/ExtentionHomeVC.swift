@@ -66,18 +66,21 @@ extension HomeVC: UITableViewDataSource {
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
    
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
+            cell.logoUserOnline.isHidden = false
 
         } else if listBroadcast[indexPath.row].status == "PLANNED" {
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
 
         }
         
@@ -91,6 +94,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.isUserInteractionEnabled = true
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
+         
 
         return cell
     }

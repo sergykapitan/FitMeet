@@ -918,12 +918,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     self.homeView.tableView.reloadData()
                     self.brodcast = response.data!
                     guard let broadcast = self.brodcast.first else {
+                        self.homeView.buttonOnline.isHidden = true
+                        self.homeView.buttonOffline.anchor(top: self.homeView.segmentControll.bottomAnchor, left: self.homeView.cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
                         self.actionOffline()
                         self.homeView.imagePromo.addSubview(self.homeView.imageBack)
                         self.homeView.imageBack.anchor(top: self.homeView.imagePromo.topAnchor, left: self.homeView.imagePromo.leftAnchor, right: self.homeView.imagePromo.rightAnchor, bottom: self.homeView.imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                         let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
                         self.homeView.imageBack.kf.setImage(with: url)
                         return }
+                    self.homeView.buttonOnline.isHidden = false
                     self.homeView.labelINTVideo.text = "\(self.brodcast.count)"
                     self.broadcast = broadcast
                     self.homeView.labelStreamDescription.text = self.broadcast?.description
