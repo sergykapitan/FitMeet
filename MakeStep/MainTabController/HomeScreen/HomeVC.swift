@@ -36,12 +36,12 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         }
     }
 
-    override  var shouldAutorotate: Bool {
-        return false
-    }
-    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .portrait
-    }
+//    override  var shouldAutorotate: Bool {
+//        return false
+//    }
+//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+//        return .portrait
+//    }
     
     var ids = [Int]()
     var complishionHandler: ((Bool) -> Void)?
@@ -88,7 +88,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
 
     }
     override func viewDidAppear(_ animated: Bool) {

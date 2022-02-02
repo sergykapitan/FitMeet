@@ -30,6 +30,7 @@ class ButtonOffline: UIViewController {
     var url: String?
     var user: User?
     var offsetObservation: NSKeyValueObservation?
+    var indexPath: IndexPath?
     
     var usersd = [Int: User]()
  
@@ -136,7 +137,7 @@ class ButtonOffline: UIViewController {
     }
 
     func findCurrentCell(path: IndexPath) -> UITableViewCell {
-
+        print("Cell == \( offlineView.tableView.cellForRow(at: path))")
         return offlineView.tableView.cellForRow(at: path)!
     }
     fileprivate func updateCell(at indexPath: IndexPath) {
@@ -145,6 +146,19 @@ class ButtonOffline: UIViewController {
             offlineView.mmPlayerLayer.thumbImageView.image = cell.backgroundImage.image
             // set video where to play
             offlineView.mmPlayerLayer.playView = cell.backgroundImage
+            if let d = cell.data?.streams?.first?.vodUrl360{
+                offlineView.mmPlayerLayer.coverView?.currentStream360(streams: d)
+            }
+            if let d = cell.data?.streams?.first?.vodUrl480{
+                offlineView.mmPlayerLayer.coverView?.currentStream480(streams: d)
+            }
+            if let d = cell.data?.streams?.first?.vodUrl720{
+                offlineView.mmPlayerLayer.coverView?.currentStream720(streams: d)
+            }
+            if let d = cell.data?.streams?.first?.vodUrl1080{
+                offlineView.mmPlayerLayer.coverView?.currentStream1080(streams: d)
+            }
+          
             let url = URL(string: playURL)
             //playURL
             offlineView.mmPlayerLayer.set(url: url)

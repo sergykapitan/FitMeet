@@ -21,6 +21,10 @@ import SwiftUI
 
 public protocol MMPlayerCoverViewProtocol: MMPlayerBasePlayerProtocol {
     func currentPlayer(status: PlayStatus)
+    func currentStream360(streams: String)
+    func currentStream480(streams: String)
+    func currentStream720(streams: String)
+    func currentStream1080(streams: String)
 }
 
 public protocol MMProgressProtocol {

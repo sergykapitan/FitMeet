@@ -60,6 +60,8 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         cell.tagView.addTags(arr)
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
+        
+        
 
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["m_avatar_48"]?.jpeg ?? "https://logodix.com/logo/1070633.png")
@@ -71,7 +73,7 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
 
-
+        
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
 
         if self.usersd[id]?.id == Int(selfId!) {

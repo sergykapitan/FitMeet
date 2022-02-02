@@ -40,7 +40,7 @@ public class MMPlayerShrinkControl {
         view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
         return view
     }()
-    lazy var landPlayView: UIView = {
+    public lazy var landPlayView: UIView = {
         let view = UIView(frame: CGRect.init(origin: .zero, size: CGSize(width: maxLandWidth, height: maxLandHeight)))
         view.setShadow(offset: CGSize(width: 2, height: 2), opacity: 0.5)
         return view
@@ -49,7 +49,7 @@ public class MMPlayerShrinkControl {
     
     weak var originalPlayView:UIView?
     weak var originalLandPlayView:UIView?
-    
+
     unowned let mmPlayerLayer: MMPlayerLayer
     init(mmPlayerLayer: MMPlayerLayer) {
         self.mmPlayerLayer = mmPlayerLayer
@@ -117,6 +117,8 @@ public class MMPlayerShrinkControl {
         self.setFrameWith(quadrant: self.currentQuadrant, dismissVideo: true)
         landPlayView.removeFromSuperview()
     }
+  
+
     
     @objc func pan(gesture: UIPanGestureRecognizer) {
         let point = gesture.location(in: shrinkPlayView)
@@ -191,9 +193,8 @@ public class MMPlayerShrinkControl {
                 if self.isHiddenVC {
                     self.onVC?.view.alpha = 1.0
                 }
-            }
-            //CGRect(origin: CGPoint(x: 100, y: 100), size: CGSize(width: 84.375, height: 150))
-            self.shrinkPlayView.frame = rect//(origin = (x = 801.625, y = 254), size = (width = 84.375, height = 150))
+            }           
+            self.shrinkPlayView.frame = rect
         }) { [unowned self] (_) in
             if dismissVideo {
                 CATransaction.setDisableActions(true)

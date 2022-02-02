@@ -214,8 +214,8 @@ public class MMPlayerLayer: AVPlayerLayer {
     public private(set) var orientation: PlayerOrientation = .protrait {
         didSet {
             self.landscapeWindow.update()
-            if orientation == oldValue { return }
-            self.layerOrientationBlock?(orientation)
+           // if orientation == oldValue { return }
+          //  self.layerOrientationBlock?(orientation)
         }
     }
     

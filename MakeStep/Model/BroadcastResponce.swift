@@ -66,6 +66,14 @@ struct Stream: Codable {
     let updatedAt: String?
     let gcoreId, gcoreClientId: Int?
     let hlsPlaylistUrl: String?
+    let hlsPlaylistUrl360: String?
+    let hlsPlaylistUrl480: String?
+    let hlsPlaylistUrl720: String?
+    let hlsPlaylistUrl1080: String?
+    let vodUrl360: String?
+    let vodUrl480: String?
+    let vodUrl720: String?
+    let vodUrl1080: String?
     let dashURL: String?
     let vodUrl: String?
 }

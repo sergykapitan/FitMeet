@@ -458,6 +458,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     guard let url = response.url else { return }
                      if url != nil {
                      DispatchQueue.main.async {
+                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
                          Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
                              switch disType {
                              case .tapped:  self.startStream(id: id, url: url)
