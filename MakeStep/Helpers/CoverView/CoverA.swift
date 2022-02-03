@@ -51,6 +51,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     override func awakeFromNib() {
         super.awakeFromNib()
         btnPlay.imageView?.tintColor = UIColor.white
+        viewBtn.isUserInteractionEnabled = false
        
     }
     @IBAction func btnAction() {
@@ -67,6 +68,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
         sender.isSelected.toggle()
         
         if sender.isSelected {
+            viewBtn.isUserInteractionEnabled = true
             AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
             self.playLayer?.fullScreenWhenLandscape = true
             self.playLayer!.landView(isHiddenVC: false, maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height) { [weak self] () -> UIView? in
@@ -79,6 +81,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
                    return cell.backgroundImage
                }
         } else {
+            viewBtn.isUserInteractionEnabled = false
             self.playLayer?.fullScreenWhenLandscape = false
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
             self.playLayer?.dissmisLand()
@@ -105,7 +108,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
        
     }
     func Player() {
-       
+     
         let button360 = ContextMenuItemWithImage(title: "360", image: #imageLiteral(resourceName: "play2"))
         let button480 = ContextMenuItemWithImage(title: "480", image: #imageLiteral(resourceName: "play2"))
         let button720 = ContextMenuItemWithImage(title: "720", image: #imageLiteral(resourceName: "play2"))
@@ -116,7 +119,7 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
         CM.MenuConstants.MenuWidth = 120
         CM.MenuConstants.HorizontalMarginSpace = 30
         CM.MenuConstants.LabelDefaultColor = UIColor(hexString: "#C4C4C4")
-        CM.showMenu(viewTargeted: viewBtn, delegate: self,animated: true)
+        CM.showMenu(viewTargeted: viewBtn, delegate: self,animated: false)
         CM.MenuConstants.BlurEffectEnabled = false
         
     }
