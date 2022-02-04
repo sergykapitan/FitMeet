@@ -8,7 +8,12 @@
 import UIKit
 import SwiftUI
 
-class MainTabBarViewController: UITabBarController {
+class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
+    
+    var profile: UIViewController?
+    var streamView : UIViewController?
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +23,9 @@ class MainTabBarViewController: UITabBarController {
       //  navigationVC.tabBarItem.image?.withTintColor(UIColor(hexString: "#3B58A4"))
         self.tabBar.barTintColor = .white
 
-        var profile: UIViewController?
-        var streamView : UIViewController?
+       
+        
+        self.delegate = self
         
         let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
         
@@ -61,13 +67,17 @@ class MainTabBarViewController: UITabBarController {
        
     }
     
-    private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) ->UIViewController {
+    private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) -> UIViewController {
   
         let navigationVC = UINavigationController(rootViewController: rootViewController)
         navigationVC.tabBarItem.image = image
         navigationVC.tabBarItem.title = title
         rootViewController.navigationItem.title = title
         navigationVC.navigationBar.backgroundColor = .white
+        if navigationVC == NewStartStream() {
+            navigationVC.modalPresentationStyle = .formSheet
+            navigationVC.preferredContentSize = .init(width: 500, height: 800)
+        }
         return navigationVC
     }
 

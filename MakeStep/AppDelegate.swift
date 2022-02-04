@@ -13,7 +13,7 @@ import UserNotifications
 let logger = Logboard.with("FitMeet.iOS")
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate {
 
 
     override init() {
@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     /// Set orientations you want to be allowed in this property by default
     var orientationLock = UIInterfaceOrientationMask.all
+    let actionChatTransitionManager = ActionTransishionChatManadger()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Purchases.default.initialize()
@@ -65,6 +66,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForPushNotifications()
         return true
     }
+    
+
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let vcIndex = tabBarController.viewControllers!.firstIndex(of: viewController)!
+           if  vcIndex == 2 {
+    
+               let chatVC = SendStream()
+               let curvaView = tabBarController.selectedViewController!
+               chatVC.transitioningDelegate = actionChatTransitionManager
+               chatVC.modalPresentationStyle = .custom
+               actionChatTransitionManager.intWidth = 1
+               actionChatTransitionManager.intHeight = 0.3
+               curvaView.present(chatVC, animated: true, completion: nil)
+
+               return false
+           } else {
+               return true
+           }
+       }
+
+  
 
     // MARK: UISceneSession Lifecycle
 

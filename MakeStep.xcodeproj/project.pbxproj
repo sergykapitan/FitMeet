@@ -250,6 +250,9 @@
 		A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */; };
 		A5457EA7272AAE51006A8F2D /* AddMonetezationCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */; };
 		A5457EA9272C0F8A006A8F2D /* TarrifCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */; };
+		A54ACC9A27AD7B75004BAEF1 /* SendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9927AD7B75004BAEF1 /* SendStream.swift */; };
+		A54ACC9C27AD7B8A004BAEF1 /* SendStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */; };
+		A54ACC9E27AD7B9D004BAEF1 /* ExSendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */; };
 		A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54F9B85273156B5008E7E60 /* StoreKit.framework */; };
 		A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8827315C4C008E7E60 /* IAPProducts.swift */; };
 		A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
@@ -522,6 +525,9 @@
 		A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationVC.swift; sourceTree = "<group>"; };
 		A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMonetezationCode.swift; sourceTree = "<group>"; };
 		A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TarrifCell.swift; sourceTree = "<group>"; };
+		A54ACC9927AD7B75004BAEF1 /* SendStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStream.swift; sourceTree = "<group>"; };
+		A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStreamCell.swift; sourceTree = "<group>"; };
+		A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExSendStream.swift; sourceTree = "<group>"; };
 		A54F9B85273156B5008E7E60 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A54F9B8827315C4C008E7E60 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
 		A54F9B8B27315CF8008E7E60 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
@@ -822,6 +828,16 @@
 				A5457EA6272AAE51006A8F2D /* AddMonetezationCode.swift */,
 			);
 			path = "Add Monetezation";
+			sourceTree = "<group>";
+		};
+		A54ACC9827AD7B3F004BAEF1 /* SendStream */ = {
+			isa = PBXGroup;
+			children = (
+				A54ACC9927AD7B75004BAEF1 /* SendStream.swift */,
+				A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */,
+				A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */,
+			);
+			path = SendStream;
 			sourceTree = "<group>";
 		};
 		A54F9B8727315C26008E7E60 /* IAPProducts */ = {
@@ -1690,6 +1706,7 @@
 				B4E88E4E26D3E364003E6B16 /* SendVC.swift */,
 				B4E88E5226D3E3D3003E6B16 /* SendVCCell.swift */,
 				B4E88E5526D3E6B3003E6B16 /* EcSendVC.swift */,
+				A54ACC9827AD7B3F004BAEF1 /* SendStream */,
 				B43A6C7126F24DA8009E6DDE /* SendCoach */,
 			);
 			path = Send;
@@ -2237,6 +2254,7 @@
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,
 				A5671E892757A2AE00EE4191 /* VideosVC.swift in Sources */,
+				A54ACC9E27AD7B9D004BAEF1 /* ExSendStream.swift in Sources */,
 				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
@@ -2244,6 +2262,7 @@
 				A5427798274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
+				A54ACC9C27AD7B8A004BAEF1 /* SendStreamCell.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
@@ -2372,6 +2391,7 @@
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,
 				B4908FE126C2B03E00AE3117 /* PresentCode.swift in Sources */,
 				B4E88E5626D3E6B3003E6B16 /* EcSendVC.swift in Sources */,
+				A54ACC9A27AD7B75004BAEF1 /* SendStream.swift in Sources */,
 				A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */,
 				B4A9F6232631AC28000E00DE /* CategoryViewModel.swift in Sources */,
 				B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */,

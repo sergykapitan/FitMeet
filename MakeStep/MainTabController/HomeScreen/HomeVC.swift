@@ -120,6 +120,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
       
+      
         
     }
     func makeNavItem() {
