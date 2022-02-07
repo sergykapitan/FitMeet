@@ -28,12 +28,18 @@ extension SendStream: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
             self.dismiss(animated: true) {
-               
+                if let tabBC = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
+                    tabBC.boolStream = false
+                    NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+                    tabBC.selectedIndex = 2
+                }
             }
         }
         if indexPath.row == 1 {
             self.dismiss(animated: true) {
-                if let tabBC = UIApplication.shared.windows[0].rootViewController as? UITabBarController {
+                if let tabBC = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
+                    tabBC.boolStream = true
+                    NotificationCenter.default.post(Notification(name: .refreshAllTabs))
                     tabBC.selectedIndex = 2
                 }
             }

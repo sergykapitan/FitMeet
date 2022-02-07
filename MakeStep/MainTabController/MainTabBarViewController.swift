@@ -8,10 +8,16 @@
 import UIKit
 import SwiftUI
 
+extension Notification.Name {
+    static let refreshAllTabs = Notification.Name("RefreshAllTabs")
+}
+
+
 class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     var profile: UIViewController?
     var streamView : UIViewController?
+    var boolStream: Bool = true
     
     
 
@@ -32,10 +38,12 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         if token != nil {
             profile = ProfileVC()
             streamView = NewStartStream()
+            
         } else {
             profile = StartScreen()
             streamView = NotTokenView()
           }
+      
 
         viewControllers = [
             generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
@@ -45,7 +53,37 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
             generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
         ]
     }
-    
+    deinit {
+           NotificationCenter.default.removeObserver(self)
+       }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        NotificationCenter.default.addObserver(forName: .refreshAllTabs, object: nil, queue: .main) { (notification) in
+                  if self.boolStream {
+                      self.viewControllers = [
+                        self.generateViewController(rootViewController: HomeVC(), image:  #imageLiteral(resourceName: "home(1) 31"), title: ""),
+                        self.generateViewController(rootViewController: SearchVC(), image:  #imageLiteral(resourceName: "search 51"), title: ""),
+                        self.generateViewController(rootViewController: self.streamView ?? NotTokenView(), image:  #imageLiteral(resourceName: "Act1"),title: ""),
+                        self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
+                        self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
+
+
+                      ]
+
+                  } else {
+                      self.viewControllers = [
+                        self.generateViewController(rootViewController: HomeVC(), image:  #imageLiteral(resourceName: "home(1) 31"), title: ""),
+                        self.generateViewController(rootViewController: SearchVC(), image:  #imageLiteral(resourceName: "search 51"), title: ""),
+                        self.generateViewController(rootViewController: AddedVideoVC(), image:  #imageLiteral(resourceName: "Act1"),title: ""),
+                        self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
+                        self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
+
+
+                      ]
+                  }
+              }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if #available(iOS 15, *) {
@@ -74,10 +112,6 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         navigationVC.tabBarItem.title = title
         rootViewController.navigationItem.title = title
         navigationVC.navigationBar.backgroundColor = .white
-        if navigationVC == NewStartStream() {
-            navigationVC.modalPresentationStyle = .formSheet
-            navigationVC.preferredContentSize = .init(width: 500, height: 800)
-        }
         return navigationVC
     }
 
