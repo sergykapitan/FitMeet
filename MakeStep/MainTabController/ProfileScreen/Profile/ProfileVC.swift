@@ -14,6 +14,8 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     let profileView = ProfileVCCode()
     private var take: AnyCancellable?
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+    let chanellId = UserDefaults.standard.string(forKey: Constants.chanellID)
+    
     @Inject var fitMeetApi: FitMeetApi
     var user: User?
     
@@ -52,6 +54,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         print("Token = \(token)")
+        print("ChanelId = \(chanellId)")
         
     }
  

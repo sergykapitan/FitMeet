@@ -279,6 +279,9 @@
 		A58EC19827B1384400E920FB /* AddedVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58EC19627B1384400E920FB /* AddedVideoVC.swift */; };
 		A58EC19A27B1385500E920FB /* AddedVideoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58EC19927B1385500E920FB /* AddedVideoCode.swift */; };
 		A58EC19B27B1385500E920FB /* AddedVideoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58EC19927B1385500E920FB /* AddedVideoCode.swift */; };
+		A58EC19C27B1524100E920FB /* SendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9927AD7B75004BAEF1 /* SendStream.swift */; };
+		A58EC19D27B1524A00E920FB /* SendStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */; };
+		A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5027371A2F002C1500 /* CalculateVC.swift */; };
 		A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5227371A40002C1500 /* CalculateVCCode.swift */; };
@@ -2000,6 +2003,7 @@
 				A512942B273A6EB7000CBBD9 /* SJDatePicker.swift in Sources */,
 				A512942C273A6EB7000CBBD9 /* Preference.swift in Sources */,
 				A512942D273A6EB7000CBBD9 /* StartScreenCode.swift in Sources */,
+				A58EC19D27B1524A00E920FB /* SendStreamCell.swift in Sources */,
 				A512942E273A6EB7000CBBD9 /* CategoryCode.swift in Sources */,
 				A512942F273A6EB7000CBBD9 /* MonetezeitionVCode.swift in Sources */,
 				A5129430273A6EB7000CBBD9 /* AuthorizationRequest.swift in Sources */,
@@ -2132,6 +2136,7 @@
 				A51294A7273A6EB7000CBBD9 /* CustomSegmentedControl.swift in Sources */,
 				A51294A8273A6EB7000CBBD9 /* Dependencies.swift in Sources */,
 				A51294A9273A6EB7000CBBD9 /* Task.swift in Sources */,
+				A58EC19C27B1524100E920FB /* SendStream.swift in Sources */,
 				A51294AA273A6EB7000CBBD9 /* EditMonetVCCode.swift in Sources */,
 				A51294AB273A6EB7000CBBD9 /* NotTokenView.swift in Sources */,
 				A51294AC273A6EB7000CBBD9 /* CoachCode.swift in Sources */,
@@ -2158,6 +2163,7 @@
 				A51294C1273A6EB7000CBBD9 /* VCControllerCode.swift in Sources */,
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
+				A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
 				A5427796274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */,
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,

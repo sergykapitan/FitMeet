@@ -83,10 +83,7 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    
-    
-    
-    
+ 
     
     public func getListFollowBroadcast(status:String,follow: Bool) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=\(status)&isFollow=\(follow)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))

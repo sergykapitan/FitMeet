@@ -19,6 +19,13 @@ final class AddedVideoCode: UIView {
         view.backgroundColor = .white
         return view
     }()
+    let buttonUploadVideo: UIButton = {
+        let button = UIButton()
+        button.setTitle("UploadVideo", for: .normal)
+        button.layer.cornerRadius = 19
+        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        return button
+    }()
     let imageButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
@@ -54,18 +61,18 @@ final class AddedVideoCode: UIView {
         textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
-    let textFieldStartDate: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Start Date", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        return textField
-    }()
+//    let textFieldStartDate: DropDown = {
+//        let textField = DropDown()
+//        textField.layer.cornerRadius = 19
+//        textField.backgroundColor = UIColor(hexString: "F9F9F9")
+//        textField.attributedPlaceholder =
+//            NSAttributedString(string: "Start Date", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+//        textField.setLeftPaddingPoints(25)
+//        textField.textColor = .black
+//        textField.layer.borderWidth = 1
+//        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+//        return textField
+//    }()
     let textFieldAviable: DropDown = {
         let textField = DropDown()
         textField.layer.cornerRadius = 19
@@ -161,8 +168,11 @@ final class AddedVideoCode: UIView {
     private func initLayout() {
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
         
+        scroll.addSubview(buttonUploadVideo)
+        buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 120,  height: 36)
+        
         scroll.addSubview(imageButton)
-        imageButton.anchor(top: cardView.topAnchor,
+        imageButton.anchor(top: buttonUploadVideo.bottomAnchor,
                                left: cardView.leftAnchor,
                                right: cardView.rightAnchor,
                                paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 160)
@@ -180,14 +190,14 @@ final class AddedVideoCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10)
         
-        scroll.addSubview(textFieldStartDate)
-        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        scroll.addSubview(textFieldStartDate)
+//        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
+//                              left: cardView.leftAnchor,
+//                              right: cardView.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldAviable)
-        textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
+        textFieldAviable.anchor(top: textFieldCategory.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

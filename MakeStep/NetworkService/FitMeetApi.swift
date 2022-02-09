@@ -169,6 +169,36 @@ class FitMeetApi {
             .eraseToAnyPublisher()
         
     }
+    //,params: [String: Any]
+    public func uploadVideo(image: Data) -> AnyPublisher<ResponseVOD,DifferentError> {
+ 
+
+        return AF.upload( multipartFormData: { multipartFormData in
+//            let parameters = [
+//                "channelId": "255",
+//                "title": "NewVideo"
+//            ]
+            multipartFormData.append( image, withName: "file",fileName: "\(Data()).mp4", mimeType: "video/mp4")
+     
+                           multipartFormData.append("255".data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
+                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "categoryIds")
+                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
+                           multipartFormData.append("old".data(using: .utf8, allowLossyConversion: false)!, withName: "title")
+                           multipartFormData.append("new foo".data(using: .utf8, allowLossyConversion: false)!, withName: "description")
+                           multipartFormData.append("false".data(using: .utf8, allowLossyConversion: false)!, withName: "onlyForSubscribers")
+                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "appProductId")
+
+
+        },to: Constants.apiEndpoint + "/vodUpload/userUpload",usingThreshold: UInt64.init(),  method: .post, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ResponseVOD.self)
+            .value()
+            .print("uploadVideo")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+        
+    }
     public func getUserId(id: Int) -> AnyPublisher<User,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/user/users/\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)

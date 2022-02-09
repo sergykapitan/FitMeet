@@ -16,6 +16,7 @@ import EasyPeasy
 import Loaf
 import TagListView
 import iOSDropDown
+import AVKit
 
 class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate, TagListViewDelegate {
     
@@ -37,6 +38,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     @Inject var fitMeetChanell: FitMeetChannels
     
     var imagePicker: ImagePicker!
+    var videoPicker: VideoPicker!
     
     var image: String?
     
@@ -116,7 +118,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         self.authView.buttonOK.setTitle("OK", for: .normal)
-        self.authView.textFieldStartDate.text = ""
+      
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -138,17 +140,17 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.scroll.delegate = self
    
         authView.textFieldCategory.delegate = self
-        authView.textFieldStartDate.delegate = self
+      //  authView.textFieldStartDate.delegate = self
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
-        authView.textFieldStartDate.isSearchEnable = true
+       // authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
         
        // self.authView.textFieldCategory.easy.layout(Left(10),Right(10),Height(maxHeight).when({[unowned self] in self.isOversized}))
       
-        authView.textFieldStartDate.optionArray = ["NOW", "Later"]
+      //  authView.textFieldStartDate.optionArray = ["NOW", "Later"]
         
         authView.textFieldAviable.optionArray = ["All"]
         
@@ -156,6 +158,8 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         
         changeData()
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
+        self.videoPicker = VideoPicker(presentationController: self, delegate: self)
+        
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
         
@@ -219,16 +223,16 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
 
     func changeData() {
-        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-            if gg == "NOW" {
-                self.authView.buttonOK.setTitle("OK", for: .normal)
-                self.authView.buttonOK.isUserInteractionEnabled = true
-                
-            } else {
-                self.authView.buttonOK.setTitle("Planned", for: .normal)
-                self.authView.buttonOK.isUserInteractionEnabled = true
-            }
-        }
+//        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
+//            if gg == "NOW" {
+//                self.authView.buttonOK.setTitle("OK", for: .normal)
+//                self.authView.buttonOK.isUserInteractionEnabled = true
+//
+//            } else {
+//                self.authView.buttonOK.setTitle("Planned", for: .normal)
+//                self.authView.buttonOK.isUserInteractionEnabled = true
+//            }
+//        }
         authView.textFieldAviable.didSelect { (str, ind, col) in
             if str == "All" || str == "Subscribers"{
                 self.authView.textFieldFree.isUserInteractionEnabled = false
@@ -238,13 +242,13 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
        }
    
     }
-        authView.textFieldStartDate.didSelect { (ff, _, _) in
-                       if ff == "Later" {
-                        self.showPicker()
-                        self.authView.buttonOK.setTitle("Planned", for: .normal)
-                        self.authView.buttonOK.isUserInteractionEnabled = true
-                       }
-                   }
+//        authView.textFieldStartDate.didSelect { (ff, _, _) in
+//                       if ff == "Later" {
+//                        self.showPicker()
+//                        self.authView.buttonOK.setTitle("Planned", for: .normal)
+//                        self.authView.buttonOK.isUserInteractionEnabled = true
+//                       }
+//                   }
 }
     private func showPicker() {
         var style = DefaultStyle()
@@ -260,7 +264,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let pick:PresentedViewController = PresentedViewController()
         pick.style = style
         pick.block = { [weak self] (date) in
-            self?.authView.textFieldStartDate.text = date
+        //    self?.authView.textFieldStartDate.text = date
         }
         self.present(pick, animated: true, completion: nil)
     }
@@ -268,14 +272,15 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
+        authView.buttonUploadVideo.addTarget(self, action: #selector(actionUploadVideo), for: .touchUpInside)
     }
     @objc func actionSignUp() {
 
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
-              let img = image ,
-              let planedDate = authView.textFieldStartDate.text else { return }
+              let img = image  else { return }
+              //let planedDate = authView.textFieldStartDate.text
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         var isPlan: Bool?
@@ -284,14 +289,14 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
         
-        if authView.textFieldStartDate.text == "NOW" {
-            isPlan = false
-            date = "\(Date())"
-        } else {
-            
-            isPlan = true
-            date = authView.textFieldStartDate.text
-        }
+//        if authView.textFieldStartDate.text == "NOW" {
+//            isPlan = false
+//            date = "\(Date())"
+//        } else {
+//
+//            isPlan = true
+//            date = authView.textFieldStartDate.text
+//        }
         //"All","Subscribers", "Only Sponsors"
         if authView.textFieldAviable.text == "All" {
              onlyForSponsors = false
@@ -319,6 +324,10 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     @objc func actionUploadImage(_ sender: UIButton) {
         self.imagePicker.present(from: sender)
+
+    }
+    @objc func actionUploadVideo(_ sender: UIButton) {
+        self.videoPicker.present(from: sender)
 
     }
     func makeNavItem() {
@@ -480,24 +489,24 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.url = url
 
         
-        if self.authView.textFieldStartDate.text == "NOW" {
-            let navVC = LiveStreamViewController()
-            navVC.modalPresentationStyle = .fullScreen
-            navVC.idBroad = id
-            guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-            navVC.myuri = myuris
-            navVC.myPublish = myPublishh
-           // self.present(navVC, animated: true, completion: nil)
-            self.present(navVC, animated: true) {
-                self.authView.textFieldStartDate.text = ""
-            }
-        } else {
-            let channelVC = ChanellVC()
-            channelVC.user = self.user
-            self.navigationController?.pushViewController(channelVC, animated: true)
-
-        }
-    }
+//        if self.authView.textFieldStartDate.text == "NOW" {
+//            let navVC = LiveStreamViewController()
+//            navVC.modalPresentationStyle = .fullScreen
+//            navVC.idBroad = id
+//            guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+//            navVC.myuri = myuris
+//            navVC.myPublish = myPublishh
+//           // self.present(navVC, animated: true, completion: nil)
+//            self.present(navVC, animated: true) {
+//                self.authView.textFieldStartDate.text = ""
+//            }
+//        } else {
+//            let channelVC = ChanellVC()
+//            channelVC.user = self.user
+//            self.navigationController?.pushViewController(channelVC, animated: true)
+//
+//        }
+   }
 
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
@@ -526,18 +535,18 @@ extension AddedVideoVC: UITextFieldDelegate {
           }
         }
         
-        if textField == authView.textFieldStartDate {
-            print("hhhhhhhh============\(fullString)")
-            if fullString == "NOW" {
-               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-                authView.buttonOK.setTitle("OK", for: .normal)
-                authView.buttonOK.isUserInteractionEnabled = true
-            } else {
-              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-                authView.buttonOK.setTitle("Planned", for: .normal)
-                authView.buttonOK.isUserInteractionEnabled = true
-            }
-        }
+//        if textField == authView.textFieldStartDate {
+//            print("hhhhhhhh============\(fullString)")
+//            if fullString == "NOW" {
+//               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
+//                authView.buttonOK.setTitle("OK", for: .normal)
+//                authView.buttonOK.isUserInteractionEnabled = true
+//            } else {
+//              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
+//                authView.buttonOK.setTitle("Planned", for: .normal)
+//                authView.buttonOK.isUserInteractionEnabled = true
+//            }
+//        }
              
         return true
     }
@@ -552,10 +561,10 @@ extension AddedVideoVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-        if textField == authView.textFieldStartDate {
-            self.authView.textFieldName.resignFirstResponder()
-            return true
-        }
+//        if textField == authView.textFieldStartDate {
+//            self.authView.textFieldName.resignFirstResponder()
+//            return true
+//        }
         if textField == authView.textFieldFree {
             self.authView.textFieldName.resignFirstResponder()
             return true
@@ -590,4 +599,91 @@ extension AddedVideoVC: ImagePickerDelegate {
         self.image = imageStr
 
     }
+}
+extension AddedVideoVC: VideoPickerDelegate {
+    
+    // Don't forget to import AVKit
+    func encodeVideo(at videoURL: URL, completionHandler: ((URL?, Error?) -> Void)?)  {
+        let avAsset = AVURLAsset(url: videoURL, options: nil)
+            
+        let startDate = Date()
+            
+        //Create Export session
+        guard let exportSession = AVAssetExportSession(asset: avAsset, presetName: AVAssetExportPresetPassthrough) else {
+            completionHandler?(nil, nil)
+            return
+        }
+            
+        //Creating temp path to save the converted video
+        let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0] as URL
+        let filePath = documentsDirectory.appendingPathComponent("rendered-Video.mp4")
+            
+        //Check if the file already exists then remove the previous file
+        if FileManager.default.fileExists(atPath: filePath.path) {
+            do {
+                try FileManager.default.removeItem(at: filePath)
+            } catch {
+                completionHandler?(nil, error)
+            }
+        }
+            
+        exportSession.outputURL = filePath
+        exportSession.outputFileType = AVFileType.mp4
+        exportSession.shouldOptimizeForNetworkUse = true
+        let start = CMTimeMakeWithSeconds(0.0, preferredTimescale: 0)
+        let range = CMTimeRangeMake(start: start, duration: avAsset.duration)
+        exportSession.timeRange = range
+            
+        exportSession.exportAsynchronously(completionHandler: {() -> Void in
+            switch exportSession.status {
+            case .failed:
+                print(exportSession.error ?? "NO ERROR")
+                completionHandler?(nil, exportSession.error)
+            case .cancelled:
+                print("Export canceled")
+                completionHandler?(nil, nil)
+            case .completed:
+                //Video conversion finished
+                let endDate = Date()
+                    
+                let time = endDate.timeIntervalSince(startDate)
+                print(time)
+                print("Successful!")
+                print(exportSession.outputURL ?? "NO OUTPUT URL")
+                completionHandler?(exportSession.outputURL, nil)
+                    
+                default: break
+            }
+                
+        })
+    }
+ 
+    func didSelectVideo(video: URL?) {
+      
+        guard let video = video else { return }
+
+        self.encodeVideo(at: video) { url, error in
+            
+            do {
+                let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
+                       print(data)
+         //   guard let url = url else { return }
+                self.takeChannel = self.fitMeetApi.uploadVideo(image: data)
+                           .mapError({ (error) -> Error in
+                               print("ERROR = \(error)")
+                               return error })
+                           .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                               if response != nil  {
+                                   print("GOODDDDDD")
+                                  // self.imageUpload = response
+                                   
+                                 
+                               }
+                       })
+                  //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
+                   } catch  {
+                       print("ERRRRR")
+               }         
+    }
+  }
 }
