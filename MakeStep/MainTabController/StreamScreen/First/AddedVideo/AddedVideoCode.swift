@@ -26,6 +26,14 @@ final class AddedVideoCode: UIView {
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
+    var labelNameVOD: UILabel = {
+        let label = UILabel()
+        label.text = "file.mp4"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 18)
+        label.numberOfLines = 2
+        return label
+    }()
     let imageButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
@@ -170,6 +178,9 @@ final class AddedVideoCode: UIView {
         
         scroll.addSubview(buttonUploadVideo)
         buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 120,  height: 36)
+        
+        scroll.addSubview(labelNameVOD)
+        labelNameVOD.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
         
         scroll.addSubview(imageButton)
         imageButton.anchor(top: buttonUploadVideo.bottomAnchor,

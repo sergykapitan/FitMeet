@@ -23,7 +23,6 @@ class FitMeetApi {
     }
     //MARK: - signupPassword
     public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
-        print(authRequest.asDictionary())
         return AF.request(Constants.apiEndpoint + "/auth/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary() , encoding: JSONEncoding.default, headers: nil)
                 // .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
@@ -73,8 +72,7 @@ class FitMeetApi {
                  .eraseToAnyPublisher()
            }
     
-    
-    
+
     //MARK: - requestLogin
     public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/loginPhone", method: .post, parameters: phoneCode.asDictionary(), encoding: JSONEncoding.default, headers: nil)

@@ -118,6 +118,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         self.authView.buttonOK.setTitle("OK", for: .normal)
+        self.authView.labelNameVOD.isHidden = true
       
     }
     override func viewDidLoad() {
@@ -661,29 +662,41 @@ extension AddedVideoVC: VideoPickerDelegate {
     func didSelectVideo(video: URL?) {
       
         guard let video = video else { return }
+        self.authView.buttonUploadVideo.isHidden = true
+        self.authView.labelNameVOD.isHidden = false
+        
+        let name = self.separateUrl(url: video)
+        self.authView.labelNameVOD.text = name
 
-        self.encodeVideo(at: video) { url, error in
-            
-            do {
-                let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
-                       print(data)
-         //   guard let url = url else { return }
-                self.takeChannel = self.fitMeetApi.uploadVideo(image: data)
-                           .mapError({ (error) -> Error in
-                               print("ERROR = \(error)")
-                               return error })
-                           .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                               if response != nil  {
-                                   print("GOODDDDDD")
-                                  // self.imageUpload = response
-                                   
-                                 
-                               }
-                       })
-                  //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
-                   } catch  {
-                       print("ERRRRR")
-               }         
-    }
+//        self.encodeVideo(at: video) { url, error in
+//
+//            do {
+//                let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
+//                       print(data)
+//         //   guard let url = url else { return }
+//                self.takeChannel = self.fitMeetApi.uploadVideo(image: data)
+//                           .mapError({ (error) -> Error in
+//                               print("ERROR = \(error)")
+//                               return error })
+//                           .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                               if response != nil  {
+//                                   print("GOODDDDDD")
+//                                  // self.imageUpload = response
+//
+//
+//                               }
+//                       })
+//                  //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
+//                   } catch  {
+//                       print("ERRRRR")
+//               }
+//    }
   }
+    func separateUrl(url: URL) -> String {
+        let urlString = url.absoluteString
+        let fullUrlArr = urlString.components(separatedBy: "/")
+        let nameVod = fullUrlArr.last
+        guard let nameVod = nameVod else { return "" }
+        return nameVod
+    }
 }

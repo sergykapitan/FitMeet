@@ -72,8 +72,7 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    //https://dev.fitliga.com/api/v0/stream/broadcasts/private?order=ASC&page=1&take=200&sort=type
-    
+ 
     public func getListAllBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&sort=type", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
