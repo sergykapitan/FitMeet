@@ -26,6 +26,11 @@ final class AddedVideoCode: UIView {
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
+    var resetVideo: UIButton = {
+        let but = UIButton()
+        but.setImage(UIImage(named: "x1"), for: .normal)
+        return but
+    }()
     var labelNameVOD: UILabel = {
         let label = UILabel()
         label.text = "file.mp4"
@@ -180,7 +185,11 @@ final class AddedVideoCode: UIView {
         buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 120,  height: 36)
         
         scroll.addSubview(labelNameVOD)
-        labelNameVOD.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 10)
+        labelNameVOD.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 40)
+        
+        scroll.addSubview(resetVideo)
+        resetVideo.anchor(left: labelNameVOD.rightAnchor, paddingLeft: 5, width: 20, height: 20)
+        resetVideo.centerY(inView: labelNameVOD)
         
         scroll.addSubview(imageButton)
         imageButton.anchor(top: buttonUploadVideo.bottomAnchor,
@@ -220,7 +229,7 @@ final class AddedVideoCode: UIView {
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldDescription)
-        textFieldDescription.anchor(top: textFieldFree.bottomAnchor,
+        textFieldDescription.anchor(top: textFieldAviable.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

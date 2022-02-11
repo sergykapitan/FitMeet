@@ -44,6 +44,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     
     var name: String = "JOPE"
     var user: User?
+    var videoURl: URL?
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
@@ -119,6 +120,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         self.authView.buttonOK.setTitle("OK", for: .normal)
         self.authView.labelNameVOD.isHidden = true
+        self.authView.resetVideo.isHidden = true
       
     }
     override func viewDidLoad() {
@@ -153,9 +155,11 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
       
       //  authView.textFieldStartDate.optionArray = ["NOW", "Later"]
         
-        authView.textFieldAviable.optionArray = ["All"]
+        authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]
+       
         
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
+        authView.textFieldFree.isHidden = true
         
         changeData()
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
@@ -234,13 +238,37 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
 //                self.authView.buttonOK.isUserInteractionEnabled = true
 //            }
 //        }
+         //All/Suscribers/PPV/Private room
         authView.textFieldAviable.didSelect { (str, ind, col) in
-            if str == "All" || str == "Subscribers"{
-                self.authView.textFieldFree.isUserInteractionEnabled = false
-                
-        } else if str == "Only Sponsors" {
+            if str == "All" || str == "Suscribers"{
+                if self.authView.textFieldDescription.frame.origin.y == 463.0 {
+                UIView.animate(withDuration: 0.5) {
+                    self.authView.textFieldDescription.frame.origin.y -= 50
+                    self.authView.buttonOK.frame.origin.y -= 50
+                  
+                } completion: { (bool) in
+                    if bool {
+                        self.authView.textFieldFree.isHidden = true
+                        self.authView.textFieldFree.isUserInteractionEnabled = false
+                    }
+                }
+            }
+        } else if str == "PPV" {
+            if self.authView.textFieldDescription.frame.origin.y == 413.0 {
+            UIView.animate(withDuration: 0.5) {
+                self.authView.textFieldDescription.frame.origin.y += 50
+                self.authView.buttonOK.frame.origin.y += 50
+              
+            } completion: { (bool) in
+                if bool {
+                    self.authView.textFieldFree.isHidden = false
+                    self.authView.textFieldFree.isUserInteractionEnabled = true
+                }
+            }
+            self.authView.textFieldFree.isHidden = false
             self.authView.textFieldFree.isUserInteractionEnabled = true
        }
+        }
    
     }
 //        authView.textFieldStartDate.didSelect { (ff, _, _) in
@@ -274,7 +302,16 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
         authView.buttonUploadVideo.addTarget(self, action: #selector(actionUploadVideo), for: .touchUpInside)
+        authView.resetVideo.addTarget(self, action: #selector(resetVideo), for: .touchUpInside)
     }
+    @objc func resetVideo() {
+        self.videoURl = nil
+        self.authView.buttonUploadVideo.isHidden = false
+        self.authView.resetVideo.isHidden = true
+        self.authView.labelNameVOD.isHidden = true
+        
+    }
+        
     @objc func actionSignUp() {
 
         guard let chanelId = listChanell.last?.id ,
@@ -302,27 +339,58 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         if authView.textFieldAviable.text == "All" {
              onlyForSponsors = false
              onlyForSubscribers = false
-        } else if authView.textFieldAviable.text == "Subscribers" {
+        } else if authView.textFieldAviable.text == "Suscribers" {
             onlyForSponsors = false
             onlyForSubscribers = true
-        } else if authView.textFieldAviable.text == "Only Sponsors" {
+        } else if authView.textFieldAviable.text == "PPV" {
             onlyForSponsors = true
             onlyForSubscribers = false
         }
         
         
-        guard let isP = isPlan,
-              let d = date,
+        guard
+              
               let sponsor = onlyForSponsors,
-              let sub = onlyForSubscribers else { return }
+              let sub = onlyForSubscribers,
+              let video = self.videoURl  else { return }
         
        
+        self.encodeVideo(at: video) { url, error in
         
+                    do {
+                        let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
+                        self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview:  (self.imageUpload?.data?.first?.filename)!, title: name, description: description, categoryId: self.IdCategory)
+                                   .mapError({ (error) -> Error in
+                                       return error })
+                                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                                       if response != nil  {
+                                           Loaf("Upload Video  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                                               switch disType {
+                                               case .tapped: self.gotoChannel()
+                                               case .timedOut: self.gotoChannel()
+                                           }
+                                           }
+         
+                                       }
+                               })
+                          //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
+                           } catch  {
+                               print("ERRRRR")
+                       }
+            }
      
         
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
+     //   self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
      
     }
+    
+    private func gotoChannel() {
+        let channelVC = ChanellVC()
+        channelVC.user = self.user
+        self.navigationController?.pushViewController(channelVC, animated: true)
+    }
+    
+    
     @objc func actionUploadImage(_ sender: UIButton) {
         self.imagePicker.present(from: sender)
 
@@ -388,7 +456,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.listChanell = response.data
                     guard let sub = self.listChanell.last?.isSubscribe else { return }
                     if sub {
-                        self.authView.textFieldAviable.optionArray = ["All","Subscribers"]//,"Only Sponsors"
+                        self.authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]//,"Only Sponsors"
                     }
                 }
         })
@@ -662,11 +730,14 @@ extension AddedVideoVC: VideoPickerDelegate {
     func didSelectVideo(video: URL?) {
       
         guard let video = video else { return }
+        self.videoURl = video
         self.authView.buttonUploadVideo.isHidden = true
         self.authView.labelNameVOD.isHidden = false
+        self.authView.resetVideo.isHidden = false
         
         let name = self.separateUrl(url: video)
         self.authView.labelNameVOD.text = name
+        
 
 //        self.encodeVideo(at: video) { url, error in
 //

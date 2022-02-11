@@ -43,6 +43,16 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         guard let id = brodcast[indexPath.row].userId
              // let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
+
+        if brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+            cell.imageLive.image =  #imageLiteral(resourceName: "slider")
+            cell.imageLive.setImageColor(color: .gray)
+            cell.labelLive.text = "Wait for"
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.overlay.anchor(width: 130)
+         }
+        
       
        if brodcast[indexPath.row].status == "OFFLINE" {
            cell.imageLive.image =  #imageLiteral(resourceName: "slider")

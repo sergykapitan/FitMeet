@@ -168,23 +168,23 @@ class FitMeetApi {
         
     }
     //,params: [String: Any]
-    public func uploadVideo(image: Data) -> AnyPublisher<ResponseVOD,DifferentError> {
+    public func uploadVideo(image: Data,channelId: String,preview: String ,title: String, description: String, categoryId: [Int]) -> AnyPublisher<ResponseVOD,DifferentError> {
  
 
         return AF.upload( multipartFormData: { multipartFormData in
-//            let parameters = [
-//                "channelId": "255",
-//                "title": "NewVideo"
-//            ]
+
             multipartFormData.append( image, withName: "file",fileName: "\(Data()).mp4", mimeType: "video/mp4")
-     
-                           multipartFormData.append("255".data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
-                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "categoryIds")
-                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
-                           multipartFormData.append("old".data(using: .utf8, allowLossyConversion: false)!, withName: "title")
-                           multipartFormData.append("new foo".data(using: .utf8, allowLossyConversion: false)!, withName: "description")
-                           multipartFormData.append("false".data(using: .utf8, allowLossyConversion: false)!, withName: "onlyForSubscribers")
-                           multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "appProductId")
+                            
+                        //   let cat = Data(categoryId)
+                           let data1 = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: categoryId), count: categoryId.count, deallocator: .none)
+            
+                           multipartFormData.append(channelId.data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
+                           multipartFormData.append(data1, withName: "categoryIds")
+                           multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
+                           multipartFormData.append(title.data(using: .utf8, allowLossyConversion: false)!, withName: "title")
+                           multipartFormData.append(description.data(using: .utf8, allowLossyConversion: false)!, withName: "description")
+                         //  multipartFormData.append("false".data(using: .utf8, allowLossyConversion: false)!, withName: "onlyForSubscribers")
+                        //   multipartFormData.append("".data(using: .utf8, allowLossyConversion: false)!, withName: "appProductId")
 
 
         },to: Constants.apiEndpoint + "/vodUpload/userUpload",usingThreshold: UInt64.init(),  method: .post, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
