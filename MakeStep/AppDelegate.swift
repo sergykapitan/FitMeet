@@ -70,8 +70,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let vcIndex = tabBarController.viewControllers!.firstIndex(of: viewController)!
+        let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
            if  vcIndex == 2 {
-    
+               if token != nil {
                let chatVC = SendStream()
                let curvaView = tabBarController.selectedViewController!
                chatVC.transitioningDelegate = actionChatTransitionManager
@@ -81,6 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
                curvaView.present(chatVC, animated: true, completion: nil)
 
                return false
+               } else {
+                   return true
+               }
            } else {
                return true
            }

@@ -214,7 +214,12 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let info = notificiation.userInfo!
          let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
             if authView.textFieldDescription.isFirstResponder {
-                self.authView.scroll.contentOffset.y = 100
+                UIView.animate(withDuration: 0.5) {
+                   // self.authView.textFieldDescription.frame.origin.y -= 50
+                   // self.authView.buttonOK.frame.origin.y -= 50
+
+                }
+             //   self.authView.scroll.contentOffset.y = 100
         }
     }
     
@@ -279,24 +284,24 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
 //                       }
 //                   }
 }
-    private func showPicker() {
-        var style = DefaultStyle()
-        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
-        style.pickerMode = .dateAndTime
-        style.titleString = "Please Сhoose Date"
-        style.returnDateFormat = .yyyy_To_ss
-        style.minimumDate = Date()
-        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
-        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
-    
-        style.textColor = UIColor(hexString: "#3B58A4")
-        let pick:PresentedViewController = PresentedViewController()
-        pick.style = style
-        pick.block = { [weak self] (date) in
-        //    self?.authView.textFieldStartDate.text = date
-        }
-        self.present(pick, animated: true, completion: nil)
-    }
+//    private func showPicker() {
+//        var style = DefaultStyle()
+//        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
+//        style.pickerMode = .dateAndTime
+//        style.titleString = "Please Сhoose Date"
+//        style.returnDateFormat = .yyyy_To_ss
+//        style.minimumDate = Date()
+//        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
+//        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
+//
+//        style.textColor = UIColor(hexString: "#3B58A4")
+//        let pick:PresentedViewController = PresentedViewController()
+//        pick.style = style
+//        pick.block = { [weak self] (date) in
+//        //    self?.authView.textFieldStartDate.text = date
+//        }
+//        self.present(pick, animated: true, completion: nil)
+//    }
 
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
@@ -482,73 +487,73 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 }
         })
     }
-    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
-
-        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
-                                                    channelID: chanellId,
-                                                    name: name,
-                                                    type: "STANDARD",
-                                                    access: "ALL",
-                                                    hasChat: true,
-                                                    isPlanned: isPlaned,
-                                                    onlyForSponsors: onlyForSponsors,
-                                                    onlyForSubscribers: onlyForSubscribers,
-                                                    categoryIDS: categoryId,
-                                                    scheduledStartDate: date,
-                                                    description: description,
-                                                    previewPath: self.imageUpload?.data?.first?.filename))
-
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if let id = response.id  {
-                    
-                    print("greate broadcast")
-                    guard let usId = self.userId else { return }
-                    self.broadcast = response
-                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
-                    self.fetchStream(id: self.broadcast?.id, name: name)
-                    
-                    self.authView.textFieldName.text = ""
-                    self.authView.textFieldFree.text = ""
-                    self.authView.textFieldAviable.text = ""
-                    self.authView.textFieldDescription.text = ""
-                    self.authView.textFieldCategory.text = ""
-                    self.authView.imageButton.setImage(nil, for: .normal)
-
-                } else {
-                    guard let mess = response.message else { return }
-                    Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-                }
-             })
-         
-         }
+//    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
+//
+//        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
+//                                                    channelID: chanellId,
+//                                                    name: name,
+//                                                    type: "STANDARD",
+//                                                    access: "ALL",
+//                                                    hasChat: true,
+//                                                    isPlanned: isPlaned,
+//                                                    onlyForSponsors: onlyForSponsors,
+//                                                    onlyForSubscribers: onlyForSubscribers,
+//                                                    categoryIDS: categoryId,
+//                                                    scheduledStartDate: date,
+//                                                    description: description,
+//                                                    previewPath: self.imageUpload?.data?.first?.filename))
+//
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if let id = response.id  {
+//
+//                    print("greate broadcast")
+//                    guard let usId = self.userId else { return }
+//                    self.broadcast = response
+//                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+//                    self.fetchStream(id: self.broadcast?.id, name: name)
+//
+//                    self.authView.textFieldName.text = ""
+//                    self.authView.textFieldFree.text = ""
+//                    self.authView.textFieldAviable.text = ""
+//                    self.authView.textFieldDescription.text = ""
+//                    self.authView.textFieldCategory.text = ""
+//                    self.authView.imageButton.setImage(nil, for: .normal)
+//
+//                } else {
+//                    guard let mess = response.message else { return }
+//                    Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+//                }
+//             })
+//
+//         }
     
-    func fetchStream(id:Int?,name: String?) {
-        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
-        guard let id = id , let name = name , let userId = UserId  else{ return }
-        let usId = Int(userId)
-        guard let usID = usId else { return }
-        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
-            .mapError({ (error) -> Error in
-                  print(error)
-                   return error })
-                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    guard let url = response.url else { return }
-                     if url != nil {
-                     DispatchQueue.main.async {
-                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
-                             switch disType {
-                             case .tapped:  self.startStream(id: id, url: url)
-                            case .timedOut: self.startStream(id: id, url: url)
-                         }
-                     }
-                 }
-             } else {
-                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-             }
-        })
-    }
+//    func fetchStream(id:Int?,name: String?) {
+//        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+//        guard let id = id , let name = name , let userId = UserId  else{ return }
+//        let usId = Int(userId)
+//        guard let usID = usId else { return }
+//        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
+//            .mapError({ (error) -> Error in
+//                  print(error)
+//                   return error })
+//                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                    guard let url = response.url else { return }
+//                     if url != nil {
+//                     DispatchQueue.main.async {
+//                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+//                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+//                             switch disType {
+//                             case .tapped:  self.startStream(id: id, url: url)
+//                            case .timedOut: self.startStream(id: id, url: url)
+//                         }
+//                     }
+//                 }
+//             } else {
+//                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+//             }
+//        })
+//    }
     
     private func startStream(id : Int, url : String) {
         UserDefaults.standard.set(url, forKey: Constants.urlStream)
