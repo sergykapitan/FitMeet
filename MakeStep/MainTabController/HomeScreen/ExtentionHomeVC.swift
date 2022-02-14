@@ -101,6 +101,7 @@ extension HomeVC: UITableViewDataSource {
 
 
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
+        guard self.token != nil else {  return  }
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
            guard let id = listBroadcast[sender.tag].id else { return }
@@ -112,7 +113,7 @@ extension HomeVC: UITableViewDataSource {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        
+        guard self.token != nil else {  return  }
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
