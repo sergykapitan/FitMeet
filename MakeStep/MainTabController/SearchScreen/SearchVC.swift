@@ -123,7 +123,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         setupMainView()
         makeTableView()
         makeNavItem()
-        searchView.segmentControll.setButtonTitles(buttonTitles: ["Streams","Coaches","Categories"])
+        searchView.segmentControll.setButtonTitles(buttonTitles: ["Video","Coaches","Categories"])
         searchView.segmentControll.delegate = self
 
     }
