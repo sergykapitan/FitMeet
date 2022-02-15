@@ -158,7 +158,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listUsers = response.data
+                    self.listUsers = response.data.sorted(by: {$0.channelFollowCount! > $1.channelFollowCount!})
                     self.filterListUser = self.listUsers
                     self.searchView.tableView.reloadData()
                    
