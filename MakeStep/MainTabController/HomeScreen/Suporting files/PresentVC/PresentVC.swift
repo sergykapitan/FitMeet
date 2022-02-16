@@ -723,6 +723,15 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
         makeNavItem()
         i = 0
        
@@ -1032,7 +1041,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           })
     }
     @objc func actionSubscribe() {
-        guard let channel = channel else { return }
+        guard let channel = channel,let _ = token else { return }
         guard let subscribe = channel.isSubscribe else { return }
         if subscribe {
            
@@ -1060,6 +1069,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         }
     }
     @objc func actionFollow() {
+        guard let _ = token else { return }
         homeView.buttonFollow.isSelected.toggle()
         
         if homeView.buttonFollow.isSelected {

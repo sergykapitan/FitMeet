@@ -26,13 +26,21 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         }
         if index == 1 {
             self.index = index
-            self.homeView.tableView.reloadData()
-            bindingRecomandate()
+            if token != nil {
+                self.listBroadcast.removeAll()
+                bindingRecomandate()
+                self.homeView.tableView.reloadData()
+            } else {
+                self.listBroadcast.removeAll()
+                bindingRecomandate()
+                self.homeView.tableView.reloadData()
+            }
         }
         if index == 2 {
             self.index = index
-            self.homeView.tableView.reloadData()
+            self.listBroadcast.removeAll()
             onlyFollowBroadcast(follow: true)
+            self.homeView.tableView.reloadData()
         }
     }
 
@@ -175,8 +183,10 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 bindingNotAuht()
             }
         } else if index == 1 {
+            self.listBroadcast.removeAll()
             bindingRecomandate()
         } else if index == 2 {
+            self.listBroadcast.removeAll()
             onlyFollowBroadcast(follow: true)
         }
         
