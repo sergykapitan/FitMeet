@@ -18,6 +18,13 @@ final class SearchVCCode: UIView {
         view.clipsToBounds = true
         return view
         }()
+    let labelNtResult: UILabel = {
+        var label = UILabel()
+        label.text = "No results"
+        label.textColor = UIColor(hexString: "#000000")
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    } ()
     var tableView: UITableView = {
         let table = UITableView()
         return table
@@ -45,6 +52,9 @@ final class SearchVCCode: UIView {
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+        cardView.addSubview(labelNtResult)
+        labelNtResult.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 20)
         
     }
 

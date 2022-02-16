@@ -125,6 +125,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         makeNavItem()
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Video","Coaches","Categories"])
         searchView.segmentControll.delegate = self
+        searchView.labelNtResult.isHidden = true
 
     }
     
@@ -136,8 +137,17 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = self.listBroadcast
+                    if self.listBroadcast.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
+                   
                     self.searchView.tableView.reloadData()
-                 
+ 
+                   
                 }
           })
     }
@@ -148,6 +158,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.filtredBroadcast = self.listBroadcast
+                    if self.listBroadcast.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
                     self.searchView.tableView.reloadData()
                  
                 }
@@ -160,6 +177,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 if response.data != nil  {
                     self.listUsers = response.data.sorted(by: {$0.channelFollowCount! > $1.channelFollowCount!})
                     self.filterListUser = self.listUsers
+                    if self.listUsers.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
                     self.searchView.tableView.reloadData()
                    
                 }
@@ -171,6 +195,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listUsers = response.data.reversed()
+                    if self.listUsers.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
                     self.searchView.tableView.reloadData()
                    
                 }
@@ -192,6 +223,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listCategory = response.data!
+                    if self.listCategory.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
                     self.searchView.tableView.reloadData()
 
                 }
