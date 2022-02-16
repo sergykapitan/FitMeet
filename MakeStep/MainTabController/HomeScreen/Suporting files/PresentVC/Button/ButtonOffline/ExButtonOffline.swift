@@ -85,11 +85,11 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
 
         
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-
+        if token != nil {
         if self.usersd[id]?.id == Int(selfId!) {
             cell.buttonLike.isHidden = true
         } else { cell.buttonLike.isHidden = false }
-        
+        }
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         cell.buttonLike.isUserInteractionEnabled = true

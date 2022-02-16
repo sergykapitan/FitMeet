@@ -725,9 +725,14 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
         self.navigationController?.navigationBar.layoutIfNeeded()
         makeNavItem()
         i = 0
+       
         self.actionOnline()
         frame = self.view.frame
-        guard let broadcast = broadcast else { return }
+        guard let broadcast = broadcast else {
+            self.homeView.buttonOnline.isHidden = true
+            self.homeView.buttonOffline.anchor(top: self.homeView.segmentControll.bottomAnchor, left: self.homeView.cardView.leftAnchor, paddingTop: 15, paddingLeft: 20, width: 74, height: 26)
+            self.actionOffline()
+            return }
         homeView.labelStreamDescription.text = broadcast.description
         let categorys = broadcast.categories
         let s = categorys!.map{$0.title!}
@@ -863,6 +868,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
   
     @objc func actionLike() {
+        guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
@@ -872,6 +878,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
 
     }
     @objc func actionMore() {
+        guard token != nil else { return }
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom

@@ -642,8 +642,8 @@ public class iLabeledSeekSlider: UIView {
             lastSliderLocation = getInitialX()
             let recognizerX = recognizer.location(in: self).x
             if abs(lastSliderLocation - recognizerX) > thumbSliderRadius * 4 {
-                recognizer.isEnabled = false
-                recognizer.isEnabled = true
+               // recognizer.isEnabled = false
+               // recognizer.isEnabled = true
             }
         }
         if recognizer.state != .cancelled {
