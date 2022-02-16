@@ -78,39 +78,34 @@ class CalculateVC: UIViewController {
                }
                    print("Slider value: \(value)")
                    self.valueA = Float(value)
-                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+            self.calculateView.labelTotal.text = "$" + self.calculate()
                }
                calculateView.sliderB.onValueChanged = { value in
                    print("Slider value: \(value)")
                    self.valueB = Float(value)
-                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+                   self.calculateView.labelTotal.text = "$" + self.calculate()
                }
                calculateView.sliderC.onValueChanged = { value in
                    print("Slider value: \(value)")
                    self.ValueC = Float(value)
-                   self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
+                   self.calculateView.labelTotal.text = "$" + self.calculate()
                }
     }
     @objc func actionLabelComission() {
         let vc = CommissionVC()
         self.navigationController?.pushViewController(vc, animated: true)
     }
-    private func calculate() -> Float {
+    private func calculate() -> String {
       let price = valueA * valueB * ValueC
-      let value = calculatePercentage(value: price,percentageVal: 30)
-      return value
+      let value = Double(calculatePercentage(value: price,percentageVal: 30))
+       
+        return value.roundToDecimal(2).formattedWithSeparator
     }
     //Calucate percentage based on given values
     private func calculatePercentage(value:Float,percentageVal:Float) -> Float { 
         let val = value * percentageVal
         return val / 100.0
     }
-    
-    @objc func deleteCell(_ sender: UIButton) -> Void  {
-        print(sender.tag)
-    }
 
- 
-  
 }
 
