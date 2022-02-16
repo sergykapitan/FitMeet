@@ -123,12 +123,19 @@ final class CalculateVCCode: UIView {
         return label
     }()
     
-    var labelComision: UILabel = {
-        let label = UILabel()
-        label.text = "Service commission 30%" + " ➔"
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = UIColor(hexString: "#868686")
-        return label
+//    var labelComision: UILabel = {
+//        let label = UILabel()
+//        label.text = "Service commission 30%" + " ➔"
+//        label.font = UIFont.boldSystemFont(ofSize: 16)
+//        label.textColor = UIColor(hexString: "#868686")
+//        return label
+//    }()
+    var labelComision: UIButton = {
+        let button = UIButton()
+        button.setTitle("Service commission 30%" + " ➔", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.setTitleColor(UIColor.init(hexString: "#868686"), for: .normal)
+        return button
     }()
     
     var labelAfterComision: UILabel = {
@@ -144,8 +151,7 @@ final class CalculateVCCode: UIView {
     init() {
         super.init(frame: CGRect.zero)
         initUI()
-       
-        
+      
     }
     
     required init?(coder: NSCoder) {

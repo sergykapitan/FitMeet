@@ -45,8 +45,7 @@ final class MonetezeitionVCode: UIView {
     init() {
         super.init(frame: CGRect.zero)
         initUI()
-       
-        
+    
     }
     
     required init?(coder: NSCoder) {

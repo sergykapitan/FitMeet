@@ -54,6 +54,7 @@ class CalculateVC: UIViewController {
                }
     }
     private func actionButton() {
+        calculateView.labelComision.addTarget(self, action: #selector(actionLabelComission), for: .touchUpInside)
         calculateView.sliderA.onValueChanged = { value in
                 if value == 0 || value <= 1000 {
                        self.calculateView.sliderA.slidingInterval = 1
@@ -89,6 +90,10 @@ class CalculateVC: UIViewController {
                    self.ValueC = Float(value)
                    self.calculateView.labelTotal.text = "$" + String(format: "%.2f", self.calculate())
                }
+    }
+    @objc func actionLabelComission() {
+        let vc = CommissionVC()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     private func calculate() -> Float {
       let price = valueA * valueB * ValueC

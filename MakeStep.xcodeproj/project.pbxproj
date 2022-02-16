@@ -299,6 +299,10 @@
 		A5B635B8271866280097A127 /* srtDemo.srt in Resources */ = {isa = PBXBuildFile; fileRef = A5B635B7271866280097A127 /* srtDemo.srt */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
+		A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
+		A5F2FF0327BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
+		A5F2FF0527BD02C400F6C518 /* CommissionVCCde.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */; };
+		A5F2FF0627BD02C400F6C518 /* CommissionVCCde.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */; };
 		B404922926D6456600A2F417 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
 		B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */; };
 		B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923026D7970200A2F417 /* ActionChatPresentationController.swift */; };
@@ -570,6 +574,8 @@
 		A5B635B7271866280097A127 /* srtDemo.srt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = srtDemo.srt; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
+		A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVC.swift; sourceTree = "<group>"; };
+		A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVCCde.swift; sourceTree = "<group>"; };
 		B404922826D6456600A2F417 /* Label.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Label.swift; sourceTree = "<group>"; };
 		B404922E26D796C900A2F417 /* ActionTransishionChatManadger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionTransishionChatManadger.swift; sourceTree = "<group>"; };
 		B404923026D7970200A2F417 /* ActionChatPresentationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionChatPresentationController.swift; sourceTree = "<group>"; };
@@ -925,6 +931,7 @@
 			children = (
 				A5950E5027371A2F002C1500 /* CalculateVC.swift */,
 				A5950E5227371A40002C1500 /* CalculateVCCode.swift */,
+				A5F2FF0027BD026E00F6C518 /* CommissionView */,
 			);
 			path = Calculate;
 			sourceTree = "<group>";
@@ -971,6 +978,15 @@
 				A5D2E0A627147D1200986BAE /* EditChannelCode.swift */,
 			);
 			path = "Edit Channel";
+			sourceTree = "<group>";
+		};
+		A5F2FF0027BD026E00F6C518 /* CommissionView */ = {
+			isa = PBXGroup;
+			children = (
+				A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */,
+				A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */,
+			);
+			path = CommissionView;
 			sourceTree = "<group>";
 		};
 		A91686760454E5B22AB8EF6D /* Frameworks */ = {
@@ -2011,6 +2027,7 @@
 				A5129432273A6EB7000CBBD9 /* UserVC.swift in Sources */,
 				A5129433273A6EB7000CBBD9 /* SceneDelegate.swift in Sources */,
 				A5129434273A6EB7000CBBD9 /* MonetezeitionVC.swift in Sources */,
+				A5F2FF0327BD02B100F6C518 /* CommissionVC.swift in Sources */,
 				A5129435273A6EB7000CBBD9 /* Token.swift in Sources */,
 				A5129436273A6EB7000CBBD9 /* HistoryChat.swift in Sources */,
 				A5129437273A6EB7000CBBD9 /* CustomPresentationAnimationController.swift in Sources */,
@@ -2066,6 +2083,7 @@
 				A5129466273A6EB7000CBBD9 /* ActionTransishionChatManadger.swift in Sources */,
 				A5129467273A6EB7000CBBD9 /* SlideInPresentationController.swift in Sources */,
 				A5129468273A6EB7000CBBD9 /* CategoryCell.swift in Sources */,
+				A5F2FF0627BD02C400F6C518 /* CommissionVCCde.swift in Sources */,
 				A5129469273A6EB7000CBBD9 /* ExChanellVC.swift in Sources */,
 				A512946A273A6EB7000CBBD9 /* ChannelModel.swift in Sources */,
 				A512946B273A6EB7000CBBD9 /* CalendarClass.swift in Sources */,
@@ -2251,6 +2269,7 @@
 				A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
 				A5671E8B2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
+				A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */,
 				B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */,
 				B4497D6226A8371E00321AB8 /* CustomPresentationAnimationController.swift in Sources */,
 				A5950E5B273815CF002C1500 /* EditMonetVC.swift in Sources */,
@@ -2306,6 +2325,7 @@
 				B416382A268B09BC005BAA46 /* ChanellVC.swift in Sources */,
 				B4E88E4D26D3DB79003E6B16 /* Usermap.swift in Sources */,
 				B404922F26D796C900A2F417 /* ActionTransishionChatManadger.swift in Sources */,
+				A5F2FF0527BD02C400F6C518 /* CommissionVCCde.swift in Sources */,
 				B4B1115F2692F8AA0006CA5A /* SlideInPresentationController.swift in Sources */,
 				B4F204D3266F4F9600ED11B5 /* CategoryCell.swift in Sources */,
 				B48868FB26FB2F3800DD12A9 /* ExChanellVC.swift in Sources */,
