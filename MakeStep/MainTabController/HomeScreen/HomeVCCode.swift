@@ -21,7 +21,7 @@ final class HomeVCCode: UIView {
         }()
     var label: UILabel = {
         let label = UILabel()
-        label.text = "HI"
+        label.text = ""
         label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 25)
         return label

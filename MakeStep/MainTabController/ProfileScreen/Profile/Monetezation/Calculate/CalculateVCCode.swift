@@ -22,7 +22,7 @@ final class CalculateVCCode: UIView {
     let sliderA : iLabeledSeekSlider = {
         let slide = iLabeledSeekSlider()
         slide.title = "Subscribers"
-        slide.unit = "𓁹"
+        slide.unit = ""
         slide.unitPosition = .back
         slide.limitValueIndicator = "Max"
         slide.minValue = 0
