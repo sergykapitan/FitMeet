@@ -157,12 +157,17 @@ final class ChanellCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
-    let selfView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(hexString: "#F6F6F6")
-        return view
+    let tableView: UITableView = {
+        let table = UITableView()
+        table.backgroundColor = UIColor(hexString: "#F9FAFC")
+        return table
     }()
+//    let selfView: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = UIColor(hexString: "#F6F6F6")
+//        return view
+//    }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -177,10 +182,15 @@ final class ChanellCode: UIView {
     func createCardViewLayer() {
 
         cardView.fillFull(for: self)
-        cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 16, height: 20)
-        cardView.addSubview(selfView)
-        selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        cardView.addSubview(tableView)
+        tableView.anchor(top: cardView.topAnchor,
+                         left: cardView.leftAnchor,
+                         right: cardView.rightAnchor,
+                         bottom: cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+      //  cardView.addSubview(segmentControll)
+      //  segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 16, height: 20)
+      //  cardView.addSubview(selfView)
+      //  selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
     
 
     }

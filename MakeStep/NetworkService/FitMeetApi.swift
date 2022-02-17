@@ -110,7 +110,7 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: User.self)
             .value()
-            .print("getUser")
+           // .print("getUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -219,7 +219,7 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UploadMapUser.self)
             .value()
-            .print("getUserMap")
+           // .print("getUserMap")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

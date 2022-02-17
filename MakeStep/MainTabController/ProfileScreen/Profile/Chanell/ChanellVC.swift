@@ -31,32 +31,32 @@ extension State {
         }
     }
 }
-
-class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegmentedFullControlDelegate {
+//, CustomSegmentedControlDelegate//CustomSegmentedFullControlDelegate
+class ChanellVC: UIViewController  {
 
     let videoVC = VideosVC()
     let timeTable = TimetableVC()
     let time = Timetable()
 
-    func change(to index: Int) {
-  
-        if index == 0 {
-            removeAllChildViewController(timeTable)
-            configureChildViewController(videoVC, onView: profileView.selfView )            
-            guard let userID = self.user?.id else { return }
-            videoVC.id = userID
-            videoVC.user = self.user
-        }
-        if index == 1 {
-            guard let user = self.user else { return }
-            
-            time.user = user
-            removeAllChildViewController(videoVC)
-            configureChildViewController(time, onView: profileView.selfView )
-           
-        }
-   
-    }
+//    func change(to index: Int) {
+//
+//        if index == 0 {
+//            removeAllChildViewController(timeTable)
+//            configureChildViewController(videoVC, onView: profileView.selfView )
+//            guard let userID = self.user?.id else { return }
+//            videoVC.id = userID
+//            videoVC.user = self.user
+//        }
+//        if index == 1 {
+//            guard let user = self.user else { return }
+//
+//            time.user = user
+//            removeAllChildViewController(videoVC)
+//            configureChildViewController(time, onView: profileView.selfView )
+//
+//        }
+//
+//    }
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
     
@@ -85,6 +85,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     
     
     let profileView = ChanellCode()
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
@@ -102,6 +103,7 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
     var url: String?
     var usersd = [Int: User]()
     var userID = UserDefaults.standard.string(forKey: Constants.userID)
+    let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
 
     
     private var takeChannel: AnyCancellable?
@@ -139,10 +141,11 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
-        profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])//,
-        profileView.segmentControll.delegate = self
-        removeAllChildViewController(timeTable)
-        configureChildViewController(videoVC, onView: profileView.selfView )
+        createTableView()
+      //  profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])//,
+      //  profileView.segmentControll.delegate = self
+     //   removeAllChildViewController(timeTable)
+      //  configureChildViewController(videoVC, onView: profileView.selfView )
         guard let userID = self.user?.id else { return }
         videoVC.id = userID
         videoVC.user = self.user
@@ -180,11 +183,25 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+      //  profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
         self.navigationController?.navigationBar.isHidden = false
         
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
+        if token != nil {
+            self.bindingBroadcast(status: "OFFLINE", userId: "\(id)")
+        } else {
+            self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
+        }
         AppUtility.lockOrientation(.portrait)
      //   configureChildViewController(videoVC, onView: profileView.selfView )
         
@@ -195,10 +212,6 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
         setUserProfile()
       
        
-    }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        
     }
 
     func bindingChannel(userId: Int?) {
@@ -211,8 +224,42 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                 }
         })
     }
-   
- 
+    func bindingBroadcast(status: String,userId: String) {
+        take = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                   
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.profileView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingBroadcastNotAuth(status: String,userId: String) {
+        take = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                   
+                    self.brodcast = response.data!
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.profileView.tableView.reloadData()
+                }
+           })
+       }
+    func bindingUserMap(ids: [Int])  {
+        take = fitMeetApi.getUserIdMap(ids: ids)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.usersd = response.data
+                    self.profileView.tableView.reloadData()
+                }
+          })
+    }
     // MARK: - Animation
     
     /// The current state of the animation. This variable is changed only when an animation completes.
@@ -337,7 +384,13 @@ class ChanellVC: UIViewController, CustomSegmentedControlDelegate, CustomSegment
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
     }
-
+    private func createTableView() {
+        profileView.tableView.dataSource = self
+        profileView.tableView.delegate = self
+        profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
+        profileView.tableView.separatorStyle = .none
+        profileView.tableView.showsVerticalScrollIndicator = false
+    }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
