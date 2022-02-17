@@ -64,8 +64,10 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         }
         if token != nil {
             binding()
+            self.searchView.buttonLikes.isHidden = false
         } else {
             bindingNotAuth()
+            self.searchView.buttonLikes.isHidden = true
         }
     }
 
@@ -216,6 +218,8 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         print("refrech")
        }
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
+        guard token != nil else { return }
+
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             guard let id = filtredBroadcast[sender.tag].id else { return }
