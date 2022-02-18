@@ -198,7 +198,7 @@ class ChanellVC: UIViewController  {
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
-            self.bindingBroadcast(status: "OFFLINE", userId: "\(id)")
+            self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)")
         } else {
             self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
         }

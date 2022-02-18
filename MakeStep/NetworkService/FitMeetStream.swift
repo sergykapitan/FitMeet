@@ -44,7 +44,6 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     //MARK: - list Broadcast//GET
-
     public func getListBroadcast(status:String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=\(status)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -106,9 +105,8 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
-    //
     public func getBroadcastPrivate(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=50&status=\(status)&sort=userId&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=100&status=\(status)&sort=userId&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
