@@ -44,6 +44,18 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         super.viewWillAppear(animated)
         setUserProfile()
         self.navigationController?.navigationBar.isHidden = false
+        if #available(iOS 15, *) {
+                   let appearance = UINavigationBarAppearance()
+                   appearance.configureWithOpaqueBackground()
+                   appearance.backgroundColor = .white
+                   appearance.shadowImage = UIImage()
+                   appearance.shadowColor = .clear
+                   UINavigationBar.appearance().standardAppearance = appearance
+                   UINavigationBar.appearance().scrollEdgeAppearance = appearance
+               }
+        
+        
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -53,15 +65,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            appearance.shadowImage = UIImage()
-            appearance.shadowColor = .clear
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
+       
         print("Token = \(token)")
         print("ChanelId = \(chanellId)")
         

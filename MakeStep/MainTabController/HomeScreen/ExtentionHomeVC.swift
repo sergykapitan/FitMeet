@@ -58,7 +58,7 @@ extension HomeVC: UITableViewDataSource {
   
         
        
-        self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+      //  self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         
         if listBroadcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
@@ -67,14 +67,14 @@ extension HomeVC: UITableViewDataSource {
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
-   
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.labelLive.text = "Live"
             cell.imageEye.isHidden = false
             cell.labelEye.isHidden = false
             cell.logoUserOnline.isHidden = false
-
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         } else if listBroadcast[indexPath.row].status == "PLANNED" {
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
@@ -118,6 +118,7 @@ extension HomeVC: UITableViewDataSource {
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
+        print("Self = \(self.url)")
         detailViewController.url = self.url        
         present(detailViewController, animated: true)
 

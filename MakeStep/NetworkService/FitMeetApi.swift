@@ -174,8 +174,6 @@ class FitMeetApi {
         return AF.upload( multipartFormData: { multipartFormData in
 
             multipartFormData.append( image, withName: "file",fileName: "\(Data()).mp4", mimeType: "video/mp4")
-                            
-                        //   let cat = Data(categoryId)
                            let data1 = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: categoryId), count: categoryId.count, deallocator: .none)
             
                            multipartFormData.append(channelId.data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
@@ -223,7 +221,7 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-///api/v0/watcher/watchers/map
+
     public func getWatcherMap(ids: [Int]) -> AnyPublisher<MapWatcher,DifferentError> {
 
         let parameters = [

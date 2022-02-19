@@ -146,7 +146,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        //
                 guard let coachID = user?.id,let userID = selfId else { return }
         
                 if coachID == Int(userID)! {
@@ -171,6 +170,12 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     @objc func actionStartStream(_ sender: UIButton) {
         guard let broadcastID = brodcast[sender.tag].id else { return }
           //  self.nextView(broadcastId: broadcastID)
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = PlayerViewVC()
+        vc.urlStream = self.brodcast[indexPath.row].streams?.first?.vodUrl
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
 }
 
