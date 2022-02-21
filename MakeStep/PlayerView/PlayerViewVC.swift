@@ -146,7 +146,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-        makeNavItem()
+     
         i = 0
         frame = self.view.frame
 
@@ -220,31 +220,10 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             }
         }
     }
-    func deviceOrientationDidChange() {
-           //2
-           switch UIDevice.current.orientation {
-           case .faceDown:
-               print("Face down")
-           case .faceUp:
-               print("Face up")
-           case .unknown:
-               print("Unknown")
-           case .landscapeLeft:
-               print("Landscape left")
-           case .landscapeRight:
-               print("Landscape right")
-           case .portrait:
-               print("Portrait")
-           case .portraitUpsideDown:
-               print("Portrait upside down")
-           }
-       }
+  
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
-        homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
-        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
-        button.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
        
@@ -426,7 +405,6 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
                 } else {
                     actionChatTransitionManager.intHeight = 0.4
                 }
-                    //   actionChatTransitionManager.intHeight = 0.4
                        actionChatTransitionManager.intWidth = 1
                        subscribe.transitioningDelegate = actionChatTransitionManager
                        present(subscribe, animated: true)
@@ -434,21 +412,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
        
         }
     }
-    @objc func actionFollow() {
-        guard let _ = token else { return }
-        homeView.buttonFollow.isSelected.toggle()
-        
-        if homeView.buttonFollow.isSelected {
-            homeView.buttonFollow.backgroundColor = UIColor(hexString: "#3B58A4")
-            homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-
-        } else {
-            homeView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
-            homeView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-        }
-
-    }
-    
+   
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
@@ -464,9 +428,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
              
          })
     }
-    let buttonOffline = ButtonOffline()
-    let buttonComming = ButtonCommingg()
-    let vv = EditProfile()
+   
 
    
     @objc func actionBut(sender:UITapGestureRecognizer) {
@@ -480,9 +442,9 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             
-            homeView.buttonChat.isHidden = true
            
-            button.isHidden = true
+           
+          
             if playPauseButton == nil {
                 
             } else {
@@ -512,51 +474,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
 
     }
     
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = ""
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-        
-        
-                    let backButto = UIButton()
-                    backButto.setTitle("Back", for: .normal)
-                    backButto.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    
-                    let backButton = UIButton()
-                   // backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:40,height: 40)
-
-                   let stackView = UIStackView(arrangedSubviews: [backButton,backButto,titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .horizontal
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Note"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-      //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
-    
-    @objc func timeHandAction() {
-        print("timeHandAction")
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-                
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
+  
     
     
     func setUserProfile(user: User) {
@@ -629,45 +547,16 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                  
-                
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
-
         playerViewController!.didMove(toParent: self)
 
               playPauseButton = PlayPauseButton()
               playPauseButton.avPlayer = player
         
         
-              homeView.imagePromo.addSubview(playPauseButton)
+        self.playerViewController!.view.addSubview(playPauseButton)
  
-        
-       
-        
-//        homeView.overlay.anchor(
-//                       left: homeView.imagePromo.leftAnchor,
-//                       paddingLeft: 16,  width: 90, height: 24)
-//
-//        homeView.imagePromo.addSubview(homeView.imageLive)
-//        homeView.imageLive.anchor( left: homeView.overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
-//        homeView.imageLive.centerY(inView: homeView.overlay)
-//
-//        homeView.imagePromo.addSubview(homeView.labelLive)
-//        homeView.labelLive.anchor( left: homeView.imageLive.rightAnchor, paddingLeft: 6)
-//        homeView.labelLive.centerY(inView: homeView.overlay)
-//
-//        homeView.imagePromo.addSubview(homeView.imageEye)
-//        homeView.imageEye.anchor( left: homeView.labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
-//        homeView.imageEye.centerY(inView: homeView.overlay)
-//
-//        homeView.imagePromo.addSubview(homeView.labelEye)
-//        homeView.labelEye.anchor( left: homeView.imageEye.rightAnchor, paddingLeft: 6)
-//        homeView.labelEye.centerY(inView: homeView.overlay)
-  
-//
-//               let tim : Float64 = CMTimeGetSeconds((player.currentItem?.asset.duration)!)
-//               print("TIM=====\(tim)")
                playPauseButton.setup(in: self)
 
     }
@@ -675,222 +564,52 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
     //MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
-        if  indexTab == 1 { return }
-        guard let url = urlStream else { return }
         playPauseButton.updateUI()
-        deviceOrientationDidChange()
        
-        if UIDevice.current.orientation.isFlat {
-            print("isFlat")
-        }
-        if UIDevice.current.orientation.isValidInterfaceOrientation{
-            print("isValidInterfaceOrientation")
-        }
-           if UIDevice.current.orientation.isLandscape {
-              
+        if UIDevice.current.orientation.isLandscape {
             print("Landscape")
-          //  AppUtility.lockOrientation(.allButUpsideDown)
-            AppUtility.lockOrientation(.portrait)
-            isFullSize = true
-            isLand = true
-            button.isHidden = false
-            self.view.addSubview(button)
-            self.homeView.buttonSubscribe.isHidden = true
-            self.homeView.buttonFollow.isHidden = true
-            self.homeView.labelINTVideo.isHidden = true
-            self.homeView.labelVideo.isHidden = true
-            self.homeView.labelINTFollows.isHidden = true
-            self.homeView.labelFollows.isHidden = true
-            self.homeView.labelINTFolowers.isHidden = true
-            self.homeView.labelFolowers.isHidden = true
-            self.homeView.labelDescription.isHidden = true
-            self.homeView.buttonChat.isHidden = true
-            navigationController?.navigationBar.isHidden = true
-            tabBarController?.tabBar.isHidden = true
-            homeView.imageLogoProfile.isHidden = true
-            
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                    self.playerViewController?.view.fillFull(for: self.view)
-                    self.homeView.buttonLandScape.anchor( bottom: self.homeView.imagePromo.bottomAnchor,  paddingBottom: 20,width: 45,height: 45)
-                
+                self.playerViewController!.view.frame = self.view.bounds
+                self.view.addSubview(self.playerViewController!.view)
+                self.playerViewController!.didMove(toParent: self)
+                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                self.view.addSubview(self.homeView.buttonLandScape)
+                self.playerViewController!.view.addSubview(self.playPauseButton)
+                self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
+                self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
                 self.view.layoutIfNeeded()
             
             })
             transitionAnimator.startAnimation()
-            
-            UIView.animate(withDuration: 1.0,
-                delay: 0.0,
-                options: [],
-                animations: {
- 
-                },completion: nil)
-  
-            isPlaying = true
-            isLandscape = true
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            
+            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill            
            } else {
-            isLand = false
-            button.isHidden = true
-            self.homeView.buttonChat.isHidden = false
-            isLandscape = false
-   
-
-            if self.isFullSize {
-                
-                AppUtility.lockOrientation(.landscapeLeft)
-                    let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                   
-                 
-                   
-
-                        
-                        if self.view.frame.origin.y == 0.0 {
-                            print("FRAME ==== \(self.view.frame.origin.y)")
-                        }else {
-                            print("FRAME ==== \(self.view.frame.origin.y)")
-                        }
-
-                    self.view.layoutIfNeeded()
-                    })
-                transitionAnimator.startAnimation()
-    } else {
+            print("PORTRATE")
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-             
+                let playerFrame = self.homeView.imagePromo.bounds
+                self.playerViewController!.view.frame = playerFrame
+                self.playerViewController!.showsPlaybackControls = false
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.homeView.imagePromo.addSubview(self.playerViewController!.view)
+                self.playerViewController!.didMove(toParent: self)
+                self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
                 self.view.layoutIfNeeded()
                 })
             transitionAnimator.startAnimation()
-            }
-            
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-
-           }
-       }
-    // MARK: - ButtonLandscape
-    @objc func rightHandAction() {
-        
-           
-       
-            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-               
-                   
-            
-                self.view.layoutIfNeeded()
-            
-            })
-            transitionAnimator.startAnimation()
-            self.view.layoutIfNeeded()
-        
-
-        self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        if isPlaying {
-            isFullSize = false
-            isPlaying = false
-            isPortraiteFull = false
-            guard let frame = frame else { return }
-     
-            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-              
-                print("FRAME ==== \(frame)")
-                self.view.frame = frame
-               
-                self.view.layoutIfNeeded()
-            
-            })
-            transitionAnimator.startAnimation()
-            self.view.layoutIfNeeded()
-           
-            navigationController?.navigationBar.isHidden = false
-            tabBarController?.tabBar.isHidden = false
-            self.homeView.imageLogoProfile.isHidden = false
-            self.homeView.buttonSubscribe.isHidden = false
-            self.homeView.buttonSubscribe.isHidden = false
-            self.homeView.buttonFollow.isHidden = false
-            self.homeView.labelINTVideo.isHidden = false
-            self.homeView.labelVideo.isHidden = false
-            self.homeView.labelINTFollows.isHidden = false
-            self.homeView.labelFollows.isHidden = false
-            self.homeView.labelINTFolowers.isHidden = false
-            self.homeView.labelFolowers.isHidden = false
-            self.homeView.labelDescription.isHidden = false
-           
-            
-            self.homeView.buttonChat.isHidden = false
-            
-            self.homeView.imagePromo.isHidden = false
-
-            self.homeView.imagePromo.removeFromSuperview()
-            self.homeView.labelCategory.removeFromSuperview()
-            self.homeView.labelNameBroadcast.removeFromSuperview()
-            self.homeView.labelStreamInfo.removeFromSuperview()
-            self.homeView.labelStreamDescription.removeFromSuperview()
-            self.homeView.buttonChat.removeFromSuperview()
-            self.homeView.buttonLandScape.removeFromSuperview()
-            
-            UIView.animate(withDuration: 1.0,
-                delay: 0.0,
-                options: [],
-                animations: {
-                   
-                    self.homeView.cardView.addSubview(self.homeView.imagePromo)
-                    self.homeView.imagePromo.anchor(top: self.homeView.cardView.topAnchor,
-                                                    left: self.homeView.cardView.leftAnchor,
-                                                    right: self.homeView.cardView.rightAnchor,
-                                      paddingTop: 15, paddingLeft: 0, paddingRight: 0,height: 208 )
-                 
-
-                    self.view.addSubview(self.homeView.buttonLandScape)
-                   
-                    self.homeView.buttonLandScape.anchor(bottom: self.homeView.imagePromo.bottomAnchor, paddingBottom: 20,width: 40,height: 40)
-                    
-                    self.homeView.cardView.addSubview(self.homeView.labelNameBroadcast)
-                    self.homeView.labelNameBroadcast.anchor(top: self.homeView.imagePromo.bottomAnchor,
-                                         left: self.homeView.cardView.leftAnchor, paddingTop: 11, paddingLeft: 16)
-
-                    self.homeView.cardView.addSubview(self.homeView.labelCategory)
-                    self.homeView.labelCategory.anchor(top: self.homeView.labelNameBroadcast.bottomAnchor,
-                                         left: self.homeView.cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
-
-                    self.homeView.cardView.addSubview(self.homeView.labelStreamInfo)
-                    self.homeView.labelStreamInfo.anchor(top: self.homeView.labelCategory.bottomAnchor,
-                                                         left: self.homeView.cardView.leftAnchor,
-                                           paddingTop: 9, paddingLeft: 16)
-
-                    self.homeView.cardView.addSubview(self.homeView.labelStreamDescription)
-                    self.homeView.labelStreamDescription.anchor(top: self.homeView.labelStreamInfo.bottomAnchor,
-                                                                left: self.homeView.cardView.leftAnchor,
-                                                                right: self.homeView.cardView.rightAnchor,
-                                                  paddingTop: 4, paddingLeft: 16, paddingRight: 16)
-
-                    self.homeView.cardView.addSubview(self.homeView.buttonMore)
-                    self.homeView.buttonMore.anchor(top: self.homeView.imagePromo.bottomAnchor,right: self.homeView.cardView.rightAnchor, paddingTop: 11, paddingRight: 20, width: 30, height: 30)
-
-                    self.homeView.cardView.addSubview(self.homeView.buttonLike)
-                    self.homeView.buttonLike.anchor(top: self.homeView.imagePromo.bottomAnchor,right: self.homeView.buttonMore.leftAnchor, paddingTop: 11, paddingRight: 10, width: 30, height: 30)
-                    //,bottom: self.view.bottomAnchor//,paddingBottom: 80
-                    self.homeView.cardView.addSubview(self.homeView.buttonChat)
-                    self.homeView.buttonChat.anchor(left:self.view.leftAnchor, paddingLeft: 15,width: 80, height: 30)
-                   
-               
-                  
-  
-                    AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-                    self.isPortraiteFull = false
-                    self.view.layoutIfNeeded()
-                },completion: nil)
-        } else {
-            
-            isFullSize = true
-            isPortraiteFull = true
-            AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
-            print("ALL EXIT")
-        }
+            }
     }
    
-    @objc func leftHandAction() {
-    
-        print("left bar button action")
+    // MARK: - ButtonLandscape
+    @objc func rightHandAction() {
+        if isPlaying {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+            self.isPlaying = false
+        } else {
+            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeLeft)
+            self.isPlaying =  true
+        }
     }
+
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
        }
