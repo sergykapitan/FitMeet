@@ -173,7 +173,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-        vc.urlStream = self.brodcast[indexPath.row].streams?.first?.vodUrl
+        vc.broadcast = self.brodcast[indexPath.row]
+        vc.id =  self.brodcast[indexPath.row].userId
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }

@@ -15,31 +15,23 @@ import Kingfisher
 import TimelineTableViewCell
 
 
-class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, VeritiPurchase{
+class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     
     func addPurchase() {
         guard let userId = user?.id else { return }
         self.bindingChannel(id: userId)
     }
     
-    
-    
-    
+
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
 
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
-  
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
  
-    func changeButton() {
-       
-        homeView.buttonChat.isHidden = false
-
-    }
+   
     
-    var frame: CGRect?
-    var button = UIButton()
-    var indexTab: Int?
+  
 
     var isPlaying: Bool = false
     var isButton: Bool = true
@@ -95,7 +87,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
     var i : Int?
     
     private let refreshControl = UIRefreshControl()
-   // var  playerContainerView: PlayerContainerView?
+  
   
     var urlStream: String?
     var playPauseButton: PlayPauseButton!
@@ -109,24 +101,14 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         view = homeView
 
     }
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
-        self.homeView.imageLogoProfile.makeRounded()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.homeView.imageLogoProfile.makeRounded()
-
-    }
+  
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
         guard let id = id  else { return }
         bindingUser(id: id)
-        guard let  broadId = broadId else { return }
-        getMapWather(ids: [broadId])
+    
         
 
     }
@@ -146,22 +128,23 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-     
-        i = 0
-        frame = self.view.frame
-
-        homeView.labelStreamDescription.text = broadcast?.description
-        let categorys = broadcast?.categories
-//        let s = categorys.map{$0.title}
+      
+       
+        
+//        let categorys = broadcast?.categories
+//        let s = categorys.map{$0}
+//      //  let s = categorys.map{$0.title}
 //        var arr = [""]
 //        arr = s.map { String("\u{0023}" + $0)}
 //        homeView.labelCategory.removeAllTags()
 //        homeView.labelCategory.addTags(arr)
 //        homeView.labelCategory.delegate = self
-//        homeView.labelNameBroadcast.text = broadcast?.name
+        self.urlStream = self.broadcast?.streams?.first?.vodUrl
+        homeView.labelStreamDescription.text = self.broadcast?.description
+        homeView.labelNameBroadcast.text = broadcast?.name
         loadPlayer()
-        guard let idU = user?.id else { return }
-        bindingChannel(id: idU)
+        guard let idU = self.id else { return }
+        bindingChanell(status: "WAIT_FOR_APPROVE", userId: "\(idU)")
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -173,12 +156,8 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
     // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
-        navigationItem.largeTitleDisplayMode = .always
-        homeView.tableView.isHidden = true
         makeTableView()
         actionButton ()
-        self.view.addSubview(self.homeView.viewChat)
         SocketIOManager.sharedInstance.getTokenChat()
      
 
@@ -186,11 +165,8 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
         
-        heightBar = tabBarController?.tabBar.frame.height
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
-      
-       
-     
+
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
         self.view.addGestureRecognizer(swipeDown)
@@ -226,9 +202,6 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
-       
-      
-        
 
     }
  
@@ -254,11 +227,11 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
     }
  
     private func makeTableView() {
-      //  homeView.tableView.dataSource = self
-      //  homeView.tableView.delegate = self
-       // homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
-       // homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
-       // homeView.tableView.separatorStyle = .none
+        homeView.tableView.dataSource = self
+        homeView.tableView.delegate = self
+        homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
+        homeView.tableView.separatorStyle = .none
+        homeView.tableView.showsVerticalScrollIndicator = false
         
     }
     
@@ -269,7 +242,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
                 if response.data != nil  {
                     self.brodcastTime = response
                     self.homeView.tableView.reloadData()
-                  
+
                }
         })
     }
@@ -277,65 +250,8 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                self.brodcast.removeAll()
                 if response.data != nil  {
-                    
-                    self.homeView.tableView.reloadData()
                     self.brodcast = response.data!
-                    guard let broadcast = self.brodcast.first else {
-                       
-                       
-                        let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
-                       
-                        return }
-    
-                    self.homeView.labelINTVideo.text = "\(self.brodcast.count)"
-                    self.broadcast = broadcast
-                    self.homeView.labelStreamDescription.text = self.broadcast?.description
-                    let categorys = self.broadcast?.categories
-                    let s = categorys!.map{$0.title!}
-                    let arr = s.map { String("\u{0023}" + $0)}
-                    self.homeView.labelCategory.addTags(arr)
-                    self.homeView.labelCategory.delegate = self
-                    self.homeView.labelNameBroadcast.text = self.broadcast?.name
-                    self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
-                    self.loadPlayer()
-                    SocketIOManager.sharedInstance.getTokenChat()
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    let  broadId = self.brodcast.compactMap{$0.id}
-                    self.getMapWather(ids: broadId)
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                } else {
-                    print("ADDDDDDDDD")
-                }
-           })
-       }
-    func bindingChanellNotAutn(status: String,userId: String) {
-        takeChanell = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                self.brodcast.removeAll()
-                if response.data != nil  {
-                    
-                    self.homeView.tableView.reloadData()
-                    self.brodcast = response.data!
-                    guard let broadcast = self.brodcast.first else {
-                       
-                        let url = URL(string: self.channel?.backgroundUrl ?? "https://pixy.org/src2/575/5759243.jpg")
-                       
-                        return }
-                    self.homeView.labelINTVideo.text = "\(self.brodcast.count)"
-                    self.broadcast = broadcast
-                    self.homeView.labelStreamDescription.text = self.broadcast?.description
-                    let categorys = self.broadcast?.categories
-                    let s = categorys!.map{$0.title!}
-                    let arr = s.map { String("\u{0023}" + $0)}
-                    self.homeView.labelCategory.addTags(arr)
-                    self.homeView.labelCategory.delegate = self
-                    self.homeView.labelNameBroadcast.text = self.broadcast?.name
-                    self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
-                    self.loadPlayer()
                     SocketIOManager.sharedInstance.getTokenChat()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     let  broadId = self.brodcast.compactMap{$0.id}
@@ -345,36 +261,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
                 }
            })
        }
-    func bindingChanellVOD(userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.brodcast.removeAll()
-                  response.data!.forEach{
-                        self.brodcast.append($0)
-                    }
-                  
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.homeView.tableView.reloadData()
-                }
-           })
-       }
-    func bindingChanellMulti(userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivateMulty( userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.brodcast.removeAll()
-                    self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                }
-           })
-       }
+
     func bindingUserMap(ids: [Int])  {
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
@@ -442,7 +329,7 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             
-           
+            playPauseButton.isHidden = true
            
           
             if playPauseButton == nil {
@@ -483,11 +370,11 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
         self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
         guard let id = user.id else { return }
-        if token != nil {
-            bindingChannel(id: id)
-        } else {
-            bindingNotChannel(id: id)
-        }
+//        if token != nil {
+//            bindingChannel(id: id)
+//        } else {
+//            bindingNotChannel(id: id)
+//        }
        
     }
     
@@ -550,24 +437,19 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
+        playPauseButton = PlayPauseButton()
+        playPauseButton.avPlayer = player
 
-              playPauseButton = PlayPauseButton()
-              playPauseButton.avPlayer = player
-        
-        
-        self.playerViewController!.view.addSubview(playPauseButton)
- 
-               playPauseButton.setup(in: self)
+        self.playerViewController?.view.addSubview(playPauseButton)
+        playPauseButton.setup(in: self)
 
     }
 
     //MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
-        playPauseButton.updateUI()
        
         if UIDevice.current.orientation.isLandscape {
-            print("Landscape")
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 self.playerViewController!.view.frame = self.view.bounds
                 self.view.addSubview(self.playerViewController!.view)
@@ -583,7 +465,6 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             transitionAnimator.startAnimation()
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill            
            } else {
-            print("PORTRATE")
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 let playerFrame = self.homeView.imagePromo.bounds
                 self.playerViewController!.view.frame = playerFrame
@@ -631,12 +512,11 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
         guard let id = broadcast?.id,let channel = broadcast?.channelIds?.first  else { return }
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = "\(channel)"
-        chatVC.delegate = self
+      
         
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         if isLand {
-          //  button.isHidden = true
             homeView.buttonChat.isHidden = true
             chatVC.isLand = true
             actionChatTransitionManager.intWidth = 0.5
@@ -722,10 +602,9 @@ class PlayerViewVC: UIViewController, ClassUserDelegate, TagListViewDelegate, Ve
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
-                        self.user = response
-                        self.setUserProfile(user: self.user!)
-                    guard let id = self.user?.id else { return }
-                    self.bindingChanell(status: "ONLINE", userId: "\(id)")
+                    self.user = response
+                    self.homeView.tableView.reloadData()
+ 
                 }
             })
         }

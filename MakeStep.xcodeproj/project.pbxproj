@@ -295,6 +295,8 @@
 		A5950E5B273815CF002C1500 /* EditMonetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5A273815CF002C1500 /* EditMonetVC.swift */; };
 		A5950E5D273815DC002C1500 /* EditMonetVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */; };
 		A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5E27384EE5002C1500 /* SliderFloat.swift */; };
+		A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
+		A5A0642227C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
 		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
 		A5B635B027185C010097A127 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
@@ -575,6 +577,7 @@
 		A5950E5A273815CF002C1500 /* EditMonetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVC.swift; sourceTree = "<group>"; };
 		A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVCCode.swift; sourceTree = "<group>"; };
 		A5950E5E27384EE5002C1500 /* SliderFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderFloat.swift; sourceTree = "<group>"; };
+		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
 		A5B635AE27185C010097A127 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
@@ -1006,6 +1009,7 @@
 			children = (
 				A5F2FF0927BF922200F6C518 /* PlayerViewVC.swift */,
 				A5F2FF0C27BF923700F6C518 /* PlayerViewVCCode.swift */,
+				A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */,
 			);
 			path = PlayerView;
 			sourceTree = "<group>";
@@ -2069,6 +2073,7 @@
 				A5129448273A6EB7000CBBD9 /* OptionalView.swift in Sources */,
 				A5129449273A6EB7000CBBD9 /* TimeTableCode.swift in Sources */,
 				A512944A273A6EB7000CBBD9 /* HomeCustomList.swift in Sources */,
+				A5A0642227C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */,
 				A512944B273A6EB7000CBBD9 /* CoreDataManager.swift in Sources */,
 				A512944C273A6EB7000CBBD9 /* UserVCCode.swift in Sources */,
 				A512944D273A6EB7000CBBD9 /* SignInPasswordViewControllerCode.swift in Sources */,
@@ -2315,6 +2320,7 @@
 				B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */,
 				B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */,
 				B4C49971263ADC3F00BFD1EE /* CoreDataManager.swift in Sources */,
+				A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */,
 				B41DCB80268F4D9C007096AB /* UserVCCode.swift in Sources */,
 				B4D9D79626284900007CFB71 /* SignInPasswordViewControllerCode.swift in Sources */,
 				B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */,

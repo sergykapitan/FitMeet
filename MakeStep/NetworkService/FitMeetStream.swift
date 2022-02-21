@@ -105,6 +105,7 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
+    //&type=STANDARD_VOD"
     public func getBroadcastPrivate(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=100&status=\(status)&sort=userId&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)

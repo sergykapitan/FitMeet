@@ -170,32 +170,12 @@ final class PlayerViewCell: UITableViewCell {
 
     func initialize() {
         clipsToBounds = true
-//        contentView.addSubview(backgroundImage)
-//        backgroundImage.anchor(top: contentView.topAnchor,
-//                               left: contentView.leftAnchor,
-//                               right: contentView.rightAnchor,
-//                               paddingTop: 0, paddingLeft: 0, paddingRight: 0,
-//                               height: 200)
-//
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
                                bottom: contentView.bottomAnchor,
-                               paddingTop: 5, paddingLeft: 18,paddingBottom: 5 ,width: contentView.bounds.width/1.9, height: 94)
-
-//        contentView.addSubview(bottomView)
-//        bottomView.anchor(top: backgroundImage.bottomAnchor,
-//                          left: contentView.leftAnchor,
-//                          right: contentView.rightAnchor,
-//                          bottom: contentView.bottomAnchor,
-//                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 134)
-        
-        
-//        bottomView.addSubview(logoUserImage)
-//        logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 36,height: 36)
-//
-//        bottomView.addSubview(logoUserOnline)
-//        logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
+                               paddingTop: 5, paddingLeft: 18,paddingBottom: 5,width: contentView.bounds.width / 2,height: (contentView.bounds.width / 1.9) / 1.8)
+ 
         contentView.addSubview(titleLabel)
         titleLabel.anchor(left: backgroundImage.rightAnchor,
                           bottom: contentView.bottomAnchor,
@@ -212,56 +192,7 @@ final class PlayerViewCell: UITableViewCell {
                           bottom: contentView.bottomAnchor,
                           paddingRight: 10,paddingBottom: 8)
         
-//        bottomView.addSubview(titleLabel)
-//        titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8)
-//        titleLabel.centerY(inView: logoUserImage)
-//
-//        bottomView.addSubview(buttonMore)
-//        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
-        
-//        contentView.addSubview(buttonLike)
-//        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 0,width: 24,height: 24)
-//
- //       bottomView.addSubview(labelDescription)
- //       labelDescription.anchor(top: logoUserImage.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 0, paddingLeft: 8,paddingRight: 16)
 
-//        contentView.addSubview(tagView)
-//        tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 0, paddingLeft: 8,paddingRight: 8)
-        
-        
-        
-//        contentView.addSubview(overlay)
-//        overlay.anchor(top: contentView.topAnchor,
-//                       left: contentView.leftAnchor,
-//                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
-//        
-//       
-//              
-//        contentView.addSubview(imageLive)
-//        imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
-//        imageLive.centerY(inView: overlay)
-//        
-//        contentView.addSubview(labelLive)
-//        labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
-//        labelLive.centerY(inView: overlay)
-//        
-//        contentView.addSubview(imageEye)
-//        imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
-//        imageEye.centerY(inView: overlay)
-//        
-//        contentView.addSubview(labelEye)
-//        labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
-//        labelEye.centerY(inView: overlay)
-//        
-//        contentView.addSubview(buttonstartStream)
-//        buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 10, width: 100, height: 26)
-//        buttonstartStream.centerX(inView: backgroundImage)
-//        
-//        contentView.addSubview(label)
-//        label.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 40)
-//        label.centerX(inView: backgroundImage)
-        
-        
     }
     func setImage(image:String) {
         let url = URL(string: image)

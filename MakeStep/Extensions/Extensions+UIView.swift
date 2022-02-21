@@ -94,7 +94,9 @@ extension UIView {
     func heightEqualToMultiplier (inView view: UIView,multiplier: CGFloat) {
         heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: multiplier).isActive = true
     }
-   
+    func widthEqualToMultiplier (inView view: UIView,multiplier: CGFloat) {
+        heightAnchor.constraint(equalTo: view.widthAnchor, multiplier: multiplier).isActive = true
+    }
 }
 
 extension UIView {

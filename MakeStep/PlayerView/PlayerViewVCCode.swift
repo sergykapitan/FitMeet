@@ -90,14 +90,7 @@ final class PlayerViewVCCode: UIView {
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
         return button
     }()
-   
-//    var buttonChatUser: UIButton = {
-//        var button = UIButton()
-//        button.setBackgroundImage(#imageLiteral(resourceName: "Open Chat1"), for: .normal)
-//        button.imageView?.clipsToBounds = true
-//        button.imageView?.contentMode = .scaleToFill
-//        return button
-//    }()
+
     var labelNameBroadcast: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 16)
@@ -266,8 +259,10 @@ final class PlayerViewVCCode: UIView {
         imagePromo.anchor(top: cardView.topAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
-                          paddingTop: 40, paddingLeft: 0, paddingRight: 0,height: 208 )
-    
+                          paddingTop: 40, paddingLeft: 0, paddingRight: 0)
+        
+        imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
+  
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 0, width: 40, height: 24)
 
@@ -279,13 +274,14 @@ final class PlayerViewVCCode: UIView {
                          left: cardView.leftAnchor,
                          right: cardView.rightAnchor,
                          bottom: cardView.bottomAnchor,
-                         paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                         paddingTop: 50, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
   
         cardView.addSubview(labelNameBroadcast)
         labelNameBroadcast.anchor(top: imagePromo.bottomAnchor,
                              left: cardView.leftAnchor,
                              right: buttonLike.rightAnchor,
                              paddingTop: 11, paddingLeft: 16,paddingRight: 10)
+        
         cardView.addSubview(labelCategory)
         labelCategory.anchor(top: labelNameBroadcast.bottomAnchor,
                              left: cardView.leftAnchor,
@@ -307,11 +303,7 @@ final class PlayerViewVCCode: UIView {
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 40, height: 40)
         buttonChat.centerY(inView: buttonLike)
 
-        cardView.addSubview(viewChat)
-        viewChat.anchor(top: labelStreamDescription.bottomAnchor,
-                        left: cardView.leftAnchor,
-                        right: cardView.rightAnchor,
-                        bottom: cardView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+       
 
         cardView.addSubview(labelNotToken)
         labelNotToken.anchor( left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingLeft: 16, paddingRight: 16)
@@ -349,7 +341,6 @@ final class PlayerViewVCCode: UIView {
         imageLogoProfile.kf.setImage(with: url)
     }
     func setLabel(description: String,category: String) {
-       // labelCategory.text = category
         labelStreamDescription.text = description
     }
     
