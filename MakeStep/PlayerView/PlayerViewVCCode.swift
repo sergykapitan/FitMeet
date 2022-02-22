@@ -91,12 +91,6 @@ final class PlayerViewVCCode: UIView {
         return button
     }()
 
-    var labelNameBroadcast: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 16)
-        label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-        return label
-    }()
 
     var tableView: UITableView = {
         let table = UITableView()
@@ -262,46 +256,48 @@ final class PlayerViewVCCode: UIView {
                           paddingTop: 40, paddingLeft: 0, paddingRight: 0)
         
         imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
-  
-        cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 11, paddingRight: 0, width: 40, height: 24)
-
-        cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: imagePromo.bottomAnchor,right: buttonMore.leftAnchor, paddingTop: 11, paddingRight: 0, width: 24, height: 24)
-
-        cardView.addSubview(tableView)
-        tableView.anchor(top: imagePromo.bottomAnchor,
-                         left: cardView.leftAnchor,
-                         right: cardView.rightAnchor,
-                         bottom: cardView.bottomAnchor,
-                         paddingTop: 50, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-  
-        cardView.addSubview(labelNameBroadcast)
-        labelNameBroadcast.anchor(top: imagePromo.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: buttonLike.rightAnchor,
-                             paddingTop: 11, paddingLeft: 16,paddingRight: 10)
-        
-        cardView.addSubview(labelCategory)
-        labelCategory.anchor(top: labelNameBroadcast.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: buttonLike.rightAnchor,
-                             paddingTop: 0, paddingLeft: 16,paddingRight: 10)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: labelCategory.bottomAnchor,
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,
                                left: cardView.leftAnchor,
-                               paddingTop: 9, paddingLeft: 16)
+                               paddingTop: 11, paddingLeft: 16)
         
-        cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor,
-                                      left: cardView.leftAnchor,
-                                      right: cardView.rightAnchor,
-                                      paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+
+        cardView.addSubview(buttonMore)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 18)
+
+        cardView.addSubview(buttonLike)
+        buttonLike.anchor(top: buttonMore.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 24)
         
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 40, height: 40)
         buttonChat.centerY(inView: buttonLike)
+        
+        cardView.addSubview(labelStreamDescription)
+        labelStreamDescription.anchor(top: labelStreamInfo.bottomAnchor,
+                                              left: cardView.leftAnchor,
+                                              right: cardView.rightAnchor,
+                                              paddingTop: 4, paddingLeft: 16, paddingRight: 16)
+
+        cardView.addSubview(tableView)
+        tableView.anchor(top: labelStreamDescription.bottomAnchor,
+                         left: cardView.leftAnchor,
+                         right: cardView.rightAnchor,
+                         bottom: cardView.bottomAnchor,
+                         paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+  
+  
+        cardView.addSubview(labelCategory)
+        labelCategory.anchor(top:  imagePromo.bottomAnchor,
+                             left: cardView.leftAnchor,
+                             right: buttonLike.rightAnchor,
+                             paddingTop: 0, paddingLeft: 16,paddingRight: 10)
+        
+       
+        
+        
+        
+     
 
        
 

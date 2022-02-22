@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVKit
 
 extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
 
@@ -121,7 +122,13 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
-        loadPlayer()
+        
+        guard let url = urlStream else { return }
+        playerViewController?.player?.pause()
+        playerViewController!.view.removeFromSuperview()
+        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].streams?.first?.name
+        self.loadPlayer()
+
     }
   
 }

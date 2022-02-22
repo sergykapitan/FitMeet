@@ -141,7 +141,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
 //        homeView.labelCategory.delegate = self
         self.urlStream = self.broadcast?.streams?.first?.vodUrl
         homeView.labelStreamDescription.text = self.broadcast?.description
-        homeView.labelNameBroadcast.text = broadcast?.name
+     //   homeView.labelNameBroadcast.text = broadcast?.name
+        self.homeView.labelStreamInfo.text = broadcast?.name
         loadPlayer()
         guard let idU = self.id else { return }
         bindingChanell(status: "WAIT_FOR_APPROVE", userId: "\(idU)")
@@ -440,9 +441,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         playPauseButton = PlayPauseButton()
         playPauseButton.avPlayer = player
 
-        self.playerViewController?.view.addSubview(playPauseButton)
+        self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self)
-
+        self.view.addSubview(self.homeView.buttonLandScape)
+        self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
     }
 
     //MARK: - Transishion
@@ -456,9 +459,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 self.playerViewController!.didMove(toParent: self)
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
-                self.playerViewController!.view.addSubview(self.playPauseButton)
+               
+         
+                self.playerViewController?.view.addSubview(self.playPauseButton)
+              
+               
+                self.playPauseButton.updatePosition()
                 self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
-                self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
                 self.view.layoutIfNeeded()
             
             })

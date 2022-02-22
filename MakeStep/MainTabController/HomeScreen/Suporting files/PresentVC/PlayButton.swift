@@ -54,6 +54,7 @@ class PlayPauseButton: UIView {
     func updateUI() {
         if isPlaying {
             setBackgroundImage(name: "Play")////pause1
+            
 
         } else {
             setBackgroundImage(name: "PlayLand")//play2
@@ -67,8 +68,8 @@ class PlayPauseButton: UIView {
         translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            widthAnchor.constraint(equalToConstant: 60),
-            heightAnchor.constraint(equalToConstant: 60),
+            widthAnchor.constraint(equalToConstant: 40),
+            heightAnchor.constraint(equalToConstant: 40),
             centerXAnchor.constraint(equalTo: superview.centerXAnchor),
             centerYAnchor.constraint(equalTo: superview.centerYAnchor)
             ])
