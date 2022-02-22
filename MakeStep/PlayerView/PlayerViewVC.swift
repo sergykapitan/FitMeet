@@ -131,14 +131,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
       
        
         
-//        let categorys = broadcast?.categories
-//        let s = categorys.map{$0}
-//      //  let s = categorys.map{$0.title}
-//        var arr = [""]
-//        arr = s.map { String("\u{0023}" + $0)}
-//        homeView.labelCategory.removeAllTags()
-//        homeView.labelCategory.addTags(arr)
-//        homeView.labelCategory.delegate = self
+        let categorys = broadcast?.categories
+        var arr = [""]
+        for i in categorys! {
+            arr.append(i.title)
+        }
+      //  arr = categorys.map { String("\u{0023}" + $0 }
+        homeView.labelCategory.removeAllTags()
+        homeView.labelCategory.addTags(arr)
+        homeView.labelCategory.delegate = self
         self.urlStream = self.broadcast?.streams?.first?.vodUrl
         homeView.labelStreamDescription.text = self.broadcast?.description
      //   homeView.labelNameBroadcast.text = broadcast?.name
@@ -329,7 +330,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
-            
+            homeView.buttonSetting.isHidden = true
             playPauseButton.isHidden = true
            
           
@@ -344,7 +345,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         } else {
    
            
-            
+            homeView.buttonSetting.isHidden = false
             homeView.overlay.isHidden = false
             homeView.imageLive.isHidden = false
             homeView.labelLive.isHidden = false
@@ -367,9 +368,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     
     func setUserProfile(user: User) {
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = user.channelFollowCount else { return }
-        self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
-        self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
+      //  guard let follow = user.channelFollowCount else { return }
+     //   self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
+    //    self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
         guard let id = user.id else { return }
 //        if token != nil {
 //            bindingChannel(id: id)
@@ -386,10 +387,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 if response.data.first?.name != nil  {
                     self.channel = response.data.last
                     guard let channel = self.channel,let description = channel.description else { return }
-                    self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
                    
-                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
-                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                   
+                 
                     
                     if channel.isSubscribe! {
                         
@@ -413,8 +413,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                     guard let channel = self.channel,let description = channel.description else { return }
                     self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
                    
-                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
-                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                
                     self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
                     self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
                     self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
@@ -443,6 +442,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
 
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self)
+        
+        self.view.addSubview(self.homeView.buttonSetting)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)
+        self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
+        
         self.view.addSubview(self.homeView.buttonLandScape)
         self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
         self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
@@ -459,7 +463,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 self.playerViewController!.didMove(toParent: self)
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
-               
+                self.view.addSubview(self.homeView.buttonSetting)
          
                 self.playerViewController?.view.addSubview(self.playPauseButton)
               
@@ -505,41 +509,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         self.navigationController?.popViewController(animated: true)
     }
     
-    
-    // MARK: - UserOnline
-    @objc func actionUserOnline () {
-        homeView.overlay.isHidden = true
-        homeView.imageLive.isHidden = true
-        homeView.labelLive.isHidden = true
-        homeView.imageEye.isHidden = true
-        homeView.labelEye.isHidden = true
-        playPauseButton.isHidden = true
-
-        let chatVC = UserVC()
-        guard let id = broadcast?.id,let channel = broadcast?.channelIds?.first  else { return }
-        chatVC.broadcastId = "\(id)"
-        chatVC.chanellId = "\(channel)"
-      
-        
-        chatVC.transitioningDelegate = actionChatTransitionManager
-        chatVC.modalPresentationStyle = .custom
-        if isLand {
-            homeView.buttonChat.isHidden = true
-            chatVC.isLand = true
-            actionChatTransitionManager.intWidth = 0.5
-            actionChatTransitionManager.intHeight = 1
-            present(chatVC, animated: true, completion: nil)
-        } else {
-            homeView.buttonChat.isHidden = false
-            chatVC.isLand = false
-            actionChatTransitionManager.intWidth = 1
-            actionChatTransitionManager.intHeight = 0.7
-            actionChatTransitionManager.isLandscape = isLandscape
-            present(chatVC, animated: true)
-        }
-    }
-    
-    
+  
     // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
 
