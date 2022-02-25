@@ -35,7 +35,7 @@ final class CategoryCode: UIView {
 
     var buttonAll: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         button.setTitle("All", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
@@ -63,7 +63,7 @@ final class CategoryCode: UIView {
     }()
     var buttonLikes: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#BBBCBC")
+        button.backgroundColor = .blueColor
         button.setTitle("Likes", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13

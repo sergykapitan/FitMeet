@@ -266,6 +266,10 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
+                      if response.data != nil {
+                       //   self.homeView.imagePromo
+                       //   self.homeView.
+                      }
                       self.bindingChanellVOD(userId: id)
                      
 

@@ -21,8 +21,8 @@ class SegmentControlSearch: UIView {
     private var selector: CGFloat?
     
     var textColor:UIColor = UIColor.init(hexString: "#7C7C7C")
-    var selectorViewColor: UIColor = UIColor.init(hexString: "#3B58A4")
-    var selectorTextColor: UIColor = UIColor.init(hexString: "#3B58A4")
+    var selectorViewColor: UIColor = .blueColor
+    var selectorTextColor: UIColor = .blueColor
     
     weak var delegate: SegmentControlSearchDelegate?
     

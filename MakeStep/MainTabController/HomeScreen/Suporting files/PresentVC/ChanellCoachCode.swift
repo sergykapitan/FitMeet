@@ -33,10 +33,34 @@ final class ChanellCoachCode: UIView {
         view.backgroundColor = .clear
         return view
     }()
+
+    var imageLogo: UIImageView = {
+        let image = UIImageView()
+        image.isHidden =  true
+        return image
+    }()
+    var imagePromo: UIView = {
+        var image = UIView()
+        return image
+    }()
+
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
         return image
+    }()
+    var labelStreamInfo: UILabel = {
+        var label = UILabel()
+        label.textColor = UIColor(hexString: "#000000")
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.text = "Stream information"
+        label.numberOfLines = 1
+        return label
+    }()
+    var buttonMore: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        return button
     }()
     var welcomeLabel: UILabel = {
         let label = UILabel()
@@ -179,6 +203,25 @@ final class ChanellCoachCode: UIView {
 
         cardView.fillFull(for: self)
         cardView.addSubview(tableView)
+        cardView.addSubview(imagePromo)
+        imagePromo.anchor(top: cardView.topAnchor,
+                          left: cardView.leftAnchor,
+                          right: cardView.rightAnchor,
+                          paddingTop: 40, paddingLeft: 0, paddingRight: 0)
+        
+        imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
+        
+        cardView.addSubview(imageLogo)
+        imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+        cardView.addSubview(labelStreamInfo)
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,
+                               left: cardView.leftAnchor,
+                               paddingTop: 11, paddingLeft: 16)
+        
+
+        cardView.addSubview(buttonMore)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 18)
         tableView.anchor(top: cardView.topAnchor,
                          left: cardView.leftAnchor,
                          right: cardView.rightAnchor,

@@ -25,7 +25,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         
       //  self.tabBar.isTranslucent = false
-        self.tabBar.tintColor = UIColor(hexString: "#3B58A4")
+        self.tabBar.tintColor = .blueColor// UIColor(hexString: "#3B58A4")
       //  navigationVC.tabBarItem.image?.withTintColor(UIColor(hexString: "#3B58A4"))
         self.tabBar.barTintColor = .white
 

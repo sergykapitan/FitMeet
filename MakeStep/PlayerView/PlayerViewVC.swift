@@ -326,13 +326,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
-            homeView.imageEye.isHidden = true
+           // homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
             playPauseButton.isHidden = true
             homeView.buttonVolum.isHidden = true
-           
+            homeView.playerSlider.isHidden = true
           
             if playPauseButton == nil {
                 
@@ -349,10 +349,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.overlay.isHidden = false
             homeView.imageLive.isHidden = false
             homeView.labelLive.isHidden = false
-            homeView.imageEye.isHidden = false
+           // homeView.imageEye.isHidden = false
             homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
+            homeView.playerSlider.isHidden = false
             
             
             if playPauseButton == nil {

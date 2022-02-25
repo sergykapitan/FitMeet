@@ -186,10 +186,10 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     }
     @objc func actionViewers() {
         
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonAll.backgroundColor = .blueColor//UIColor(hexString: "#BBBCBC")
         searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonLikes.backgroundColor = .blueColor// UIColor(hexString: "#BBBCBC")
         searchView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
       
         filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}

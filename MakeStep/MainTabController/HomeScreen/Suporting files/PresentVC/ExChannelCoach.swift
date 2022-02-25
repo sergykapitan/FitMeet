@@ -184,10 +184,12 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageLive.image = #imageLiteral(resourceName: "rec")
             vc.homeView.imageLive.setImageColor(color: .gray)
             vc.homeView.labelLive.text = "  Offline"
+            vc.homeView.imageEye.isHidden = true
         } else if  self.brodcast[indexPath.row].status == "PLANNED" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
+            vc.homeView.imageEye.isHidden = true
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
         }
