@@ -28,8 +28,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     
     var listBroadcast: [BroadcastResponce] = []
     var filtredBroadcast: [BroadcastResponce] = []
-    var listUsers:[Users] = []
-    var filterListUser:[Users] = []
+    var listUsers:[User] = []
+    var filterListUser:[User] = []
     var listCategory: [Datum] = []
     var filerlistCategory: [Datum] = []
     

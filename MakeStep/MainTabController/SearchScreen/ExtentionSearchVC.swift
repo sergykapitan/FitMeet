@@ -116,9 +116,9 @@ extension SearchVC: UITableViewDelegate {
                 self.getBroadcast(userId: "\(ids)")
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                               let vc = PresentVC()
+                               let vc = ChannelCoach()
                                vc.modalPresentationStyle = .fullScreen
-                               vc.id = ids
+                               vc.user = user
                    self.navigationController?.pushViewController(vc, animated: true)
 
                }

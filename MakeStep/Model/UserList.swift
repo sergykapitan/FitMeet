@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Welcome5
 struct UserList:Codable {
-    let data: [Users]
+    let data: [User]
     let meta: Meta
 }
 
