@@ -89,6 +89,7 @@ class ChanellVC: UIViewController  {
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
+    private var takeBroadcast: AnyCancellable?
 
     var myCell: PlayerViewCell?
     
@@ -197,7 +198,9 @@ class ChanellVC: UIViewController  {
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
-            self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+            self.binding(id: "\(id)")
+          //  self.bindingPlanned(id: "\(id)")
+          
         } else {
             self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
         }
@@ -212,6 +215,32 @@ class ChanellVC: UIViewController  {
       
        
     }
+    func binding(id: String) {
+          takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                  if response.data != nil  {
+                      self.brodcast.append(contentsOf: response.data!)
+                      self.bindingChanellVOD(userId: id)
+                     
+
+                 }
+          })
+      }
+    func bindingChanellVOD(userId: String) {
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.brodcast = self.brodcast.reversed()
+                    self.profileView.tableView.reloadData()
+                }
+           })
+       }
 
     func bindingChannel(userId: Int?) {
         guard let id = userId else { return }

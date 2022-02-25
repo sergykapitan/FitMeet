@@ -45,7 +45,7 @@ final class PlayerViewVCCode: UIView {
     }()
     var playerSlider: UISlider = {
         var slider = UISlider()
-        slider.setThumbImage(UIImage(named:"Vector1"), for: .normal)
+        slider.setThumbImage(UIImage(named:"segmented_selected_bg"), for: .normal)
         return slider
     }()
     var buttonSetting: UIButton = {

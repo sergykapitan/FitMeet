@@ -141,7 +141,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
       //  configureChildViewController(videoVC, onView: profileView.selfView )
         guard let userID = self.user?.id else { return }
        
-     
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         
         layout()
         homeView.viewTop.addGestureRecognizer(panRecognizer)
@@ -509,14 +509,18 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
        
         if UIDevice.current.orientation.isLandscape {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                self.playerViewController!.view.frame = self.view.bounds
-                self.view.addSubview(self.playerViewController!.view)
-                self.playerViewController!.didMove(toParent: self)
-                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                guard let playerViewController = self.playerViewController else {
+                    return
+                }
+
+                playerViewController.view.frame = self.view.bounds
+                self.view.addSubview(playerViewController.view)
+                playerViewController.didMove(toParent: self)
+                playerViewController.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
                 self.view.addSubview(self.homeView.buttonVolum)
-                self.playerViewController?.view.addSubview(self.playPauseButton)
+                playerViewController.view.addSubview(self.playPauseButton)
                 self.playPauseButton.updatePosition()
                 self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
                 self.navigationController?.navigationBar.isHidden = true
@@ -525,22 +529,25 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
             
             })
             transitionAnimator.startAnimation()
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+          //  playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
            } else {
-            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+               let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: { [self] in
+                guard let playerViewController = playerViewController else {
+                    return
+                }
                 let playerFrame = self.homeView.imagePromo.bounds
-                self.playerViewController!.view.frame = playerFrame
-                self.playerViewController!.showsPlaybackControls = false
-                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                self.homeView.imagePromo.addSubview(self.playerViewController!.view)
-                self.playerViewController!.didMove(toParent: self)
+                playerViewController.view.frame = playerFrame
+                playerViewController.showsPlaybackControls = false
+                playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.homeView.imagePromo.addSubview(playerViewController.view)
+                playerViewController.didMove(toParent: self)
                 self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
                 self.navigationController?.navigationBar.isHidden = false
                 self.tabBarController?.tabBar.isHidden = false
                 self.view.layoutIfNeeded()
                 })
             transitionAnimator.startAnimation()
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        //    playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
             }
     }
    
