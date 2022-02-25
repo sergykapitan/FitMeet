@@ -177,10 +177,35 @@ final class ChanellCoachCode: UIView {
         label.font = UIFont.systemFont(ofSize: 14)
         return label
     }()
+    var buttonLandScape: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
+        return button
+    }()
+  
+    var buttonSetting: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+    var buttonVolum: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
     let tableView: UITableView = {
         let table = UITableView()
         table.backgroundColor = UIColor(hexString: "#F9FAFC")
         return table
+    }()
+    var buttonChat: UIButton = {
+        var button = UIButton()
+        button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
+        return button
     }()
 //    let selfView: UIView = {
 //        let view = UIView()
@@ -202,12 +227,13 @@ final class ChanellCoachCode: UIView {
     func createCardViewLayer() {
 
         cardView.fillFull(for: self)
-        cardView.addSubview(tableView)
+       
+        
         cardView.addSubview(imagePromo)
         imagePromo.anchor(top: cardView.topAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
-                          paddingTop: 40, paddingLeft: 0, paddingRight: 0)
+                          paddingTop: 110, paddingLeft: 0, paddingRight: 0)
         
         imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
         
@@ -222,10 +248,16 @@ final class ChanellCoachCode: UIView {
 
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 18)
-        tableView.anchor(top: cardView.topAnchor,
-                         left: cardView.leftAnchor,
-                         right: cardView.rightAnchor,
-                         bottom: cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+        cardView.addSubview(buttonChat)
+        buttonChat.anchor(right: buttonMore.leftAnchor,paddingRight: 5,width: 40, height: 40)
+        buttonChat.centerY(inView: buttonMore)
+        
+//        cardView.addSubview(tableView)
+//        tableView.anchor(top: cardView.topAnchor,
+//                         left: cardView.leftAnchor,
+//                         right: cardView.rightAnchor,
+//                         bottom: cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
       //  cardView.addSubview(segmentControll)
       //  segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 16, height: 20)
       //  cardView.addSubview(selfView)

@@ -142,6 +142,7 @@ extension HomeVC: UITableViewDelegate {
         let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
         vc.user = self.usersd[id!]
+        vc.broadcast = self.listBroadcast[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
 
     }

@@ -14,6 +14,7 @@ import TimelineTableViewCell
 import MMPlayerView
 import AVFoundation
 import EasyPeasy
+import AVKit
 
 
 // MARK: - State
@@ -42,6 +43,8 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
  
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
+    
+    var broadcast: BroadcastResponce?
     
      var topConstraint = NSLayoutConstraint()
      var leftConstant = NSLayoutConstraint()
@@ -90,6 +93,8 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
 
     
+    var playerViewController: AVPlayerViewController?
+    
     private var takeChannel: AnyCancellable?
     private var channels: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
@@ -100,7 +105,9 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
     
    
     
-    var isButtton: Bool = false
+    var isPlaying: Bool = false
+    var isButton: Bool = true
+    var playPauseButton: PlayPauseButton!
 
 //    override  var shouldAutorotate: Bool {
 //        return false
@@ -186,6 +193,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
           //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
           //  self.bindingBroadcast(status: "OFFLINE", userId: "\(id)",type: "STANDARD_VOD")
           //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+          
             self.binding(id: "\(id)")
           //  self.bindingPlanned(id: "\(id)")
             self.bindingChanellVOD(userId: "\(id)")
@@ -266,9 +274,27 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
-                      if response.data != nil {
-                       //   self.homeView.imagePromo
-                       //   self.homeView.
+                      if !response.data!.isEmpty  {
+                          self.homeView.imagePromo.isHidden = false
+                          self.homeView.imageLogo.isHidden = false
+                          self.homeView.labelStreamInfo.isHidden = false
+                          self.homeView.buttonMore.isHidden = false
+                          homeView.cardView.addSubview(homeView.tableView)
+                          homeView.tableView.anchor(top: homeView.labelStreamInfo.bottomAnchor,
+                                           left: homeView.cardView.leftAnchor,
+                                           right: homeView.cardView.rightAnchor,
+                                           bottom: homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                          loadPlayer(url: (self.brodcast.first?.streams?.first?.hlsPlaylistUrl)!)
+                      } else {
+                          self.homeView.imagePromo.isHidden = true
+                          self.homeView.imageLogo.isHidden = true
+                          self.homeView.labelStreamInfo.isHidden = true
+                          self.homeView.buttonMore.isHidden = true
+                          homeView.cardView.addSubview(homeView.tableView)
+                          homeView.tableView.anchor(top: homeView.cardView.topAnchor,
+                                           left: homeView.cardView.leftAnchor,
+                                           right: homeView.cardView.rightAnchor,
+                                           bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                       }
                       self.bindingChanellVOD(userId: id)
                      
@@ -309,6 +335,41 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                     self.homeView.tableView.reloadData()
                 }
           })
+    }
+    func loadPlayer(url: String) {
+       
+        print(url)
+                let videoURL = URL(string: url)
+                let player = AVPlayer(url: videoURL!)
+                self.playerViewController = AVPlayerViewController()
+             
+        let playerFrame = self.homeView.imagePromo.bounds
+        playerViewController!.player = player
+        player.rate = 1
+        playerViewController!.view.frame = playerFrame
+        playerViewController!.showsPlaybackControls = false
+        playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        addChild(playerViewController!)
+        homeView.imagePromo.addSubview(playerViewController!.view)
+        playerViewController!.didMove(toParent: self)
+        playPauseButton = PlayPauseButton()
+        playPauseButton.avPlayer = player
+
+        self.homeView.imagePromo.addSubview(playPauseButton)
+        playPauseButton.setup(in: self)
+        self.view.addSubview(self.homeView.buttonLandScape)
+        self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
+        
+        self.view.addSubview(self.homeView.buttonSetting)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 20, height: 20)
+        self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
+  
+        self.view.addSubview(self.homeView.buttonVolum)
+        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5 , paddingBottom: 10,width: 20,height: 20)
+        
+       
+        
     }
     // MARK: - Animation
     
@@ -434,8 +495,68 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
         homeView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
-      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+        
+        homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
+        homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
+        homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
+        homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
+       
 
+    }
+    //MARK: - Transishion
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+           super.viewWillTransition(to: size, with: coordinator)
+       
+        if UIDevice.current.orientation.isLandscape {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                self.playerViewController!.view.frame = self.view.bounds
+                self.view.addSubview(self.playerViewController!.view)
+                self.playerViewController!.didMove(toParent: self)
+                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                self.view.addSubview(self.homeView.buttonLandScape)
+                self.view.addSubview(self.homeView.buttonSetting)
+                self.view.addSubview(self.homeView.buttonVolum)
+                self.playerViewController?.view.addSubview(self.playPauseButton)
+                self.playPauseButton.updatePosition()
+                self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
+                self.navigationController?.navigationBar.isHidden = true
+                self.tabBarController?.tabBar.isHidden = true
+                self.view.layoutIfNeeded()
+            
+            })
+            transitionAnimator.startAnimation()
+            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+           } else {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                let playerFrame = self.homeView.imagePromo.bounds
+                self.playerViewController!.view.frame = playerFrame
+                self.playerViewController!.showsPlaybackControls = false
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                self.homeView.imagePromo.addSubview(self.playerViewController!.view)
+                self.playerViewController!.didMove(toParent: self)
+                self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
+                self.navigationController?.navigationBar.isHidden = false
+                self.tabBarController?.tabBar.isHidden = false
+                self.view.layoutIfNeeded()
+                })
+            transitionAnimator.startAnimation()
+            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            }
+    }
+   
+    // MARK: - ButtonLandscape
+    @objc func rightHandAction() {
+        if isPlaying {
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+            self.isPlaying = false
+        } else {
+            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeLeft)
+            self.isPlaying =  true
+        }
+    }
+    @objc func actionFollow() {
+       print("Folow")
     }
     @objc func actionTwitter() {
         guard let link = self.channel?.twitterLink else { return }
@@ -455,6 +576,90 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
     }
+  
+    // MARK: - ActionChat
+    @objc func actionChat(sender:UITapGestureRecognizer) {
+
+     
+         
+            isButton = false
+            
+            let detailViewController = ChatVCPlayer()
+            detailViewController.modalPresentationStyle = .custom
+            detailViewController.transitioningDelegate = actionChatTransitionManager
+            detailViewController.broadcast = broadcast
+            detailViewController.color = .white
+
+
+            AppUtility.lockOrientation(.portrait)
+            
+           
+           
+           
+            actionChatTransitionManager.intWidth = 1
+            actionChatTransitionManager.intHeight = 0.7
+            present(detailViewController, animated: true)
+        
+       
+    }
+     @objc func actionVolume() {
+         guard token != nil else { return }
+         homeView.buttonVolum.isSelected.toggle()
+         if homeView.buttonVolum.isSelected {
+             self.playerViewController?.player?.volume = 0
+         } else {
+             self.playerViewController?.player?.volume = 1
+         }
+
+     }
+     @objc func actionMore() {
+         guard token != nil else { return }
+         let detailViewController = SendVC()
+         actionSheetTransitionManager.height = 0.2
+         detailViewController.modalPresentationStyle = .custom
+         detailViewController.transitioningDelegate = actionSheetTransitionManager
+         detailViewController.url = broadcast?.url
+         present(detailViewController, animated: true)
+
+     }
+    @objc func actionBut(sender:UITapGestureRecognizer) {
+        
+        
+        if isButton {
+           // homeView.overlay.isHidden = true
+           // homeView.imageLive.isHidden = true
+           // homeView.labelLive.isHidden = true
+           // homeView.imageEye.isHidden = true
+           // homeView.labelEye.isHidden = true
+            homeView.buttonLandScape.isHidden = true
+            homeView.buttonSetting.isHidden = true
+          //  playPauseButton.isHidden = true
+            homeView.buttonVolum.isHidden = true
+           
+         
+            
+            isButton = false
+        } else {
+   
+           
+            homeView.buttonSetting.isHidden = false
+          //  homeView.overlay.isHidden = false
+          //  homeView.imageLive.isHidden = false
+          //  homeView.labelLive.isHidden = false
+           // homeView.imageEye.isHidden = false
+          //  homeView.labelEye.isHidden = false
+            homeView.buttonLandScape.isHidden = false
+            homeView.buttonVolum.isHidden = false
+         
+            
+        
+           
+            isButton = true
+        }
+
+    }
+    
+  
     private func createTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
