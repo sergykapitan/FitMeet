@@ -924,8 +924,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                }
         })
     }
-    func bindingChanell(status: String,userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+    func bindingChanell(status: String,userId: String,type: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId,type: type)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 self.brodcast.removeAll()
@@ -1114,7 +1114,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
           guard let userId = id else { return }
         homeView.labelCategory.removeAllTags()
         if token != nil {
-            bindingChanell(status: "ONLINE", userId: "\(userId)")
+            bindingChanell(status: "ONLINE", userId: "\(userId)", type: "STANDARD")
         } else {
             bindingChanellNotAutn(status: "ONLINE", userId: "\(userId)")
         }
@@ -1821,7 +1821,7 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                         self.user = response
                         self.setUserProfile(user: self.user!)
                     guard let id = self.user?.id else { return }
-                    self.bindingChanell(status: "ONLINE", userId: "\(id)")
+                    self.bindingChanell(status: "ONLINE", userId: "\(id)",type: "STANDARD")
                 }
             })
         }

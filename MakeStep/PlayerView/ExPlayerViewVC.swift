@@ -68,12 +68,12 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
 
 
 //        self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-//        guard let selfID = selfId else { return cell}
-//        if self.usersd[id]?.id == Int(selfID) {
-//            cell.buttonLike.isHidden = true          
-//        } else {
-//            cell.buttonLike.isHidden = false
-//        }
+        guard let selfID = selfId else { return cell}
+        if self.usersd[id]?.id == Int(selfID) {
+            cell.buttonLike.isHidden = true
+        } else {
+            cell.buttonLike.isHidden = false
+        }
 
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -121,7 +121,56 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+        guard let brodcastStatus = brodcast[indexPath.row].status else { return }
+        print("STATUS == \(brodcastStatus)")
+        if brodcastStatus == "OFFLINE" {
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = true
+            homeView.buttonChat.isHidden = true
+            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
+            homeView.imageLive.setImageColor(color: .gray)
+            homeView.labelLive.text = "  Offline"
+            homeView.imageEye.isHidden = true
+            homeView.labelEye.isHidden = true
+            homeView.playerSlider.isHidden = false
+            self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+        } else if brodcastStatus == "ONLINE" {
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = false
+            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
+            homeView.labelLive.text = "Live ·"
+            homeView.labelEye.text = "3"
+            homeView.imageEye.isHidden = false
+            homeView.labelEye.isHidden = false
+            homeView.playerSlider.isHidden = true
+          
+            
+            self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+        } else if brodcastStatus == "WAIT_FOR_APPROVE" {
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = true
+            homeView.labelEye.isHidden = true
+            homeView.imageEye.isHidden = true
+            homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+            homeView.labelLive.text = "Wait for"
+            homeView.playerSlider.isHidden = false
+            homeView.labelEye.isHidden = true
+            self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+        }else if brodcastStatus == "PLANNED" {
+            self.urlStream = nil
+            self.homeView.buttonChat.isHidden = true
+            self.homeView.imageLogo.isHidden = false
+            homeView.labelEye.isHidden = true
+            homeView.imageEye.isHidden = true
+            homeView.playerSlider.isHidden = false
+            homeView.labelEye.isHidden = true
+            homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+            homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            playerViewController?.player?.pause()
+            playerViewController!.view.removeFromSuperview()
+            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
+        }
+        
         
         guard let url = urlStream else { return }
         playerViewController?.player?.pause()

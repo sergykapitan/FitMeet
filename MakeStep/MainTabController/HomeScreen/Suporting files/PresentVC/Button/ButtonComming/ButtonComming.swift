@@ -49,7 +49,7 @@ class ButtonCommingg: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if token != nil {
-            self.bindingBroadcast(status: "PLANNED", userId: "\(userId)")
+            self.bindingBroadcast(status: "PLANNED", userId: "\(userId)", type: "STANDARD")
         } else {
             self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(userId)")
         }
@@ -68,8 +68,8 @@ class ButtonCommingg: UIViewController {
 
     //MARK: - Selectors
 
-    func bindingBroadcast(status: String,userId: String) {
-        take = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+    func bindingBroadcast(status: String,userId: String,type:String) {
+        take = fitMeetStream.getBroadcastPrivate(status: status, userId: userId,type: type)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

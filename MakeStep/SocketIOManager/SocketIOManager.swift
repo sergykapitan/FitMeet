@@ -25,7 +25,7 @@ class SocketIOManager: NSObject {
         guard let token = UserDefaults.standard.string(forKey: "tokenChat") else { return }
         
 #if QA
- let url = "https://dev.fitliga.com"
+ let url = "https://dev.makestep.com"
 #elseif DEBUG
  let url = "https://api.makestep.com"
 #endif

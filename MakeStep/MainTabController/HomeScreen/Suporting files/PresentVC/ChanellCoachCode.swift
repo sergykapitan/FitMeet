@@ -1,10 +1,9 @@
 //
-//  ChanellCode.swift
-//  FitMeet
+//  ChanellCoachCode.swift
+//  MakeStep
 //
-//  Created by novotorica on 29.06.2021.
+//  Created by Sergey on 24.02.2022.
 //
-
 
 import Foundation
 import UIKit
@@ -13,7 +12,7 @@ import Kingfisher
 import MMPlayerView
 import AVFoundation
 
-final class ChanellCode: UIView {
+final class ChanellCoachCode: UIView {
 
     //MARK: - First layer in TopView
     
@@ -65,15 +64,12 @@ final class ChanellCode: UIView {
     }()
     var buttonSubscribe: UIButton = {
         var button = UIButton()
-        button.setTitle("Edit Channel", for: .normal)
-        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = .white //UIColor(hexString: "#DADADA")
         button.layer.borderWidth = 1
         button.layer.masksToBounds = false
         button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
         button.clipsToBounds = true
-        button.layer.cornerRadius = 14
+        button.layer.cornerRadius = 12
         return button
     }()
     var buttonFollow: UIButton = {
@@ -187,7 +183,10 @@ final class ChanellCode: UIView {
                          left: cardView.leftAnchor,
                          right: cardView.rightAnchor,
                          bottom: cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-  
+      //  cardView.addSubview(segmentControll)
+      //  segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 16, height: 20)
+      //  cardView.addSubview(selfView)
+      //  selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
     
 
     }

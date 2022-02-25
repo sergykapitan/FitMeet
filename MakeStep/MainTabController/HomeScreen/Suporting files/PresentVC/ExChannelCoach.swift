@@ -1,17 +1,17 @@
 //
-//  ExChanellVC.swift
+//  ExChannelCoach.swift
 //  MakeStep
 //
-//  Created by novotorica on 22.09.2021.
+//  Created by Sergey on 24.02.2022.
 //
-//
+
 import Foundation
 import UIKit
 import AVKit
 import AVFoundation
 import EasyPeasy
 
-extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
+extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     
 //    func scrollViewDidScroll(_ scrollView: UIScrollView) {
 //        if self.profileView.mmPlayerLayer.isShrink { return }
@@ -190,148 +190,159 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.buttonChat.isHidden = true
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-        } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.labelLive.text = "Wait for"
         }
+       
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
 }
 
-extension ChanellVC {
+extension ChannelCoach {
     
      func layout() {
-        profileView.viewTop.translatesAutoresizingMaskIntoConstraints = false
-        profileView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
-        profileView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
-        profileView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
-        profileView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
-        profileView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
-     
-     view.addSubview(profileView.viewTop)
-     view.addSubview(profileView.imageLogoProfile)
-     view.addSubview(profileView.welcomeLabel)
-     view.addSubview(profileView.labelFollow)
-        
-        view.addSubview(profileView.buttonHelpCoach)
-        
-        view.addSubview(profileView.buttonSubscribe)
-        view.addSubview(profileView.buttonInstagram)
-        view.addSubview(profileView.buttonTwiter)
-        view.addSubview(profileView.buttonfaceBook)
-        view.addSubview(profileView.labelINTVideo)
-        view.addSubview(profileView.labelVideo)
-        view.addSubview(profileView.labelINTFollows)
-        view.addSubview(profileView.labelFollows)
-        view.addSubview(profileView.labelINTFolowers)
-        view.addSubview(profileView.labelFolowers)
-        view.addSubview(profileView.labelDescription)
-
-
-        profileView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        profileView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        bottomConstraint = profileView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
-        bottomConstraint.isActive = true
-        heightViewTop = profileView.viewTop.heightAnchor.constraint(equalToConstant: 450)
-        heightViewTop.isActive = true
-
-        profileView.labelFollow.bottomAnchor.constraint(equalTo: profileView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
-        profileView.labelFollow.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
-
-        topWelcomLabelConstant = profileView.welcomeLabel.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor, constant: 0)
-        topWelcomLabelConstant.isActive = true
-        
-        rightWelcomLabel = profileView.welcomeLabel.trailingAnchor.constraint(equalTo: profileView.buttonSubscribe.leadingAnchor, constant: -5)
-        rightWelcomLabel.isActive = true
-        
-        leftWelcomeLabelConstant = profileView.welcomeLabel.leadingAnchor.constraint(equalTo: profileView.imageLogoProfile.trailingAnchor, constant: 15)
-        leftWelcomeLabelConstant.isActive = true
-        
-        centerWelcomeLabelConstant = profileView.welcomeLabel.centerXAnchor.constraint(equalTo: profileView.cardView.centerXAnchor)
-        centerWelcomeLabelConstant.isActive = false
-        
-
-        leftConstant = profileView.imageLogoProfile.leadingAnchor.constraint(equalTo: profileView.viewTop.leadingAnchor, constant: 20)
-        leftConstant.isActive = true
-        
-        
-        botConstant = profileView.imageLogoProfile.bottomAnchor.constraint(equalTo: profileView.viewTop.bottomAnchor, constant: -20)
-        botConstant.isActive = true
-        
-        topConstraint = profileView.imageLogoProfile.topAnchor.constraint(equalTo: profileView.viewTop.topAnchor, constant: 120)
-        topConstraint.isActive = false
-        
-        centerConstant = profileView.imageLogoProfile.centerXAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor)
-        centerConstant.isActive = false
-        
-        heightConstant = profileView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
-        heightConstant.isActive = true
-        widthConstant = profileView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
-        widthConstant.isActive = true
-
-        
-        topbuttonSubscribeConstant = profileView.buttonSubscribe.topAnchor.constraint(equalTo: profileView.welcomeLabel.bottomAnchor, constant: 20)
-        topbuttonSubscribeConstant.isActive = false
-        
-        leftbuttonSubscribeConstant = profileView.buttonSubscribe.leadingAnchor.constraint(equalTo: profileView.viewTop.centerXAnchor, constant: 18) // leadingAnchor
-        leftbuttonSubscribeConstant.isActive = false
-        
-        rightbuttonSubscribeConstant = profileView.buttonSubscribe.trailingAnchor.constraint(equalTo: profileView.trailingAnchor, constant: -10)
-        rightbuttonSubscribeConstant.isActive = true
-        centerbuttonSubscribeConstant = profileView.buttonSubscribe.centerYAnchor.constraint(equalTo: profileView.imageLogoProfile.centerYAnchor)
-        centerbuttonSubscribeConstant.isActive = true
-        
-        profileView.buttonSubscribe.anchor( width: 100, height: 28)
-
-        profileView.buttonInstagram.anchor(  right: profileView.viewTop.centerXAnchor,paddingRight: 17, width: 28, height: 28)
-        profileView.buttonInstagram.centerY(inView: profileView.buttonSubscribe)
-        
-        profileView.buttonTwiter.anchor(right: profileView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
-        profileView.buttonTwiter.centerY(inView: profileView.buttonInstagram)
-        
-        profileView.buttonfaceBook.anchor( right: profileView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
-        profileView.buttonfaceBook.centerY(inView: profileView.buttonInstagram)
-
-        self.profileView.buttonInstagram.alpha = 0
-        self.profileView.buttonTwiter.alpha = 0
-        self.profileView.buttonfaceBook.alpha = 0
-        self.profileView.labelINTVideo.alpha = 0
-        self.profileView.labelVideo.alpha = 0
-        self.profileView.labelINTFollows.alpha = 0
-        self.profileView.labelFollows.alpha = 0
-        self.profileView.labelINTFolowers.alpha = 0
-        self.profileView.labelFolowers.alpha = 0
-        self.profileView.labelDescription.alpha = 0
-        
-        profileView.labelINTVideo.anchor(top: profileView.buttonSubscribe.bottomAnchor, left: profileView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
+         homeView.viewTop.translatesAutoresizingMaskIntoConstraints = false
+         homeView.imageLogoProfile.translatesAutoresizingMaskIntoConstraints = false
+         homeView.welcomeLabel.translatesAutoresizingMaskIntoConstraints = false
+         homeView.labelFollow.translatesAutoresizingMaskIntoConstraints = false
+         homeView.buttonSubscribe.translatesAutoresizingMaskIntoConstraints = false
+         homeView.buttonHelpCoach.translatesAutoresizingMaskIntoConstraints = false
          
-        profileView.labelVideo.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelVideo.centerX(inView: profileView.labelINTVideo)
-        
-        
-        profileView.labelINTFollows.anchor(top: profileView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
-        profileView.labelINTFollows.centerX(inView: profileView.viewTop)
-        
-        
-        profileView.labelFollows.anchor(top: profileView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelFollows.centerX(inView: profileView.viewTop)
-        
+         view.addSubview(homeView.viewTop)
+         view.addSubview(homeView.imageLogoProfile)
+         view.addSubview(homeView.welcomeLabel)
+         view.addSubview(homeView.labelFollow)
+         view.addSubview(homeView.buttonHelpCoach)
+         
+         view.addSubview(homeView.buttonSubscribe)
+         view.addSubview(homeView.buttonFollow)
+         view.addSubview(homeView.buttonInstagram)
+         view.addSubview(homeView.buttonTwiter)
+         view.addSubview(homeView.buttonfaceBook)
+         view.addSubview(homeView.labelINTVideo)
+         view.addSubview(homeView.labelVideo)
+         view.addSubview(homeView.labelINTFollows)
+         view.addSubview(homeView.labelFollows)
+         view.addSubview(homeView.labelINTFolowers)
+         view.addSubview(homeView.labelFolowers)
+         view.addSubview(homeView.labelDescription)
+
+         
+         
+
+         homeView.viewTop.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+         homeView.viewTop.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+         bottomConstraint = homeView.viewTop.topAnchor.constraint(equalTo: view.topAnchor, constant: popupOffset)
+         bottomConstraint.isActive = true
+         heightViewTop = homeView.viewTop.heightAnchor.constraint(equalToConstant: 450)
+         heightViewTop.isActive = true
+
+         homeView.labelFollow.bottomAnchor.constraint(equalTo: homeView.imageLogoProfile.bottomAnchor, constant: 0).isActive = true
+         homeView.labelFollow.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15).isActive = true
+         
+
+        // topWelcomLabelConstant = homeView.welcomeLabel.topAnchor.constraint(equalTo: homeView.imageLogoProfile.topAnchor, constant: 0)
+         topWelcomLabelConstant = homeView.welcomeLabel.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor, constant: 0)
+         topWelcomLabelConstant.isActive = true
+         
+         rightWelcomLabel = homeView.welcomeLabel.trailingAnchor.constraint(equalTo: homeView.buttonSubscribe.leadingAnchor, constant: -5)
+         rightWelcomLabel.isActive = true
+         
+         leftWelcomeLabelConstant = homeView.welcomeLabel.leadingAnchor.constraint(equalTo: homeView.imageLogoProfile.trailingAnchor, constant: 15)
+         leftWelcomeLabelConstant.isActive = true
+         
+         centerWelcomeLabelConstant = homeView.welcomeLabel.centerXAnchor.constraint(equalTo: homeView.cardView.centerXAnchor)
+         centerWelcomeLabelConstant.isActive = false
+         
+
+         leftConstant = homeView.imageLogoProfile.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 20)
+         leftConstant.isActive = true
+         
+         
+         botConstant = homeView.imageLogoProfile.bottomAnchor.constraint(equalTo: homeView.viewTop.bottomAnchor, constant: -20)
+         botConstant.isActive = true
+         
+         topConstraint = homeView.imageLogoProfile.topAnchor.constraint(equalTo: homeView.viewTop.topAnchor, constant: 120)
+         topConstraint.isActive = false
+         
+         centerConstant = homeView.imageLogoProfile.centerXAnchor.constraint(equalTo: homeView.viewTop.centerXAnchor)
+         centerConstant.isActive = false
+         
+         heightConstant = homeView.imageLogoProfile.heightAnchor.constraint(equalToConstant: 70)
+         heightConstant.isActive = true
+         widthConstant = homeView.imageLogoProfile.widthAnchor.constraint(equalToConstant: 70)
+         widthConstant.isActive = true
+
+         
+         topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
+         topbuttonSubscribeConstant.isActive = false
+         leftbuttonSubscribeConstant = homeView.buttonSubscribe.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 18)
+         leftbuttonSubscribeConstant.isActive = false
+         rightbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -10)
+         rightbuttonSubscribeConstant.isActive = true
+         centerbuttonSubscribeConstant = homeView.buttonSubscribe.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor)
+         centerbuttonSubscribeConstant.isActive = true
+         
+         
+         homeView.buttonSubscribe.anchor( width: 90, height: 28)
+         homeView.buttonFollow.anchor( width: 90, height: 28)
+         
+         
+         homeView.buttonFollow.anchor(top: homeView.welcomeLabel.bottomAnchor, paddingTop: 20, width: 102, height: 28)
+         homeView.buttonFollow.centerX(inView: homeView.viewTop)
   
-        profileView.labelINTFolowers.anchor(top: profileView.buttonSubscribe.bottomAnchor, right: profileView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
         
-        profileView.labelFolowers.anchor(top: profileView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
-        profileView.labelFolowers.centerX(inView: profileView.labelINTFolowers)
+         homeView.buttonInstagram.anchor(  right: homeView.cardView.rightAnchor,paddingRight: 17, width: 28, height: 28)
+         homeView.buttonInstagram.centerY(inView: homeView.buttonSubscribe)
+         
+         
+         
+         homeView.buttonTwiter.anchor(right: homeView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
+         homeView.buttonTwiter.centerY(inView: homeView.buttonInstagram)
+
+         
+         homeView.buttonfaceBook.anchor( right: homeView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
+         homeView.buttonfaceBook.centerY(inView: homeView.buttonInstagram)
+         
+         
+  
+        // homeView.labelVideo.alpha = 0
+         self.homeView.buttonFollow.alpha = 0
+         self.homeView.buttonInstagram.alpha = 0
+         self.homeView.buttonTwiter.alpha = 0
+         self.homeView.buttonfaceBook.alpha = 0
+         self.homeView.labelINTVideo.alpha = 0
+         self.homeView.labelVideo.alpha = 0
+         self.homeView.labelINTFollows.alpha = 0
+         self.homeView.labelFollows.alpha = 0
+         self.homeView.labelINTFolowers.alpha = 0
+         self.homeView.labelFolowers.alpha = 0
+         self.homeView.labelDescription.alpha = 0
         
-        
-        profileView.labelDescription.anchor(top: profileView.labelFollows.bottomAnchor, left: profileView.viewTop.leftAnchor, right: profileView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
-        
-        profileView.buttonHelpCoach.anchor(bottom:profileView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
-        profileView.buttonHelpCoach.centerX(inView: profileView.viewTop)
-        profileView.buttonHelpCoach.isUserInteractionEnabled = false
-    
-    }
+         
+         homeView.labelINTVideo.anchor(top: homeView.buttonSubscribe.bottomAnchor, left: homeView.viewTop.leftAnchor, paddingTop: 16, paddingLeft: 16, width: 100, height: 20)
+          
+          homeView.labelVideo.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+         homeView.labelVideo.centerX(inView: homeView.labelINTVideo)
+         
+         
+         homeView.labelINTFollows.anchor(top: homeView.buttonSubscribe.bottomAnchor, paddingTop: 16, width: 100, height: 16)
+         homeView.labelINTFollows.centerX(inView: homeView.buttonFollow)
+         
+         
+         homeView.labelFollows.anchor(top: homeView.labelINTVideo.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+         homeView.labelFollows.centerX(inView: homeView.viewTop)
+         
+   
+         homeView.labelINTFolowers.anchor(top: homeView.buttonSubscribe.bottomAnchor, right: homeView.viewTop.rightAnchor, paddingTop: 16, paddingRight:  16, width: 100, height: 20)
+         
+         homeView.labelFolowers.anchor(top: homeView.labelINTFolowers.bottomAnchor,paddingTop: 4,width: 100,height: 16)
+         homeView.labelFolowers.centerX(inView: homeView.labelINTFolowers)
+         
+         
+         homeView.labelDescription.anchor(top: homeView.labelFollows.bottomAnchor, left: homeView.viewTop.leftAnchor, right: homeView.viewTop.rightAnchor,  paddingTop: 10, paddingLeft: 15, paddingRight: 5)
+         
+         homeView.buttonHelpCoach.anchor(bottom:homeView.viewTop.bottomAnchor,paddingBottom: -5,width: 40, height: 30)
+         homeView.buttonHelpCoach.centerX(inView: homeView.viewTop)
+         homeView.buttonHelpCoach.isUserInteractionEnabled = false
+     }
 }

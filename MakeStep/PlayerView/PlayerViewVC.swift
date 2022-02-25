@@ -19,7 +19,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     
     func addPurchase() {
         guard let userId = user?.id else { return }
-        self.bindingChannel(id: userId)
+       
     }
     
 
@@ -40,6 +40,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     var isLand:Bool = true
     var isPortraiteFull: Bool = false
     var isFullSize = false
+    fileprivate var isUpdateTime = false
     
     var id: Int?
     var follow: String?
@@ -58,6 +59,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    private var takeBroadcastPlanned: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
@@ -101,15 +103,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         view = homeView
 
     }
-  
-    
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-        guard let id = id  else { return }
-        bindingUser(id: id)
-    
-        
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -133,20 +130,18 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         
         let categorys = broadcast?.categories
         var arr = [""]
-        for i in categorys! {
-            arr.append(i.title)
-        }
+//        for i in categorys! {
+//            arr.append(i.title!)
+//        }
       //  arr = categorys.map { String("\u{0023}" + $0 }
         homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
         self.urlStream = self.broadcast?.streams?.first?.vodUrl
-        homeView.labelStreamDescription.text = self.broadcast?.description
-     //   homeView.labelNameBroadcast.text = broadcast?.name
         self.homeView.labelStreamInfo.text = broadcast?.name
         loadPlayer()
         guard let idU = self.id else { return }
-        bindingChanell(status: "WAIT_FOR_APPROVE", userId: "\(idU)")
+        bindingUser(id: idU)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -204,9 +199,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
-
+        homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
+        homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange), for: .touchUpInside)
     }
- 
+   @objc func sliderValueChange() {
+        self.isUpdateTime = true
+        
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delaySeekTime), object: nil)
+        self.perform(#selector(delaySeekTime), with: nil, afterDelay: 0.1)
+    }
     @objc func actionLike() {
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
@@ -214,6 +215,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
         } else {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+        }
+
+    }
+    @objc func actionVolume() {
+        guard token != nil else { return }
+        homeView.buttonVolum.isSelected.toggle()
+        if homeView.buttonVolum.isSelected {
+            self.playerViewController?.player?.volume = 0
+        } else {
+            self.playerViewController?.player?.volume = 1
         }
 
     }
@@ -237,23 +248,14 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         
     }
     
-    func binding(id: String) {
-        takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
-                if response.data != nil  {
-                    self.brodcastTime = response
-                    self.homeView.tableView.reloadData()
-
-               }
-        })
-    }
-    func bindingChanell(status: String,userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId)
+  
+    func bindingChanell(status: String,userId: String,type: String) {
+        takeChanell = fitMeetStream.getBroadcastPrivate(status: status, userId: userId,type: type)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.brodcast = response.data!
+                    //self.brodcast = response.data!
+                    self.brodcast.append(contentsOf: response.data!)
                     SocketIOManager.sharedInstance.getTokenChat()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     let  broadId = self.brodcast.compactMap{$0.id}
@@ -263,7 +265,30 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 }
            })
        }
+    
+    func binding(id: String) {
+          takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                  if response.data != nil  {
+                      self.brodcast.append(contentsOf: response.data!)
+                      self.bindingChanellVOD(userId: "\(id)")
+                     // self.homeView.tableView.reloadData()
 
+                 }
+          })
+      }
+    func bindingPlanned(id: String) {
+          takeBroadcastPlanned = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                  if response.data != nil  {
+                      self.brodcast.append(contentsOf: response.data!)
+                      self.homeView.tableView.reloadData()
+
+                 }
+          })
+      }
     func bindingUserMap(ids: [Int])  {
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
@@ -274,33 +299,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 }
           })
     }
-    @objc func actionSubscribe() {
-        guard let channel = channel,let _ = token else { return }
-        guard let subscribe = channel.isSubscribe else { return }
-        if subscribe {
-           
-        } else {
-          guard let subPlans = channel.subscriptionPlans else { return }
-            if subPlans.isEmpty {
-                
-            } else {
-                
-                let subscribe = SubscribeVC()
-                       subscribe.modalPresentationStyle = .custom
-                       subscribe.id = user?.id
-                       subscribe.delagatePurchase = self
-                if view.bounds.height <= 603 {
-                    actionChatTransitionManager.intHeight = 0.5
-                } else {
-                    actionChatTransitionManager.intHeight = 0.4
-                }
-                       actionChatTransitionManager.intWidth = 1
-                       subscribe.transitioningDelegate = actionChatTransitionManager
-                       present(subscribe, animated: true)
-            }
-       
-        }
-    }
+  
    
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
@@ -332,6 +331,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
             playPauseButton.isHidden = true
+            homeView.buttonVolum.isHidden = true
            
           
             if playPauseButton == nil {
@@ -352,6 +352,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.imageEye.isHidden = false
             homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
+            homeView.buttonVolum.isHidden = false
+            
+            
             if playPauseButton == nil {
                 
             } else {
@@ -368,58 +371,21 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     
     func setUserProfile(user: User) {
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-      //  guard let follow = user.channelFollowCount else { return }
-     //   self.homeView.labelINTFollows.text = "\(user.channelFollowCount!)"
-    //    self.homeView.labelINTFolowers.text = "\(user.channelSubscribeCount!)"
+        homeView.labelStreamDescription.text = self.user?.fullName
         guard let id = user.id else { return }
-//        if token != nil {
-//            bindingChannel(id: id)
-//        } else {
-//            bindingNotChannel(id: id)
-//        }
+        if token != nil {
+        //    self.bindingChanell(status: "ONLINE", userId: "\(id)",type: "STANDARD")
+         //   self.bindingChanell(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+            self.binding(id: "\(id)")
+           // self.bindingChanellVOD(userId: "\(id)")
+          //  self.bindingPlanned(id: "\(id)")
+        } else {
+           
+        }
        
     }
     
-    func bindingChannel(id: Int) {
-        take = fitMeetChannel.listChannelsPrivate(idUser: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.first?.name != nil  {
-                    self.channel = response.data.last
-                    guard let channel = self.channel,let description = channel.description else { return }
-                   
-                   
-                 
-                    
-                    if channel.isSubscribe! {
-                        
-                        self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
-                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
-                        self.homeView.buttonSubscribe.backgroundColor = .white
-                    } else {
-                        self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
-                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
-                    }
-                }
-           })
-    }
-    func bindingNotChannel(id: Int) {
-        take = fitMeetChannel.listChannelsNotAuth(idUser: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.first?.name != nil  {
-                    self.channel = response.data.last
-                    guard let channel = self.channel,let description = channel.description else { return }
-                    self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
-                   
-                
-                    self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
-                    self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-                    self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
-                }
-           })
-    }
+  
     // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = urlStream else { return }
@@ -444,12 +410,19 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         playPauseButton.setup(in: self)
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 20, height: 20)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.buttonLandScape)
         self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
+        
+        self.view.addSubview(self.homeView.buttonVolum)
+        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5 , paddingBottom: 10,width: 20,height: 20)
+        
+        self.view.addSubview(self.homeView.playerSlider)
+        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 2)
+        
     }
 
     //MARK: - Transishion
@@ -464,10 +437,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
-         
-                self.playerViewController?.view.addSubview(self.playPauseButton)
-              
-               
+                self.view.addSubview(self.homeView.buttonVolum)
+                self.view.addSubview(self.homeView.playerSlider)
+                self.playerViewController?.view.addSubview(self.playPauseButton)               
                 self.playPauseButton.updatePosition()
                 self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
                 self.view.layoutIfNeeded()
@@ -501,7 +473,24 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             self.isPlaying =  true
         }
     }
-
+    func timerObserver(time: CMTime) {
+        if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,
+            !duration.isIndefinite ,
+            !isUpdateTime {
+            if self.homeView.playerSlider.maximumValue != Float(duration.seconds) {
+                self.homeView.playerSlider.maximumValue = Float(duration.seconds)
+            }
+          //  self.labCurrent.text = time.seconds.convertSecondString()
+          //  self.labTotal.text = (duration.seconds-time.seconds).convertSecondString()
+            self.homeView.playerSlider.value = Float(time.seconds)
+        }
+    }
+    @objc func delaySeekTime() {
+        let time =  CMTimeMake(value: Int64(self.homeView.playerSlider.value), timescale: 1)
+        self.playerViewController?.player?.seek(to: time, completionHandler: { [unowned self] (finish) in
+            self.isUpdateTime = false
+        })
+    }
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
        }
@@ -580,13 +569,28 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
+                    self.setUserProfile(user: self.user!)
                     self.homeView.tableView.reloadData()
  
                 }
             })
         }
    
-    
+    func bindingChanellVOD(userId: String) {
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+
+   //                 self.brodcast = response.data!
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+                    guard  var s  = response.data?.reversed() else { return }
+                    self.brodcast.append(contentsOf: s.reversed())
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
     func getMapWather(ids: [Int])  {
         watcherMap = fitMeetApi.getWatcherMap(ids: ids)
             .mapError({ (error) -> Error in return error })

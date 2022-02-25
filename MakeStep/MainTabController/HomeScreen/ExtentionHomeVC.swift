@@ -118,7 +118,6 @@ extension HomeVC: UITableViewDataSource {
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
-        print("Self = \(self.url)")
         detailViewController.url = self.url        
         present(detailViewController, animated: true)
 
@@ -129,7 +128,7 @@ extension HomeVC: UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 310
+        return 330
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -140,9 +139,9 @@ extension HomeVC: UITableViewDelegate {
               let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
         self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-        let vc = PresentVC()
+        let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
-        vc.id = id
+        vc.user = self.usersd[id!]
         navigationController?.pushViewController(vc, animated: true)
 
     }

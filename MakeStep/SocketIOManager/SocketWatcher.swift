@@ -23,7 +23,7 @@ class SocketWatcher: NSObject {
         
         let token = UserDefaults.standard.string(forKey: "tokenChat")
 #if QA
- let url = "https://dev.fitliga.com"
+ let url = "https://dev.makestep.com"
 #elseif DEBUG
  let url = "https://api.makestep.com"
 #endif

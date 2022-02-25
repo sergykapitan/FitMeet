@@ -131,14 +131,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         }
         rtmpStream.captureSettings = [
             .sessionPreset: AVCaptureSession.Preset.hd1280x720,
-            .continuousAutofocus: true,
+          //  .continuousAutofocus: true,
             .continuousExposure: true,
            // .preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
         ]
         rtmpStream.videoSettings = [
             .width: 720,
             .height: 1280,
-            .bitrate: 14 * 1000,
+            .bitrate: 1000 * 1000,
             //.profileLevel: kVTProfileLevel_H264_Baseline_3_1,
         ]
         

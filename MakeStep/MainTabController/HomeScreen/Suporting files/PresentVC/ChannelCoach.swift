@@ -1,8 +1,8 @@
 //
-//  ChanellVC.swift
-//  FitMeet
+//  ChannelCoach.swift
+//  MakeStep
 //
-//  Created by novotorica on 29.06.2021.
+//  Created by Sergey on 24.02.2022.
 //
 
 import Foundation
@@ -32,31 +32,14 @@ extension State {
     }
 }
 //, CustomSegmentedControlDelegate//CustomSegmentedFullControlDelegate
-class ChanellVC: UIViewController  {
+class ChannelCoach: UIViewController, VeritiPurchase  {
+    func addPurchase() {
+        guard let userId = user?.id else { return }
+        self.bindingChannel(userId: userId)
+    }
+    
 
-    let videoVC = VideosVC()
-    let timeTable = TimetableVC()
-    let time = Timetable()
-
-//    func change(to index: Int) {
-//
-//        if index == 0 {
-//            removeAllChildViewController(timeTable)
-//            configureChildViewController(videoVC, onView: profileView.selfView )
-//            guard let userID = self.user?.id else { return }
-//            videoVC.id = userID
-//            videoVC.user = self.user
-//        }
-//        if index == 1 {
-//            guard let user = self.user else { return }
-//
-//            time.user = user
-//            removeAllChildViewController(videoVC)
-//            configureChildViewController(time, onView: profileView.selfView )
-//
-//        }
-//
-//    }
+ 
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
     
@@ -84,7 +67,7 @@ class ChanellVC: UIViewController  {
     var heightViewTop = NSLayoutConstraint()
     
     
-    let profileView = ChanellCode()
+    let homeView = ChanellCoachCode()
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
@@ -99,6 +82,7 @@ class ChanellVC: UIViewController  {
     var user: User?
     var brodcast: [BroadcastResponce] = []
     var indexButton: Int = 0
+    let actionChatTransitionManager = ActionTransishionChatManadger()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     var url: String?
     var usersd = [Int: User]()
@@ -108,6 +92,8 @@ class ChanellVC: UIViewController  {
     
     private var takeChannel: AnyCancellable?
     private var channels: AnyCancellable?
+    private var takeBroadcast: AnyCancellable?
+    private var takeBroadcastPlanned : AnyCancellable?
  
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
@@ -125,16 +111,16 @@ class ChanellVC: UIViewController  {
     
     override func loadView() {
         super.loadView()
-        view = profileView
+        view = homeView
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.profileView.imageLogoProfile.makeRounded()
+        self.homeView.imageLogoProfile.makeRounded()
     }
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.profileView.imageLogoProfile.makeRounded()
+        self.homeView.imageLogoProfile.makeRounded()
 
     }
     override func viewDidLoad() {
@@ -147,11 +133,11 @@ class ChanellVC: UIViewController  {
      //   removeAllChildViewController(timeTable)
       //  configureChildViewController(videoVC, onView: profileView.selfView )
         guard let userID = self.user?.id else { return }
-     
+       
      
         
         layout()
-        profileView.viewTop.addGestureRecognizer(panRecognizer)
+        homeView.viewTop.addGestureRecognizer(panRecognizer)
 
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
@@ -197,7 +183,12 @@ class ChanellVC: UIViewController  {
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
-            self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+          //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+          //  self.bindingBroadcast(status: "OFFLINE", userId: "\(id)",type: "STANDARD_VOD")
+          //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
+            self.binding(id: "\(id)")
+          //  self.bindingPlanned(id: "\(id)")
+            self.bindingChanellVOD(userId: "\(id)")
         } else {
             self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
         }
@@ -207,19 +198,51 @@ class ChanellVC: UIViewController  {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-        profileView.imageLogoProfile.makeRounded()
+        homeView.imageLogoProfile.makeRounded()
         setUserProfile()
       
        
     }
+    func bindingChanellVOD(userId: String) {
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.brodcast = self.brodcast.reversed()
+                    self.homeView.tableView.reloadData()
+                }
+           })
+       }
 
     func bindingChannel(userId: Int?) {
         guard let id = userId else { return }
         takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {                    
+                if response != nil  {
                     self.channel = response.data.last
+                    guard let channel = self.channel else {
+                        return
+                    }
+                    if channel.isSubscribe! {                        
+                        self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+                        self.homeView.buttonSubscribe.backgroundColor = .white
+                    } else {
+                        self.homeView.buttonSubscribe.backgroundColor = .blueColor
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                    }
+                    guard let _ = self.channel?.twitterLink ,
+                          let _ = self.channel?.instagramLink ,
+                          let _ = self.channel?.facebookLink else { return }
+                    self.homeView.buttonTwiter.setImageTintColor(.blueColor)
+                    self.homeView.buttonfaceBook.setImageTintColor(.blueColor)
+                    self.homeView.buttonInstagram.setImageTintColor(.blueColor)
                 }
         })
     }
@@ -231,11 +254,35 @@ class ChanellVC: UIViewController  {
                    
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
+                    
                     self.bindingUserMap(ids: arrayUserId)
-                    self.profileView.tableView.reloadData()
+                    self.homeView.tableView.reloadData()
                 }
            })
        }
+    func binding(id: String) {
+          takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                  if response.data != nil  {
+                      self.brodcast.append(contentsOf: response.data!)
+                      self.bindingChanellVOD(userId: id)
+                     
+
+                 }
+          })
+      }
+    func bindingPlanned(id: String) {
+          takeBroadcastPlanned = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                  if response.data != nil  {
+                      self.brodcast.append(contentsOf: response.data!)
+                      self.homeView.tableView.reloadData()
+
+                 }
+          })
+      }
     func bindingBroadcastNotAuth(status: String,userId: String) {
         take = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
             .mapError({ (error) -> Error in return error })
@@ -245,7 +292,7 @@ class ChanellVC: UIViewController  {
                     self.brodcast = response.data!
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
-                    self.profileView.tableView.reloadData()
+                    self.homeView.tableView.reloadData()
                 }
            })
        }
@@ -255,7 +302,7 @@ class ChanellVC: UIViewController  {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.usersd = response.data
-                    self.profileView.tableView.reloadData()
+                    self.homeView.tableView.reloadData()
                 }
           })
     }
@@ -292,7 +339,7 @@ class ChanellVC: UIViewController  {
         case .changed:
             
             // variable setup
-            let translation = recognizer.translation(in: profileView.viewTop)
+            let translation = recognizer.translation(in: homeView.viewTop)
             var fraction = -translation.y / popupOffset
             
             // adjust the fraction for the current state and reversed state
@@ -307,7 +354,7 @@ class ChanellVC: UIViewController  {
         case .ended:
             
             // variable setup
-            let yVelocity = recognizer.velocity(in: profileView.viewTop).y
+            let yVelocity = recognizer.velocity(in: homeView.viewTop).y
             let shouldClose = yVelocity < 0
             
             // if there is no motion, continue all animations and exit early
@@ -335,34 +382,55 @@ class ChanellVC: UIViewController  {
     }
     @objc func actionSubscribe() {
         
-        let vc = EdetChannelVC()
-        vc.modalPresentationStyle = .fullScreen
-        vc.user = self.user
-        self.navigationController?.pushViewController(vc, animated: true)
- 
+        guard let channel = channel,let _ = token else { return }
+        guard let subscribe = channel.isSubscribe else { return }
+        if subscribe {
+           
+        } else {
+          guard let subPlans = channel.subscriptionPlans else { return }
+            if subPlans.isEmpty {
+                
+            } else {
+                
+                let subscribe = SubscribeVC()
+                       subscribe.modalPresentationStyle = .custom
+                       subscribe.id = user?.id
+                       subscribe.delagatePurchase = self
+                if view.bounds.height <= 603 {
+                    actionChatTransitionManager.intHeight = 0.5
+                } else {
+                    actionChatTransitionManager.intHeight = 0.4
+                }
+                    //   actionChatTransitionManager.intHeight = 0.4
+                       actionChatTransitionManager.intWidth = 1
+                       subscribe.transitioningDelegate = actionChatTransitionManager
+                       present(subscribe, animated: true)
+            }
+       
+        }
     }
 
     
 
     func setUserProfile() {
 
-        profileView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+        homeView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
-        profileView.labelFollow.text = "Followers:" + "\(follow)"
-        self.profileView.welcomeLabel.text = fullName
-        self.profileView.labelINTFollows.text = "\(follow)"
-        self.profileView.labelINTFolowers.text = "\(sub)"
-        self.profileView.labelDescription.text = channel?.description //" Welcome to my channel!\n My name is \(fullName)"
+        homeView.labelFollow.text = "Followers:" + "\(follow)"
+        self.homeView.welcomeLabel.text = fullName
+        self.homeView.labelINTFollows.text = "\(follow)"
+        self.homeView.labelINTFolowers.text = "\(sub)"
+        self.homeView.labelDescription.text = channel?.description //" Welcome to my channel!\n My name is \(fullName)"
  
     }
     
     func actionButtonContinue() {
       
-        profileView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
-        profileView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
-        profileView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
-        profileView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
-      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)     
+        homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
+        homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
+        homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
+        homeView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
+      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
 
     }
     @objc func actionTwitter() {
@@ -384,11 +452,11 @@ class ChanellVC: UIViewController  {
                 }
     }
     private func createTableView() {
-        profileView.tableView.dataSource = self
-        profileView.tableView.delegate = self
-        profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
-        profileView.tableView.separatorStyle = .none
-        profileView.tableView.showsVerticalScrollIndicator = false
+        homeView.tableView.dataSource = self
+        homeView.tableView.delegate = self
+        homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
+        homeView.tableView.separatorStyle = .none
+        homeView.tableView.showsVerticalScrollIndicator = false
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -449,7 +517,10 @@ class ChanellVC: UIViewController  {
                 self.centerbuttonSubscribeConstant.isActive = false
                 self.topbuttonSubscribeConstant.isActive = true
                 self.leftbuttonSubscribeConstant.isActive = true
-                self.heightViewTop.constant = 400 + self.profileView.labelDescription.frame.height
+                self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
+                
+                self.homeView.buttonSubscribe.isHidden = true
+                self.homeView.labelFollow.isHidden = true
 
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
@@ -462,9 +533,9 @@ class ChanellVC: UIViewController  {
                    self.topWelcomLabelConstant.constant = 80
                    self.rightWelcomLabel.isActive = false
                    self.centerWelcomeLabelConstant.isActive = true
-                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                   self.profileView.labelFollow.isHidden = true
-                self.profileView.imageLogoProfile.makeRounded()
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                 
+                self.homeView.imageLogoProfile.makeRounded()
 
             case .closed:
                 print("CLOSE FIRST")
@@ -473,6 +544,9 @@ class ChanellVC: UIViewController  {
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
                 self.heightViewTop.constant = 450
+                
+                self.homeView.buttonSubscribe.isHidden = true
+                self.homeView.labelFollow.isHidden = true
                 
                 self.bottomConstraint.constant = self.popupOffset
                    self.heightConstant.constant = 70
@@ -486,12 +560,12 @@ class ChanellVC: UIViewController  {
                    self.leftWelcomeLabelConstant.isActive = true
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
-                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-                   self.profileView.labelFollow.isHidden = false
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                  
                 
                 
                 
-                self.profileView.imageLogoProfile.makeRounded()
+                self.homeView.imageLogoProfile.makeRounded()
             }
             self.view.layoutIfNeeded()
         })
@@ -518,7 +592,7 @@ class ChanellVC: UIViewController  {
                 self.centerbuttonSubscribeConstant.isActive = false
                 self.topbuttonSubscribeConstant.isActive = true
                 self.leftbuttonSubscribeConstant.isActive = true
-                self.heightViewTop.constant = 400 + self.profileView.labelDescription.frame.height
+                self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
 
                    self.heightConstant.constant = 90
                    self.widthConstant.constant = 90
@@ -531,9 +605,13 @@ class ChanellVC: UIViewController  {
                    self.rightWelcomLabel.isActive = false
                    self.topWelcomLabelConstant.constant = 80
                    self.centerWelcomeLabelConstant.isActive = true
-                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                   self.profileView.labelFollow.isHidden = true
-                self.profileView.imageLogoProfile.makeRounded()
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                  
+                
+                self.homeView.buttonSubscribe.isHidden = false
+                self.homeView.labelFollow.isHidden = true
+                
+                self.homeView.imageLogoProfile.makeRounded()
 
              
             case .closed:
@@ -556,12 +634,14 @@ class ChanellVC: UIViewController  {
                    self.leftWelcomeLabelConstant.isActive = true
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
-                   self.profileView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
-                   self.profileView.labelFollow.isHidden = false
+                   self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
+                  
+                
+                self.homeView.buttonSubscribe.isHidden = false
+                self.homeView.labelFollow.isHidden = false
                 
                 
-                
-                self.profileView.imageLogoProfile.makeRounded()
+                self.homeView.imageLogoProfile.makeRounded()
      
             }
             
@@ -575,32 +655,36 @@ class ChanellVC: UIViewController  {
             switch state {
             case .open:
                 print("OPEN FIR")
-                self.profileView.labelVideo.alpha = 1
-                self.profileView.buttonInstagram.alpha = 1
-                self.profileView.buttonTwiter.alpha = 1
-                self.profileView.buttonfaceBook.alpha = 1
-                self.profileView.labelINTVideo.alpha = 1
-                self.profileView.labelVideo.alpha = 1
-                self.profileView.labelINTFollows.alpha = 1
-                self.profileView.labelFollows.alpha = 1
-                self.profileView.labelINTFolowers.alpha = 1
-                self.profileView.labelFolowers.alpha = 1
-                self.profileView.labelDescription.alpha = 1
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.buttonInstagram.alpha = 1
+                self.homeView.buttonTwiter.alpha = 1
+                self.homeView.buttonfaceBook.alpha = 1
+                self.homeView.labelINTVideo.alpha = 1
+                self.homeView.labelVideo.alpha = 1
+                self.homeView.labelINTFollows.alpha = 1
+                self.homeView.labelFollows.alpha = 1
+                self.homeView.labelINTFolowers.alpha = 1
+                self.homeView.labelFolowers.alpha = 1
+                self.homeView.labelDescription.alpha = 1
+                
+               
                 
                
             case .closed:
                 print("Close FIR")
-                self.profileView.labelVideo.alpha = 0
-                self.profileView.buttonInstagram.alpha = 0
-                self.profileView.buttonTwiter.alpha = 0
-                self.profileView.buttonfaceBook.alpha = 0
-                self.profileView.labelINTVideo.alpha = 0
-                self.profileView.labelVideo.alpha = 0
-                self.profileView.labelINTFollows.alpha = 0
-                self.profileView.labelFollows.alpha = 0
-                self.profileView.labelINTFolowers.alpha = 0
-                self.profileView.labelFolowers.alpha = 0
-                self.profileView.labelDescription.alpha = 0
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.buttonInstagram.alpha = 0
+                self.homeView.buttonTwiter.alpha = 0
+                self.homeView.buttonfaceBook.alpha = 0
+                self.homeView.labelINTVideo.alpha = 0
+                self.homeView.labelVideo.alpha = 0
+                self.homeView.labelINTFollows.alpha = 0
+                self.homeView.labelFollows.alpha = 0
+                self.homeView.labelINTFolowers.alpha = 0
+                self.homeView.labelFolowers.alpha = 0
+                self.homeView.labelDescription.alpha = 0
+                
+                
             }
         })
         inTitleAnimator.scrubsLinearly = false
@@ -610,31 +694,35 @@ class ChanellVC: UIViewController  {
             switch state {
                 case .open:
                     print("OPEN Sec")
-                    self.profileView.labelVideo.alpha = 1
-                    self.profileView.buttonInstagram.alpha = 1
-                    self.profileView.buttonTwiter.alpha = 1
-                    self.profileView.buttonfaceBook.alpha = 1
-                    self.profileView.labelINTVideo.alpha = 1
-                    self.profileView.labelVideo.alpha = 1
-                    self.profileView.labelINTFollows.alpha = 1
-                    self.profileView.labelFollows.alpha = 1
-                    self.profileView.labelINTFolowers.alpha = 1
-                    self.profileView.labelFolowers.alpha = 1
-                    self.profileView.labelDescription.alpha = 1
+                    self.homeView.labelVideo.alpha = 1
+                    self.homeView.buttonInstagram.alpha = 1
+                    self.homeView.buttonTwiter.alpha = 1
+                    self.homeView.buttonfaceBook.alpha = 1
+                    self.homeView.labelINTVideo.alpha = 1
+                    self.homeView.labelVideo.alpha = 1
+                    self.homeView.labelINTFollows.alpha = 1
+                    self.homeView.labelFollows.alpha = 1
+                    self.homeView.labelINTFolowers.alpha = 1
+                    self.homeView.labelFolowers.alpha = 1
+                    self.homeView.labelDescription.alpha = 1
+                
+                 
              
                 case .closed:
                     print("Close sec")
-                    self.profileView.labelVideo.alpha = 0
-                    self.profileView.buttonInstagram.alpha = 0
-                    self.profileView.buttonTwiter.alpha = 0
-                    self.profileView.buttonfaceBook.alpha = 0
-                    self.profileView.labelINTVideo.alpha = 0
-                    self.profileView.labelVideo.alpha = 0
-                    self.profileView.labelINTFollows.alpha = 0
-                    self.profileView.labelFollows.alpha = 0
-                    self.profileView.labelINTFolowers.alpha = 0
-                    self.profileView.labelFolowers.alpha = 0
-                    self.profileView.labelDescription.alpha = 0
+                    self.homeView.labelVideo.alpha = 0
+                    self.homeView.buttonInstagram.alpha = 0
+                    self.homeView.buttonTwiter.alpha = 0
+                    self.homeView.buttonfaceBook.alpha = 0
+                    self.homeView.labelINTVideo.alpha = 0
+                    self.homeView.labelVideo.alpha = 0
+                    self.homeView.labelINTFollows.alpha = 0
+                    self.homeView.labelFollows.alpha = 0
+                    self.homeView.labelINTFolowers.alpha = 0
+                    self.homeView.labelFolowers.alpha = 0
+                    self.homeView.labelDescription.alpha = 0
+                
+               
                    
                 }
             })

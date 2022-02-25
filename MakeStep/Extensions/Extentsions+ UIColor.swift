@@ -61,6 +61,8 @@ extension UIColor {
             rendererContext.fill(CGRect(origin: .zero, size: size))
         }
     }
+    static var blueColor = UIColor(hexString: "#0066FF")
+    static var redColor = UIColor(hexString: "#FF0066")
 }
 
 extension UIPageViewController {
@@ -183,4 +185,13 @@ extension Equatable {
         let activity = UIActivityViewController(activityItems: [self], applicationActivities: nil)
         UIApplication.topViewController?.present(activity, animated: true, completion: nil)
     }
+}
+extension UIButton{
+
+    func setImageTintColor(_ color: UIColor) {
+        let tintedImage = self.imageView?.image?.withRenderingMode(.alwaysTemplate)
+        self.setImage(tintedImage, for: .normal)
+        self.tintColor = color
+    }
+
 }

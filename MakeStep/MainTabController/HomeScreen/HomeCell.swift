@@ -151,8 +151,8 @@ final class HomeCell: UITableViewCell {
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
                                right: contentView.rightAnchor,
-                               paddingTop: 0, paddingLeft: 0, paddingRight: 0,
-                               height: 200)
+                               paddingTop: 0, paddingLeft: 0, paddingRight: 0)
+        backgroundImage.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
 
         contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,

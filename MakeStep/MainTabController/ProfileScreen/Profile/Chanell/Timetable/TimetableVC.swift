@@ -54,7 +54,7 @@ class TimetableVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         guard let user = user else { return }
-        self.bindingBroadcast(status: "PLANNED", userId: "\(user.id)")
+        self.bindingBroadcast(status: "PLANNED", userId: "\(user.id)",type: "STANDART")
     }
     private func makeTableView() {
         timeTableView.tableView.dataSource = self
@@ -66,9 +66,9 @@ class TimetableVC: UIViewController {
             bundle: Bundle(url: nibUrl!)!)
         self.timeTableView.tableView.register(timelineTableViewCellNib, forCellReuseIdentifier: "TimelineTableViewCell")
     }
-    func bindingBroadcast(status: String,userId: String?) {
+    func bindingBroadcast(status: String,userId: String?,type: String) {
         guard let id = userId else { return }
-        takeBroadcast = fitMeetSream.getBroadcastPrivate(status: status, userId: id)
+        takeBroadcast = fitMeetSream.getBroadcastPrivate(status: status, userId: id, type : type)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

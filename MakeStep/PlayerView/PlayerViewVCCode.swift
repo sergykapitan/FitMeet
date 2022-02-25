@@ -28,7 +28,11 @@ final class PlayerViewVCCode: UIView {
         image.image = #imageLiteral(resourceName: "Group 17091")
         return image
     }()
-  
+    var imageLogo: UIImageView = {
+        let image = UIImageView()
+        image.isHidden =  true
+        return image
+    }()
     var imagePromo: UIView = {
         var image = UIView()
         return image
@@ -39,9 +43,23 @@ final class PlayerViewVCCode: UIView {
         button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
         return button
     }()
+    var playerSlider: UISlider = {
+        var slider = UISlider()
+        slider.setThumbImage(UIImage(named:"Vector1"), for: .normal)
+        return slider
+    }()
     var buttonSetting: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Settings"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
+        return button
+    }()
+    var buttonVolum: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }()
     var labelTimer: UILabel = {
@@ -184,6 +202,9 @@ final class PlayerViewVCCode: UIView {
         
         imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
         
+        cardView.addSubview(imageLogo)
+        imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
         cardView.addSubview(labelStreamInfo)
         labelStreamInfo.anchor(top: imagePromo.bottomAnchor,
                                left: cardView.leftAnchor,
@@ -239,15 +260,15 @@ final class PlayerViewVCCode: UIView {
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
         
-        imagePromo.addSubview(labelLive)
+        cardView.addSubview(labelLive)
         labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
         labelLive.centerY(inView: overlay)
         
-        imagePromo.addSubview(imageEye)
+        cardView.addSubview(imageEye)
         imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
         imageEye.centerY(inView: overlay)
         
-        imagePromo.addSubview(labelEye)
+        cardView.addSubview(labelEye)
         labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
         labelEye.centerY(inView:overlay)
        
@@ -259,7 +280,10 @@ final class PlayerViewVCCode: UIView {
     func setLabel(description: String,category: String) {
         labelStreamDescription.text = description
     }
-    
+    func setImagePromo(image:String) {
+        let url = URL(string: image)
+        imageLogo.kf.setImage(with: url)
+    }
     
     required init?(coder: NSCoder) {
         //super.init(coder: aDecoder)
