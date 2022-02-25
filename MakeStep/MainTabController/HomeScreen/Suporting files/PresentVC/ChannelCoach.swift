@@ -495,8 +495,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
         homeView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
-        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
-        
+        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)        
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
@@ -556,7 +555,21 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         }
     }
     @objc func actionFollow() {
-       print("Folow")
+      
+        guard let _ = token else { return }
+        homeView.buttonFollow.isSelected.toggle()
+        
+        if homeView.buttonFollow.isSelected {
+            homeView.buttonFollow.backgroundColor = .blueColor
+            homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+
+        } else {
+            homeView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
+            homeView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        }
+        
+        
+        
     }
     @objc func actionTwitter() {
         guard let link = self.channel?.twitterLink else { return }
@@ -875,6 +888,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                 self.homeView.labelINTFolowers.alpha = 1
                 self.homeView.labelFolowers.alpha = 1
                 self.homeView.labelDescription.alpha = 1
+                self.homeView.buttonFollow.alpha = 1
                 
                
                 
@@ -892,6 +906,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                 self.homeView.labelINTFolowers.alpha = 0
                 self.homeView.labelFolowers.alpha = 0
                 self.homeView.labelDescription.alpha = 0
+                self.homeView.buttonFollow.alpha = 0
                 
                 
             }
@@ -914,6 +929,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                     self.homeView.labelINTFolowers.alpha = 1
                     self.homeView.labelFolowers.alpha = 1
                     self.homeView.labelDescription.alpha = 1
+                    self.homeView.buttonFollow.alpha = 1
                 
                  
              
@@ -930,6 +946,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                     self.homeView.labelINTFolowers.alpha = 0
                     self.homeView.labelFolowers.alpha = 0
                     self.homeView.labelDescription.alpha = 0
+                    self.homeView.buttonFollow.alpha = 0
                 
                
                    
