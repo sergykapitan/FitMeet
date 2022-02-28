@@ -375,7 +375,22 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                 }
         })
     }
+    enum Section {
+        case authors(authors: [User])
+        case post(items: [BroadcastResponce])
         
+        var cellIdentifer: String {
+            switch self {
+            case .authors(_): return CellIdentifier.horizontalList
+            case .post(_): return CellIdentifier.post
+            }
+        }
+    }
+      
+    struct CellIdentifier {
+        static var horizontalList = "HomeHorizontalListTableViewCell"
+        static var post = HomeCell.reuseID
+    }
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self

@@ -307,6 +307,10 @@
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
 		A5B635B027185C010097A127 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
 		A5B635B127185C010097A127 /* CoverA.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635AF27185C010097A127 /* CoverA.swift */; };
+		A5C4172C27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */; };
+		A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */; };
+		A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */; };
+		A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
 		A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
@@ -591,6 +595,8 @@
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
 		A5B635AE27185C010097A127 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
 		A5B635AF27185C010097A127 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
+		A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHorizontalListTableViewCell.swift; sourceTree = "<group>"; };
+		A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHorizontalListItemCollectionViewCell.swift; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
 		A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVC.swift; sourceTree = "<group>"; };
@@ -1724,6 +1730,8 @@
 				B41D069F2664C65C00C28C29 /* HomeVCCode.swift */,
 				B41D06A22664C67600C28C29 /* HomeCell.swift */,
 				B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */,
+				A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */,
+				A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -2046,6 +2054,7 @@
 				A5129423273A6EB7000CBBD9 /* NotTkenViewCode.swift in Sources */,
 				A5129424273A6EB7000CBBD9 /* Extensins+String.swift in Sources */,
 				A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */,
+				A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5129426273A6EB7000CBBD9 /* SlideInPresentationManager.swift in Sources */,
 				A5129427273A6EB7000CBBD9 /* StreamingVC.swift in Sources */,
 				A5129428273A6EB7000CBBD9 /* EdetChannelVC.swift in Sources */,
@@ -2248,6 +2257,7 @@
 				A51294D3273A6EB7000CBBD9 /* CategoryVC.swift in Sources */,
 				A51294D4273A6EB7000CBBD9 /* StreamingVCCode.swift in Sources */,
 				A51294D5273A6EB7000CBBD9 /* ExMytariff.swift in Sources */,
+				A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */,
 				A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */,
 				A51294D8273A6EB7000CBBD9 /* SegmentControlSearch.swift in Sources */,
@@ -2296,6 +2306,7 @@
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
+				A5C4172C27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */,
 				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
@@ -2498,6 +2509,7 @@
 				B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */,
 				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
 				A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */,
+				A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 				B43A6C7B26F4DFFF009E6DDE /* SegmentControlSearch.swift in Sources */,
@@ -2543,7 +2555,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.7;
+				MARKETING_VERSION = 2.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2571,7 +2583,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.7;
+				MARKETING_VERSION = 2.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2715,7 +2727,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.8;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2742,7 +2754,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.7;
+				MARKETING_VERSION = 1.0.8;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";

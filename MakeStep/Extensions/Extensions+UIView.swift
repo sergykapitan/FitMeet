@@ -469,6 +469,14 @@ extension UIView {
                                           toItem: self, attribute: .right, multiplier: 1.0, constant: 0)
         self.addConstraints([pinTop, pinBottom, pinLeft, pinRight])
     }
+    func setupTapGesture() {
+        self.isUserInteractionEnabled = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelector))
+        self.addGestureRecognizer(tap)
+    }
+    @objc func tapGestureSelector() {
+        self.endEditing(true)
+    }
 }
 extension UIImageView {
   func setImageColor(color: UIColor) {
@@ -494,3 +502,4 @@ extension UIImageView {
         }
     }
 }
+
