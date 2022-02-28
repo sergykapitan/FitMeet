@@ -20,11 +20,28 @@ extension HomeVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return listBroadcast.count
+        if section == 1 {
+            return listBroadcast.count
+        } else if section == 0 {
+           return  1
+        }
+      return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        print("IndexPath == \(indexPath.section)")
         
+        
+        
+        
+        switch  indexPath.section {
+       //  return cell1
+        case 0:
+         let cell1 = tableView.dequeueReusableCell(withIdentifier: "HomeHorizontalListTableViewCell", for: indexPath) as! HomeHorizontalListTableViewCell
+         return cell1
+        
+        case 1:
+            
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
@@ -98,9 +115,14 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.isUserInteractionEnabled = true
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
-         
+        
 
         return cell
+        
+        default:
+            break
+        }
+        return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
     }
 
 
@@ -132,7 +154,16 @@ extension HomeVC: UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 330
+        switch indexPath.section {
+        case 0:
+            return 100
+        case 1:
+            return 330
+        default:
+            break
+        }
+       
+        return UITableView.automaticDimension
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

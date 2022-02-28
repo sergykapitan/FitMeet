@@ -104,9 +104,9 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHorizontalListItemCollectionViewCell", for: indexPath) as! HomeHorizontalListItemCollectionViewCell
         if let type = type {
-            switch type {
-            case .authors(let user): cell.setup(indexPath.row, item: user[indexPath.row])
-            }
+         //  switch type {
+           //r case .authors(let user): cell.setup(indexPath.row, item: user[indexPath.row])
+         //   }
         }
         
         cell.delegate = self

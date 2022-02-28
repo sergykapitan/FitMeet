@@ -395,6 +395,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
+        homeView.tableView.register(HomeHorizontalListTableViewCell.self, forCellReuseIdentifier: "HomeHorizontalListTableViewCell")
         homeView.tableView.separatorStyle = .none
     }
     func connectUser (broadcastId:String?,channellId: String?) {
