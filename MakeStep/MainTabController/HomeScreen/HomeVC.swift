@@ -84,6 +84,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
    // var  playerContainerView: PlayerContainerView?
     var user: User?
     var ar =  [User]()
+    var listUsers : [User]?
     var arrayIdUser = [Int]()
     var index = 0
     var url:String?
@@ -97,6 +98,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+        getUsers()
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -207,6 +209,17 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.bindingPlanned()
                 }
         })
+    }
+    func getUsers() {
+        takeUser = fitMeetStream.getListAllUser()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listUsers = response.data
+                    self.homeView.tableView.reloadData()
+                   
+                }
+          })
     }
     func bindingPlanned() {
         takePlan = fitMeetStream.getListPlanBroadcast()

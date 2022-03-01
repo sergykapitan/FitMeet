@@ -44,18 +44,18 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
     weak var delegate: HomeHorizontalListItemCollectionViewCellDelegate?
     private var index: Int = 0
     
-    private var item: AnyObject? = nil {
+    private var item: User? = nil {
         didSet{
             setupData(item: item)
         }
     }
     
-    func setup(_ index: Int, item: AnyObject) {
+    func setup(_ index: Int, item: User) {
         self.index = index
         self.item = item
     }
     
-    private func setupData(item: AnyObject?) {
+    private func setupData(item: User?) {
         guard let item = item else { return}
      
         if let item = item as? User {

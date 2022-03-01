@@ -12,7 +12,7 @@ enum HomeHorizontalListType {
 }
 
 protocol HomeHorizontalListTableViewCellDelegate: AnyObject {
-    func horizontalListItemTapped(index: Int, type: HomeHorizontalListType)
+    func horizontalListItemTapped(index: Int, type: User)
 }
 
 class HomeHorizontalListTableViewCell: UITableViewCell {
@@ -43,21 +43,20 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
         return cv
     }()
     
-    private var type: HomeHorizontalListType? = nil {
+    private var type: [User]? = nil {
         didSet{
             guard let type = type else { return }
-            switch type {
-            case .authors(_):
+          
                 titleLabel.text = "Famous Authors"
          
-            }
+            
             collectionView.reloadData()
         }
     }
     
     weak var delegate: HomeHorizontalListTableViewCellDelegate? = nil
     
-    func setup(type: HomeHorizontalListType) {
+    func setup(type: [User]) {
         self.type = type
     }
     
@@ -95,18 +94,17 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let type = type else {return 0}
-        switch type {
-        case .authors(let authors): return authors.count
+        
+         return type.count
        
-        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHorizontalListItemCollectionViewCell", for: indexPath) as! HomeHorizontalListItemCollectionViewCell
         if let type = type {
-         //  switch type {
-           //r case .authors(let user): cell.setup(indexPath.row, item: user[indexPath.row])
-         //   }
+            cell.setup(indexPath.row, item: type[indexPath.row])
+         
         }
         
         cell.delegate = self
@@ -127,7 +125,7 @@ extension HomeHorizontalListTableViewCell: HomeHorizontalListItemCollectionViewC
     
     func itemTapped(index: Int) {
         guard let type = type else {return}
-        delegate?.horizontalListItemTapped(index: index, type: type)
+      //  delegate?.horizontalListItemTapped(index: index, type: type)
     }
     
     

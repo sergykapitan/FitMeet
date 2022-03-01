@@ -29,16 +29,14 @@ extension HomeVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        print("IndexPath == \(indexPath.section)")
-        
-        
-        
-        
+
         switch  indexPath.section {
-       //  return cell1
         case 0:
-         let cell1 = tableView.dequeueReusableCell(withIdentifier: "HomeHorizontalListTableViewCell", for: indexPath) as! HomeHorizontalListTableViewCell
-         return cell1
+         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeHorizontalListTableViewCell", for: indexPath) as! HomeHorizontalListTableViewCell
+            if let listUsers = listUsers {
+                cell.setup(type: listUsers)
+            }
+         return cell
         
         case 1:
             
