@@ -177,7 +177,9 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listUsers = response.data
+                    var list = response.data
+                    let result = list.filter({ $0.avatarPath != nil })
+                    self.listUsers = result
                     self.homeView.tableView.reloadData()
                    
                 }
@@ -348,22 +350,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                 }
         })
     }
-    enum Section {
-        case authors(authors: [User])
-        case post(items: [BroadcastResponce])
-        
-        var cellIdentifer: String {
-            switch self {
-            case .authors(_): return CellIdentifier.horizontalList
-            case .post(_): return CellIdentifier.post
-            }
-        }
-    }
-      
-    struct CellIdentifier {
-        static var horizontalList = "HomeHorizontalListTableViewCell"
-        static var post = HomeCell.reuseID
-    }
+ 
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self

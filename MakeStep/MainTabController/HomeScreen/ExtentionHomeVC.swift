@@ -36,6 +36,7 @@ extension HomeVC: UITableViewDataSource {
             if let listUsers = listUsers {
                 cell.setup(type: listUsers)
             }
+            cell.delegate = self
          return cell
         
         case 1:
@@ -111,6 +112,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
+            
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
         
@@ -165,18 +167,22 @@ extension HomeVC: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+   
+            let id = self.listBroadcast[indexPath.row].userId
+
+          guard let broadcastID = self.listBroadcast[indexPath.row].id,
+                let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+
+          self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+          let vc = ChannelCoach()
+          vc.modalPresentationStyle = .fullScreen
+          vc.user = self.usersd[id!]
+          vc.broadcast = self.listBroadcast[indexPath.row]
+          navigationController?.pushViewController(vc, animated: true)
+   
      
-        let id = self.listBroadcast[indexPath.row].userId
-
-        guard let broadcastID = self.listBroadcast[indexPath.row].id,
-              let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
-
-        self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-        let vc = ChannelCoach()
-        vc.modalPresentationStyle = .fullScreen
-        vc.user = self.usersd[id!]
-        vc.broadcast = self.listBroadcast[indexPath.row]
-        navigationController?.pushViewController(vc, animated: true)
+      
 
     }
 }
@@ -204,4 +210,17 @@ extension HomeVC: TagListViewDelegate {
         }
       }
     }
+}
+extension HomeVC: HomeHorizontalListTableViewCellDelegate {
+    func horizontalListItemTapped(index: Int, type: [User]) {
+  
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = type[index]       
+        navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    
+  
+    
 }

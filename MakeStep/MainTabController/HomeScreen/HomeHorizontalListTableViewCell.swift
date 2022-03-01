@@ -12,7 +12,7 @@ enum HomeHorizontalListType {
 }
 
 protocol HomeHorizontalListTableViewCellDelegate: AnyObject {
-    func horizontalListItemTapped(index: Int, type: User)
+    func horizontalListItemTapped(index: Int, type: [User])
 }
 
 class HomeHorizontalListTableViewCell: UITableViewCell {
@@ -37,7 +37,7 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
     
     private var type: [User]? = nil {
         didSet{
-            guard let type = type else { return }          
+            guard let type = type else { return }
             collectionView.reloadData()
         }
     }
@@ -87,6 +87,7 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHorizontalListItemCollectionViewCell", for: indexPath) as! HomeHorizontalListItemCollectionViewCell
         if let type = type {
+      
             cell.setup(indexPath.row, item: type[indexPath.row])
          
         }
@@ -109,7 +110,7 @@ extension HomeHorizontalListTableViewCell: HomeHorizontalListItemCollectionViewC
     
     func itemTapped(index: Int) {
         guard let type = type else {return}
-      //  delegate?.horizontalListItemTapped(index: index, type: type)
+        delegate?.horizontalListItemTapped(index: index, type: type)
     }
     
     
