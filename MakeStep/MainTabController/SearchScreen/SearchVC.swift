@@ -21,6 +21,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     @Inject var makeStepChannel: FitMeetChannels
     private var takeChannel: AnyCancellable?
     
+    @Inject var makeApi: FitMeetApi
+    
 
     
     
@@ -32,6 +34,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     var filterListUser:[User] = []
     var listCategory: [Datum] = []
     var filerlistCategory: [Datum] = []
+    
+    var user: User?
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
@@ -157,6 +161,21 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                     self.searchView.tableView.reloadData()
  
                    
+                }
+          })
+    }
+  
+    func getUser(id: Int ) {
+        takeUser = makeApi.getUserId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {                
+                    self.user = response
+                    let vc = ChannelCoach()
+                    vc.modalPresentationStyle = .fullScreen
+                    vc.user = self.user
+                    self.user = nil
+                    self.navigationController?.pushViewController(vc, animated: true)
                 }
           })
     }

@@ -101,11 +101,13 @@ extension SearchVC: UITableViewDelegate {
         
 
         if index == 0 {
-            let id = self.listBroadcast[indexPath.row].userId
-            let vc = PresentVC()
-            vc.modalPresentationStyle = .fullScreen
-            vc.id = id
-            navigationController?.pushViewController(vc, animated: true)
+            guard let id = self.listBroadcast[indexPath.row].userId else { return }
+            self.getUser(id: id)
+//            let vc = ChannelCoach()
+//            vc.modalPresentationStyle = .fullScreen
+//            vc.user = self.user
+//            self.user = nil
+//            navigationController?.pushViewController(vc, animated: true)
      
             
         } else if index == 1 {
