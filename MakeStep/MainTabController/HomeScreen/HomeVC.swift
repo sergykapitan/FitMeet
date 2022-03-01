@@ -11,46 +11,9 @@ import UIKit
 
 
 
-class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarControllerDelegate{
+class HomeVC: UIViewController, UITabBarControllerDelegate{
     
-    func change(to index: Int) {
-        if index == 0 {
-            self.index = index
-            if token != nil {
-                self.homeView.tableView.reloadData()
-                binding()
-            } else {
-                bindingNotAuht()
-                self.homeView.tableView.reloadData()
-            }
-        }
-        if index == 1 {
-            self.index = index
-            if token != nil {
-                self.listBroadcast.removeAll()
-                bindingRecomandate()
-                self.homeView.tableView.reloadData()
-            } else {
-                self.listBroadcast.removeAll()
-                bindingRecomandate()
-                self.homeView.tableView.reloadData()
-            }
-        }
-        if index == 2 {
-            self.index = index
-            self.listBroadcast.removeAll()
-            onlyFollowBroadcast(follow: true)
-            self.homeView.tableView.reloadData()
-        }
-    }
 
-//    override  var shouldAutorotate: Bool {
-//        return false
-//    }
-//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
-    
     var ids = [Int]()
     var complishionHandler: ((Bool) -> Void)?
     var watch = 0
@@ -125,15 +88,15 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         makeTableView()
-        homeView.segmentControll.setButtonTitles(buttonTitles: ["Trending","For you","Subscriptions"])
-        homeView.segmentControll.delegate = self
-        navigationItem.largeTitleDisplayMode = .always
-        makeNavItem()
+       // makeNavItem()
         if token != nil {
             binding()
         } else {
             bindingNotAuht()
         }
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+      
+        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
@@ -145,18 +108,18 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         let titleLabel = UILabel()
-                   titleLabel.text = "Home"
+                   titleLabel.text = "Make Step"
                    titleLabel.textAlignment = .center
-                  // titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
                    let stackView = UIStackView(arrangedSubviews: [titleLabel])
                    stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
+                   stackView.alignment = .center
                    stackView.axis = .vertical
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
+           self.navigationItem.leftBarButtonItems = [customTitles]
+           self.navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
         let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
         let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
@@ -199,7 +162,6 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.homeView.tableView.isHidden = false
-                    self.homeView.label.isHidden = true
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     self.bindingPlanned()
@@ -253,7 +215,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.homeView.tableView.isHidden = false
-                    self.homeView.label.isHidden = true
+                   
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     self.bindingNotPlanned()
@@ -306,7 +268,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data?.first?.id != nil  {
                     self.homeView.tableView.isHidden = false
-                    self.homeView.label.isHidden = true
+                   
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
                     let arrayUserId = self.listBroadcast.map{$0.userId!}
@@ -315,8 +277,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.refreshControl.endRefreshing()
                 } else {
                     self.homeView.tableView.isHidden = true
-                    self.homeView.label.isHidden = false
-                    self.homeView.label.text = "there are no suitable broadcasts"
+                  
                 }
           })
     }
@@ -373,8 +334,7 @@ class HomeVC: UIViewController,CustomSegmentedControlDelegate,UITabBarController
                     self.refreshControl.endRefreshing()
                 } else {
                     self.homeView.tableView.isHidden = true
-                    self.homeView.label.isHidden = false
-                    self.homeView.label.text = "no subscriptions"
+                  
                 }
          })
     }

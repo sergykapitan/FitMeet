@@ -17,14 +17,6 @@ protocol HomeHorizontalListTableViewCellDelegate: AnyObject {
 
 class HomeHorizontalListTableViewCell: UITableViewCell {
     
-    private lazy var titleLabel:  UILabel = {
-        let label = UILabel()
-        label.textColor = .black
-        label.textAlignment = .left
-        label.font = UIFont(name: "AvenirNext-Medium", size: 22)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
     
     private lazy var collectionView:  UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -45,11 +37,7 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
     
     private var type: [User]? = nil {
         didSet{
-            guard let type = type else { return }
-          
-                titleLabel.text = "Famous Authors"
-         
-            
+            guard let type = type else { return }          
             collectionView.reloadData()
         }
     }
@@ -67,16 +55,12 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
         backgroundColor = .white
         separatorInset = UIEdgeInsets(top: 0, left: UIScreen.main.bounds.width, bottom: 0, right: 0)
         selectionStyle = .none
-        
-        addSubview(titleLabel)
+  
         addSubview(collectionView)
         
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             
-            collectionView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
+            collectionView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.heightAnchor.constraint(equalToConstant: 84),

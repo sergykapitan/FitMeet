@@ -19,13 +19,7 @@ final class HomeVCCode: UIView {
         view.clipsToBounds = true
             return view
         }()
-    var label: UILabel = {
-        let label = UILabel()
-        label.text = ""
-        label.textColor = .black
-        label.font = UIFont.systemFont(ofSize: 25)
-        return label
-    }()
+   
     var tableView: UITableView = {
         let table = UITableView()
         return table
@@ -48,16 +42,11 @@ final class HomeVCCode: UIView {
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillSuperview()
-        //cardView.fillFull(for: self)
-        cardView.addSubview(segmentControll)
-        segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 15, height: 30)
         
         cardView.addSubview(tableView)
-        tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        cardView.addSubview(label)
-        label.anchor(top: segmentControll.bottomAnchor,  paddingTop: 20, height: 39)
-        label.centerX(inView: cardView)
+     
       
     }
     required init?(coder: NSCoder) {
