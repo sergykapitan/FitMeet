@@ -212,7 +212,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
-            homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+            homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)            
         } else {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
@@ -375,11 +375,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         homeView.labelStreamDescription.text = self.user?.fullName
         guard let id = user.id else { return }
         if token != nil {
-        //    self.bindingChanell(status: "ONLINE", userId: "\(id)",type: "STANDARD")
-         //   self.bindingChanell(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
             self.binding(id: "\(id)")
-           // self.bindingChanellVOD(userId: "\(id)")
-          //  self.bindingPlanned(id: "\(id)")
         } else {
            
         }
@@ -583,9 +579,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
 
-   //                 self.brodcast = response.data!
-//                    let arrayUserId = self.brodcast.map{$0.userId!}
-//                    self.bindingUserMap(ids: arrayUserId)
                     guard  var s  = response.data?.reversed() else { return }
                     self.brodcast.append(contentsOf: s.reversed())
                     self.homeView.tableView.reloadData()

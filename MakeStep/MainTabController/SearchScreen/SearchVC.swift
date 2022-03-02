@@ -156,11 +156,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                     } else {
                         self.searchView.tableView.isHidden = false
                         self.searchView.labelNtResult.isHidden = true
-                    }
-                   
+                    }                   
                     self.searchView.tableView.reloadData()
- 
-                   
                 }
           })
     }

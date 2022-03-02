@@ -121,7 +121,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let brodcastStatus = brodcast[indexPath.row].status else { return }
+        guard let brodcastStatus = brodcast[indexPath.row].status, let like = self.brodcast[indexPath.row].followersCount else { return }
         print("STATUS == \(brodcastStatus)")
         if brodcastStatus == "OFFLINE" {
             self.homeView.imageLogo.isHidden = true
@@ -134,6 +134,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+            homeView.labelLike.text = "\(like)"
         } else if brodcastStatus == "ONLINE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = false
@@ -143,7 +144,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.imageEye.isHidden = false
             homeView.labelEye.isHidden = false
             homeView.playerSlider.isHidden = true
-          
+            homeView.labelLike.text = "\(like)"
             
             self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         } else if brodcastStatus == "WAIT_FOR_APPROVE" {
@@ -156,6 +157,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.playerSlider.isHidden = false
             homeView.labelEye.isHidden = true
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+            homeView.labelLike.text = "\(like)"
         }else if brodcastStatus == "PLANNED" {
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
@@ -169,6 +171,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             playerViewController?.player?.pause()
             playerViewController!.view.removeFromSuperview()
             self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
+            homeView.labelLike.text = "\(like)"
         }
         
         

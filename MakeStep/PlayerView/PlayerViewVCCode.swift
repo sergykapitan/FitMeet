@@ -98,6 +98,7 @@ final class PlayerViewVCCode: UIView {
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
+        label.textAlignment = .center
         return label
     }()
 
@@ -133,14 +134,14 @@ final class PlayerViewVCCode: UIView {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "slider")
         return image
-        
     }()
+    
     var imageEye: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "eye")
         return image
-        
     }()
+    
     var labelEye: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -172,7 +173,7 @@ final class PlayerViewVCCode: UIView {
     }()
     var buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
         return button
     }()
   
@@ -212,17 +213,21 @@ final class PlayerViewVCCode: UIView {
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
+        cardView.addSubview(buttonLandScape)
+        buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
+        
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 18)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 0)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 16, paddingRight: 5)
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: cardView.rightAnchor,paddingTop: 11, paddingLeft: 24, paddingRight: 0)
         
-        
+        cardView.addSubview(labelLike)
+        labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
 
         cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: buttonMore.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 24)
-        
+        buttonLike.anchor(top: imagePromo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
+
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 40, height: 40)
         buttonChat.centerY(inView: buttonLike)
@@ -231,11 +236,11 @@ final class PlayerViewVCCode: UIView {
         imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
         
         cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor, right: buttonMore.leftAnchor ,paddingLeft: 5, paddingRight: 5)
+        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor, right: cardView.rightAnchor ,paddingLeft: 5, paddingRight: 25)
         labelStreamDescription.centerY(inView: imageLogoProfile)
 
         cardView.addSubview(labelCategory)
-        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonLike.rightAnchor, paddingLeft: 16,paddingRight: 10)
+        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: cardView.rightAnchor, paddingLeft: 16,paddingRight: 10)
         labelCategory.centerY(inView: labelStreamDescription)
                 
         cardView.addSubview(tableView)
@@ -255,8 +260,7 @@ final class PlayerViewVCCode: UIView {
                        paddingTop: 10,
                        paddingLeft: 16,  width: 90, height: 24)
         
-        cardView.addSubview(buttonLandScape)
-        buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
+       
         
         cardView.addSubview(buttonSetting)
         buttonSetting.anchor( right: buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)

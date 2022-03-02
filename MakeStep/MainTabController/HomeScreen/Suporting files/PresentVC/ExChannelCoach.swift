@@ -177,6 +177,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
@@ -185,6 +186,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageLive.setImageColor(color: .gray)
             vc.homeView.labelLive.text = "  Offline"
             vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         } else if  self.brodcast[indexPath.row].status == "PLANNED" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
@@ -192,6 +194,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageEye.isHidden = true
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         }
        
         vc.modalPresentationStyle = .fullScreen
