@@ -129,11 +129,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
        
         
         let categorys = broadcast?.categories
-        var arr = [""]
-//        for i in categorys! {
-//            arr.append(i.title!)
-//        }
-      //  arr = categorys.map { String("\u{0023}" + $0 }
+        let s = categorys!.map{$0.title!}
+        let arr = s.map { String("\u{0023}" + $0)}
         homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
@@ -174,7 +171,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         offsetObservation = nil
         print("ViewController deinit")
     }
-   @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+    @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
@@ -202,9 +199,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange), for: .touchUpInside)
     }
-   @objc func sliderValueChange() {
+    @objc func sliderValueChange() {
         self.isUpdateTime = true
-        
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delaySeekTime), object: nil)
         self.perform(#selector(delaySeekTime), with: nil, afterDelay: 0.1)
     }
@@ -212,9 +208,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
-            homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)            
+            homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+            if let id = self.broadcast?.id {
+                followBroadcast(id: id)
+            }
+            
         } else {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+            if let id = self.broadcast?.id {
+                unFollowBroadcast(id: id)
+            }
         }
 
     }
@@ -305,15 +308,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.categories != nil {
-                }
+                guard let like = response.followersCount else { return }
+                self.homeView.labelLike.text = "\(like)"
           })
     }
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-             
+               // guard let like = response else { return }
+              //  self.homeView.labelLike.text = "\(like)"
          })
     }
    
@@ -377,7 +381,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         if token != nil {
             self.binding(id: "\(id)")
         } else {
-           
+            self.binding(id: "\(id)")
         }
        
     }

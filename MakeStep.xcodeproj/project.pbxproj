@@ -1001,6 +1001,16 @@
 			path = CoverView;
 			sourceTree = "<group>";
 		};
+		A5C4173127CF71EB00BC1224 /* ChannelCoach */ = {
+			isa = PBXGroup;
+			children = (
+				A52FA7BD27C79499004F570F /* ChannelCoach.swift */,
+				A52FA7C027C794A7004F570F /* ChanellCoachCode.swift */,
+				A52FA7C327C794BB004F570F /* ExChannelCoach.swift */,
+			);
+			path = ChannelCoach;
+			sourceTree = "<group>";
+		};
 		A5D2E0A327147CDB00986BAE /* Edit Channel */ = {
 			isa = PBXGroup;
 			children = (
@@ -1053,9 +1063,7 @@
 				B4B113C7269868790006CA5A /* PresentVC.swift */,
 				B4908FE026C2B03E00AE3117 /* PresentCode.swift */,
 				B4CD87E727021CD100D065ED /* ExPresenVC.swift */,
-				A52FA7BD27C79499004F570F /* ChannelCoach.swift */,
-				A52FA7C027C794A7004F570F /* ChanellCoachCode.swift */,
-				A52FA7C327C794BB004F570F /* ExChannelCoach.swift */,
+				A5C4173127CF71EB00BC1224 /* ChannelCoach */,
 				A58E2942274D1B3100CC39BB /* Button */,
 				B4908FCD26C27FBB00AE3117 /* PlayButton.swift */,
 				B4D2B93A26E78E880080E7E3 /* Coach.swift */,
