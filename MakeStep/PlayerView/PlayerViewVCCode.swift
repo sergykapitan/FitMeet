@@ -45,7 +45,7 @@ final class PlayerViewVCCode: UIView {
     }()
     var playerSlider: UISlider = {
         var slider = UISlider()
-        slider.setThumbImage(UIImage(named:"segmented_selected_bg"), for: .normal)
+        slider.setThumbImage(UIImage(named:"SliderCircle"), for: .normal)
         return slider
     }()
     var buttonSetting: UIButton = {
@@ -101,7 +101,14 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
-
+    var labelTimeStart: UILabel = {
+        var label = UILabel()
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        return label
+    }()
     var buttonChat: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)

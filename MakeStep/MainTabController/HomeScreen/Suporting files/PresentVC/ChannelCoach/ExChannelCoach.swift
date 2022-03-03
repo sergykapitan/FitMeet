@@ -175,8 +175,9 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.buttonChat.isHidden = false
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
+            guard let stream = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
+            vc.id = self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
             vc.homeView.imageLive.image = #imageLiteral(resourceName: "rec")
             vc.homeView.imageLive.setImageColor(color: .gray)

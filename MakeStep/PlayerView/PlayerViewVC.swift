@@ -225,8 +225,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         guard token != nil else { return }
         homeView.buttonVolum.isSelected.toggle()
         if homeView.buttonVolum.isSelected {
+            let highlightedImage = UIImage(named: "volumeMute")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            homeView.buttonVolum.setImage(highlightedImage, for: .normal)
             self.playerViewController?.player?.volume = 0
         } else {
+            homeView.buttonVolum.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
             self.playerViewController?.player?.volume = 1
         }
 
@@ -424,6 +427,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 2)
         
+        self.view.addSubview(self.homeView.labelTimeStart)
+        self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingBottom: 2)
+        
     }
 
     //MARK: - Transishion
@@ -475,13 +481,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         }
     }
     func timerObserver(time: CMTime) {
-        if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,
-            !duration.isIndefinite ,
-            !isUpdateTime {
+        if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,!duration.isIndefinite ,!isUpdateTime {
             if self.homeView.playerSlider.maximumValue != Float(duration.seconds) {
                 self.homeView.playerSlider.maximumValue = Float(duration.seconds)
             }
-          //  self.labCurrent.text = time.seconds.convertSecondString()
+            self.homeView.labelTimeStart.text = time.seconds.convertSecondString()
           //  self.labTotal.text = (duration.seconds-time.seconds).convertSecondString()
             self.homeView.playerSlider.value = Float(time.seconds)
         }

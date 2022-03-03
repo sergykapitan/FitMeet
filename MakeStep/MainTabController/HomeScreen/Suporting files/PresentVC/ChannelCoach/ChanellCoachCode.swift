@@ -207,12 +207,7 @@ final class ChanellCoachCode: UIView {
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
         return button
     }()
-//    let selfView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = UIColor(hexString: "#F6F6F6")
-//        return view
-//    }()
+
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)

@@ -109,13 +109,6 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
     var isButton: Bool = true
     var playPauseButton: PlayPauseButton!
 
-//    override  var shouldAutorotate: Bool {
-//        return false
-//    }
-//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
-    
     override func loadView() {
         super.loadView()
         view = homeView
@@ -135,10 +128,6 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         actionButtonContinue()
         makeNavItem()
         createTableView()
-      //  profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])//,
-      //  profileView.segmentControll.delegate = self
-     //   removeAllChildViewController(timeTable)
-      //  configureChildViewController(videoVC, onView: profileView.selfView )
         guard let userID = self.user?.id else { return }
        
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
@@ -184,24 +173,20 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-      //  profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
+        self.homeView.imagePromo.isHidden = true
+        self.homeView.imageLogo.isHidden = true
+        self.homeView.labelStreamInfo.isHidden = true
+        self.homeView.buttonMore.isHidden = true
+        self.homeView.buttonChat.isHidden = true
         self.navigationController?.navigationBar.isHidden = false
         
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
-          //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
-          //  self.bindingBroadcast(status: "OFFLINE", userId: "\(id)",type: "STANDARD_VOD")
-          //  self.bindingBroadcast(status: "WAIT_FOR_APPROVE", userId: "\(id)",type: "STANDARD_VOD")
-          
             self.binding(id: "\(id)")
-          //  self.bindingPlanned(id: "\(id)")
-            self.bindingChanellVOD(userId: "\(id)")
         } else {
-            self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
+            self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
         }
-        AppUtility.lockOrientation(.portrait)
-     //   configureChildViewController(videoVC, onView: profileView.selfView )
         
     }
     override func viewDidAppear(_ animated: Bool) {
