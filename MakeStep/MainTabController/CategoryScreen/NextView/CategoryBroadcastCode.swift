@@ -20,7 +20,7 @@ final class CategoryBroadcastCode: UIView {
         }()
     var buttonAll: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         button.setTitle("All", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.layer.cornerRadius = 13
@@ -85,9 +85,7 @@ final class CategoryBroadcastCode: UIView {
 
         cardView.addSubview(buttonViewers)
         buttonViewers.anchor(top: cardView.topAnchor, left: buttonNew.rightAnchor, paddingTop: 15, paddingLeft: 5, width: 74, height: 26)
-
-        
-        
+ 
         cardView.addSubview(tableView)
         tableView.anchor(top: buttonAll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
     }

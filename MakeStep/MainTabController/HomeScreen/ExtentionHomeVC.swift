@@ -60,9 +60,8 @@ extension HomeVC: UITableViewDataSource {
  
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
-
-
         let arr = s.map { String("\u{0023}" + $0)}
+            
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self
@@ -76,9 +75,6 @@ extension HomeVC: UITableViewDataSource {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
   
-        
-       
-      //  self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         
         if listBroadcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")

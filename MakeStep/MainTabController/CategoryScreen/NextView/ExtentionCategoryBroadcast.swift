@@ -25,25 +25,22 @@ extension CategoryBroadcast: UITableViewDataSource {
         
         
         
-        cell.titleLabel.text = sortListCategory[indexPath.row].name
+      
         guard
               let id = sortListCategory[indexPath.row].userId,
               let broadcastID = self.sortListCategory[indexPath.row].id
               else { return cell}
 
-        self.arrayIdUser.append(id)
-        self.bindingUser(id: id)
-        let us = usersd.map { key,user in
-            return user
-        }
-        
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
         cell.labelEye.text = "\(self.watch)"
+        
+     
  
         let categorys = sortListCategory[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
+        
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self
@@ -58,11 +55,34 @@ extension CategoryBroadcast: UITableViewDataSource {
             cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         }
     
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            cell.setImageLogo(image: self.user?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        }
+      
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
+        
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
+        
+        if sortListCategory[indexPath.row].status == "OFFLINE" {
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.imageLive.setImageColor(color: .gray)
+            cell.labelLive.text = "Offline"
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
+        } else if sortListCategory[indexPath.row].status == "ONLINE" {
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.labelLive.text = "Live"
+            cell.imageEye.isHidden = false
+            cell.labelEye.isHidden = false
+            cell.logoUserOnline.isHidden = false
+        } else if sortListCategory[indexPath.row].status == "PLANNED" {
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
+
+        }
         
         
         cell.buttonLike.tag = indexPath.row
@@ -109,14 +129,9 @@ extension CategoryBroadcast: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let id = self.sortListCategory[indexPath.row].userId
-
-        guard let broadcastID = self.sortListCategory[indexPath.row].id,
-              let channelId = self.sortListCategory[indexPath.row].channelIds else { return }
- 
-        self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-        let vc = PresentVC()
+        let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
-        vc.id = id
+        vc.user = self.usersd[id!]
         navigationController?.pushViewController(vc, animated: true)
 
     }

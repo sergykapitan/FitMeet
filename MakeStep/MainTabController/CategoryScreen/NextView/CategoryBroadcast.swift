@@ -9,29 +9,9 @@ import Foundation
 import Combine
 import UIKit
 
-class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
+class CategoryBroadcast: UIViewController  {
     
-    func change(to index: Int) {
-        print("segmentedControl index changed to \(index)")
-        if index == 0 {
-            sortListCategory = listBroadcast            
-            self.categoryView.tableView.reloadData()
-        }
-        if index == 1 {
-            sortListCategory = listBroadcast.filter { ($0.categories?.first?.isPopular ?? false) }
-            self.categoryView.tableView.reloadData()
-        }
-        if index == 2 {
-            sortListCategory = listBroadcast.filter { ($0.categories?.first?.isNew ?? false) }
-            self.categoryView.tableView.reloadData()
-        }
-        if index == 3 {
-           // sortListCategory = listBroadcast.filter { ($0.categories?.first?.followersCount > 1) }
-            sortListCategory = listBroadcast.filter { ($0.categories?.first?.isNew ?? false) }
-            self.categoryView.tableView.reloadData()
-        }
-    }
-    
+  
   
     let categoryView = CategoryBroadcastCode()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
@@ -57,10 +37,9 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     
     var listBroadcast: [BroadcastResponce] = []
     private let refreshControl = UIRefreshControl()
-   // var  playerContainerView: PlayerContainerView?
+   
     var user: User?
     var ar =  [User]()
-    
     var index = 0
     var url:String?
     var usersd = [Int: User]()
@@ -98,15 +77,12 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         } else {
             self.bindingNotAuth(categoryId: categoryid ?? 30)
         }
-        
-        title = sortListCategory.first?.name
     
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         makeTableView()
-        navigationItem.largeTitleDisplayMode = .always
         makeNavItem()
         actionButton()
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
@@ -187,7 +163,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     @objc func actionAll() {
-        categoryView.buttonAll.backgroundColor = UIColor(hexString: "#3B58A4")
+        categoryView.buttonAll.backgroundColor = .blueColor
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -198,7 +174,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     @objc func actionPopular() {
         
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#3B58A4")
+        categoryView.buttonPopular.backgroundColor = .blueColor
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
@@ -211,7 +187,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonNew.backgroundColor = UIColor(hexString: "#3B58A4")
+        categoryView.buttonNew.backgroundColor = .blueColor
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
         
         
@@ -224,7 +200,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
+        categoryView.buttonViewers.backgroundColor = .blueColor
       
         sortListCategory = listBroadcast.filter{ $0.followersCount ?? 0 > 1}
         self.categoryView.tableView.reloadData()
@@ -238,6 +214,8 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.sortListCategory = response.data!
+                    let arrayUserId = self.sortListCategory.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
                     self.categoryView.tableView.reloadData()
                 }
         })
@@ -269,7 +247,7 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.usersd = response.data
-                   // self.homeView.tableView.reloadData()
+                    self.categoryView.tableView.reloadData()
                 }
           })
     }
@@ -307,7 +285,6 @@ class CategoryBroadcast: UIViewController,CustomSegmentedControlDelegate {
     private func makeTableView() {
         categoryView.tableView.dataSource = self
         categoryView.tableView.delegate = self
-        categoryView.tableView.register(CategoryBroadcastCell.self, forCellReuseIdentifier: CategoryBroadcastCell.reuseID)
         categoryView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
         categoryView.tableView.separatorStyle = .none
     }
