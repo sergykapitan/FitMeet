@@ -197,13 +197,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
-        homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange), for: .touchUpInside)
+        homeView.playerSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
     }
-    @objc func sliderValueChange() {
-        self.isUpdateTime = true
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delaySeekTime), object: nil)
-        self.perform(#selector(delaySeekTime), with: nil, afterDelay: 0.1)
-    }
+  
     @objc func actionLike() {
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
@@ -340,6 +336,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             playPauseButton.isHidden = true
             homeView.buttonVolum.isHidden = true
             homeView.playerSlider.isHidden = true
+            homeView.labelTimeEnd.isHidden = true
+            homeView.labelTimeStart.isHidden =  true
+
           
             if playPauseButton == nil {
                 
@@ -361,6 +360,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
             homeView.playerSlider.isHidden = false
+            homeView.labelTimeEnd.isHidden = false
+            homeView.labelTimeStart.isHidden =  false
+
             
             
             if playPauseButton == nil {
@@ -409,12 +411,31 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         playerViewController!.didMove(toParent: self)
         playPauseButton = PlayPauseButton()
         playPauseButton.avPlayer = player
+        
+        self.homeView.playerSlider.minimumValue = 0
+               
+               
+        let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
+        let seconds : Float64 = CMTimeGetSeconds(duration)
+               
+        self.homeView.playerSlider.maximumValue = Float(seconds)
+        self.homeView.playerSlider.isContinuous = true
+        self.homeView.playerSlider.tintColor = .blueColor
+        self.homeView.labelTimeEnd.text = "/0." + "\(Int(seconds))"
+        
+        playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
+                 if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
+                     let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
+                     self.homeView.playerSlider.value = Float ( time )
+                     self.homeView.labelTimeStart.text = "0." + "\(Int( time ) )"
+                 }
+             }
 
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self)
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 20, height: 20)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 21,  width: 20, height: 20)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.buttonLandScape)
@@ -422,13 +443,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
         
         self.view.addSubview(self.homeView.buttonVolum)
-        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5 , paddingBottom: 10,width: 20,height: 20)
+        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 21 , paddingBottom: 10,width: 20,height: 20)
         
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 2)
         
         self.view.addSubview(self.homeView.labelTimeStart)
-        self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingBottom: 2)
+        self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
+        
+        self.view.addSubview(self.homeView.labelTimeEnd)
+        self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
         
     }
 
@@ -446,6 +470,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 self.view.addSubview(self.homeView.buttonSetting)
                 self.view.addSubview(self.homeView.buttonVolum)
                 self.view.addSubview(self.homeView.playerSlider)
+                self.view.addSubview(self.homeView.labelTimeEnd)
+                self.view.addSubview(self.homeView.labelTimeStart)
+                
                 self.playerViewController?.view.addSubview(self.playPauseButton)               
                 self.playPauseButton.updatePosition()
                 self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
@@ -480,21 +507,18 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             self.isPlaying =  true
         }
     }
-    func timerObserver(time: CMTime) {
-        if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,!duration.isIndefinite ,!isUpdateTime {
-            if self.homeView.playerSlider.maximumValue != Float(duration.seconds) {
-                self.homeView.playerSlider.maximumValue = Float(duration.seconds)
-            }
-            self.homeView.labelTimeStart.text = time.seconds.convertSecondString()
-          //  self.labTotal.text = (duration.seconds-time.seconds).convertSecondString()
-            self.homeView.playerSlider.value = Float(time.seconds)
+    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
+    {
+        
+        let seconds : Int64 = Int64(playbackSlider.value)
+        let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
+        
+        self.playerViewController?.player!.seek(to: targetTime)
+        
+        if  self.playerViewController?.player!.rate == 0
+        {
+            self.playerViewController?.player!.play()
         }
-    }
-    @objc func delaySeekTime() {
-        let time =  CMTimeMake(value: Int64(self.homeView.playerSlider.value), timescale: 1)
-        self.playerViewController?.player?.seek(to: time, completionHandler: { [unowned self] (finish) in
-            self.isUpdateTime = false
-        })
     }
     //MARK: - Selectors
     @objc private func refreshAlbumList() {

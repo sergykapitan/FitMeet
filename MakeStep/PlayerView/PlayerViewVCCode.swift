@@ -103,8 +103,17 @@ final class PlayerViewVCCode: UIView {
     }()
     var labelTimeStart: UILabel = {
         var label = UILabel()
-        label.textColor = .gray
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.text = "0.0"
+        return label
+    }()
+    var labelTimeEnd: UILabel = {
+        var label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 1
         label.textAlignment = .center
         return label
