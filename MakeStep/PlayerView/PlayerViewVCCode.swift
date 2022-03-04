@@ -150,14 +150,12 @@ final class PlayerViewVCCode: UIView {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "slider")
         return image
-    }()
-    
+    }()    
     var imageEye: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "eye")
         return image
     }()
-    
     var labelEye: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
@@ -173,8 +171,7 @@ final class PlayerViewVCCode: UIView {
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         return button
-    }()
- 
+    }() 
     var labelDescription : UILabel  = {
         let label  = UILabel()
         label.textColor = .black

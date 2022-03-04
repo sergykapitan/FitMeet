@@ -315,8 +315,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-               // guard let like = response else { return }
-              //  self.homeView.labelLike.text = "\(like)"
+             
          })
     }
    
@@ -329,7 +328,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
-           // homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
@@ -355,7 +353,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.overlay.isHidden = false
             homeView.imageLive.isHidden = false
             homeView.labelLive.isHidden = false
-           // homeView.imageEye.isHidden = false
             homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
@@ -426,7 +423,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
                  if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
                      let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
-                     self.homeView.playerSlider.value = Float ( time )
+                     UIView.animate(withDuration: 2) {
+                         self.homeView.playerSlider.setValue(Float(time), animated: true)
+                    }
+                   
                      self.homeView.labelTimeStart.text = "0." + "\(Int( time ) )"
                  }
              }
