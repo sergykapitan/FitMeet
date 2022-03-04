@@ -45,6 +45,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
       homeView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
       homeView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
       homeView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
+      homeView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
     }
 
     func makeNavItem() {
@@ -80,15 +81,20 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
     func leftHandAction() {
         print("left bar button action")
     }
+    @objc func actionMonetezation() {
+        let vc = MonetezeitionVC()
+        self.navigationController?.pushViewController(vc, animated: true)
+
+    }
     @objc func actionSignUp() {
-        homeView.buttonSignUp.backgroundColor = UIColor(hexString: "#3B58A4")
+        homeView.buttonSignUp.backgroundColor = .blueColor
         homeView.buttonSignIn.backgroundColor = UIColor(hexString: "#BBBCBC")
         let auth = AuthViewController()
         self.present(auth, animated: true, completion: nil)
     }
 
     @objc func actionSignIn() {
-        homeView.buttonSignIn.backgroundColor = UIColor(hexString: "#3B58A4")
+        homeView.buttonSignIn.backgroundColor = .blueColor
         homeView.buttonSignUp.backgroundColor = UIColor(hexString: "#BBBCBC")
         let sign = SignInViewController()
         self.present(sign, animated: true, completion: nil)
@@ -96,7 +102,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
     //1
     @objc func actionAbout() {
         let helpWebViewController = WebViewController()
-      //  helpWebViewController.url = Constants.webViewPwa + "about"
+          helpWebViewController.url = Constants.webViewPwa + "about"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
     //3

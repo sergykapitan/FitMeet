@@ -139,7 +139,7 @@ extension SignInViewController: UITextFieldDelegate {
             signUpView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             signUpView.buttonContinue.isUserInteractionEnabled = false
         } else if  fullString.isValidPhone() || fullString.isValidEmail() {
-            signUpView.buttonContinue.backgroundColor = UIColor(hexString: "#3B58A4")
+            signUpView.buttonContinue.backgroundColor = .blueColor
             signUpView.buttonContinue.isUserInteractionEnabled = true
         } else {
             signUpView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)

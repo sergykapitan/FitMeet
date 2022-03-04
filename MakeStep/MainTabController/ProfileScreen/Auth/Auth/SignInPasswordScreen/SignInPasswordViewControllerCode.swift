@@ -39,14 +39,14 @@ final class SignInPasswordViewControllerCode: UIView {
     }()
     let buttonSignIn: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         button.setTitle("Sign In", for: .normal)
         button.layer.cornerRadius = 19
         return button
     }()
     let buttonFoggotPassword: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        button.setTitleColor(.blueColor, for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
         button.setAttributedTitle(NSAttributedString(string: "Forgot password?", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button
@@ -84,7 +84,6 @@ final class SignInPasswordViewControllerCode: UIView {
  
     }
     private func initLayout() {
-        //cardView.fillSuperview()
         cardView.fillFull(for: self)
 
         cardView.addSubview(labelSignIn)

@@ -77,7 +77,7 @@ final class SignUpViewControllerCode: UIView {
         let button = UIButton()
         button.setTitle("Sign Up", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         return button
     }()
     let textPrivacyPolice: UILabel = {
@@ -105,7 +105,6 @@ final class SignUpViewControllerCode: UIView {
 
     }
     private func initLayout() {
-        //cardView.fillSuperview()
         cardView.fillFull(for: self)
 
         cardView.addSubview(labelSignUp)

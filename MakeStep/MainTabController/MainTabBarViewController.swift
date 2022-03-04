@@ -86,22 +86,34 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-           
 
-        }
         if #available(iOS 15.0, *) {
                let appearance2 = UITabBarAppearance()
                appearance2.configureWithOpaqueBackground()
                appearance2.backgroundColor = .white //or whatever your color is
-               
+
                tabBar.scrollEdgeAppearance = appearance2
                tabBar.standardAppearance = appearance2
            }
+   
+
+            self.navigationController?.navigationBar.isTranslucent = false
+            navigationController?.navigationBar.backgroundColor = .white
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+            self.navigationController?.navigationBar.shadowImage = UIImage()
+            self.navigationController?.navigationBar.layoutIfNeeded()
+
+            if #available(iOS 15, *) {
+                let appearance = UINavigationBarAppearance()
+                appearance.configureWithOpaqueBackground()
+                appearance.backgroundColor = .white
+                appearance.shadowImage = UIImage()
+                appearance.shadowColor = .clear
+                UINavigationBar.appearance().standardAppearance = appearance
+                UINavigationBar.appearance().scrollEdgeAppearance = appearance
+            }
+        
+        
        
     }
     

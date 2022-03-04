@@ -32,7 +32,7 @@ final class ProfileVCCode: UIView {
     }()
     var welcomeLabel: UILabel = {
         let label = UILabel()
-        label.text = "Hi,"
+        label.text = ""
         label.numberOfLines = 0
         label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 34)
@@ -43,16 +43,14 @@ final class ProfileVCCode: UIView {
         return segment
         
     }()
-    
-   
-    
+      
     var firstLine: OneLine = {
         let line = OneLine()
         return line
     }()
     var imageProfile:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "edit 1-1")
+        image.image = UIImage(named: "edit")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     
@@ -108,7 +106,7 @@ final class ProfileVCCode: UIView {
     
     var imageChanell:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "youtube 1-1")
+        image.image = UIImage(named: "youtube")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     
@@ -123,12 +121,10 @@ final class ProfileVCCode: UIView {
         let button = UIButton()   
         return button
     }()
-    
-    
-    
+
     var imageWallet: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "wallet")
+        image.image = UIImage(named: "wallet")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     
@@ -206,7 +202,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageSignOut: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "log-out 1-1")
+        image.image = UIImage(named: "logout")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     var labelSignOut: UILabel = {

@@ -72,13 +72,13 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
  
     func setUserProfile() {
-        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
+        guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
         bindingUser()
         let name: String?
         if user?.fullName != nil { name = user?.fullName
         } else { name = userName }
-        guard let n = name else { return }
-        profileView.welcomeLabel.text = "Hi! " + n
+        guard let name = name else { return }
+        profileView.welcomeLabel.text = name
         
     }
     func actionButtonContinue() {
@@ -141,12 +141,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
    
-    
-    
-    
-    
-    
-    
+
     func bindingUser() {
         take = fitMeetApi.getUser()
             .mapError({ (error) -> Error in return error })

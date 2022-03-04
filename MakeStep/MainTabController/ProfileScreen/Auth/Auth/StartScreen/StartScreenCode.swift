@@ -26,11 +26,7 @@ final class StartScreenCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 34)
         return label
     }()
-//    var segmentControll: CustomSegmentedControl = {
-//        let segment = CustomSegmentedControl()
-//        return segment
-//
-//    }()
+
     var buttonSignIn: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -60,26 +56,9 @@ final class StartScreenCode: UIView {
         return line
     }()
     
-    var imageLogo:UIImageView = {
-        let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "history 1")
-        return image
-        }()
-    
-    var labelHistory: UILabel = {
-        let label = UILabel()
-        label.text = "History"
-        label.textColor = UIColor(hexString: "#7C7C7C")
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    var buttonHistory: UIButton = {
-        let button = UIButton()
-        return button
-    }()
     var imageWallet: UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "wallet")
+        image.image = UIImage(named: "wallet")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     
@@ -94,63 +73,17 @@ final class StartScreenCode: UIView {
         let button = UIButton()
         return button
     }()
+
     var secondLine: OneLine = {
         let line = OneLine()
         return line
     }()
-    var imageSettinh: UIImageView = {
-        let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "settings 1-1")
-        return image
-        }()
-    var labelSetting: UILabel = {
-        let label = UILabel()
-        label.text = "Setting"
-        label.textColor = UIColor(hexString: "#7C7C7C")
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    var buttonSetting: UIButton = {
-        let button = UIButton()
-        return button
-    }()
-    var imageLanguage: UIImageView = {
-        let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "globe 1-1")
-        return image
-        }()
-    var labelLanguage: UILabel = {
-        let label = UILabel()
-        label.text = "Language"
-        label.textColor = UIColor(hexString: "#7C7C7C")
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    var buttonLanguage: UIButton = {
-        let button = UIButton()
-        return button
-    }()
+
     var treeLine: OneLine = {
         let line = OneLine()
         return line
     }()
-    
-    var imageHelp: UIImageView = {
-        let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "help-circle 1-1")
-        return image
-        }()
-    var labelHelp: UILabel = {
-        let label = UILabel()
-        label.text = "Help"
-        label.textColor = UIColor(hexString: "#7C7C7C")
-        label.font = UIFont.systemFont(ofSize: 18)
-        return label
-    }()
-    var buttonHelp: UIButton = {
-        let button = UIButton()
-        return button
-    }()
+ 
     var fourLine: OneLine = {
         let line = OneLine()
         return line
@@ -294,59 +227,20 @@ final class StartScreenCode: UIView {
         scroll.addSubview(firstLine)
         firstLine.anchor(top: buttonSignIn.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        scroll.addSubview(buttonHistory)
-        buttonHistory.anchor(top: firstLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        buttonHistory.addSubview(imageLogo)
-        imageLogo.anchor(top: buttonHistory.topAnchor, left: buttonHistory.leftAnchor,  bottom: buttonHistory.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        buttonHistory.addSubview(labelHistory)
-        labelHistory.anchor(left: imageLogo.rightAnchor,paddingLeft: 5)
-        labelHistory.centerY(inView: buttonHistory)
-        
-        scroll.addSubview(secondLine)
-        secondLine.anchor(top: buttonHistory.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
         scroll.addSubview(buttonWallet)
-        buttonWallet.anchor(top: secondLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        buttonWallet.anchor(top: firstLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonWallet.addSubview(imageWallet)
         imageWallet.anchor(top: buttonWallet.topAnchor, left: buttonWallet.leftAnchor,  bottom: buttonWallet.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
         buttonWallet.addSubview(labelWallet)
         labelWallet.anchor(left: imageWallet.rightAnchor,paddingLeft: 5)
         labelWallet.centerY(inView: buttonWallet)
         
-        scroll.addSubview(buttonSetting)
-        buttonSetting.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        buttonSetting.addSubview(imageSettinh)
-        imageSettinh.anchor(top: buttonSetting.topAnchor, left: buttonSetting.leftAnchor,  bottom: buttonSetting.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        buttonSetting.addSubview(labelSetting)
-        labelSetting.anchor(left: imageSettinh.rightAnchor,paddingLeft: 5)
-        labelSetting.centerY(inView: buttonSetting)
+        scroll.addSubview(secondLine)
+        secondLine.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
-        scroll.addSubview(buttonLanguage)
-        buttonLanguage.anchor(top: buttonSetting.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        buttonLanguage.addSubview(imageLanguage)
-        imageLanguage.anchor(top: buttonLanguage.topAnchor, left: buttonLanguage.leftAnchor,  bottom: buttonLanguage.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        buttonLanguage.addSubview(labelLanguage)
-        labelLanguage.anchor(left: imageLanguage.rightAnchor,paddingLeft: 5)
-        labelLanguage.centerY(inView: buttonLanguage)
-        
-        scroll.addSubview(treeLine)
-        treeLine.anchor(top: buttonLanguage.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
-        scroll.addSubview(buttonHelp)
-        buttonHelp.anchor(top: treeLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
-        buttonHelp.addSubview(imageHelp)
-        imageHelp.anchor(top: buttonHelp.topAnchor, left: buttonHelp.leftAnchor,  bottom: buttonHelp.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-        
-        buttonHelp.addSubview(labelHelp)
-        labelHelp.anchor(left: imageHelp.rightAnchor,paddingLeft: 5)
-        labelHelp.centerY(inView: buttonHelp)
-        
-        scroll.addSubview(fourLine)
-        fourLine.anchor(top: buttonHelp.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
+
         scroll.addSubview(buttonAbout)
-        buttonAbout.anchor(top: fourLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
+        buttonAbout.anchor(top: secondLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
         buttonAbout.addSubview(labelAbout)
         labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
         labelAbout.centerY(inView: buttonAbout)

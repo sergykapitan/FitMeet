@@ -25,7 +25,7 @@ final class AuthViewControllerCode: UIView {
     }()
     let buttonSocialNetwork: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         button.setTitle("Sign up with Social Network", for: .normal)
         button.layer.cornerRadius = 19
         return button
@@ -63,7 +63,7 @@ final class AuthViewControllerCode: UIView {
     }()
     let buttonSignIn: UIButton = {
         let button = UIButton()
-        button.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+        button.setTitleColor(.blueColor, for: .normal)
         let font = UIFont.systemFont(ofSize: 14)
         button.setAttributedTitle(NSAttributedString(string: "Sign In", attributes: [NSAttributedString.Key.font: font]), for: .normal)
         return button
