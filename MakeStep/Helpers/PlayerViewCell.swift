@@ -34,9 +34,7 @@ final class PlayerViewCell: UITableViewCell {
     }()
     var logoUserImage: UIImageView = {
         let image = UIImageView()
-       // image.layer.borderWidth = 1
         image.layer.masksToBounds = false
-       // image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
         image.layer.cornerRadius = 18
         return image

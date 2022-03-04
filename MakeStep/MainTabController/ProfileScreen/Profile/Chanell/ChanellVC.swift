@@ -31,32 +31,13 @@ extension State {
         }
     }
 }
-//, CustomSegmentedControlDelegate//CustomSegmentedFullControlDelegate
+
 class ChanellVC: UIViewController  {
 
     let videoVC = VideosVC()
     let timeTable = TimetableVC()
     let time = Timetable()
 
-//    func change(to index: Int) {
-//
-//        if index == 0 {
-//            removeAllChildViewController(timeTable)
-//            configureChildViewController(videoVC, onView: profileView.selfView )
-//            guard let userID = self.user?.id else { return }
-//            videoVC.id = userID
-//            videoVC.user = self.user
-//        }
-//        if index == 1 {
-//            guard let user = self.user else { return }
-//
-//            time.user = user
-//            removeAllChildViewController(videoVC)
-//            configureChildViewController(time, onView: profileView.selfView )
-//
-//        }
-//
-//    }
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
     
@@ -112,18 +93,8 @@ class ChanellVC: UIViewController  {
  
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
-    
-   
-    
     var isButtton: Bool = false
 
-//    override  var shouldAutorotate: Bool {
-//        return false
-//    }
-//    override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-//        return .portrait
-//    }
-    
     override func loadView() {
         super.loadView()
         view = profileView
@@ -143,17 +114,9 @@ class ChanellVC: UIViewController  {
         actionButtonContinue()
         makeNavItem()
         createTableView()
-      //  profileView.segmentControll.setButtonTitles(buttonTitles: ["Videos","Timetable"])//,
-      //  profileView.segmentControll.delegate = self
-     //   removeAllChildViewController(timeTable)
-      //  configureChildViewController(videoVC, onView: profileView.selfView )
-        guard let userID = self.user?.id else { return }
-     
-     
-        
         layout()
+        
         profileView.viewTop.addGestureRecognizer(panRecognizer)
-
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -192,20 +155,17 @@ class ChanellVC: UIViewController  {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-      //  profileView.segmentControll.backgroundColor = UIColor(hexString: "#F6F6F6")
+        self.brodcast.removeAll()
         self.navigationController?.navigationBar.isHidden = false
         
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
             self.binding(id: "\(id)")
-          //  self.bindingPlanned(id: "\(id)")
-          
         } else {
             self.bindingBroadcastNotAuth(status: "PLANNED", userId: "\(id)")
         }
         AppUtility.lockOrientation(.portrait)
-     //   configureChildViewController(videoVC, onView: profileView.selfView )
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -381,7 +341,7 @@ class ChanellVC: UIViewController  {
         self.profileView.welcomeLabel.text = fullName
         self.profileView.labelINTFollows.text = "\(follow)"
         self.profileView.labelINTFolowers.text = "\(sub)"
-        self.profileView.labelDescription.text = channel?.description //" Welcome to my channel!\n My name is \(fullName)"
+        self.profileView.labelDescription.text = channel?.description 
  
     }
     
@@ -391,7 +351,6 @@ class ChanellVC: UIViewController  {
         profileView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         profileView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
         profileView.buttonInstagram.addTarget(self, action: #selector(actionInstagram), for: .touchUpInside)
-      //  profileView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)     
 
     }
     @objc func actionTwitter() {

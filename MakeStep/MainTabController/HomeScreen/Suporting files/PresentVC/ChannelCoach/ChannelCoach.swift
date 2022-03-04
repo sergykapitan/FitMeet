@@ -223,7 +223,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                     }
                     if channel.isSubscribe! {                        
                         self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
-                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitleColor(.blueColor, for: .normal)
                         self.homeView.buttonSubscribe.backgroundColor = .white
                     } else {
                         self.homeView.buttonSubscribe.backgroundColor = .blueColor
@@ -556,8 +556,8 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
             homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
 
         } else {
-            homeView.buttonFollow.backgroundColor = UIColor(hexString: "FFFFFF")
-            homeView.buttonFollow.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
+            homeView.buttonFollow.backgroundColor = .white
+            homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
         }
         
         

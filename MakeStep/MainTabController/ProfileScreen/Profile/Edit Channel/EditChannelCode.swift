@@ -113,7 +113,7 @@ final class EditChannelCode: UIView {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         return button
     }()
     let scroll: UIScrollView = {

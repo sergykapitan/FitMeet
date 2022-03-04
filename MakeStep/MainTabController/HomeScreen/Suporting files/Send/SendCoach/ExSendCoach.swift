@@ -22,6 +22,7 @@ extension SendCoach: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SendCoachCell", for: indexPath) as! SendCoachCell
         cell.labelCategory.text = list[indexPath.row]
+        cell.selectionStyle = .none
          return cell
     }
     
@@ -29,10 +30,7 @@ extension SendCoach: UITableViewDataSource {
 extension SendCoach: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Send  = \(indexPath.row)")
         if indexPath.row == 0 {
-           // guard let urlString = url else { return }
-           // urlString.share()
             "Data to share".share()
         }
         if indexPath.row == 3 {
@@ -41,6 +39,15 @@ extension SendCoach: UITableViewDelegate {
             self.present(vc, animated: true, completion: nil)
         }
     
+    }
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath)
+        cell!.contentView.backgroundColor = .lightGray
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath)
+        cell!.contentView.backgroundColor = .clear
     }
 }
 
