@@ -97,6 +97,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     var usersd = [Int: User]()
     var url: String?
     var heightBar: CGFloat?
+    
+    var isPlay: Bool = true
 
     //MARK - LifeCicle
     override func loadView() {
@@ -423,7 +425,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         self.homeView.playerSlider.tintColor = .blueColor
         let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
         self.homeView.labelTimeEnd.text = "\(m).\(s)"
-        
+        if isPlay {
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
                  if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
                      let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
@@ -434,7 +436,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                      self.homeView.labelTimeStart.text =  "\(m).\(s)" + "/"
                  }
              }
-
+        }
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self)
         
@@ -516,11 +518,12 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         
         let seconds : Int64 = Int64(playbackSlider.value)
         let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
-        
+        isPlay = false
         self.playerViewController?.player!.seek(to: targetTime)
         
         if  self.playerViewController?.player!.rate == 0
         {
+            isPlay = true
             self.playerViewController?.player!.play()
         }
     }

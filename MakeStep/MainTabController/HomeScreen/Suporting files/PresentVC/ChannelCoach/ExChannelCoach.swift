@@ -41,21 +41,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
       
-//       if brodcast[indexPath.row].status == "PLANNED" {
-//
-//
-//            cell.label.text = self.brodcast[indexPath.row].name
-//            cell.backgroundImage.removeBlur()
-//            cell.backgroundImage.backgroundColor = .clear
-//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-//            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-//            cell.backgroundImage.applyBlurEffect()
-//
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.overlay.anchor(width: 80)
-//
-//        }
+
         if brodcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)
@@ -179,9 +165,9 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id = self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image = #imageLiteral(resourceName: "rec")
-            vc.homeView.imageLive.setImageColor(color: .gray)
-            vc.homeView.labelLive.text = "  Offline"
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
             vc.homeView.imageEye.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         } else if  self.brodcast[indexPath.row].status == "PLANNED" {

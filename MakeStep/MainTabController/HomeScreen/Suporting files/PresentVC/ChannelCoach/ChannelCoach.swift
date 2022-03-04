@@ -179,7 +179,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         self.homeView.buttonMore.isHidden = true
         self.homeView.buttonChat.isHidden = true
         self.navigationController?.navigationBar.isHidden = false
-        
+        self.brodcast.removeAll()
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
         if token != nil {
