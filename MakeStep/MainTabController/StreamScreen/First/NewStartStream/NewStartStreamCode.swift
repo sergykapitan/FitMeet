@@ -64,6 +64,7 @@ final class NewStartStreamCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldAviable: DropDown = {
@@ -76,6 +77,7 @@ final class NewStartStreamCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     var textFieldFree: DropDown = {
@@ -89,7 +91,7 @@ final class NewStartStreamCode: UIView {
         
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldDescription: UITextField = {
@@ -116,7 +118,7 @@ final class NewStartStreamCode: UIView {
         let button = UIButton()
         button.setTitle("Ok", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+        button.backgroundColor = .blueColor//UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
         return button
     }()
     let scroll: UIScrollView = {

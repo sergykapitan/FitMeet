@@ -74,18 +74,7 @@ final class AddedVideoCode: UIView {
         textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
-//    let textFieldStartDate: DropDown = {
-//        let textField = DropDown()
-//        textField.layer.cornerRadius = 19
-//        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-//        textField.attributedPlaceholder =
-//            NSAttributedString(string: "Start Date", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-//        textField.setLeftPaddingPoints(25)
-//        textField.textColor = .black
-//        textField.layer.borderWidth = 1
-//        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-//        return textField
-//    }()
+
     let textFieldAviable: DropDown = {
         let textField = DropDown()
         textField.layer.cornerRadius = 19
@@ -96,6 +85,7 @@ final class AddedVideoCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     var textFieldFree: DropDown = {
@@ -109,7 +99,7 @@ final class AddedVideoCode: UIView {
         
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldDescription: UITextField = {

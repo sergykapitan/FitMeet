@@ -106,6 +106,16 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+        self.navigationController?.navigationBar.isHidden = false
         authView.tagView.removeAllTags()
        
 
@@ -145,8 +155,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
-        
-       // self.authView.textFieldCategory.easy.layout(Left(10),Right(10),Height(maxHeight).when({[unowned self] in self.isOversized}))
+  
       
         authView.textFieldStartDate.optionArray = ["NOW", "Later"]
         
@@ -487,7 +496,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
             navVC.myuri = myuris
             navVC.myPublish = myPublishh
-           // self.present(navVC, animated: true, completion: nil)
             self.present(navVC, animated: true) {
                 self.authView.textFieldStartDate.text = ""
             }
@@ -520,20 +528,16 @@ extension NewStartStream: UITextFieldDelegate {
             authView.buttonOK.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonOK.isUserInteractionEnabled = false
         } else {
-           // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-            authView.buttonOK.backgroundColor = UIColor(hexString: "#3B58A4")
+            authView.buttonOK.backgroundColor = .blueColor
             authView.buttonOK.isUserInteractionEnabled = true
           }
         }
         
         if textField == authView.textFieldStartDate {
-            print("hhhhhhhh============\(fullString)")
             if fullString == "NOW" {
-               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
                 authView.buttonOK.setTitle("OK", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             } else {
-              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
                 authView.buttonOK.setTitle("Planned", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             }
