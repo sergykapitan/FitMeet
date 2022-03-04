@@ -387,7 +387,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         }
        
     }
-    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.playerViewController?.player?.rate = 0
+    }
   
     // MARK: - LoadPlayer
     func loadPlayer() {
@@ -418,7 +421,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         self.homeView.playerSlider.maximumValue = Float(seconds)
         self.homeView.playerSlider.isContinuous = true
         self.homeView.playerSlider.tintColor = .blueColor
-        self.homeView.labelTimeEnd.text = "/0." + "\(Int(seconds))"
+        let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
+        self.homeView.labelTimeEnd.text = "\(m).\(s)"
         
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
                  if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
@@ -426,8 +430,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                      UIView.animate(withDuration: 2) {
                          self.homeView.playerSlider.setValue(Float(time), animated: true)
                     }
-                   
-                     self.homeView.labelTimeStart.text = "0." + "\(Int( time ) )"
+                     let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(time))
+                     self.homeView.labelTimeStart.text =  "\(m).\(s)" + "/"
                  }
              }
 
@@ -627,5 +631,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 }
             })
        }
+    func secondsToHoursMinutesSeconds(_ seconds: Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
     
 }
