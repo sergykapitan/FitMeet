@@ -226,9 +226,16 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                         self.homeView.buttonSubscribe.setTitleColor(.blueColor, for: .normal)
                         self.homeView.buttonSubscribe.backgroundColor = .white
                     } else {
+                        if  channel.subscriptionPlans != nil {
                         self.homeView.buttonSubscribe.backgroundColor = .blueColor
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
                         self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        } else {
+                            self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                            self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                            self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                            self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+                        }
                     }
                     guard let _ = self.channel?.twitterLink ,
                           let _ = self.channel?.instagramLink ,
@@ -552,12 +559,13 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         homeView.buttonFollow.isSelected.toggle()
         
         if homeView.buttonFollow.isSelected {
+            homeView.buttonFollow.backgroundColor = .white
+            homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+
+        } else {
             homeView.buttonFollow.backgroundColor = .blueColor
             homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
 
-        } else {
-            homeView.buttonFollow.backgroundColor = .white
-            homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
         }
         
         

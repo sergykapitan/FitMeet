@@ -91,7 +91,7 @@ final class ChanellCoachCode: UIView {
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         button.layer.borderWidth = 1
         button.layer.masksToBounds = false
-        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
+        button.layer.borderColor = UIColor(hexString: "#0066FF").cgColor
         button.clipsToBounds = true
         button.layer.cornerRadius = 12
         return button
@@ -99,9 +99,9 @@ final class ChanellCoachCode: UIView {
     var buttonFollow: UIButton = {
         var button = UIButton()
         button.setTitle("Follow", for: .normal)
-        button.setTitleColor(.blueColor, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.backgroundColor = .white
+        button.backgroundColor = .blueColor
         button.layer.borderWidth = 1
         button.layer.masksToBounds = false
         button.layer.borderColor = UIColor(hexString: "#0066FF").cgColor
