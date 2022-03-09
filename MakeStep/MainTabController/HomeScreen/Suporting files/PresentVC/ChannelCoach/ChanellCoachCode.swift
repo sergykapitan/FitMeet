@@ -55,8 +55,10 @@ final class ChanellCoachCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.text = "Stream information"
         label.numberOfLines = 1
+       
         return label
     }()
+  
     var buttonMore: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
@@ -207,6 +209,42 @@ final class ChanellCoachCode: UIView {
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
         return button
     }()
+    var overlay : UIView = {
+        let view = UIView()
+        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        view.layer.borderWidth = 0.5
+        view.layer.masksToBounds = false
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    var labelLive: UILabel = {
+        let label = UILabel()
+        label.text = "Live"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        return label
+    }()
+    var imageLive: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "slider")
+        return image
+        
+    }()
+    var imageEye: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "eye")
+        return image
+        
+    }()
+    var labelEye: UILabel = {
+        let label = UILabel()
+        label.text = "0"
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.textColor = .white
+        return label
+    }()
 
     //MARK: - initial
     init() {
@@ -247,6 +285,27 @@ final class ChanellCoachCode: UIView {
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: buttonMore.leftAnchor,paddingRight: 5,width: 40, height: 40)
         buttonChat.centerY(inView: buttonMore)
+        
+        cardView.addSubview(overlay)
+        overlay.anchor(top: imagePromo.topAnchor,
+                       left: imagePromo.leftAnchor,
+                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
+        
+        cardView.addSubview(imageLive)
+        imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
+        imageLive.centerY(inView: overlay)
+        
+        cardView.addSubview(labelLive)
+        labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
+        labelLive.centerY(inView: overlay)
+        
+        cardView.addSubview(imageEye)
+        imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
+        imageEye.centerY(inView: overlay)
+        
+        cardView.addSubview(labelEye)
+        labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
+        labelEye.centerY(inView: overlay)
         
 //        cardView.addSubview(tableView)
 //        tableView.anchor(top: cardView.topAnchor,

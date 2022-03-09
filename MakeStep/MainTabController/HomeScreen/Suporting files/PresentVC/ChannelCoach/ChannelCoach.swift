@@ -33,7 +33,7 @@ extension State {
     }
 }
 //, CustomSegmentedControlDelegate//CustomSegmentedFullControlDelegate
-class ChannelCoach: UIViewController, VeritiPurchase  {
+class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegate  {
     func addPurchase() {
         guard let userId = user?.id else { return }
         self.bindingChannel(userId: userId)
@@ -138,6 +138,25 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+        self.homeView.labelStreamInfo.isUserInteractionEnabled = true
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelAction))
+        self.homeView.labelStreamInfo.addGestureRecognizer(tap)
+        tap.delegate = self
+    }
+    @objc func labelAction(gr:UITapGestureRecognizer) {
+        
+        let vc = PlayerViewVC()
+        guard let broadcast = broadcast else { return }
+
+        if broadcast.status == "ONLINE" {
+            vc.broadcast = broadcast
+            vc.id =  broadcast.userId
+            vc.homeView.buttonChat.isHidden = false
+            vc.homeView.labelLike.text = "\(String(describing: broadcast.followersCount!))"
+            vc.homeView.playerSlider.isHidden = true
+        }
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
@@ -277,6 +296,8 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                           loadPlayer(url: (self.brodcast.first?.streams?.first?.hlsPlaylistUrl)!)
+                          guard let nameStream = self.brodcast.first?.streams?.first?.name else { return }
+                          self.homeView.labelStreamInfo.text = "\(nameStream)"
                       } else {
                           self.homeView.imagePromo.isHidden = true
                           self.homeView.imageLogo.isHidden = true
@@ -294,6 +315,19 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
                  }
           })
       }
+    @objc func actionVolume() {
+        guard token != nil else { return }
+        homeView.buttonVolum.isSelected.toggle()
+        if homeView.buttonVolum.isSelected {
+            let highlightedImage = UIImage(named: "volumeMute")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            homeView.buttonVolum.setImage(highlightedImage, for: .normal)
+            self.playerViewController?.player?.volume = 0
+        } else {
+            homeView.buttonVolum.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
+            self.playerViewController?.player?.volume = 1
+        }
+
+    }
     func bindingPlanned(id: String) {
           takeBroadcastPlanned = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
               .mapError({ (error) -> Error in return error })
@@ -346,6 +380,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         playerViewController!.didMove(toParent: self)
         playPauseButton = PlayPauseButton()
         playPauseButton.avPlayer = player
+        
 
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self)
@@ -615,16 +650,7 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         
        
     }
-     @objc func actionVolume() {
-         guard token != nil else { return }
-         homeView.buttonVolum.isSelected.toggle()
-         if homeView.buttonVolum.isSelected {
-             self.playerViewController?.player?.volume = 0
-         } else {
-             self.playerViewController?.player?.volume = 1
-         }
-
-     }
+  
      @objc func actionMore() {
          guard token != nil else { return }
          let detailViewController = SendVC()
@@ -639,11 +665,11 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
         
         
         if isButton {
-           // homeView.overlay.isHidden = true
-           // homeView.imageLive.isHidden = true
-           // homeView.labelLive.isHidden = true
-           // homeView.imageEye.isHidden = true
-           // homeView.labelEye.isHidden = true
+            homeView.overlay.isHidden = true
+            homeView.imageLive.isHidden = true
+            homeView.labelLive.isHidden = true
+            homeView.imageEye.isHidden = true
+            homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
           //  playPauseButton.isHidden = true
@@ -656,11 +682,11 @@ class ChannelCoach: UIViewController, VeritiPurchase  {
    
            
             homeView.buttonSetting.isHidden = false
-          //  homeView.overlay.isHidden = false
-          //  homeView.imageLive.isHidden = false
-          //  homeView.labelLive.isHidden = false
-           // homeView.imageEye.isHidden = false
-          //  homeView.labelEye.isHidden = false
+            homeView.overlay.isHidden = false
+            homeView.imageLive.isHidden = false
+            homeView.labelLive.isHidden = false
+            homeView.imageEye.isHidden = false
+            homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
          

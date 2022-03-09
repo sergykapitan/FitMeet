@@ -136,7 +136,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
+        if self.broadcast?.status == "ONLINE" {
+            self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
+        } else {
         self.urlStream = self.broadcast?.streams?.first?.vodUrl
+        }
         self.homeView.labelStreamInfo.text = broadcast?.name
         loadPlayer()
         guard let idU = self.id else { return }
@@ -420,11 +424,20 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
         let seconds : Float64 = CMTimeGetSeconds(duration)
                
-        self.homeView.playerSlider.maximumValue = Float(seconds)
-        self.homeView.playerSlider.isContinuous = true
-        self.homeView.playerSlider.tintColor = .blueColor
-        let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
-        self.homeView.labelTimeEnd.text = "\(m).\(s)"
+        
+        guard let broadcast = broadcast else { return }
+        if broadcast.status == "ONLINE" {
+            self.homeView.playerSlider.maximumValue = 1
+        } else {
+            self.homeView.playerSlider.maximumValue = Float(seconds)
+            self.homeView.playerSlider.isContinuous = true
+            self.homeView.playerSlider.tintColor = .blueColor
+            let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
+            self.homeView.labelTimeEnd.text = "\(m).\(s)"
+            
+        }
+
+       
         if isPlay {
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
                  if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
