@@ -25,37 +25,40 @@ class ChatCell: BaseCell {
       //  view.backgroundColor = .clear
             return view
         }()
-    
+    var logoUserImage: UIImageView = {
+        let image = UIImageView()
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 10
+        image.backgroundColor = .red
+        return image
+        
+    }()
     var bgView: UIView = {
         let v = UIView()
         v.translatesAutoresizingMaskIntoConstraints = false
-      //  v.backgroundColor = .clear
         return v
     }()
     var topLabel: UILabel = {
         let v = UILabel()
-       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var bottomLabel: UILabel = {
         let v = UILabel()
-       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var statusLabel: UILabel = {
         let v = UILabel()
-       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
     
     var textView: UITextView = {
         let v = UITextView()
-       // v.backgroundColor = .clear
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
@@ -73,17 +76,9 @@ class ChatCell: BaseCell {
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
         label.textAlignment = .right
-       // label.backgroundColor = .lightGray
         return label
     }()
-    
-//    var showTopLabel = true {
-//        didSet {
-//            textviewTopConstraintToBg.isActive = !showTopLabel
-//            textviewTopConstraintToTopLabel.isActive = showTopLabel
-//            topLabel.isHidden = !showTopLabel
-//        }
-//    }
+
     
     let extraSpacing: CGFloat = 80
     
@@ -112,44 +107,32 @@ class ChatCell: BaseCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-//
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//       // self.initialize()
-//    }
-//    override func setSelected(_ selected: Bool, animated: Bool) {
-//        super.setSelected(selected, animated: animated)
-//
-//        // Configure the view for the selected state
-//    }
-
-    func initialize() {
+    func setImageLogo(image:String) {
+        let url = URL(string: image)
+        logoUserImage.kf.setImage(with: url)
        
-    
-//        contentView.addSubview(labelChatMessage)
-//        labelChatMessage.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5)
-//
-//        contentView.addSubview(labelMessageDetail)
-//        labelMessageDetail.anchor(top: labelChatMessage.bottomAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor,bottom: contentView.bottomAnchor,paddingTop: 5, paddingLeft: 5, paddingRight: 5,paddingBottom: 5)
-   
     }
-    
     func setupSendersCell() {
         print("setupSendersCell")
-        let offset = UIEdgeInsets(top: 2, left: padding, bottom: 2, right: -padding)
+        let offset = UIEdgeInsets(top: 2, left: 5, bottom: 2, right: -5)
        
-        self.contentView.addSubview(bgView)        
+        self.contentView.addSubview(bgView)
+    
         bgView.edges([.right, .top, .bottom], to: self.contentView, offset: offset)
         
         bgView.layer.cornerRadius = 10
-       // bgView.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.3)
-        bgView.backgroundColor = UIColor(hexString: "#3B58A4")
+        bgView.backgroundColor = .gray
+        
+        self.bgView.addSubview(logoUserImage)
+      //  logoUserImage.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0))
+        logoUserImage.anchor(top: self.bgView.topAnchor, left: self.bgView.leftAnchor, paddingTop: 0, paddingLeft: 0, width: 20, height: 20)
+        
         
         
         self.bgView.addSubview(topLabel)
-        topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding, left: secondaryPadding, bottom: 0, right: 0))
+        topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding + 10, left: secondaryPadding, bottom: 0, right: 0))
         topLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        topLabel.textColor = .white
+        topLabel.textColor = .black
      
  
         self.bgView.addSubview(textView)
@@ -161,7 +144,7 @@ class ChatCell: BaseCell {
         textView.isEditable = false
         textView.isSelectable = true
         textView.font = UIFont.systemFont(ofSize: 14)
-        textView.textColor = UIColor.white
+        textView.textColor = .black
         textView.backgroundColor = UIColor.clear
        
         self.bgView.addSubview(bottomLabel)
@@ -169,24 +152,26 @@ class ChatCell: BaseCell {
         bottomLabel.trailingAnchor.constraint(equalTo: textView.trailingAnchor, constant: -secondaryPadding).isActive = true
         bottomLabel.topAnchor.constraint(equalTo: textView.bottomAnchor, constant: -2).isActive = true
         bottomLabel.font = UIFont.systemFont(ofSize: 10)
-        bottomLabel.textColor = UIColor.white
+        bottomLabel.textColor = .black
         bottomLabel.textAlignment = .right
     }
     
     func setupReceiversCell() {
         print("setupReceiversCell")
-        let offset = UIEdgeInsets(top: 5, left: padding, bottom: 0, right: -padding)
+        let offset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
         self.contentView.addSubview(bgView)
-       // self.contentView.backgroundColor = .red
-        bgView.edges([.left, .top, .bottom], to: self.contentView, offset: offset)
+        bgView.edges([.left,.right, .top, .bottom], to: self.contentView, offset: offset)
 
-        bgView.layer.cornerRadius = 8
-        bgView.backgroundColor = UIColor.lightGray.withAlphaComponent(0.1)
+        bgView.layer.cornerRadius = 0
+        bgView.backgroundColor = .white
+        
+        self.bgView.addSubview(logoUserImage)
+        logoUserImage.anchor(top: self.bgView.topAnchor, left: self.bgView.leftAnchor, paddingTop: 2, paddingLeft: 2, width: 20, height: 20)
         
         self.bgView.addSubview(topLabel)
-        topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding, left: secondaryPadding, bottom: 0, right: 0))
-        topLabel.font = UIFont.boldSystemFont(ofSize: 14)
-        topLabel.textColor = .blue
+        topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding, left: 28, bottom: 0, right: 0))
+        topLabel.font = UIFont.boldSystemFont(ofSize: 11)
+        topLabel.textColor = .black
         
         
         self.bgView.addSubview(textView)
@@ -201,7 +186,7 @@ class ChatCell: BaseCell {
         textView.isScrollEnabled = false
         textView.isEditable = false
         textView.isSelectable = true
-        textView.font = UIFont.systemFont(ofSize: 14)
+        textView.font = UIFont.systemFont(ofSize: 11)
         textView.backgroundColor = UIColor.clear
         
         self.bgView.addSubview(bottomLabel)

@@ -572,7 +572,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 actionChatTransitionManager.intHeight = 1
                 actionChatTransitionManager.isLandscape = isLand
                 detailViewController.color = .white
-                detailViewController.chatView.buttonComm.isHidden = true
                 detailViewController.chatView.buttonCloseChat.isHidden = false
                 present(detailViewController, animated: true)
             } else {
@@ -581,7 +580,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                 actionChatTransitionManager.intHeight = 0.7
                 actionChatTransitionManager.isLandscape = isLand
                 detailViewController.color = .white
-                detailViewController.chatView.buttonComm.isHidden = true
                 present(detailViewController, animated: true)
             }
             

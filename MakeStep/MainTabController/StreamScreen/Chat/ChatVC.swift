@@ -184,12 +184,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     @objc func sendMessage() {
         
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
-      
-        print("CHATCOUNR = == == =  ==\( chatView.textView.text.count)")
+  
         if textView.text.count > 0 {
             SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
             self.nickname = name
-           // self.chatMessages.append(["nickname":"\(name!)","message": chatView.textView.text,"date":"5 sec"])
             self.chatView.tableView.reloadData()
             textView.text = ""
             textView.resignFirstResponder()
@@ -260,10 +258,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
        if UIDevice.current.orientation.isLandscape {
-              print("Landscape8888")
             dismiss(animated: true)
            } else {
-              print("Portrait8888")
             dismiss(animated: true)
             }
     }
