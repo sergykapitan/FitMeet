@@ -61,8 +61,6 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
             appearance.shadowColor = .clear
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        } else {
-            
         }
         if token != nil {
             binding()
