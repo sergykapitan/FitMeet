@@ -399,8 +399,9 @@ if senderNickname == nic {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
                 cell.topLabel.text = senderNickname
+                cell.timeLabel.text = messageDate.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message
-                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                cell.bottomLabel.text = ""
                 let idUser = Int(id)
               guard let avatar = self.usersd[idUser!]?.avatarPath else { return cell}
             
@@ -415,8 +416,9 @@ if senderNickname == nic {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .white
                 cell.topLabel.text = senderNickname
+                cell.timeLabel.text = messageDate.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message
-                cell.bottomLabel.text = messageDate.getFormattedDate(format: "HH:mm:ss")
+                cell.bottomLabel.text = ""
                 let idUser = Int(id)
                 let avatar = self.usersd[idUser!]?.avatarPath
                 cell.setImageLogo(image: avatar!)

@@ -13,7 +13,6 @@ protocol VeritifProduct: class {
    func addPurchase()
 }
 
-
 class IAPManager: NSObject {
     
     static let shared = IAPManager()
@@ -41,8 +40,6 @@ class IAPManager: NSObject {
     public func getProducts() {
         let identifiers: Set = [
             IAPProducts.consumable.rawValue,
-          //  IAPProducts.nonRenewable.rawValue,
-          //  IAPProducts.autoMonthSubscription.rawValue,
         ]
         
         let productRequest = SKProductsRequest(productIdentifiers: identifiers)

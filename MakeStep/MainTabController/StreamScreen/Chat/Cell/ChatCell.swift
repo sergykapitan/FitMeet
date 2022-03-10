@@ -50,6 +50,11 @@ class ChatCell: BaseCell {
         v.translatesAutoresizingMaskIntoConstraints = false
         return v
     }()
+    var timeLabel: UILabel = {
+        let v = UILabel()
+        v.translatesAutoresizingMaskIntoConstraints = false
+        return v
+    }()
     
     var statusLabel: UILabel = {
         let v = UILabel()
@@ -124,7 +129,6 @@ class ChatCell: BaseCell {
         bgView.backgroundColor = .gray
         
         self.bgView.addSubview(logoUserImage)
-      //  logoUserImage.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: 5, left: 5, bottom: 0, right: 0))
         logoUserImage.anchor(top: self.bgView.topAnchor, left: self.bgView.leftAnchor, paddingTop: 0, paddingLeft: 0, width: 20, height: 20)
         
         
@@ -157,7 +161,6 @@ class ChatCell: BaseCell {
     }
     
     func setupReceiversCell() {
-        print("setupReceiversCell")
         let offset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: -5)
         self.contentView.addSubview(bgView)
         bgView.edges([.left,.right, .top, .bottom], to: self.contentView, offset: offset)
@@ -168,8 +171,15 @@ class ChatCell: BaseCell {
         self.bgView.addSubview(logoUserImage)
         logoUserImage.anchor(top: self.bgView.topAnchor, left: self.bgView.leftAnchor, paddingTop: 2, paddingLeft: 2, width: 20, height: 20)
         
+        self.bgView.addSubview(timeLabel)
+        timeLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 5)
+        timeLabel.centerY(inView: logoUserImage)
+        timeLabel.font = UIFont.systemFont(ofSize: 10)
+        timeLabel.textColor = UIColor.lightGray
+        
         self.bgView.addSubview(topLabel)
-        topLabel.edges([.left, .top], to: self.bgView, offset: UIEdgeInsets(top: secondaryPadding, left: 28, bottom: 0, right: 0))
+        topLabel.anchor( left: timeLabel.rightAnchor, paddingLeft: 5)
+        topLabel.centerY(inView: logoUserImage)
         topLabel.font = UIFont.boldSystemFont(ofSize: 11)
         topLabel.textColor = .black
         
@@ -179,7 +189,7 @@ class ChatCell: BaseCell {
         textviewTopConstraintToTopLabel.isActive = true
         textviewTopConstraintToBg = textView.topAnchor.constraint(equalTo: bgView.topAnchor, constant: innerSpacing)
         textviewTopConstraintToBg.isActive = false
-        textView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: innerSpacing).isActive = true
+        textView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 24).isActive = true
         textView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -innerSpacing).isActive = true
         topLabel.trailingAnchor.constraint(lessThanOrEqualTo: textView.trailingAnchor, constant: 0).isActive = true
         bgView.trailingAnchor.constraint(lessThanOrEqualTo: self.contentView.trailingAnchor, constant: -extraSpacing).isActive = true
