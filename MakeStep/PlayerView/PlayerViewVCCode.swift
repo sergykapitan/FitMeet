@@ -230,10 +230,10 @@ final class PlayerViewVCCode: UIView {
         buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
         
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 0)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 0,width: 20,height: 20)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: cardView.rightAnchor,paddingTop: 11, paddingLeft: 24, paddingRight: 0)
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 24, paddingRight: 2)
         
         cardView.addSubview(labelLike)
         labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
@@ -253,7 +253,7 @@ final class PlayerViewVCCode: UIView {
         labelStreamDescription.centerY(inView: imageLogoProfile)
 
         cardView.addSubview(labelCategory)
-        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonLike.leftAnchor, paddingLeft: 0,paddingRight: 10)
+        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
         labelCategory.centerY(inView: labelStreamDescription)
                 
         cardView.addSubview(tableView)

@@ -11,6 +11,7 @@ import HHCustomCorner
 import Kingfisher
 import MMPlayerView
 import AVFoundation
+import TagListView
 
 final class ChanellCoachCode: UIView {
 
@@ -245,6 +246,29 @@ final class ChanellCoachCode: UIView {
         label.textColor = .white
         return label
     }()
+  
+    var imageLogoProfileBottom: UIImageView = {
+        let image = UIImageView()
+        image.image = #imageLiteral(resourceName: "Group 17091")
+        return image
+    }()
+    var labelCategory: TagListView = {
+        var tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 12)
+        tag.tagBackgroundColor = .clear
+        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        tag.selectedTextColor = .black
+        tag.paddingX = 0
+        return tag
+    }()
+ 
+    var labelNameCoach: UILabel = {
+        var label = UILabel()
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        return label
+    }()
 
     //MARK: - initial
     init() {
@@ -273,18 +297,25 @@ final class ChanellCoachCode: UIView {
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,
-                               left: cardView.leftAnchor,
-                               paddingTop: 11, paddingLeft: 16)
-        
 
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 20, width: 24, height: 18)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 10, width: 24, height: 24)
         
-        cardView.addSubview(buttonChat)
-        buttonChat.anchor(right: buttonMore.leftAnchor,paddingRight: 5,width: 40, height: 40)
-        buttonChat.centerY(inView: buttonMore)
+        cardView.addSubview(labelStreamInfo)
+               labelStreamInfo.anchor(top: imagePromo.bottomAnchor,
+                                      left: cardView.leftAnchor, right: buttonMore.leftAnchor,
+                                      paddingTop: 11, paddingLeft: 16, paddingRight: 5)
+        
+        cardView.addSubview(imageLogoProfileBottom)
+        imageLogoProfileBottom.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
+        
+        cardView.addSubview(labelNameCoach)
+        labelNameCoach.anchor(left: imageLogoProfileBottom.rightAnchor,paddingLeft: 5,width: 120)
+        labelNameCoach.centerY(inView: imageLogoProfileBottom)
+
+        cardView.addSubview(labelCategory)
+        labelCategory.anchor( left: labelNameCoach.rightAnchor, right: cardView.rightAnchor, paddingLeft: 0,paddingRight: 10)
+        labelCategory.centerY(inView: labelNameCoach)
         
         cardView.addSubview(overlay)
         overlay.anchor(top: imagePromo.topAnchor,
@@ -306,22 +337,13 @@ final class ChanellCoachCode: UIView {
         cardView.addSubview(labelEye)
         labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
         labelEye.centerY(inView: overlay)
-        
-//        cardView.addSubview(tableView)
-//        tableView.anchor(top: cardView.topAnchor,
-//                         left: cardView.leftAnchor,
-//                         right: cardView.rightAnchor,
-//                         bottom: cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-      //  cardView.addSubview(segmentControll)
-      //  segmentControll.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 120, paddingLeft: 16, height: 20)
-      //  cardView.addSubview(selfView)
-      //  selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-    
+   
 
     }
     func setImage(image:String) {
         let url = URL(string: image)
         imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfileBottom.kf.setImage(with: url)
     }
 
     required init?(coder: NSCoder) {

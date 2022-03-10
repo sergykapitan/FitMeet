@@ -15,6 +15,7 @@ import MMPlayerView
 import AVFoundation
 import EasyPeasy
 import AVKit
+import TagListView
 
 
 // MARK: - State
@@ -32,8 +33,8 @@ extension State {
         }
     }
 }
-//, CustomSegmentedControlDelegate//CustomSegmentedFullControlDelegate
-class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegate  {
+
+class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegate, TagListViewDelegate  {
     func addPurchase() {
         guard let userId = user?.id else { return }
         self.bindingChannel(userId: userId)
@@ -197,6 +198,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         self.homeView.labelStreamInfo.isHidden = true
         self.homeView.buttonMore.isHidden = true
         self.homeView.buttonChat.isHidden = true
+        
         self.navigationController?.navigationBar.isHidden = false
         self.brodcast.removeAll()
         guard let id = user?.id else { return }
@@ -291,7 +293,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                           self.homeView.labelStreamInfo.isHidden = false
                           self.homeView.buttonMore.isHidden = false
                           homeView.cardView.addSubview(homeView.tableView)
-                          homeView.tableView.anchor(top: homeView.labelStreamInfo.bottomAnchor,
+                          homeView.tableView.anchor(top: homeView.imageLogoProfileBottom.bottomAnchor,
                                            left: homeView.cardView.leftAnchor,
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
@@ -512,7 +514,15 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         self.homeView.welcomeLabel.text = fullName
         self.homeView.labelINTFollows.text = "\(follow)"
         self.homeView.labelINTFolowers.text = "\(sub)"
-        self.homeView.labelDescription.text = channel?.description //" Welcome to my channel!\n My name is \(fullName)"
+        self.homeView.labelDescription.text = channel?.description
+        self.homeView.labelNameCoach.text = fullName
+        self.homeView.imageLogoProfileBottom.makeRounded()
+        let categorys = broadcast?.categories
+        let s = categorys!.map{$0.title!}
+        let arr = s.map { String("\u{0023}" + $0)}
+        homeView.labelCategory.removeAllTags()
+        homeView.labelCategory.addTags(arr)
+        homeView.labelCategory.delegate = self
  
     }
     
