@@ -31,8 +31,6 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         }
 
 
-      
-
         cell.labelDescription.text = brodcast[indexPath.row].description
         cell.titleLabel.text = self.user?.fullName
         
@@ -94,39 +92,20 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         guard let selfID = selfId else { return cell}
         if self.usersd[id]?.id == Int(selfID) {
             cell.buttonLike.isHidden = true
-          //  cell.buttonstartStream.isHidden = false
         } else {
             cell.buttonLike.isHidden = false
-          //  cell.buttonstartStream.isHidden = true
         }
-
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
 
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        
-//        cell.buttonstartStream.tag = indexPath.row
-//        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
-//        cell.buttonstartStream.isUserInteractionEnabled = true
+  
       
       
         
        return cell
     }
-    @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        if sender.currentImage == UIImage(named: "LikeNot") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.followBroadcast(id: id)
-        } else {
-            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.unFollowBroadcast(id: id)
-        }
-    }
+ 
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
                 guard let coachID = user?.id,let userID = selfId else { return }
         
@@ -151,15 +130,16 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
     @objc func actionStartStream(_ sender: UIButton) {
         guard let broadcastID = brodcast[sender.tag].id else { return }
-          //  self.nextView(broadcastId: broadcastID)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+       
         if self.brodcast[indexPath.row].status == "ONLINE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            vc.delegatePlayer = self
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
             guard let stream = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.brodcast[indexPath.row]
@@ -179,12 +159,23 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
         }
-       
+       // vc.delegatePlayer = self
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
 }
-
+extension ChannelCoach: DissmisPlayer {
+    func reloadbroadcast() {
+        brodcast.removeAll()
+        guard let id = user?.id else { return }
+        bindingChannel(userId: id)
+        if token != nil {
+            self.binding(id: "\(id)")
+        } else {
+            self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
+        }
+    }
+}
 extension ChannelCoach {
     
      func layout() {

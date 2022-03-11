@@ -113,9 +113,9 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         }
         registerForKeyboardNotifications()
         
-        NotificationCenter.default.addObserver(self, selector: "handleConnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
-        NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleConnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDisconnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUserTypingNotification(notification:)), name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
 
 
     }
@@ -264,18 +264,18 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             chatView.textView.resignFirstResponder()
         }
     }
-    func handleConnectedUserUpdateNotification(notification: NSNotification) {
+    @objc func handleConnectedUserUpdateNotification(notification: NSNotification) {
         let connectedUserInfo = notification.object as! [String: AnyObject]
         let connectedUserNickname = connectedUserInfo["message"] as? String
     }
     
     
-    func handleDisconnectedUserUpdateNotification(notification: NSNotification) {
+    @objc func handleDisconnectedUserUpdateNotification(notification: NSNotification) {
         let disconnectedUserNickname = notification.object as! String
     }
     
     
-    func handleUserTypingNotification(notification: NSNotification) {
+    @objc func handleUserTypingNotification(notification: NSNotification) {
         if let typingUsersDictionary = notification.object as? [String: AnyObject] {
             var names = ""
             var totalTypingUsers = 0

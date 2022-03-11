@@ -432,8 +432,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id  {
-                    
-                    print("greate broadcast")
                     guard let usId = self.userId else { return }
                     self.broadcast = response
                     UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)

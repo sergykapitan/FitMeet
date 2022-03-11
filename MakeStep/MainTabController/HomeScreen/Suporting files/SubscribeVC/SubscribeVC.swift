@@ -16,7 +16,6 @@ protocol VeritiPurchase: class {
 class SubscribeVC: UIViewController, VeritifProduct {
     
     func addPurchase() {
-        print("Add")
         dismiss(animated: true) {
             self.delagatePurchase?.addPurchase()
         }
@@ -97,9 +96,7 @@ class SubscribeVC: UIViewController, VeritifProduct {
         takeProduct = fitMeetApi.getAppProduct()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.first != nil  {
-                    print("Responce = \(response)")
-                        
+                if response.data.first != nil  {     
                 }
             })
         }

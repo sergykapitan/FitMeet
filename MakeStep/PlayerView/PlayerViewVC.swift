@@ -15,12 +15,12 @@ import Kingfisher
 import TimelineTableViewCell
 
 
-class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
-    
-    func addPurchase() {
-        guard let userId = user?.id else { return }
-       
-    }
+protocol DissmisPlayer: class {
+   func reloadbroadcast()
+}
+
+
+class PlayerViewVC: UIViewController, TagListViewDelegate {
     
 
     var offsetObservation: NSKeyValueObservation?
@@ -29,7 +29,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
  
-   
+    weak var delegatePlayer: DissmisPlayer?
     
   
 
@@ -55,7 +55,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
-   // let actionPresentChat = ActionChatPresentationController()
+ 
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -103,14 +103,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     //MARK - LifeCicle
     override func loadView() {
         view = homeView
-
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -175,22 +174,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil
-        print("ViewController deinit")
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizer.Direction.right:
-                print("Swipe Right")
-            case UISwipeGestureRecognizer.Direction.down:
-                self.dismiss(animated: true, completion: nil)
-                print("Swiped down")
-            case UISwipeGestureRecognizer.Direction.left:
-                print("Swiped left")
-            case UISwipeGestureRecognizer.Direction.up:
-                print("Swiped up")
+            case UISwipeGestureRecognizer.Direction.down:            
+                self.dismiss(animated: true) {
+                    self.delegatePlayer?.reloadbroadcast()
+                }
             default:
                 break
             }
@@ -242,7 +235,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = broadcast?.url//self.url
+        detailViewController.url = broadcast?.url
         present(detailViewController, animated: true)
 
     }
@@ -262,7 +255,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    //self.brodcast = response.data!
                     self.brodcast.append(contentsOf: response.data!)
                     SocketIOManager.sharedInstance.getTokenChat()
                     let arrayUserId = self.brodcast.map{$0.userId!}
@@ -281,8 +273,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
                       self.bindingChanellVOD(userId: "\(id)")
-                     // self.homeView.tableView.reloadData()
-
                  }
           })
       }
@@ -293,7 +283,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
                       self.homeView.tableView.reloadData()
-
                  }
           })
       }
@@ -301,7 +290,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
+                if !response.data.isEmpty  {
                     self.usersd = response.data
                     self.homeView.tableView.reloadData()
                 }
@@ -328,8 +317,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
 
    
     @objc func actionBut(sender:UITapGestureRecognizer) {
-        
-        
         if isButton {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
@@ -342,19 +329,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.playerSlider.isHidden = true
             homeView.labelTimeEnd.isHidden = true
             homeView.labelTimeStart.isHidden =  true
-
-          
             if playPauseButton == nil {
                 
             } else {
                 playPauseButton.isHidden = true
             }
-           
-            
             isButton = false
         } else {
-   
-           
             homeView.buttonSetting.isHidden = false
             homeView.overlay.isHidden = false
             homeView.imageLive.isHidden = false
@@ -365,23 +346,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
             homeView.playerSlider.isHidden = false
             homeView.labelTimeEnd.isHidden = false
             homeView.labelTimeStart.isHidden =  false
-
-            
-            
+         
             if playPauseButton == nil {
                 
             } else {
                 playPauseButton.isHidden = false
             }
-           
             isButton = true
         }
-
     }
-    
-  
-    
-    
+
     func setUserProfile(user: User) {
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         homeView.labelStreamDescription.text = self.user?.fullName
@@ -395,13 +369,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate, VeritiPurchase{
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.delegatePlayer?.reloadbroadcast()
         self.playerViewController?.player?.rate = 0
     }
   
     // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = urlStream else { return }
-        print(url)
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()

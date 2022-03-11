@@ -35,13 +35,12 @@ extension State {
 }
 
 class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegate, TagListViewDelegate  {
+    
     func addPurchase() {
         guard let userId = user?.id else { return }
         self.bindingChannel(userId: userId)
     }
-    
 
- 
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
     
@@ -156,22 +155,16 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             vc.homeView.labelLike.text = "\(String(describing: broadcast.followersCount!))"
             vc.homeView.playerSlider.isHidden = true
         }
+        vc.delegatePlayer = self
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
              switch swipeGesture.direction {
              case UISwipeGestureRecognizer.Direction.right:
                  self.navigationController?.popViewController(animated: true)
-             case UISwipeGestureRecognizer.Direction.down:
-                 print("Swiped down")
-             case UISwipeGestureRecognizer.Direction.left:
-                 print("Swiped left")
-             case UISwipeGestureRecognizer.Direction.up:
-                 print("Swiped up")
              default:
                  break
              }
@@ -200,23 +193,22 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         self.homeView.buttonChat.isHidden = true
         
         self.navigationController?.navigationBar.isHidden = false
-        self.brodcast.removeAll()
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
+        if self.brodcast.isEmpty {
         if token != nil {
             self.binding(id: "\(id)")
         } else {
             self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
         }
-        
-    }
+      }
+   }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
         setUserProfile()
-      
-       
     }
+    
     func bindingChanellVOD(userId: String) {
         take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
             .mapError({ (error) -> Error in return error })
@@ -312,10 +304,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                       }
                       self.bindingChanellVOD(userId: id)
-                     
-
-                 }
-          })
+            }
+        })
       }
     @objc func actionVolume() {
         guard token != nil else { return }
