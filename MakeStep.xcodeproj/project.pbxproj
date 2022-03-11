@@ -48,7 +48,6 @@
 		A5129429273A6EB7000CBBD9 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93A26E78E880080E7E3 /* Coach.swift */; };
 		A512942A273A6EB7000CBBD9 /* SearchVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */; };
 		A512942B273A6EB7000CBBD9 /* SJDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5B26A8370C00321AB8 /* SJDatePicker.swift */; };
-		A512942C273A6EB7000CBBD9 /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6602632B200000E00DE /* Preference.swift */; };
 		A512942D273A6EB7000CBBD9 /* StartScreenCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8E12682829600D75BE8 /* StartScreenCode.swift */; };
 		A512942E273A6EB7000CBBD9 /* CategoryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204CE266F4F4100ED11B5 /* CategoryCode.swift */; };
 		A512942F273A6EB7000CBBD9 /* MonetezeitionVCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457E9F27298D08006A8F2D /* MonetezeitionVCode.swift */; };
@@ -411,7 +410,6 @@
 		B4A9F6272631B54E000E00DE /* CategoryRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6262631B54E000E00DE /* CategoryRequest.swift */; };
 		B4A9F63A26320AA3000E00DE /* HomeCustomList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F63926320AA3000E00DE /* HomeCustomList.swift */; };
 		B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */; };
-		B4A9F6612632B200000E00DE /* Preference.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6602632B200000E00DE /* Preference.swift */; };
 		B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A22632C944000E00DE /* ChannelRequest.swift */; };
 		B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */; };
 		B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADB263B42A20033F78F /* UserSetting.swift */; };
@@ -693,7 +691,6 @@
 		B4A9F6262631B54E000E00DE /* CategoryRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryRequest.swift; sourceTree = "<group>"; };
 		B4A9F63926320AA3000E00DE /* HomeCustomList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCustomList.swift; sourceTree = "<group>"; };
 		B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveStreamVCCode.swift; sourceTree = "<group>"; };
-		B4A9F6602632B200000E00DE /* Preference.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preference.swift; sourceTree = "<group>"; };
 		B4A9F6A22632C944000E00DE /* ChannelRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelRequest.swift; sourceTree = "<group>"; };
 		B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelResponce.swift; sourceTree = "<group>"; };
 		B4AE7ADB263B42A20033F78F /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
@@ -1350,7 +1347,6 @@
 				B4AE7AE6263D780A0033F78F /* Stream */,
 				B4C5A93E267C847A00010F88 /* NewStartStream */,
 				A58EC19527B1381C00E920FB /* AddedVideo */,
-				B4AE7AE7263D782A0033F78F /* Old */,
 			);
 			path = First;
 			sourceTree = "<group>";
@@ -1364,14 +1360,6 @@
 				B4AE7AEB263D789E0033F78F /* EXStreamingVC */,
 			);
 			path = Stream;
-			sourceTree = "<group>";
-		};
-		B4AE7AE7263D782A0033F78F /* Old */ = {
-			isa = PBXGroup;
-			children = (
-				B4A9F6602632B200000E00DE /* Preference.swift */,
-			);
-			path = Old;
 			sourceTree = "<group>";
 		};
 		B4AE7AEB263D789E0033F78F /* EXStreamingVC */ = {
@@ -2069,7 +2057,6 @@
 				A5129429273A6EB7000CBBD9 /* Coach.swift in Sources */,
 				A512942A273A6EB7000CBBD9 /* SearchVCCode.swift in Sources */,
 				A512942B273A6EB7000CBBD9 /* SJDatePicker.swift in Sources */,
-				A512942C273A6EB7000CBBD9 /* Preference.swift in Sources */,
 				A512942D273A6EB7000CBBD9 /* StartScreenCode.swift in Sources */,
 				A58EC19D27B1524A00E920FB /* SendStreamCell.swift in Sources */,
 				A512942E273A6EB7000CBBD9 /* CategoryCode.swift in Sources */,
@@ -2320,7 +2307,6 @@
 				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */,
-				B4A9F6612632B200000E00DE /* Preference.swift in Sources */,
 				B484E8E22682829600D75BE8 /* StartScreenCode.swift in Sources */,
 				B4F204CF266F4F4100ED11B5 /* CategoryCode.swift in Sources */,
 				A5457EA027298D08006A8F2D /* MonetezeitionVCode.swift in Sources */,

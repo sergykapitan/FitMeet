@@ -21,7 +21,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     var nickname: String?
     var isLand:Bool = false
     
-    var chatMessages = [[String: String]]()
+    var chatMessages = [[String: Any]]()
     var bannerLabelTimer: Timer!
     
     var color: UIColor?
@@ -35,7 +35,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     var broadcastId: String?
     var chanellId: String?
     var messHistory: [Datums]?
-    var usersd = [Int: User]()
+    var user: User?
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -199,50 +199,22 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             chatView.tableView.isHidden = false
             let name = UserDefaults.standard.string(forKey: Constants.userFullName)
             if textView.text.count > 0 {
-               
-                   
-                
                 SocketIOManager.sharedInstance.sendMessage(message: ["text" : textView.text!], withNickname: "\(name)")
                 self.nickname = name
-                
-                SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
-                        DispatchQueue.main.async { () -> Void in
-                        self.chatMessages.append(messageInfo)
-                        self.chatView.tableView.reloadData()
-                        self.chatView.tableView.scrollToBottom()
-                            }
-                }
-
                 textView.text = ""
                 textView.resignFirstResponder()
-            
-        }
-        
-        } else {
-            chatView.tableView.isHidden = true
+                //self.chatView.tableView.reloadData()
+             }
         }
     }
-
-    @objc
-    func rightHandAction() {
-        print("right bar button action")
-    }
-
-    @objc
-    func leftHandAction() {
-        print("left bar button action")
-    }
+  
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        print("refrech")
         binding()
- 
-       }
+    }
     @objc  func buttonJoin() {
-        
         delegate?.changeBackgroundColor()
         dismiss(animated: true)
-
     }
     func binding() {
         takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
@@ -255,17 +227,14 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                 }
         })
     }
-    func bindingUserMap(ids: [Int])  {
-        if ids.isEmpty { return } else {
-        takeUser = fitMeetApi.getUserIdMap(ids: ids)
+    func bindingUser(id: Int)  {
+        takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.count != 0 {
-                    self.usersd = response.data
-                    self.chatView.tableView.reloadData()
+                if response.username != nil  {
+                    self.user = response
                 }
           })
-       }
     }
     
     func bindingMessage(broad: Int) {
@@ -296,32 +265,18 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                         }
 
                     }
-                   let ids = mess.map{ $0.user!.userId!}
-                    if !ids.isEmpty {
-                        self.bindingUserMap(ids: ids)
-                    }
-                   
-                   
-                   
                     self.refreshControl.endRefreshing()
                 }
             })
         }
     
-    
-    
-  
-    
     private func makeTableView() {
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
-        
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: ChatCell.reuseID)
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.receiverCellId)
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.senderCellId)
         chatView.tableView.separatorStyle  =  .none
-        
-   
     }
     
     func registerForKeyboardNotifications() {
@@ -391,22 +346,24 @@ extension ChatVCPlayer: UITableViewDataSource {
               let message = currentChatMessage["message"],
               let messageDate = currentChatMessage["timestamp"],
               let nic = nickname,
-              let id = currentChatMessage["id"]
+              let id = currentChatMessage["id"] as? Int
         else { return UITableViewCell()}
         
-if senderNickname == nic {
+        if senderNickname as! String == nic {
           if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname
-                cell.timeLabel.text = messageDate.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message
+                cell.topLabel.text = senderNickname as! String
+                cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
+                cell.textView.text = message as! String
                 cell.bottomLabel.text = ""
-                let idUser = Int(id)
-              guard let avatar = self.usersd[idUser!]?.avatarPath else { return cell}
-            
-              cell.setImageLogo(image: avatar)
-              
+                self.user = nil
+                self.bindingUser(id: id)
+                let delay = DispatchTime.now() + .seconds(1)
+              DispatchQueue.main.asyncAfter(deadline: delay) {
+                guard let avatar = self.user?.avatarPath else { return }
+                cell.setImageLogo(image: avatar)
+            }
                 return cell
             }
 } else {
@@ -415,13 +372,17 @@ if senderNickname == nic {
        {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .white
-                cell.topLabel.text = senderNickname
-                cell.timeLabel.text = messageDate.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message
+                cell.topLabel.text = senderNickname as! String
+                cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
+                cell.textView.text = message as! String
                 cell.bottomLabel.text = ""
-                let idUser = Int(id)
-                let avatar = self.usersd[idUser!]?.avatarPath
-                cell.setImageLogo(image: avatar!)
+                self.user = nil
+                self.bindingUser(id: id)
+                let delay = DispatchTime.now() + .seconds(1)
+            DispatchQueue.main.asyncAfter(deadline: delay) {
+                guard let avatar = self.user?.avatarPath else { return }
+                cell.setImageLogo(image: avatar)
+            }
                 return cell
             }
         }

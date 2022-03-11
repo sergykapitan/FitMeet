@@ -358,15 +358,13 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
+                if !response.data.isEmpty {
                     self.usersd = response.data
                     self.homeView.tableView.reloadData()
                 }
           })
     }
     func loadPlayer(url: String) {
-       
-        print(url)
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
@@ -495,12 +493,10 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 } else {
                     actionChatTransitionManager.intHeight = 0.4
                 }
-                    //   actionChatTransitionManager.intHeight = 0.4
-                       actionChatTransitionManager.intWidth = 1
-                       subscribe.transitioningDelegate = actionChatTransitionManager
-                       present(subscribe, animated: true)
+                   actionChatTransitionManager.intWidth = 1
+                   subscribe.transitioningDelegate = actionChatTransitionManager
+                   present(subscribe, animated: true)
             }
-       
         }
     }
 
@@ -517,8 +513,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         self.homeView.labelDescription.text = channel?.description
         self.homeView.labelNameCoach.text = fullName
         self.homeView.imageLogoProfileBottom.makeRounded()
-        let categorys = broadcast?.categories
-        let s = categorys!.map{$0.title!}
+        guard  let categorys = broadcast?.categories else { return }
+        let s = categorys.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
         homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)

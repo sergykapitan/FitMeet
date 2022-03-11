@@ -81,7 +81,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
             SocketIOManager.sharedInstance.getTokenChat()
             SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
             SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "OLD") { arrayId in
-                   print("array Id === \(arrayId)")
+                  
                 guard let array = arrayId else { return }
                 self.bindingUserMap(ids: array)
                }
@@ -108,7 +108,6 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
   
         SocketIOManager.sharedInstance.connectToServerWithNickname( nicname: "Old", completionHandler: { (userList) -> Void in
             DispatchQueue.main.async { () -> Void in
-                print("USERLIST ======= \(userList)")
 
             }
         })
@@ -136,7 +135,6 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     let dict = response.data
-                    print("DICT ==== \(dict)")
                     self.usersd = dict
                     self.homeView.tableView.reloadData()
    
@@ -174,18 +172,4 @@ extension UserVC: UITableViewDataSource {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 44.0
     }
-}
-// MARK: - Private
-private extension UserVC {
-//  func setupGestureRecognizers() {
-//    let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap(gestureRecognizer:)))
-//    view.addGestureRecognizer(tapRecognizer)
-//  }
-}
-
-// MARK: - GestureRecognizerSelectors
-private extension UserVC {
-//  @objc func handleTap(gestureRecognizer: UITapGestureRecognizer) {
-//    dismiss(animated: true)
-//  }
 }

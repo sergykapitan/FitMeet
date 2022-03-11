@@ -22,15 +22,14 @@ class ChatCell: BaseCell {
     let cardView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
-      //  view.backgroundColor = .clear
-            return view
+        return view
         }()
     var logoUserImage: UIImageView = {
         let image = UIImageView()
         image.layer.masksToBounds = false
         image.clipsToBounds = true
         image.layer.cornerRadius = 10
-        image.backgroundColor = .red
+        image.backgroundColor = .lightGray
         return image
         
     }()
