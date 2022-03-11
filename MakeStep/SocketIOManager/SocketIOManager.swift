@@ -66,7 +66,6 @@ class SocketIOManager: NSObject {
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 guard let token = response.token else { return }
-                print("\(token)")
                 self.saveToken(tokenChat: token)
               
                    

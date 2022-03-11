@@ -16,7 +16,6 @@ class StreamingVC: BottomPopupViewController {
     let streamView = StreamingVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
-    var viewModel  = StreamViewModel()
     
     var height: CGFloat?
     var topCornerRadius: CGFloat?

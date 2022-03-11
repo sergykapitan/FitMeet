@@ -31,6 +31,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     var messHistory: [Datums]?
     var isLand:Bool = false
     var user: User?
+    var usersd = [Int: User]()
 
     private lazy var textView = UITextView(frame: CGRect.zero)
     private var isOversized = false {
@@ -122,10 +123,14 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         super.viewWillAppear(animated)
         guard let broadId = broadcastId,let channelId = chanellId else { return }
             SocketIOManager.sharedInstance.getTokenChat()
-            SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
+            SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(channelId)")
             makeTableView()
         
         guard let broadID = broadcastId,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
+        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+                      guard let array = arrayId else { return }
+                      self.bindingUserMap(ids: array)
+                 }
         self.nickname = name
         guard let intBroad = Int(broadId) else { return }
         bindingMessage(broad: intBroad)
@@ -144,25 +149,37 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         chatView.sendMessage.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         
     }
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "l") { arrayId in
+                      guard let array = arrayId else { return }
+                      self.bindingUserMap(ids: array)
+        }
+    }
     
     @objc func sendMessage() {
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if textView.text.count > 0 {
             SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
+            SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+                          guard let array = arrayId else { return }
+                          self.bindingUserMap(ids: array)
+                     }
             self.nickname = name
             self.chatView.tableView.reloadData()
+            scrollToBottom()
             textView.text = ""
             textView.resignFirstResponder()
-          
-
         }
     }
-    func bindingUser(id: Int)  {
-        takeUser = fitMeetApi.getUserId(id: id)
+    func bindingUserMap(ids: [Int])  {
+        takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
+                if !response.data.isEmpty  {
+                    let dict = response.data
+                    self.usersd = dict
+                    self.chatView.tableView.reloadData()
                 }
           })
     }
@@ -221,7 +238,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         })
     }
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
-         let info = notification.userInfo!
+        _ = notification.userInfo!
          UIView.animate(withDuration: 0.1, animations: { () -> Void in
              self.textView.easy.layout(Bottom(20))
              self.view.layoutIfNeeded()
@@ -332,24 +349,16 @@ extension ChatVC: UITextFieldDelegate {
             }
             return true
         }
-
-
 }
 extension ChatVC: UITableViewDataSource {
-    
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-            return self.chatMessages.count
-        }
-
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.chatMessages.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let currentChatMessage = chatMessages[indexPath.section]
+        let currentChatMessage = chatMessages[indexPath.row]
         
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
@@ -359,20 +368,16 @@ extension ChatVC: UITableViewDataSource {
              
         else { return UITableViewCell()}
         
-        if senderNickname as! String == nic {
+if senderNickname as! String == nic {
           if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname as! String
+                cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as! String
+                cell.textView.text = message as? String
                 cell.bottomLabel.text = ""
-                self.bindingUser(id: id)
-                let delay = DispatchTime.now() + .seconds(1)
-              DispatchQueue.main.asyncAfter(deadline: delay) {
-                  guard let avatar = self.user?.avatarPath else { return }
-                  cell.setImageLogo(image: avatar)
-              }
+                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
+                cell.setImageLogo(image: avatar)
              
                 return cell
             }
@@ -380,47 +385,32 @@ extension ChatVC: UITableViewDataSource {
     if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell
        {
                 cell.selectionStyle = .none
-                cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname as! String
+               cell.backgroundColor = .clear
+                cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as! String
+                cell.textView.text = message as? String
                 cell.bottomLabel.text = ""
-                self.bindingUser(id: id)
-                let delay = DispatchTime.now() + .seconds(1)
-            DispatchQueue.main.asyncAfter(deadline: delay) {
-                guard let avatar = self.user?.avatarPath else { return }
+                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
                 cell.setImageLogo(image: avatar)
-      }
+        
                 return cell
             }
         }
         return UITableViewCell()
-
     }
     
     // MARK: UITextViewDelegate Methods
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         return true
     }
-
-    
     // MARK: UIGestureRecognizerDelegate Methods
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
                let headerView = UIView()
                return headerView
     }
-
-
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-    
+   
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 0
     }
 }
 

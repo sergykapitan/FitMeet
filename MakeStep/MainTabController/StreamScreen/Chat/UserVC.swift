@@ -97,8 +97,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
 
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        print("refrech")
-       // binding()
+      
       
        }
     @objc  func buttonJoin() {
@@ -164,7 +163,7 @@ extension UserVC: UITableViewDataSource {
         cell.layoutIfNeeded()
         cell.titleLabel.text = us[indexPath.row].fullName
         cell.labelCategory.text =  "Online"
-        cell.labelCategory.textColor = UIColor.green
+        cell.labelCategory.textColor = UIColor.lightGray
         cell.backgroundColor = .clear
         
         return cell

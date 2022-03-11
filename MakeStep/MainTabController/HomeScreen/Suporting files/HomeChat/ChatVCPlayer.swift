@@ -36,6 +36,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     var chanellId: String?
     var messHistory: [Datums]?
     var user: User?
+    var usersd = [Int: User]()
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -153,6 +154,11 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             SocketIOManager.sharedInstance.getTokenChat()
             SocketIOManager.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
                     makeTableView()
+            SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+                  
+                guard let array = arrayId else { return }
+                self.bindingUserMap(ids: array)
+               }
             
             chatView.tableView.isHidden = false
             chatView.imageNotToken.isHidden = true
@@ -200,14 +206,26 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             let name = UserDefaults.standard.string(forKey: Constants.userFullName)
             if textView.text.count > 0 {
                 SocketIOManager.sharedInstance.sendMessage(message: ["text" : textView.text!], withNickname: "\(name)")
+                SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+                              guard let array = arrayId else { return }
+                              self.bindingUserMap(ids: array)
+                         }
                 self.nickname = name
+                scrollToBottom()
                 textView.text = ""
                 textView.resignFirstResponder()
-                //self.chatView.tableView.reloadData()
+                self.chatView.tableView.reloadData()
              }
+         }
+    }
+    func scrollToBottom() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { () -> Void in
+            if self.chatMessages.count > 0 {
+                let lastRowIndexPath = NSIndexPath(row: self.chatMessages.count - 1, section: 0)
+                self.chatView.tableView.scrollToRow(at: lastRowIndexPath as IndexPath, at: UITableView.ScrollPosition.bottom, animated: true)
+            }
         }
     }
-  
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         binding()
@@ -227,12 +245,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                 }
         })
     }
-    func bindingUser(id: Int)  {
-        takeUser = fitMeetApi.getUserId(id: id)
+    func bindingUserMap(ids: [Int])  {
+        takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
+                if !response.data.isEmpty  {
+                    let dict = response.data
+                    self.usersd = dict
+                    self.chatView.tableView.reloadData()
+   
                 }
           })
     }
@@ -298,10 +319,8 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         if keyboardFrame.size.height == 303 {
             size = 48
         }
-        UIView.animate(withDuration: 0.1, animations: { () -> Void in
-  
+        UIView.animate(withDuration: 0.1, animations: { () -> Void in  
             self.textView.easy.layout(Bottom(keyboardFrame.size.height + size))
-
             self.view.layoutIfNeeded()
 
         })
@@ -353,17 +372,13 @@ extension ChatVCPlayer: UITableViewDataSource {
           if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname as! String
+                cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as! String
+                cell.textView.text = message as? String
                 cell.bottomLabel.text = ""
-                self.user = nil
-                self.bindingUser(id: id)
-                let delay = DispatchTime.now() + .seconds(1)
-              DispatchQueue.main.asyncAfter(deadline: delay) {
-                guard let avatar = self.user?.avatarPath else { return }
+                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
                 cell.setImageLogo(image: avatar)
-            }
+            
                 return cell
             }
 } else {
@@ -372,17 +387,12 @@ extension ChatVCPlayer: UITableViewDataSource {
        {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .white
-                cell.topLabel.text = senderNickname as! String
+                cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as! String
+                cell.textView.text = message as? String
                 cell.bottomLabel.text = ""
-                self.user = nil
-                self.bindingUser(id: id)
-                let delay = DispatchTime.now() + .seconds(1)
-            DispatchQueue.main.asyncAfter(deadline: delay) {
-                guard let avatar = self.user?.avatarPath else { return }
+                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
                 cell.setImageLogo(image: avatar)
-            }
                 return cell
             }
         }
@@ -392,11 +402,10 @@ extension ChatVCPlayer: UITableViewDataSource {
     
     // MARK: UITextViewDelegate Methods
     func textViewDidChange(textView: UITextView) {
-
            if textView.contentSize.height >= maxHeight {
                        isOversized = true
-                   }
-              }
+                }
+            }
     
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         if token != nil {
@@ -407,7 +416,7 @@ extension ChatVCPlayer: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
-        }
+    }
 
 }
 
