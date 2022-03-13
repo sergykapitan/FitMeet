@@ -32,7 +32,9 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
 
 
         cell.labelDescription.text = brodcast[indexPath.row].description
-        cell.titleLabel.text = self.user?.fullName
+        
+        
+       
         
  
         guard let id = brodcast[indexPath.row].userId,
@@ -99,10 +101,22 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-  
-      
-      
         
+        guard let id = brodcast[indexPath.row].userId else { return cell}
+        cell.titleLabel.text = self.usersd[id]?.fullName
+  
+        if indexPath.row == brodcast.count - 1 {
+            if self.itemCount > brodcast.count {
+            self.isLoadingList = true
+            self.loadMoreItemsForList() 
+            } else {
+                self.isLoadingList = true
+                self.loadMoreCaategoryForList()
+                if self.categoryCount + self.itemCount == brodcast.count {
+                    bindingOff()
+                }
+            }
+        }
        return cell
     }
  
@@ -133,15 +147,22 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-       
+        
+        print("Broadcast == \(self.brodcast[indexPath.row])")
+        
+        if self.brodcast[indexPath.row] == nil {
+            return
+        }
         if self.brodcast[indexPath.row].status == "ONLINE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
             vc.delegatePlayer = self
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
-            guard let stream = brodcast[indexPath.row].streams?.first?.vodUrl else { return }
+            guard let stream = brodcast[indexPath.row].streams?.first else { return }
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id = self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
@@ -150,19 +171,29 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLive.isHidden = true
             vc.homeView.imageEye.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "PLANNED" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            print("PLANNED")
+            return
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+        } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+            print("WAIT_FOR_APPROVE")
+            return
+        } else if  self.brodcast[indexPath.row].status == "FINISHED" {
+            print("FINISHED")
+            return
         }
-       // vc.delegatePlayer = self
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
     }
+
 }
 extension ChannelCoach: DissmisPlayer {
     func reloadbroadcast() {

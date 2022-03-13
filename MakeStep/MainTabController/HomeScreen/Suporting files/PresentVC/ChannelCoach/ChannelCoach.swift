@@ -75,7 +75,14 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     private var take: AnyCancellable?
     private var takeChanell: AnyCancellable?
     private var followBroad: AnyCancellable?
-
+    
+    var currentPage : Int = 1
+    var currentPageCategory : Int = 1
+    var isLoadingList : Bool = true
+    var itemCount: Int = 0
+    var categoryCount: Int = 0
+    var allCount: Int = 0
+    
     var myCell: PlayerViewCell?
     
     
@@ -98,6 +105,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     private var takeChannel: AnyCancellable?
     private var channels: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
+    private var takeOff: AnyCancellable?
     private var takeBroadcastPlanned : AnyCancellable?
  
     @Inject var fitMeetChannel: FitMeetChannels
@@ -128,13 +136,9 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         actionButtonContinue()
         makeNavItem()
         createTableView()
-        guard let userID = self.user?.id else { return }
-       
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        
         layout()
         homeView.viewTop.addGestureRecognizer(panRecognizer)
-
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -144,10 +148,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         tap.delegate = self
     }
     @objc func labelAction(gr:UITapGestureRecognizer) {
-        
         let vc = PlayerViewVC()
         guard let broadcast = broadcast else { return }
-
         if broadcast.status == "ONLINE" {
             vc.broadcast = broadcast
             vc.id =  broadcast.userId
@@ -209,21 +211,69 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         setUserProfile()
     }
     
-    func bindingChanellVOD(userId: String) {
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+    func bindingChanellVOD(userId: String,page: Int) {
+        self.isLoadingList = false
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                   
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.itemCount = itemCount
+                }
+           })
+       }
+    func bindingCategory(categoryId: Int,page: Int) {
+        self.isLoadingList = false
+        takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId, page: page)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
+                    
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.homeView.tableView.reloadData()
                 }
-           })
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.categoryCount = itemCount
+                }
+        })
+    }
+    func bindingOff() {
+        takeOff = fitMeetStream.getOffBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.allCount = itemCount
+                }
+            })
+    }
+    func loadMoreItemsForList(){
+            currentPage += 1
+            guard let id = user?.id else { return }
+            bindingChanellVOD(userId: "\(id)", page: currentPage)
        }
-
+    func loadMoreCaategoryForList(){
+            currentPageCategory += 1
+            guard let id = self.broadcast?.categories?.first?.id else { return }
+            bindingCategory(categoryId: id,page: currentPageCategory)
+       }
     func bindingChannel(userId: Int?) {
         guard let id = userId else { return }
         takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
@@ -303,7 +353,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                       }
-                      self.bindingChanellVOD(userId: id)
+                      self.bindingChanellVOD(userId: id, page: currentPage)
             }
         })
       }

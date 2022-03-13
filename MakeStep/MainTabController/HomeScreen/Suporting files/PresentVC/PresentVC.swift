@@ -1001,21 +1001,21 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
            })
        }
     func bindingChanellVOD(userId: String) {
-        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.brodcast.removeAll()
-                  response.data!.forEach{
-                        self.brodcast.append($0)
-                    }
-                  
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.homeView.tableView.reloadData()
-                }
-           })
+//        takeChanell = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.brodcast.removeAll()
+//                  response.data!.forEach{
+//                        self.brodcast.append($0)
+//                    }
+//                  
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+//                    self.brodcast = self.brodcast.reversed()
+//                    self.homeView.tableView.reloadData()
+//                }
+//           })
        }
     func bindingChanellMulti(userId: String) {
         takeChanell = fitMeetStream.getBroadcastPrivateMulty( userId: "\(userId)")

@@ -127,11 +127,18 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         self.authView.buttonOK.setTitle("OK", for: .normal)
         self.authView.textFieldStartDate.text = ""
+        bindingChanell()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        self.authView.buttonOK.setTitle("OK", for: .normal)
+        self.authView.textFieldStartDate.text = ""
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNavItem()
-        bindingChanell()
+      //  bindingChanell()
         bindingUser()
         bindingCategory()
         self.hideKeyboardWhenTappedAround()

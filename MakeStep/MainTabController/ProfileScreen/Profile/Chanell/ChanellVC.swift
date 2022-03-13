@@ -188,7 +188,7 @@ class ChanellVC: UIViewController  {
           })
       }
     func bindingChanellVOD(userId: String) {
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: 1, type: "STANDARD_VOD")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

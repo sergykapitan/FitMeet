@@ -208,7 +208,7 @@ class CategoryBroadcast: UIViewController  {
 
     
     func binding(categoryId: Int) {
-        takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId)
+        takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId, page: 1)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in           
                 if response.data != nil  {

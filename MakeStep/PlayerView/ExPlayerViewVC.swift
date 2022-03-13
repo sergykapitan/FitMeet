@@ -26,7 +26,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         }
 
         cell.labelDescription.text = brodcast[indexPath.row].description
-        cell.titleLabel.text = self.user?.fullName
+       
 
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
@@ -56,7 +56,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
 
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-
+        cell.titleLabel.text = self.usersd[id]?.fullName
 
 
         if brodcast[indexPath.row].isFollow ?? false {
@@ -66,8 +66,6 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         }
 
 
-
-//        self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         guard let selfID = selfId else { return cell}
         if self.usersd[id]?.id == Int(selfID) {
             cell.buttonLike.isHidden = true
@@ -83,6 +81,18 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
         
+        if indexPath.row == brodcast.count - 1 {
+            if self.itemCount > brodcast.count {
+            self.isLoadingList = true
+            self.loadMoreItemsForList()
+            } else {
+                self.isLoadingList = true
+                self.loadMoreCaategoryForList()
+                if self.categoryCount + self.itemCount == brodcast.count {
+                    bindingOff()
+                }
+            }
+        }
   
        return cell
     }
@@ -122,7 +132,6 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let brodcastStatus = brodcast[indexPath.row].status, let like = self.brodcast[indexPath.row].followersCount else { return }
-        print("STATUS == \(brodcastStatus)")
         if brodcastStatus == "OFFLINE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
@@ -133,8 +142,11 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
+            
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             homeView.labelLike.text = "\(like)"
+            guard let user = brodcast[indexPath.row].userId else { return}
+            self.bindingUser(id: user)
         } else if brodcastStatus == "ONLINE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = false
@@ -147,6 +159,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.labelLike.text = "\(like)"
             
             self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+            guard let user = brodcast[indexPath.row].userId else { return}
+            self.bindingUser(id: user)
         } else if brodcastStatus == "WAIT_FOR_APPROVE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
@@ -172,10 +186,13 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             playerViewController!.view.removeFromSuperview()
             self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
             homeView.labelLike.text = "\(like)"
+            guard let user = brodcast[indexPath.row].userId else { return}
+            self.bindingUser(id: user)
         }
         
         
         guard let url = urlStream else { return }
+        isPlay = true
         playerViewController?.player?.pause()
         playerViewController!.view.removeFromSuperview()
         self.homeView.labelStreamInfo.text = brodcast[indexPath.row].streams?.first?.name

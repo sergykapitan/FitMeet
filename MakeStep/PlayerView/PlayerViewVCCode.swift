@@ -230,26 +230,26 @@ final class PlayerViewVCCode: UIView {
         buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
         
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 0,width: 20,height: 20)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 10,width: 24,height: 24)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 24, paddingRight: 2)
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 16, paddingRight: 2)
         
         cardView.addSubview(labelLike)
-        labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
+        labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 10, width: 24, height: 24)
 
         cardView.addSubview(buttonLike)
         buttonLike.anchor(top: imagePromo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
 
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 40, height: 40)
+        buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
 
         cardView.addSubview(imageLogoProfile)
         imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
         
         cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 120)
+        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 100)
         labelStreamDescription.centerY(inView: imageLogoProfile)
 
         cardView.addSubview(labelCategory)

@@ -172,18 +172,18 @@ class ButtonOffline: UIViewController {
     //MARK: - Selectors
 
     func bindingChanellVOD(userId: String) {
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-
-                    self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.offlineView.tableView.reloadData()
-                }
-           })
+//        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//
+//                    self.brodcast = response.data!
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+//                    self.brodcast = self.brodcast.reversed()
+//                    self.offlineView.tableView.reloadData()
+//                }
+//           })
        }
     func bindingChanellVODNotAuth(userId: String) {
         take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)")

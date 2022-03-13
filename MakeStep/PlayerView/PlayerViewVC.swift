@@ -31,10 +31,17 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
  
     weak var delegatePlayer: DissmisPlayer?
     
+    var currentPage : Int = 1
+    var currentPageCategory : Int = 1
+    var isLoadingList : Bool = true
+    var itemCount: Int = 0
+    var categoryCount: Int = 0
+    var allCount: Int = 0
   
 
     var isPlaying: Bool = false
     var isButton: Bool = true
+   
     
     var isLandscape: Bool = true
     var isLand:Bool = true
@@ -59,6 +66,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    private var takeOff: AnyCancellable?
     private var takeBroadcastPlanned: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
@@ -129,21 +137,23 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
       
        
         
-        let categorys = broadcast?.categories
-        let s = categorys!.map{$0.title!}
-        let arr = s.map { String("\u{0023}" + $0)}
-        homeView.labelCategory.removeAllTags()
-        homeView.labelCategory.addTags(arr)
-        homeView.labelCategory.delegate = self
+       
+
         if self.broadcast?.status == "ONLINE" {
             self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
         } else {
-        self.urlStream = self.broadcast?.streams?.first?.vodUrl
+            self.urlStream = self.broadcast?.streams?.first?.vodUrl
         }
         self.homeView.labelStreamInfo.text = broadcast?.name
         loadPlayer()
         guard let idU = self.id else { return }
         bindingUser(id: idU)
+//        guard let categorys = broadcast?.categories else { return }
+//        let s = categorys.map{$0.title!}
+//        let arr = s.map { String("\u{0023}" + $0)}
+//        homeView.labelCategory.removeAllTags()
+//        homeView.labelCategory.addTags(arr)
+//        homeView.labelCategory.delegate = self
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -272,7 +282,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
-                      self.bindingChanellVOD(userId: "\(id)")
+                      self.bindingChanellVOD(userId: "\(id)", page: currentPage )
                  }
           })
       }
@@ -393,8 +403,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         playPauseButton.avPlayer = player
         
         self.homeView.playerSlider.minimumValue = 0
-               
-               
+        self.homeView.playerSlider.setValue(0, animated: true)
+         
+        
         let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
         let seconds : Float64 = CMTimeGetSeconds(duration)
                
@@ -406,7 +417,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.homeView.playerSlider.maximumValue = Float(seconds)
             self.homeView.playerSlider.isContinuous = true
             self.homeView.playerSlider.tintColor = .blueColor
-            let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
+            let (_, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
             self.homeView.labelTimeEnd.text = "\(m).\(s)"
             
         }
@@ -590,6 +601,12 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
+                    guard let categorys = self.broadcast?.categories else { return }
+                    let s = categorys.map{$0.title!}
+                    let arr = s.map { String("\u{0023}" + $0)}
+                    self.homeView.labelCategory.removeAllTags()
+                    self.homeView.labelCategory.addTags(arr)
+                    self.homeView.labelCategory.delegate = self
                     self.setUserProfile(user: self.user!)
                     self.homeView.tableView.reloadData()
  
@@ -597,23 +614,74 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             })
         }
    
-    func bindingChanellVOD(userId: String) {
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)")
+    
+    func bindingChanellVOD(userId: String,page: Int) {
+        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-
-                    guard  var s  = response.data?.reversed() else { return }
-                    self.brodcast.append(contentsOf: s.reversed())
-                    self.homeView.tableView.reloadData()
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                   
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.itemCount = itemCount
                 }
            })
        }
+    func loadMoreItemsForList(){
+            currentPage += 1
+            guard let id = user?.id else { return }
+            bindingChanellVOD(userId: "\(id)", page: currentPage)
+       }
+    func bindingCategory(categoryId: Int,page: Int) {
+        self.isLoadingList = false
+        takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId, page: page)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.categoryCount = itemCount
+                }
+        })
+    }
+    func loadMoreCaategoryForList(){
+            currentPageCategory += 1
+            guard let id = self.broadcast?.categories?.first?.id else { return }
+            bindingCategory(categoryId: id,page: currentPageCategory)
+       }
+    func bindingOff() {
+        takeOff = fitMeetStream.getOffBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.allCount = itemCount
+                }
+            })
+    }
     func getMapWather(ids: [Int])  {
         watcherMap = fitMeetApi.getWatcherMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
+                if !response.data.isEmpty {
                     guard let watchers = response.data["\(ids.first!)"] else { return }
                     self.homeView.labelEye.text = "\(watchers)"
                 }

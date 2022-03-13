@@ -9,6 +9,7 @@ import Foundation
 
 struct BroadcastList: Codable {
     var data: [BroadcastResponce]?
+    let meta: MetaBroadcast?
 }
 
 struct BroadcastResponce:Codable {
@@ -37,7 +38,7 @@ struct BroadcastResponce:Codable {
     let isFollow: Bool?
     let isSubscriber: Bool?
     let resizedPreview: [String: ResizedPreview]?
-  
+
 }
 // MARK: - ResizedPreview
 struct ResizedPreview: Codable,Hashable {
@@ -76,4 +77,10 @@ struct Stream: Codable {
     let vodUrl1080: String?
     let dashURL: String?
     let vodUrl: String?
+}
+struct MetaBroadcast: Codable {
+     let page: Int?
+     let take: Int?
+     let itemCount: Int?
+     let pageCount: Int?
 }
