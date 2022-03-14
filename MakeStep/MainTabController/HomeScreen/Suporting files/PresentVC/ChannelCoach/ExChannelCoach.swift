@@ -166,13 +166,18 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
 }
 extension ChannelCoach: DissmisPlayer {
     func reloadbroadcast() {
-        brodcast.removeAll()
-        guard let id = user?.id else { return }
-        bindingChannel(userId: id)
-        if token != nil {
-            self.binding(id: "\(id)")
-        } else {
-            self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
+        UIView.animate(withDuration: 0.2, options: .curveEaseIn) {
+            self.homeView.imagePromo.isHidden = true
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.labelStreamInfo.isHidden = true
+            self.homeView.buttonMore.isHidden = true
+            homeView.cardView.addSubview(homeView.tableView)
+            homeView.tableView.anchor(top: homeView.cardView.topAnchor,
+                             left: homeView.cardView.leftAnchor,
+                             right: homeView.cardView.rightAnchor,
+                             bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        } completion: { <#Bool#> in
+            <#code#>
         }
     }
 }
