@@ -188,6 +188,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+      
         self.homeView.imagePromo.isHidden = true
         self.homeView.imageLogo.isHidden = true
         self.homeView.labelStreamInfo.isHidden = true

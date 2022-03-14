@@ -109,12 +109,6 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             if self.itemCount > brodcast.count {
             self.isLoadingList = true
             self.loadMoreItemsForList() 
-            } else {
-                self.isLoadingList = true
-                self.loadMoreCaategoryForList()
-                if self.categoryCount + self.itemCount == brodcast.count {
-                    bindingOff()
-                }
             }
         }
        return cell
@@ -150,10 +144,10 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         
         print("Broadcast == \(self.brodcast[indexPath.row])")
         
-        if self.brodcast[indexPath.row] == nil {
-            return
-        }
+        if self.brodcast[indexPath.row] == nil { return }
         if self.brodcast[indexPath.row].status == "ONLINE" {
+            guard let streams = brodcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
@@ -162,7 +156,9 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
-            guard let stream = brodcast[indexPath.row].streams?.first else { return }
+            guard let streams = brodcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
+            guard let url = streams.first?.vodUrl else { return }
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id = self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true

@@ -42,6 +42,7 @@ final class ChanellCoachCode: UIView {
     }()
     var imagePromo: UIView = {
         var image = UIView()
+        image.isHidden =  true
         return image
     }()
 
@@ -56,13 +57,14 @@ final class ChanellCoachCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.text = "Stream information"
         label.numberOfLines = 1
-       
+        label.isHidden = true
         return label
     }()
   
     var buttonMore: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        button.isHidden = true
         return button
     }()
     var welcomeLabel: UILabel = {
@@ -218,6 +220,7 @@ final class ChanellCoachCode: UIView {
         view.layer.borderColor = UIColor.gray.cgColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
+        view.isHidden = true
         return view
     }()
     var labelLive: UILabel = {
@@ -225,17 +228,20 @@ final class ChanellCoachCode: UIView {
         label.text = "Live"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.isHidden = true
         return label
     }()
     var imageLive: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "slider")
+        image.isHidden = true
         return image
         
     }()
     var imageEye: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "eye")
+        image.isHidden = true
         return image
         
     }()
@@ -244,6 +250,7 @@ final class ChanellCoachCode: UIView {
         label.text = "0"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.isHidden = true
         return label
     }()
   
