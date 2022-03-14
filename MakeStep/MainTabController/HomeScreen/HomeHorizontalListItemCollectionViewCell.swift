@@ -35,8 +35,8 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
         let label = UILabel()
         label.textColor = .black
         label.textAlignment = .center
-        label.numberOfLines = 2
-        label.font = UIFont(name: "AvenirNext-Medium", size: 12)
+        label.numberOfLines = 1
+        label.font = UIFont(name: "AvenirNext-Medium", size: 9)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -88,19 +88,19 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
         addSubview(placeholderImage)
         
         NSLayoutConstraint.activate([
-            imageView.heightAnchor.constraint(equalToConstant: 48),
-            imageView.widthAnchor.constraint(equalToConstant: 48),
+            imageView.heightAnchor.constraint(equalToConstant: 50),
+            imageView.widthAnchor.constraint(equalToConstant: 50),
             imageView.topAnchor.constraint(equalTo: topAnchor),
             imageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             
-            placeholderImage.heightAnchor.constraint(equalToConstant: 48),
-            placeholderImage.widthAnchor.constraint(equalToConstant: 48),
+            placeholderImage.heightAnchor.constraint(equalToConstant: 50),
+            placeholderImage.widthAnchor.constraint(equalToConstant: 50),
             placeholderImage.topAnchor.constraint(equalTo: topAnchor),
             placeholderImage.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 4),
-            nameLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            nameLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor,constant: -2),
+            nameLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor,constant: 2),
         ])
         
         //imageView.showAnimatedGradientSkeleton()

@@ -77,6 +77,7 @@ struct Stream: Codable {
     let vodUrl1080: String?
     let dashURL: String?
     let vodUrl: String?
+    let vodLength: Int?
 }
 struct MetaBroadcast: Codable {
      let page: Int?

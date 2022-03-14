@@ -51,13 +51,14 @@ extension HomeVC: UITableViewDataSource {
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
         else { return cell}
-
+            
+     
 
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
         cell.labelEye.text = "\(self.watch)"
- 
+      
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
@@ -67,22 +68,20 @@ extension HomeVC: UITableViewDataSource {
         cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
+        cell.buttonLike.isHidden = true
       
-        
-        if listBroadcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
+       
   
         
         if listBroadcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)
-            cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
+            if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+            cell.labelLive.text =  " \(time.secondsToTime())"
+            }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")

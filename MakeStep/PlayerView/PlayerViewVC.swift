@@ -148,12 +148,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         loadPlayer()
         guard let idU = self.id else { return }
         bindingUser(id: idU)
-//        guard let categorys = broadcast?.categories else { return }
-//        let s = categorys.map{$0.title!}
-//        let arr = s.map { String("\u{0023}" + $0)}
-//        homeView.labelCategory.removeAllTags()
-//        homeView.labelCategory.addTags(arr)
-//        homeView.labelCategory.delegate = self
+
     }
 
     override func viewDidDisappear(_ animated: Bool) {

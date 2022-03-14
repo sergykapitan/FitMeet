@@ -88,7 +88,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
         makeTableView()
-       // makeNavItem()
         if token != nil {
             binding()
         } else {
@@ -104,40 +103,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
       
         
     }
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Make Step"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .center
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-           self.navigationItem.leftBarButtonItems = [customTitles]
-           self.navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
-    @objc func timeHandAction() {
-        let tvc = Timetable()
-        tvc.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(tvc, animated: true)
-        
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
- 
+   
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         if index == 0 {

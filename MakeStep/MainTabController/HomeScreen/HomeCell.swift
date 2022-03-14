@@ -23,11 +23,9 @@ final class HomeCell: UITableViewCell {
     }()
     var logoUserImage: UIImageView = {
         let image = UIImageView()
-       // image.layer.borderWidth = 1
         image.layer.masksToBounds = false
-       // image.layer.borderColor = UIColor.red.cgColor
         image.clipsToBounds = true
-        image.layer.cornerRadius = 18
+        image.layer.cornerRadius = 12
         return image
         
     }()
@@ -70,6 +68,7 @@ final class HomeCell: UITableViewCell {
         label.numberOfLines = 2
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
+        label.numberOfLines = 2
         return label
     }()
     var labelCategory : UILabel = {
@@ -161,28 +160,28 @@ final class HomeCell: UITableViewCell {
                           bottom: contentView.bottomAnchor,
                           paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 110)
         
+        bottomView.addSubview(buttonMore)
+        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
+
+        bottomView.addSubview(labelDescription)
+        labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
         
         bottomView.addSubview(logoUserImage)
-        logoUserImage.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 36,height: 36)
+        logoUserImage.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
         
         bottomView.addSubview(logoUserOnline)
         logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
         
         bottomView.addSubview(titleLabel)
-        titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8)
+        titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8 ,width: 100)
         titleLabel.centerY(inView: logoUserImage)
-        
-        bottomView.addSubview(buttonMore)
-        buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
-        
+
         contentView.addSubview(buttonLike)
         buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 0,width: 24,height: 24)
-        
-        bottomView.addSubview(labelDescription)
-        labelDescription.anchor(top: titleLabel.bottomAnchor, left: logoUserImage.rightAnchor,right: contentView.rightAnchor , paddingTop: 8, paddingLeft: 8,paddingRight: 16)
-        
+
         contentView.addSubview(tagView)
-        tagView.anchor(top: labelDescription.bottomAnchor, left: logoUserImage.rightAnchor,right: bottomView.rightAnchor,paddingTop: 0, paddingLeft: 8,paddingRight: 8)
+        tagView.anchor(left: titleLabel.rightAnchor,right: bottomView.rightAnchor, paddingLeft: 5 ,paddingRight: 8)
+        tagView.centerY(inView: logoUserImage)
         
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,

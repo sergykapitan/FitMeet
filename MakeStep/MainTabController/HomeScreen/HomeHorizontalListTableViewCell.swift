@@ -21,7 +21,7 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
     private lazy var collectionView:  UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 4
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 12, bottom: 0, right: 0)
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.dataSource = self
@@ -101,7 +101,7 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
 extension HomeHorizontalListTableViewCell: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 80 , height: 84)
+        return CGSize(width: 60 , height: 84)
     }
     
 }
