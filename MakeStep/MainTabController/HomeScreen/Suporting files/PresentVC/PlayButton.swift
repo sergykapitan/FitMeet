@@ -15,7 +15,7 @@ class PlayPauseButton: UIView {
     
     var vies: UIView?
     var vc: UIViewController?
-    
+   
     
     var complitionHandler: ((Int)->Void)?
 
@@ -36,6 +36,7 @@ class PlayPauseButton: UIView {
         updatePosition()
         updateUI()
         addObservers()
+      
     }
 
     @objc func tapped(_ sender: UITapGestureRecognizer) {
@@ -51,13 +52,12 @@ class PlayPauseButton: UIView {
         }
     }
 
+
     func updateUI() {
         if isPlaying {
-            setBackgroundImage(name: "Play")////pause1
-            
-
+            setBackgroundImage(name: "Play")
         } else {
-            setBackgroundImage(name: "PlayLand")//play2
+            setBackgroundImage(name: "PlayLand")
         }
     }
     

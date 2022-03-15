@@ -160,6 +160,7 @@ final class PlayerViewVCCode: UIView {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.text = "2"
         return label
     }()
     var buttonSubscribe: UIButton = {

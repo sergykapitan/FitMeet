@@ -81,6 +81,8 @@ extension HomeVC: UITableViewDataSource {
             cell.logoUserOnline.isHidden = true
             if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
             cell.labelLive.text =  " \(time.secondsToTime())"
+            } else {
+            cell.labelLive.text = ""
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
@@ -184,6 +186,7 @@ extension HomeVC: UITableViewDelegate {
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id =  self.listBroadcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
+            vc.homeView.playerSlider.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
@@ -196,6 +199,7 @@ extension HomeVC: UITableViewDelegate {
             vc.homeView.imageLive.isHidden = true
             vc.homeView.labelLive.isHidden = true
             vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)

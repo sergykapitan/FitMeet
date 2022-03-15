@@ -323,6 +323,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
    
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
+  
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
@@ -334,6 +335,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.playerSlider.isHidden = true
             homeView.labelTimeEnd.isHidden = true
             homeView.labelTimeStart.isHidden =  true
+            homeView.imageEye.isHidden = true
             if playPauseButton == nil {
                 
             } else {
@@ -341,17 +343,33 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
             isButton = false
         } else {
+            if self.broadcast?.status == "OFFLINE" {
+                homeView.overlay.isHidden = true
+                homeView.imageLive.isHidden = true
+                homeView.labelLive.isHidden = true
+                homeView.labelEye.isHidden = true
+                
+            } else {
+                homeView.overlay.isHidden = false
+                homeView.imageLive.isHidden = false
+                homeView.labelLive.isHidden = false
+                homeView.labelEye.isHidden = false
+            }
+             if self.broadcast?.status == "ONLINE" {
+                 homeView.playerSlider.isHidden = true
+                 homeView.imageEye.isHidden = false
+            } else {
+                homeView.playerSlider.isHidden = false
+               
+            }
             homeView.buttonSetting.isHidden = false
-            homeView.overlay.isHidden = false
-            homeView.imageLive.isHidden = false
-            homeView.labelLive.isHidden = false
-            homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
-            homeView.playerSlider.isHidden = false
             homeView.labelTimeEnd.isHidden = false
             homeView.labelTimeStart.isHidden =  false
-         
+            
+           
+            
             if playPauseButton == nil {
                 
             } else {
@@ -394,8 +412,12 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
+        
         playPauseButton = PlayPauseButton()
         playPauseButton.avPlayer = player
+        
+
+       
         
         self.homeView.playerSlider.minimumValue = 0
         self.homeView.playerSlider.setValue(0, animated: true)
@@ -417,7 +439,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             
         }
 
-       
+
         if isPlay {
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
                  if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
@@ -425,13 +447,17 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                      UIView.animate(withDuration: 2) {
                          self.homeView.playerSlider.setValue(Float(time), animated: true)
                     }
-                     let (h, m, s) = self.secondsToHoursMinutesSeconds(Int(time))
+                     let (_, m, s) = self.secondsToHoursMinutesSeconds(Int(time))
                      self.homeView.labelTimeStart.text =  "\(m).\(s)" + "/"
                  }
              }
         }
+   
+        
+
         self.homeView.imagePromo.addSubview(playPauseButton)
-        playPauseButton.setup(in: self)
+        playPauseButton.setup(in: self.playerViewController!)
+     
         
         self.view.addSubview(self.homeView.buttonSetting)
         self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 21,  width: 20, height: 20)
