@@ -141,7 +141,8 @@ extension HomeVC: UITableViewDataSource {
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom
         detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url        
+        detailViewController.url = self.url
+        detailViewController.broadcast = self.listBroadcast[sender.tag]
         present(detailViewController, animated: true)
 
     }

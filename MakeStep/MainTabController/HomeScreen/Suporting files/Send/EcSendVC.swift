@@ -22,16 +22,15 @@ extension SendVC: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "SendVCCell", for: indexPath) as! SendVCCell
         cell.labelCategory.text = list[indexPath.row]
-         return cell
+        return cell
     }
-    
 }
 extension SendVC: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 2 {
-            guard let urlString = url else { return }          
-            urlString.share()
+            guard let id = broadcast?.id else { return }
+            "https://makestep.com/broadcast/\(id)".share()
         }
     }
 }

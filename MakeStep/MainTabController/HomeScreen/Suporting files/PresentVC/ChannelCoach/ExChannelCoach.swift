@@ -125,14 +125,14 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
                     detailViewController.url = self.url
                     detailViewController.broadcast = brodcast[sender.tag]
                     present(detailViewController, animated: true)
-                } else {
-        
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        present(detailViewController, animated: true)
+                } else {        
+                    let detailViewController = SendVC()
+                    actionSheetTransitionManager.height = 0.2
+                    detailViewController.modalPresentationStyle = .custom
+                    detailViewController.transitioningDelegate = actionSheetTransitionManager
+                    detailViewController.url = self.url
+                    detailViewController.broadcast = brodcast[sender.tag]
+                    present(detailViewController, animated: true)
         }
 
     }

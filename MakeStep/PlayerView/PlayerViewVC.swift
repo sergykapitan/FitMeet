@@ -41,6 +41,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
     var isPlaying: Bool = false
     var isButton: Bool = true
+    
+    var isPrivate: Bool = false
    
     
     var isLandscape: Bool = true
@@ -93,8 +95,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var listBroadcast: [BroadcastResponce] = []
     
     var broadcast: BroadcastResponce?
-    var  broadId: Int?
-    var i : Int?
+    var broadId: String?
+  
     
     private let refreshControl = UIRefreshControl()
   
@@ -142,7 +144,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.urlStream = self.broadcast?.streams?.first?.vodUrl
         }
         self.homeView.labelStreamInfo.text = broadcast?.name
-        loadPlayer()
+        if isPrivate {
+            guard let id = broadId else { return }
+            bindingBroadcastForId(id: id )
+        } else {
+           loadPlayer()
+        }
+        
         guard let idU = self.id else { return }
         bindingUser(id: idU)
 
@@ -276,6 +284,20 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                       self.brodcast.append(contentsOf: response.data!)
                       self.bindingChanellVOD(userId: "\(id)", page: currentPage )
                  }
+          })
+      }
+    func bindingBroadcastForId(id: String) {
+          takeBroadcast = fitMeetStream.getBroadcastId(id: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                      self.broadcast = response
+                  if self.broadcast?.status == "ONLINE" {
+                      self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
+                  } else {
+                      self.urlStream = self.broadcast?.streams?.first?.vodUrl
+                  }
+                  self.homeView.labelStreamInfo.text = broadcast?.name
+                  loadPlayer()
           })
       }
     func bindingPlanned(id: String) {

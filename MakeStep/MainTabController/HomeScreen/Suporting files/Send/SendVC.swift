@@ -17,6 +17,7 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
 
     var list = ["Send a complaint...","Copy link","Share with..."]
     var url: String?
+    var broadcast: BroadcastResponce?
     
     // MARK: Views
     var butH: UIButton = {
