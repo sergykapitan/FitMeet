@@ -63,7 +63,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         if index == 0 {
             self.index = index
             if token != nil {
-                self.binding(name: "a")
+                bindingRec()
             } else {
                 self.bindingNotAuth(name: "a")
             }
@@ -111,7 +111,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         }
         setupSearchBar()
         if token != nil {
-            self.binding(name: "a")
+            bindingRec()
         } else {
             self.bindingNotAuth(name: "a")
         }
@@ -157,6 +157,24 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                         self.searchView.tableView.isHidden = false
                         self.searchView.labelNtResult.isHidden = true
                     }                   
+                    self.searchView.tableView.reloadData()
+                }
+          })
+    }
+    func bindingRec() {
+        takeBroadcast = fitMeetStream.getRecomandateBroadcast()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.listBroadcast = response.data!
+                    self.filtredBroadcast = self.listBroadcast
+                    if self.listBroadcast.isEmpty {
+                        self.searchView.tableView.isHidden = true
+                        self.searchView.labelNtResult.isHidden = false
+                    } else {
+                        self.searchView.tableView.isHidden = false
+                        self.searchView.labelNtResult.isHidden = true
+                    }
                     self.searchView.tableView.reloadData()
                 }
           })

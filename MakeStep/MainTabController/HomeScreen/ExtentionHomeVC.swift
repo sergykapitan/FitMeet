@@ -213,9 +213,6 @@ extension HomeVC: UITableViewDelegate {
             print("FINISHED")
             return
         }
-     
-      
-
     }
 }
 

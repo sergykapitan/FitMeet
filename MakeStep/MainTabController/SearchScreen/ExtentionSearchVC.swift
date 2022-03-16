@@ -101,14 +101,54 @@ extension SearchVC: UITableViewDelegate {
         
 
         if index == 0 {
-            guard let id = self.listBroadcast[indexPath.row].userId else { return }
-            self.getUser(id: id)
-//            let vc = ChannelCoach()
-//            vc.modalPresentationStyle = .fullScreen
-//            vc.user = self.user
-//            self.user = nil
-//            navigationController?.pushViewController(vc, animated: true)
-     
+       //     guard let id = self.listBroadcast[indexPath.row].userId else { return }
+           
+
+//          guard let broadcastID = self.listBroadcast[indexPath.row].id,
+//                let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+
+        //  self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+        //  let vc = ChannelCoach()
+        //  vc.modalPresentationStyle = .fullScreen
+        //  vc.user = self.usersd[id!]
+        //  vc.broadcast = self.listBroadcast[indexPath.row]
+        //  navigationController?.pushViewController(vc, animated: true)
+        let vc = PlayerViewVC()
+        
+    
+        if self.listBroadcast[indexPath.row].status == "ONLINE" {
+            vc.broadcast = self.listBroadcast[indexPath.row]
+            vc.id =  self.listBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = false
+            vc.homeView.playerSlider.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        } else if  self.listBroadcast[indexPath.row].status == "OFFLINE" {
+            guard let streams = listBroadcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
+            guard let url = streams.first?.vodUrl else { return }
+            vc.broadcast = self.listBroadcast[indexPath.row]
+            vc.id = self.listBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
+            vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        } else if  self.listBroadcast[indexPath.row].status == "PLANNED" {
+            print("PLANNED")
+            return
+        } else if  self.listBroadcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+            print("WAIT_FOR_APPROVE")
+            return
+        } else if  self.listBroadcast[indexPath.row].status == "FINISHED" {
+            print("FINISHED")
+            return
+        }
             
         } else if index == 1 {
             let user = listUsers[indexPath.row]

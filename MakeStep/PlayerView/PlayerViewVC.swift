@@ -135,9 +135,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
       
-       
-        
-       
 
         if self.broadcast?.status == "ONLINE" {
             self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
