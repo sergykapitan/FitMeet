@@ -295,8 +295,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                   if self.broadcast?.status == "ONLINE" {
                       self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
                       self.homeView.playerSlider.isHidden = true
+                      bindingUser(id: 20)
                   } else {
                       self.urlStream = self.broadcast?.streams?.first?.vodUrl
+                      bindingUser(id: 20)
                   }
                   self.homeView.labelStreamInfo.text = broadcast?.name
                   loadPlayer()

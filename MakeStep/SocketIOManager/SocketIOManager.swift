@@ -73,6 +73,7 @@ class SocketIOManager: NSObject {
     }
     
     func connectToServerWithNickname(nicname: String, completionHandler: @escaping (_ userList: [Int]?) -> Void) {
+        guard let socket = socket else {return}
         socket.connect()
         var arrayUserId = [Int]()
         var arrUser = [Any]()
