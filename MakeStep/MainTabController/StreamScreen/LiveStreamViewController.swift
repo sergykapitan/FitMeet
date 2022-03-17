@@ -99,6 +99,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     var idBroadcast: Int = 0
     var idBroad: Int?
     var chanell: Int?
+    var isPrivate: Bool = false
+    var privateUrlKey: String?
     
     
     var captureSession: AVCaptureSession!
@@ -113,6 +115,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     private var currentEffect: VideoEffect?
     private var currentPosition: AVCaptureDevice.Position = .back
     private var retryCount: Int = 0
+    var broadcastId: Int?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
@@ -123,6 +126,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+              
 
         actionButton()
         rtmpStream = RTMPStream(connection: rtmpConnection)
@@ -131,7 +135,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         }
         rtmpStream.captureSettings = [
             .sessionPreset: AVCaptureSession.Preset.hd1280x720,
-          //  .continuousAutofocus: true,
+            .continuousAutofocus: true,
             .continuousExposure: true,
            // .preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
         ]
@@ -178,9 +182,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.previewView.videoGravity = AVLayerVideoGravity.resizeAspectFill
         rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
         streamView.previewView.attachStream(rtmpStream)
-        
-       
-        
+        if isPrivate {
+            streamView.stackButton.addArrangedSubview(streamView.privateStream)
+        } 
     }
     override func viewWillDisappear(_ animated: Bool) {
         logger.info("viewWillDisappear")
@@ -205,6 +209,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.stopButton.addTarget(self, action: #selector(stopStream), for: .touchUpInside)
         streamView.chatButton.addTarget(self, action: #selector(openChat), for: .touchUpInside)
         streamView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
+        streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
     }
 
     @objc func rotateCamera() {
@@ -215,6 +220,10 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             logger.warn(error.description)
         }
         currentPosition = position
+    }
+    @objc func shareLink() {        
+        guard let id = broadcastId,let privateKey = privateUrlKey else { return }
+        "https://makestep.com/broadcast/\(id)/\(privateKey)".share()
     }
     // MARK: - presentChat
     

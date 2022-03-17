@@ -96,6 +96,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     
     var broadcast: BroadcastResponce?
     var broadId: String?
+    var privateKey: String?
   
     
     private let refreshControl = UIRefreshControl()
@@ -145,10 +146,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
-            guard let id = broadId else { return }
-            bindingBroadcastForId(id: id )
+            guard let id = broadId,let key = privateKey else { return }
+            bindingBroadcastForId(id: id, key: key )
         } else {
-           loadPlayer()
+            loadPlayer()
         }
         
         guard let idU = self.id else { return }
@@ -286,13 +287,14 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  }
           })
       }
-    func bindingBroadcastForId(id: String) {
-          takeBroadcast = fitMeetStream.getBroadcastId(id: id)
+    func bindingBroadcastForId(id: String, key: String) {
+        takeBroadcast = fitMeetStream.getBroadcastId(id: id, key: key)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                       self.broadcast = response
                   if self.broadcast?.status == "ONLINE" {
                       self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
+                      self.homeView.playerSlider.isHidden = true
                   } else {
                       self.urlStream = self.broadcast?.streams?.first?.vodUrl
                   }

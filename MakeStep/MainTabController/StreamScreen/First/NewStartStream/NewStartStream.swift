@@ -68,6 +68,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var url: String?
     var myuri: String?
     var myPublish: String?
+    var status = "STANDART"
     
     let serviceProvider = Serviceprovider<CharacterProvider>()
    // let request: URLRequest?
@@ -166,7 +167,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
       
         authView.textFieldStartDate.optionArray = ["NOW", "Later"]
         
-        authView.textFieldAviable.optionArray = ["All"]
+        authView.textFieldAviable.optionArray = ["All","Private Stream"]
         
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         
@@ -199,10 +200,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.authView.textFieldCategory.text = ""
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-           print("Tag Remove pressed: \(title), \(sender)")
            sender.removeTagView(tagView)
-           let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
-       
        }
 
     func registerForKeyboardNotifications() {
@@ -308,7 +306,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             isPlan = true
             date = authView.textFieldStartDate.text
         }
-        //"All","Subscribers", "Only Sponsors"
+        
         if authView.textFieldAviable.text == "All" {
              onlyForSponsors = false
              onlyForSubscribers = false
@@ -318,6 +316,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         } else if authView.textFieldAviable.text == "Only Sponsors" {
             onlyForSponsors = true
             onlyForSubscribers = false
+        } else if authView.textFieldAviable.text == "Private Stream" {
+            onlyForSponsors = false
+            onlyForSubscribers = false
+            status = "PRIVATE_LINK"
         }
         
         
@@ -326,10 +328,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
               let sponsor = onlyForSponsors,
               let sub = onlyForSubscribers else { return }
         
-       
-        
-     
-        
+ 
         self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
      
     }
@@ -425,7 +424,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
                                                     channelID: chanellId,
                                                     name: name,
-                                                    type: "STANDARD",
+                                                    type: status,
                                                     access: "ALL",
                                                     hasChat: true,
                                                     isPlanned: isPlaned,
@@ -499,11 +498,21 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             navVC.modalPresentationStyle = .fullScreen
             navVC.idBroad = id
             guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-            navVC.myuri = myuris
-            navVC.myPublish = myPublishh
-            self.present(navVC, animated: true) {
-                self.authView.textFieldStartDate.text = ""
-            }
+                navVC.myuri = myuris
+                navVC.myPublish = myPublishh
+
+        if self.authView.textFieldAviable.text == "All" {
+            navVC.isPrivate = false
+        } else {
+            navVC.isPrivate = true
+            navVC.broadcastId = self.broadcast?.id
+            navVC.privateUrlKey = self.broadcast?.privateUrlKey
+        }
+    
+        self.present(navVC, animated: true) {
+            self.authView.textFieldStartDate.text = ""
+        }
+
         } else {
             let channelVC = ChanellVC()
             channelVC.user = self.user

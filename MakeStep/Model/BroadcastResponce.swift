@@ -38,6 +38,7 @@ struct BroadcastResponce:Codable {
     let isFollow: Bool?
     let isSubscriber: Bool?
     let resizedPreview: [String: ResizedPreview]?
+    let privateUrlKey: String?
 
 }
 // MARK: - ResizedPreview

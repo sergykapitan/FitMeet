@@ -24,6 +24,7 @@ final class LiveStreamVCCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
+   
     let cameraModeButton: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "rotate"), for: .normal)
@@ -41,7 +42,6 @@ final class LiveStreamVCCode: UIView {
     }()
     let StartStreamButton: UIButton = {
         let button = UIButton()
-       // button.layer.cornerRadius = 6
         button.setImage(#imageLiteral(resourceName: "startCamera"), for: .normal)
         return button
     }()
@@ -76,6 +76,17 @@ final class LiveStreamVCCode: UIView {
         button.setImage(#imageLiteral(resourceName: "stopStream"), for: .normal)
         return button
     }()
+    let privateStream: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "PrivateStream"), for: .normal)
+        return button
+    }()
+    var stackButton: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        return stack
+    }()
 
     // MARK: - Init
     init() {
@@ -89,7 +100,10 @@ final class LiveStreamVCCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
+        stackButton = UIStackView(arrangedSubviews: [cameraModeButton,cameraButton,StartStreamButton,chatButton,microfoneButton])
+        stackButton.spacing = 10
         addSubview(capturePreviewView)
+           
  
     }
     private func initLayout() {
@@ -126,40 +140,46 @@ final class LiveStreamVCCode: UIView {
     recButton.anchor(right: timerLabel.leftAnchor,
                      paddingRight: 5,  width: 12, height: 12)
     recButton.centerY(inView: timerLabel)
+        
+        
+    capturePreviewView.addSubview(stackButton)
+    stackButton.anchor( bottom: capturePreviewView.bottomAnchor, paddingBottom: 32)
+    stackButton.centerX(inView: capturePreviewView)
+        
                 
-    capturePreviewView.addSubview(StartStreamButton)
-    StartStreamButton.anchor(  bottom:capturePreviewView.bottomAnchor,
-                                paddingBottom: 32)
-    StartStreamButton.centerX(inView: capturePreviewView)
-     
-    capturePreviewView.addSubview(stopButton)
-    stopButton.anchor(right: StartStreamButton.leftAnchor,
-                                       paddingRight: 15)
-    stopButton.centerY(inView: StartStreamButton)
-        
-        
-    capturePreviewView.addSubview(chatButton)
-        chatButton.anchor(left: StartStreamButton.rightAnchor,
-                                  paddingLeft: 15)
-        chatButton.centerY(inView: StartStreamButton)
-        
-        
-    capturePreviewView.addSubview(cameraButton)
-    cameraButton.anchor(right: StartStreamButton.leftAnchor,
-                                   paddingRight: 15)
-    cameraButton.centerY(inView: StartStreamButton)
-     
-        
-    capturePreviewView.addSubview(cameraModeButton)
-    cameraModeButton.anchor(right: cameraButton.leftAnchor,
-                                paddingRight: 15)
-    cameraModeButton.centerY(inView: StartStreamButton)
-        
-    
-    capturePreviewView.addSubview(microfoneButton)
-    microfoneButton.anchor(left: chatButton.rightAnchor,
-                                 paddingLeft: 15)
-    microfoneButton.centerY(inView: StartStreamButton)
+//    capturePreviewView.addSubview(StartStreamButton)
+//    StartStreamButton.anchor(  bottom:capturePreviewView.bottomAnchor,
+//                                paddingBottom: 32)
+//    StartStreamButton.centerX(inView: capturePreviewView)
+//     
+//    capturePreviewView.addSubview(stopButton)
+//    stopButton.anchor(right: StartStreamButton.leftAnchor,
+//                                       paddingRight: 15)
+//    stopButton.centerY(inView: StartStreamButton)
+//        
+//        
+//    capturePreviewView.addSubview(chatButton)
+//        chatButton.anchor(left: StartStreamButton.rightAnchor,
+//                                  paddingLeft: 15)
+//        chatButton.centerY(inView: StartStreamButton)
+//        
+//        
+//    capturePreviewView.addSubview(cameraButton)
+//    cameraButton.anchor(right: StartStreamButton.leftAnchor,
+//                                   paddingRight: 15)
+//    cameraButton.centerY(inView: StartStreamButton)
+//     
+//        
+//    capturePreviewView.addSubview(cameraModeButton)
+//    cameraModeButton.anchor(right: cameraButton.leftAnchor,
+//                                paddingRight: 15)
+//    cameraModeButton.centerY(inView: StartStreamButton)
+//        
+//    
+//    capturePreviewView.addSubview(microfoneButton)
+//    microfoneButton.anchor(left: chatButton.rightAnchor,
+//                                 paddingLeft: 15)
+//    microfoneButton.centerY(inView: StartStreamButton)
         
         
         
