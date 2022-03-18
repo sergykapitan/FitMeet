@@ -310,6 +310,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         if authView.textFieldAviable.text == "All" {
              onlyForSponsors = false
              onlyForSubscribers = false
+            status = "STANDARD"
         } else if authView.textFieldAviable.text == "Subscribers" {
             onlyForSponsors = false
             onlyForSubscribers = true
@@ -329,7 +330,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
               let sub = onlyForSubscribers else { return }
         
  
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory, type: status)
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {
@@ -393,7 +394,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.listChanell = response.data
                     guard let sub = self.listChanell.last?.isSubscribe else { return }
                     if sub {
-                        self.authView.textFieldAviable.optionArray = ["All","Subscribers"]//,"Only Sponsors"
+                        self.authView.textFieldAviable.optionArray = ["All","Subscribers"]
                     }
                 }
         })
@@ -419,12 +420,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
+    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int],type: String)  {
 
         takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
                                                     channelID: chanellId,
                                                     name: name,
-                                                    type: status,
+                                                    type: type,
                                                     access: "ALL",
                                                     hasChat: true,
                                                     isPlanned: isPlaned,
@@ -445,7 +446,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     
                     self.authView.textFieldName.text = ""
                     self.authView.textFieldFree.text = ""
-                    self.authView.textFieldAviable.text = ""
+                   // self.authView.textFieldAviable.text = ""
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
                     self.authView.imageButton.setImage(nil, for: .normal)
@@ -475,7 +476,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                          Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
                              switch disType {
                              case .tapped:  self.startStream(id: id, url: url)
-                            case .timedOut: self.startStream(id: id, url: url)
+                             case .timedOut: self.startStream(id: id, url: url)
                          }
                      }
                  }
@@ -511,6 +512,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     
         self.present(navVC, animated: true) {
             self.authView.textFieldStartDate.text = ""
+            self.authView.textFieldAviable.text = ""
         }
 
         } else {

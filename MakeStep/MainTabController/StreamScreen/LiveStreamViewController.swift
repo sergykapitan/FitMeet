@@ -327,17 +327,15 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     @objc func startStream() {
       
-        if myuri != nil {
-            
+        if myuri != nil {            
         if streamView.StartStreamButton.isSelected {
-            
             UIApplication.shared.isIdleTimerDisabled = false
             rtmpConnection.close()
             rtmpConnection.removeEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
             rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "startCamera"), for: [])
             createTimer()
-            
+            self.streamView.stackButton.addArrangedSubview(streamView.stopButton)
             streamView.recButton.isHidden = true
             streamView.stopButton.isHidden = false
             streamView.microfoneButton.isHidden = true
