@@ -271,6 +271,16 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func getBroadcastId(id: String) -> AnyPublisher< BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)", method: .get, encoding: JSONEncoding.default)
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastResponce.self)
+                 .value()
+                 .print("getBroadcastId")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     //MARK: - startBrotcastId//GET//AUTH //stream/broadcasts/7
     public func startBroadcastId(id: Int) -> AnyPublisher< BroadcastResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)/start", method: .put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))

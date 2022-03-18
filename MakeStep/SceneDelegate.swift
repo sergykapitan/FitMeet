@@ -11,6 +11,8 @@ import AVFoundation
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    var pathKey: String?
+    var pathId: String?
     
     lazy var deeplinkCoordinator : DeeplinkCoordinatorProtocol = {
            return DeeplinkCoordinator(handlers: [
@@ -39,11 +41,15 @@ extension SceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let urlinfo = userActivity.webpageURL{
-            
+           
             let path = urlinfo.pathComponents
-            let pathKey = path[3]
-            let pathId = path[2]
-            
+            if path.count == 4 {
+                pathKey = path[3]
+                pathId = path[2]
+            } else {
+                pathKey = ""
+                pathId = urlinfo.lastPathComponent
+            }
             if let tableVC = self.window?.rootViewController as? MainTabBarViewController {
                    let reminderDetailsVC = PlayerViewVC()
                    reminderDetailsVC.modalPresentationStyle = .fullScreen

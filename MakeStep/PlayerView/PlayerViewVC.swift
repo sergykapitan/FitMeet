@@ -149,7 +149,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             guard let id = broadId,let key = privateKey else { return }
             bindingBroadcastForId(id: id, key: key )
         } else {
-            loadPlayer()
+            guard let id = broadId else { return}
+            bindingBroadcastFor(id: id)
         }
         
         guard let idU = self.id else { return }
@@ -310,7 +311,27 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                       bindingUser(id: userId)
                   } else {
                       self.urlStream = self.broadcast?.streams?.first?.vodUrl
-                      bindingUser(id: 20)
+                      guard let userId = self.broadcast?.userId else { return }
+                      bindingUser(id: userId)
+                  }
+                  self.homeView.labelStreamInfo.text = broadcast?.name
+                  loadPlayer()
+          })
+      }
+    func bindingBroadcastFor(id: String) {
+        takeBroadcast = fitMeetStream.getBroadcastId(id: id)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                      self.broadcast = response
+                  if self.broadcast?.status == "ONLINE" {
+                      self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
+                      self.homeView.playerSlider.isHidden = true
+                      guard let userId = self.broadcast?.userId else { return }
+                      bindingUser(id: userId)
+                  } else {
+                      self.urlStream = self.broadcast?.streams?.first?.vodUrl
+                      guard let userId = self.broadcast?.userId else { return }
+                      bindingUser(id: userId)
                   }
                   self.homeView.labelStreamInfo.text = broadcast?.name
                   loadPlayer()
