@@ -295,7 +295,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                   if self.broadcast?.status == "ONLINE" {
                       self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
                       self.homeView.playerSlider.isHidden = true
-                      bindingUser(id: 20)
+                      guard let userId = self.broadcast?.userId else { return }
+                      bindingUser(id: userId)
                   } else {
                       self.urlStream = self.broadcast?.streams?.first?.vodUrl
                       bindingUser(id: 20)
@@ -450,7 +451,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         let seconds : Float64 = CMTimeGetSeconds(duration)
                
         
-        guard let broadcast = broadcast else { return }
+        guard let broadcast = self.broadcast else { return }
         if broadcast.status == "ONLINE" {
             self.homeView.playerSlider.maximumValue = 1
         } else {

@@ -25,7 +25,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         }
 
-        cell.labelDescription.text = brodcast[indexPath.row].description
+        cell.labelDescription.text = brodcast[indexPath.row].name
        
 
         guard let id = brodcast[indexPath.row].userId,
@@ -87,7 +87,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.loadMoreItemsForList()
             } else {
                 self.isLoadingList = true
-                self.loadMoreCaategoryForList()
+               ////////////// self.loadMoreCaategoryForList()
                 if self.categoryCount + self.itemCount == brodcast.count {
                     bindingOff()
                 }
@@ -132,6 +132,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let brodcastStatus = brodcast[indexPath.row].status, let like = self.brodcast[indexPath.row].followersCount else { return }
+    
         if brodcastStatus == "OFFLINE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
@@ -142,7 +143,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
-            
+            self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
@@ -195,7 +196,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         isPlay = true
         playerViewController?.player?.pause()
         playerViewController!.view.removeFromSuperview()
-        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].streams?.first?.name
+        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
+        self.broadcast = brodcast[indexPath.row]
         self.loadPlayer()
 
     }

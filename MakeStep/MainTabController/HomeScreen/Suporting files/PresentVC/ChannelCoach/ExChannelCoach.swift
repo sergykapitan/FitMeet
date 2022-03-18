@@ -166,6 +166,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageLive.isHidden = true
             vc.homeView.labelLive.isHidden = true
             vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)

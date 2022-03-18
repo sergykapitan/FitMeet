@@ -220,7 +220,7 @@ final class PlayerViewVCCode: UIView {
         imagePromo.anchor(top: cardView.topAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
-                          paddingTop: 40, paddingLeft: 0, paddingRight: 0)
+                          paddingTop: 45, paddingLeft: 0, paddingRight: 0)
         
         imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
         
