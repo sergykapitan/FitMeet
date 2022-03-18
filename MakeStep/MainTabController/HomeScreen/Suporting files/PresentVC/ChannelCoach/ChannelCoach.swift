@@ -202,7 +202,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         if token != nil {
             self.binding(id: "\(id)")
         } else {
-            self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
+            self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
         }
       }
    }
@@ -215,6 +215,24 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     func bindingChanellVOD(userId: String,page: Int) {
         self.isLoadingList = false
         take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                   
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.itemCount = itemCount
+                }
+           })
+       }
+    func bindingChanellVODNotAuth(userId: String,page: Int) {
+        self.isLoadingList = false
+        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)", page: page, type: "STANDARD_VOD")
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil {
@@ -387,11 +405,33 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                   
-                    self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
+                    self.brodcast.append(contentsOf: response.data!)
+                    if !response.data!.isEmpty  {
+                        self.homeView.imagePromo.isHidden = false
+                        self.homeView.imageLogo.isHidden = false
+                        self.homeView.labelStreamInfo.isHidden = false
+                        self.homeView.buttonMore.isHidden = false
+                        self.homeView.cardView.addSubview(self.homeView.tableView)
+                        self.homeView.tableView.anchor(top: self.homeView.imageLogoProfileBottom.bottomAnchor,
+                                                       left: self.homeView.cardView.leftAnchor,
+                                                       right: self.homeView.cardView.rightAnchor,
+                                                       bottom: self.homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                        self.loadPlayer(url: (self.brodcast.first?.streams?.first?.hlsPlaylistUrl)!)
+                        guard let nameStream = self.brodcast.first?.streams?.first?.name else { return }
+                        self.homeView.labelStreamInfo.text = "\(nameStream)"
+                    } else {
+                        self.homeView.imagePromo.isHidden = true
+                        self.homeView.imageLogo.isHidden = true
+                        self.homeView.labelStreamInfo.isHidden = true
+                        self.homeView.buttonMore.isHidden = true
+                        self.homeView.cardView.addSubview(self.homeView.tableView)
+                        self.homeView.tableView.anchor(top: self.homeView.cardView.topAnchor,
+                                                       left: self.homeView.cardView.leftAnchor,
+                                                       right: self.homeView.cardView.rightAnchor,
+                                                       bottom: self.homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+                    }
+                    
+                    self.bindingChanellVODNotAuth(userId: userId, page: self.currentPage)
                 }
            })
        }

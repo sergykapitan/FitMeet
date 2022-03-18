@@ -187,10 +187,10 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                    
                     self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
-                    self.bindingNotPlanned()
+                    self.bindingNotOff()
                 } else {
                     self.listBroadcast.removeAll()
-                    self.bindingNotPlanned()
+                    self.bindingNotOff()
                 }
         })
     }
@@ -200,9 +200,11 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast.append(contentsOf: response.data!)
-                    self.bindingNotOff()
-                } else {
-                    self.bindingNotOff()
+                    let arrayUserId = self.listBroadcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                    self.homeView.tableView.reloadData()
+                    self.refreshControl.endRefreshing()
+                    self.bindingCategory()
                 }
             })
     }
@@ -212,11 +214,9 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast.append(contentsOf: response.data!)
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    self.bindingCategory()
+                    self.bindingNotPlanned()
+                } else {
+                    self.bindingNotPlanned()
                 }
             })
     }

@@ -95,7 +95,7 @@ class ButtonOffline: UIViewController {
         if token != nil {
             self.bindingChanellVOD(userId: "\(userId)")
         } else {
-            self.bindingChanellVODNotAuth(userId: "\(userId)")
+          //  self.bindingChanellVODNotAuth(userId: "\(userId)")
         }
        
     }
@@ -185,20 +185,20 @@ class ButtonOffline: UIViewController {
 //                }
 //           })
        }
-    func bindingChanellVODNotAuth(userId: String) {
-        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-
-                    self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.offlineView.tableView.reloadData()
-                }
-           })
-       }
+//    func bindingChanellVODNotAuth(userId: String) {
+//        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//
+//                    self.brodcast = response.data!
+//                    let arrayUserId = self.brodcast.map{$0.userId!}
+//                    self.bindingUserMap(ids: arrayUserId)
+//                    self.brodcast = self.brodcast.reversed()
+//                    self.offlineView.tableView.reloadData()
+//                }
+//           })
+//       }
     func bindingUserMap(ids: [Int])  {
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })

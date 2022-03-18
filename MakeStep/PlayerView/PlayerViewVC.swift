@@ -287,6 +287,17 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  }
           })
       }
+    func bindingBroadcastNotAuth(status: String,userId: String) {
+        take = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.brodcast.append(contentsOf: response.data!)
+                    self.bindingChanellVODNotAuth(userId: userId, page: self.currentPage)
+                }
+           })
+       }
+
     func bindingBroadcastForId(id: String, key: String) {
         takeBroadcast = fitMeetStream.getBroadcastId(id: id, key: key)
               .mapError({ (error) -> Error in return error })
@@ -410,7 +421,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         if token != nil {
             self.binding(id: "\(id)")
         } else {
-            self.binding(id: "\(id)")
+            self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
         }
        
     }
@@ -458,8 +469,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.homeView.playerSlider.maximumValue = Float(seconds)
             self.homeView.playerSlider.isContinuous = true
             self.homeView.playerSlider.tintColor = .blueColor
-            let (_, m, s) = self.secondsToHoursMinutesSeconds(Int(seconds))
-            self.homeView.labelTimeEnd.text = "\(m).\(s)"
+            self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
             
         }
 
@@ -471,8 +481,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                      UIView.animate(withDuration: 2) {
                          self.homeView.playerSlider.setValue(Float(time), animated: true)
                     }
-                     let (_, m, s) = self.secondsToHoursMinutesSeconds(Int(time))
-                     self.homeView.labelTimeStart.text =  "\(m).\(s)" + "/"
+                   
+                     self.homeView.labelTimeStart.text = Int(time).secondsToTime()
                  }
              }
         }
@@ -677,10 +687,32 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
            })
        }
+    func bindingChanellVODNotAuth(userId: String,page: Int) {
+        self.isLoadingList = false
+        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)", page: page, type: "STANDARD_VOD")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                   
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.itemCount = itemCount
+                }
+           })
+       }
     func loadMoreItemsForList(){
             currentPage += 1
             guard let id = user?.id else { return }
+        if token != nil {
             bindingChanellVOD(userId: "\(id)", page: currentPage)
+        } else {
+            bindingChanellVODNotAuth(userId: "\(id)", page: currentPage)
+        }
        }
     func bindingCategory(categoryId: Int,page: Int) {
         self.isLoadingList = false
