@@ -82,7 +82,7 @@ extension HomeVC: UITableViewDataSource {
             if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
             cell.labelLive.text =  " \(time.secondsToTime())"
             } else {
-            cell.labelLive.text = ""
+            cell.labelLive.text = "  00:00"
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
@@ -173,11 +173,6 @@ extension HomeVC: UITableViewDelegate {
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
           self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-        //  let vc = ChannelCoach()
-        //  vc.modalPresentationStyle = .fullScreen
-        //  vc.user = self.usersd[id!]
-        //  vc.broadcast = self.listBroadcast[indexPath.row]
-        //  navigationController?.pushViewController(vc, animated: true)
         let vc = PlayerViewVC()
 
         if self.listBroadcast[indexPath.row] == nil {
