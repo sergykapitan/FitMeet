@@ -149,13 +149,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             guard let id = broadId,let key = privateKey else { return }
             bindingBroadcastForId(id: id, key: key )
         } else {
-            guard let id = broadId else { return}
-            bindingBroadcastFor(id: id)
+            loadPlayer()
+            guard let idU = self.id else { return }
+            bindingUser(id: idU)
+           // guard let id = broadId else { return}
+          //  bindingBroadcastFor(id: id)
+           
         }
-        
-        guard let idU = self.id else { return }
-        bindingUser(id: idU)
-
     }
 
     override func viewDidDisappear(_ animated: Bool) {

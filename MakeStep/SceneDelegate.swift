@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             return window?.rootViewController
         }
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
+        sleep(2)
         guard let windowScene = (scene as? UIWindowScene) else { return }
            openRootViewController(viewController: MainTabBarViewController(), windowScene: windowScene)
     }
