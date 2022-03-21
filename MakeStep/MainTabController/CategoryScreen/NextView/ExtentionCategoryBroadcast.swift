@@ -33,7 +33,7 @@ extension CategoryBroadcast: UITableViewDataSource {
 
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
-        cell.labelEye.text = "\(self.watch)"
+        cell.overlay.labelEye.text = "\(self.watch)"
         
      
  
@@ -63,23 +63,23 @@ extension CategoryBroadcast: UITableViewDataSource {
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         
         if sortListCategory[indexPath.row].status == "OFFLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.imageLive.setImageColor(color: .gray)
-            cell.labelLive.text = "Offline"
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
+            cell.overlay.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.overlay.imageLive.setImageColor(color: .gray)
+            cell.overlay.labelLive.text = "Offline"
+            cell.overlay.imageEye.isHidden = true
+            cell.overlay.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
         } else if sortListCategory[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
+            cell.overlay.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.overlay.labelLive.text = "Live"
+            cell.overlay.imageEye.isHidden = false
+            cell.overlay.labelEye.isHidden = false
             cell.logoUserOnline.isHidden = false
         } else if sortListCategory[indexPath.row].status == "PLANNED" {
-            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
+            cell.overlay.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.overlay.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            cell.overlay.imageEye.isHidden = true
+            cell.overlay.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
 
         }

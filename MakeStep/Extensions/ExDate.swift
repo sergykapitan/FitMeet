@@ -54,7 +54,7 @@ extension Int {
         let m_string =  m < 10 ? "0\(m)" : "\(m)"
         let s_string =  s < 10 ? "0\(s)" : "\(s)"
 
-        return "  \(m_string):\(s_string)"
+        return "\(m_string):\(s_string)"
     }
 }
 

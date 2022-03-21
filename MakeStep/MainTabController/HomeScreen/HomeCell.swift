@@ -79,42 +79,19 @@ final class HomeCell: UITableViewCell {
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         return label
     }()
-    var overlay : UIView = {
-        let view = UIView()
-        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-        view.layer.borderWidth = 0.5
-        view.layer.masksToBounds = false
-        view.layer.borderColor = UIColor.gray.cgColor
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 12
+    var overlay : OverlayLive = {
+        let view = OverlayLive()
         return view
     }()
-    var labelLive: UILabel = {
-        let label = UILabel()
-        label.text = "Live"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .white
-        return label
+    var overlayPlan : OverlayPlanned = {
+        let view = OverlayPlanned()
+        return view
     }()
-    var imageLive: UIImageView = {
-        let image = UIImageView()
-        image.image = #imageLiteral(resourceName: "slider")
-        return image
-        
+    var overlayOffline : OverlayOffline = {
+        let view = OverlayOffline()
+        return view
     }()
-    var imageEye: UIImageView = {
-        let image = UIImageView()
-        image.image = #imageLiteral(resourceName: "eye")
-        return image
-        
-    }()
-    var labelEye: UILabel = {
-        let label = UILabel()
-        label.text = "0"
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.textColor = .white
-        return label
-    }()
+
     var tagView: TagListView = {
         let tag = TagListView()
         tag.textFont = UIFont.systemFont(ofSize: 12)
@@ -188,21 +165,16 @@ final class HomeCell: UITableViewCell {
                        left: contentView.leftAnchor,
                        paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
-        contentView.addSubview(imageLive)
-        imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
-        imageLive.centerY(inView: overlay)
+        contentView.addSubview(overlayPlan)
+        overlayPlan.anchor(top: contentView.topAnchor,
+                       left: contentView.leftAnchor,
+                       paddingTop: 8, paddingLeft: 16,  width: 90, height: 24)
         
-        contentView.addSubview(labelLive)
-        labelLive.anchor( left: imageLive.rightAnchor, paddingLeft: 6)
-        labelLive.centerY(inView: overlay)
-        
-        contentView.addSubview(imageEye)
-        imageEye.anchor( left: labelLive.rightAnchor, paddingLeft: 6, width: 12, height: 12)
-        imageEye.centerY(inView: overlay)
-        
-        contentView.addSubview(labelEye)
-        labelEye.anchor( left: imageEye.rightAnchor, paddingLeft: 6)
-        labelEye.centerY(inView: overlay)
+        contentView.addSubview(overlayOffline)
+        overlayOffline.anchor(top: contentView.topAnchor,
+                       left: contentView.leftAnchor,
+                       paddingTop: 8, paddingLeft: 16,  width: 50, height: 24)
+ 
         
         contentView.addSubview(buttonstartStream)
         buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 30, width: 100, height: 26)
@@ -231,7 +203,7 @@ final class HomeCell: UITableViewCell {
         self.accessoryType = .none
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
-        self.labelEye.text = nil
+        self.overlay.labelEye.text = nil
      
        }
 }

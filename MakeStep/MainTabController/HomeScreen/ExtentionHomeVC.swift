@@ -44,8 +44,7 @@ extension HomeVC: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
-        cell.imageEye.isHidden = false
-        cell.labelEye.isHidden = false
+       
 
         guard 
               let id = listBroadcast[indexPath.row].userId,
@@ -57,7 +56,7 @@ extension HomeVC: UITableViewDataSource {
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
-        cell.labelEye.text = "\(self.watch)"
+            cell.overlay.labelEye.text = "\(self.watch)"
       
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -69,34 +68,32 @@ extension HomeVC: UITableViewDataSource {
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
         cell.buttonLike.isHidden = true
-      
-       
-  
-        
+
         if listBroadcast[indexPath.row].status == "OFFLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.imageLive.setImageColor(color: .gray)
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
+            cell.overlayPlan.isHidden = true
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = false
+
             if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
-            cell.labelLive.text =  " \(time.secondsToTime())"
+                cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
             } else {
-            cell.labelLive.text = "  00:00"
+                cell.overlayOffline.labelLive.text = "00:00"
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
+            
         } else if listBroadcast[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
+            cell.overlayPlan.isHidden = true
+            cell.overlayOffline.isHidden = true
+            cell.overlay.isHidden = false
+            
             cell.logoUserOnline.isHidden = false
             self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
         } else if listBroadcast[indexPath.row].status == "PLANNED" {
-            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = true
+            cell.overlayPlan.isHidden = false
+            
+            cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.logoUserOnline.isHidden = true
 
         }

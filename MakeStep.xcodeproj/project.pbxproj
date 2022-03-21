@@ -288,6 +288,12 @@
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
 		A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
+		A59431E827E8CC0500374890 /* OverlayLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E727E8CC0500374890 /* OverlayLive.swift */; };
+		A59431E927E8CC0500374890 /* OverlayLive.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E727E8CC0500374890 /* OverlayLive.swift */; };
+		A59431EB27E8CEF500374890 /* OverlayPlanned.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431EA27E8CEF500374890 /* OverlayPlanned.swift */; };
+		A59431EC27E8CEF500374890 /* OverlayPlanned.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431EA27E8CEF500374890 /* OverlayPlanned.swift */; };
+		A59431EE27E8D09B00374890 /* OverlayOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431ED27E8D09B00374890 /* OverlayOffline.swift */; };
+		A59431EF27E8D09B00374890 /* OverlayOffline.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431ED27E8D09B00374890 /* OverlayOffline.swift */; };
 		A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5027371A2F002C1500 /* CalculateVC.swift */; };
 		A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5227371A40002C1500 /* CalculateVCCode.swift */; };
 		A5950E562737D59D002C1500 /* DeleteTariffVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E552737D59D002C1500 /* DeleteTariffVC.swift */; };
@@ -570,6 +576,9 @@
 		A58EC19927B1385500E920FB /* AddedVideoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedVideoCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A59431E327E8B59C00374890 /* SignWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignWithApple.swift; sourceTree = "<group>"; };
+		A59431E727E8CC0500374890 /* OverlayLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLive.swift; sourceTree = "<group>"; };
+		A59431EA27E8CEF500374890 /* OverlayPlanned.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayPlanned.swift; sourceTree = "<group>"; };
+		A59431ED27E8D09B00374890 /* OverlayOffline.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayOffline.swift; sourceTree = "<group>"; };
 		A5950E5027371A2F002C1500 /* CalculateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVC.swift; sourceTree = "<group>"; };
 		A5950E5227371A40002C1500 /* CalculateVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVCCode.swift; sourceTree = "<group>"; };
 		A5950E552737D59D002C1500 /* DeleteTariffVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTariffVC.swift; sourceTree = "<group>"; };
@@ -943,6 +952,18 @@
 			path = AddedVideo;
 			sourceTree = "<group>";
 		};
+		A59431E627E8CBDF00374890 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
+				A59431E327E8B59C00374890 /* SignWithApple.swift */,
+				A59431E727E8CC0500374890 /* OverlayLive.swift */,
+				A59431EA27E8CEF500374890 /* OverlayPlanned.swift */,
+				A59431ED27E8D09B00374890 /* OverlayOffline.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		A5950E4F273719E8002C1500 /* Calculate */ = {
 			isa = PBXGroup;
 			children = (
@@ -1187,6 +1208,7 @@
 		B47828A126CFF3D20068292A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A59431E627E8CBDF00374890 /* CustomView */,
 				A5B635AD27185C010097A127 /* CoverView */,
 				B4D2B93E26E7C7970080E7E3 /* SwipbleView */,
 				B47828A226CFF3E30068292A /* Transishion */,
@@ -1539,8 +1561,6 @@
 			children = (
 				B4D9D72226257D8D007CFB71 /* AuthViewController.swift */,
 				B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */,
-				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
-				A59431E327E8B59C00374890 /* SignWithApple.swift */,
 			);
 			path = AuthViewScreen;
 			sourceTree = "<group>";
@@ -1967,6 +1987,7 @@
 				A5129404273A6EB7000CBBD9 /* IAPManager.swift in Sources */,
 				A580AE3A27C0E82A00FCD682 /* AccountDeeplinkHandler.swift in Sources */,
 				A5129405273A6EB7000CBBD9 /* ChatVC.swift in Sources */,
+				A59431EC27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				A5129406273A6EB7000CBBD9 /* CustomActionSheet.swift in Sources */,
@@ -2052,6 +2073,7 @@
 				A5427799274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */,
 				A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */,
+				A59431EF27E8D09B00374890 /* OverlayOffline.swift in Sources */,
 				A5129454273A6EB7000CBBD9 /* SignUpViewController.swift in Sources */,
 				A5129455273A6EB7000CBBD9 /* SwipeableItemTransform.swift in Sources */,
 				A5129456273A6EB7000CBBD9 /* NewStartStreamCode.swift in Sources */,
@@ -2081,6 +2103,7 @@
 				A512946B273A6EB7000CBBD9 /* CalendarClass.swift in Sources */,
 				A512946C273A6EB7000CBBD9 /* PhoneCode.swift in Sources */,
 				A512946D273A6EB7000CBBD9 /* PlayerView.swift in Sources */,
+				A59431E927E8CC0500374890 /* OverlayLive.swift in Sources */,
 				A5671E932757A2E000EE4191 /* TimetableVCCode.swift in Sources */,
 				A512946E273A6EB7000CBBD9 /* HomeCell.swift in Sources */,
 				A512946F273A6EB7000CBBD9 /* SwipeableView.swift in Sources */,
@@ -2212,6 +2235,7 @@
 				A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */,
 				A580AE3927C0E82A00FCD682 /* AccountDeeplinkHandler.swift in Sources */,
 				B4B113A7269739090006CA5A /* ChatVC.swift in Sources */,
+				A59431EB27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */,
@@ -2297,6 +2321,7 @@
 				A58E294027466EC100CC39BB /* PaddingLabel.swift in Sources */,
 				A5427798274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
+				A59431EE27E8D09B00374890 /* OverlayOffline.swift in Sources */,
 				B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */,
 				A54ACC9C27AD7B8A004BAEF1 /* SendStreamCell.swift in Sources */,
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
@@ -2326,6 +2351,7 @@
 				B48868FB26FB2F3800DD12A9 /* ExChanellVC.swift in Sources */,
 				B49376AA2639968600D38EC3 /* ChannelModel.swift in Sources */,
 				B475A95B26BCA71200EF96A4 /* CalendarClass.swift in Sources */,
+				A59431E827E8CC0500374890 /* OverlayLive.swift in Sources */,
 				B4D9D7B0262973F4007CFB71 /* PhoneCode.swift in Sources */,
 				A5671E922757A2E000EE4191 /* TimetableVCCode.swift in Sources */,
 				A5B635A8271836120097A127 /* PlayerView.swift in Sources */,
