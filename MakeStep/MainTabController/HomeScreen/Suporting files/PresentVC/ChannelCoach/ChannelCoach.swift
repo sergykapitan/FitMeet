@@ -16,6 +16,7 @@ import AVFoundation
 import EasyPeasy
 import AVKit
 import TagListView
+import CloudKit
 
 
 // MARK: - State
@@ -197,13 +198,14 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         
         self.navigationController?.navigationBar.isHidden = false
         guard let id = user?.id else { return }
-        bindingChannel(userId: id)
         if self.brodcast.isEmpty {
-        if token != nil {
-            self.binding(id: "\(id)")
-        } else {
-            self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
-        }
+            if token != nil {
+                self.bindingChannel(userId: id)
+                self.binding(id: "\(id)")
+            } else {
+                self.bindingChannelNotAuth(userId: id)
+                self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
+            }
       }
    }
     override func viewDidAppear(_ animated: Bool) {
@@ -319,6 +321,30 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                             self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
                         }
                     }
+                    guard let _ = self.channel?.twitterLink ,
+                          let _ = self.channel?.instagramLink ,
+                          let _ = self.channel?.facebookLink else { return }
+                    self.homeView.buttonTwiter.setImageTintColor(.blueColor)
+                    self.homeView.buttonfaceBook.setImageTintColor(.blueColor)
+                    self.homeView.buttonInstagram.setImageTintColor(.blueColor)
+                }
+        })
+    }
+    func bindingChannelNotAuth(userId: Int?) {
+        guard let id = userId else { return }
+        takeChanell = fitMeetChannel.listChannelsNotAuth(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.channel = response.data.last
+                    guard let channel = self.channel else {
+                        return
+                    }
+                    self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                    self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                    self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                    self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+                    
                     guard let _ = self.channel?.twitterLink ,
                           let _ = self.channel?.instagramLink ,
                           let _ = self.channel?.facebookLink else { return }
