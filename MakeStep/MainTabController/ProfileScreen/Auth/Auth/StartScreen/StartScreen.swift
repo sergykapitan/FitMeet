@@ -46,6 +46,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
       homeView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
       homeView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
       homeView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
+      homeView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
     }
 
     func makeNavItem() {
@@ -99,31 +100,37 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         let sign = SignInViewController()
         self.present(sign, animated: true, completion: nil)
     }
-    //1
+ 
     @objc func actionAbout() {
         let helpWebViewController = WebViewController()
           helpWebViewController.url = Constants.webViewPwa + "about"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //3
-       @objc func actionTerms() {
+    
+    @objc func actionHowIt() {
+        let helpWebViewController = WebViewController()
+          helpWebViewController.url = "https://join.makestep.com"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    
+    @objc func actionTerms() {
            let helpWebViewController = WebViewController()
            helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
            self.navigationController?.pushViewController(helpWebViewController, animated: true)
        }
-    //4
+   
     @objc func actionPrivacyPolicy() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //5
+
     @objc func actionDMCA() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "dmca"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //6
+  
     @objc func actionDisclaimer() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "disclaimer"
