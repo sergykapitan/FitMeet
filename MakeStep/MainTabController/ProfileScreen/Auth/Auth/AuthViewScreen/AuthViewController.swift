@@ -46,10 +46,7 @@ class AuthViewController: UIViewController,SignUpDelegate {
        }
     }
     func changePhone() {
-        
-        print("4444 ===== \(self.authView.buttonContinue.frame.origin.y)")
-        
-        if self.authView.buttonContinue.frame.origin.y == 219.0 {
+            if self.authView.buttonContinue.frame.origin.y == 219.0 {
          
          UIView.animate(withDuration: 0.5) {
            self.authView.buttonContinue.frame.origin.y += 15
@@ -210,17 +207,7 @@ extension AuthViewController : ContextMenuDelegate {
     
     func contextMenuDidDeselect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) {
         if index == 0 {
-           // CM.closeAllViews()
-          //  contextMenu.closeAllViews()
             self.avtorizete()
-//            let request = ASAuthorizationAppleIDProvider().createRequest()
-//            request.requestedScopes = [.fullName, .email]
-//
-//            let controller = ASAuthorizationController(authorizationRequests: [request])
-//            controller.delegate = self
-//            controller.presentationContextProvider = self
-//            controller.performRequests()
-
         }
     }
     
@@ -238,14 +225,14 @@ extension AuthViewController : ContextMenuDelegate {
     
 }
 extension AuthViewController: ASAuthorizationControllerDelegate {
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let credential as ASAuthorizationAppleIDCredential:
             
             let token = credential.identityToken!
             let tokenStr = String(data: token, encoding: .utf8)!
-            
-            print("Token == \(tokenStr)")
+
             takeAppleSign = fitMeetApi.signWithApple(token: AppleAuthorizationRequest(id_token: tokenStr))
                 .mapError({ (error) -> Error in
                             return error })
@@ -260,20 +247,7 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
                
                   }
             })
-            
-            let code = credential.authorizationCode!
-            let codeStr = String(data: code, encoding: .utf8)
-            print("User Code: ", codeStr)
-            let userId = credential.user
-            print("User Identifier: ", userId)
-        
-            if let fullname = credential.fullName {
-                print(fullname)
-            }
-            
-            if let email = credential.email {
-                print("Email: ", email)
-            }
+  
         default:
             break
         }
