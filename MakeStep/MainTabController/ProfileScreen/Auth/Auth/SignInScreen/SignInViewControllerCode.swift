@@ -25,11 +25,9 @@ final class SignInViewControllerCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
-    let buttonSocialNetwork: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blueColor
-        button.setTitle("Sign up with Social Network", for: .normal)
-        button.layer.cornerRadius = 19
+    let buttonSocialNetwork: SignWithApple = {
+        let button = SignWithApple()
+        button.labelRight.text = "Sign in with Apple"
         return button
     }()
     let textFieldLogin: UITextField = {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AuthenticationServices
 
 final class AuthViewControllerCode: UIView {
     
@@ -23,10 +24,19 @@ final class AuthViewControllerCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
+    let image: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "Apple")
+        return image
+    }()
+    var appleLogInButton : SignWithApple = {
+        let but = SignWithApple()
+        return but
+    }()
     let buttonSocialNetwork: UIButton = {
         let button = UIButton()
         button.backgroundColor = .blueColor
-        button.setTitle("Sign up with Social Network", for: .normal)
+        button.setTitle("Sign up with Apple", for: .normal)
         button.layer.cornerRadius = 19
         return button
     }()
@@ -117,15 +127,17 @@ final class AuthViewControllerCode: UIView {
         labelSignUp.anchor(top: cardView.topAnchor,
                            paddingTop: 46, height: 40)
         labelSignUp.centerX(inView: cardView)
-        
-        cardView.addSubview(buttonSocialNetwork)
-        buttonSocialNetwork.anchor(top: labelSignUp.bottomAnchor,
+ 
+        cardView.addSubview(appleLogInButton)
+        appleLogInButton.anchor(top: labelSignUp.bottomAnchor,
                                    left: cardView.leftAnchor,
                                    right: cardView.rightAnchor,
                                    paddingTop: 15, paddingLeft: 16, paddingRight: 16, height: 39)
+       
+       
         
         cardView.addSubview(oneLine)
-        oneLine.anchor(top: buttonSocialNetwork.bottomAnchor,
+        oneLine.anchor(top: appleLogInButton.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 25, paddingLeft: 10, paddingRight: 10, height: 39)

@@ -286,6 +286,8 @@
 		A58EC19D27B1524A00E920FB /* SendStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */; };
 		A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
+		A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
+		A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
 		A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5027371A2F002C1500 /* CalculateVC.swift */; };
 		A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5227371A40002C1500 /* CalculateVCCode.swift */; };
 		A5950E562737D59D002C1500 /* DeleteTariffVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E552737D59D002C1500 /* DeleteTariffVC.swift */; };
@@ -567,6 +569,7 @@
 		A58EC19627B1384400E920FB /* AddedVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedVideoVC.swift; sourceTree = "<group>"; };
 		A58EC19927B1385500E920FB /* AddedVideoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedVideoCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
+		A59431E327E8B59C00374890 /* SignWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignWithApple.swift; sourceTree = "<group>"; };
 		A5950E5027371A2F002C1500 /* CalculateVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVC.swift; sourceTree = "<group>"; };
 		A5950E5227371A40002C1500 /* CalculateVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculateVCCode.swift; sourceTree = "<group>"; };
 		A5950E552737D59D002C1500 /* DeleteTariffVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTariffVC.swift; sourceTree = "<group>"; };
@@ -1537,6 +1540,7 @@
 				B4D9D72226257D8D007CFB71 /* AuthViewController.swift */,
 				B4D9D73A2625BFDA007CFB71 /* AuthViewControllerCode.swift */,
 				B4D9D7462625C2D7007CFB71 /* OneLineView.swift */,
+				A59431E327E8B59C00374890 /* SignWithApple.swift */,
 			);
 			path = AuthViewScreen;
 			sourceTree = "<group>";
@@ -2013,6 +2017,7 @@
 				A5129431273A6EB7000CBBD9 /* DropDownCell.swift in Sources */,
 				A5129432273A6EB7000CBBD9 /* UserVC.swift in Sources */,
 				A5129433273A6EB7000CBBD9 /* SceneDelegate.swift in Sources */,
+				A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */,
 				A5129434273A6EB7000CBBD9 /* MonetezeitionVC.swift in Sources */,
 				A5F2FF0327BD02B100F6C518 /* CommissionVC.swift in Sources */,
 				A5129435273A6EB7000CBBD9 /* Token.swift in Sources */,
@@ -2257,6 +2262,7 @@
 				B4D9D72126257D8D007CFB71 /* SceneDelegate.swift in Sources */,
 				A5457E9E27298CFB006A8F2D /* MonetezeitionVC.swift in Sources */,
 				B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */,
+				A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */,
 				A5671E8B2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
 				A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */,
 				B404923A26DE799000A2F417 /* HistoryChat.swift in Sources */,
