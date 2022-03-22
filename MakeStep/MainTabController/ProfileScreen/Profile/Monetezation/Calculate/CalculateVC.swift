@@ -97,7 +97,7 @@ class CalculateVC: UIViewController {
     }
     private func calculate() -> String {
       let price = valueA * valueB * ValueC
-      let value = Double(calculatePercentage(value: price,percentageVal: 30))
+      let value = Double(calculatePercentage(value: price,percentageVal: 70))
        
         return value.roundToDecimal(2).formattedWithSeparator
     }
