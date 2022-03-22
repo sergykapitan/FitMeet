@@ -108,6 +108,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     private var takeBroadcast: AnyCancellable?
     private var takeOff: AnyCancellable?
     private var takeBroadcastPlanned : AnyCancellable?
+    private var follow : AnyCancellable?
  
     @Inject var fitMeetChannel: FitMeetChannels
     var channel: ChannelResponce?
@@ -303,6 +304,10 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 if response != nil  {
                     self.channel = response.data.last
                     guard let channel = self.channel else {
+                        self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
                         return
                     }
                     if channel.isSubscribe! {                        
@@ -321,6 +326,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                             self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
                         }
                     }
+                    
                     guard let _ = self.channel?.twitterLink ,
                           let _ = self.channel?.instagramLink ,
                           let _ = self.channel?.facebookLink else { return }
@@ -338,6 +344,10 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 if response != nil  {
                     self.channel = response.data.last
                     guard let channel = self.channel else {
+                        self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
                         return
                     }
                     self.homeView.buttonSubscribe.backgroundColor = .lightGray
@@ -612,7 +622,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     func setUserProfile() {
 
         homeView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
+        guard let follow = self.channel?.followersCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
         homeView.labelFollow.text = "Followers:" + "\(follow)"
         self.homeView.welcomeLabel.text = fullName
         self.homeView.labelINTFollows.text = "\(follow)"
@@ -707,18 +717,46 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         homeView.buttonFollow.isSelected.toggle()
         
         if homeView.buttonFollow.isSelected {
-            homeView.buttonFollow.backgroundColor = .white
-            homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+            guard let id = self.channel?.id else { return }
+            followChannel(id: id)
 
         } else {
-            homeView.buttonFollow.backgroundColor = .blueColor
-            homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+            guard let id = self.channel?.id else { return }
+            unFollowChannel(id: id)
 
         }
-        
-        
-        
     }
+    
+    private func followChannel(id: Int) {
+        follow = firMeetChanell.followChannels(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil {
+                    self.homeView.buttonFollow.backgroundColor = .white
+                    self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+                    guard let follow =  response.followersCount else { return }
+                    self.homeView.labelINTFollows.text = "\(follow)"
+                    
+            }
+        })
+    }
+    private func unFollowChannel(id: Int) {
+        follow = firMeetChanell.unFollowChannels(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil {
+                    self.homeView.buttonFollow.backgroundColor = .blueColor
+                    self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                    guard let follow =  response.followersCount else { return }
+                    self.homeView.labelINTFollows.text = "\(follow)"
+            }
+        })
+    }
+    
+    
+    
+    
+    
     @objc func actionTwitter() {
         guard let link = self.channel?.twitterLink else { return }
         if let url = URL(string: link) {

@@ -113,8 +113,15 @@ class FitMeetChannels {
             .eraseToAnyPublisher()
     }
     
-    ///api/v0/channel/channels/{uniqField}
-    //, interceptor: Interceptor(interceptors: [AuthInterceptor()])
+    public func unFollowChannels(id: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/follow", method: .delete, encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ChannelResponce.self)
+            .value()
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     public func getChannelsUserName(username: String) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(username)", method: .get, encoding: JSONEncoding.default)
             //.validate(statusCode: 200..<300)
