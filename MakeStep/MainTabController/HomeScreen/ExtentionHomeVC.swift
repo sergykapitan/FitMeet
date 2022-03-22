@@ -56,7 +56,7 @@ extension HomeVC: UITableViewDataSource {
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
-            cell.overlay.labelEye.text = "\(self.watch)"
+        cell.overlay.labelEye.text = "\(self.watch)"
       
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -99,9 +99,9 @@ extension HomeVC: UITableViewDataSource {
         }
             
            
-            cell.buttonLogo.tag = indexPath.row
-            cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
-            cell.buttonLogo.isUserInteractionEnabled = true
+        cell.buttonLogo.tag = indexPath.row
+        cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
+        cell.buttonLogo.isUserInteractionEnabled = true
         
         
         cell.buttonLike.tag = indexPath.row

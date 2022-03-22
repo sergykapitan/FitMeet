@@ -62,28 +62,38 @@ extension CategoryBroadcast: UITableViewDataSource {
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         
-        if sortListCategory[indexPath.row].status == "OFFLINE" {
-            cell.overlay.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.overlay.imageLive.setImageColor(color: .gray)
-            cell.overlay.labelLive.text = "Offline"
-            cell.overlay.imageEye.isHidden = true
-            cell.overlay.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
-        } else if sortListCategory[indexPath.row].status == "ONLINE" {
-            cell.overlay.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.overlay.labelLive.text = "Live"
-            cell.overlay.imageEye.isHidden = false
-            cell.overlay.labelEye.isHidden = false
+        if listBroadcast[indexPath.row].status == "OFFLINE" {
+            cell.overlayPlan.isHidden = true
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = false
+
+            if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+                cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
+            } else {
+                cell.overlayOffline.labelLive.text = "00:00"
+            }
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
+            
+        } else if listBroadcast[indexPath.row].status == "ONLINE" {
+            cell.overlayPlan.isHidden = true
+            cell.overlayOffline.isHidden = true
+            cell.overlay.isHidden = false
+            
             cell.logoUserOnline.isHidden = false
-        } else if sortListCategory[indexPath.row].status == "PLANNED" {
-            cell.overlay.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.overlay.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.overlay.imageEye.isHidden = true
-            cell.overlay.labelEye.isHidden = true
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+        } else if listBroadcast[indexPath.row].status == "PLANNED" {
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = true
+            cell.overlayPlan.isHidden = false
+            
+            cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.logoUserOnline.isHidden = true
 
         }
-        
+            
+        cell.buttonLogo.tag = indexPath.row
+        cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
+        cell.buttonLogo.isUserInteractionEnabled = true
         
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -118,7 +128,14 @@ extension CategoryBroadcast: UITableViewDataSource {
         present(detailViewController, animated: true)
 
     }
-    
+    @objc func tappedCoach(_ sender: UIButton) -> Void {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        guard let id = listBroadcast[sender.tag].userId else { return}
+        vc.user = self.usersd[id]
+        navigationController?.pushViewController(vc, animated: true)
+
+    }    
 }
 extension CategoryBroadcast: UITableViewDelegate {
     
