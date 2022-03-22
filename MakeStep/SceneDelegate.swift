@@ -42,19 +42,20 @@ extension SceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let urlinfo = userActivity.webpageURL{
-           
+            let reminderDetailsVC = PlayerViewVC()
             let path = urlinfo.pathComponents
             if path.count == 4 {
                 pathKey = path[3]
                 pathId = path[2]
+                reminderDetailsVC.isPrivate = true
             } else {
                 pathKey = ""
                 pathId = urlinfo.lastPathComponent
+                reminderDetailsVC.isPrivate = false
             }
             if let tableVC = self.window?.rootViewController as? MainTabBarViewController {
-                   let reminderDetailsVC = PlayerViewVC()
+                  
                    reminderDetailsVC.modalPresentationStyle = .fullScreen
-                   reminderDetailsVC.isPrivate = true
                    reminderDetailsVC.broadId = pathId
                    reminderDetailsVC.privateKey = pathKey
                    tableVC.present(reminderDetailsVC, animated: true)
