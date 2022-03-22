@@ -125,6 +125,7 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
 
             takeAppleSign = fitMeetApi.signWithApple(token: AppleAuthorizationRequest(id_token: tokenStr))
                 .mapError({ (error) -> Error in
+                    print("Error == \(error)")
                             return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if let token = response.token?.token {

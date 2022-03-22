@@ -133,7 +133,6 @@ extension HomeVC: UITableViewDataSource {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        guard self.token != nil else {  return  }
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
         detailViewController.modalPresentationStyle = .custom

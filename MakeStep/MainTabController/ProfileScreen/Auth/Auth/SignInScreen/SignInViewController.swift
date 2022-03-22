@@ -120,8 +120,10 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
 
             takeAppleSign = fitMeetApi.signWithApple(token: AppleAuthorizationRequest(id_token: tokenStr))
                 .mapError({ (error) -> Error in
+                    print("Error == \(error)")
                             return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    print("Responce == \(response)")
                     if let token = response.token?.token {
                         
                         UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
