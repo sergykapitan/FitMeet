@@ -145,15 +145,52 @@ extension CategoryBroadcast: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let id = self.sortListCategory[indexPath.row].userId
-        let vc = ChannelCoach()
+
+      guard let broadcastID = self.listBroadcast[indexPath.row].id,
+            let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+
+      self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+    let vc = PlayerViewVC()
+
+        if self.listBroadcast[indexPath.row].id == nil {
+        return
+    }
+    if self.listBroadcast[indexPath.row].status == "ONLINE" {
+        vc.broadcast = self.listBroadcast[indexPath.row]
+        vc.id =  self.listBroadcast[indexPath.row].userId
+        vc.homeView.buttonChat.isHidden = false
+        vc.homeView.playerSlider.isHidden = true
+        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
         vc.modalPresentationStyle = .fullScreen
-        vc.user = self.usersd[id!]
-        navigationController?.pushViewController(vc, animated: true)
+        self.present(vc, animated: true, completion: nil)
+    } else if  self.listBroadcast[indexPath.row].status == "OFFLINE" {
+        guard let _ = listBroadcast[indexPath.row].streams?.first else { return }
+        vc.broadcast = self.listBroadcast[indexPath.row]
+        vc.id = self.listBroadcast[indexPath.row].userId
+        vc.homeView.buttonChat.isHidden = true
+        vc.homeView.overlay.isHidden = true
+        vc.homeView.imageLive.isHidden = true
+        vc.homeView.labelLive.isHidden = true
+        vc.homeView.imageEye.isHidden = true
+        vc.homeView.labelEye.isHidden = true
+        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
+    } else if  self.listBroadcast[indexPath.row].status == "PLANNED" {
+        print("PLANNED")
+        return
+    } else if  self.listBroadcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+        print("WAIT_FOR_APPROVE")
+        return
+    } else if  self.listBroadcast[indexPath.row].status == "FINISHED" {
+        print("FINISHED")
+        return
+    }
+}
 
     }
 
-}
+
 extension CategoryBroadcast: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         print("Tag pressed: \(title), \(sender)")
