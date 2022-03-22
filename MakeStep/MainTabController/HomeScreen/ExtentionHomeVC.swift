@@ -97,6 +97,11 @@ extension HomeVC: UITableViewDataSource {
             cell.logoUserOnline.isHidden = true
 
         }
+            
+           
+            cell.buttonLogo.tag = indexPath.row
+            cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
+            cell.buttonLogo.isUserInteractionEnabled = true
         
         
         cell.buttonLike.tag = indexPath.row
@@ -140,6 +145,14 @@ extension HomeVC: UITableViewDataSource {
         detailViewController.url = self.url
         detailViewController.broadcast = self.listBroadcast[sender.tag]
         present(detailViewController, animated: true)
+
+    }
+    @objc func tappedCoach(_ sender: UIButton) -> Void {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        guard let id = listBroadcast[sender.tag].userId else { return}
+        vc.user = self.usersd[id]
+        navigationController?.pushViewController(vc, animated: true)
 
     }
     

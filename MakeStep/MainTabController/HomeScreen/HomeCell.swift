@@ -91,6 +91,12 @@ final class HomeCell: UITableViewCell {
         let view = OverlayOffline()
         return view
     }()
+    
+    var buttonLogo: UIButton = {
+        let but = UIButton()
+        but.backgroundColor = .clear
+        return but
+    }()
 
     var tagView: TagListView = {
         let tag = TagListView()
@@ -143,13 +149,16 @@ final class HomeCell: UITableViewCell {
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
         
-        bottomView.addSubview(logoUserImage)
-        logoUserImage.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
+        bottomView.addSubview(buttonLogo)
+                buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 124,height: 24 )
         
-        bottomView.addSubview(logoUserOnline)
+        buttonLogo.addSubview(logoUserImage)
+        logoUserImage.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
+
+        buttonLogo.addSubview(logoUserOnline)
         logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
         
-        bottomView.addSubview(titleLabel)
+        buttonLogo.addSubview(titleLabel)
         titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8 ,width: 100)
         titleLabel.centerY(inView: logoUserImage)
 
