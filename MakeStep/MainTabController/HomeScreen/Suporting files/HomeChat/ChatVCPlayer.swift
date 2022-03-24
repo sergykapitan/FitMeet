@@ -66,17 +66,22 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                
         self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
         
-        //UIColor.gray.withAlphaComponent(0.5).cgColor
         self.textView.layer.borderWidth = 1.5
         self.textView.layer.cornerRadius = 20
-        self.textView.clipsToBounds = true
+      //  self.textView.clipsToBounds = true
         self.textView.font =  UIFont.systemFont(ofSize: 18)
+       
+       
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
         
+      
+        
         self.textView.easy.layout(Left(20),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
+      
         self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
+      
         textView.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
         self.textView.delegate = self
  
@@ -94,8 +99,37 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         }
        
     }
+    private func customShadowPath(viewLayer layer: CALayer,
+                                  shadowHeight: CGFloat) -> UIBezierPath {
+        let layerX = layer.bounds.origin.x
+        let layerY = layer.bounds.origin.y
+        let layerWidth = layer.bounds.size.width
+        let layerHeight = layer.bounds.size.height
+        
+        let path = UIBezierPath()
+        path.move(to: CGPoint.zero)
+        
+        path.addLine(to: CGPoint(x: layerX + layerWidth,
+                                 y: layerY))
+        path.addLine(to: CGPoint(x: layerX + layerWidth,
+                                 y: layerHeight + 20))
+        
+        path.addCurve(to: CGPoint(x: 0,
+                                  y: layerHeight),
+                      controlPoint1: CGPoint(x: layerX + layerWidth,
+                                             y: layerHeight),
+                      controlPoint2: CGPoint(x: layerX,
+                                             y: layerHeight))
+        
+        return path
+    }
     
-    private lazy var textView = UITextView(frame: CGRect.zero)
+    private lazy var textView: UITextView = {
+        let view = UITextView(frame: CGRect.zero)
+        view.backgroundColor  =  .white
+        return view
+    }()
+  
     private var isOversized = false {
             didSet {
                 self.textView.easy.reload()
@@ -111,7 +145,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-        chatView.tableView.delegate = self
+       // chatView.tableView.delegate = self
         registerForKeyboardNotifications()
         if isLand {
             chatView.cardView.backgroundColor = .white

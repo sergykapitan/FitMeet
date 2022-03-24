@@ -16,9 +16,6 @@ final class ChatVCCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 8
-//        view.layer.borderWidth = 0.8
-//        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         return view
         }()
     var tableView: UITableView = {
@@ -28,7 +25,6 @@ final class ChatVCCode: UIView {
     var buttonChat: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Back1-2"), for: .normal)
-       // button.backgroundColor = .blue
         return button
     }()
     var textView: UITextView = {
@@ -41,6 +37,10 @@ final class ChatVCCode: UIView {
     var sendMessage: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Frame"), for: .normal)
+        button.layer.shadowOffset = CGSize(width: 3, height: 3)
+        button.layer.shadowOpacity = 0.8
+        button.layer.shadowRadius = 2
+        button.layer.shadowColor = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
         return button
     }()
    
@@ -62,13 +62,6 @@ final class ChatVCCode: UIView {
         cardView.addSubview(buttonChat)
         buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 12,height: 12)
         buttonChat.centerX(inView: cardView)
-        
-//        cardView.addSubview(textView)
-//        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 0, height: 40)
-        
-//        cardView.addSubview(sendMessage)
-//        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 25 ,height: 25)
-//        sendMessage.centerY(inView: textView)
         
         cardView.addSubview(sendMessage)
         sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)

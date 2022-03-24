@@ -69,11 +69,26 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
         self.textView.layer.borderWidth = 1.5
         self.textView.layer.cornerRadius = 20
-        self.textView.clipsToBounds = true
+        //self.textView.clipsToBounds = true
         self.textView.font =  UIFont.systemFont(ofSize: 18)
+        
+//        self.textView.layer.shadowOffset = CGSize(width: 3, height: 3)
+//        self.textView.layer.shadowOpacity = 0.8
+//        self.textView.layer.shadowRadius = 20
+//        self.textView.layer.shadowColor = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
+        
+//        self.textView.layer.masksToBounds = false
+//        self.textView.layer.shadowRadius = 3.0
+//        self.textView.layer.shadowColor = UIColor.black.cgColor
+//        self.textView.layer.shadowOffset = CGSize(width: 3, height: 3)
+//        self.textView.layer.shadowOpacity = 1.0
+
+        
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
+    
+        
         
         self.textView.easy.layout(Left(5),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
         self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
