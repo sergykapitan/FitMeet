@@ -37,29 +37,14 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
 
       
 
-        cell.labelDescription.text = brodcast[indexPath.row].description
+        cell.labelDescription.text = brodcast[indexPath.row].name
         cell.titleLabel.text = self.user?.fullName
         
  
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
-      
-//       if brodcast[indexPath.row].status == "PLANNED" {
-//
-//
-//            cell.label.text = self.brodcast[indexPath.row].name
-//            cell.backgroundImage.removeBlur()
-//            cell.backgroundImage.backgroundColor = .clear
-//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-//            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-//            cell.backgroundImage.applyBlurEffect()
-//
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.overlay.anchor(width: 80)
-//
-//        }
+
         if brodcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)

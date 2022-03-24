@@ -31,7 +31,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         }
 
 
-        cell.labelDescription.text = brodcast[indexPath.row].description
+        cell.labelDescription.text = brodcast[indexPath.row].name
         
         
        
@@ -141,9 +141,6 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-        
-        print("Broadcast == \(self.brodcast[indexPath.row])")
-        
         if self.brodcast[indexPath.row] == nil { return }
         if self.brodcast[indexPath.row].status == "ONLINE" {
             guard let streams = brodcast[indexPath.row].streams else { return }
