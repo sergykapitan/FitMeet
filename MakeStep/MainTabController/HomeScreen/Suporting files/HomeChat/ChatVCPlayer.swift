@@ -122,7 +122,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-       // chatView.tableView.delegate = self
         registerForKeyboardNotifications()
         if isLand {
             chatView.cardView.backgroundColor = .white
@@ -133,12 +132,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             chatView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         }
 
-//        NotificationCenter.default.addObserver(self,selector: Selector(("handleConnectedUserUpdateNotification")), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
-//        
-//        NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
-//        
-//        NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
-        
+
         NotificationCenter.default.addObserver(self, selector: #selector(handleConnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDisconnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleUserTypingNotification(notification:)), name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
@@ -160,7 +154,8 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         guard let broad = broadcast else { return }
         guard let id = broad.channelIds?.first,let broadID = broad.id,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
         self.nickname = name
-        
+       
+        bindingMessage(broad: broadID)
         
         
         if token != nil {
@@ -322,16 +317,19 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                         } else {
                             if  let id = i.user?.userId {
                                 messageDictionary["id"] = "\(id)"
+                                messageDictionary["username"] = i.user?.fullName
+                                messageDictionary["message"] = i.payload?.message?.text
+                                messageDictionary["timestamp"] = i.timestamp
+                                self.chatMessages.append(messageDictionary)
+
+                                
                             }
+  
                        
-                        messageDictionary["username"] = i.user?.fullName
-                        messageDictionary["message"] = i.payload?.message?.text
-                        messageDictionary["timestamp"] = i.timestamp
-                        self.chatMessages.append(messageDictionary)
+                        
                         self.chatView.tableView.reloadData()
                         self.chatView.tableView.scrollToBottom()
                         }
-
                     }
                     self.refreshControl.endRefreshing()
                 }
@@ -411,39 +409,23 @@ extension ChatVCPlayer: UITableViewDataSource {
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
               let messageDate = currentChatMessage["timestamp"],
-              let nic = nickname,
-              let id = currentChatMessage["id"] as? Int
+              let id = currentChatMessage["id"]
         else { return UITableViewCell()}
         
-        if senderNickname as! String == nic {
-          if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
-                cell.selectionStyle = .none
-                cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname as? String
-                cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as? String
-                cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
-                cell.setImageLogo(image: avatar)
-            
-                return cell
-            }
-} else {
+    
        
-    if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell
-       {
+     let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as! ChatCell
+       
                 cell.selectionStyle = .none
                 cell.backgroundColor = .white
                 cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message as? String
+                guard  let ids = id as? Int else { return cell}
                 cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
+                guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
                 cell.setImageLogo(image: avatar)
                 return cell
-            }
-        }
-        return UITableViewCell()
     
     }
     

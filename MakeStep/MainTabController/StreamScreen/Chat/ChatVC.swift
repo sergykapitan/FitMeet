@@ -128,10 +128,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             makeTableView()
         
         guard let broadID = broadcastId,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
- //       SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
-//                      guard let array = arrayId else { return }
-//                      self.bindingUserMap(ids: array)
-//                 }
+
         self.nickname = name
         guard let intBroad = Int(broadId) else { return }
         bindingMessage(broad: intBroad)
@@ -150,14 +147,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         chatView.sendMessage.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
         
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-//        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "l") { arrayId in
-//                      guard let array = arrayId else { return }
-//                      self.bindingUserMap(ids: array)
-//        }
-    }
-    
+
     @objc func sendMessage() {
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if textView.text.count > 0 {
@@ -348,8 +338,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
                         self.chatView.tableView.scrollToBottom()
                         }
                     }
-                  //  self.chatView.tableView.reloadData()
-                  //  self.chatView.tableView.scrollToBottom()
                     self.refreshControl.endRefreshing()
                 }
             })
@@ -377,26 +365,11 @@ extension ChatVC: UITableViewDataSource {
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
               let messageDate = currentChatMessage["timestamp"],
-            //  let nic = nickname,
-              let id = currentChatMessage["id"] //as? Int
+              let id = currentChatMessage["id"] 
              
         else { return UITableViewCell()}
-        
-//if senderNickname as! String == nic {
-//          if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
-//               cell.selectionStyle = .none
-//               cell.backgroundColor = .clear
-//               cell.topLabel.text = senderNickname as? String
-//               cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-//               cell.textView.text = message as? String
-//               cell.bottomLabel.text = ""
-//               guard let avatar = self.usersd[id]?.avatarPath else { return cell }
-//               cell.setImageLogo(image: avatar)
-//                return cell
-//            }
-//} else {
+ 
     let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as! ChatCell
-     //  {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
                 cell.topLabel.text = senderNickname as? String
@@ -404,13 +377,11 @@ extension ChatVC: UITableViewDataSource {
                 cell.textView.text = message as? String
                 guard  let ids = id as? Int else { return cell}
                 cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[ids]?.avatarPath else { return cell }
+                guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
                 cell.setImageLogo(image: avatar)
         
                 return cell
-      //      }
-     //   }
-    //    return UITableViewCell()
+  
     }
     
     // MARK: UITextViewDelegate Methods
