@@ -99,30 +99,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         }
        
     }
-    private func customShadowPath(viewLayer layer: CALayer,
-                                  shadowHeight: CGFloat) -> UIBezierPath {
-        let layerX = layer.bounds.origin.x
-        let layerY = layer.bounds.origin.y
-        let layerWidth = layer.bounds.size.width
-        let layerHeight = layer.bounds.size.height
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint.zero)
-        
-        path.addLine(to: CGPoint(x: layerX + layerWidth,
-                                 y: layerY))
-        path.addLine(to: CGPoint(x: layerX + layerWidth,
-                                 y: layerHeight + 20))
-        
-        path.addCurve(to: CGPoint(x: 0,
-                                  y: layerHeight),
-                      controlPoint1: CGPoint(x: layerX + layerWidth,
-                                             y: layerHeight),
-                      controlPoint2: CGPoint(x: layerX,
-                                             y: layerHeight))
-        
-        return path
-    }
+  
     
     private lazy var textView: UITextView = {
         let view = UITextView(frame: CGRect.zero)
@@ -156,11 +133,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             chatView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         }
 
-        NotificationCenter.default.addObserver(self,selector: Selector(("handleConnectedUserUpdateNotification")), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+//        NotificationCenter.default.addObserver(self,selector: Selector(("handleConnectedUserUpdateNotification")), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+//        
+//        NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
+//        
+//        NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
         
-        NotificationCenter.default.addObserver(self, selector: "handleDisconnectedUserUpdateNotification:", name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
-        
-        NotificationCenter.default.addObserver(self, selector: "handleUserTypingNotification:", name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleConnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleDisconnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleUserTypingNotification(notification:)), name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
 
 
     }
@@ -233,6 +214,38 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
            } else {
             dismiss(animated: true)
             }
+    }
+    @objc func handleConnectedUserUpdateNotification(notification: NSNotification) {
+        let connectedUserInfo = notification.object as! [String: AnyObject]
+        let connectedUserNickname = connectedUserInfo["user"] //as? String
+        guard  let id = connectedUserNickname?["userId"] as? Int else { return }
+        var setId: Set<Int> = []
+        setId.insert(id)
+        let array = Array(setId)
+        self.bindingUserMap(ids: array)
+    }
+    
+    
+    @objc func handleDisconnectedUserUpdateNotification(notification: NSNotification) {
+        let disconnectedUserNickname = notification.object as! String
+    }
+    
+    
+    @objc func handleUserTypingNotification(notification: NSNotification) {
+        if let typingUsersDictionary = notification.object as? [String: AnyObject] {
+            var names = ""
+            var totalTypingUsers = 0
+            for (typingUser, _) in typingUsersDictionary {
+                if typingUser != nickname {
+                    names = (names == "") ? typingUser : "\(names), \(typingUser)"
+                    totalTypingUsers += 1
+                }
+            }
+            
+            if totalTypingUsers > 0 {
+                let verb = (totalTypingUsers == 1) ? "is" : "are"
+            }
+        }
     }
     @objc func sendMessage() {
         if token != nil {

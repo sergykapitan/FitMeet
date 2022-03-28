@@ -32,6 +32,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     var isLand:Bool = false
     var user: User?
     var usersd = [Int: User]()
+    var setId: Set<Int> = []
 
     private lazy var textView = UITextView(frame: CGRect.zero)
     private var isOversized = false {
@@ -41,9 +42,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             }
         }
         
-        private let maxHeight: CGFloat = 100
-    
-    //MARK: step 2 Create a delegate property here.
+    private let maxHeight: CGFloat = 100
     weak var delegate: ClassBVCDelegate?
 
     var broadcastId: String?
@@ -69,21 +68,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
         self.textView.layer.borderWidth = 1.5
         self.textView.layer.cornerRadius = 20
-        //self.textView.clipsToBounds = true
         self.textView.font =  UIFont.systemFont(ofSize: 18)
-        
-//        self.textView.layer.shadowOffset = CGSize(width: 3, height: 3)
-//        self.textView.layer.shadowOpacity = 0.8
-//        self.textView.layer.shadowRadius = 20
-//        self.textView.layer.shadowColor = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
-        
-//        self.textView.layer.masksToBounds = false
-//        self.textView.layer.shadowRadius = 3.0
-//        self.textView.layer.shadowColor = UIColor.black.cgColor
-//        self.textView.layer.shadowOffset = CGSize(width: 3, height: 3)
-//        self.textView.layer.shadowOpacity = 1.0
 
-        
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
@@ -142,10 +128,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             makeTableView()
         
         guard let broadID = broadcastId,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
-        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
-                      guard let array = arrayId else { return }
-                      self.bindingUserMap(ids: array)
-                 }
+ //       SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+//                      guard let array = arrayId else { return }
+//                      self.bindingUserMap(ids: array)
+//                 }
         self.nickname = name
         guard let intBroad = Int(broadId) else { return }
         bindingMessage(broad: intBroad)
@@ -153,7 +139,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        delegate?.changeBackgroundColor()
+       
     }
  
     deinit {
@@ -166,15 +152,16 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     }
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "l") { arrayId in
-                      guard let array = arrayId else { return }
-                      self.bindingUserMap(ids: array)
-        }
+//        SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "l") { arrayId in
+//                      guard let array = arrayId else { return }
+//                      self.bindingUserMap(ids: array)
+//        }
     }
     
     @objc func sendMessage() {
         let name = UserDefaults.standard.string(forKey: Constants.userFullName)
         if textView.text.count > 0 {
+            SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: "\(name)")
             SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
             SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
                           guard let array = arrayId else { return }
@@ -202,7 +189,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
  
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        binding()
+       // binding()
+        self.chatView.tableView.reloadData()
       
        }
     @objc  func buttonJoin() {
@@ -281,7 +269,12 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
     }
     @objc func handleConnectedUserUpdateNotification(notification: NSNotification) {
         let connectedUserInfo = notification.object as! [String: AnyObject]
-        let connectedUserNickname = connectedUserInfo["message"] as? String
+        let connectedUserNickname = connectedUserInfo["user"] //as? String
+        guard  let id = connectedUserNickname?["userId"] as? Int else { return }
+      //  var setId: Set<Int> = []
+        setId.insert(id)
+        let array = Array(setId)  
+        self.bindingUserMap(ids: array)
     }
     
     
@@ -341,16 +334,22 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
                         } else {
                             if  let id = i.user?.userId {
                                 messageDictionary["id"] = "\(id)"
+                                messageDictionary["username"] = i.user?.fullName
+                                messageDictionary["message"] = i.payload?.message?.text
+                                messageDictionary["timestamp"] = i.timestamp
+                                self.chatMessages.append(messageDictionary)
+
+                                
                             }
   
-                        messageDictionary["username"] = i.user?.fullName
-                        messageDictionary["message"] = i.payload?.message?.text
-                        messageDictionary["timestamp"] = i.timestamp
-                        self.chatMessages.append(messageDictionary)
+                       
+                        
                         self.chatView.tableView.reloadData()
                         self.chatView.tableView.scrollToBottom()
                         }
                     }
+                  //  self.chatView.tableView.reloadData()
+                  //  self.chatView.tableView.scrollToBottom()
                     self.refreshControl.endRefreshing()
                 }
             })
@@ -378,40 +377,40 @@ extension ChatVC: UITableViewDataSource {
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
               let messageDate = currentChatMessage["timestamp"],
-              let nic = nickname,
-              let id = currentChatMessage["id"] as? Int
+            //  let nic = nickname,
+              let id = currentChatMessage["id"] //as? Int
              
         else { return UITableViewCell()}
         
-if senderNickname as! String == nic {
-          if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
+//if senderNickname as! String == nic {
+//          if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell {
+//               cell.selectionStyle = .none
+//               cell.backgroundColor = .clear
+//               cell.topLabel.text = senderNickname as? String
+//               cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
+//               cell.textView.text = message as? String
+//               cell.bottomLabel.text = ""
+//               guard let avatar = self.usersd[id]?.avatarPath else { return cell }
+//               cell.setImageLogo(image: avatar)
+//                return cell
+//            }
+//} else {
+    let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as! ChatCell
+     //  {
                 cell.selectionStyle = .none
                 cell.backgroundColor = .clear
                 cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message as? String
+                guard  let ids = id as? Int else { return cell}
                 cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
-                cell.setImageLogo(image: avatar)
-             
-                return cell
-            }
-} else {
-    if let cell = tableView.dequeueReusableCell(withIdentifier: "receiverCellId", for: indexPath) as? ChatCell
-       {
-                cell.selectionStyle = .none
-               cell.backgroundColor = .clear
-                cell.topLabel.text = senderNickname as? String
-                cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
-                cell.textView.text = message as? String
-                cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[id]?.avatarPath else { return cell }
+                guard let avatar = self.usersd[ids]?.avatarPath else { return cell }
                 cell.setImageLogo(image: avatar)
         
                 return cell
-            }
-        }
-        return UITableViewCell()
+      //      }
+     //   }
+    //    return UITableViewCell()
     }
     
     // MARK: UITextViewDelegate Methods

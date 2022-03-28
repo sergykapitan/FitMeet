@@ -38,13 +38,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     func changeButton() {
         
-        streamView.recButton.isHidden = false
-        streamView.stopButton.isHidden = false
-        streamView.microfoneButton.isHidden = false
-        streamView.cameraModeButton.isHidden = false
-        streamView.cameraButton.isHidden = false
-        streamView.chatButton.isHidden = false
-        streamView.StartStreamButton.isHidden = false
+//        streamView.recButton.isHidden = false
+//        streamView.stopButton.isHidden = false
+//        streamView.microfoneButton.isHidden = false
+//        streamView.cameraModeButton.isHidden = false
+//        streamView.cameraButton.isHidden = false
+//        streamView.chatButton.isHidden = false
+//        streamView.StartStreamButton.isHidden = false
     }
     
     
@@ -64,14 +64,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     
     func changeBackgroundColor() {
-        print("GoodStaf")
-        streamView.recButton.isHidden = false
-        streamView.stopButton.isHidden = false
-        streamView.microfoneButton.isHidden = false
-        streamView.cameraModeButton.isHidden = false
-        streamView.cameraButton.isHidden = false
-        streamView.chatButton.isHidden = false
-        streamView.StartStreamButton.isHidden = false
+       
+//        streamView.recButton.isHidden = false
+//        streamView.stopButton.isHidden = false
+//        streamView.microfoneButton.isHidden = false
+//        streamView.cameraModeButton.isHidden = false
+//        streamView.cameraButton.isHidden = false
+//        streamView.chatButton.isHidden = false
+//        streamView.StartStreamButton.isHidden = false
     }
     
     
@@ -82,10 +82,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     let UserId = UserDefaults.standard.string(forKey: Constants.userID)
     let userName = UserDefaults.standard.string(forKey: Constants.userFullName)
     let streanUrl = UserDefaults.standard.string(forKey: Constants.urlStream)
-    
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
-    
     let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
+    
+    
+    
     
     private var takeChannel: AnyCancellable?
     private var task: AnyCancellable?
@@ -236,27 +237,35 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         guard let id = idBroad,let channel = channelId else { return }
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = channel
+        actionChatTransitionManager.intWidth = 1
+        actionChatTransitionManager.intHeight = 0.7
+        actionChatTransitionManager.isLandscape = isLandscape
+        present(chatVC, animated: true)
         
-        if isLandscape {
-            chatVC.isLand = true
-            actionChatTransitionManager.intWidth = 0.5
-            actionChatTransitionManager.intHeight = 1
-            present(chatVC, animated: true, completion: nil)
-        } else {
-            chatVC.isLand = false
-            actionChatTransitionManager.intWidth = 1
-            actionChatTransitionManager.intHeight = 0.7
-            actionChatTransitionManager.isLandscape = isLandscape
-            present(chatVC, animated: true)
-        }
         
-        streamView.recButton.isHidden = true
-        streamView.stopButton.isHidden = true
-        streamView.microfoneButton.isHidden = true
-        streamView.cameraModeButton.isHidden = true
-        streamView.cameraButton.isHidden = true
-        streamView.chatButton.isHidden = true
-        streamView.StartStreamButton.isHidden = true
+        
+        
+        
+//        if isLandscape {
+//            chatVC.isLand = true
+//            actionChatTransitionManager.intWidth = 0.5
+//            actionChatTransitionManager.intHeight = 1
+//            present(chatVC, animated: true, completion: nil)
+//        } else {
+//            chatVC.isLand = false
+//            actionChatTransitionManager.intWidth = 1
+//            actionChatTransitionManager.intHeight = 0.7
+//            actionChatTransitionManager.isLandscape = isLandscape
+//            present(chatVC, animated: true)
+//        }
+//
+//        streamView.recButton.isHidden = true
+//        streamView.stopButton.isHidden = true
+//        streamView.microfoneButton.isHidden = true
+//        streamView.cameraModeButton.isHidden = true
+//        streamView.cameraButton.isHidden = true
+//        streamView.chatButton.isHidden = true
+//        streamView.StartStreamButton.isHidden = true
  
     }
     @objc func openUserOnline() {
