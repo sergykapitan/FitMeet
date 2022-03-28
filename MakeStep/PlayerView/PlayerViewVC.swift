@@ -213,6 +213,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+        homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
+        homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
     }
   
     @objc func actionLike() {
@@ -244,6 +246,31 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.playerViewController?.player?.volume = 1
         }
 
+    }
+    @objc func actionSetting() {
+        homeView.buttonSetting.isSelected.toggle()
+        if homeView.buttonSetting.isSelected {
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                self.view.addSubview(self.homeView.settingView)
+                self.homeView.settingView.anchor( bottom: self.homeView.buttonSetting.topAnchor, paddingBottom: 3, width: 50, height: 100)
+                self.homeView.settingView.centerX(inView: self.homeView.buttonSetting)
+                self.homeView.settingView.alpha = 1
+                }, completion: nil)
+        } else {
+            UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+                self.homeView.settingView.alpha = 0
+                }, completion: nil)
+            
+        }
+
+    }
+    @objc func action480() {
+        homeView.settingView.button480.isSelected.toggle()
+        if homeView.settingView.button480.isSelected {
+            print("TODO: playlist")
+        } else {
+            print("TODO: playlist")
+        }
     }
     @objc func actionMore() {
         guard token != nil else { return }
@@ -502,9 +529,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
 
 
-        if isPlay {
-        playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
-                 if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
+      
+            let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
+            // CMTimeMakeWithSeconds(1, preferredTimescale: 1)
+            playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
+                if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
                      let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
                      UIView.animate(withDuration: 2) {
                          self.homeView.playerSlider.setValue(Float(time), animated: true)
@@ -513,7 +542,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                      self.homeView.labelTimeStart.text = Int(time).secondsToTime()
                  }
              }
-        }
+        
    
         
 
@@ -596,15 +625,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
     {
+        print("Value == \(playbackSlider.value)")
         
         let seconds : Int64 = Int64(playbackSlider.value)
         let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
-        isPlay = false
+        
         self.playerViewController?.player!.seek(to: targetTime)
         
         if  self.playerViewController?.player!.rate == 0
         {
-            isPlay = true
             self.playerViewController?.player!.play()
         }
     }

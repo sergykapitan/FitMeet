@@ -311,6 +311,8 @@
 		A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */; };
 		A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */; };
 		A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */; };
+		A5CEF0B527F1FFF200D9C6BC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */; };
+		A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
 		A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
@@ -593,6 +595,7 @@
 		A5B635AF27185C010097A127 /* CoverA.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoverA.swift; sourceTree = "<group>"; };
 		A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHorizontalListTableViewCell.swift; sourceTree = "<group>"; };
 		A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHorizontalListItemCollectionViewCell.swift; sourceTree = "<group>"; };
+		A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
 		A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVC.swift; sourceTree = "<group>"; };
@@ -960,6 +963,7 @@
 				A59431E727E8CC0500374890 /* OverlayLive.swift */,
 				A59431EA27E8CEF500374890 /* OverlayPlanned.swift */,
 				A59431ED27E8D09B00374890 /* OverlayOffline.swift */,
+				A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -2203,6 +2207,7 @@
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
+				A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */,
 				A5671E8C2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
 				A542778E274D22740063BBEE /* ButtonCommingCode.swift in Sources */,
 				A51294C6273A6EB7000CBBD9 /* BroadcastResponce.swift in Sources */,
@@ -2451,6 +2456,7 @@
 				A5427795274E44CE0063BBEE /* ButtonOfflineCode.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
+				A5CEF0B527F1FFF200D9C6BC /* SettingView.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				A58E2946274D1BC500CC39BB /* ButtonCommingCode.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,

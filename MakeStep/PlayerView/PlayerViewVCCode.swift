@@ -139,6 +139,16 @@ final class PlayerViewVCCode: UIView {
         view.layer.cornerRadius = 12
         return view
     }()
+    var settingView : SettingView = {
+        let view = SettingView()
+        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        view.layer.borderWidth = 0.5
+        view.layer.masksToBounds = false
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
+    }()
     var labelLive: UILabel = {
         let label = UILabel()
         label.text = "Live"
@@ -280,6 +290,7 @@ final class PlayerViewVCCode: UIView {
         buttonSetting.anchor( right: buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)
         buttonSetting.centerY(inView: buttonLandScape)
         
+              
         cardView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
