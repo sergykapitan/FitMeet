@@ -34,8 +34,9 @@ final class ChatVCPlayerCode: UIView {
         view.backgroundColor = .white
         view.layer.shadowOffset = CGSize(width: 10,
                                           height: 10)
+        view.layer.shadowColor = UIColor(hexString: "#D8D8D8").cgColor
         view.layer.shadowRadius = 5
-        view.layer.shadowOpacity = 0.3
+        view.layer.shadowOpacity = 0.8
         view.layer.shouldRasterize = true
         view.layer.rasterizationScale = UIScreen.main.scale
         view.layer.cornerRadius = 20
@@ -51,10 +52,12 @@ final class ChatVCPlayerCode: UIView {
     var sendMessage: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Frame"), for: .normal)
-        button.layer.shadowOffset = CGSize(width: 3, height: 3)
+        button.layer.shadowOffset = CGSize(width: 10, height: 10)
         button.layer.shadowOpacity = 0.8
-        button.layer.shadowRadius = 2
-        button.layer.shadowColor = CGColor.init(srgbRed: 1, green: 0, blue: 0, alpha: 1)
+        button.layer.shadowRadius = 5
+        button.layer.shouldRasterize = true
+        button.layer.rasterizationScale = UIScreen.main.scale
+        button.layer.shadowColor = UIColor(hexString: "#D8D8D8").cgColor
         return button
     }()
     var buttonCloseChat: UIButton = {
