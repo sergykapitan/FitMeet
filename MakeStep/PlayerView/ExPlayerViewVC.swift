@@ -85,12 +85,10 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             if self.itemCount > brodcast.count {
             self.isLoadingList = true
             self.loadMoreItemsForList()
-            } else {
-                self.isLoadingList = true
-               ////////////// self.loadMoreCaategoryForList()
-                if self.categoryCount + self.itemCount == brodcast.count {
+            } else if self.itemCount == brodcast.count {
+               // if self.categoryCount + self.itemCount == brodcast.count {
                     bindingOff()
-                }
+              //  }
             }
         }
   
