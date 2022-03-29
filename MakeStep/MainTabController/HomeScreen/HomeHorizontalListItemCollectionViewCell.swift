@@ -60,7 +60,7 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
      
         if let item = item as? User {
             nameLabel.text = item.fullName
-            setupImage(urlString: item.avatarPath ?? "")
+            setupImage(urlString: item.resizedAvatar?["avatar_120"]?.png ?? "")
         }
     }
     
