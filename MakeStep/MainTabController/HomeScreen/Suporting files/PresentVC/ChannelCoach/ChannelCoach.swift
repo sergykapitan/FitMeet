@@ -46,6 +46,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     var bottomConstraint = NSLayoutConstraint()
     
     var broadcast: BroadcastResponce?
+    var startAnimation:Bool = true
     
      var topConstraint = NSLayoutConstraint()
      var leftConstant = NSLayoutConstraint()
@@ -127,7 +128,6 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         super.viewWillLayoutSubviews()
         self.homeView.imageLogoProfile.makeRounded()
     }
-
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         self.homeView.imageLogoProfile.makeRounded()
@@ -136,11 +136,11 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButtonContinue()
-        makeNavItem()
         createTableView()
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         layout()
         homeView.viewTop.addGestureRecognizer(panRecognizer)
+        
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -149,6 +149,47 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         self.homeView.labelStreamInfo.addGestureRecognizer(tap)
         tap.delegate = self
     }
+    override func viewWillAppear(_ animated: Bool) {
+           super.viewWillAppear(animated)
+           self.navigationController?.navigationBar.isTranslucent = false
+           self.navigationController?.navigationBar.backgroundColor = .white
+           self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+           self.navigationController?.navigationBar.shadowImage = UIImage()
+           self.navigationController?.navigationBar.layoutIfNeeded()
+           if #available(iOS 15, *) {
+               let appearance = UINavigationBarAppearance()
+               appearance.configureWithOpaqueBackground()
+               appearance.backgroundColor = .white
+               appearance.shadowImage = UIImage()
+               appearance.shadowColor = .clear
+               UINavigationBar.appearance().standardAppearance = appearance
+               UINavigationBar.appearance().scrollEdgeAppearance = appearance
+           }
+         
+           self.homeView.imagePromo.isHidden = true
+           self.homeView.imageLogo.isHidden = true
+           self.homeView.labelStreamInfo.isHidden = true
+           self.homeView.buttonMore.isHidden = true
+           self.homeView.buttonChat.isHidden = true
+           
+           self.navigationController?.navigationBar.isHidden = false
+           guard let id = user?.id else { return }
+           if self.brodcast.isEmpty {
+               if token != nil {
+                   self.bindingChannel(userId: id)
+                   self.binding(id: "\(id)")
+               } else {
+                   self.bindingChannelNotAuth(userId: id)
+                   self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
+               }
+         }
+      }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        homeView.imageLogoProfile.makeRounded()
+        setUserProfile()
+    }
+    
     @objc func labelAction(gr:UITapGestureRecognizer) {
         let vc = PlayerViewVC()
         guard let broadcast = broadcast else { return }
@@ -174,46 +215,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
              }
          }
      }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isTranslucent = false
-        self.navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            appearance.shadowImage = UIImage()
-            appearance.shadowColor = .clear
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
-      
-        self.homeView.imagePromo.isHidden = true
-        self.homeView.imageLogo.isHidden = true
-        self.homeView.labelStreamInfo.isHidden = true
-        self.homeView.buttonMore.isHidden = true
-        self.homeView.buttonChat.isHidden = true
-        
-        self.navigationController?.navigationBar.isHidden = false
-        guard let id = user?.id else { return }
-        if self.brodcast.isEmpty {
-            if token != nil {
-                self.bindingChannel(userId: id)
-                self.binding(id: "\(id)")
-            } else {
-                self.bindingChannelNotAuth(userId: id)
-                self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
-            }
-      }
-   }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        homeView.imageLogoProfile.makeRounded()
-        setUserProfile()
-    }
+   
     
     func bindingChanellVOD(userId: String,page: Int) {
         self.isLoadingList = false
@@ -515,80 +517,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
        
         
     }
-    // MARK: - Animation
-    
-    /// The current state of the animation. This variable is changed only when an animation completes.
-    private var currentState: State = .closed
-    
-    /// All of the currently running animators.
-    private var runningAnimators = [UIViewPropertyAnimator]()
-    
-    /// The progress of each animator. This array is parallel to the `runningAnimators` array.
-    private var animationProgress = [CGFloat]()
-    
-    private lazy var panRecognizer: InstantPanGestureRecognizer = {
-        let recognizer = InstantPanGestureRecognizer()
-        recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
-        return recognizer
-    }()
-    
-    @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            
-            // start the animations
-            animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
-            
-            // pause all animations, since the next event may be a pan changed
-            runningAnimators.forEach { $0.pauseAnimation() }
-            
-            // keep track of each animator's progress
-            animationProgress = runningAnimators.map { $0.fractionComplete }
-            
-        case .changed:
-            
-            // variable setup
-            let translation = recognizer.translation(in: homeView.viewTop)
-            var fraction = -translation.y / popupOffset
-            
-            // adjust the fraction for the current state and reversed state
-            if currentState == .open { fraction *= -1 }
-            if runningAnimators[0].isReversed { fraction *= -1 }
-            
-            // apply the new fraction
-            for (index, animator) in runningAnimators.enumerated() {
-                animator.fractionComplete = fraction + animationProgress[index]
-            }
-            
-        case .ended:
-            
-            // variable setup
-            let yVelocity = recognizer.velocity(in: homeView.viewTop).y
-            let shouldClose = yVelocity < 0
-            
-            // if there is no motion, continue all animations and exit early
-            if yVelocity == 0 {
-                runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-                break
-            }
-            
-            // reverse the animations based on their current state and pan motion
-            switch currentState {
-            case .open:
-                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            case .closed:
-                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            }
-            
-            // continue all animations
-            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-            
-        default:
-            ()
-        }
-    }
+ 
     @objc func actionSubscribe() {
         
         guard let channel = channel,let _ = token else { return }
@@ -700,7 +629,6 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         //    playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
             }
     }
-   
     // MARK: - ButtonLandscape
     @objc func rightHandAction() {
         if isPlaying {
@@ -752,11 +680,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             }
         })
     }
-    
-    
-    
-    
-    
+
     @objc func actionTwitter() {
         guard let link = self.channel?.twitterLink else { return }
         if let url = URL(string: link) {
@@ -802,16 +726,16 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
        
     }
   
-     @objc func actionMore() {
-         guard token != nil else { return }
-         let detailViewController = SendVC()
-         actionSheetTransitionManager.height = 0.2
-         detailViewController.modalPresentationStyle = .custom
-         detailViewController.transitioningDelegate = actionSheetTransitionManager
-         detailViewController.url = broadcast?.url
-         present(detailViewController, animated: true)
+    @objc func actionMore() {
+        guard token != nil else { return }
+        let detailViewController = SendVC()
+        actionSheetTransitionManager.height = 0.2
+        detailViewController.modalPresentationStyle = .custom
+        detailViewController.transitioningDelegate = actionSheetTransitionManager
+        detailViewController.url = broadcast?.url
+        present(detailViewController, animated: true)
 
-     }
+    }
     @objc func actionBut(sender:UITapGestureRecognizer) {
         
         
@@ -823,11 +747,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
-          //  playPauseButton.isHidden = true
             homeView.buttonVolum.isHidden = true
-           
-         
-            
+
             isButton = false
         } else {
    
@@ -840,13 +761,9 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             homeView.labelEye.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.buttonVolum.isHidden = false
-         
-            
-        
-           
+
             isButton = true
         }
-
     }
     
   
@@ -857,47 +774,83 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         homeView.tableView.separatorStyle = .none
         homeView.tableView.showsVerticalScrollIndicator = false
     }
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Channel"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
-                    
-                    let backButton = UIButton()
-                  //  backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
-                   let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .horizontal
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-     //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
-    @objc func timeHandAction() {
-        print("timeHandAction")
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
+  
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    // MARK: - Animation
+    
+    /// The current state of the animation. This variable is changed only when an animation completes.
+    private var currentState: State = .closed
+    
+    /// All of the currently running animators.
+    private var runningAnimators = [UIViewPropertyAnimator]()
+    
+    /// The progress of each animator. This array is parallel to the `runningAnimators` array.
+    private var animationProgress = [CGFloat]()
+    
+    private lazy var panRecognizer: InstantPanGestureRecognizer = {
+        let recognizer = InstantPanGestureRecognizer()
+        recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
+        return recognizer
+    }()
+    
+    @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
+        switch recognizer.state {
+        case .began:
+            
+            // start the animations
+            animateTransitionIfNeeded(to: currentState.opposite, duration: 0.2)
+            
+            // pause all animations, since the next event may be a pan changed
+            runningAnimators.forEach { $0.pauseAnimation() }
+            
+            // keep track of each animator's progress
+            animationProgress = runningAnimators.map { $0.fractionComplete }
+            
+        case .changed:
+            
+            // variable setup
+            let translation = recognizer.translation(in: homeView.viewTop)
+            var fraction = -translation.y / popupOffset
+            
+            // adjust the fraction for the current state and reversed state
+            if currentState == .open { fraction *= -1 }
+            if runningAnimators[0].isReversed { fraction *= -1 }
+            
+            // apply the new fraction
+            for (index, animator) in runningAnimators.enumerated() {
+                animator.fractionComplete = fraction + animationProgress[index]
+            }
+            
+        case .ended:
+            
+            // variable setup
+            let yVelocity = recognizer.velocity(in: homeView.viewTop).y
+            let shouldClose = yVelocity < 0
+            
+            // if there is no motion, continue all animations and exit early
+            if yVelocity == 0 {
+                runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+                break
+            }
+            
+            // reverse the animations based on their current state and pan motion
+            switch currentState {
+            case .open:
+                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+            case .closed:
+                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+            }
+            
+            // continue all animations
+            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+            
+        default:
+            ()
+        }
     }
     
     //  MARK:  - Animation Top View
@@ -907,6 +860,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         guard runningAnimators.isEmpty else { return }
         
         // an animator for the transition
+        
+      
         let transitionAnimator = UIViewPropertyAnimator(duration: duration, dampingRatio: 1, animations: {
             switch state {
             case .open:
@@ -918,7 +873,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 self.leftbuttonSubscribeConstant.isActive = true
                 self.heightViewTop.constant = 400 + self.homeView.labelDescription.frame.height
                 
-                self.homeView.buttonSubscribe.isHidden = true
+              //  self.homeView.buttonSubscribe.isHidden = true
                 self.homeView.labelFollow.isHidden = true
 
                    self.heightConstant.constant = 90
@@ -943,8 +898,6 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 self.topbuttonSubscribeConstant.isActive = false
                 self.leftbuttonSubscribeConstant.isActive = false
                 self.heightViewTop.constant = 450
-                
-                self.homeView.buttonSubscribe.isHidden = true
                 self.homeView.labelFollow.isHidden = true
                 
                 self.bottomConstraint.constant = self.popupOffset
@@ -1007,7 +960,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                   
                 
-                self.homeView.buttonSubscribe.isHidden = false
+             
                 self.homeView.labelFollow.isHidden = true
                 
                 self.homeView.imageLogoProfile.makeRounded()
@@ -1036,10 +989,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
                   
                 
-                self.homeView.buttonSubscribe.isHidden = false
+               
                 self.homeView.labelFollow.isHidden = false
-                
-                
                 self.homeView.imageLogoProfile.makeRounded()
      
             }

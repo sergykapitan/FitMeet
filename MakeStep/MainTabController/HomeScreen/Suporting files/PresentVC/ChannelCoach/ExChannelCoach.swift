@@ -279,8 +279,9 @@ extension ChannelCoach {
          
          topbuttonSubscribeConstant = homeView.buttonSubscribe.topAnchor.constraint(equalTo: homeView.welcomeLabel.bottomAnchor, constant: 20)
          topbuttonSubscribeConstant.isActive = false
-         leftbuttonSubscribeConstant = homeView.buttonSubscribe.leadingAnchor.constraint(equalTo: homeView.viewTop.leadingAnchor, constant: 18)
+         leftbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -18)
          leftbuttonSubscribeConstant.isActive = false
+         
          rightbuttonSubscribeConstant = homeView.buttonSubscribe.trailingAnchor.constraint(equalTo: homeView.trailingAnchor, constant: -10)
          rightbuttonSubscribeConstant.isActive = true
          centerbuttonSubscribeConstant = homeView.buttonSubscribe.centerYAnchor.constraint(equalTo: homeView.imageLogoProfile.centerYAnchor)
@@ -295,21 +296,18 @@ extension ChannelCoach {
          homeView.buttonFollow.centerX(inView: homeView.viewTop)
   
         
-         homeView.buttonInstagram.anchor(  right: homeView.cardView.rightAnchor,paddingRight: 17, width: 28, height: 28)
-         homeView.buttonInstagram.centerY(inView: homeView.buttonSubscribe)
-         
-         
-         
-         homeView.buttonTwiter.anchor(right: homeView.buttonInstagram.leftAnchor,paddingRight: 5,  width: 28, height: 28)
+         homeView.buttonInstagram.anchor( left: homeView.cardView.leftAnchor,paddingLeft: 17, width: 28, height: 28)
+         homeView.buttonInstagram.centerY(inView: homeView.buttonFollow)
+
+         homeView.buttonTwiter.anchor(left: homeView.buttonInstagram.rightAnchor,paddingLeft: 5, width: 28, height: 28)
          homeView.buttonTwiter.centerY(inView: homeView.buttonInstagram)
 
-         
-         homeView.buttonfaceBook.anchor( right: homeView.buttonTwiter.leftAnchor, paddingRight: 5, width: 28, height: 28)
+         homeView.buttonfaceBook.anchor(left: homeView.buttonTwiter.rightAnchor, paddingLeft: 5, width: 28, height: 28)
          homeView.buttonfaceBook.centerY(inView: homeView.buttonInstagram)
          
          
   
-        // homeView.labelVideo.alpha = 0
+        
          self.homeView.buttonFollow.alpha = 0
          self.homeView.buttonInstagram.alpha = 0
          self.homeView.buttonTwiter.alpha = 0
