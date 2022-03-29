@@ -45,7 +45,8 @@ final class PlayerViewVCCode: UIView {
     }()
     var playerSlider: UISlider = {
         var slider = UISlider()
-        slider.setThumbImage(UIImage(named:"SliderCircle"), for: .normal)
+       // slider.setThumbImage(UIImage(named:"rec"), for: .highlighted)
+        slider.setThumbImage(UIImage(named: "SliderCircle"), for: .normal)
         return slider
     }()
     var buttonSetting: UIButton = {
@@ -55,13 +56,13 @@ final class PlayerViewVCCode: UIView {
         button.contentHorizontalAlignment = .fill
         return button
     }()
-    var buttonVolum: UIButton = {
-        var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
-        return button
-    }()
+//    var buttonVolum: UIButton = {
+//        var button = UIButton()
+//        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
+//        button.contentVerticalAlignment = .fill
+//        button.contentHorizontalAlignment = .fill
+//        return button
+//    }()
     var labelTimer: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#727272")

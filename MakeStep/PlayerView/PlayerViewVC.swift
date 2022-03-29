@@ -211,7 +211,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
-        homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
+       
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
         homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
@@ -234,19 +234,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
 
     }
-    @objc func actionVolume() {
-        guard token != nil else { return }
-        homeView.buttonVolum.isSelected.toggle()
-        if homeView.buttonVolum.isSelected {
-            let highlightedImage = UIImage(named: "volumeMute")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            homeView.buttonVolum.setImage(highlightedImage, for: .normal)
-            self.playerViewController?.player?.volume = 0
-        } else {
-            homeView.buttonVolum.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
-            self.playerViewController?.player?.volume = 1
-        }
-
-    }
+   
     @objc func actionSetting() {
         homeView.buttonSetting.isSelected.toggle()
         if homeView.buttonSetting.isSelected {
@@ -421,7 +409,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
             playPauseButton.isHidden = true
-            homeView.buttonVolum.isHidden = true
             homeView.playerSlider.isHidden = true
             homeView.labelTimeEnd.isHidden = true
             homeView.labelTimeStart.isHidden =  true
@@ -454,7 +441,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
             homeView.buttonSetting.isHidden = false
             homeView.buttonLandScape.isHidden = false
-            homeView.buttonVolum.isHidden = false
             homeView.labelTimeEnd.isHidden = false
             homeView.labelTimeStart.isHidden =  false
             
@@ -507,8 +493,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         playPauseButton.avPlayer = player
         
 
-       
-        
         self.homeView.playerSlider.minimumValue = 0
         self.homeView.playerSlider.setValue(0, animated: true)
          
@@ -528,20 +512,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             
         }
 
-
-      
-            let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
-            playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
-                if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
-                     let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
-                    guard let i = self.playerViewController?.player!.currentTime() else { return }                
-                     self.homeView.labelTimeStart.text = Int(time).secondsToTime()
-                 }
+        let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
+        playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
+            if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
+                 let timeLabel : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
+                 guard let time = self.playerViewController?.player!.currentTime() else { return }
+                 self.timerObserver(time: time)
+                 self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
+         }
         
-   
-        
-
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self.playerViewController!)
      
@@ -554,8 +534,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
         self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
         
-        self.view.addSubview(self.homeView.buttonVolum)
-        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 21 , paddingBottom: 10,width: 20,height: 20)
         
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 2)
@@ -580,7 +558,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
-                self.view.addSubview(self.homeView.buttonVolum)
                 self.view.addSubview(self.homeView.playerSlider)
                 self.view.addSubview(self.homeView.labelTimeEnd)
                 self.view.addSubview(self.homeView.labelTimeStart)
@@ -609,7 +586,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
     }
    
-    // MARK: - ButtonLandscape
+    //MARK: - Selectors
     @objc func rightHandAction() {
         if isPlaying {
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
@@ -627,8 +604,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             if self.homeView.playerSlider.maximumValue != Float(duration.seconds) {
                 self.homeView.playerSlider.maximumValue = Float(duration.seconds)
             }
-           // self.labCurrent.text = time.seconds.convertSecondString()
-           // self.labTotal.text = (duration.seconds-time.seconds).convertSecondString()
             self.homeView.playerSlider.value = Float(time.seconds)
         }
     }
@@ -647,8 +622,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.isUpdateTime = false
         })
     }
-    
-    //MARK: - Selectors
+
     @objc private func refreshAlbumList() {
        }
     @objc func rightBack() {
@@ -832,8 +806,5 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
             })
        }
-    func secondsToHoursMinutesSeconds(_ seconds: Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
+     
 }
