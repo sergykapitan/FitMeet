@@ -137,6 +137,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         super.viewDidLoad()
         actionButtonContinue()
         createTableView()
+        makeNavItem()
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         layout()
         homeView.viewTop.addGestureRecognizer(panRecognizer)
@@ -545,7 +546,29 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             }
         }
     }
+    func makeNavItem() {
+        
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+                    let titleLabel = UILabel()
+                   titleLabel.text = "Channel Coach"
+                   titleLabel.textAlignment = .center
+                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        
+                    let backButton = UIButton()
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
+                    stackView.distribution = .equalSpacing
+                      stackView.alignment = .center
+                    stackView.axis = .horizontal
 
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
+        
+       
+    }
     
 
     func setUserProfile() {

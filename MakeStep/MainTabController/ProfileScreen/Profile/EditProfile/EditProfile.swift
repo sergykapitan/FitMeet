@@ -20,9 +20,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     
     @Inject var fitMeetApi: FitMeetApi
     var imageUpload: UploadImage?
-   
-    
-    
     var user: User?
     var imagePicker: ImagePicker!
     
@@ -65,6 +62,24 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
         
     }
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+            setUserProfile()
+            self.navigationController?.navigationBar.isHidden = false
+            profileView.alertLabel.isHidden = true
+            profileView.alertImage.isHidden = true
+            profileView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+        }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.navigationController?.navigationBar.isTranslucent = false
+        navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+    
+    }
+    
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -92,7 +107,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: nil)
   }
-
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
@@ -106,28 +120,11 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
             self.profileView.scroll.contentOffset.y = 75
     }
     }
-    
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.profileView.scroll.contentOffset.y = 0
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        setUserProfile()
-        self.navigationController?.navigationBar.isHidden = false
-        profileView.alertLabel.isHidden = true
-        profileView.alertImage.isHidden = true
-        profileView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-        self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
     
-    }
    
    
     func setUserProfile() {
@@ -197,22 +194,22 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
                     let titleLabel = UILabel()
-                   titleLabel.text = "   Profile"
+                   titleLabel.text = "Edit Profile"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
-                   let backButton = UIButton()
-                   backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                   backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                   backButton.anchor(width:40,height: 40)
-                   let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .horizontal
+                    let backButton = UIButton()
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
+                    stackView.distribution = .equalSpacing
+                      stackView.alignment = .center
+                    stackView.axis = .horizontal
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
+        
         let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
         let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
@@ -223,10 +220,10 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     }
     func changeData() {
         profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .touchDown)
-       }
+    }
     @objc func myTargetFunction(textField: UITextField) {
                showPicker()
-              }
+    }
     private func showPicker() {
         var style = DefaultStyle()
         style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])

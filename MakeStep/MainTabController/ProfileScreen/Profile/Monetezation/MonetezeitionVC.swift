@@ -52,9 +52,9 @@ class MonetezeitionVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = attributes
         
                     let backButton = UIButton()
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
+                   
         
                     let titleLabel = UILabel()
                    titleLabel.text = "Monetization"
@@ -64,7 +64,7 @@ class MonetezeitionVC: UIViewController {
 
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
+                   stackView.alignment = .center
                    stackView.axis = .horizontal
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)

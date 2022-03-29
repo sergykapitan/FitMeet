@@ -381,20 +381,19 @@ class ChanellVC: UIViewController  {
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
+                   let titleLabel = UILabel()
                    titleLabel.text = "Channel"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
                     
                     let backButton = UIButton()
-                  //  backButton.setImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
+
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
+                   stackView.alignment = .center
                    stackView.axis = .horizontal
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
