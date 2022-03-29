@@ -38,7 +38,7 @@ extension SearchVC: UITableViewDataSource {
         let cell2 = tableView.dequeueReusableCell(withIdentifier: "SearchVCUserCell") as! SearchVCUserCell
         let cell3 = tableView.dequeueReusableCell(withIdentifier: "SearchVCCategory") as! SearchVCCategory
         
-        let defoultImage = "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg"
+        let defoultImage = "https://dev.makestep.com/qa-files/files_1e2d9edb-4819-4800-8076-30a80d6b51d0.jpeg"
 
         if index == 0 {
 

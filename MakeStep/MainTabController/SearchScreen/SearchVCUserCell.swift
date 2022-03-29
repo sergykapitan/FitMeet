@@ -27,9 +27,10 @@ class SearchVCUserCell: UITableViewCell {
     }()
     let logoUserImage: UIImageView = {
         let image = UIImageView()
+        image.backgroundColor = .gray
         return image
-        
     }()
+    
     let buttonLike: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
