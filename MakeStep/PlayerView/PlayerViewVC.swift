@@ -115,12 +115,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func loadView() {
         view = homeView
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
     }
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -161,7 +159,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
         }
     }
-
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.popViewController(animated: true)
@@ -187,6 +184,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.view.addGestureRecognizer(swipeDown)
 
     }
+    
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil
@@ -592,7 +590,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
             self.isPlaying = false
         } else {
-            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeLeft)
+            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeRight)
             self.isPlaying =  true
         }
     }
