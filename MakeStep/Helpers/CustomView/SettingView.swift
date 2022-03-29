@@ -21,7 +21,7 @@ final class SettingView : UIView {
     let button480: UIButton = {
         let but = UIButton()
         but.backgroundColor = .blueColor
-        but.setTitle("480", for: .normal)
+        but.setTitle("360", for: .normal)
         but.anchor( height: 20)
         but.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return but
@@ -29,15 +29,16 @@ final class SettingView : UIView {
     let button4801: UIButton = {
         let but = UIButton()
         but.backgroundColor = .blueColor
-        but.setTitle("4802", for: .normal)
+        but.setTitle("480", for: .normal)
         but.anchor( height: 20)
         but.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return but
     }()
+  
     let button4802: UIButton = {
         let but = UIButton()
         but.backgroundColor = .blueColor
-        but.setTitle("4803", for: .normal)
+        but.setTitle("720", for: .normal)
         but.anchor( height: 20)
         but.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         return but
@@ -45,7 +46,7 @@ final class SettingView : UIView {
     let button4803: UIButton = {
         let but = UIButton()
         but.backgroundColor = .blueColor
-        but.setTitle("4804", for: .normal)
+        but.setTitle("1080", for: .normal)
         but.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
         but.anchor( height: 20)
         return but

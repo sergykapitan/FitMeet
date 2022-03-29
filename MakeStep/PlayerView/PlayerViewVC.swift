@@ -238,7 +238,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         if homeView.buttonSetting.isSelected {
             UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
                 self.view.addSubview(self.homeView.settingView)
-                self.homeView.settingView.anchor( bottom: self.homeView.buttonSetting.topAnchor, paddingBottom: 3, width: 50, height: 100)
+                self.homeView.settingView.anchor( bottom: self.homeView.buttonSetting.topAnchor, paddingBottom: 3, width: 80, height: 100)
                 self.homeView.settingView.centerX(inView: self.homeView.buttonSetting)
                 self.homeView.settingView.alpha = 1
                 }, completion: nil)
@@ -254,8 +254,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.settingView.button480.isSelected.toggle()
         if homeView.settingView.button480.isSelected {
             print("TODO: playlist")
+            homeView.settingView.button480.titleLabel?.textColor = .gray
         } else {
             print("TODO: playlist")
+            homeView.settingView.button480.titleLabel?.textColor = .white
         }
     }
     @objc func actionMore() {
@@ -525,12 +527,12 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
      
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 21,  width: 20, height: 20)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 21,  width: 25, height: 25)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.buttonLandScape)
         self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 30,height: 30)
         
         
         self.view.addSubview(self.homeView.playerSlider)
@@ -544,7 +546,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
     }
 
-    //MARK: - Transishion
+ //MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
        
@@ -583,8 +585,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
             }
     }
-   
-    //MARK: - Selectors
+ //MARK: - Selectors
     @objc func rightHandAction() {
         if isPlaying {
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
@@ -594,7 +595,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.isPlaying =  true
         }
     }
- 
     func timerObserver(time: CMTime) {
         if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,
             !duration.isIndefinite ,
@@ -605,30 +605,24 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.homeView.playerSlider.value = Float(time.seconds)
         }
     }
-    
     @objc  func sliderValueChange(slider: UISlider) {
         self.isUpdateTime = true
         
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delaySeekTime), object: nil)
         self.perform(#selector(delaySeekTime), with: nil, afterDelay: 0.1)
     }
-    
-    
     @objc func delaySeekTime() {
         let time =  CMTimeMake(value: Int64(self.homeView.playerSlider.value), timescale: 1)
         self.playerViewController?.player?.seek(to: time, completionHandler: { [unowned self] (finish) in
             self.isUpdateTime = false
         })
     }
-
     @objc private func refreshAlbumList() {
        }
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
     }
-    
-  
-    // MARK: - ActionChat
+ // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
 
         if isPlaying {
@@ -678,7 +672,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
        
     }
-    
  // MARK: - NetworkMetod
     func followChannels(id: Int) {
         takeChannels = fitMeetChannels.followChannels(id: id)
@@ -689,7 +682,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
             })
       }
-
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
@@ -708,8 +700,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
             })
         }
-   
-    
     func bindingChanellVOD(userId: String,page: Int) {
         take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
             .mapError({ (error) -> Error in return error })
