@@ -212,7 +212,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
-        homeView.playerSlider.addTarget(self, action: #selector(self.playbackSliderValueChanged(_:)), for: .valueChanged)
+        homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
         homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
     }
@@ -531,14 +531,10 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
       
             let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
-            // CMTimeMakeWithSeconds(1, preferredTimescale: 1)
-            playerViewController?.player!.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { (CMTime) -> Void in
+            playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
                 if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
                      let time : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
-                     UIView.animate(withDuration: 2) {
-                         self.homeView.playerSlider.setValue(Float(time), animated: true)
-                    }
-                   
+                    guard let i = self.playerViewController?.player!.currentTime() else { return }                
                      self.homeView.labelTimeStart.text = Int(time).secondsToTime()
                  }
              }
@@ -623,20 +619,35 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.isPlaying =  true
         }
     }
-    @objc func playbackSliderValueChanged(_ playbackSlider:UISlider)
-    {
-        print("Value == \(playbackSlider.value)")
-        
-        let seconds : Int64 = Int64(playbackSlider.value)
-        let targetTime:CMTime = CMTimeMake(value: seconds, timescale: 1)
-        
-        self.playerViewController?.player!.seek(to: targetTime)
-        
-        if  self.playerViewController?.player!.rate == 0
-        {
-            self.playerViewController?.player!.play()
+ 
+    func timerObserver(time: CMTime) {
+        if let duration = self.playerViewController?.player?.currentItem?.asset.duration ,
+            !duration.isIndefinite ,
+            !isUpdateTime {
+            if self.homeView.playerSlider.maximumValue != Float(duration.seconds) {
+                self.homeView.playerSlider.maximumValue = Float(duration.seconds)
+            }
+           // self.labCurrent.text = time.seconds.convertSecondString()
+           // self.labTotal.text = (duration.seconds-time.seconds).convertSecondString()
+            self.homeView.playerSlider.value = Float(time.seconds)
         }
     }
+    
+    @objc  func sliderValueChange(slider: UISlider) {
+        self.isUpdateTime = true
+        
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(delaySeekTime), object: nil)
+        self.perform(#selector(delaySeekTime), with: nil, afterDelay: 0.1)
+    }
+    
+    
+    @objc func delaySeekTime() {
+        let time =  CMTimeMake(value: Int64(self.homeView.playerSlider.value), timescale: 1)
+        self.playerViewController?.player?.seek(to: time, completionHandler: { [unowned self] (finish) in
+            self.isUpdateTime = false
+        })
+    }
+    
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
        }
