@@ -40,9 +40,13 @@ extension HomeVC: UITableViewDataSource {
          return cell
         
         case 1:
+           
             
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-        cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            
+        guard !listBroadcast.isEmpty  else { return cell }
+
+        cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg")
         cell.labelDescription.text = listBroadcast[indexPath.row].description
        
 
@@ -102,12 +106,7 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonLogo.tag = indexPath.row
         cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
         cell.buttonLogo.isUserInteractionEnabled = true
-        
-        
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
-        
+  
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
@@ -124,19 +123,6 @@ extension HomeVC: UITableViewDataSource {
         return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
     }
 
-
-    @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        guard self.token != nil else {  return  }
-        if sender.currentImage == UIImage(named: "LikeNot") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
-            self.followBroadcast(id: id)
-        } else {
-            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
-            self.unFollowBroadcast(id: id)
-        }
-    }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         let detailViewController = SendVC()
         actionSheetTransitionManager.height = 0.2
@@ -182,11 +168,10 @@ extension HomeVC: UITableViewDelegate {
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
           self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-        let vc = PlayerViewVC()
+          let vc = PlayerViewVC()
 
-        if self.listBroadcast[indexPath.row] == nil {
-            return
-        }
+        if self.listBroadcast.isEmpty { return }
+        
         if self.listBroadcast[indexPath.row].status == "ONLINE" {
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id =  self.listBroadcast[indexPath.row].userId

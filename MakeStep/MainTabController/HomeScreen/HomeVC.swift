@@ -94,34 +94,21 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             bindingNotAuht()
         }
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
-      
-        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-      
-      
-        
+  
     }
    
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        if index == 0 {
-            if token != nil {
+        if token != nil {
                 binding()
-               
-            } else {
+         } else {
                 bindingNotAuht()
             }
-        } else if index == 1 {
-            self.listBroadcast.removeAll()
-            bindingRecomandate()
-        } else if index == 2 {
-            self.listBroadcast.removeAll()
-            onlyFollowBroadcast(follow: true)
         }
-        
-       }
+    
     func binding() {
         takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
@@ -138,12 +125,108 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                 }
         })
     }
+    func bindingNotAuht() {
+            takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        self.homeView.tableView.isHidden = false
+                       
+                        self.listBroadcast.removeAll()
+                        self.listBroadcast = response.data!
+                        self.bindingNotOff()
+                    } else {
+                        self.listBroadcast.removeAll()
+                        self.bindingNotOff()
+                    }
+            })
+        }
+    
+    func bindingOff() {
+          takeOff = fitMeetStream.getOffBroadcast()
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                  if response.data != nil  {
+                      self.listBroadcast.append(contentsOf: response.data!)
+                      self.bindingPlanned()
+                  } else {
+                      self.bindingPlanned()
+                     
+                  }
+              })
+      }
+    func bindingNotOff() {
+            takeOff = fitMeetStream.getNotOffBroadcast()
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        self.listBroadcast.append(contentsOf: response.data!)
+                        self.bindingNotPlanned()
+                    } else {
+                        self.bindingNotPlanned()
+                    }
+                })
+        }
+    
+    func bindingPlanned() {
+            takePlan = fitMeetStream.getListPlanBroadcast()
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        self.listBroadcast.append(contentsOf: response.data!)
+                        let arrayUserId = self.listBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                        self.homeView.tableView.reloadData()
+                        self.refreshControl.endRefreshing()
+                        self.bindingCategory()
+                    }
+                })
+        }
+    func bindingNotPlanned() {
+           takePlan = fitMeetStream.getNotPlanBroadcast()
+               .mapError({ (error) -> Error in return error })
+               .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                   if response.data != nil  {
+                       self.listBroadcast.append(contentsOf: response.data!)
+                       let arrayUserId = self.listBroadcast.map{$0.userId!}
+                       self.bindingUserMap(ids: arrayUserId)
+                       self.homeView.tableView.reloadData()
+                       self.refreshControl.endRefreshing()
+                       self.bindingCategory()
+                   }
+               })
+       }
+    
+    func bindingUserMap(ids: [Int])  {
+           if ids.isEmpty { return } else {
+           takeUser = fitMeetApi.getUserIdMap(ids: ids)
+               .mapError({ (error) -> Error in return error })
+               .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                   if response.data.count != 0 {
+                       self.usersd = response.data
+                       self.homeView.tableView.reloadData()
+                   }
+             })
+          }
+       }
+    func bindingCategory() {
+            takeBroadcast = fitMeetStream.getCategory()
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        self.listCategory = response.data!
+      
+                    }
+            })
+        }
+    
+    
     func getUsers() {
         takeUser = fitMeetStream.getListAllUser()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    var list = response.data
+                if !response.data.isEmpty  {
+                    let list = response.data
                     let result = list.filter({ $0.avatarPath != nil })
                     self.listUsers = result
                     self.homeView.tableView.reloadData()
@@ -151,172 +234,17 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                 }
           })
     }
-    func bindingPlanned() {
-        takePlan = fitMeetStream.getListPlanBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    self.bindingCategory()
-                }
-            })
-    }
-    func bindingOff() {
-        takeOff = fitMeetStream.getOffBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    self.bindingPlanned()
-                } else {
-                    self.bindingPlanned()
-                   
-                }
-            })
-    }
-    func bindingNotAuht() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.homeView.tableView.isHidden = false
-                   
-                    self.listBroadcast.removeAll()
-                    self.listBroadcast = response.data!
-                    self.bindingNotOff()
-                } else {
-                    self.listBroadcast.removeAll()
-                    self.bindingNotOff()
-                }
-        })
-    }
-    func bindingNotPlanned() {
-        takePlan = fitMeetStream.getNotPlanBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    self.bindingCategory()
-                }
-            })
-    }
-    func bindingNotOff() {
-        takeOff = fitMeetStream.getNotOffBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    self.bindingNotPlanned()
-                } else {
-                    self.bindingNotPlanned()
-                }
-            })
-    }
-
     func getMapWather(ids: [Int])   {
-        watcherMap = fitMeetApi.getWatcherMap(ids: ids)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.watch = response.data["\(ids.first!)"]!
-             
-                }
-          })
-    }
-    func bindingRecomandate() {
-        takeBroadcast = fitMeetStream.getRecomandateBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data?.first?.id != nil  {
-                    self.homeView.tableView.isHidden = false
-                   
-                    self.listBroadcast.removeAll()
-                    self.listBroadcast = response.data!
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                } else {
-                    self.homeView.tableView.isHidden = true
-                  
-                }
-          })
-    }
-    func bindingUser(id: Int)  {
-        takeUser = fitMeetApi.getUserId(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
-                    self.ar.append(self.user!)
-                }
-          })
-    }
-    func bindingUserMap(ids: [Int])  {
-        if ids.isEmpty { return } else {
-        takeUser = fitMeetApi.getUserIdMap(ids: ids)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.count != 0 {
-                    self.usersd = response.data
-                    self.homeView.tableView.reloadData()
-                }
-          })
-       }
-    }
-
-    func followBroadcast(id: Int) {
-        followBroad = fitMeetStream.followBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-          
-          })
-    }
-    func unFollowBroadcast(id: Int) {
-        followBroad = fitMeetStream.unFollowBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-            
-         })
-    }
-    
-    func onlyFollowBroadcast(follow: Bool) {
-        followBroad = fitMeetStream.getBroadcastSubscription()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                self.listBroadcast.removeAll()
-                self.homeView.tableView.reloadData()
-                if response.data?.first?.id != nil {
-                   
-                    self.listBroadcast = response.data!
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                } else {
-                    self.homeView.tableView.isHidden = true
-                  
-                }
-         })
-    }
-    func bindingCategory() {
-        takeBroadcast = fitMeetStream.getCategory()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listCategory = response.data!
-  
-                }
+          watcherMap = fitMeetApi.getWatcherMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                  if !response.data.isEmpty  {
+                      self.watch = response.data["\(ids.first!)"]!
+            }
         })
-    }
+      }
+
+    
  
     private func makeTableView() {
         homeView.tableView.dataSource = self
