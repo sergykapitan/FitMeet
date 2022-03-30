@@ -46,7 +46,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     var listBroadcast: [BroadcastResponce] = []
     var listCategory: [Datum] = []
     private let refreshControl = UIRefreshControl()
-   // var  playerContainerView: PlayerContainerView?
+   
     var user: User?
     var ar =  [User]()
     var listUsers : [User]?

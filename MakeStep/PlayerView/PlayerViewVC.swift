@@ -536,7 +536,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         
         self.view.addSubview(self.homeView.playerSlider)
-        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 2)
+        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: -10)
         
         self.view.addSubview(self.homeView.labelTimeStart)
         self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
