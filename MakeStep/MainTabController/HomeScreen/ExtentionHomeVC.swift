@@ -114,7 +114,14 @@ extension HomeVC: UITableViewDataSource {
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
         
-
+        if indexPath.row == listBroadcast.count - 1 {
+            if self.itemCount > listBroadcast.count {
+                self.isLoadingList = true
+                self.loadMoreItemsForList()
+            } else if self.itemCount == listBroadcast.count {
+                self.bindingPlanned()
+            }
+        }
         return cell
         
         default:

@@ -273,7 +273,7 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
         })
     }
     func bindingOff() {
-        takeOff = fitMeetStream.getOffBroadcast()
+        takeOff = fitMeetStream.getOffBroadcast(page: 1)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {

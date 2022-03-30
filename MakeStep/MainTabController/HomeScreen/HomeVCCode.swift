@@ -23,12 +23,7 @@ final class HomeVCCode: UIView {
     var tableView: UITableView = {
         let table = UITableView()
         return table
-    }()
-    var segmentControll: CustomSegmentedControl = {
-        let segment = CustomSegmentedControl()
-        return segment
-        
-    }()
+    }()  
     //MARK: - initial
     
     override init(frame: CGRect) {

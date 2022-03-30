@@ -107,8 +107,8 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
   
         if indexPath.row == brodcast.count - 1 {
             if self.itemCount > brodcast.count {
-            self.isLoadingList = true
-            self.loadMoreItemsForList() 
+                self.isLoadingList = true
+                self.loadMoreItemsForList()
             }
         }
        return cell

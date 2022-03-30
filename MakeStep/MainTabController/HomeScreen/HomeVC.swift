@@ -17,9 +17,11 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     var ids = [Int]()
     var complishionHandler: ((Bool) -> Void)?
     var watch = 0
-
+    var itemCount: Int = 0
+    var isLoadingList : Bool = true
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
+    var currentPage : Int = 1
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
@@ -103,8 +105,10 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
         if token != nil {
+            self.listBroadcast.removeAll()
                 binding()
          } else {
+             self.listBroadcast.removeAll()
                 bindingNotAuht()
             }
         }
@@ -114,14 +118,11 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.homeView.tableView.isHidden = false
-                    self.listBroadcast.removeAll()
                     self.listBroadcast = response.data!
-                    self.bindingOff()
+                    self.bindingOff(page: self.currentPage)
                   
                 } else {
-                    self.listBroadcast.removeAll()
-                    self.bindingOff()
+                    self.bindingOff(page: self.currentPage)
                 }
         })
     }
@@ -130,28 +131,29 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
-                        self.homeView.tableView.isHidden = false
-                       
-                        self.listBroadcast.removeAll()
                         self.listBroadcast = response.data!
                         self.bindingNotOff()
                     } else {
-                        self.listBroadcast.removeAll()
                         self.bindingNotOff()
                     }
             })
         }
     
-    func bindingOff() {
-          takeOff = fitMeetStream.getOffBroadcast()
+    func bindingOff(page:Int) {
+        takeOff = fitMeetStream.getOffBroadcast(page: page)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { response in
                   if response.data != nil  {
                       self.listBroadcast.append(contentsOf: response.data!)
-                      self.bindingPlanned()
-                  } else {
-                      self.bindingPlanned()
-                     
+                      let arrayUserId = self.listBroadcast.map{$0.userId!}
+                      self.bindingUserMap(ids: arrayUserId)
+                      self.refreshControl.endRefreshing()
+                      self.homeView.tableView.reloadData()
+
+                  } 
+                  if response.meta != nil {
+                      guard let itemCount = response.meta?.itemCount else { return }
+                      self.itemCount = itemCount
                   }
               })
       }
@@ -244,7 +246,10 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
         })
       }
 
-    
+    func loadMoreItemsForList(){
+            currentPage += 1
+            bindingOff(page: currentPage)
+       }
  
     private func makeTableView() {
         homeView.tableView.dataSource = self
