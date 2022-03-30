@@ -200,7 +200,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                     let backButton = UIButton()
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                     let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                     stackView.distribution = .equalSpacing
