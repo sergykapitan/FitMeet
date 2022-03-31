@@ -85,8 +85,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-       
-    
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -103,7 +101,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-  
+       
     }
    
     //MARK: - Selectors

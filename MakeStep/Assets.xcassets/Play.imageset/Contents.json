@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Controls Left1.svg",
+      "filename" : "Vector1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Controls Left@2x.svg",
+      "filename" : "Vector@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Controls Left@3x.svg",
+      "filename" : "Vector@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

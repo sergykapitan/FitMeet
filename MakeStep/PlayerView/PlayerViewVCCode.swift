@@ -52,23 +52,36 @@ final class PlayerViewVCCode: UIView {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
         button.contentVerticalAlignment = .center
-        button.contentHorizontalAlignment = .right
+        button.contentHorizontalAlignment = .center
         return button
     }()
-//    var buttonVolum: UIButton = {
-//        var button = UIButton()
-//        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
-//        button.contentVerticalAlignment = .fill
-//        button.contentHorizontalAlignment = .fill
-//        return button
-//    }()
+    var buttonPlayPause: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
+    }()
+    var buttonSkipPrevious: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Skip Previous"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
+    }()
+    var buttonSkipNext: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Skip Next"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
+    }()
     var labelTimer: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#727272")
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
-    
     var labelCategory: TagListView = {
         var tag = TagListView()
         tag.textFont = UIFont.systemFont(ofSize: 12)
@@ -123,8 +136,6 @@ final class PlayerViewVCCode: UIView {
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
         return button
     }()
-
-
     var tableView: UITableView = {
         let table = UITableView()
         return table
@@ -200,7 +211,6 @@ final class PlayerViewVCCode: UIView {
         button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
         return button
     }()
-  
     let labelNotToken: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0

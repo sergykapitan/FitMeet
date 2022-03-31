@@ -207,6 +207,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
+        homeView.buttonPlayPause.addTarget(self, action: #selector(actionPlayPause), for: .touchUpInside)
         
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
@@ -215,7 +216,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
     }
-  
+    @objc func actionPlayPause() {
+        homeView.buttonPlayPause.isSelected.toggle()
+        if homeView.buttonPlayPause.isSelected {
+            homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+            self.playerViewController?.player?.pause()
+        } else {
+            homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
+            self.playerViewController?.player?.play()
+        }
+    }
     @objc func actionLike() {
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
@@ -233,7 +243,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
 
     }
-   
     @objc func actionSetting() {
         homeView.buttonSetting.isSelected.toggle()
         if homeView.buttonSetting.isSelected {
@@ -402,7 +411,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.labelEye.isHidden = true
             homeView.buttonLandScape.isHidden = true
             homeView.buttonSetting.isHidden = true
-            playPauseButton.isHidden = true
+            homeView.buttonPlayPause.isHidden = true
+            homeView.buttonSkipNext.isHidden = true
+            homeView.buttonSkipPrevious.isHidden = true
             homeView.playerSlider.isHidden = true
             homeView.labelTimeEnd.isHidden = true
             homeView.labelTimeStart.isHidden =  true
@@ -437,7 +448,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.buttonLandScape.isHidden = false
             homeView.labelTimeEnd.isHidden = false
             homeView.labelTimeStart.isHidden =  false
-            
+            homeView.buttonPlayPause.isHidden = false
+            homeView.buttonSkipNext.isHidden = false
+            homeView.buttonSkipPrevious.isHidden = false
            
             
             if playPauseButton == nil {
@@ -482,8 +495,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
         
-        playPauseButton = PlayPauseButton()
-        playPauseButton.avPlayer = player
         
 
         self.homeView.playerSlider.minimumValue = 0
@@ -514,29 +525,40 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
          }
-        
-        self.homeView.imagePromo.addSubview(playPauseButton)
-        playPauseButton.setup(in: self.playerViewController!)
-        
-        
-       
-        
+  
         
         self.view.addSubview(self.homeView.buttonLandScape)
+        self.homeView.buttonLandScape.backgroundColor = .lightGray
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         self.homeView.buttonLandScape.setImage(imageL, for: .normal)        
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 0,width: 60,height: 40)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 0,width: 50,height: 30)
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 60,height: 40)
+        self.homeView.buttonSetting.backgroundColor = .lightGray
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.playerSlider)
-        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 30,height: 20)
-       
+        self.homeView.playerSlider.backgroundColor = .red
+        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 0,height: 20)
         
         
        
+        
+        self.view.addSubview(self.homeView.buttonPlayPause)
+        self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
+        self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
+       
+        
+        self.view.addSubview(self.homeView.buttonSkipPrevious)
+        self.homeView.buttonSkipPrevious.backgroundColor = .red
+        self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 0)
+        self.homeView.buttonSkipPrevious.centerY(inView: self.homeView.buttonPlayPause)
+               
+        self.view.addSubview(self.homeView.buttonSkipNext)
+        self.homeView.buttonSkipNext.backgroundColor = .red
+        self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 0)
+        self.homeView.buttonSkipNext.centerY(inView: self.homeView.buttonPlayPause)
         
         self.view.addSubview(self.homeView.labelTimeStart)
         self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
@@ -556,14 +578,18 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 self.view.addSubview(self.playerViewController!.view)
                 self.playerViewController!.didMove(toParent: self)
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                
+                self.view.addSubview(self.homeView.playerSlider)
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
-                self.view.addSubview(self.homeView.playerSlider)
                 self.view.addSubview(self.homeView.labelTimeEnd)
                 self.view.addSubview(self.homeView.labelTimeStart)
+                self.view.addSubview(self.homeView.buttonPlayPause)
+                self.view.addSubview(self.homeView.buttonSkipNext)
+                self.view.addSubview(self.homeView.buttonSkipPrevious)
+                self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 120)
                 
-                self.playerViewController?.view.addSubview(self.playPauseButton)               
-                self.playPauseButton.updatePosition()
+               
                 let imageL = UIImage(named: "minimize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
                 self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
@@ -573,6 +599,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill            
            } else {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                self.homeView.buttonPlayPause.removeFromSuperview()
                 let playerFrame = self.homeView.imagePromo.bounds
                 self.playerViewController!.view.frame = playerFrame
                 self.playerViewController!.showsPlaybackControls = false
@@ -580,6 +607,18 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 self.homeView.imagePromo.addSubview(self.playerViewController!.view)
                 self.playerViewController!.didMove(toParent: self)
                 let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+                self.view.addSubview(self.homeView.buttonPlayPause)
+                self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
+                self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
+                self.view.addSubview(self.homeView.buttonSkipPrevious)
+                self.homeView.buttonSkipPrevious.backgroundColor = .red
+                self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 0)
+                self.homeView.buttonSkipPrevious.centerY(inView: self.homeView.buttonPlayPause)
+                       
+                self.view.addSubview(self.homeView.buttonSkipNext)
+                self.homeView.buttonSkipNext.backgroundColor = .red
+                self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 0)
+                self.homeView.buttonSkipNext.centerY(inView: self.homeView.buttonPlayPause)
                 self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
                 })
