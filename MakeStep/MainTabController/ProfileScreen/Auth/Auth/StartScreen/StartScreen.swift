@@ -47,6 +47,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
       homeView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
       homeView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
       homeView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
+      homeView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
     }
 
     func makeNavItem() {
@@ -73,13 +74,10 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    @objc
-    func rightHandAction() {
+    @objc func rightHandAction() {
         print("right bar button action")
     }
-
-    @objc
-    func leftHandAction() {
+    @objc func leftHandAction() {
         print("left bar button action")
     }
     @objc func actionMonetezation() {
@@ -87,6 +85,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
+  
     @objc func actionSignUp() {
         homeView.buttonSignUp.backgroundColor = .blueColor
         homeView.buttonSignIn.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -103,7 +102,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
  
     @objc func actionAbout() {
         let helpWebViewController = WebViewController()
-          helpWebViewController.url = Constants.webViewPwa + "about"
+        helpWebViewController.url = "https://dev.makestep.com/about-us-webview/"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
     
