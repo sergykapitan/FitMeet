@@ -31,7 +31,12 @@ extension SendCoach: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            "Data to share".share()
+            guard let id = broadcast?.id else { return }
+            #if QA
+                "https://makestepQA.com/broadcastQA/\(id)".share()
+            #elseif DEBUG
+                "https://makestep.com/broadcast/\(id)".share()
+            #endif
         }
         if indexPath.row == 3 {
             let vc = EditStreamVC()

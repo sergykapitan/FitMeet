@@ -30,7 +30,12 @@ extension SendVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 2 {
             guard let id = broadcast?.id else { return }
-            "https://makestep.com/broadcast/\(id)".share()
+            #if QA
+                "https://makestep.com/broadcastQA/\(id)".share()
+            #elseif DEBUG
+                "https://makestep.com/broadcast/\(id)".share()
+            #endif
+          
         }
     }
 }

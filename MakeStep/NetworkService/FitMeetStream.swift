@@ -378,8 +378,8 @@ class FitMeetStream {
  
     public func getCategoryId(id: Int) -> AnyPublisher<Datum,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-          //  .validate(statusCode: 200..<300)
-          //  .validate(contentType: ["application/json"])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
             .publishDecodable(type: Datum.self)
             .value()
             .print("getBroadcastCategoryId")

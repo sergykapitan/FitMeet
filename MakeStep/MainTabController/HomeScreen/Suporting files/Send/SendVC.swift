@@ -34,14 +34,12 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         makeTableView()
-        // Subviews
         [butH, tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         butH.setContentHuggingPriority(.required, for: .vertical)
-  //.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
@@ -52,8 +50,7 @@ class SendVC: UIViewController,UITabBarControllerDelegate {
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
-            
-           
+ 
         ])
 
     }

@@ -151,8 +151,7 @@ extension HomeVC: UITableViewDataSource {
     
 }
 extension HomeVC: UITableViewDelegate {
-    
-    
+        
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
@@ -165,7 +164,6 @@ extension HomeVC: UITableViewDelegate {
        
         return UITableView.automaticDimension
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
    
@@ -212,8 +210,6 @@ extension HomeVC: UITableViewDelegate {
         }
     }
 }
-
-
 extension HomeVC: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         var st = title
@@ -240,14 +236,9 @@ extension HomeVC: TagListViewDelegate {
 }
 extension HomeVC: HomeHorizontalListTableViewCellDelegate {
     func horizontalListItemTapped(index: Int, type: [User]) {
-  
         let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
         vc.user = type[index]       
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
-  
-    
 }

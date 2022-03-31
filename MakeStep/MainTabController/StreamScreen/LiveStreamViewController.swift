@@ -37,32 +37,14 @@ final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
 class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDelegate{
     
     func changeButton() {
-        
-//        streamView.recButton.isHidden = false
-//        streamView.stopButton.isHidden = false
-//        streamView.microfoneButton.isHidden = false
-//        streamView.cameraModeButton.isHidden = false
-//        streamView.cameraButton.isHidden = false
-//        streamView.chatButton.isHidden = false
-//        streamView.StartStreamButton.isHidden = false
     }
-    
-    
-
     var isLandscape: Bool = false
-    
-    
-    
     func changeUp(key: CGFloat) {
         
     }
     func changeDown(key: CGFloat) {
         
     }
-    
-    
-    
-    
     func changeBackgroundColor() {
        
 //        streamView.recButton.isHidden = false
@@ -127,8 +109,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-              
-
         actionButton()
         rtmpStream = RTMPStream(connection: rtmpConnection)
         if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
@@ -224,7 +204,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     @objc func shareLink() {        
         guard let id = broadcastId,let privateKey = privateUrlKey else { return }
-        "https://makestep.com/broadcast/\(id)/\(privateKey)".share()
+ 
+        #if QA
+            "https://makestep.com/broadcastQA/\(id)/\(privateKey)".share()
+        #elseif DEBUG
+            "https://makestep.com/broadcast/\(id)/\(privateKey)".share()
+        #endif
     }
     // MARK: - presentChat
     
@@ -522,11 +507,15 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.timerLabel.text = times.joined(separator: " ")
     //  }
     }
+    
+    
+    
+    
+    
     @objc func timerAction() {
            counter += 1
            updateTimer(timeElapsed: counter)
        }
-    
     func blurEffect(key: Bool) {
         let blur = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blur)
