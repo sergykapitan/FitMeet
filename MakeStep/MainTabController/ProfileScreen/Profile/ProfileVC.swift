@@ -32,8 +32,6 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-       
         setUserProfile()
         actionButtonContinue()
         makeNavItem()
@@ -70,7 +68,6 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         print("ChanelId = \(chanellId)")
         
     }
- 
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
         bindingUser()

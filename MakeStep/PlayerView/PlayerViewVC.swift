@@ -206,12 +206,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
   
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
+        homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
+        
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
-       
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
-        homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
+        
         homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
     }
   
@@ -296,7 +297,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
            })
        }
-    
     func binding(id: String) {
           takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
               .mapError({ (error) -> Error in return error })
@@ -317,7 +317,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
            })
        }
-
     func bindingBroadcastForId(id: String, key: String) {
         takeBroadcast = fitMeetStream.getBroadcastId(id: id, key: key)
               .mapError({ (error) -> Error in return error })
@@ -379,8 +378,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
           })
     }
-  
-   
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
@@ -396,9 +393,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
              
          })
     }
-   
-
-   
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
   
@@ -454,7 +448,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             isButton = true
         }
     }
-
     func setUserProfile(user: User) {
         homeView.setImage(image: user.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         homeView.labelStreamDescription.text = self.user?.fullName
@@ -524,19 +517,26 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         self.homeView.imagePromo.addSubview(playPauseButton)
         playPauseButton.setup(in: self.playerViewController!)
-     
         
-        self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 21,  width: 25, height: 25)
-        self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
+        
+       
+        
         
         self.view.addSubview(self.homeView.buttonLandScape)
-        self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 30,height: 30)
+        let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        self.homeView.buttonLandScape.setImage(imageL, for: .normal)        
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 0,width: 60,height: 40)
         
+        self.view.addSubview(self.homeView.buttonSetting)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 60,height: 40)
+        self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.playerSlider)
-        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: -10)
+        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 30,height: 20)
+       
+        
+        
+       
         
         self.view.addSubview(self.homeView.labelTimeStart)
         self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
@@ -564,7 +564,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 
                 self.playerViewController?.view.addSubview(self.playPauseButton)               
                 self.playPauseButton.updatePosition()
-                self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
+                let imageL = UIImage(named: "minimize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+                self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
             
             })
@@ -578,7 +579,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
                 self.homeView.imagePromo.addSubview(self.playerViewController!.view)
                 self.playerViewController!.didMove(toParent: self)
-                self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
+                let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+                self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
                 })
             transitionAnimator.startAnimation()

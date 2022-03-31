@@ -22,7 +22,6 @@ final class PlayerViewVCCode: UIView {
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
         }()
-
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
@@ -37,10 +36,11 @@ final class PlayerViewVCCode: UIView {
         var image = UIView()
         return image
     }()
-
     var buttonLandScape: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "maximize"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
     var playerSlider: UISlider = {
@@ -51,8 +51,8 @@ final class PlayerViewVCCode: UIView {
     var buttonSetting: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .right
         return button
     }()
 //    var buttonVolum: UIButton = {
@@ -88,7 +88,7 @@ final class PlayerViewVCCode: UIView {
     }()
     var labelStreamDescription: UILabel = {
         var label = UILabel()
-        label.textColor = .gray //UIColor(hexString: "#F6F6F6")
+        label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
         return label
@@ -237,9 +237,6 @@ final class PlayerViewVCCode: UIView {
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        cardView.addSubview(buttonLandScape)
-        buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
-        
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 10,width: 24,height: 24)
         
@@ -266,7 +263,7 @@ final class PlayerViewVCCode: UIView {
         cardView.addSubview(labelCategory)
         labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
         labelCategory.centerY(inView: labelStreamDescription)
-                
+      
         cardView.addSubview(tableView)
         tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
 
@@ -283,14 +280,7 @@ final class PlayerViewVCCode: UIView {
                        left: imagePromo.leftAnchor,
                        paddingTop: 10,
                        paddingLeft: 16,  width: 90, height: 24)
-        
-       
-        
-        cardView.addSubview(buttonSetting)
-        buttonSetting.anchor( right: buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)
-        buttonSetting.centerY(inView: buttonLandScape)
-        
-              
+    
         cardView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
