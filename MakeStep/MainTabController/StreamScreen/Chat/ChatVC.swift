@@ -196,7 +196,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
                 }
         })
     }
-  
     private func makeTableView() {
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
@@ -214,8 +213,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
       NotificationCenter.default.addObserver(self, selector:
     #selector(keyboardWillBeHidden(_:)),name: UIResponder.keyboardWillHideNotification, object: nil)
     }
-    
-    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
         let info = notificiation.userInfo!
         let keyboardFrame: CGRect = (info[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -233,12 +230,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
              self.view.layoutIfNeeded()
         })
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             view.endEditing(true)
 
         }
-    
     func scrollToBottom() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { () -> Void in
             if self.chatMessages.count > 0 {

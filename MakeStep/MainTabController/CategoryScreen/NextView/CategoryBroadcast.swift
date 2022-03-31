@@ -121,22 +121,21 @@ class CategoryBroadcast: UIViewController  {
         
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = categoryTitle
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                    let titleLabel = UILabel()
+                    titleLabel.text = categoryTitle
+                    titleLabel.textAlignment = .center
+                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                     let backButton = UIButton()
+                    backButton.anchor( width: 40, height: 30)
                     backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
-
-        
+  
                    let stackView = UIStackView(arrangedSubviews: [backButton ,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
-                  stackView.axis = .horizontal
+                   stackView.axis = .horizontal
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]

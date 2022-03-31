@@ -174,7 +174,6 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
         }
-
     func changeData() {
         authView.textFieldStartDate.didSelect { (gg, tt, hh) in
             if gg == "NOW" {

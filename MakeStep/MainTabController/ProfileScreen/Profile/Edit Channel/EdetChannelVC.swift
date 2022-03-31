@@ -266,8 +266,10 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                    let backButton = UIButton()
+                    backButton.anchor( width: 40, height: 30)
                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+        
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
                    stackView.alignment = .leading
