@@ -34,7 +34,6 @@ final class NotTkenViewCode: UIView {
         initLayout()
         
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

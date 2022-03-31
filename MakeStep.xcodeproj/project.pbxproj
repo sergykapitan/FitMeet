@@ -33,7 +33,6 @@
 		A512941A273A6EB7000CBBD9 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
 		A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CD87E92704539300D065ED /* WebViewController.swift */; };
 		A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D72226257D8D007CFB71 /* AuthViewController.swift */; };
-		A512941D273A6EB7000CBBD9 /* EXDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF3263D794E0033F78F /* EXDelegate.swift */; };
 		A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A956267C965100010F88 /* DropDownTextField.swift */; };
 		A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA4272AAE1E006A8F2D /* AddMonetezationVC.swift */; };
 		A5129420273A6EB7000CBBD9 /* ChatVCPlayerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */; };
@@ -43,7 +42,6 @@
 		A5129424273A6EB7000CBBD9 /* Extensins+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74F2625F0C6007CFB71 /* Extensins+String.swift */; };
 		A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7E5267A427D00EA0741 /* TabySegmentedControl.swift */; };
 		A5129426273A6EB7000CBBD9 /* SlideInPresentationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */; };
-		A5129427273A6EB7000CBBD9 /* StreamingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */; };
 		A5129428273A6EB7000CBBD9 /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5129429273A6EB7000CBBD9 /* Coach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D2B93A26E78E880080E7E3 /* Coach.swift */; };
 		A512942A273A6EB7000CBBD9 /* SearchVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */; };
@@ -73,7 +71,6 @@
 		A5129443273A6EB7000CBBD9 /* ExtentionHomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */; };
 		A5129444273A6EB7000CBBD9 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B11150269221EA0006CA5A /* UserCell.swift */; };
 		A5129446273A6EB7000CBBD9 /* AppUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E88E5826D4F216003E6B16 /* AppUtility.swift */; };
-		A5129447273A6EB7000CBBD9 /* StreamingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */; };
 		A5129448273A6EB7000CBBD9 /* OptionalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CBB86D263B2B8300015380 /* OptionalView.swift */; };
 		A5129449273A6EB7000CBBD9 /* TimeTableCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */; };
 		A512944C273A6EB7000CBBD9 /* UserVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB7F268F4D9C007096AB /* UserVCCode.swift */; };
@@ -141,7 +138,6 @@
 		A512948E273A6EB7000CBBD9 /* NewStartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A944267C880300010F88 /* NewStartStream.swift */; };
 		A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */; };
 		A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376952639625900D38EC3 /* BroadcastRequest.swift */; };
-		A5129492273A6EB7000CBBD9 /* VCcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A938267C81F700010F88 /* VCcontroller.swift */; };
 		A5129493273A6EB7000CBBD9 /* ExtentionSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */; };
 		A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */; };
 		A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5526A836F800321AB8 /* PresentedViewController.swift */; };
@@ -176,7 +172,6 @@
 		A51294B2273A6EB7000CBBD9 /* RightToLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D4FADA26E502FF004AAC42 /* RightToLeft.swift */; };
 		A51294B3273A6EB7000CBBD9 /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DCB73268E1BE9007096AB /* SocketIOManager.swift */; };
 		A51294B4273A6EB7000CBBD9 /* EditStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47079092705B69500921821 /* EditStreamVC.swift */; };
-		A51294B5273A6EB7000CBBD9 /* EXDataSourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */; };
 		A51294B6273A6EB7000CBBD9 /* Responce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4F26A7315500321AB8 /* Responce.swift */; };
 		A51294B7273A6EB7000CBBD9 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B484E8F12684512900D75BE8 /* BaseViewController.swift */; };
 		A51294B8273A6EB7000CBBD9 /* ChannelRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A22632C944000E00DE /* ChannelRequest.swift */; };
@@ -188,7 +183,6 @@
 		A51294BE273A6EB7000CBBD9 /* Label.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404922826D6456600A2F417 /* Label.swift */; };
 		A51294BF273A6EB7000CBBD9 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48D82C2262DC5F500F5A0D9 /* VideoClip.swift */; };
-		A51294C1273A6EB7000CBBD9 /* VCControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A93B267C820D00010F88 /* VCControllerCode.swift */; };
 		A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */; };
 		A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B404923726D8FA1500A2F417 /* MapWatcher.swift */; };
 		A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7AC262965FB007CFB71 /* SecurityCodeVCCode.swift */; };
@@ -206,7 +200,6 @@
 		A51294D1273A6EB7000CBBD9 /* ChannelResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F6A52632CC77000E00DE /* ChannelResponce.swift */; };
 		A51294D2273A6EB7000CBBD9 /* ResponcePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376892638622700D38EC3 /* ResponcePassword.swift */; };
 		A51294D3273A6EB7000CBBD9 /* CategoryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F204D5266F501800ED11B5 /* CategoryVC.swift */; };
-		A51294D4273A6EB7000CBBD9 /* StreamingVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */; };
 		A51294D5273A6EB7000CBBD9 /* ExMytariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */; };
 		A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADF263D4D740033F78F /* HueButton.swift */; };
 		A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */; };
@@ -414,9 +407,6 @@
 		B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADB263B42A20033F78F /* UserSetting.swift */; };
 		B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7ADF263D4D740033F78F /* HueButton.swift */; };
 		B4AE7AE3263D61D40033F78F /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AE2263D61D40033F78F /* PopUpView.swift */; };
-		B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */; };
-		B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */; };
-		B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AF3263D794E0033F78F /* EXDelegate.swift */; };
 		B4B1114E269221C70006CA5A /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1114D269221C70006CA5A /* BaseCell.swift */; };
 		B4B11151269221EA0006CA5A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B11150269221EA0006CA5A /* UserCell.swift */; };
 		B4B111552692239A0006CA5A /* ChatCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B111542692239A0006CA5A /* ChatCell.swift */; };
@@ -436,8 +426,6 @@
 		B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BF4768270757380013FC13 /* DeleteStreamVC.swift */; };
 		B4BF476B270757480013FC13 /* DeleteStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BF476A270757480013FC13 /* DeleteStreamCode.swift */; };
 		B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */; };
-		B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A938267C81F700010F88 /* VCcontroller.swift */; };
-		B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A93B267C820D00010F88 /* VCControllerCode.swift */; };
 		B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A944267C880300010F88 /* NewStartStream.swift */; };
 		B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A947267C881700010F88 /* NewStartStreamCode.swift */; };
 		B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A956267C965100010F88 /* DropDownTextField.swift */; };
@@ -486,9 +474,7 @@
 		B4D9D7B72629A98B007CFB71 /* Token.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7B62629A98B007CFB71 /* Token.swift */; };
 		B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7B92629ABB5007CFB71 /* Password.swift */; };
 		B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */; };
-		B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */; };
 		B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */; };
-		B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */; };
 		B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */; };
 		B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */; };
 		B4E88E4D26D3DB79003E6B16 /* Usermap.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E88E4C26D3DB79003E6B16 /* Usermap.swift */; };
@@ -693,9 +679,6 @@
 		B4AE7ADB263B42A20033F78F /* UserSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSetting.swift; sourceTree = "<group>"; };
 		B4AE7ADF263D4D740033F78F /* HueButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HueButton.swift; sourceTree = "<group>"; };
 		B4AE7AE2263D61D40033F78F /* PopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUpView.swift; sourceTree = "<group>"; };
-		B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDataSourse.swift; sourceTree = "<group>"; };
-		B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingViewCell.swift; sourceTree = "<group>"; };
-		B4AE7AF3263D794E0033F78F /* EXDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EXDelegate.swift; sourceTree = "<group>"; };
 		B4B1114D269221C70006CA5A /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
 		B4B11150269221EA0006CA5A /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		B4B111542692239A0006CA5A /* ChatCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatCell.swift; sourceTree = "<group>"; };
@@ -715,8 +698,6 @@
 		B4BF4768270757380013FC13 /* DeleteStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStreamVC.swift; sourceTree = "<group>"; };
 		B4BF476A270757480013FC13 /* DeleteStreamCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStreamCode.swift; sourceTree = "<group>"; };
 		B4C4996C263ADB9600BFD1EE /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
-		B4C5A938267C81F700010F88 /* VCcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCcontroller.swift; sourceTree = "<group>"; };
-		B4C5A93B267C820D00010F88 /* VCControllerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VCControllerCode.swift; sourceTree = "<group>"; };
 		B4C5A944267C880300010F88 /* NewStartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStartStream.swift; sourceTree = "<group>"; };
 		B4C5A947267C881700010F88 /* NewStartStreamCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewStartStreamCode.swift; sourceTree = "<group>"; };
 		B4C5A956267C965100010F88 /* DropDownTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownTextField.swift; sourceTree = "<group>"; };
@@ -770,9 +751,7 @@
 		B4D9D7B62629A98B007CFB71 /* Token.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Token.swift; sourceTree = "<group>"; };
 		B4D9D7B92629ABB5007CFB71 /* Password.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
 		B4D9D7BC2629ACFE007CFB71 /* LoginPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPassword.swift; sourceTree = "<group>"; };
-		B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVC.swift; sourceTree = "<group>"; };
 		B4D9D7CD262D8F1F007CFB71 /* MainTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarViewController.swift; sourceTree = "<group>"; };
-		B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVCCode.swift; sourceTree = "<group>"; };
 		B4E3CC8F26AE70F2001E78BA /* ChatVCPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCPlayer.swift; sourceTree = "<group>"; };
 		B4E3CC9226AE73AF001E78BA /* ChatVCPlayerCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVCPlayerCode.swift; sourceTree = "<group>"; };
 		B4E88E4C26D3DB79003E6B16 /* Usermap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Usermap.swift; sourceTree = "<group>"; };
@@ -1342,32 +1321,10 @@
 		B4A9F63C26321789000E00DE /* First */ = {
 			isa = PBXGroup;
 			children = (
-				B4C5A937267C81D700010F88 /* VC */,
-				B4AE7AE6263D780A0033F78F /* Stream */,
 				B4C5A93E267C847A00010F88 /* NewStartStream */,
 				A58EC19527B1381C00E920FB /* AddedVideo */,
 			);
 			path = First;
-			sourceTree = "<group>";
-		};
-		B4AE7AE6263D780A0033F78F /* Stream */ = {
-			isa = PBXGroup;
-			children = (
-				B4D9D7C7262D8C1B007CFB71 /* StreamingVC.swift */,
-				B4D9D7D1262D9377007CFB71 /* StreamingVCCode.swift */,
-				B4AE7AF0263D79030033F78F /* StreamingViewCell.swift */,
-				B4AE7AEB263D789E0033F78F /* EXStreamingVC */,
-			);
-			path = Stream;
-			sourceTree = "<group>";
-		};
-		B4AE7AEB263D789E0033F78F /* EXStreamingVC */ = {
-			isa = PBXGroup;
-			children = (
-				B4AE7AEC263D78C60033F78F /* EXDataSourse.swift */,
-				B4AE7AF3263D794E0033F78F /* EXDelegate.swift */,
-			);
-			path = EXStreamingVC;
 			sourceTree = "<group>";
 		};
 		B4B11153269223850006CA5A /* Cell */ = {
@@ -1420,15 +1377,6 @@
 				B475A93B26B91CE000EF96A4 /* UploadImage.swift */,
 			);
 			path = CoreData;
-			sourceTree = "<group>";
-		};
-		B4C5A937267C81D700010F88 /* VC */ = {
-			isa = PBXGroup;
-			children = (
-				B4C5A938267C81F700010F88 /* VCcontroller.swift */,
-				B4C5A93B267C820D00010F88 /* VCControllerCode.swift */,
-			);
-			path = VC;
 			sourceTree = "<group>";
 		};
 		B4C5A93E267C847A00010F88 /* NewStartStream */ = {
@@ -2017,7 +1965,6 @@
 				A512941A273A6EB7000CBBD9 /* PlayerViewCell.swift in Sources */,
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
 				A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */,
-				A512941D273A6EB7000CBBD9 /* EXDelegate.swift in Sources */,
 				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
 				A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */,
 				A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */,
@@ -2029,7 +1976,6 @@
 				A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */,
 				A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5129426273A6EB7000CBBD9 /* SlideInPresentationManager.swift in Sources */,
-				A5129427273A6EB7000CBBD9 /* StreamingVC.swift in Sources */,
 				A5129428273A6EB7000CBBD9 /* EdetChannelVC.swift in Sources */,
 				A5129429273A6EB7000CBBD9 /* Coach.swift in Sources */,
 				A512942A273A6EB7000CBBD9 /* SearchVCCode.swift in Sources */,
@@ -2063,7 +2009,6 @@
 				A5129443273A6EB7000CBBD9 /* ExtentionHomeVC.swift in Sources */,
 				A5129444273A6EB7000CBBD9 /* UserCell.swift in Sources */,
 				A5129446273A6EB7000CBBD9 /* AppUtility.swift in Sources */,
-				A5129447273A6EB7000CBBD9 /* StreamingViewCell.swift in Sources */,
 				A5129448273A6EB7000CBBD9 /* OptionalView.swift in Sources */,
 				A5129449273A6EB7000CBBD9 /* TimeTableCode.swift in Sources */,
 				A5A0642227C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */,
@@ -2146,7 +2091,6 @@
 				A542778F274D22780063BBEE /* ExButtonComming.swift in Sources */,
 				A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */,
 				A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */,
-				A5129492273A6EB7000CBBD9 /* VCcontroller.swift in Sources */,
 				A5129493273A6EB7000CBBD9 /* ExtentionSearchVC.swift in Sources */,
 				A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */,
 				A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */,
@@ -2184,7 +2128,6 @@
 				A51294B2273A6EB7000CBBD9 /* RightToLeft.swift in Sources */,
 				A51294B3273A6EB7000CBBD9 /* SocketIOManager.swift in Sources */,
 				A51294B4273A6EB7000CBBD9 /* EditStreamVC.swift in Sources */,
-				A51294B5273A6EB7000CBBD9 /* EXDataSourse.swift in Sources */,
 				A51294B6273A6EB7000CBBD9 /* Responce.swift in Sources */,
 				A51294B7273A6EB7000CBBD9 /* BaseViewController.swift in Sources */,
 				A51294B8273A6EB7000CBBD9 /* ChannelRequest.swift in Sources */,
@@ -2197,7 +2140,6 @@
 				A51294BE273A6EB7000CBBD9 /* Label.swift in Sources */,
 				A51294BF273A6EB7000CBBD9 /* ChangeChannel.swift in Sources */,
 				A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */,
-				A51294C1273A6EB7000CBBD9 /* VCControllerCode.swift in Sources */,
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */,
@@ -2224,7 +2166,6 @@
 				A51294D1273A6EB7000CBBD9 /* ChannelResponce.swift in Sources */,
 				A51294D2273A6EB7000CBBD9 /* ResponcePassword.swift in Sources */,
 				A51294D3273A6EB7000CBBD9 /* CategoryVC.swift in Sources */,
-				A51294D4273A6EB7000CBBD9 /* StreamingVCCode.swift in Sources */,
 				A51294D5273A6EB7000CBBD9 /* ExMytariff.swift in Sources */,
 				A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */,
@@ -2266,7 +2207,6 @@
 				A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
-				B4AE7AF4263D794E0033F78F /* EXDelegate.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
 				A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */,
 				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
@@ -2277,7 +2217,6 @@
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				A5C4172C27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
-				B4D9D7C8262D8C1C007CFB71 /* StreamingVC.swift in Sources */,
 				A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */,
 				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
@@ -2311,7 +2250,6 @@
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
 				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
 				B4E88E5926D4F216003E6B16 /* AppUtility.swift in Sources */,
-				B4AE7AF1263D79030033F78F /* StreamingViewCell.swift in Sources */,
 				B4CBB86E263B2B8300015380 /* OptionalView.swift in Sources */,
 				B475A94C26BA7F1600EF96A4 /* TimeTableCode.swift in Sources */,
 				A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */,
@@ -2397,7 +2335,6 @@
 				A58E2948274D1BD500CC39BB /* ExButtonComming.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
-				B4C5A939267C81F700010F88 /* VCcontroller.swift in Sources */,
 				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
@@ -2435,7 +2372,6 @@
 				B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */,
 				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
 				B470790A2705B69500921821 /* EditStreamVC.swift in Sources */,
-				B4AE7AED263D78C60033F78F /* EXDataSourse.swift in Sources */,
 				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
@@ -2448,7 +2384,6 @@
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
-				B4C5A93C267C820D00010F88 /* VCControllerCode.swift in Sources */,
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A52FA7BE27C79499004F570F /* ChannelCoach.swift in Sources */,
@@ -2473,7 +2408,6 @@
 				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
 				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
 				B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */,
-				B4D9D7D2262D9377007CFB71 /* StreamingVCCode.swift in Sources */,
 				A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */,
 				A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,

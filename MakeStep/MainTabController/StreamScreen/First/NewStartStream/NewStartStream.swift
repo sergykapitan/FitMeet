@@ -21,8 +21,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
-    }
-    
+    }    
     func optionSelected(option: String) {
         print("optionSelected===========\(option)")
     }
