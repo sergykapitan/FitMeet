@@ -220,6 +220,7 @@ extension HomeVC: TagListViewDelegate {
         st.remove(at: st.startIndex)
         
         for i in self.listCategory {
+            print("I == \(i)")
             if i.title == st {
                 let detailVC = CategoryBroadcast()
                 detailVC.categoryid = i.id

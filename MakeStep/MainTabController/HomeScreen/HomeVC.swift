@@ -28,6 +28,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    private var takeCategory: AnyCancellable?
     private var takePlan: AnyCancellable?
     private var takeOff: AnyCancellable?
     
@@ -63,7 +64,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        getUsers()
+        
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -84,11 +85,14 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+       
     
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+        getUsers()
+        bindingCategory()
         makeTableView()
         if token != nil {
             binding()
@@ -180,7 +184,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                         self.bindingUserMap(ids: arrayUserId)
                         self.homeView.tableView.reloadData()
                         self.refreshControl.endRefreshing()
-                        self.bindingCategory()
                     }
                 })
         }
@@ -194,7 +197,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                        self.bindingUserMap(ids: arrayUserId)
                        self.homeView.tableView.reloadData()
                        self.refreshControl.endRefreshing()
-                       self.bindingCategory()
                    }
                })
        }
@@ -211,8 +213,9 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
              })
           }
        }
+    
     func bindingCategory() {
-            takeBroadcast = fitMeetStream.getCategory()
+        takeCategory = fitMeetStream.getCategory()
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
