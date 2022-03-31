@@ -97,7 +97,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var broadcast: BroadcastResponce?
     var broadId: String?
     var privateKey: String?
-  
+    var BoolTrack: Bool = true
     
     private let refreshControl = UIRefreshControl()
   
@@ -108,7 +108,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var usersd = [Int: User]()
     var url: String?
     var heightBar: CGFloat?
-    
+    var tracks = 0
     var isPlay: Bool = true
 
     //MARK - LifeCicle
@@ -118,6 +118,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -171,8 +172,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         makeTableView()
         actionButton ()
         SocketIOManager.sharedInstance.getTokenChat()
-     
-
+        
+       
         _ = UserDefaults.standard.string(forKey: "tokenChat")
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
@@ -208,6 +209,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
         homeView.buttonPlayPause.addTarget(self, action: #selector(actionPlayPause), for: .touchUpInside)
+        homeView.buttonSkipNext.addTarget(self, action: #selector(actionSkipNext), for: .touchUpInside)
+        homeView.buttonSkipPrevious.addTarget(self, action: #selector(actionSkipPrevious), for: .touchUpInside)
         
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
@@ -215,6 +218,23 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         
         homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
+    }
+    @objc func actionSkipNext() {
+        if BoolTrack {}
+        
+        
+            let indexPath = IndexPath(row: tracks, section: 0)
+            self.homeView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+           
+        
+       
+        BoolTrack = false
+        
+       
+        getTrack(isForwardTrack: true)
+    }
+    @objc func actionSkipPrevious() {
+       
     }
     @objc func actionPlayPause() {
         homeView.buttonPlayPause.isSelected.toggle()
@@ -287,7 +307,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
         homeView.tableView.separatorStyle = .none
         homeView.tableView.showsVerticalScrollIndicator = false
-        
+      
     }
     
   
@@ -525,8 +545,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
          }
-  
-        
+          
         self.view.addSubview(self.homeView.buttonLandScape)
         self.homeView.buttonLandScape.backgroundColor = .lightGray
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -542,13 +561,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.homeView.playerSlider.backgroundColor = .red
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 0,height: 20)
         
-        
-       
-        
         self.view.addSubview(self.homeView.buttonPlayPause)
         self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
         self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
-       
         
         self.view.addSubview(self.homeView.buttonSkipPrevious)
         self.homeView.buttonSkipPrevious.backgroundColor = .red
@@ -835,5 +850,95 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
             })
        }
+    
+    private func getTrack(isForwardTrack: Bool) {
+        guard let indexPath = homeView.tableView.indexPathForSelectedRow else { return  }
+        tracks += 1
+        let tracks = self.brodcast
+        var nextIndexPath: IndexPath!
+        
+                if isForwardTrack {
+                    nextIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
+                    if nextIndexPath.row == tracks.count {
+                        nextIndexPath.row = 0
+                    }
+                }
+        
+      //  self.homeView.tableView.selectRow(at: nextIndexPath, animated: true, scrollPosition: .middle)
+    //    self.homeView.tableView.selectRow(at: nextIndexPath, animated: true, scrollPosition: .none)
+        
+        let track = tracks[nextIndexPath.row]
+        
+        print("track === \(track.streams?.first)")
+        
+        if track.status == "OFFLINE" {
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = true
+            homeView.buttonChat.isHidden = true
+            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
+            homeView.imageLive.setImageColor(color: .gray)
+            homeView.labelLive.text = "  Offline"
+            homeView.imageEye.isHidden = true
+            homeView.labelEye.isHidden = true
+            homeView.playerSlider.isHidden = false
+            self.broadcast = tracks[nextIndexPath.row]
+            self.urlStream = tracks[nextIndexPath.row].streams?.first?.vodUrl
+            homeView.labelLike.text = "\(tracks[indexPath.row].followersCount)"
+            guard let user = tracks[indexPath.row].userId else { return}
+            self.bindingUser(id: user)
+//        } else if brodcastStatus == "ONLINE" {
+//            self.homeView.imageLogo.isHidden = true
+//            self.homeView.buttonChat.isHidden = false
+//            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
+//            homeView.labelLive.text = "Live ·"
+//            homeView.labelEye.text = "3"
+//            homeView.imageEye.isHidden = false
+//            homeView.labelEye.isHidden = false
+//            homeView.playerSlider.isHidden = true
+//            homeView.labelLike.text = "\(like)"
+//
+//            self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+//            guard let user = brodcast[indexPath.row].userId else { return}
+//            self.bindingUser(id: user)
+//        } else if brodcastStatus == "WAIT_FOR_APPROVE" {
+//            self.homeView.imageLogo.isHidden = true
+//            self.homeView.buttonChat.isHidden = true
+//            homeView.labelEye.isHidden = true
+//            homeView.imageEye.isHidden = true
+//            homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            homeView.labelLive.text = "Wait for"
+//            homeView.playerSlider.isHidden = false
+//            homeView.labelEye.isHidden = true
+//            self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+//            homeView.labelLike.text = "\(like)"
+//        }else if brodcastStatus == "PLANNED" {
+//            self.urlStream = nil
+//            self.homeView.buttonChat.isHidden = true
+//            self.homeView.imageLogo.isHidden = false
+//            homeView.labelEye.isHidden = true
+//            homeView.imageEye.isHidden = true
+//            homeView.playerSlider.isHidden = false
+//            homeView.labelEye.isHidden = true
+//            homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            playerViewController?.player?.pause()
+//            playerViewController!.view.removeFromSuperview()
+//            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
+//            homeView.labelLike.text = "\(like)"
+//            guard let user = brodcast[indexPath.row].userId else { return}
+//            self.bindingUser(id: user)
+//        }
+        
+        
+        guard let url = urlStream else { return }
+        isPlay = true
+        playerViewController?.player?.pause()
+        playerViewController!.view.removeFromSuperview()
+        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
+        self.broadcast = brodcast[indexPath.row]
+        self.loadPlayer()
+
+    }
+    }
      
 }

@@ -199,5 +199,19 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         self.loadPlayer()
 
     }
+    func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
+            let cell = tableView.cellForRow(at: indexPath)
+            let selectedColor: UIColor
+            let selectedView = UIView(frame: CGRect.zero)
+            if tableView.isEditing == true {
+
+                selectedColor = .clear
+            } else {
+                selectedColor = .lightGray
+            }
+            selectedView.backgroundColor = selectedColor
+            cell?.multipleSelectionBackgroundView = selectedView
+            return true
+        }
   
 }
