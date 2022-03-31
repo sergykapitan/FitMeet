@@ -21,7 +21,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
-    }    
+    }
     func optionSelected(option: String) {
         print("optionSelected===========\(option)")
     }
@@ -595,7 +595,6 @@ extension NewStartStream: UITextFieldDelegate {
             return false
         }
 }
-
 extension NewStartStream: ImagePickerDelegate {
 
     func didSelect(image: UIImage?) {

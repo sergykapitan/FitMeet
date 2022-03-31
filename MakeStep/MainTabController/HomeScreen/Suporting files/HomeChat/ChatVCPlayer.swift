@@ -14,7 +14,7 @@ import EasyPeasy
 
 
 
-class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
+class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate {
       
     let chatView = ChatVCPlayerCode()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
@@ -63,14 +63,14 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         view = chatView
         self.view.backgroundColor = UIColor.white
         self.textView.delegate = self
-               
         self.textView.layer.borderColor = UIColor(hexString: "#F4F4F4").cgColor
-        
         self.textView.layer.borderWidth = 1.5
         self.textView.layer.cornerRadius = 20
-      //  self.textView.clipsToBounds = true
         self.textView.font =  UIFont.systemFont(ofSize: 18)
-       
+        
+        self.textView.text = "Send a message..."
+        self.textView.textColor = UIColor.lightGray.alpha(0.5)
+        
        
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
@@ -79,9 +79,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
       
         
         self.textView.easy.layout(Left(20),Right(0).to(chatView.sendMessage),Height(maxHeight).when({[unowned self] in self.isOversized}))
-      
         self.textView.anchor(bottom:self.chatView.cardView.bottomAnchor,paddingBottom: 30)
-      
         textView.textContainerInset = UIEdgeInsets(top: 9, left: 10, bottom: 9, right: 5)
         self.textView.delegate = self
  
@@ -105,16 +103,14 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         let view = UITextView(frame: CGRect.zero)
         view.backgroundColor  =  .white
         return view
-    }()
-  
+    }()  
     private var isOversized = false {
             didSet {
                 self.textView.easy.reload()
                 self.textView.isScrollEnabled = isOversized
             }
         }
-        
-        private let maxHeight: CGFloat = 100
+    private let maxHeight: CGFloat = 100
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -147,7 +143,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         textView.backgroundColor = tint
         chatView.cardView.backgroundColor = color
         chatView.tableView.backgroundColor = color
-        textView.textColor = .lightGray
+       
       
         self.chatView.tableView.reloadData()
 
@@ -187,13 +183,10 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         super.viewDidLayoutSubviews()
 
     }
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
     deinit {
        NotificationCenter.default.removeObserver(self)
     }
@@ -219,13 +212,9 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         let array = Array(setId)
         self.bindingUserMap(ids: array)
     }
-    
-    
     @objc func handleDisconnectedUserUpdateNotification(notification: NSNotification) {
         let disconnectedUserNickname = notification.object as! String
     }
-    
-    
     @objc func handleUserTypingNotification(notification: NSNotification) {
         if let typingUsersDictionary = notification.object as? [String: AnyObject] {
             var names = ""
@@ -299,7 +288,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                 }
           })
     }
-    
     func bindingMessage(broad: Int) {
         takeMessage = fitMeetChat.getHistoryMessage(broadId: broad)
             .mapError({ (error) -> Error in return error })
@@ -335,7 +323,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                 }
             })
         }
-    
     private func makeTableView() {
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
@@ -344,7 +331,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         chatView.tableView.register(ChatCell.self, forCellReuseIdentifier: CellIds.senderCellId)
         chatView.tableView.separatorStyle  =  .none
     }
-    
     func registerForKeyboardNotifications() {
         
     NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
@@ -354,7 +340,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: nil)
   }
-    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
@@ -377,7 +362,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             })
       
     }
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             view.endEditing(true)
 
@@ -448,4 +432,19 @@ extension ChatVCPlayer: UITableViewDataSource {
     }
 
 }
-
+extension ChatVCPlayer: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        print("Color === \(textView.textColor)")
+        if textView.textColor == UIColor.lightGray.alpha(0.5) {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Send a message..."
+            textView.textColor = UIColor.lightGray.alpha(0.5)
+        }
+    }
+    
+}

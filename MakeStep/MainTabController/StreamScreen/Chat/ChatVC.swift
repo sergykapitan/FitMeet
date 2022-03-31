@@ -21,8 +21,7 @@ class CellIds {
     static let receiverCellId = "receiverCellId"
 }
 
-
-class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
+class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerDelegate {
       
     let chatView = ChatVCCode()
     var nickname: String?
@@ -69,7 +68,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         self.textView.layer.borderWidth = 1.5
         self.textView.layer.cornerRadius = 20
         self.textView.font =  UIFont.systemFont(ofSize: 18)
-
+        
+        self.textView.text = "Send a message..."
+        self.textView.textColor = UIColor.lightGray.alpha(0.5)
+        
         self.view.addSubview(self.textView)
         self.textView.clipsToBounds = true
         self.textView.isScrollEnabled = false
@@ -96,7 +98,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             }
         }
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         chatView.backgroundColor =  .white
@@ -113,7 +114,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             chatView.cardView.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         }
         registerForKeyboardNotifications()
-        
         NotificationCenter.default.addObserver(self, selector: #selector(handleConnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleDisconnectedUserUpdateNotification(notification:)), name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleUserTypingNotification(notification:)), name: NSNotification.Name(rawValue: "userTypingNotification"), object: nil)
@@ -138,31 +138,12 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         super.viewDidDisappear(animated)
        
     }
- 
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
 
     func actionButton() {
         chatView.sendMessage.addTarget(self, action: #selector(sendMessage), for: .touchUpInside)
-        
-    }
-
-    @objc func sendMessage() {
-        let name = UserDefaults.standard.string(forKey: Constants.userFullName)
-        if textView.text.count > 0 {
-            SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: "\(name)")
-            SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
-            SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
-                          guard let array = arrayId else { return }
-                          self.bindingUserMap(ids: array)
-                     }
-            self.nickname = name
-            self.chatView.tableView.reloadData()
-            scrollToBottom()
-            textView.text = ""
-            textView.resignFirstResponder()
-        }
     }
     func bindingUserMap(ids: [Int])  {
         takeUser = fitMeetApi.getUserIdMap(ids: ids)
@@ -182,6 +163,22 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
        // binding()
         self.chatView.tableView.reloadData()
       
+       }
+    @objc func sendMessage() {
+           let name = UserDefaults.standard.string(forKey: Constants.userFullName)
+           if textView.text.count > 0 {
+               SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: "\(name)")
+               SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
+               SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
+                             guard let array = arrayId else { return }
+                             self.bindingUserMap(ids: array)
+                        }
+               self.nickname = name
+               self.chatView.tableView.reloadData()
+               scrollToBottom()
+               textView.text = ""
+               textView.resignFirstResponder()
+           }
        }
     @objc  func buttonJoin() {
         delegate?.changeBackgroundColor()
@@ -212,7 +209,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         chatView.tableView.tableFooterView = UIView(frame: .zero)
         chatView.tableView.separatorStyle = .none
     }
-    
     func registerForKeyboardNotifications() {
       NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),name: UIResponder.keyboardWillShowNotification, object: nil)
       NotificationCenter.default.addObserver(self, selector:
@@ -237,7 +233,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
              self.view.layoutIfNeeded()
         })
     }
-
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
             view.endEditing(true)
@@ -266,13 +261,9 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
         let array = Array(setId)  
         self.bindingUserMap(ids: array)
     }
-    
-    
     @objc func handleDisconnectedUserUpdateNotification(notification: NSNotification) {
         let disconnectedUserNickname = notification.object as! String
     }
-    
-    
     @objc func handleUserTypingNotification(notification: NSNotification) {
         if let typingUsersDictionary = notification.object as? [String: AnyObject] {
             var names = ""
@@ -289,7 +280,6 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate,
             }
         }
     }
-    
     func showBannerLabelAnimated() {
         UIView.animate(withDuration: 0.75, animations: { () -> Void in
             
@@ -398,4 +388,20 @@ extension ChatVC: UITableViewDataSource {
         return UITableView.automaticDimension
     }
 }
-
+extension ChatVC: UITableViewDelegate {
+    
+}
+extension ChatVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray.alpha(0.5) {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Send a message..."
+            textView.textColor = UIColor.lightGray.alpha(0.5)
+        }
+    }
+}
