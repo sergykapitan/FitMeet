@@ -101,7 +101,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         super.loadView()
         view = authView
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -186,18 +185,15 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.authView.textFieldCategory.text = ""
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-           print("Tag Remove pressed: \(title), \(sender)")
            sender.removeTagView(tagView)
            let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
        
        }
-
     func registerForKeyboardNotifications() {
         
     NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
@@ -215,35 +211,22 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
          let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
             if authView.textFieldDescription.isFirstResponder {
                 UIView.animate(withDuration: 0.5) {
-                   // self.authView.textFieldDescription.frame.origin.y -= 50
-                   // self.authView.buttonOK.frame.origin.y -= 50
+                    self.authView.textFieldDescription.frame.origin.y -= 50
+                    self.authView.buttonOK.frame.origin.y -= 50
 
                 }
-             //   self.authView.scroll.contentOffset.y = 100
+                self.authView.scroll.contentOffset.y = 100
         }
     }
     
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
-    
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
         }
-
     func changeData() {
-//        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-//            if gg == "NOW" {
-//                self.authView.buttonOK.setTitle("OK", for: .normal)
-//                self.authView.buttonOK.isUserInteractionEnabled = true
-//
-//            } else {
-//                self.authView.buttonOK.setTitle("Planned", for: .normal)
-//                self.authView.buttonOK.isUserInteractionEnabled = true
-//            }
-//        }
-         //All/Suscribers/PPV/Private room
         authView.textFieldAviable.didSelect { (str, ind, col) in
             if str == "All" || str == "Suscribers"{
                 if self.authView.textFieldDescription.frame.origin.y == 463.0 {
@@ -276,33 +259,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
    
     }
-//        authView.textFieldStartDate.didSelect { (ff, _, _) in
-//                       if ff == "Later" {
-//                        self.showPicker()
-//                        self.authView.buttonOK.setTitle("Planned", for: .normal)
-//                        self.authView.buttonOK.isUserInteractionEnabled = true
-//                       }
-//                   }
 }
-//    private func showPicker() {
-//        var style = DefaultStyle()
-//        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
-//        style.pickerMode = .dateAndTime
-//        style.titleString = "Please Сhoose Date"
-//        style.returnDateFormat = .yyyy_To_ss
-//        style.minimumDate = Date()
-//        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
-//        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
-//
-//        style.textColor = UIColor(hexString: "#3B58A4")
-//        let pick:PresentedViewController = PresentedViewController()
-//        pick.style = style
-//        pick.block = { [weak self] (date) in
-//        //    self?.authView.textFieldStartDate.text = date
-//        }
-//        self.present(pick, animated: true, completion: nil)
-//    }
-
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
@@ -331,16 +288,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
-        
-//        if authView.textFieldStartDate.text == "NOW" {
-//            isPlan = false
-//            date = "\(Date())"
-//        } else {
-//
-//            isPlan = true
-//            date = authView.textFieldStartDate.text
-//        }
-        //"All","Subscribers", "Only Sponsors"
+ 
         if authView.textFieldAviable.text == "All" {
              onlyForSponsors = false
              onlyForSubscribers = false
@@ -381,12 +329,8 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                           //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
                            } catch  {
                                print("ERRRRR")
-                       }
-            }
-     
-        
-     //   self.nextView(chanellId: chanelId, name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
-     
+              }
+         }
     }
     
     private func gotoChannel() {
@@ -394,8 +338,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         channelVC.user = self.user
         self.navigationController?.pushViewController(channelVC, animated: true)
     }
-    
-    
     @objc func actionUploadImage(_ sender: UIButton) {
         self.imagePicker.present(from: sender)
 
@@ -438,7 +380,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    
     func bindingCategory() {
         takeBroadcast = fitMeetStream.getCategoryPrivate()
             .mapError({ (error) -> Error in return error })
@@ -449,10 +390,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.authView.textFieldCategory.optionArray = list
                 }
         })
-    }
-    
-    
-    
+    }            
     func bindingChanell() {
         takeChannel = fitMeetChanell.listChannels()
             .mapError({ (error) -> Error in return error })
@@ -461,7 +399,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.listChanell = response.data
                     guard let sub = self.listChanell.last?.isSubscribe else { return }
                     if sub {
-                        self.authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]//,"Only Sponsors"
+                        self.authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]
                     }
                 }
         })
@@ -487,101 +425,13 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 }
         })
     }
-//    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
-//
-//        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
-//                                                    channelID: chanellId,
-//                                                    name: name,
-//                                                    type: "STANDARD",
-//                                                    access: "ALL",
-//                                                    hasChat: true,
-//                                                    isPlanned: isPlaned,
-//                                                    onlyForSponsors: onlyForSponsors,
-//                                                    onlyForSubscribers: onlyForSubscribers,
-//                                                    categoryIDS: categoryId,
-//                                                    scheduledStartDate: date,
-//                                                    description: description,
-//                                                    previewPath: self.imageUpload?.data?.first?.filename))
-//
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if let id = response.id  {
-//
-//                    print("greate broadcast")
-//                    guard let usId = self.userId else { return }
-//                    self.broadcast = response
-//                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
-//                    self.fetchStream(id: self.broadcast?.id, name: name)
-//
-//                    self.authView.textFieldName.text = ""
-//                    self.authView.textFieldFree.text = ""
-//                    self.authView.textFieldAviable.text = ""
-//                    self.authView.textFieldDescription.text = ""
-//                    self.authView.textFieldCategory.text = ""
-//                    self.authView.imageButton.setImage(nil, for: .normal)
-//
-//                } else {
-//                    guard let mess = response.message else { return }
-//                    Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-//                }
-//             })
-//
-//         }
-    
-//    func fetchStream(id:Int?,name: String?) {
-//        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
-//        guard let id = id , let name = name , let userId = UserId  else{ return }
-//        let usId = Int(userId)
-//        guard let usID = usId else { return }
-//        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
-//            .mapError({ (error) -> Error in
-//                  print(error)
-//                   return error })
-//                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                    guard let url = response.url else { return }
-//                     if url != nil {
-//                     DispatchQueue.main.async {
-//                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-//                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
-//                             switch disType {
-//                             case .tapped:  self.startStream(id: id, url: url)
-//                            case .timedOut: self.startStream(id: id, url: url)
-//                         }
-//                     }
-//                 }
-//             } else {
-//                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-//             }
-//        })
-//    }
-    
     private func startStream(id : Int, url : String) {
         UserDefaults.standard.set(url, forKey: Constants.urlStream)
         let twoString = self.removeUrl(url: url)
         self.myuri = twoString.0
         self.myPublish = twoString.1
         self.url = url
-
-        
-//        if self.authView.textFieldStartDate.text == "NOW" {
-//            let navVC = LiveStreamViewController()
-//            navVC.modalPresentationStyle = .fullScreen
-//            navVC.idBroad = id
-//            guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-//            navVC.myuri = myuris
-//            navVC.myPublish = myPublishh
-//           // self.present(navVC, animated: true, completion: nil)
-//            self.present(navVC, animated: true) {
-//                self.authView.textFieldStartDate.text = ""
-//            }
-//        } else {
-//            let channelVC = ChanellVC()
-//            channelVC.user = self.user
-//            self.navigationController?.pushViewController(channelVC, animated: true)
-//
-//        }
    }
-
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
@@ -608,23 +458,9 @@ extension AddedVideoVC: UITextFieldDelegate {
             authView.buttonOK.isUserInteractionEnabled = true
           }
         }
-        
-//        if textField == authView.textFieldStartDate {
-//            print("hhhhhhhh============\(fullString)")
-//            if fullString == "NOW" {
-//               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-//                authView.buttonOK.setTitle("OK", for: .normal)
-//                authView.buttonOK.isUserInteractionEnabled = true
-//            } else {
-//              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-//                authView.buttonOK.setTitle("Planned", for: .normal)
-//                authView.buttonOK.isUserInteractionEnabled = true
-//            }
-//        }
-             
+
         return true
     }
-    
     func NewStartStream(_ textField: UITextField) -> Bool {
         
         if textField == authView.textFieldName {
@@ -635,10 +471,7 @@ extension AddedVideoVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-//        if textField == authView.textFieldStartDate {
-//            self.authView.textFieldName.resignFirstResponder()
-//            return true
-//        }
+
         if textField == authView.textFieldFree {
             self.authView.textFieldName.resignFirstResponder()
             return true
@@ -676,7 +509,6 @@ extension AddedVideoVC: ImagePickerDelegate {
 }
 extension AddedVideoVC: VideoPickerDelegate {
     
-    // Don't forget to import AVKit
     func encodeVideo(at videoURL: URL, completionHandler: ((URL?, Error?) -> Void)?)  {
         let avAsset = AVURLAsset(url: videoURL, options: nil)
             
@@ -731,7 +563,6 @@ extension AddedVideoVC: VideoPickerDelegate {
                 
         })
     }
- 
     func didSelectVideo(video: URL?) {
       
         guard let video = video else { return }
@@ -742,31 +573,7 @@ extension AddedVideoVC: VideoPickerDelegate {
         
         let name = self.separateUrl(url: video)
         self.authView.labelNameVOD.text = name
-        
-
-//        self.encodeVideo(at: video) { url, error in
-//
-//            do {
-//                let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
-//                       print(data)
-//         //   guard let url = url else { return }
-//                self.takeChannel = self.fitMeetApi.uploadVideo(image: data)
-//                           .mapError({ (error) -> Error in
-//                               print("ERROR = \(error)")
-//                               return error })
-//                           .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                               if response != nil  {
-//                                   print("GOODDDDDD")
-//                                  // self.imageUpload = response
-//
-//
-//                               }
-//                       })
-//                  //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
-//                   } catch  {
-//                       print("ERRRRR")
-//               }
-//    }
+    
   }
     func separateUrl(url: URL) -> String {
         let urlString = url.absoluteString

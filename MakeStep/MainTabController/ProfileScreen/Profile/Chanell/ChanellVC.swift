@@ -22,7 +22,6 @@ private enum State {
     case closed
     case open
 }
-
 extension State {
     var opposite: State {
         switch self {
