@@ -156,23 +156,12 @@ open class VideoPicker: NSObject {
         self.presentationController?.present(alertController, animated: true)
     }
 
-//    private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
-//        controller.dismiss(animated: true, completion: nil)
-//
-//        self.delegate?.didSelectVideo(image: image)
-//    }
     private func pickerController(_ controller: UIImagePickerController, didSelect video: URL?) {
         controller.dismiss(animated: true, completion: nil)
 
         self.delegate?.didSelectVideo(video: video)
     }
 
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//
-//     let videoURL = info["UIImagePickerControllerReferenceURL"] as? NSURL
-//     print(videoURL!)
-//     controller.dismiss(animated: true, completion: nil)
-//    }
     
 }
 
@@ -185,12 +174,6 @@ extension VideoPicker: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let videoURL = info[.mediaURL] as? URL
-        print(videoURL!)
-      //  controller.dismiss(animated: true, completion: nil)
-        
-//        guard let image = info[.editedImage] as? UIImage else {
-//            return self.pickerController(picker, didSelect: nil)
-//        }
         self.pickerController(picker, didSelect: videoURL)
     }
 }

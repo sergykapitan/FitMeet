@@ -83,22 +83,18 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
            
             }
         }
-        
     private let maxHeight: CGFloat = 100
     
     override  var shouldAutorotate: Bool {
         return false
     }
-    
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
-    
     override func loadView() {
         super.loadView()
         view = authView
     }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -193,7 +189,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.authView.textFieldCategory.text = ""
@@ -201,7 +196,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
        }
-
     func registerForKeyboardNotifications() {
         
     NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
@@ -211,7 +205,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: nil)
   }
-
+    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
@@ -221,7 +215,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 self.authView.scroll.contentOffset.y = 100
         }
     }
-    
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
@@ -230,7 +223,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
         }
-
     func changeData() {
         authView.textFieldStartDate.didSelect { (gg, tt, hh) in
             if gg == "NOW" {
@@ -277,7 +269,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         }
         self.present(pick, animated: true, completion: nil)
     }
-
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
@@ -370,7 +361,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    
     func bindingCategory() {
         takeBroadcast = fitMeetStream.getCategoryPrivate()
             .mapError({ (error) -> Error in return error })
@@ -382,9 +372,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-    
-    
-    
+  
     func bindingChanell() {
         takeChannel = fitMeetChanell.listChannels()
             .mapError({ (error) -> Error in return error })
@@ -457,7 +445,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
              })
          
          }
-    
     func fetchStream(id:Int?,name: String?) {
         let UserId = UserDefaults.standard.string(forKey: Constants.userID)
         guard let id = id , let name = name , let userId = UserId  else{ return }
@@ -484,7 +471,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
              }
         })
     }
-    
     private func startStream(id : Int, url : String) {
         UserDefaults.standard.set(url, forKey: Constants.urlStream)
         let twoString = self.removeUrl(url: url)
@@ -521,16 +507,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 
         }
     }
-
     func removeUrl(url: String) -> (url:String,publish: String) {
         let fullUrlArr = url.components(separatedBy: "/")
         let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
         let myPublish = fullUrlArr[4]
         return (myuri,myPublish)
     }
-    
-   
-   
+  
 }
 extension NewStartStream: UITextFieldDelegate {
     
