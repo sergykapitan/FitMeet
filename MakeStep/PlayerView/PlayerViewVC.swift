@@ -185,7 +185,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.view.addGestureRecognizer(swipeDown)
 
     }
-    
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil
@@ -204,7 +203,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
         }
     }
-  
     func actionButton () {
         homeView.buttonLandScape.addTarget(self, action: #selector(rightHandAction), for: .touchUpInside)
         homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
@@ -295,7 +293,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         present(detailViewController, animated: true)
 
     }
- 
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
@@ -838,7 +835,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
             })
        }
-    
     private func getTrack(isForwardTrack: Bool) {
         guard let indexPath = homeView.tableView.indexPathForSelectedRow else { return  }
         
@@ -887,13 +883,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
       
    }
-    
     private func action(for type: String, title: String) -> UIAlertAction? {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
            print("Type == \(type)")
         }
-    }
-    
+    }    
     public func present() {
 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

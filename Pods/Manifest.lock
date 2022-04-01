@@ -57,6 +57,8 @@ PODS:
   - Starscream (4.0.4)
   - TagListView (1.4.1)
   - TimelineTableViewCell (2.2.2)
+  - WLM3U (0.1.5):
+    - Alamofire (~> 5.1)
 
 DEPENDENCIES:
   - Alamofire (~> 5.4)
@@ -76,6 +78,7 @@ DEPENDENCIES:
   - Socket.IO-Client-Swift (~> 16.0.1)
   - TagListView (~> 1.0)
   - TimelineTableViewCell
+  - WLM3U
 
 SPEC REPOS:
   trunk:
@@ -99,6 +102,7 @@ SPEC REPOS:
     - Starscream
     - TagListView
     - TimelineTableViewCell
+    - WLM3U
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
@@ -121,7 +125,8 @@ SPEC CHECKSUMS:
   Starscream: 5178aed56b316f13fa3bc55694e583d35dd414d9
   TagListView: a1c236d17960a0cf64156725a76ce6d73ebce2be
   TimelineTableViewCell: f0c35f7941775e48a5356e7c7ae3a5a51721c80a
+  WLM3U: f388dceeee61781be6af7a11a5f4e18bc7d85677
 
-PODFILE CHECKSUM: da0e2770461e04b8a94410d1fe8d22f5eabd4ec5
+PODFILE CHECKSUM: cee08e0165f4a961583c2ef718bf6a6470371b10
 
 COCOAPODS: 1.11.2
