@@ -15,6 +15,7 @@ import Kingfisher
 import TimelineTableViewCell
 
 
+
 protocol DissmisPlayer: class {
    func reloadbroadcast()
 }
@@ -22,7 +23,8 @@ protocol DissmisPlayer: class {
 
 class PlayerViewVC: UIViewController, TagListViewDelegate {
     
-
+   
+    
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
 
@@ -64,7 +66,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
- 
+   
     
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -262,9 +264,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     @objc func actionSetting() {
         homeView.buttonSetting.isSelected.toggle()
         if homeView.buttonSetting.isSelected {
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
+           // UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
                 self.present()
-                }, completion: nil)
+               // }, completion: nil)
         } else {
             UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
           
@@ -484,10 +486,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.delegatePlayer?.reloadbroadcast()
         self.playerViewController?.player?.rate = 0
     }
-  
- // MARK: - LoadPlayer
+   
+    // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = urlStream else { return }
+
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
@@ -501,7 +504,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
-        
+     
         
 
         self.homeView.playerSlider.minimumValue = 0
@@ -532,7 +535,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
          }
-          
+       
         self.view.addSubview(self.homeView.buttonLandScape)
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         self.homeView.buttonLandScape.setImage(imageL, for: .normal)        
@@ -837,11 +840,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
        }
     private func getTrack(isForwardTrack: Bool) {
         guard let indexPath = homeView.tableView.indexPathForSelectedRow else { return  }
-        
         let tracks = self.brodcast
-        print("TracsInt == \(tracksInt)\n Count == \(brodcast.count)")
         var nextIndexPath: IndexPath!
-        
                 if isForwardTrack {
                     tracksInt += 1
                     nextIndexPath = IndexPath(row: indexPath.row + 1, section: indexPath.section)
@@ -885,7 +885,24 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
    }
     private func action(for type: String, title: String) -> UIAlertAction? {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
-           print("Type == \(type)")
+            switch type {
+               
+            case "360" :
+                guard let url = urlStream else { return }
+                let videoURL = URL(string: url)
+                self.getPlaylist(from: videoURL!)
+               // self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 1
+                print("640x360/video.m3u8")
+            case "480" :
+                print("842x480/video.m3u8")
+            case "720" :
+                print(" 1280x720/video.m3u8")
+            case "1080" :
+                break
+            default:
+               break
+            }
+           
         }
     }    
     public func present() {
@@ -916,4 +933,49 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
         self.present(alertController, animated: true)
     }
-}
+        /// Downloads the stream file and converts it to the raw playlist.
+        /// - Parameter completion: In successful case should return the `RawPlalist` which contains the url with which was the request performed
+        /// and the string representation of the downloaded file as `content: String` parameter.
+        func getPlaylist(from url: URL)  {
+            //(with: url, completion: (Swift.Result<RawPlaylist,Error>) -> Void)
+            let task = URLSession.shared.dataTask(with: url,complation: (Swift.Result<RawPlaylist,Error>) -> Void){ data, response, error in
+                if let error = error {
+                  //  completion(.failure(error))
+                } else if let data = data, let string = String(data: data, encoding: .utf8) {
+                    print("URL = \(url)")
+                    print("Content = \(string)")
+                 //   completion(.success(RawPlaylist(url: url, content: string)))
+                } else {
+                  //  completion(.failure(PlayerException.MEDIA_ERR_DECODE)) // Probably an MP4 file.
+                }
+            }
+            task.resume()
+        }
+      /// Iterates over the provided playlist contetn and fetches all the stream info data under the `#EXT-X-STREAM-INF"` key.
+      /// - Parameter playlist: Playlist object obtained from the stream url.
+      /// - Returns: All available stream resolutions for respective bandwidth.
+     func getStreamResolutions(from playlist: RawPlaylist) -> [StreamResolution] {
+         var resolutions = [StreamResolution]()
+         playlist.content.enumerateLines { line, shouldStop in
+             let infoline = line.replacingOccurrences(of: "#EXT-X-STREAM-INF", with: "")
+             let infoItems = infoline.components(separatedBy: ",")
+             let bandwidthItem = infoItems.first(where: { $0.contains(":BANDWIDTH") })
+             let resolutionItem = infoItems.first(where: { $0.contains("RESOLUTION")})
+             if let bandwidth = bandwidthItem?.components(separatedBy: "=").last,
+                let numericBandwidth = Double(bandwidth),
+                let resolution = resolutionItem?.components(separatedBy: "=").last?.components(separatedBy: "x"),
+                let strignWidth = resolution.first,
+                let stringHeight = resolution.last,
+                let width = Double(strignWidth),
+                let height = Double(stringHeight) {
+                 resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
+                                                     averageBandwidth: numericBandwidth,
+                                                     resolution: CGSize(width: width, height: height)))
+             }
+         }
+         return resolutions
+     }
+ }
+
+
+

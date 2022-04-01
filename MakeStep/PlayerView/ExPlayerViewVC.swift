@@ -143,6 +143,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.playerSlider.isHidden = false
             self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+            guard let url = urlStream else { return }
+            guard let videoURL = URL(string: url) else { return}
+            self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUser(id: user)
@@ -192,11 +195,11 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         
         guard let url = urlStream else { return }
         isPlay = true
-        playerViewController?.player?.pause()
-        playerViewController!.view.removeFromSuperview()
-        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
-        self.broadcast = brodcast[indexPath.row]
-        self.loadPlayer()
+//        playerViewController?.player?.pause()
+//        playerViewController!.view.removeFromSuperview()
+//        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
+//        self.broadcast = brodcast[indexPath.row]
+//        self.loadPlayer()
 
     }
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
