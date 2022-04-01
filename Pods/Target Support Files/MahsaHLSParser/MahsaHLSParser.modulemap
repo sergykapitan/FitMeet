@@ -1,0 +1,6 @@
+framework module MahsaHLSParser {
+  umbrella header "MahsaHLSParser-umbrella.h"
+
+  export *
+  module * { export * }
+}

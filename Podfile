@@ -5,7 +5,6 @@ target 'MakeStep' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
   pod 'Alamofire', '~> 5.4'
-  pod 'MaterialComponents/Tabs+ColorThemer'
   pod 'HaishinKit', '~> 1.1.4'
   pod 'Hue', '~> 5.0.0'
   pod 'Loaf'
@@ -22,7 +21,7 @@ target 'MakeStep' do
   pod 'TagListView', '~> 1.0'
   pod 'MMPlayerView'
   pod 'iLabeledSeekSlider', '~> 1.0.2'
-  pod 'WLM3U'
+  pod ‘MahsaHLSParser’
 
 
 
