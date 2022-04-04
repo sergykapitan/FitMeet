@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 struct RawPlaylist {
     let url: URL
     let content: String
@@ -13,4 +14,9 @@ struct RawPlaylist {
 struct Channel {
     let title: String
     var url: URL?
+}
+struct StreamResolution {
+     let maxBandwidth: Double
+     let averageBandwidth: Double
+     let resolution: CGSize
 }

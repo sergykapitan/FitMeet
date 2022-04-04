@@ -13,7 +13,7 @@ import TagListView
 import MMPlayerView
 import Kingfisher
 import TimelineTableViewCell
-
+import Alamofire
 
 
 protocol DissmisPlayer: class {
@@ -113,7 +113,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var tracksInt = 1
     var isPlay: Bool = true
 
-    //MARK - LifeCicle
+  // MARK: - LifeCicle
     override func loadView() {
         view = homeView
     }
@@ -168,7 +168,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
     }
-    // MARK: - ViewDidLoad
+  // MARK: - ViewDidLoad
     override func viewDidLoad() {
         super.viewDidLoad()
         makeTableView()
@@ -415,7 +415,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
-  
+            self.playerViewController?.view.removeBlurA()
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
@@ -436,6 +436,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
             isButton = false
         } else {
+            self.playerViewController?.view.addBlur()
             if self.broadcast?.status == "OFFLINE" {
                 homeView.overlay.isHidden = true
                 homeView.imageLive.isHidden = true
@@ -450,18 +451,22 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
              if self.broadcast?.status == "ONLINE" {
                  homeView.playerSlider.isHidden = true
+                 homeView.buttonPlayPause.isHidden = true
+                 homeView.buttonSkipNext.isHidden = true
+                 homeView.buttonSkipPrevious.isHidden = true
                  homeView.imageEye.isHidden = false
             } else {
                 homeView.playerSlider.isHidden = false
+                homeView.buttonPlayPause.isHidden = false
+                homeView.buttonSkipNext.isHidden = false
+                homeView.buttonSkipPrevious.isHidden = false
                
             }
             homeView.buttonSetting.isHidden = false
             homeView.buttonLandScape.isHidden = false
             homeView.labelTimeEnd.isHidden = false
             homeView.labelTimeStart.isHidden =  false
-            homeView.buttonPlayPause.isHidden = false
-            homeView.buttonSkipNext.isHidden = false
-            homeView.buttonSkipPrevious.isHidden = false
+            
            
             
             if playPauseButton == nil {
@@ -472,7 +477,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             isButton = true
         }
     }
-    
     func setUserProfile(user: User) {
         guard let id = user.id else { return }
         if token != nil {
@@ -487,7 +491,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.playerViewController?.player?.rate = 0
     }
    
-    // MARK: - LoadPlayer
+ // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = urlStream else { return }
 
@@ -535,6 +539,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                  self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
          }
+    
        
         self.view.addSubview(self.homeView.buttonLandScape)
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
@@ -567,8 +572,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
         
     }
-
- //MARK: - Transishion
+  
+ // MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
            super.viewWillTransition(to: size, with: coordinator)
        
@@ -625,7 +630,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
             }
     }
- //MARK: - Selectors
+ // MARK: - Selectors
     @objc func rightHandAction() {
         if isPlaying {
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
@@ -869,35 +874,38 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.broadcast = tracks[nextIndexPath.row]
             self.urlStream = tracks[nextIndexPath.row].streams?.first?.vodUrl
             homeView.labelLike.text = "\(tracks[indexPath.row].followersCount!)"
+            guard let url = urlStream else { return }
+            guard let videoURL = URL(string: url) else { return}
+            self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             guard let user = tracks[indexPath.row].userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
         }
-        guard let _ = urlStream else { return }
-        isPlay = true
-        playerViewController?.player?.pause()
-        playerViewController!.view.removeFromSuperview()
-        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
-        self.broadcast = brodcast[indexPath.row]
-        self.loadPlayer()
 
-      
    }
     private func action(for type: String, title: String) -> UIAlertAction? {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
+            print("Old Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
             switch type {
-               
+            case "Auto" :
+                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 0
+                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
+                print("Auto")
             case "360" :
-                guard let url = urlStream else { return }
-                let videoURL = URL(string: url)
-                self.getPlaylist(from: videoURL!)
-               // self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 1
+                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 800000
+                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
                 print("640x360/video.m3u8")
             case "480" :
+                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 1400000
+                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
                 print("842x480/video.m3u8")
             case "720" :
+                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 2800000
+                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
                 print(" 1280x720/video.m3u8")
             case "1080" :
+                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 5000000
+                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
                 break
             default:
                break
@@ -906,47 +914,64 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
     }    
     public func present() {
-
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        if let action = self.action(for: "360", title: "360") {
+        guard let urlStream = urlStream else { return }
+        guard let url = URL(string: urlStream) else { return }
+       
+        self.getPlaylist(from: url) { rawPlay in
+            
+                
+          //  let play = self.getStreamResolutions(from: rawPlay)
+        }
+        
+        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+     
+        if UIDevice.current.orientation == .portrait {
+             alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        } else if UIDevice.current.orientation == .landscapeLeft {
+             alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        }else if UIDevice.current.orientation == .landscapeRight {
+            alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+       }
+        
+        if let action = self.action(for: "Auto", title: "Auto") {
             alertController.addAction(action)
         }
-        if let action = self.action(for: "480", title: "480") {
+        if let action = self.action(for: "360", title: "360 p") {
             alertController.addAction(action)
         }
-        if let action = self.action(for: "720", title: "720") {
+        if let action = self.action(for: "480", title: "480 p") {
             alertController.addAction(action)
         }
-        if let action = self.action(for: "1080", title: "1080") {
+        if let action = self.action(for: "720", title: "720 p") {
+            alertController.addAction(action)
+        }
+        if let action = self.action(for: "1080", title: "1080 p") {
             alertController.addAction(action)
         }
 
         alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
 
         if UIDevice.current.userInterfaceIdiom == .pad {
+          
            // alertController.popoverPresentationController?.sourceView = sourceView
           //  alertController.popoverPresentationController?.sourceRect = sourceView.bounds
             alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
         }
-       
+        
 
         self.present(alertController, animated: true)
     }
         /// Downloads the stream file and converts it to the raw playlist.
         /// - Parameter completion: In successful case should return the `RawPlalist` which contains the url with which was the request performed
         /// and the string representation of the downloaded file as `content: String` parameter.
-        func getPlaylist(from url: URL)  {
-            //(with: url, completion: (Swift.Result<RawPlaylist,Error>) -> Void)
-            let task = URLSession.shared.dataTask(with: url,complation: (Swift.Result<RawPlaylist,Error>) -> Void){ data, response, error in
+        func getPlaylist(from url: URL, completion: @escaping (Swift.Result<RawPlaylist,Error>) -> Void)  {
+            let task = URLSession.shared.dataTask(with: url ){ data, response, error in
                 if let error = error {
-                  //  completion(.failure(error))
+                    completion(.failure(error))
                 } else if let data = data, let string = String(data: data, encoding: .utf8) {
-                    print("URL = \(url)")
-                    print("Content = \(string)")
-                 //   completion(.success(RawPlaylist(url: url, content: string)))
+                    completion(.success(RawPlaylist(url: url, content: string)))
                 } else {
-                  //  completion(.failure(PlayerException.MEDIA_ERR_DECODE)) // Probably an MP4 file.
+                    completion(.failure(error!))// Probably an MP4 file.
                 }
             }
             task.resume()
@@ -968,14 +993,39 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 let stringHeight = resolution.last,
                 let width = Double(strignWidth),
                 let height = Double(stringHeight) {
-                 resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
+                resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
                                                      averageBandwidth: numericBandwidth,
                                                      resolution: CGSize(width: width, height: height)))
              }
          }
          return resolutions
      }
+
+     
  }
 
+public extension UIView {
 
+    @discardableResult
+    public func addBlur(style: UIBlurEffect.Style = .dark) -> UIVisualEffectView {
+        let blurEffect = UIBlurEffect(style: style)
+        let blurBackground = UIVisualEffectView(effect: blurEffect)
+        blurBackground.backgroundColor = .black
+        blurBackground.alpha = 0.2
+        addSubview(blurBackground)
+        blurBackground.translatesAutoresizingMaskIntoConstraints = false
+        blurBackground.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        blurBackground.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        blurBackground.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        blurBackground.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        return blurBackground
+    }
+    func removeBlurA() {
+        for subview in self.subviews {
+            if subview is UIVisualEffectView {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+}
 

@@ -297,6 +297,7 @@
 		A5A0642227C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
 		A5A7960027F7408000F3B45E /* RawPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A795FF27F7408000F3B45E /* RawPlaylist.swift */; };
 		A5A7960127F7408000F3B45E /* RawPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A795FF27F7408000F3B45E /* RawPlaylist.swift */; };
+		A5A7960627FB134700F3B45E /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */; };
 		A5B635A8271836120097A127 /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A7271836120097A127 /* PlayerView.swift */; };
 		A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B635A9271836890097A127 /* PlayerViewCell.swift */; };
 		A5B635B027185C010097A127 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
@@ -578,6 +579,7 @@
 		A5950E5E27384EE5002C1500 /* SliderFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderFloat.swift; sourceTree = "<group>"; };
 		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5A795FF27F7408000F3B45E /* RawPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlaylist.swift; sourceTree = "<group>"; };
+		A5A7960227FB132700F3B45E /* EasyPeasy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyPeasy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A5B635A7271836120097A127 /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		A5B635A9271836890097A127 /* PlayerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewCell.swift; sourceTree = "<group>"; };
 		A5B635AE27185C010097A127 /* CoverA.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CoverA.xib; sourceTree = "<group>"; };
@@ -779,6 +781,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A5A7960627FB134700F3B45E /* Pods_MakeStep.framework in Frameworks */,
 				A51294DB273A6EB7000CBBD9 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1029,6 +1032,7 @@
 		A91686760454E5B22AB8EF6D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A5A7960227FB132700F3B45E /* EasyPeasy.framework */,
 				A54F9B85273156B5008E7E60 /* StoreKit.framework */,
 				56F02992DE3509E8AF1A369A /* Pods_MakeStep.framework */,
 			);
@@ -2406,7 +2410,6 @@
 		A51294E6273A6EB7000CBBD9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
@@ -2433,7 +2436,6 @@
 		A51294E7273A6EB7000CBBD9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MakeStep/FitMeet.entitlements;
@@ -2590,7 +2592,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2617,7 +2619,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.15;
+				MARKETING_VERSION = 1.0.16;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestep;
 				PRODUCT_NAME = "$(TARGET_NAME)";

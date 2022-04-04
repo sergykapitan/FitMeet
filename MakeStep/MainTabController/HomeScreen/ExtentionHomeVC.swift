@@ -18,7 +18,6 @@ extension HomeVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 1 {
             return listBroadcast.count
@@ -27,7 +26,6 @@ extension HomeVC: UITableViewDataSource {
         }
       return 0
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch  indexPath.section {
@@ -183,6 +181,9 @@ extension HomeVC: UITableViewDelegate {
             vc.homeView.buttonChat.isHidden = false
             vc.homeView.playerSlider.isHidden = true
             vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+            vc.homeView.buttonPlayPause.isHidden = true
+            vc.homeView.buttonSkipNext.isHidden = true
+            vc.homeView.buttonSkipPrevious.isHidden = true
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         } else if  self.listBroadcast[indexPath.row].status == "OFFLINE" {
