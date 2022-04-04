@@ -23,16 +23,11 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
     }
-    
     func optionSelected(option: String) {
         print("optionSelected===========\(option)")
     }
-    
-    
-    let authView = AddedVideoCode()
-    
 
-    
+    let authView = AddedVideoCode()
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
@@ -73,17 +68,12 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     var myPublish: String?
     
     let serviceProvider = Serviceprovider<CharacterProvider>()
-   // let request: URLRequest?
-    
     private var dropDown: DropDownTextField!
     var listCategory: [Datum] = []
     var IdCategory = [Int]()
-    
     private var isOversized = false {
             didSet {
                 self.authView.textFieldCategory.easy.reload()
-              //  self.authView.textFieldCategory.isScrollEnabled = isOversized
-           
             }
         }
         
@@ -109,9 +99,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         authView.tagView.removeAllTags()
-       
 
-    
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -142,21 +130,12 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.scroll.delegate = self
    
         authView.textFieldCategory.delegate = self
-      //  authView.textFieldStartDate.delegate = self
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
-       // authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
-        
-       // self.authView.textFieldCategory.easy.layout(Left(10),Right(10),Height(maxHeight).when({[unowned self] in self.isOversized}))
-      
-      //  authView.textFieldStartDate.optionArray = ["NOW", "Later"]
-        
         authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]
-       
-        
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         authView.textFieldFree.isHidden = true
         
@@ -167,7 +146,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
         
-            authView.textFieldCategory.didSelect { (ff, _, _) in
+        authView.textFieldCategory.didSelect { (ff, _, _) in
 
                 let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
                 if j.isEmpty {
@@ -218,7 +197,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 self.authView.scroll.contentOffset.y = 100
         }
     }
-    
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
@@ -280,7 +258,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
               let img = image  else { return }
-              //let planedDate = authView.textFieldStartDate.text
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         var isPlan: Bool?
@@ -298,6 +275,9 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         } else if authView.textFieldAviable.text == "PPV" {
             onlyForSponsors = true
             onlyForSubscribers = false
+        } else {
+            onlyForSponsors = false
+            onlyForSubscribers = false
         }
         
         
@@ -305,14 +285,16 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
               
               let sponsor = onlyForSponsors,
               let sub = onlyForSubscribers,
-              let video = self.videoURl  else { return }
+              let video = self.videoURl,
+              let image = self.imageUpload?.data?.first?.filename
+                        else { return }
         
        
         self.encodeVideo(at: video) { url, error in
         
                     do {
-                        let data = try Data(contentsOf: url!, options: .mappedIfSafe)//.mappedIfSafe)
-                        self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview:  (self.imageUpload?.data?.first?.filename)!, title: name, description: description, categoryId: self.IdCategory)
+                        let data = try Data(contentsOf: url!, options: .mappedIfSafe)
+                        self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview: image, title: name, description: description, categoryId: self.IdCategory)
                                    .mapError({ (error) -> Error in
                                        return error })
                                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
@@ -328,9 +310,8 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                                })
                           //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
                            } catch  {
-                               print("ERRRRR")
-              }
-         }
+                        }
+                    }
     }
     
     private func gotoChannel() {
@@ -450,11 +431,10 @@ extension AddedVideoVC: UITextFieldDelegate {
         if textField == authView.textFieldName {
             
         if fullString == "" {
-            authView.buttonOK.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+            authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
             authView.buttonOK.isUserInteractionEnabled = false
         } else {
-           // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-            authView.buttonOK.backgroundColor = UIColor(hexString: "#3B58A4")
+            authView.buttonOK.backgroundColor = .blueColor
             authView.buttonOK.isUserInteractionEnabled = true
           }
         }
@@ -492,7 +472,6 @@ extension AddedVideoVC: UITextFieldDelegate {
             return false
         }
 }
-
 extension AddedVideoVC: ImagePickerDelegate {
 
     func didSelect(image: UIImage?) {

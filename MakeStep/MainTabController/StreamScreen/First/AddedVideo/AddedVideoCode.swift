@@ -21,9 +21,9 @@ final class AddedVideoCode: UIView {
     }()
     let buttonUploadVideo: UIButton = {
         let button = UIButton()
-        button.setTitle("UploadVideo", for: .normal)
+        button.setTitle(" Upload Video ", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         return button
     }()
     var resetVideo: UIButton = {
@@ -119,14 +119,14 @@ final class AddedVideoCode: UIView {
         let button = UIButton()
         button.setTitle("Planned", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
+        button.backgroundColor = .blueColor.alpha(0.4)
         return button
     }()
     let buttonOK: UIButton = {
         let button = UIButton()
         button.setTitle("Ok", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+        button.backgroundColor = .blueColor.alpha(0.4)
         return button
     }()
     let scroll: UIScrollView = {
@@ -172,7 +172,7 @@ final class AddedVideoCode: UIView {
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
         
         scroll.addSubview(buttonUploadVideo)
-        buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 120,  height: 36)
+        buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 130,  height: 36)
         
         scroll.addSubview(labelNameVOD)
         labelNameVOD.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 40)
