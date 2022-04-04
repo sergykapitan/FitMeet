@@ -25,16 +25,12 @@ class MonetezeitionVC: UIViewController {
         makeNavItem()
         actionButton()
         actionBtnCalculate()
-       // actionBtnTariff()
-
-      
+   
     }
     func actionButton(){
-       // self.monetView.buttonMytariffs.addTarget(self, action: #selector(actionBtnTariff) , for: .touchUpInside)
         self.monetView.buttonIncomecalculator.addTarget(self, action: #selector(actionBtnCalculate), for: .touchUpInside)
     }
     @objc func actionBtnTariff() {
-       // self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#3B58A4")
         self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#BBBCBC")
         removeAllChildViewController(ch)
         configureChildViewController(loadingVC, onView:monetView.selfView )
@@ -42,7 +38,6 @@ class MonetezeitionVC: UIViewController {
     }
     @objc func actionBtnCalculate() {
         self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#3B58A4")
-      //  self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#BBBCBC")
         removeAllChildViewController(loadingVC)
         configureChildViewController(ch, onView:monetView.selfView )
     }

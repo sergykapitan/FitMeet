@@ -10,17 +10,12 @@ import UIKit
 import Combine
 
 class CalculateVC: UIViewController {
-    
 
-   
     let calculateView = CalculateVCCode()
     var valueA: Float = 0
     var valueB: Float = 3.99
     var ValueC: Float = 1
-    
-    
-    
-    
+
     override func loadView() {
         super.loadView()
         view = calculateView
@@ -28,14 +23,6 @@ class CalculateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
-        print( self.view.bounds.height)
-       
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-       
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
