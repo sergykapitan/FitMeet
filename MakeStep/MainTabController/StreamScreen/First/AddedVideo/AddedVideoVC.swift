@@ -260,8 +260,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
               let img = image  else { return }
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
-        var isPlan: Bool?
-        var date: String?
+       
         
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
