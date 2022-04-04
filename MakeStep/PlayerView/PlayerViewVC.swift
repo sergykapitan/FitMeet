@@ -264,9 +264,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     @objc func actionSetting() {
         homeView.buttonSetting.isSelected.toggle()
         if homeView.buttonSetting.isSelected {
-           // UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
                 self.present()
-               // }, completion: nil)
         } else {
             UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
           
