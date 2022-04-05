@@ -21,10 +21,10 @@ import AVKit
 class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate, TagListViewDelegate {
     
     func menuDidAnimate(up: Bool) {
-        print("menuDidAnimate")
+        self.authView.textFieldCategory.text = ""
     }
     func optionSelected(option: String) {
-        print("optionSelected===========\(option)")
+        self.authView.textFieldCategory.text = ""
     }
 
     let authView = AddedVideoCode()
@@ -76,13 +76,10 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 self.authView.textFieldCategory.easy.reload()
             }
         }
-        
     private let maxHeight: CGFloat = 100
-    
     override  var shouldAutorotate: Bool {
         return false
     }
-    
     override  var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
@@ -99,6 +96,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
         authView.tagView.removeAllTags()
+        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -108,6 +106,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.authView.buttonOK.setTitle("OK", for: .normal)
         self.authView.labelNameVOD.isHidden = true
         self.authView.resetVideo.isHidden = true
+        self.authView.buttonUploadVideo.isHidden = false
       
     }
     override func viewDidLoad() {
@@ -129,13 +128,13 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.textFieldDescription.delegate = self
         authView.scroll.delegate = self
    
-        authView.textFieldCategory.delegate = self
+     //   authView.textFieldCategory.delegate = self
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
-        authView.textFieldAviable.optionArray = ["All","Suscribers","PPV","Private room"]
+        authView.textFieldAviable.optionArray = ["All","Suscribers","PPV"]
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         authView.textFieldFree.isHidden = true
         
@@ -146,9 +145,14 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
         
+        
+        self.authView.textFieldCategory.text = "Category"
+        self.authView.textFieldCategory.textColor = UIColor.lightGray.alpha(0.5)
+        
         authView.textFieldCategory.didSelect { (ff, _, _) in
 
                 let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
+                
                 if j.isEmpty {
                     self.authView.tagView.addTag(ff)
                 } else {
@@ -159,14 +163,13 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
             self.IdCategory.append(contentsOf: p)
             self.authView.tagView.layoutSubviews()
-            self.authView.textFieldCategory.placeholder = ""
+            
                         
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        self.authView.textFieldCategory.text = ""
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
@@ -251,67 +254,49 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.authView.labelNameVOD.isHidden = true
         
     }
-        
     @objc func actionSignUp() {
 
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
-              let img = image  else { return }
+              let video = self.videoURl,
+              let image = self.imageUpload?.data?.first?.filename   else {
+                  Loaf("Not Saved video and image", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+                  return }
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
-       
-        
-        var onlyForSponsors : Bool?
-        var onlyForSubscribers: Bool?
- 
-        if authView.textFieldAviable.text == "All" {
-             onlyForSponsors = false
-             onlyForSubscribers = false
-        } else if authView.textFieldAviable.text == "Suscribers" {
-            onlyForSponsors = false
-            onlyForSubscribers = true
-        } else if authView.textFieldAviable.text == "PPV" {
-            onlyForSponsors = true
-            onlyForSubscribers = false
-        } else {
-            onlyForSponsors = false
-            onlyForSubscribers = false
-        }
-        
-        
-        guard
-              
-              let sponsor = onlyForSponsors,
-              let sub = onlyForSubscribers,
-              let video = self.videoURl,
-              let image = self.imageUpload?.data?.first?.filename
-                        else { return }
-        
+        self.authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
+        self.authView.buttonOK.isUserInteractionEnabled = false
+        self.view.addBlur()
        
         self.encodeVideo(at: video) { url, error in
-        
+           
                     do {
                         let data = try Data(contentsOf: url!, options: .mappedIfSafe)
                         self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview: image, title: name, description: description, categoryId: self.IdCategory)
                                    .mapError({ (error) -> Error in
                                        return error })
                                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                                       if response != nil  {
+                                       if response.vodUrl != nil  {
+                                           self.authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+                                           self.view.removeBlurA()
+                                           self.authView.textFieldName.text = ""
+                                         
                                            Loaf("Upload Video  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
                                                switch disType {
-                                               case .tapped: self.gotoChannel()
-                                               case .timedOut: self.gotoChannel()
+                                               case .tapped:
+                                                   self.gotoChannel()
+                                               case .timedOut:
+                                                   self.gotoChannel()
                                            }
-                                           }
-         
-                                       }
+                                        }
+                                    }
                                })
                           //  here you can see data bytes of selected video, this data object is upload to server by multipartFormData upload
                            } catch  {
                         }
                     }
-    }
+                 }
     
     private func gotoChannel() {
         let channelVC = ChanellVC()
@@ -390,9 +375,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.imageUpload = response
-                    
-                  
-                }
+            }
         })
     }
     func bindingUser() {
@@ -418,9 +401,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let myPublish = fullUrlArr[4]
         return (myuri,myPublish)
     }
-    
-   
-   
+ 
 }
 extension AddedVideoVC: UITextFieldDelegate {
     
@@ -440,6 +421,7 @@ extension AddedVideoVC: UITextFieldDelegate {
 
         return true
     }
+   
     func NewStartStream(_ textField: UITextField) -> Bool {
         
         if textField == authView.textFieldName {
@@ -448,7 +430,7 @@ extension AddedVideoVC: UITextFieldDelegate {
         }
         if textField == authView.textFieldCategory {
             self.authView.textFieldName.resignFirstResponder()
-            return true
+            return false
         }
 
         if textField == authView.textFieldFree {
@@ -559,5 +541,19 @@ extension AddedVideoVC: VideoPickerDelegate {
         let nameVod = fullUrlArr.last
         guard let nameVod = nameVod else { return "" }
         return nameVod
+    }
+}
+extension AddedVideoVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.lightGray.alpha(0.5) {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Category"
+            textView.textColor = UIColor.lightGray.alpha(0.5)
+        }
     }
 }

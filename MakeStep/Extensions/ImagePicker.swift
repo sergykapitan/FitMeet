@@ -117,7 +117,6 @@ open class VideoPicker: NSObject {
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.movie"]
-        //"public.movie"
     }
 
     private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
@@ -155,10 +154,8 @@ open class VideoPicker: NSObject {
 
         self.presentationController?.present(alertController, animated: true)
     }
-
     private func pickerController(_ controller: UIImagePickerController, didSelect video: URL?) {
         controller.dismiss(animated: true, completion: nil)
-
         self.delegate?.didSelectVideo(video: video)
     }
 
