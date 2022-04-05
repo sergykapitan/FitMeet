@@ -92,11 +92,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
         getUsers()
         bindingCategory()
         makeTableView()
-        if token != nil {
-            binding()
-        } else {
-            bindingNotAuht()
-        }
+        
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
@@ -140,7 +136,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                     }
             })
         }
-    
     func bindingOff(page:Int) {
         takeOff = fitMeetStream.getOffBroadcast(page: page)
               .mapError({ (error) -> Error in return error })
@@ -171,7 +166,6 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                     }
                 })
         }
-    
     func bindingPlanned() {
             takePlan = fitMeetStream.getListPlanBroadcast()
                 .mapError({ (error) -> Error in return error })
@@ -222,18 +216,22 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
                     }
             })
         }
-    
-    
+
     func getUsers() {
         takeUser = fitMeetStream.getListAllUser()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if !response.data.isEmpty  {
-                    let list = response.data
-                    let result = list.filter({ $0.avatarPath != nil })
+                if !response.data.isEmpty {
+                    let result = response.data.filter({ $0.avatarPath != nil })
                     self.listUsers = result
-                    self.homeView.tableView.reloadData()
-                   
+                    if self.token != nil {
+                        self.binding()
+                    } else {
+                        self.bindingNotAuht()
+                    }
+  
+                } else {
+                    self.getUsers()
                 }
           })
     }

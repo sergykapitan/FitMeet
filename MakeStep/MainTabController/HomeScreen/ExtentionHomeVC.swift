@@ -19,10 +19,10 @@ extension HomeVC: UITableViewDataSource {
         return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
+        if section == 0 {
+            return 1
+        } else if section == 1 {
             return listBroadcast.count
-        } else if section == 0 {
-           return  1
         }
       return 0
     }
@@ -34,7 +34,7 @@ extension HomeVC: UITableViewDataSource {
             if let listUsers = listUsers {
                 cell.setup(type: listUsers)
             }
-            cell.delegate = self
+         cell.delegate = self
          return cell
         
         case 1:

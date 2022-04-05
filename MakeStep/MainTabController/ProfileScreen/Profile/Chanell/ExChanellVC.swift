@@ -70,6 +70,13 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.logoUserOnline.isHidden = true
             cell.buttonstartStream.isHidden = false
 
+        } else if brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
+            cell.buttonstartStream.isHidden = true
+            cell.labelLive.text = "Wait for"
         }
         
         let categorys = brodcast[indexPath.row].categories
@@ -114,7 +121,16 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
 //        cell.buttonstartStream.tag = indexPath.row
 //        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
 //        cell.buttonstartStream.isUserInteractionEnabled = true
-      
+        
+        if indexPath.row == brodcast.count - 1 {
+            if self.itemCount > brodcast.count {
+                self.isLoadingList = true
+                self.loadMoreItemsForList()
+            }
+//            } else if self.itemCount == brodcast.count {
+//                self.bindingPlanned()
+//            }
+        }
       
         
        return cell
@@ -158,18 +174,28 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+        
         if self.brodcast[indexPath.row].status == "ONLINE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
+            guard let streams = brodcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
+            guard let url = streams.first?.vodUrl else { return }
             vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
+            vc.id = self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image = #imageLiteral(resourceName: "rec")
-            vc.homeView.imageLive.setImageColor(color: .gray)
-            vc.homeView.labelLive.text = "  Offline"
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
             vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "PLANNED" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
@@ -177,6 +203,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.imageEye.isHidden = true
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
@@ -185,8 +213,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLive.text = "Wait for"
             vc.homeView.imageEye.isHidden = true
         }
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
     }
 }
 
