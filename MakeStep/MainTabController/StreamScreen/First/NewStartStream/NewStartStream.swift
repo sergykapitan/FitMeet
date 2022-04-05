@@ -68,9 +68,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var myuri: String?
     var myPublish: String?
     var status = "STANDART"
-    
     let serviceProvider = Serviceprovider<CharacterProvider>()
-   // let request: URLRequest?
+  
     
     private var dropDown: DropDownTextField!
     var listCategory: [Datum] = []
@@ -79,8 +78,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     private var isOversized = false {
             didSet {
                 self.authView.textFieldCategory.easy.reload()
-              //  self.authView.textFieldCategory.isScrollEnabled = isOversized
-           
             }
         }
     private let maxHeight: CGFloat = 100
@@ -134,7 +131,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNavItem()
-      //  bindingChanell()
         bindingUser()
         bindingCategory()
         self.hideKeyboardWhenTappedAround()
@@ -218,7 +214,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
-    
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
@@ -355,8 +350,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         print("timeHandAction")
         let tvc = Timetable()
         navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
+ 
     }
     @objc func notificationHandAction() {
         print("notificationHandAction")
@@ -372,7 +366,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 }
         })
     }
-  
     func bindingChanell() {
         takeChannel = fitMeetChanell.listChannels()
             .mapError({ (error) -> Error in return error })

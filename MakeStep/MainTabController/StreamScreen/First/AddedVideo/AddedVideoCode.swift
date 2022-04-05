@@ -64,10 +64,10 @@ final class AddedVideoCode: UIView {
       
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
-      //  textField.attributedPlaceholder =
-       // NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.attributedPlaceholder =
+        NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(25)
-      //  textField.textColor = .black
+        textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         textField.clipsToBounds = true
@@ -132,8 +132,11 @@ final class AddedVideoCode: UIView {
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.contentSize.height = 1000
+        scroll.showsVerticalScrollIndicator = false
+        scroll.alwaysBounceVertical = true
+       // scroll.contentSize.height = 1000
         scroll.backgroundColor = .white
+       
         return scroll
     }()
     var tagView: TagListView = {
@@ -169,6 +172,10 @@ final class AddedVideoCode: UIView {
  
     }
     private func initLayout() {
+       
+        
+        
+        
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
         
         scroll.addSubview(buttonUploadVideo)

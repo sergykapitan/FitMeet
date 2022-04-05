@@ -31,7 +31,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
-    
+    var scrollViewBottomConstrain = NSLayoutConstraint()
     var imagePicker: ImagePicker!
     var videoPicker: VideoPicker!
     
@@ -87,6 +87,15 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     override func loadView() {
         super.loadView()
         view = authView
+        scrollViewBottomConstrain = authView.scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        NSLayoutConstraint.activate([
+ 
+            authView.scroll.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollViewBottomConstrain,
+            authView.scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            authView.scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+        ])
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -115,8 +124,9 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         bindingChanell()
         bindingUser()
         bindingCategory()
+        setupKeyboardNotifications()
         self.hideKeyboardWhenTappedAround()
-        registerForKeyboardNotifications()
+      //  registerForKeyboardNotifications()
         authView.tagView.delegate = self
     
         
@@ -128,7 +138,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.textFieldDescription.delegate = self
         authView.scroll.delegate = self
    
-     //   authView.textFieldCategory.delegate = self
+        authView.textFieldCategory.delegate = self
         authView.textFieldAviable.delegate = self
         authView.textFieldFree.delegate = self
        
@@ -144,11 +154,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
-        
-        
-        self.authView.textFieldCategory.text = "Category"
-        self.authView.textFieldCategory.textColor = UIColor.lightGray.alpha(0.5)
-        
         authView.textFieldCategory.didSelect { (ff, _, _) in
 
                 let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
@@ -163,46 +168,47 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
             self.IdCategory.append(contentsOf: p)
             self.authView.tagView.layoutSubviews()
-            
+            self.authView.textFieldCategory.placeholder = ""
                         
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        self.authView.textFieldCategory.text = ""
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
            let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
        
        }
-    func registerForKeyboardNotifications() {
-        
-    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
-                                           name: UIResponder.keyboardWillShowNotification,
-                                           object: nil)
-    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
-                                           name: UIResponder.keyboardWillHideNotification,
-                                           object: nil)
-  }
+//    func registerForKeyboardNotifications() {
+//
+//    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
+//                                           name: UIResponder.keyboardWillShowNotification,
+//                                           object: nil)
+//    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
+//                                           name: UIResponder.keyboardWillHideNotification,
+//                                           object: nil)
+//  }
 
-    @objc func keyboardWillShown(_ notificiation: NSNotification) {
-       
-      // write source code handle when keyboard will show
-        let info = notificiation.userInfo!
-         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-            if authView.textFieldDescription.isFirstResponder {
-                UIView.animate(withDuration: 0.5) {
-                    self.authView.textFieldDescription.frame.origin.y -= 50
-                    self.authView.buttonOK.frame.origin.y -= 50
-
-                }
-                self.authView.scroll.contentOffset.y = 100
-        }
-    }
-    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
-        self.authView.scroll.contentOffset.y = 0
-    }
+//    @objc func keyboardWillShown(_ notificiation: NSNotification) {
+//
+//      // write source code handle when keyboard will show
+//        let info = notificiation.userInfo!
+//         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//            if authView.textFieldDescription.isFirstResponder {
+//                UIView.animate(withDuration: 0.5) {
+//                    self.authView.textFieldDescription.frame.origin.y -= 50
+//                    self.authView.buttonOK.frame.origin.y -= 50
+//
+//                }
+//                self.authView.scroll.contentOffset.y = 100
+//        }
+//    }
+//    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+//        self.authView.scroll.contentOffset.y = 0
+//    }
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
@@ -224,16 +230,36 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             }
         } else if str == "PPV" {
             if self.authView.textFieldDescription.frame.origin.y == 413.0 {
-            UIView.animate(withDuration: 0.5) {
-                self.authView.textFieldDescription.frame.origin.y += 50
-                self.authView.buttonOK.frame.origin.y += 50
-              
-            } completion: { (bool) in
-                if bool {
-                    self.authView.textFieldFree.isHidden = false
-                    self.authView.textFieldFree.isUserInteractionEnabled = true
-                }
-            }
+                let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                   
+                    self.authView.textFieldDescription.frame.origin.y += 50
+                    self.authView.buttonOK.frame.origin.y += 50
+                
+                    self.view.layoutIfNeeded()
+                
+                })
+                transitionAnimator.startAnimation()
+                self.view.layoutIfNeeded()
+//                self.authView.buttonOK.transform = CGAffineTransform(scaleX: 0, y: 50)
+//                            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
+//                                self.authView.buttonOK.transform = .identity
+//                            }, completion: nil)
+//                let translate = CGAffineTransform(translationX: 0, y: +120)
+//                self.authView.buttonOK.transform = translate
+//                           UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: {
+//                               self.authView.buttonOK.transform = .identity
+//                           }, completion: nil)
+//            UIView.animate(withDuration: 0.5) {
+//                self.authView.textFieldDescription.frame.origin.y += 50
+//                self.authView.buttonOK.frame.origin.y += 50
+//
+//
+//            } completion: { (bool) in
+//                if bool {
+//                    self.authView.textFieldFree.isHidden = false
+//                    self.authView.textFieldFree.isUserInteractionEnabled = true
+//                }
+//            }
             self.authView.textFieldFree.isHidden = false
             self.authView.textFieldFree.isUserInteractionEnabled = true
        }
@@ -430,7 +456,7 @@ extension AddedVideoVC: UITextFieldDelegate {
         }
         if textField == authView.textFieldCategory {
             self.authView.textFieldName.resignFirstResponder()
-            return false
+            return true
         }
 
         if textField == authView.textFieldFree {
@@ -543,17 +569,16 @@ extension AddedVideoVC: VideoPickerDelegate {
         return nameVod
     }
 }
-extension AddedVideoVC: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        if textView.textColor == UIColor.lightGray.alpha(0.5) {
-            textView.text = nil
-            textView.textColor = UIColor.black
+extension AddedVideoVC {
+    
+    override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardHeight = keyboardFrame.cgRectValue.height
+            scrollViewBottomConstrain.constant =  -keyboardHeight
         }
     }
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if textView.text.isEmpty {
-            textView.text = "Category"
-            textView.textColor = UIColor.lightGray.alpha(0.5)
-        }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        scrollViewBottomConstrain.constant = 0
     }
 }
