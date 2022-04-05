@@ -27,7 +27,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
-
+    var arrayResolution = [String]()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
  
@@ -883,93 +883,95 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
    }
     private func action(for type: String, title: String) -> UIAlertAction? {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in
-            print("Old Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
+            guard let url = URL(string: urlStream!) else { return }
+      
             switch type {
             case "Auto" :
-                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 0
-                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
-                print("Auto")
+                self.replaceItem(with: url)
+            case "240" :
+                let change = changeUrl(url: urlStream!, end: arrayResolution[0])
+                guard let urls = URL(string: change) else { return }
+                self.replaceItem(with: urls)
             case "360" :
-                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 800000
-                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
-                print("640x360/video.m3u8")
+                let change = changeUrl(url: urlStream!, end: arrayResolution[1])
+                guard let urls = URL(string: change) else { return }
+                self.replaceItem(with: urls)
             case "480" :
-                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 1400000
-                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
-                print("842x480/video.m3u8")
+                let change = changeUrl(url: urlStream!, end: arrayResolution[2])
+                guard let urls = URL(string: change) else { return }
+                self.replaceItem(with: urls)
             case "720" :
-                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 2800000
-                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
-                print(" 1280x720/video.m3u8")
+                let change = changeUrl(url: urlStream!, end: arrayResolution[3])
+                guard let urls = URL(string: change) else { return }
+                self.replaceItem(with: urls)
             case "1080" :
-                self.playerViewController?.player!.currentItem?.preferredPeakBitRate = 5000000
-                print("Playing in Bit Rate \(String(describing: self.playerViewController?.player?.currentItem?.preferredPeakBitRate))")
+                let change = changeUrl(url: urlStream!, end: arrayResolution[4])
+                guard let urls = URL(string: change) else { return }
+                self.replaceItem(with: urls)
                 break
             default:
                break
             }
            
         }
-    }    
+    }
     public func present() {
+        
         guard let urlStream = urlStream else { return }
         guard let url = URL(string: urlStream) else { return }
-       
-        self.getPlaylist(from: url) { rawPlay in
-            
-                
-          //  let play = self.getStreamResolutions(from: rawPlay)
-        }
-        
+        var streamResolution = [StreamResolution]()
         var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-     
+                         
         if UIDevice.current.orientation == .portrait {
-             alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         } else if UIDevice.current.orientation == .landscapeLeft {
-             alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        }else if UIDevice.current.orientation == .landscapeRight {
-            alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-       }
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        } else if UIDevice.current.orientation == .landscapeRight {
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+            }
         
-        if let action = self.action(for: "Auto", title: "Auto") {
-            alertController.addAction(action)
+        self.getPlaylist(from: url) { result in
+            switch result {
+            case .success( let raw ):
+                self.arrayResolution = self.getStreamResolutions(from: raw)
+                streamResolution = self.getStreamResolutionsAll(from: raw)
+                streamResolution.forEach {
+                    let action = self.action(for: $0.stringHeight, title: $0.stringHeight + "p")
+                    guard let action = action else {return  }
+                    DispatchQueue.main.async {
+                        alertController.addAction(action)
+                    }
+                }
+                if let action = self.action(for: "Auto", title: "Auto") {
+                    DispatchQueue.main.async {
+                    alertController.addAction(action)
+                    }
+                }
+                DispatchQueue.main.async {
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                }
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
+                }
+                DispatchQueue.main.async {
+                   self.present(alertController, animated: true)
+                }
+            case .failure(let error):
+                print("Error = \(error)")
+            }
         }
-        if let action = self.action(for: "360", title: "360 p") {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: "480", title: "480 p") {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: "720", title: "720 p") {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: "1080", title: "1080 p") {
-            alertController.addAction(action)
-        }
-
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-          
-           // alertController.popoverPresentationController?.sourceView = sourceView
-          //  alertController.popoverPresentationController?.sourceRect = sourceView.bounds
-            alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
-        }
-        
-
-        self.present(alertController, animated: true)
     }
         /// Downloads the stream file and converts it to the raw playlist.
         /// - Parameter completion: In successful case should return the `RawPlalist` which contains the url with which was the request performed
         /// and the string representation of the downloaded file as `content: String` parameter.
-        func getPlaylist(from url: URL, completion: @escaping (Swift.Result<RawPlaylist,Error>) -> Void)  {
+    func getPlaylist(from url: URL, completion: @escaping (Swift.Result<RawPlaylist,Error>) -> Void)  {
             let task = URLSession.shared.dataTask(with: url ){ data, response, error in
                 if let error = error {
                     completion(.failure(error))
                 } else if let data = data, let string = String(data: data, encoding: .utf8) {
                     completion(.success(RawPlaylist(url: url, content: string)))
                 } else {
-                    completion(.failure(error!))// Probably an MP4 file.
+                   print("TO DO:")
                 }
             }
             task.resume()
@@ -977,29 +979,48 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
       /// Iterates over the provided playlist contetn and fetches all the stream info data under the `#EXT-X-STREAM-INF"` key.
       /// - Parameter playlist: Playlist object obtained from the stream url.
       /// - Returns: All available stream resolutions for respective bandwidth.
-     func getStreamResolutions(from playlist: RawPlaylist) -> [StreamResolution] {
-         var resolutions = [StreamResolution]()
-         playlist.content.enumerateLines { line, shouldStop in
-             let infoline = line.replacingOccurrences(of: "#EXT-X-STREAM-INF", with: "")
-             let infoItems = infoline.components(separatedBy: ",")
-             let bandwidthItem = infoItems.first(where: { $0.contains(":BANDWIDTH") })
-             let resolutionItem = infoItems.first(where: { $0.contains("RESOLUTION")})
-             if let bandwidth = bandwidthItem?.components(separatedBy: "=").last,
-                let numericBandwidth = Double(bandwidth),
-                let resolution = resolutionItem?.components(separatedBy: "=").last?.components(separatedBy: "x"),
-                let strignWidth = resolution.first,
-                let stringHeight = resolution.last,
-                let width = Double(strignWidth),
-                let height = Double(stringHeight) {
-                resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
-                                                     averageBandwidth: numericBandwidth,
-                                                     resolution: CGSize(width: width, height: height)))
-             }
-         }
-         return resolutions
-     }
-
-     
+    func getStreamResolutions(from playlist: RawPlaylist) -> [String] {
+        var resolutions = [StreamResolution]()
+        let band = playlist.content.components(separatedBy: "\n")
+        let arrayResolution = band.filter(){$0.hasSuffix("m3u8")}
+        return arrayResolution
+    }
+    func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
+        var resolutions = [StreamResolution]()
+        playlist.content.enumerateLines { line, shouldStop in
+            let infoline = line.replacingOccurrences(of: "#EXT-X-STREAM-INF", with: "")
+            let infoItems = infoline.components(separatedBy: ",")
+            let bandwidthItem = infoItems.first(where: { $0.contains(":BANDWIDTH") })
+            let resolutionItem = infoItems.first(where: { $0.contains("RESOLUTION")})
+            if let bandwidth = bandwidthItem?.components(separatedBy: "=").last,
+               let numericBandwidth = Double(bandwidth),
+               let resolution = resolutionItem?.components(separatedBy: "=").last?.components(separatedBy: "x"),
+               let strignWidth = resolution.first,
+               let stringHeight = resolution.last,
+               let width = Double(strignWidth),
+               let height = Double(stringHeight) {
+               resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
+                                                    averageBandwidth: numericBandwidth,
+                                                   resolution: CGSize(width: width, height: height), stringHeight: stringHeight))
+            }
+        }
+        return resolutions
+    }
+    private func replaceItem(with newResolution: URL ) {
+            let currentTime: CMTime
+        if let currentItem = self.playerViewController?.player?.currentItem {
+                currentTime = currentItem.currentTime()
+            } else {
+                currentTime = .zero
+            }
+            
+        self.playerViewController?.player?.replaceCurrentItem(with: AVPlayerItem(url: newResolution))
+        self.playerViewController?.player?.seek(to: currentTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        }
+    func changeUrl(url: String,end: String) -> (String) {
+        let i = url.replacingOccurrences(of: "playlist.m3u8", with: end)
+        return i
+    }
  }
 
 public extension UIView {

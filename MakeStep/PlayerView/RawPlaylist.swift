@@ -19,4 +19,5 @@ struct StreamResolution {
      let maxBandwidth: Double
      let averageBandwidth: Double
      let resolution: CGSize
+     let stringHeight: String
 }
