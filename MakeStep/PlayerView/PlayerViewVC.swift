@@ -216,8 +216,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
-        
-        homeView.settingView.button480.addTarget(self, action: #selector(action480), for: .touchUpInside)
+      
     }
     @objc func actionSkipNext() {
         if tracksInt <= self.brodcast.count - 1 {
@@ -262,26 +261,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
     }
     @objc func actionSetting() {
-        homeView.buttonSetting.isSelected.toggle()
-        if homeView.buttonSetting.isSelected {
-                self.present()
-        } else {
-            UIView.animate(withDuration: 0.2, delay: 0.1, options: .curveEaseOut, animations: {
-          
-                }, completion: nil)
-            
-        }
-
-    }
-    @objc func action480() {
-        homeView.settingView.button480.isSelected.toggle()
-        if homeView.settingView.button480.isSelected {
-            print("TODO: playlist")
-            homeView.settingView.button480.titleLabel?.textColor = .gray
-        } else {
-            print("TODO: playlist")
-            homeView.settingView.button480.titleLabel?.textColor = .white
-        }
+            self.present()
+       
     }
     @objc func actionMore() {
         guard token != nil else { return }
@@ -541,15 +522,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
        
         self.view.addSubview(self.homeView.buttonLandScape)
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-        self.homeView.buttonLandScape.setImage(imageL, for: .normal)        
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 0,width: 50,height: 30)
+        self.homeView.buttonLandScape.setImage(imageL, for: .normal)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 5,width: 50,height: 30)
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 40,height: 30)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
         
         self.view.addSubview(self.homeView.playerSlider)
-        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 0,height: 20)
+        self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 1,height: 20)
         
         self.view.addSubview(self.homeView.buttonPlayPause)
         self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
