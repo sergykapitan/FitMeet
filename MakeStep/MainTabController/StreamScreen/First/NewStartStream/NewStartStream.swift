@@ -214,6 +214,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
+    
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone

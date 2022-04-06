@@ -13,12 +13,12 @@ import TagListView
 final class AddedVideoCode: UIView {
     
     //MARK: - UI
-    let cardView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }()
+//    let cardView: UIView = {
+//        let view = UIView()
+//        view.translatesAutoresizingMaskIntoConstraints = false
+//        view.backgroundColor = .white
+//        return view
+//    }()
     let buttonUploadVideo: UIButton = {
         let button = UIButton()
         button.setTitle(" Upload Video ", for: .normal)
@@ -168,21 +168,21 @@ final class AddedVideoCode: UIView {
     private func initUI() {
         addSubview(scroll)
         scroll.fillFull(for: self)
-        scroll.addSubview(cardView)
+      //  scroll.addSubview(cardView)
  
     }
     private func initLayout() {
        
         
         
-        
-        cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
+        // cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
+//        cardView.anchor(top: scroll.topAnchor, left: scroll.leftAnchor, right: scroll.rightAnchor, bottom: scroll.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
         scroll.addSubview(buttonUploadVideo)
-        buttonUploadVideo.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 130,  height: 36)
+        buttonUploadVideo.anchor(top: scroll.topAnchor, left: scroll.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 130,  height: 36)
         
         scroll.addSubview(labelNameVOD)
-        labelNameVOD.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 40)
+        labelNameVOD.anchor(top: scroll.topAnchor, left: scroll.leftAnchor,right: scroll.rightAnchor, paddingTop: 20, paddingLeft: 10, paddingRight: 40)
         
         scroll.addSubview(resetVideo)
         resetVideo.anchor(left: labelNameVOD.rightAnchor, paddingLeft: 5, width: 20, height: 20)
@@ -190,53 +190,45 @@ final class AddedVideoCode: UIView {
         
         scroll.addSubview(imageButton)
         imageButton.anchor(top: buttonUploadVideo.bottomAnchor,
-                               left: cardView.leftAnchor,
-                               right: cardView.rightAnchor,
+                               left: scroll.leftAnchor,
+                               right: scroll.rightAnchor,
                                paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 160)
-        imageButton.centerX(inView: cardView)
+        imageButton.centerX(inView: scroll)
 
         scroll.addSubview(textFieldName)
         textFieldName.anchor(top: imageButton.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldCategory)
         textFieldCategory.anchor(top: textFieldName.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10)
-        
-//        scroll.addSubview(textFieldStartDate)
-//        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
-//                              left: cardView.leftAnchor,
-//                              right: cardView.rightAnchor,
-//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldAviable)
         textFieldAviable.anchor(top: textFieldCategory.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldFree)
         textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldDescription)
-   // paddingTop: 15,
-        //top: textFieldAviable.bottomAnchor,
         textFieldDescription.anchor(
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                                paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(buttonOK)
         buttonOK.anchor(top: textFieldDescription.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         textFieldCategory.addSubview(tagView)
         tagView.anchor(top:textFieldCategory.topAnchor,

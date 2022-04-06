@@ -111,7 +111,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
+       // authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
         self.authView.buttonOK.setTitle("OK", for: .normal)
         self.authView.labelNameVOD.isHidden = true
@@ -127,7 +127,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         bindingCategory()
         setupKeyboardNotifications()
         self.hideKeyboardWhenTappedAround()
-      //  registerForKeyboardNotifications()
+       
         authView.tagView.delegate = self
         
         bottomConstraint = authView.textFieldDescription.topAnchor.constraint(equalTo: authView.textFieldAviable.bottomAnchor, constant: 15)
@@ -177,9 +177,43 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
+//    func registerForKeyboardNotifications() {
+//
+//    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown),
+//                                           name: UIResponder.keyboardWillShowNotification,
+//                                           object: nil)
+//    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
+//                                           name: UIResponder.keyboardWillHideNotification,
+//                                           object: nil)
+//  }
+    
+//    @objc func keyboardWillShown(notificiation: NSNotification) {
+////        if let keyboardFrame: NSValue = notificiation.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+////           // if authView.textFieldDescription.isFirstResponder {
+////            let keyboardHeight = keyboardFrame.cgRectValue.height
+////            scrollViewBottomConstrain.constant =  -keyboardHeight
+////             //   self.authView.scroll.contentOffset.y = 100
+////          //  }
+////        }
+//      // write source code handle when keyboard will show
+//        let info = notificiation.userInfo!
+//         let keyboardFrame = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
+//            if authView.textFieldDescription.isFirstResponder {
+//                let keyboardHeight = keyboardFrame.height
+//                self.authView.scroll.contentOffset.y = -keyboardFrame.height
+//              //  self.authView.scroll.contentOffset.y = 100
+//        }
+//    }
+//    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+//        self.authView.scroll.contentOffset.y = 0
+//    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.authView.textFieldCategory.text = ""
+    }
+    deinit{
+        removeKeyboardNotifications()
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
@@ -413,10 +447,10 @@ extension AddedVideoVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-        if textField == authView.textFieldDescription {
-            self.authView.textFieldName.resignFirstResponder()
-            return true
-        }
+//        if textField == authView.textFieldDescription {
+//            self.authView.textFieldName.resignFirstResponder()
+//            return true
+//        }
    
         return true
     }
@@ -519,12 +553,16 @@ extension AddedVideoVC {
     
     override func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardHeight = keyboardFrame.cgRectValue.height
-            scrollViewBottomConstrain.constant =  -keyboardHeight
+            if authView.textFieldDescription.isFirstResponder {
+               let keyboardHeight = keyboardFrame.cgRectValue.height
+                scrollViewBottomConstrain.constant =  keyboardHeight
+                self.authView.scroll.contentOffset.y = 50
+            }
         }
     }
     
     override func keyboardWillHide(notification: NSNotification) {
         scrollViewBottomConstrain.constant = 0
+        self.authView.scroll.contentOffset.y = 0
     }
 }
