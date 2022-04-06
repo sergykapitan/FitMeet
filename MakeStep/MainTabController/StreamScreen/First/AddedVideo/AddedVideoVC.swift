@@ -526,8 +526,7 @@ extension AddedVideoVC {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             if authView.textFieldDescription.isFirstResponder {
                let keyboardHeight = keyboardFrame.cgRectValue.height
-                scrollViewBottomConstrain.constant =  keyboardHeight
-                self.authView.scroll.contentOffset.y = 50
+                self.authView.scroll.contentOffset.y =  authView.buttonOK.frame.minY - keyboardHeight - authView.buttonOK.bounds.height
             }
         }
     }
