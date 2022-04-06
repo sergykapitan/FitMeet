@@ -162,7 +162,7 @@ class ChanellVC: UIViewController  {
         
         guard let id = user?.id else { return }
         bindingChannel(userId: id)
-        self.binding(id: "\(id)")
+        self.binding(id: "\(id)", page: currentPage)
        
         AppUtility.lockOrientation(.portrait)
         
@@ -183,48 +183,20 @@ class ChanellVC: UIViewController  {
                   }
           })
       }
-    func binding(id: String) {
-          takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
+    func binding(id: String,page:Int) {
+        takeBroadcast = fitMeetStream.getBroadcastPrivateChannel(userId: id, page: page)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
                       self.brodcast.append(contentsOf: response.data!)
-                      self.bindingChanellVOD(userId: id, curentPage: currentPage)
-                     
+                      let arrayUserId = self.brodcast.map{$0.userId!}
+                      self.bindingUserMap(ids: arrayUserId)
+                      self.profileView.tableView.reloadData()
 
                  }
           })
       }
-    func bindingChanellVOD(userId: String,curentPage: Int) {
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: curentPage, type: "STANDARD_VOD")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    guard let brod = response.data else { return }
-                    self.brodcast.append(contentsOf: brod)
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.brodcast = self.brodcast.reversed()
-                    self.profileView.tableView.reloadData()
-                }
-                if response.meta != nil {
-                    guard let itemCount = response.meta?.itemCount else { return }
-                    self.itemCount = itemCount
-                }
-           })
-       }
-    func bindingPlanned() {
-            takePlan = fitMeetStream.getListPlanBroadcast()
-                .mapError({ (error) -> Error in return error })
-                .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    if response.data != nil  {
-                        self.brodcast.append(contentsOf: response.data!)
-                        let arrayUserId = self.brodcast.map{$0.userId!}
-                        self.bindingUserMap(ids: arrayUserId)
-                        self.profileView.tableView.reloadData()
-                    }
-            })
-        }
+   
     func bindingUserMap(ids: [Int])  {
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
@@ -404,7 +376,7 @@ class ChanellVC: UIViewController  {
     func loadMoreItemsForList(){
             currentPage += 1
             guard let id = user?.id else { return }
-            self.bindingChanellVOD(userId: "\(id)", curentPage: currentPage)
+            self.binding(id: "\(id)", page: currentPage)
        }
     
     //  MARK:  - Animation Top View

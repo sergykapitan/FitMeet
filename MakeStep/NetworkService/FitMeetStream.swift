@@ -128,6 +128,17 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
+    public func getBroadcastPrivateChannel(userId: String,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=10&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcastPrivate")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
     public func getBroadcastNotAuth(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=\(status)&sort=userId&userId=\(userId)", method: .get, encoding: JSONEncoding.default)
                  .validate(statusCode: 200..<300)
