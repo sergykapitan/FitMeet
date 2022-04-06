@@ -26,6 +26,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     func optionSelected(option: String) {
         self.authView.textFieldCategory.text = ""
     }
+    var bottomConstraint = NSLayoutConstraint()
 
     let authView = AddedVideoCode()
     @Inject var fitMeetApi: FitMeetApi
@@ -128,6 +129,9 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.hideKeyboardWhenTappedAround()
       //  registerForKeyboardNotifications()
         authView.tagView.delegate = self
+        
+        bottomConstraint = authView.textFieldDescription.topAnchor.constraint(equalTo: authView.textFieldAviable.bottomAnchor, constant: 15)
+        bottomConstraint.isActive = true
     
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
@@ -182,33 +186,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
            let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
        
        }
-//    func registerForKeyboardNotifications() {
-//
-//    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),
-//                                           name: UIResponder.keyboardWillShowNotification,
-//                                           object: nil)
-//    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
-//                                           name: UIResponder.keyboardWillHideNotification,
-//                                           object: nil)
-//  }
-
-//    @objc func keyboardWillShown(_ notificiation: NSNotification) {
-//
-//      // write source code handle when keyboard will show
-//        let info = notificiation.userInfo!
-//         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-//            if authView.textFieldDescription.isFirstResponder {
-//                UIView.animate(withDuration: 0.5) {
-//                    self.authView.textFieldDescription.frame.origin.y -= 50
-//                    self.authView.buttonOK.frame.origin.y -= 50
-//
-//                }
-//                self.authView.scroll.contentOffset.y = 100
-//        }
-//    }
-//    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
-//        self.authView.scroll.contentOffset.y = 0
-//    }
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
@@ -216,57 +193,26 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     func changeData() {
         authView.textFieldAviable.didSelect { (str, ind, col) in
             if str == "All" || str == "Suscribers"{
-                if self.authView.textFieldDescription.frame.origin.y == 463.0 {
-                UIView.animate(withDuration: 0.5) {
-                    self.authView.textFieldDescription.frame.origin.y -= 50
-                    self.authView.buttonOK.frame.origin.y -= 50
-                  
-                } completion: { (bool) in
-                    if bool {
+                    let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
+                        self.bottomConstraint.constant = 15
                         self.authView.textFieldFree.isHidden = true
                         self.authView.textFieldFree.isUserInteractionEnabled = false
                     }
-                }
-            }
-        } else if str == "PPV" {
-            if self.authView.textFieldDescription.frame.origin.y == 413.0 {
-                let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                   
-                    self.authView.textFieldDescription.frame.origin.y += 50
-                    self.authView.buttonOK.frame.origin.y += 50
-                
                     self.view.layoutIfNeeded()
-                
-                })
+                    trA.startAnimation()
+        } else if str == "PPV" {
+                let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: {
+                    
+                    self.bottomConstraint.constant = 65
+                    self.authView.textFieldFree.isHidden = false
+                    self.authView.textFieldFree.isUserInteractionEnabled = true
+                    
+                    })
+                    self.view.layoutIfNeeded()
                 transitionAnimator.startAnimation()
-                self.view.layoutIfNeeded()
-//                self.authView.buttonOK.transform = CGAffineTransform(scaleX: 0, y: 50)
-//                            UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .curveEaseInOut, animations: {
-//                                self.authView.buttonOK.transform = .identity
-//                            }, completion: nil)
-//                let translate = CGAffineTransform(translationX: 0, y: +120)
-//                self.authView.buttonOK.transform = translate
-//                           UIView.animate(withDuration: 1, delay: 0, options: .curveEaseInOut, animations: {
-//                               self.authView.buttonOK.transform = .identity
-//                           }, completion: nil)
-//            UIView.animate(withDuration: 0.5) {
-//                self.authView.textFieldDescription.frame.origin.y += 50
-//                self.authView.buttonOK.frame.origin.y += 50
-//
-//
-//            } completion: { (bool) in
-//                if bool {
-//                    self.authView.textFieldFree.isHidden = false
-//                    self.authView.textFieldFree.isUserInteractionEnabled = true
-//                }
-//            }
-            self.authView.textFieldFree.isHidden = false
-            self.authView.textFieldFree.isUserInteractionEnabled = true
+           }
        }
-        }
-   
-    }
-}
+   }
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)

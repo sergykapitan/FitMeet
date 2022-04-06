@@ -226,10 +226,12 @@ final class AddedVideoCode: UIView {
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldDescription)
-        textFieldDescription.anchor(top: textFieldAviable.bottomAnchor,
+   // paddingTop: 15,
+        //top: textFieldAviable.bottomAnchor,
+        textFieldDescription.anchor(
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                               paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(buttonOK)
         buttonOK.anchor(top: textFieldDescription.bottomAnchor,
