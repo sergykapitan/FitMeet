@@ -30,6 +30,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var arrayResolution = [String]()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
+    
+    var bottomConstraint = NSLayoutConstraint()
  
     weak var delegatePlayer: DissmisPlayer?
     
@@ -483,7 +485,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         player.rate = 1
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
-        playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
@@ -528,12 +530,14 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.view.addSubview(self.homeView.buttonSetting)
         self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
-        
+       
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 1,height: 20)
         
         self.view.addSubview(self.homeView.buttonPlayPause)
-        self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
+        self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 40)
+      //  bottomConstraint = homeView.buttonPlayPause.centerYAnchor.constraint(equalTo: self.homeView.imagePromo.centerYAnchor, constant: 0)
+      //  bottomConstraint.isActive = true
         self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
         
         self.view.addSubview(self.homeView.buttonSkipPrevious)
@@ -557,6 +561,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
            super.viewWillTransition(to: size, with: coordinator)
        
         if UIDevice.current.orientation.isLandscape {
+           
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 self.playerViewController!.view.frame = self.view.bounds
                 self.view.addSubview(self.playerViewController!.view)
@@ -580,8 +585,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             
             })
             transitionAnimator.startAnimation()
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill            
+            playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
            } else {
+               
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 self.homeView.buttonPlayPause.removeFromSuperview()
                 let playerFrame = self.homeView.imagePromo.bounds
@@ -593,7 +599,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
                 
                 self.view.addSubview(self.homeView.buttonPlayPause)
-                self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 60)
+                self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 40)
                 self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
                 self.view.addSubview(self.homeView.buttonSkipPrevious)
                 self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 0)
@@ -606,7 +612,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 self.view.layoutIfNeeded()
                 })
             transitionAnimator.startAnimation()
-            self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+               playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
             }
     }
  // MARK: - Selectors

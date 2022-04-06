@@ -102,14 +102,9 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
    
     //MARK: - Selectors
     @objc private func refreshAlbumList() {
-        if token != nil {
-            self.listBroadcast.removeAll()
-                binding()
-         } else {
-             self.listBroadcast.removeAll()
-                bindingNotAuht()
-            }
-        }
+        self.listBroadcast.removeAll()
+        getUsers()
+     }
     
     func binding() {
         takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
