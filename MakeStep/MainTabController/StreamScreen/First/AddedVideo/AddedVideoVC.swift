@@ -177,36 +177,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
-//    func registerForKeyboardNotifications() {
-//
-//    NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown),
-//                                           name: UIResponder.keyboardWillShowNotification,
-//                                           object: nil)
-//    NotificationCenter.default.addObserver(self, selector:  #selector(keyboardWillBeHidden(_:)),
-//                                           name: UIResponder.keyboardWillHideNotification,
-//                                           object: nil)
-//  }
-    
-//    @objc func keyboardWillShown(notificiation: NSNotification) {
-////        if let keyboardFrame: NSValue = notificiation.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-////           // if authView.textFieldDescription.isFirstResponder {
-////            let keyboardHeight = keyboardFrame.cgRectValue.height
-////            scrollViewBottomConstrain.constant =  -keyboardHeight
-////             //   self.authView.scroll.contentOffset.y = 100
-////          //  }
-////        }
-//      // write source code handle when keyboard will show
-//        let info = notificiation.userInfo!
-//         let keyboardFrame = (info[UIResponder.keyboardFrameBeginUserInfoKey] as! NSValue).cgRectValue
-//            if authView.textFieldDescription.isFirstResponder {
-//                let keyboardHeight = keyboardFrame.height
-//                self.authView.scroll.contentOffset.y = -keyboardFrame.height
-//              //  self.authView.scroll.contentOffset.y = 100
-//        }
-//    }
-//    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
-//        self.authView.scroll.contentOffset.y = 0
-//    }
+
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()

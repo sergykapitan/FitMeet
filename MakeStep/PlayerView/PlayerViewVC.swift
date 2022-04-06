@@ -183,6 +183,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
         
         homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
+       
 
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeDown.direction = UISwipeGestureRecognizer.Direction.down
@@ -458,6 +459,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             isButton = true
         }
     }
+    @objc func actionResize(sender:UIPinchGestureRecognizer) {
+        self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+    }
     func setUserProfile(user: User) {
         guard let id = user.id else { return }
         if token != nil {
@@ -561,12 +565,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
            super.viewWillTransition(to: size, with: coordinator)
        
         if UIDevice.current.orientation.isLandscape {
-           
+            
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 self.playerViewController!.view.frame = self.view.bounds
                 self.view.addSubview(self.playerViewController!.view)
                 self.playerViewController!.didMove(toParent: self)
                 self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                self.playerViewController!.view.addGestureRecognizer(UIPinchGestureRecognizer.init(target: self, action: #selector(self.actionResize(sender:))))
                 
                 self.view.addSubview(self.homeView.playerSlider)
                 self.view.addSubview(self.homeView.buttonLandScape)
