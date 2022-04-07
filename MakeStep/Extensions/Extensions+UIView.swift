@@ -478,6 +478,18 @@ extension UIView {
     @objc func tapGestureSelector() {
         self.endEditing(true)
     }
+    func getCurrentViewController() -> UIViewController? {
+
+        if let rootController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController {
+            var currentController: UIViewController! = rootController
+            while( currentController.presentedViewController != nil ) {
+                currentController = currentController.presentedViewController
+            }
+            return currentController
+        }
+        return nil
+
+    }
 }
 extension UIImageView {
   func setImageColor(color: UIColor) {

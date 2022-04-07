@@ -255,6 +255,20 @@
 		A5671E932757A2E000EE4191 /* TimetableVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E912757A2E000EE4191 /* TimetableVCCode.swift */; };
 		A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E972757ACC100EE4191 /* ExTimetableVc.swift */; };
 		A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5671E972757ACC100EE4191 /* ExTimetableVc.swift */; };
+		A572949027FED59500675FD8 /* DownSheetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572948F27FED59500675FD8 /* DownSheetActionType.swift */; };
+		A572949127FED59500675FD8 /* DownSheetActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572948F27FED59500675FD8 /* DownSheetActionType.swift */; };
+		A572949327FED5B300675FD8 /* DownSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949227FED5B300675FD8 /* DownSheetViewController.swift */; };
+		A572949427FED5B300675FD8 /* DownSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949227FED5B300675FD8 /* DownSheetViewController.swift */; };
+		A572949627FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949527FED5C200675FD8 /* DownSheetTableViewCell.swift */; };
+		A572949727FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949527FED5C200675FD8 /* DownSheetTableViewCell.swift */; };
+		A572949927FED8CC00675FD8 /* UITraitEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949827FED8CC00675FD8 /* UITraitEnvironment.swift */; };
+		A572949A27FED8CC00675FD8 /* UITraitEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949827FED8CC00675FD8 /* UITraitEnvironment.swift */; };
+		A572949C27FED91100675FD8 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949B27FED91100675FD8 /* CALayer.swift */; };
+		A572949D27FED91100675FD8 /* CALayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949B27FED91100675FD8 /* CALayer.swift */; };
+		A572949F27FEEFFD00675FD8 /* SheetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949E27FEEFFD00675FD8 /* SheetableViewController.swift */; };
+		A57294A027FEEFFD00675FD8 /* SheetableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A572949E27FEEFFD00675FD8 /* SheetableViewController.swift */; };
+		A57294A227FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57294A127FEF05100675FD8 /* ComplaintSuccessView.swift */; };
+		A57294A327FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57294A127FEF05100675FD8 /* ComplaintSuccessView.swift */; };
 		A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE42728084B00734A28 /* MyTariff.swift */; };
 		A57BBFE72728085900734A28 /* MytariffVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A57BBFE62728085900734A28 /* MytariffVCCode.swift */; };
 		A580AE3027C0E7E400FCD682 /* VideoDeeplinkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A580AE2F27C0E7E400FCD682 /* VideoDeeplinkHandler.swift */; };
@@ -551,6 +565,13 @@
 		A5671E8E2757A2D500EE4191 /* TimetableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVC.swift; sourceTree = "<group>"; };
 		A5671E912757A2E000EE4191 /* TimetableVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimetableVCCode.swift; sourceTree = "<group>"; };
 		A5671E972757ACC100EE4191 /* ExTimetableVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExTimetableVc.swift; sourceTree = "<group>"; };
+		A572948F27FED59500675FD8 /* DownSheetActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownSheetActionType.swift; sourceTree = "<group>"; };
+		A572949227FED5B300675FD8 /* DownSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownSheetViewController.swift; sourceTree = "<group>"; };
+		A572949527FED5C200675FD8 /* DownSheetTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownSheetTableViewCell.swift; sourceTree = "<group>"; };
+		A572949827FED8CC00675FD8 /* UITraitEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITraitEnvironment.swift; sourceTree = "<group>"; };
+		A572949B27FED91100675FD8 /* CALayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CALayer.swift; sourceTree = "<group>"; };
+		A572949E27FEEFFD00675FD8 /* SheetableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetableViewController.swift; sourceTree = "<group>"; };
+		A57294A127FEF05100675FD8 /* ComplaintSuccessView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplaintSuccessView.swift; sourceTree = "<group>"; };
 		A57BBFE42728084B00734A28 /* MyTariff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTariff.swift; sourceTree = "<group>"; };
 		A57BBFE62728085900734A28 /* MytariffVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MytariffVCCode.swift; sourceTree = "<group>"; };
 		A580AE2F27C0E7E400FCD682 /* VideoDeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoDeeplinkHandler.swift; sourceTree = "<group>"; };
@@ -895,6 +916,34 @@
 			path = Timetable;
 			sourceTree = "<group>";
 		};
+		A572948C27FED54200675FD8 /* BottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				A572948D27FED55600675FD8 /* model */,
+				A572948E27FED56900675FD8 /* controller */,
+			);
+			path = BottomSheet;
+			sourceTree = "<group>";
+		};
+		A572948D27FED55600675FD8 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				A572948F27FED59500675FD8 /* DownSheetActionType.swift */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
+		A572948E27FED56900675FD8 /* controller */ = {
+			isa = PBXGroup;
+			children = (
+				A572949227FED5B300675FD8 /* DownSheetViewController.swift */,
+				A572949527FED5C200675FD8 /* DownSheetTableViewCell.swift */,
+				A572949E27FEEFFD00675FD8 /* SheetableViewController.swift */,
+				A57294A127FEF05100675FD8 /* ComplaintSuccessView.swift */,
+			);
+			path = controller;
+			sourceTree = "<group>";
+		};
 		A57BBFE32728082A00734A28 /* MyTariff */ = {
 			isa = PBXGroup;
 			children = (
@@ -1198,6 +1247,7 @@
 		B47828A126CFF3D20068292A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A572948C27FED54200675FD8 /* BottomSheet */,
 				A59431E627E8CBDF00374890 /* CustomView */,
 				A5B635AD27185C010097A127 /* CoverView */,
 				B4D2B93E26E7C7970080E7E3 /* SwipbleView */,
@@ -1508,6 +1558,8 @@
 				B4497D4926A71CDE00321AB8 /* URLRequstBilder.swift */,
 				B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */,
 				B475A94E26BBB19F00EF96A4 /* ExDate.swift */,
+				A572949827FED8CC00675FD8 /* UITraitEnvironment.swift */,
+				A572949B27FED91100675FD8 /* CALayer.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1970,9 +2022,11 @@
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
 				A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */,
 				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
+				A572949727FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */,
 				A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */,
 				A5129420273A6EB7000CBBD9 /* ChatVCPlayerCode.swift in Sources */,
+				A572949D27FED91100675FD8 /* CALayer.swift in Sources */,
 				A5129421273A6EB7000CBBD9 /* AppDelegate.swift in Sources */,
 				A5129422273A6EB7000CBBD9 /* StartStream.swift in Sources */,
 				A5129423273A6EB7000CBBD9 /* NotTkenViewCode.swift in Sources */,
@@ -2006,8 +2060,10 @@
 				A512943D273A6EB7000CBBD9 /* TokenWatcher.swift in Sources */,
 				A512943E273A6EB7000CBBD9 /* Timetable.swift in Sources */,
 				A512943F273A6EB7000CBBD9 /* PresentVC.swift in Sources */,
+				A57294A027FEEFFD00675FD8 /* SheetableViewController.swift in Sources */,
 				A5427793274E44BC0063BBEE /* ButtonOffline.swift in Sources */,
 				A5129440273A6EB7000CBBD9 /* StreamResponce.swift in Sources */,
+				A572949427FED5B300675FD8 /* DownSheetViewController.swift in Sources */,
 				A5129441273A6EB7000CBBD9 /* ParentViewController.swift in Sources */,
 				A5129442273A6EB7000CBBD9 /* ImagePicker.swift in Sources */,
 				A5129443273A6EB7000CBBD9 /* ExtentionHomeVC.swift in Sources */,
@@ -2031,6 +2087,7 @@
 				A5129456273A6EB7000CBBD9 /* NewStartStreamCode.swift in Sources */,
 				A5129457273A6EB7000CBBD9 /* SendVCCell.swift in Sources */,
 				A5129458273A6EB7000CBBD9 /* SliderFloat.swift in Sources */,
+				A57294A327FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */,
 				A5129459273A6EB7000CBBD9 /* ChatVCCode.swift in Sources */,
 				A512945A273A6EB7000CBBD9 /* EditProfileCode.swift in Sources */,
 				A512945B273A6EB7000CBBD9 /* EdetBroadcast.swift in Sources */,
@@ -2098,6 +2155,7 @@
 				A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */,
 				A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */,
 				A5129496273A6EB7000CBBD9 /* SendCoachCell.swift in Sources */,
+				A572949A27FED8CC00675FD8 /* UITraitEnvironment.swift in Sources */,
 				A5129497273A6EB7000CBBD9 /* StartScreen.swift in Sources */,
 				A5129498273A6EB7000CBBD9 /* TarrifCell.swift in Sources */,
 				A5129499273A6EB7000CBBD9 /* NewPassword.swift in Sources */,
@@ -2125,6 +2183,7 @@
 				A51294AC273A6EB7000CBBD9 /* CoachCode.swift in Sources */,
 				A51294AD273A6EB7000CBBD9 /* AuthViewControllerCode.swift in Sources */,
 				A51294AE273A6EB7000CBBD9 /* SignInPasswordViewController.swift in Sources */,
+				A572949127FED59500675FD8 /* DownSheetActionType.swift in Sources */,
 				A51294AF273A6EB7000CBBD9 /* URLRequstBilder.swift in Sources */,
 				A51294B0273A6EB7000CBBD9 /* Password.swift in Sources */,
 				A51294B1273A6EB7000CBBD9 /* DataExtensions.swift in Sources */,
@@ -2211,9 +2270,11 @@
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
+				A572949627FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */,
 				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
+				A572949C27FED91100675FD8 /* CALayer.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
@@ -2247,8 +2308,10 @@
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				B4B113C8269868790006CA5A /* PresentVC.swift in Sources */,
 				A5427792274E44BC0063BBEE /* ButtonOffline.swift in Sources */,
+				A572949F27FEEFFD00675FD8 /* SheetableViewController.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
+				A572949327FED5B300675FD8 /* DownSheetViewController.swift in Sources */,
 				B4497D4726A6EA9300321AB8 /* ImagePicker.swift in Sources */,
 				B41D06AE2664D3C900C28C29 /* ExtentionHomeVC.swift in Sources */,
 				B4B11151269221EA0006CA5A /* UserCell.swift in Sources */,
@@ -2272,6 +2335,7 @@
 				B4D9D7542625FF2F007CFB71 /* SignUpViewController.swift in Sources */,
 				B4D2B94226E7C7F30080E7E3 /* SwipeableItemTransform.swift in Sources */,
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
+				A57294A227FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */,
 				B4E88E5326D3E3D3003E6B16 /* SendVCCell.swift in Sources */,
 				A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */,
 				B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */,
@@ -2339,6 +2403,7 @@
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
+				A572949927FED8CC00675FD8 /* UITraitEnvironment.swift in Sources */,
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,
 				B43A6C7726F24DEE009E6DDE /* SendCoachCell.swift in Sources */,
 				B484E8DF2682828200D75BE8 /* StartScreen.swift in Sources */,
@@ -2366,6 +2431,7 @@
 				A5950E5D273815DC002C1500 /* EditMonetVCCode.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */,
+				A572949027FED59500675FD8 /* DownSheetActionType.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,

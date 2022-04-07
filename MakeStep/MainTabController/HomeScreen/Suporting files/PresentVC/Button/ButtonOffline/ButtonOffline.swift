@@ -227,14 +227,6 @@ class ButtonOffline: UIViewController {
                
          })
     }
-    internal func vibrate() {
-        if #available(iOS 10.0, *) {
-            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .medium)
-            impactFeedbackgenerator.prepare()
-            impactFeedbackgenerator.impactOccurred()
-        } else {
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        }
-    }
+    
 }
 

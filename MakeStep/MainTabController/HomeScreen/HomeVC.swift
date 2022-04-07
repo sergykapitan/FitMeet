@@ -11,7 +11,7 @@ import UIKit
 
 
 
-class HomeVC: UIViewController, UITabBarControllerDelegate{
+class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     
 
     var ids = [Int]()
@@ -55,7 +55,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     var index = 0
     var url:String?
     var usersd = [Int: User]()
-    
+
     
     //MARK - LifeCicle
     override func loadView() {

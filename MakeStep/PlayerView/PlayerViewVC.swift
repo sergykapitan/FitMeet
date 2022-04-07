@@ -250,6 +250,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
+            vibrate()
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             if let id = self.broadcast?.id {
                 followBroadcast(id: id)
@@ -264,8 +265,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
     }
     @objc func actionSetting() {
-            self.present()
-       
+        vibrate()
+        self.present()
     }
     @objc func actionMore() {
         guard token != nil else { return }
@@ -622,12 +623,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
  // MARK: - Selectors
     @objc func rightHandAction() {
-        if isPlaying {
-            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-            self.isPlaying = false
-        } else {
+        homeView.buttonLandScape.isSelected.toggle()
+        if homeView.buttonLandScape.isSelected {
+            vibrate()
             AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeRight)
-            self.isPlaying =  true
+        } else {
+            vibrate()
+            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         }
     }
     func timerObserver(time: CMTime) {

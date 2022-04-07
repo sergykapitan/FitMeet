@@ -67,14 +67,6 @@ class VideosVC: UIViewController {
         configureChildViewController(buttonComming, onView: videoView.selfView )
         
     }
-    private func vibrate() {
-        if #available(iOS 10.0, *) {
-            let impactFeedbackgenerator = UIImpactFeedbackGenerator(style: .light)
-            impactFeedbackgenerator.prepare()
-            impactFeedbackgenerator.impactOccurred()
-        } else {
-            AudioServicesPlaySystemSound(SystemSoundID(kSystemSoundID_Vibrate))
-        }
-    }
+  
 }
 

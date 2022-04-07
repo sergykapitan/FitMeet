@@ -106,12 +106,12 @@ extension ButtonOffline: UITableViewDataSource, UITableViewDelegate {
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
            guard let id = brodcast[sender.tag].id else { return }
-            self.vibrate()
+            vibrate()
             self.followBroadcast(id: id)
         } else {
             sender.setImage(UIImage(named: "LikeNot"), for: .normal)
            guard let id = brodcast[sender.tag].id else { return }
-            self.vibrate()
+            vibrate()
             self.unFollowBroadcast(id: id)
         }
     }

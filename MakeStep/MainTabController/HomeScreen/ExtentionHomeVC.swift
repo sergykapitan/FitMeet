@@ -129,14 +129,8 @@ extension HomeVC: UITableViewDataSource {
     }
 
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        detailViewController.broadcast = self.listBroadcast[sender.tag]
-        present(detailViewController, animated: true)
-
+        vibrate()
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
     @objc func tappedCoach(_ sender: UIButton) -> Void {
         let vc = ChannelCoach()
@@ -243,3 +237,4 @@ extension HomeVC: HomeHorizontalListTableViewCellDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
+
