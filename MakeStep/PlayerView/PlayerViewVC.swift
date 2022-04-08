@@ -499,22 +499,22 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
         self.homeView.playerSlider.minimumValue = 0
         self.homeView.playerSlider.setValue(0, animated: true)
-         
+        setTimeVideo()
         
-        let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
-        let seconds : Float64 = CMTimeGetSeconds(duration)
-               
-        
-        guard let broadcast = self.broadcast else { return }
-        if broadcast.status == "ONLINE" {
-            self.homeView.playerSlider.maximumValue = 1
-        } else {
-            self.homeView.playerSlider.maximumValue = Float(seconds)
-            self.homeView.playerSlider.isContinuous = true
-            self.homeView.playerSlider.tintColor = .blueColor
-            self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
-            
-        }
+//        let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
+//        let seconds : Float64 = CMTimeGetSeconds(duration)
+//
+//
+//        guard let broadcast = self.broadcast else { return }
+//        if broadcast.status == "ONLINE" {
+//            self.homeView.playerSlider.maximumValue = 1
+//        } else {
+//            self.homeView.playerSlider.maximumValue = Float(seconds)
+//            self.homeView.playerSlider.isContinuous = true
+//            self.homeView.playerSlider.tintColor = .blueColor
+//            self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
+//
+//        }
 
         let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
@@ -559,6 +559,22 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.view.addSubview(self.homeView.labelTimeEnd)
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
         
+    }
+    private func setTimeVideo() {
+        let duration : CMTime = (self.playerViewController?.player?.currentItem!.asset.duration)!
+        let seconds : Float64 = CMTimeGetSeconds(duration)
+               
+        
+        guard let broadcast = self.broadcast else { return }
+        if broadcast.status == "ONLINE" {
+            self.homeView.playerSlider.maximumValue = 1
+        } else {
+            self.homeView.playerSlider.maximumValue = Float(seconds)
+            self.homeView.playerSlider.isContinuous = true
+            self.homeView.playerSlider.tintColor = .blueColor
+            self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
+            
+        }
     }
   
  // MARK: - Transishion
@@ -869,6 +885,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            setTimeVideo()
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
             self.playerViewController?.player?.play()
             guard let user = tracks[indexPath.row].userId else { return}
