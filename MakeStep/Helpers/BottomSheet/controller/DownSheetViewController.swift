@@ -55,7 +55,7 @@ class DownSheetViewController: UIViewController {
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = topTitle?.1 ?? .black
-        label.font = UIFont(name: "AvenirNext-Medium", size: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -140,7 +140,7 @@ class DownSheetViewController: UIViewController {
         }
         
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
-        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: safeAreaBottom)
+        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: safeAreaBottomPadding)
         
         NSLayoutConstraint.activate([
             
@@ -190,14 +190,14 @@ class DownSheetViewController: UIViewController {
                 tableView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
                 tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10 - safeAreaBottomPadding),
+                tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5 - safeAreaBottomPadding),
             ])
         } else {
             NSLayoutConstraint.activate([
                 tableView.topAnchor.constraint(equalTo: gripView.bottomAnchor, constant: 10),
                 tableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 tableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -10 - safeAreaBottomPadding),
+                tableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -5 - safeAreaBottomPadding),
             ])
         }
         
@@ -209,7 +209,7 @@ class DownSheetViewController: UIViewController {
     
     func animatePresentContainer(_ height: CGFloat) {
         UIView.animate(withDuration: 0.3) {
-            self.containerViewBottomConstraint.constant = -8 - self.safeAreaBottomPadding
+            self.containerViewBottomConstraint.constant = 0
             self.containerViewHeightConstraint.constant = height
             self.view.layoutIfNeeded()
         }

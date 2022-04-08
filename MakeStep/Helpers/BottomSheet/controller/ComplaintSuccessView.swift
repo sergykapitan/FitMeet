@@ -22,7 +22,7 @@ class ComplaintSuccessView : UIView {
         label.textColor = .black
         label.textAlignment = .center
         label.numberOfLines = 0
-        label.font = UIFont(name: "AvenirNext-Medium", size: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

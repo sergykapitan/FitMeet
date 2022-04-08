@@ -10,21 +10,11 @@ import UIKit
 
 class SheetableViewController: UIViewController, DownSheetViewControllerDelegate {
     
-    
- 
-    private lazy var dimmingView: UIView = {
-        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
-        let view = UIVisualEffectView(effect: blurEffect)
-        return view
-    }()
     let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
-    private let actionSheetCornerRadius: CGFloat = 30
-    private let dimmingViewMaxAlpha: CGFloat = 0.2
     lazy var moreArtworkOtherUserSheetVC = DownSheetViewController(items:[
         (ArtworkItemActionType.copyLink, .regular),
         (ArtworkItemActionType.share, .regular),
         (ArtworkItemActionType.sendComplaint, .regular),
-        (ArtworkItemActionType.block, .destructive),
     ]
     )
     
@@ -101,7 +91,6 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     func addBlurEffect() {
         let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
         let bounds = self.navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -(statusBarHeight)).offsetBy(dx: 0, dy: -(statusBarHeight))
-       // let bounds = self.navigationController?.navigationBar.bounds
         visualEffectView.frame = bounds ?? CGRect.zero
         visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         visualEffectView.backgroundColor = .black

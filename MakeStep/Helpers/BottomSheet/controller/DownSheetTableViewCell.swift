@@ -16,7 +16,7 @@ class DownSheetTableViewCell: UITableViewCell {
     private lazy var titleLabel:  UILabel = {
         let label = UILabel()
         label.textColor = .black
-        label.font = UIFont(name: "AvenirNext-Medium", size: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

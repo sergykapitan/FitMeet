@@ -219,6 +219,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                 if !response.data.isEmpty {
                     let result = response.data.filter({ $0.avatarPath != nil })
                     self.listUsers = result
+                    self.currentPage = 1
                     if self.token != nil {
                         self.binding()
                     } else {

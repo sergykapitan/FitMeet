@@ -83,14 +83,16 @@ extension HomeVC: UITableViewDataSource {
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
             
-        } else if listBroadcast[indexPath.row].status == "ONLINE" {
+        }
+            else if listBroadcast[indexPath.row].status == "ONLINE" {
             cell.overlayPlan.isHidden = true
             cell.overlayOffline.isHidden = true
             cell.overlay.isHidden = false
             
             cell.logoUserOnline.isHidden = false
             self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        } else if listBroadcast[indexPath.row].status == "PLANNED" {
+        }
+            else if listBroadcast[indexPath.row].status == "PLANNED" {
             cell.overlay.isHidden = true
             cell.overlayOffline.isHidden = true
             cell.overlayPlan.isHidden = false
@@ -129,7 +131,6 @@ extension HomeVC: UITableViewDataSource {
     }
 
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        vibrate()
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
     @objc func tappedCoach(_ sender: UIButton) -> Void {
