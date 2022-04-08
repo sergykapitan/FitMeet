@@ -44,11 +44,12 @@ extension HomeVC: UITableViewDataSource {
             
         guard !listBroadcast.isEmpty  else { return cell }
 
-        cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg")
+            cell.setImage(image:  (listBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.png ??  listBroadcast[indexPath.row].previewPath) ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg")
+            
         cell.labelDescription.text = listBroadcast[indexPath.row].description
        
 
-        guard 
+        guard
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
         else { return cell}

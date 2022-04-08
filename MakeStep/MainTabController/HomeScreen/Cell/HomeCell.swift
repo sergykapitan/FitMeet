@@ -194,14 +194,7 @@ final class HomeCell: UITableViewCell {
     }
     func setImage(image:String) {
         let url = URL(string: image)
-        let processor = DownsamplingImageProcessor(size: backgroundImage.bounds.size)
-        backgroundImage.kf.setImage(with: url,
-                                    options: [
-                                        .processor(processor),
-                                        .scaleFactor(UIScreen.main.scale),
-                                        .transition(.fade(0.25)),
-                                        .cacheOriginalImage
-                                    ])
+        backgroundImage.kf.setImage(with: url)
     }
     func setImageLogo(image:String) {
         let url = URL(string: image)

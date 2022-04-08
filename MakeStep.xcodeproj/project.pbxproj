@@ -11,7 +11,6 @@
 		839D27D98E644C564AB48A83 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		A5129404273A6EB7000CBBD9 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
 		A5129405273A6EB7000CBBD9 /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113A6269739090006CA5A /* ChatVC.swift */; };
-		A5129406273A6EB7000CBBD9 /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C3269856460006CA5A /* CustomActionSheet.swift */; };
 		A5129407273A6EB7000CBBD9 /* SearchVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7B7267378B900EA0741 /* SearchVCCell.swift */; };
 		A5129408273A6EB7000CBBD9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF0D26BEC15800C25304 /* Message.swift */; };
 		A5129409273A6EB7000CBBD9 /* EditStreamCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B470790B2705B6A300921821 /* EditStreamCode.swift */; };
@@ -79,7 +78,6 @@
 		A512944E273A6EB7000CBBD9 /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B1114D269221C70006CA5A /* BaseCell.swift */; };
 		A512944F273A6EB7000CBBD9 /* SubscribeVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8F2732D7FC008E7E60 /* SubscribeVCCode.swift */; };
 		A5129450273A6EB7000CBBD9 /* ExSendCoach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7826F24DFE009E6DDE /* ExSendCoach.swift */; };
-		A5129451273A6EB7000CBBD9 /* CustomActionSheetContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */; };
 		A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D4C26A72E6B00321AB8 /* ServiceProvider.swift */; };
 		A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AE7AE2263D61D40033F78F /* PopUpView.swift */; };
 		A5129454273A6EB7000CBBD9 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D7532625FF2F007CFB71 /* SignUpViewController.swift */; };
@@ -205,7 +203,6 @@
 		A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */; };
 		A51294D8273A6EB7000CBBD9 /* SegmentControlSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7A26F4DFFF009E6DDE /* SegmentControlSearch.swift */; };
 		A51294DB273A6EB7000CBBD9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54F9B85273156B5008E7E60 /* StoreKit.framework */; };
-		A51294DE273A6EB7000CBBD9 /* customActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113C02698563C0006CA5A /* customActionSheet.xib */; };
 		A51294DF273A6EB7000CBBD9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */; };
 		A51294E0273A6EB7000CBBD9 /* CoverA.xib in Resources */ = {isa = PBXBuildFile; fileRef = A5B635AE27185C010097A127 /* CoverA.xib */; };
 		A51294E1273A6EB7000CBBD9 /* videoPlayerContainerNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */; };
@@ -430,9 +427,6 @@
 		B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */; };
 		B4B113B82698561F0006CA5A /* PlayerContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113B72698561F0006CA5A /* PlayerContainerView.swift */; };
 		B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113BA269856290006CA5A /* CustomSlider.swift */; };
-		B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */; };
-		B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4B113C02698563C0006CA5A /* customActionSheet.xib */; };
-		B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C3269856460006CA5A /* CustomActionSheet.swift */; };
 		B4B113C8269868790006CA5A /* PresentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B113C7269868790006CA5A /* PresentVC.swift */; };
 		B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */; };
 		B4BF4769270757380013FC13 /* DeleteStreamVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4BF4768270757380013FC13 /* DeleteStreamVC.swift */; };
@@ -712,9 +706,6 @@
 		B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = videoPlayerContainerNib.xib; sourceTree = "<group>"; };
 		B4B113B72698561F0006CA5A /* PlayerContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerContainerView.swift; sourceTree = "<group>"; };
 		B4B113BA269856290006CA5A /* CustomSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomSlider.swift; sourceTree = "<group>"; };
-		B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActionSheetContainer.swift; sourceTree = "<group>"; };
-		B4B113C02698563C0006CA5A /* customActionSheet.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = customActionSheet.xib; sourceTree = "<group>"; };
-		B4B113C3269856460006CA5A /* CustomActionSheet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomActionSheet.swift; sourceTree = "<group>"; };
 		B4B113C7269868790006CA5A /* PresentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentVC.swift; sourceTree = "<group>"; };
 		B4BAAD5D2639EAE300D2D6AE /* StartStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartStream.swift; sourceTree = "<group>"; };
 		B4BF4768270757380013FC13 /* DeleteStreamVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteStreamVC.swift; sourceTree = "<group>"; };
@@ -944,6 +935,16 @@
 			path = controller;
 			sourceTree = "<group>";
 		};
+		A57294A428002E9E00675FD8 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */,
+				A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */,
+				B41D06A22664C67600C28C29 /* HomeCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		A57BBFE32728082A00734A28 /* MyTariff */ = {
 			isa = PBXGroup;
 			children = (
@@ -1114,9 +1115,6 @@
 		B404922C26D78D9D00A2F417 /* Wath is this */ = {
 			isa = PBXGroup;
 			children = (
-				B4B113C3269856460006CA5A /* CustomActionSheet.swift */,
-				B4B113C02698563C0006CA5A /* customActionSheet.xib */,
-				B4B113BD269856320006CA5A /* CustomActionSheetContainer.swift */,
 				B4B113BA269856290006CA5A /* CustomSlider.swift */,
 				B4B113B72698561F0006CA5A /* PlayerContainerView.swift */,
 				B4B113B4269856100006CA5A /* videoPlayerContainerNib.xib */,
@@ -1704,10 +1702,8 @@
 				B4B113B3269855ED0006CA5A /* Suporting files */,
 				B41D069A2664C61B00C28C29 /* HomeVC.swift */,
 				B41D069F2664C65C00C28C29 /* HomeVCCode.swift */,
-				B41D06A22664C67600C28C29 /* HomeCell.swift */,
 				B41D06AD2664D3C900C28C29 /* ExtentionHomeVC.swift */,
-				A5C4172B27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift */,
-				A5C4172E27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift */,
+				A57294A428002E9E00675FD8 /* Cell */,
 			);
 			path = HomeScreen;
 			sourceTree = "<group>";
@@ -1884,7 +1880,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A51294DE273A6EB7000CBBD9 /* customActionSheet.xib in Resources */,
 				A51294DF273A6EB7000CBBD9 /* LaunchScreen.storyboard in Resources */,
 				A51294E0273A6EB7000CBBD9 /* CoverA.xib in Resources */,
 				A51294E1273A6EB7000CBBD9 /* videoPlayerContainerNib.xib in Resources */,
@@ -1896,7 +1891,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B4B113C12698563C0006CA5A /* customActionSheet.xib in Resources */,
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
 				A5B635B027185C010097A127 /* CoverA.xib in Resources */,
 				B4B113B5269856100006CA5A /* videoPlayerContainerNib.xib in Resources */,
@@ -1998,7 +1992,6 @@
 				A59431EC27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
-				A5129406273A6EB7000CBBD9 /* CustomActionSheet.swift in Sources */,
 				A5129407273A6EB7000CBBD9 /* SearchVCCell.swift in Sources */,
 				A5129408273A6EB7000CBBD9 /* Message.swift in Sources */,
 				A5129409273A6EB7000CBBD9 /* EditStreamCode.swift in Sources */,
@@ -2077,7 +2070,6 @@
 				A512944E273A6EB7000CBBD9 /* BaseCell.swift in Sources */,
 				A512944F273A6EB7000CBBD9 /* SubscribeVCCode.swift in Sources */,
 				A5129450273A6EB7000CBBD9 /* ExSendCoach.swift in Sources */,
-				A5129451273A6EB7000CBBD9 /* CustomActionSheetContainer.swift in Sources */,
 				A5427799274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */,
 				A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */,
@@ -2246,7 +2238,6 @@
 				A59431EB27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
-				B4B113C4269856460006CA5A /* CustomActionSheet.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */,
 				B470790C2705B6A300921821 /* EditStreamCode.swift in Sources */,
@@ -2326,7 +2317,6 @@
 				A54ACC9E27AD7B9D004BAEF1 /* ExSendStream.swift in Sources */,
 				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
-				B4B113BE269856320006CA5A /* CustomActionSheetContainer.swift in Sources */,
 				A5427798274E44DC0063BBEE /* ExButtonOffline.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				A59431EE27E8D09B00374890 /* OverlayOffline.swift in Sources */,
