@@ -109,25 +109,17 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
         self.navigationController?.navigationBar.isHidden = false
-        authView.tagView.removeAllTags()
-       
-
-    
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
-        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-        self.authView.buttonOK.setTitle("OK", for: .normal)
-        self.authView.textFieldStartDate.text = ""
         bindingChanell()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-        self.authView.buttonOK.setTitle("OK", for: .normal)
-        self.authView.textFieldStartDate.text = ""
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNavItem()
@@ -424,10 +416,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.broadcast = response
                     UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
                     self.fetchStream(id: self.broadcast?.id, name: name)
-                    
+                    self.authView.tagView.removeAllTags()
                     self.authView.textFieldName.text = ""
                     self.authView.textFieldFree.text = ""
-                   // self.authView.textFieldAviable.text = ""
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
                     self.authView.imageButton.setImage(nil, for: .normal)
@@ -569,8 +560,16 @@ extension NewStartStream: UITextFieldDelegate {
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             self.view.endEditing(true)
-            return false
+        if textField == authView.textFieldName {
+            self.authView.textFieldName.resignFirstResponder()
+            return true
         }
+        if textField == authView.textFieldCategory {
+            self.authView.textFieldName.resignFirstResponder()
+            return true
+        }
+     return false
+  }
 }
 extension NewStartStream: ImagePickerDelegate {
 

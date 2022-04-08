@@ -29,6 +29,7 @@ final class AddedVideoCode: UIView {
     var resetVideo: UIButton = {
         let but = UIButton()
         but.setImage(UIImage(named: "x1"), for: .normal)
+        but.isHidden = true
         return but
     }()
     var labelNameVOD: UILabel = {
@@ -37,6 +38,7 @@ final class AddedVideoCode: UIView {
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.font = UIFont.systemFont(ofSize: 18)
         label.numberOfLines = 2
+        label.isHidden = true
         return label
     }()
     let imageButton: UIButton = {

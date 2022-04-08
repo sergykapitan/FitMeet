@@ -105,18 +105,18 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-        authView.tagView.removeAllTags()
-        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+      //  authView.tagView.removeAllTags()
+      //  self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
 
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
        // authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
-        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-        self.authView.buttonOK.setTitle("OK", for: .normal)
-        self.authView.labelNameVOD.isHidden = true
-        self.authView.resetVideo.isHidden = true
-        self.authView.buttonUploadVideo.isHidden = false
+//        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+//        self.authView.buttonOK.setTitle("OK", for: .normal)
+//        self.authView.labelNameVOD.isHidden = true
+//        self.authView.resetVideo.isHidden = true
+//        self.authView.buttonUploadVideo.isHidden = false
       
     }
     override func viewDidLoad() {
@@ -255,9 +255,13 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                                        return error })
                                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
                                        if response.vodUrl != nil  {
-                                           self.authView.imageButton.setImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+                                           self.authView.imageButton.setImage(nil, for: .normal)
                                            self.view.removeBlurA()
                                            self.authView.textFieldName.text = ""
+                                           self.authView.textFieldAviable.text = ""
+                                           self.authView.textFieldDescription.text = ""
+                                           self.authView.tagView.removeAllTags()
+                                           self.resetVideo()
                                          
                                            Loaf("Upload Video  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
                                                switch disType {

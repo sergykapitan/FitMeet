@@ -95,6 +95,7 @@ final class HomeCell: UITableViewCell {
     var buttonLogo: UIButton = {
         let but = UIButton()
         but.backgroundColor = .clear
+        
         return but
     }()
 
@@ -105,6 +106,7 @@ final class HomeCell: UITableViewCell {
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
         tag.paddingX = 0
+       
         return tag
     }()
     var buttonstartStream: UIButton = {
@@ -115,6 +117,12 @@ final class HomeCell: UITableViewCell {
         button.layer.cornerRadius = 13
         button.isHidden = true
         return button
+    }()
+    var stackButton: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .fillEqually
+        return stack
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -129,6 +137,9 @@ final class HomeCell: UITableViewCell {
 
     func initialize() {
         clipsToBounds = true
+//        stackButton = UIStackView(arrangedSubviews: [tagView])
+//        stackButton.spacing = 10
+        
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
@@ -150,16 +161,16 @@ final class HomeCell: UITableViewCell {
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
         
         bottomView.addSubview(buttonLogo)
-                buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 124,height: 24 )
+        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 124,height: 24 )
         
         buttonLogo.addSubview(logoUserImage)
-        logoUserImage.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 24,height: 24)
+        logoUserImage.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 8, paddingLeft: 0,width: 24,height: 24)
 
         buttonLogo.addSubview(logoUserOnline)
         logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
         
         buttonLogo.addSubview(titleLabel)
-        titleLabel.anchor( left: logoUserImage.rightAnchor, paddingLeft: 8 ,width: 100)
+        titleLabel.anchor( left: logoUserImage.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 0)
         titleLabel.centerY(inView: logoUserImage)
 
         contentView.addSubview(buttonLike)
@@ -195,12 +206,12 @@ final class HomeCell: UITableViewCell {
     func setImage(image:String) {
         let url = URL(string: image)
         let processor = DownsamplingImageProcessor(size: backgroundImage.bounds.size)
-                     //|> RoundCornerImageProcessor(cornerRadius: 20)
         backgroundImage.kf.setImage(with: url,options: [
                     .processor(processor),
+                    .loadDiskFileSynchronously,
                     .scaleFactor(UIScreen.main.scale),
-                    .transition(.fade(0.25)),
-                    .cacheOriginalImage
+                    .cacheOriginalImage,
+                    .transition(.fade(0.25))
             
         ])
     }
