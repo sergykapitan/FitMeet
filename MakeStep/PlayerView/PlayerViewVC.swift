@@ -265,7 +265,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 
     }
     @objc func actionSetting() {
-        vibrate()
         self.present()
     }
     @objc func actionMore() {
@@ -641,10 +640,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     @objc func rightHandAction() {
         homeView.buttonLandScape.isSelected.toggle()
         if homeView.buttonLandScape.isSelected {
-            vibrate()
             AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeRight)
         } else {
-            vibrate()
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         }
     }
