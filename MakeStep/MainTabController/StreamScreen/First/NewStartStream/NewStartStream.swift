@@ -128,7 +128,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.hideKeyboardWhenTappedAround()
         registerForKeyboardNotifications()
         authView.tagView.delegate = self
-    
+        self.authView.buttonOK.isUserInteractionEnabled = false
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
@@ -262,12 +262,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-
+        if authView.textFieldAviable.text == "" {
+            Loaf("Not Saved Aviable for ...", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            return
+        }
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
-              let img = image ,
-              let planedDate = authView.textFieldStartDate.text else { return }
+              let img = image  else { return }
         
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         var isPlan: Bool?
@@ -560,10 +562,7 @@ extension NewStartStream: UITextFieldDelegate {
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             self.view.endEditing(true)
-        if textField == authView.textFieldName {
-            self.authView.textFieldName.resignFirstResponder()
-            return true
-        }
+       
         if textField == authView.textFieldCategory {
             self.authView.textFieldName.resignFirstResponder()
             return true
