@@ -18,10 +18,11 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     var complishionHandler: ((Bool) -> Void)?
     var watch = 0
     var itemCount: Int = 0
-    var isLoadingList : Bool = true
+    var isLoadingList : Bool = false
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
-    var currentPage : Int = 1
+    var currentPage : Int = 0
+    var pageCount: Int = 0
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
@@ -139,13 +140,15 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                       self.listBroadcast.append(contentsOf: response.data!)
                       let arrayUserId = self.listBroadcast.map{$0.userId!}
                       self.bindingUserMap(ids: arrayUserId)
+                      self.isLoadingList = false
                       self.refreshControl.endRefreshing()
                       self.homeView.tableView.reloadData()
 
                   } 
                   if response.meta != nil {
-                      guard let itemCount = response.meta?.itemCount else { return }
+                      guard let itemCount = response.meta?.itemCount , let pageCount = response.meta?.page else { return }
                       self.itemCount = itemCount
+                      self.pageCount = pageCount
                   }
               })
       }

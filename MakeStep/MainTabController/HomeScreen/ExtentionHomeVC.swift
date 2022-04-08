@@ -44,7 +44,7 @@ extension HomeVC: UITableViewDataSource {
             
         guard !listBroadcast.isEmpty  else { return cell }
 
-            cell.setImage(image:  (listBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.png ??  listBroadcast[indexPath.row].previewPath) ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg")
+            cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg" )
             
         cell.labelDescription.text = listBroadcast[indexPath.row].description
        
@@ -114,15 +114,16 @@ extension HomeVC: UITableViewDataSource {
             
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
-        
-        if indexPath.row == listBroadcast.count - 1 {
-            if self.itemCount > listBroadcast.count {
-                self.isLoadingList = true
-                self.loadMoreItemsForList()
-            } else if self.itemCount == listBroadcast.count {
-                self.bindingPlanned()
+            
+            if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
+                if self.itemCount > listBroadcast.count {
+                    self.isLoadingList = true
+                    self.loadMoreItemsForList()
+                } else if self.itemCount == listBroadcast.count {
+                    self.bindingPlanned()
+                }
             }
-        }
+        
         return cell
         
         default:
@@ -130,8 +131,9 @@ extension HomeVC: UITableViewDataSource {
         }
         return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
     }
+   
 
-    @objc func moreButtonTapped(_ sender: UIButton) -> Void {
+   @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
     @objc func tappedCoach(_ sender: UIButton) -> Void {

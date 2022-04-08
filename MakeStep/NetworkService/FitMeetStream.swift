@@ -63,7 +63,7 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     public func getOffBroadcast(page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=10&sort=viewersCount&status=OFFLINE&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=12&sort=viewersCount&status=OFFLINE&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
