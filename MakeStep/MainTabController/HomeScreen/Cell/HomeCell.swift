@@ -205,9 +205,7 @@ final class HomeCell: UITableViewCell {
     }
     func setImage(image:String) {
         let url = URL(string: image)
-        let processor = DownsamplingImageProcessor(size: backgroundImage.bounds.size)
         backgroundImage.kf.setImage(with: url,options: [
-                    .processor(processor),
                     .loadDiskFileSynchronously,
                     .scaleFactor(UIScreen.main.scale),
                     .cacheOriginalImage,

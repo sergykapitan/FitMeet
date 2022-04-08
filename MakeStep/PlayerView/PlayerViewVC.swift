@@ -460,7 +460,17 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
     }
     @objc func actionResize(sender:UIPinchGestureRecognizer) {
-        self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        switch sender.state {
+        case .began:
+             let scale = sender.scale
+            sender.scale = 1.0
+            if  scale > 1 {
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            } else  {
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect}
+        @unknown default:
+            print("def")
+        }
     }
     func setUserProfile(user: User) {
         guard let id = user.id else { return }
