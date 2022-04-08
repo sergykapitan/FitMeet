@@ -869,6 +869,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
+            self.playerViewController?.player?.play()
             guard let user = tracks[indexPath.row].userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
