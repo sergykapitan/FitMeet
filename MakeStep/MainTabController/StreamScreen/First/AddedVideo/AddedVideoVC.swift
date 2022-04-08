@@ -137,7 +137,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
         authView.scroll.addGestureRecognizer(scrollViewTap)
-        
+        authView.buttonOK.isUserInteractionEnabled = false
         authView.textFieldName.delegate = self
         authView.textFieldDescription.delegate = self
         authView.scroll.delegate = self
@@ -422,11 +422,7 @@ extension AddedVideoVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-//        if textField == authView.textFieldDescription {
-//            self.authView.textFieldName.resignFirstResponder()
-//            return true
-//        }
-   
+
         return true
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
