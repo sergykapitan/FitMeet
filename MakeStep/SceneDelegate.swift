@@ -26,7 +26,37 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         sleep(1)
         guard let windowScene = (scene as? UIWindowScene) else { return }
-           openRootViewController(viewController: MainTabBarViewController(), windowScene: windowScene)
+        let window = UIWindow(windowScene: windowScene)
+        
+        if let userActivity = connectionOptions.userActivities.first,
+           userActivity.activityType == NSUserActivityTypeBrowsingWeb,
+           let urlinfo = userActivity.webpageURL{
+            
+            window.rootViewController = MainTabBarViewController()
+            self.window = window
+            window.makeKeyAndVisible()
+            
+            let reminderDetailsVC = PlayerViewVC()
+            let path = urlinfo.pathComponents
+            if path.count == 4 {
+                pathKey = path[3]
+                pathId = path[2]
+                reminderDetailsVC.isPrivate = true
+            } else {
+                pathKey = ""
+                pathId = urlinfo.lastPathComponent
+                reminderDetailsVC.isPrivate = false
+            }
+            if let tableVC = window.rootViewController as? MainTabBarViewController {
+                  
+                   reminderDetailsVC.modalPresentationStyle = .fullScreen
+                   reminderDetailsVC.broadId = pathId
+                   reminderDetailsVC.privateKey = pathKey
+                   tableVC.present(reminderDetailsVC, animated: true)
+            }
+        } else {
+            openRootViewController(viewController: MainTabBarViewController(), windowScene: windowScene)
+        }
     }
 
     func openRootViewController(viewController: UIViewController,windowScene: UIWindowScene) {
@@ -42,6 +72,7 @@ extension SceneDelegate {
     func scene(_ scene: UIScene, continue userActivity: NSUserActivity) {
         if userActivity.activityType == NSUserActivityTypeBrowsingWeb,
             let urlinfo = userActivity.webpageURL{
+            
             let reminderDetailsVC = PlayerViewVC()
             let path = urlinfo.pathComponents
             if path.count == 4 {
@@ -59,7 +90,7 @@ extension SceneDelegate {
                    reminderDetailsVC.broadId = pathId
                    reminderDetailsVC.privateKey = pathKey
                    tableVC.present(reminderDetailsVC, animated: true)
-                 }
+            }
           }
     }
     
@@ -71,4 +102,5 @@ extension SceneDelegate {
         print(firstUrl.absoluteString)
         deeplinkCoordinator.handleURL(firstUrl)
     }
+   
 }
