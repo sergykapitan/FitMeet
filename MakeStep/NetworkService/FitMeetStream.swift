@@ -25,6 +25,15 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func deleteBroadcast(id: Int) -> AnyPublisher<BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)", method: .delete, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastResponce.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     public func getNotPlanBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=PLANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)

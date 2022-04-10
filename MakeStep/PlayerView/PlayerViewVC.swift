@@ -44,8 +44,36 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
   
 
     var isPlaying: Bool = false
-    var isButton: Bool = true
+    var isButton: Bool = true {
+                didSet {
+                    if self.isButton {
+                        self.playerViewController?.view.addBlur()
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2), execute: { () -> Void in
+                            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                                self.playerViewController?.view.removeBlurA()
+                                self.homeView.overlay.alpha = 0
+                                self.homeView.imageLive.alpha = 0
+                                self.homeView.labelLive.alpha = 0
+                                self.homeView.labelEye.alpha = 0
+                                self.homeView.buttonLandScape.alpha = 0
+                                self.homeView.buttonSetting.alpha = 0
+                                self.homeView.buttonPlayPause.alpha = 0
+                                self.homeView.buttonSkipNext.alpha = 0
+                                self.homeView.buttonSkipPrevious.alpha = 0
+                                self.homeView.playerSlider.alpha = 0
+                                self.homeView.labelTimeEnd.alpha = 0
+                                self.homeView.labelTimeStart.alpha = 0
+                                self.homeView.imageEye.alpha = 0
+                                self.isButton = false
+                            })
+                        })
+                        
+                    }
+                }
+            }
+ 
     
+
     var isPrivate: Bool = false
    
     
@@ -60,8 +88,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var watch: Int?
     
     let controller =  ChatVCPlayer()
-
     let homeView = PlayerViewVCCode()
+    
     var playerViewController: AVPlayerViewController?
     @Inject var fitMeetChannel: FitMeetChannels
     
@@ -122,7 +150,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-
+        self.isButton = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -397,66 +425,77 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
-            self.playerViewController?.view.removeBlurA()
-            homeView.overlay.isHidden = true
-            homeView.imageLive.isHidden = true
-            homeView.labelLive.isHidden = true
-            homeView.labelEye.isHidden = true
-            homeView.buttonLandScape.isHidden = true
-            homeView.buttonSetting.isHidden = true
-            homeView.buttonPlayPause.isHidden = true
-            homeView.buttonSkipNext.isHidden = true
-            homeView.buttonSkipPrevious.isHidden = true
-            homeView.playerSlider.isHidden = true
-            homeView.labelTimeEnd.isHidden = true
-            homeView.labelTimeStart.isHidden =  true
-            homeView.imageEye.isHidden = true
-            if playPauseButton == nil {
-                
-            } else {
-                playPauseButton.isHidden = true
-            }
-            isButton = false
+            UIView.animate(withDuration: 0.5, animations: { () -> Void in
+                self.playerViewController?.view.removeBlurA()
+                self.homeView.overlay.alpha = 0
+                self.homeView.imageLive.alpha = 0
+                self.homeView.labelLive.alpha = 0
+                self.homeView.labelEye.alpha = 0
+                self.homeView.buttonLandScape.alpha = 0
+                self.homeView.buttonSetting.alpha = 0
+                self.homeView.buttonPlayPause.alpha = 0
+                self.homeView.buttonSkipNext.alpha = 0
+                self.homeView.buttonSkipPrevious.alpha = 0
+                self.homeView.playerSlider.alpha = 0
+                self.homeView.labelTimeEnd.alpha = 0
+                self.homeView.labelTimeStart.alpha = 0
+                self.homeView.imageEye.alpha = 0
+            })
+            self.isButton = false
         } else {
-            self.playerViewController?.view.addBlur()
-            if self.broadcast?.status == "OFFLINE" {
-                homeView.overlay.isHidden = true
-                homeView.imageLive.isHidden = true
-                homeView.labelLive.isHidden = true
-                homeView.labelEye.isHidden = true
-                
-            } else {
-                homeView.overlay.isHidden = false
-                homeView.imageLive.isHidden = false
-                homeView.labelLive.isHidden = false
-                homeView.labelEye.isHidden = false
-            }
-             if self.broadcast?.status == "ONLINE" {
-                 homeView.playerSlider.isHidden = true
-                 homeView.buttonPlayPause.isHidden = true
-                 homeView.buttonSkipNext.isHidden = true
-                 homeView.buttonSkipPrevious.isHidden = true
-                 homeView.imageEye.isHidden = false
-            } else {
-                homeView.playerSlider.isHidden = false
-                homeView.buttonPlayPause.isHidden = false
-                homeView.buttonSkipNext.isHidden = false
-                homeView.buttonSkipPrevious.isHidden = false
-               
-            }
-            homeView.buttonSetting.isHidden = false
-            homeView.buttonLandScape.isHidden = false
-            homeView.labelTimeEnd.isHidden = false
-            homeView.labelTimeStart.isHidden =  false
-            
            
+                UIView.animate(withDuration: 0.2, animations: { () -> Void in
+                    self.playerViewController?.view.addBlur()
+                    self.homeView.overlay.alpha = 1
+                    self.homeView.imageLive.alpha = 1
+                    self.homeView.labelLive.alpha = 1
+                    self.homeView.labelEye.alpha = 1
+                    self.homeView.buttonLandScape.alpha = 1
+                    self.homeView.buttonSetting.alpha = 1
+                    self.homeView.buttonPlayPause.alpha = 1
+                    self.homeView.buttonSkipNext.alpha = 1
+                    self.homeView.buttonSkipPrevious.alpha = 1
+                    self.homeView.playerSlider.alpha = 1
+                    self.homeView.labelTimeEnd.alpha = 1
+                    self.homeView.labelTimeStart.alpha = 1
+                    self.homeView.imageEye.alpha = 1
+                })
             
-            if playPauseButton == nil {
-                
-            } else {
-                playPauseButton.isHidden = false
-            }
-            isButton = true
+           // self.playerViewController?.view.addBlur()
+//            if self.broadcast?.status == "OFFLINE" {
+//                homeView.overlay.isHidden = true
+//                homeView.imageLive.isHidden = true
+//                homeView.labelLive.isHidden = true
+//                homeView.labelEye.isHidden = true
+//
+//            } else {
+//                homeView.overlay.isHidden = false
+//                homeView.imageLive.isHidden = false
+//                homeView.labelLive.isHidden = false
+//                homeView.labelEye.isHidden = false
+//            }
+//             if self.broadcast?.status == "ONLINE" {
+//                 homeView.playerSlider.isHidden = true
+//                 homeView.buttonPlayPause.isHidden = true
+//                 homeView.buttonSkipNext.isHidden = true
+//                 homeView.buttonSkipPrevious.isHidden = true
+//                 homeView.imageEye.isHidden = false
+//            } else {
+//                homeView.playerSlider.isHidden = false
+//                homeView.buttonPlayPause.isHidden = false
+//                homeView.buttonSkipNext.isHidden = false
+//                homeView.buttonSkipPrevious.isHidden = false
+//
+//            }
+//            homeView.buttonSetting.isHidden = false
+//            homeView.buttonLandScape.isHidden = false
+//            homeView.labelTimeEnd.isHidden = false
+//            homeView.labelTimeStart.isHidden =  false
+//
+//
+//
+
+            self.isButton = true
         }
     }
     @objc func actionResize(sender:UIPinchGestureRecognizer) {

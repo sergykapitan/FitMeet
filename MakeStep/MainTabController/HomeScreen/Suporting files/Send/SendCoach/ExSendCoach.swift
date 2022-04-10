@@ -43,6 +43,16 @@ extension SendCoach: UITableViewDelegate {
             vc.broadcast = self.broadcast
             self.present(vc, animated: true, completion: nil)
         }
+        if indexPath.row == 4 {
+            guard let id = self.broadcast?.id else { return }
+            deleteBroadcast = fitMeetStream.deleteBroadcast(id: id)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
+                    if response.id != nil  {
+                        print("Delete \(response.id)")
+                   }
+            })
+        }
     
     }
     func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
