@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct BroadcastList: Codable {
+struct BroadcastList: Codable,Equatable {
     var data: [BroadcastResponce]?
     let meta: MetaBroadcast?
 }
 
-struct BroadcastResponce:Codable {
+struct BroadcastResponce:Codable,Equatable {
     let message: String?
     var error: String?
     let createdAt: String?
@@ -42,12 +42,12 @@ struct BroadcastResponce:Codable {
 
 }
 // MARK: - ResizedPreview
-struct ResizedPreview: Codable,Hashable {
+struct ResizedPreview: Codable,Hashable,Equatable {
     let jpeg, png, webp: String?
 }
 
 // MARK: - Category
-struct Category: Codable{
+struct Category: Codable,Equatable{
     let createdAt: String?
     let id: Int?
     let title, name, categoryDescription: String?
@@ -59,7 +59,7 @@ struct Category: Codable{
     let isFollow: Bool?
    
 }
-struct Stream: Codable {
+struct Stream: Codable,Equatable {
     let createdAt: String?
     let id: Int?
     let userId: Int?
@@ -80,7 +80,7 @@ struct Stream: Codable {
     let vodUrl: String?
     let vodLength: Int?
 }
-struct MetaBroadcast: Codable {
+struct MetaBroadcast: Codable,Equatable {
      let page: Int?
      let take: Int?
      let itemCount: Int?

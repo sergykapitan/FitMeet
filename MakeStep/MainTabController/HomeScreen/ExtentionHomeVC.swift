@@ -162,15 +162,15 @@ extension HomeVC: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-   
-            let id = self.listBroadcast[indexPath.row].userId
+        guard  !self.listBroadcast.isEmpty else { return }
+        let id = self.listBroadcast[indexPath.row].userId
 
           guard let broadcastID = self.listBroadcast[indexPath.row].id,
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
           self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
           let vc = PlayerViewVC()
-
+          vc.delegatePlayer = self
         if self.listBroadcast.isEmpty { return }
         
         if self.listBroadcast[indexPath.row].status == "ONLINE" {
@@ -241,4 +241,8 @@ extension HomeVC: HomeHorizontalListTableViewCellDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
+extension HomeVC: DissmisPlayer {
+    func reloadbroadcast() {
+        self.refreshAlbumList()
+    }
+}

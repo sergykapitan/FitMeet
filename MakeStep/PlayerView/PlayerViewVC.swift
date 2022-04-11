@@ -197,6 +197,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.navigationController?.popViewController(animated: true)
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
+        self.delegatePlayer?.reloadbroadcast()
     }
   // MARK: - ViewDidLoad
     override func viewDidLoad() {
@@ -282,15 +283,13 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             if let id = self.broadcast?.id {
                 followBroadcast(id: id)
-            }
-            
+            }            
         } else {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
             if let id = self.broadcast?.id {
                 unFollowBroadcast(id: id)
             }
         }
-
     }
     @objc func actionSetting() {
         self.present()
@@ -408,21 +407,33 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
           })
     }
+    
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 guard let like = response.followersCount else { return }
                 self.homeView.labelLike.text = "\(like)"
+//                if let index = self.brodcast.firstIndex(of: response) {
+//                    print(index)
+//                    self.brodcast[index] = response
+//                }
+                
           })
     }
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-             
+                guard let like = response.followersCount else { return }
+                self.homeView.labelLike.text = "\(like)"
+  
+//                if let index = self.brodcast.firstIndex(of: response) {
+//                    self.brodcast[index] = response
+//                }
          })
     }
+    
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
             UIView.animate(withDuration: 0.5, animations: { () -> Void in
@@ -460,40 +471,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                     self.homeView.labelTimeStart.alpha = 1
                     self.homeView.imageEye.alpha = 1
                 })
-            
-           // self.playerViewController?.view.addBlur()
-//            if self.broadcast?.status == "OFFLINE" {
-//                homeView.overlay.isHidden = true
-//                homeView.imageLive.isHidden = true
-//                homeView.labelLive.isHidden = true
-//                homeView.labelEye.isHidden = true
-//
-//            } else {
-//                homeView.overlay.isHidden = false
-//                homeView.imageLive.isHidden = false
-//                homeView.labelLive.isHidden = false
-//                homeView.labelEye.isHidden = false
-//            }
-//             if self.broadcast?.status == "ONLINE" {
-//                 homeView.playerSlider.isHidden = true
-//                 homeView.buttonPlayPause.isHidden = true
-//                 homeView.buttonSkipNext.isHidden = true
-//                 homeView.buttonSkipPrevious.isHidden = true
-//                 homeView.imageEye.isHidden = false
-//            } else {
-//                homeView.playerSlider.isHidden = false
-//                homeView.buttonPlayPause.isHidden = false
-//                homeView.buttonSkipNext.isHidden = false
-//                homeView.buttonSkipPrevious.isHidden = false
-//
-//            }
-//            homeView.buttonSetting.isHidden = false
-//            homeView.buttonLandScape.isHidden = false
-//            homeView.labelTimeEnd.isHidden = false
-//            homeView.labelTimeStart.isHidden =  false
-//
-//
-//
 
             self.isButton = true
         }
@@ -548,21 +525,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.homeView.playerSlider.minimumValue = 0
         self.homeView.playerSlider.setValue(0, animated: true)
         setTimeVideo()
-        
-//        let duration : CMTime = (playerViewController?.player?.currentItem!.asset.duration)!
-//        let seconds : Float64 = CMTimeGetSeconds(duration)
-//
-//
-//        guard let broadcast = self.broadcast else { return }
-//        if broadcast.status == "ONLINE" {
-//            self.homeView.playerSlider.maximumValue = 1
-//        } else {
-//            self.homeView.playerSlider.maximumValue = Float(seconds)
-//            self.homeView.playerSlider.isContinuous = true
-//            self.homeView.playerSlider.tintColor = .blueColor
-//            self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
-//
-//        }
+ 
 
         let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
@@ -589,8 +552,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         self.view.addSubview(self.homeView.buttonPlayPause)
         self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 40)
-      //  bottomConstraint = homeView.buttonPlayPause.centerYAnchor.constraint(equalTo: self.homeView.imagePromo.centerYAnchor, constant: 0)
-      //  bottomConstraint.isActive = true
+      
         self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
         
         self.view.addSubview(self.homeView.buttonSkipPrevious)
@@ -786,6 +748,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
+                    print("USER == \(response.id)")
                     self.user = response
                     guard let categorys = self.broadcast?.categories else { return }
                     let s = categorys.map{$0.title!}
@@ -796,13 +759,24 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                     self.homeView.setImage(image: self.user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
                     self.homeView.labelStreamDescription.text = self.user?.fullName
                     if self.BoolTrack {
-                    self.setUserProfile(user: self.user!)
+                       self.setUserProfile(user: self.user!)
                     }
                     self.homeView.tableView.reloadData()
  
                 }
             })
         }
+    func bindingLike() {
+        
+        guard let likeCount = self.broadcast?.followersCount else { return }
+        self.homeView.labelLike.text = "\(likeCount)"
+
+        guard let like = self.broadcast?.isFollow else { return }
+        like ?  homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal) :  homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+        self.homeView.buttonLike.isSelected = like
+        
+        
+    }
     func bindingChanellVOD(userId: String,page: Int) {
         take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
             .mapError({ (error) -> Error in return error })
@@ -899,6 +873,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
        }
     private func getTrack(isForwardTrack: Bool) {
         guard let indexPath = homeView.tableView.indexPathForSelectedRow else { return  }
+        
+        
         let tracks = self.brodcast
         var nextIndexPath: IndexPath!
                 if isForwardTrack {
@@ -927,14 +903,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.playerSlider.isHidden = false
             self.broadcast = tracks[nextIndexPath.row]
             self.urlStream = tracks[nextIndexPath.row].streams?.first?.vodUrl
-            homeView.labelLike.text = "\(tracks[indexPath.row].followersCount!)"
+            self.bindingLike()
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
+            self.homeView.playerSlider.setValue(0, animated: true)
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             setTimeVideo()
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
             self.playerViewController?.player?.play()
-            guard let user = tracks[indexPath.row].userId else { return}
+            guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
         }
@@ -1039,7 +1016,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
       /// - Parameter playlist: Playlist object obtained from the stream url.
       /// - Returns: All available stream resolutions for respective bandwidth.
     func getStreamResolutions(from playlist: RawPlaylist) -> [String] {
-        var resolutions = [StreamResolution]()
         let band = playlist.content.components(separatedBy: "\n")
         let arrayResolution = band.filter(){$0.hasSuffix("m3u8")}
         return arrayResolution

@@ -102,7 +102,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     }
    
     //MARK: - Selectors
-    @objc private func refreshAlbumList() {
+    @objc  func refreshAlbumList() {
         self.listBroadcast.removeAll()
         getUsers()
      }

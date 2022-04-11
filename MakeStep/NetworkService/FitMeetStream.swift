@@ -356,11 +356,11 @@ class FitMeetStream {
             .eraseToAnyPublisher()
     }
     //MARK: - Un Follow broadcast id//DELETE//AUTH
-    public func unFollowBroadcast(id: Int) -> AnyPublisher<Bool, DifferentError> {
+    public func unFollowBroadcast(id: Int) -> AnyPublisher<BroadcastResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)/follow", method: .delete, parameters: [:], encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .publishDecodable(type: Bool.self)
+            .publishDecodable(type: BroadcastResponce.self)
             .value()
             .print("UnFollowBroadcast")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
