@@ -21,9 +21,13 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     @Inject var makeStepChannel: FitMeetChannels
     private var takeChannel: AnyCancellable?
     
-    @Inject var makeApi: FitMeetApi
+   
     
-
+    
+    @Inject var makeApi: FitMeetApi
+    private var channelMap: AnyCancellable?
+    var ids = [Int]()
+    var channellsd = [Int: ChannelResponce]()
     
     
     let actionSheetTransitionManager = ActionSheetTransitionManager()
@@ -194,6 +198,20 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                 }
           })
     }
+    func getMapChnnel(ids: [Int])   {
+        channelMap = makeApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                  if !response.data.isEmpty  {
+                      if response.data.count != 0 {
+                          self.channellsd = response.data
+                          self.listUsers = self.listUsers.sorted(by: {(self.channellsd[$0.id!]?.followersCount)! > (self.channellsd[$1.id!]?.followersCount)! })
+                          self.searchView.tableView.reloadData()
+                      }
+            }
+        })
+      }
+
     func bindingNotAuth(name: String) {
         takeBroadcast = fitMeetStream.getAllBroadcastNotAuth(name: name)
             .mapError({ (error) -> Error in return error })
@@ -226,6 +244,8 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                     } else {
                         self.searchView.tableView.isHidden = false
                         self.searchView.labelNtResult.isHidden = true
+                        let arrayUserId = self.listUsers.map{$0.id!}
+                        self.getMapChnnel(ids: arrayUserId)
                     }
                     self.searchView.tableView.reloadData()
                    

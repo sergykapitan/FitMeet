@@ -223,6 +223,22 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    public func getChannelMap(ids: [Int]) -> AnyPublisher<MapChannel,DifferentError> {
+
+        let parameters = [
+            "ids": ids
+        ]
+        return AF.request(Constants.apiEndpoint + "/channel/channels/private/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: MapChannel.self)
+            .value()
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    
+    
 ///api/v0/watcher/watchers/token токен для ватчера
     public func getTokenWatcher() -> AnyPublisher<TokenWatcher,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/watcher/watchers/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))

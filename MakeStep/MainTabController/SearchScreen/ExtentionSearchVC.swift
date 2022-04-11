@@ -56,7 +56,10 @@ extension SearchVC: UITableViewDataSource {
             cell2.setImage(image: listUsers[indexPath.row].avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png" )
             cell2.layoutIfNeeded()
             cell2.labelDescription.text = listUsers[indexPath.row].fullName
-            cell2.titleLabel.text = "\(listUsers[indexPath.row].channelFollowCount!)" + "  Folowers"
+            
+            guard let userID = self.listUsers[indexPath.row].id else { return cell2}
+            guard let followers = self.channellsd[userID]?.followersCount else { return cell2}
+            cell2.titleLabel.text = "\(followers)" + "  Folowers"
             return cell2
 
         }
