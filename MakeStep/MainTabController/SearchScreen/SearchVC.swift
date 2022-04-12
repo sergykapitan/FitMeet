@@ -247,8 +247,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
                         let arrayUserId = self.listUsers.map{$0.id!}
                         self.getMapChnnel(ids: arrayUserId)
                     }
-                    self.searchView.tableView.reloadData()
-                   
                 }
           })
     }
