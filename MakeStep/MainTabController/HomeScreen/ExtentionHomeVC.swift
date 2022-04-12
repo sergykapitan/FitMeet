@@ -46,7 +46,7 @@ extension HomeVC: UITableViewDataSource {
 
             cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg" )
             
-        cell.labelDescription.text = listBroadcast[indexPath.row].description
+        cell.labelDescription.text = listBroadcast[indexPath.row].name
        
 
         guard
