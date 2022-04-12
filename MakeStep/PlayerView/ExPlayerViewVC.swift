@@ -46,8 +46,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
 
         }
         
-        let categorys = brodcast[indexPath.row].categories
-        let s = categorys!.map{$0.title!}
+        guard let categorys = brodcast[indexPath.row].categories else { return cell }
+        let s = categorys.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
@@ -59,11 +59,11 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         cell.titleLabel.text = self.usersd[id]?.fullName
 
 
-        if brodcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
+//        if brodcast[indexPath.row].isFollow ?? false {
+//            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
+//        } else {
+//            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
+//        }
 
 
         guard let selfID = selfId else { return cell}
@@ -86,9 +86,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.isLoadingList = true
             self.loadMoreItemsForList()
             } else if self.itemCount == brodcast.count {
-               // if self.categoryCount + self.itemCount == brodcast.count {
                     bindingOff()
-              //  }
             }
         }
   

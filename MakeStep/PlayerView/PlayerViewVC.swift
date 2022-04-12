@@ -175,6 +175,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         } else {
             self.urlStream = self.broadcast?.streams?.first?.vodUrl
         }
+        self.bindingLike()
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
             guard let id = broadId,let key = privateKey else { return }
@@ -367,6 +368,17 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 
           })
       }
+    func broadcastForId(id: Int) -> BroadcastResponce?{
+        var broadcasrRet:BroadcastResponce?
+        takeBroadcast = fitMeetStream.getPrivateBroadcastId(id: "\(id)")
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                  broadcasrRet = response
+                  print("RES = \(response.categories)")
+          })
+        guard let broadcasrRet = broadcasrRet else {  return self.broadcast! }
+        return broadcasrRet
+      }
     func bindingBroadcastFor(id: String) {
         takeBroadcast = fitMeetStream.getBroadcastId(id: id)
               .mapError({ (error) -> Error in return error })
@@ -414,23 +426,23 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 guard let like = response.followersCount else { return }
                 self.homeView.labelLike.text = "\(like)"
-//                if let index = self.brodcast.firstIndex(of: response) {
-//                    print(index)
-//                    self.brodcast[index] = response
-//                }
-                
+                if let i = self.brodcast.map{$0.id}.firstIndex(of: response.id) {
+                    self.brodcast[i].isFollow = true
+                    self.brodcast[i].followersCount = response.followersCount
+                }
           })
     }
+    
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 guard let like = response.followersCount else { return }
                 self.homeView.labelLike.text = "\(like)"
-  
-//                if let index = self.brodcast.firstIndex(of: response) {
-//                    self.brodcast[index] = response
-//                }
+                if let i = self.brodcast.map{$0.id}.firstIndex(of: response.id) {
+                    self.brodcast[i].isFollow = false
+                    self.brodcast[i].followersCount = response.followersCount
+                }
          })
     }
     
@@ -772,6 +784,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.homeView.labelLike.text = "\(likeCount)"
 
         guard let like = self.broadcast?.isFollow else { return }
+        print("LIKE == \(like)")
         like ?  homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal) :  homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         self.homeView.buttonLike.isSelected = like
         
@@ -901,8 +914,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
-            self.broadcast = tracks[nextIndexPath.row]
-            self.urlStream = tracks[nextIndexPath.row].streams?.first?.vodUrl
+            self.broadcast = track
+            self.urlStream = track.streams?.first?.vodUrl
             self.bindingLike()
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}

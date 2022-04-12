@@ -134,9 +134,11 @@ extension HomeVC: UITableViewDataSource {
    
 
    @objc func moreButtonTapped(_ sender: UIButton) -> Void {
+        guard !listBroadcast.isEmpty else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
     @objc func tappedCoach(_ sender: UIButton) -> Void {
+        guard !listBroadcast.isEmpty else { return }
         let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
         guard let id = listBroadcast[sender.tag].userId else { return}

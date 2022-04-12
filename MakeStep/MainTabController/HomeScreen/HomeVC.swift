@@ -188,7 +188,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                        self.homeView.tableView.reloadData()
                        self.refreshControl.endRefreshing()
                    }
-               })
+            })
        }
     
     func bindingUserMap(ids: [Int])  {
