@@ -152,7 +152,7 @@ final class HomeCell: UITableViewCell {
                           left: contentView.leftAnchor,
                           right: contentView.rightAnchor,
                           bottom: contentView.bottomAnchor,
-                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 110)
+                          paddingTop: 0, paddingLeft: 0,paddingRight: 0,paddingBottom: 0,height: 50)
         
         bottomView.addSubview(buttonMore)
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
@@ -161,10 +161,10 @@ final class HomeCell: UITableViewCell {
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
         
         bottomView.addSubview(buttonLogo)
-        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 8, paddingLeft: 16,width: 124,height: 24 )
+        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 2, paddingLeft: 16,width: 124,height: 24 )
         
         buttonLogo.addSubview(logoUserImage)
-        logoUserImage.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 8, paddingLeft: 0,width: 24,height: 24)
+        logoUserImage.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
 
         buttonLogo.addSubview(logoUserOnline)
         logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)

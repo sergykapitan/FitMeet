@@ -123,7 +123,6 @@ extension HomeVC: UITableViewDataSource {
                     self.bindingPlanned()
                 }
             }
-        
         return cell
         
         default:
@@ -155,7 +154,7 @@ extension HomeVC: UITableViewDelegate {
         case 0:
             return UITableView.automaticDimension
         case 1:
-            return 330
+            return 310
         default:
             break
         }

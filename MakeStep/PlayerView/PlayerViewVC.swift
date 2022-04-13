@@ -24,7 +24,7 @@ protocol DissmisPlayer: class {
 class PlayerViewVC: UIViewController, TagListViewDelegate {
     
    
-    
+    let background = UIView()
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
     var arrayResolution = [String]()
@@ -41,33 +41,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var itemCount: Int = 0
     var categoryCount: Int = 0
     var allCount: Int = 0
+   
   
 
     var isPlaying: Bool = false
-    var isButton: Bool = true {
+    var timer = Timer()
+    let delay = 3
+    var isButton: Bool = false {
                 didSet {
                     if self.isButton {
-                        self.playerViewController?.view.addBlur()
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2), execute: { () -> Void in
-                            UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                                self.playerViewController?.view.removeBlurA()
-                                self.homeView.overlay.alpha = 0
-                                self.homeView.imageLive.alpha = 0
-                                self.homeView.labelLive.alpha = 0
-                                self.homeView.labelEye.alpha = 0
-                                self.homeView.buttonLandScape.alpha = 0
-                                self.homeView.buttonSetting.alpha = 0
-                                self.homeView.buttonPlayPause.alpha = 0
-                                self.homeView.buttonSkipNext.alpha = 0
-                                self.homeView.buttonSkipPrevious.alpha = 0
-                                self.homeView.playerSlider.alpha = 0
-                                self.homeView.labelTimeEnd.alpha = 0
-                                self.homeView.labelTimeStart.alpha = 0
-                                self.homeView.imageEye.alpha = 0
-                                self.isButton = false
-                            })
-                        })
-                        
+                    timer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(actionBut), userInfo: nil, repeats: false)
                     }
                 }
             }
@@ -142,7 +125,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var heightBar: CGFloat?
     var tracksInt = 1
     var isPlay: Bool = true
-
+   
+    
   // MARK: - LifeCicle
     override func loadView() {
         view = homeView
@@ -150,7 +134,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-        self.isButton = true
+      
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -168,8 +152,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-      
-
+        alphaButton()
         if self.broadcast?.status == "ONLINE" {
             self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
         } else {
@@ -206,7 +189,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         makeTableView()
         actionButton ()
         SocketIOManager.sharedInstance.getTokenChat()
-        
        
         _ = UserDefaults.standard.string(forKey: "tokenChat")
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
@@ -448,45 +430,23 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
-            UIView.animate(withDuration: 0.5, animations: { () -> Void in
-                self.playerViewController?.view.removeBlurA()
-                self.homeView.overlay.alpha = 0
-                self.homeView.imageLive.alpha = 0
-                self.homeView.labelLive.alpha = 0
-                self.homeView.labelEye.alpha = 0
-                self.homeView.buttonLandScape.alpha = 0
-                self.homeView.buttonSetting.alpha = 0
-                self.homeView.buttonPlayPause.alpha = 0
-                self.homeView.buttonSkipNext.alpha = 0
-                self.homeView.buttonSkipPrevious.alpha = 0
-                self.homeView.playerSlider.alpha = 0
-                self.homeView.labelTimeEnd.alpha = 0
-                self.homeView.labelTimeStart.alpha = 0
-                self.homeView.imageEye.alpha = 0
-            })
-            self.isButton = false
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                self.alphaButton()
+                self.background.removeFromSuperview()
+                self.timer.invalidate()
+            } completion: { bool in
+                self.isButton = false
+            }
         } else {
-           
-                UIView.animate(withDuration: 0.2, animations: { () -> Void in
-                    self.playerViewController?.view.addBlur()
-                    self.homeView.overlay.alpha = 1
-                    self.homeView.imageLive.alpha = 1
-                    self.homeView.labelLive.alpha = 1
-                    self.homeView.labelEye.alpha = 1
-                    self.homeView.buttonLandScape.alpha = 1
-                    self.homeView.buttonSetting.alpha = 1
-                    self.homeView.buttonPlayPause.alpha = 1
-                    self.homeView.buttonSkipNext.alpha = 1
-                    self.homeView.buttonSkipPrevious.alpha = 1
-                    self.homeView.playerSlider.alpha = 1
-                    self.homeView.labelTimeEnd.alpha = 1
-                    self.homeView.labelTimeStart.alpha = 1
-                    self.homeView.imageEye.alpha = 1
-                })
-
-            self.isButton = true
+            self.addBack()
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+                self.addAlfabutton()
+            } completion: { bool in
+                self.isButton = true
+            }
         }
     }
+   
     @objc func actionResize(sender:UIPinchGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -1069,14 +1029,28 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         let i = url.replacingOccurrences(of: "playlist.m3u8", with: end)
         return i
     }
+    public func addBack() {
+
+
+        background.backgroundColor = .black
+        background.alpha = 0.3
+        playerViewController!.view.addSubview(background)
+        background.translatesAutoresizingMaskIntoConstraints = false
+        background.bottomAnchor.constraint(equalTo: playerViewController!.view.bottomAnchor).isActive = true
+        background.topAnchor.constraint(equalTo: playerViewController!.view.topAnchor).isActive = true
+        background.leadingAnchor.constraint(equalTo: playerViewController!.view.leadingAnchor).isActive = true
+        background.trailingAnchor.constraint(equalTo: playerViewController!.view.trailingAnchor).isActive = true
+
+    }
  }
 
 public extension UIView {
 
     @discardableResult
-    public func addBlur(style: UIBlurEffect.Style = .dark) -> UIVisualEffectView {
+    public func addBlur(style: UIBlurEffect.Style = .dark) -> UIVisualEffectView { //UIVisualEffectView {
         let blurEffect = UIBlurEffect(style: style)
         let blurBackground = UIVisualEffectView(effect: blurEffect)
+        
         blurBackground.backgroundColor = .black
         blurBackground.alpha = 0.2
         addSubview(blurBackground)
@@ -1087,6 +1061,8 @@ public extension UIView {
         blurBackground.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         return blurBackground
     }
+    
+    
     func removeBlurA() {
         for subview in self.subviews {
             if subview is UIVisualEffectView {
@@ -1096,3 +1072,35 @@ public extension UIView {
     }
 }
 
+extension PlayerViewVC {
+    func alphaButton() {
+        self.homeView.overlay.alpha = 0
+        self.homeView.imageLive.alpha = 0
+        self.homeView.labelLive.alpha = 0
+        self.homeView.labelEye.alpha = 0
+        self.homeView.buttonLandScape.alpha = 0
+        self.homeView.buttonSetting.alpha = 0
+        self.homeView.buttonPlayPause.alpha = 0
+        self.homeView.buttonSkipNext.alpha = 0
+        self.homeView.buttonSkipPrevious.alpha = 0
+        self.homeView.playerSlider.alpha = 0
+        self.homeView.labelTimeEnd.alpha = 0
+        self.homeView.labelTimeStart.alpha = 0
+        self.homeView.imageEye.alpha = 0
+    }
+    func addAlfabutton() {
+        self.homeView.overlay.alpha = 1
+        self.homeView.imageLive.alpha = 1
+        self.homeView.labelLive.alpha = 1
+        self.homeView.labelEye.alpha = 1
+        self.homeView.buttonLandScape.alpha = 1
+        self.homeView.buttonSetting.alpha = 1
+        self.homeView.buttonPlayPause.alpha = 1
+        self.homeView.buttonSkipNext.alpha = 1
+        self.homeView.buttonSkipPrevious.alpha = 1
+        self.homeView.playerSlider.alpha = 1
+        self.homeView.labelTimeEnd.alpha = 1
+        self.homeView.labelTimeStart.alpha = 1
+        self.homeView.imageEye.alpha = 1
+    }
+}
