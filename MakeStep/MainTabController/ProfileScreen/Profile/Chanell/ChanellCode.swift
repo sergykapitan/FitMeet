@@ -37,6 +37,8 @@ final class ChanellCode: UIView {
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
         return image
     }()
     var welcomeLabel: UILabel = {
@@ -193,7 +195,7 @@ final class ChanellCode: UIView {
     }
     func setImage(image:String) {
         let url = URL(string: image)
-        imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfile.kf.setImage(with: url,options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))])
     }
 
     required init?(coder: NSCoder) {

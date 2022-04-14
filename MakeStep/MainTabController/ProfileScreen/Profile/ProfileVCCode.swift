@@ -24,7 +24,9 @@ final class ProfileVCCode: UIView {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
         image.layer.borderWidth = 0.2
-        image.layer.masksToBounds = false
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
+
         image.layer.borderColor = UIColor.black.cgColor
         image.clipsToBounds = true
         image.layer.cornerRadius = 40
@@ -499,7 +501,7 @@ final class ProfileVCCode: UIView {
     
     func setImageLogo(image:String) {
         let url = URL(string: image)
-        imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfile.kf.setImage(with: url,options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))])
        
     }
 }

@@ -28,6 +28,8 @@ class SearchVCUserCell: UITableViewCell {
     let logoUserImage: UIImageView = {
         let image = UIImageView()
         image.backgroundColor = .gray
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
         return image
     }()
     
@@ -109,7 +111,7 @@ class SearchVCUserCell: UITableViewCell {
     func setImage(image:String) {
         
         let url = URL(string: image )
-        logoUserImage.kf.setImage(with: url)
+        logoUserImage.kf.setImage(with: url,options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))])
        
     }
     override func prepareForReuse() {
