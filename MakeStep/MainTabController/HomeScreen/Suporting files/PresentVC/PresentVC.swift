@@ -1319,8 +1319,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     guard let channel = self.channel,let description = channel.description else { return }
                     self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
                    
-                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
-                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                  //  self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
+                  //  self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
                     
                     if channel.isSubscribe! {
                         
@@ -1344,8 +1344,8 @@ class PresentVC: UIViewController, ClassBDelegate, CustomSegmentedControlDelegat
                     guard let channel = self.channel,let description = channel.description else { return }
                     self.homeView.labelDescription.text = " Welcome to my channel!\n \(description)"
                    
-                    self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
-                    self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
+                  //  self.homeView.labelINTFollows.text = "\(channel.followersCount!)"
+                 //   self.homeView.labelINTFolowers.text = "\(channel.subscribersCount!)"
                     self.homeView.buttonSubscribe.backgroundColor = UIColor(hexString: "#3B58A4")
                     self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
                     self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)

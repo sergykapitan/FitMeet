@@ -317,6 +317,22 @@
 		A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
+		A5EF20E8280701BD0051AA13 /* SearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */; };
+		A5EF20E9280701BD0051AA13 /* SearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */; };
+		A5EF20EB280701D30051AA13 /* SearchUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20EA280701D30051AA13 /* SearchUserVC.swift */; };
+		A5EF20EC280701D30051AA13 /* SearchUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20EA280701D30051AA13 /* SearchUserVC.swift */; };
+		A5EF20EE280701E20051AA13 /* SearchCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20ED280701E20051AA13 /* SearchCategory.swift */; };
+		A5EF20EF280701E20051AA13 /* SearchCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20ED280701E20051AA13 /* SearchCategory.swift */; };
+		A5EF20F1280702060051AA13 /* SearchVideoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F0280702060051AA13 /* SearchVideoCode.swift */; };
+		A5EF20F2280702060051AA13 /* SearchVideoCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F0280702060051AA13 /* SearchVideoCode.swift */; };
+		A5EF20F4280702300051AA13 /* SearchUserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F3280702300051AA13 /* SearchUserCode.swift */; };
+		A5EF20F5280702300051AA13 /* SearchUserCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F3280702300051AA13 /* SearchUserCode.swift */; };
+		A5EF20F7280702490051AA13 /* SearchCategoryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */; };
+		A5EF20F8280702490051AA13 /* SearchCategoryCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */; };
+		A5EF20FA280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */; };
+		A5EF20FB280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */; };
+		A5EF20FD280723C10051AA13 /* ExtentionSearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */; };
+		A5EF20FE280723C10051AA13 /* ExtentionSearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */; };
 		A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
 		A5F2FF0327BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
 		A5F2FF0527BD02C400F6C518 /* CommissionVCCde.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */; };
@@ -600,6 +616,14 @@
 		A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
+		A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVideoVC.swift; sourceTree = "<group>"; };
+		A5EF20EA280701D30051AA13 /* SearchUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserVC.swift; sourceTree = "<group>"; };
+		A5EF20ED280701E20051AA13 /* SearchCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategory.swift; sourceTree = "<group>"; };
+		A5EF20F0280702060051AA13 /* SearchVideoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVideoCode.swift; sourceTree = "<group>"; };
+		A5EF20F3280702300051AA13 /* SearchUserCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserCode.swift; sourceTree = "<group>"; };
+		A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCode.swift; sourceTree = "<group>"; };
+		A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchVideoVC.swift; sourceTree = "<group>"; };
+		A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchUser.swift; sourceTree = "<group>"; };
 		A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVC.swift; sourceTree = "<group>"; };
 		A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVCCde.swift; sourceTree = "<group>"; };
 		A5F2FF0927BF922200F6C518 /* PlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewVC.swift; sourceTree = "<group>"; };
@@ -1055,6 +1079,38 @@
 				A5D2E0A627147D1200986BAE /* EditChannelCode.swift */,
 			);
 			path = "Edit Channel";
+			sourceTree = "<group>";
+		};
+		A5EF20E4280701730051AA13 /* SearchCategory */ = {
+			isa = PBXGroup;
+			children = (
+				B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */,
+				A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */,
+				A5EF20ED280701E20051AA13 /* SearchCategory.swift */,
+			);
+			path = SearchCategory;
+			sourceTree = "<group>";
+		};
+		A5EF20E5280701880051AA13 /* SearchUser */ = {
+			isa = PBXGroup;
+			children = (
+				A5EF20EA280701D30051AA13 /* SearchUserVC.swift */,
+				A5EF20F3280702300051AA13 /* SearchUserCode.swift */,
+				B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */,
+				A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */,
+			);
+			path = SearchUser;
+			sourceTree = "<group>";
+		};
+		A5EF20E6280701980051AA13 /* SearchVideo */ = {
+			isa = PBXGroup;
+			children = (
+				A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */,
+				A5EF20F0280702060051AA13 /* SearchVideoCode.swift */,
+				B46CF7B7267378B900EA0741 /* SearchVCCell.swift */,
+				A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */,
+			);
+			path = SearchVideo;
 			sourceTree = "<group>";
 		};
 		A5F2FF0027BD026E00F6C518 /* CommissionView */ = {
@@ -1713,9 +1769,9 @@
 			children = (
 				B48D8297262DAD7B00F5A0D9 /* SearchVC.swift */,
 				B48D829E262DADF000F5A0D9 /* SearchVCCode.swift */,
-				B46CF7B7267378B900EA0741 /* SearchVCCell.swift */,
-				B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */,
-				B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */,
+				A5EF20E6280701980051AA13 /* SearchVideo */,
+				A5EF20E5280701880051AA13 /* SearchUser */,
+				A5EF20E4280701730051AA13 /* SearchCategory */,
 				B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */,
 			);
 			path = SearchScreen;
@@ -2017,6 +2073,7 @@
 				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
 				A572949727FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */,
+				A5EF20F8280702490051AA13 /* SearchCategoryCode.swift in Sources */,
 				A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */,
 				A5129420273A6EB7000CBBD9 /* ChatVCPlayerCode.swift in Sources */,
 				A572949D27FED91100675FD8 /* CALayer.swift in Sources */,
@@ -2027,6 +2084,7 @@
 				A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */,
 				A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5129426273A6EB7000CBBD9 /* SlideInPresentationManager.swift in Sources */,
+				A5EF20F2280702060051AA13 /* SearchVideoCode.swift in Sources */,
 				A5129428273A6EB7000CBBD9 /* EdetChannelVC.swift in Sources */,
 				A5129429273A6EB7000CBBD9 /* Coach.swift in Sources */,
 				A512942A273A6EB7000CBBD9 /* SearchVCCode.swift in Sources */,
@@ -2115,6 +2173,7 @@
 				A5129474273A6EB7000CBBD9 /* CustomPresentationController.swift in Sources */,
 				A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				A5129475273A6EB7000CBBD9 /* ResetOldPassword.swift in Sources */,
+				A5EF20EC280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A5129476273A6EB7000CBBD9 /* SearchVCUserCell.swift in Sources */,
 				A5129477273A6EB7000CBBD9 /* ChatVCPlayer.swift in Sources */,
 				A5129478273A6EB7000CBBD9 /* SignInViewController.swift in Sources */,
@@ -2166,12 +2225,14 @@
 				A51294A5273A6EB7000CBBD9 /* OneLine.swift in Sources */,
 				A5F2FF0B27BF922200F6C518 /* PlayerViewVC.swift in Sources */,
 				A51294A6273A6EB7000CBBD9 /* UserSetting.swift in Sources */,
+				A5EF20E9280701BD0051AA13 /* SearchVideoVC.swift in Sources */,
 				A51294A7273A6EB7000CBBD9 /* CustomSegmentedControl.swift in Sources */,
 				A51294A8273A6EB7000CBBD9 /* Dependencies.swift in Sources */,
 				A51294A9273A6EB7000CBBD9 /* Task.swift in Sources */,
 				A58EC19C27B1524100E920FB /* SendStream.swift in Sources */,
 				A51294AA273A6EB7000CBBD9 /* EditMonetVCCode.swift in Sources */,
 				A51294AB273A6EB7000CBBD9 /* NotTokenView.swift in Sources */,
+				A5EF20FE280723C10051AA13 /* ExtentionSearchUser.swift in Sources */,
 				A51294AC273A6EB7000CBBD9 /* CoachCode.swift in Sources */,
 				A51294AD273A6EB7000CBBD9 /* AuthViewControllerCode.swift in Sources */,
 				A51294AE273A6EB7000CBBD9 /* SignInPasswordViewController.swift in Sources */,
@@ -2186,6 +2247,7 @@
 				A51294B7273A6EB7000CBBD9 /* BaseViewController.swift in Sources */,
 				A51294B8273A6EB7000CBBD9 /* ChannelRequest.swift in Sources */,
 				A51294B9273A6EB7000CBBD9 /* FitMeetStream.swift in Sources */,
+				A5EF20F5280702300051AA13 /* SearchUserCode.swift in Sources */,
 				A51294BA273A6EB7000CBBD9 /* MytariffVCCode.swift in Sources */,
 				A52FA7C527C794BB004F570F /* ExChannelCoach.swift in Sources */,
 				A51294BB273A6EB7000CBBD9 /* Extensions+UIView.swift in Sources */,
@@ -2204,9 +2266,11 @@
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
 				A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */,
+				A5EF20FB280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */,
 				A5671E8C2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
 				A542778E274D22740063BBEE /* ButtonCommingCode.swift in Sources */,
 				A51294C6273A6EB7000CBBD9 /* BroadcastResponce.swift in Sources */,
+				A5EF20EF280701E20051AA13 /* SearchCategory.swift in Sources */,
 				A51294C7273A6EB7000CBBD9 /* MyTariff.swift in Sources */,
 				A51294C8273A6EB7000CBBD9 /* ChatCell.swift in Sources */,
 				A51294C9273A6EB7000CBBD9 /* ExDate.swift in Sources */,
@@ -2263,6 +2327,7 @@
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
 				A572949627FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */,
+				A5EF20F7280702490051AA13 /* SearchCategoryCode.swift in Sources */,
 				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				A572949C27FED91100675FD8 /* CALayer.swift in Sources */,
@@ -2273,6 +2338,7 @@
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				A5C4172C27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */,
+				A5EF20F1280702060051AA13 /* SearchVideoCode.swift in Sources */,
 				B4D2B93B26E78E880080E7E3 /* Coach.swift in Sources */,
 				B48D829F262DADF000F5A0D9 /* SearchVCCode.swift in Sources */,
 				B4497D5C26A8370C00321AB8 /* SJDatePicker.swift in Sources */,
@@ -2361,6 +2427,7 @@
 				A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
+				A5EF20EB280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
@@ -2412,12 +2479,14 @@
 				B4D9D7A326286554007CFB71 /* Phone.swift in Sources */,
 				A5F2FF0A27BF922200F6C518 /* PlayerViewVC.swift in Sources */,
 				B41D06A02664C65C00C28C29 /* HomeVCCode.swift in Sources */,
+				A5EF20E8280701BD0051AA13 /* SearchVideoVC.swift in Sources */,
 				B484E8E5268287D700D75BE8 /* OneLine.swift in Sources */,
 				A58EC19727B1384400E920FB /* AddedVideoVC.swift in Sources */,
 				B4AE7ADC263B42A20033F78F /* UserSetting.swift in Sources */,
 				B41D06AB2664D1B100C28C29 /* CustomSegmentedControl.swift in Sources */,
 				B4D9D77F2626DD3D007CFB71 /* Dependencies.swift in Sources */,
 				B4C5A962267DD2DA00010F88 /* Task.swift in Sources */,
+				A5EF20FD280723C10051AA13 /* ExtentionSearchUser.swift in Sources */,
 				A5950E5D273815DC002C1500 /* EditMonetVCCode.swift in Sources */,
 				B41097F32640C0AA00DFEC19 /* NotTokenView.swift in Sources */,
 				B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */,
@@ -2432,6 +2501,7 @@
 				B470790A2705B69500921821 /* EditStreamVC.swift in Sources */,
 				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
+				A5EF20F4280702300051AA13 /* SearchUserCode.swift in Sources */,
 				B4A9F6A32632C944000E00DE /* ChannelRequest.swift in Sources */,
 				A52FA7C427C794BB004F570F /* ExChannelCoach.swift in Sources */,
 				B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */,
@@ -2450,9 +2520,11 @@
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
 				A5CEF0B527F1FFF200D9C6BC /* SettingView.swift in Sources */,
+				A5EF20FA280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,
 				A58E2946274D1BC500CC39BB /* ButtonCommingCode.swift in Sources */,
 				B493769C2639631500D38EC3 /* BroadcastResponce.swift in Sources */,
+				A5EF20EE280701E20051AA13 /* SearchCategory.swift in Sources */,
 				A57BBFE52728084B00734A28 /* MyTariff.swift in Sources */,
 				B4B111552692239A0006CA5A /* ChatCell.swift in Sources */,
 				B475A94F26BBB19F00EF96A4 /* ExDate.swift in Sources */,

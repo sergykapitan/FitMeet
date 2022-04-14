@@ -28,6 +28,7 @@ struct User: Codable,Identifiable {
     let id: Int?
     let deleted: String?
     let avatarPath: String?
+    let channelIds: [Int]
     let fullName, username, gender, status: String?
     let email, phone: String?
     let phoneVerify: Bool?

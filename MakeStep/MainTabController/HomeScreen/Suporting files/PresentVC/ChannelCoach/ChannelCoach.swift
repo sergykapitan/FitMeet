@@ -687,8 +687,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 if response.id != nil {
                     self.homeView.buttonFollow.backgroundColor = .white
                     self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
-                    guard let follow =  response.followersCount else { return }
-                    self.homeView.labelINTFollows.text = "\(follow)"
+                   // guard let follow =  response.followersCount else { return }
+                    self.homeView.labelINTFollows.text = "\(response.followersCount)"
                     
             }
         })
@@ -700,8 +700,8 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
                 if response.id != nil {
                     self.homeView.buttonFollow.backgroundColor = .blueColor
                     self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-                    guard let follow =  response.followersCount else { return }
-                    self.homeView.labelINTFollows.text = "\(follow)"
+                   // guard let follow =  response.followersCount else { return }
+                    self.homeView.labelINTFollows.text = "\(response.followersCount)"
             }
         })
     }

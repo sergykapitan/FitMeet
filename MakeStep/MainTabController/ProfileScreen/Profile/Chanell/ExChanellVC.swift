@@ -212,6 +212,22 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.labelLive.text = "Wait for"
             vc.homeView.imageEye.isHidden = true
+        } else if  self.brodcast[indexPath.row].status == "FINISHED" {
+            print("FINISHED")
+            guard let streams = self.brodcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
+            guard let url = streams.first?.vodUrl else { return }
+            vc.broadcast = self.brodcast[indexPath.row]
+            vc.id = self.brodcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
+            vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         }
     }
 }

@@ -11,7 +11,15 @@ import CoreData
 import Combine
 
 
-class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelegate {
+class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelegate  {
+    
+  
+    
+    let videoVC = SearchVideoVC()
+    let coachVC = SearchUserVC()
+    let categoriesVC = CalculateVC()
+    
+    
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
@@ -57,37 +65,26 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
     var isFiltering: Bool {
       return searchController.isActive && !isSearchBarEmpty
     }
-    
     func change(to index: Int) {
-       
         if index == 0 {
-            self.index = index
-            if token != nil {
-                bindingRec()
-            } else {
-                self.bindingNotAuth(name: "a")
-            }
-            self.searchView.tableView.reloadData()
+           actionVideo()
+//            let searchBar = searchController.searchBar
+//            videoVC.searchVideo(text: searchBar.text!)
+//            self.index = index
         }
         if index == 1 {
-            self.index = index
-            getUsers(name: "a")
-            
-            self.searchView.tableView.reloadData()
+           actionCoach()
+//            let searchBar = searchController.searchBar
+//            coachVC.searchUser(text: searchBar.text!)
+//           self.index = index
         }
         if index == 2 {
-            self.index = index
-            getCategory(name: "a")
-            self.searchView.tableView.reloadData()
+           actionCategory()
         }
     }
-   
-   
-    
     let searchView = SearchVCCode()
     var sizeSearchBar: CGFloat?
     
@@ -113,15 +110,10 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+        actionVideo()
         setupSearchBar()
-        if token != nil {
-            bindingRec()
-        } else {
-            self.bindingNotAuth(name: "a")
-        }
-        
-       
-        
+        searchView.segmentControll.setIndex(index: 0)
+        self.index = 0
 
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -130,7 +122,6 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         searchView.segmentControll.anchor(top: self.navigationItem.searchController?.searchBar.bottomAnchor, left: searchView.cardView.leftAnchor, paddingTop: 10, paddingLeft: 20, height: 30)
 
     }
-
     override func loadView() {
         super.loadView()
         view = searchView
@@ -143,46 +134,11 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Video","Coaches","Categories"])
         searchView.segmentControll.delegate = self
         searchView.labelNtResult.isHidden = true
-
+        
     }
     
     // MARK: - Metods
-    func binding(name: String) {
-        takeBroadcast = fitMeetStream.getAllBroadcastPrivate(name: name)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.filtredBroadcast = self.listBroadcast
-                    if self.listBroadcast.isEmpty {
-                        self.searchView.tableView.isHidden = true
-                        self.searchView.labelNtResult.isHidden = false
-                    } else {
-                        self.searchView.tableView.isHidden = false
-                        self.searchView.labelNtResult.isHidden = true
-                    }                   
-                    self.searchView.tableView.reloadData()
-                }
-          })
-    }
-    func bindingRec() {
-        takeBroadcast = fitMeetStream.getRecomandateBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.filtredBroadcast = self.listBroadcast
-                    if self.listBroadcast.isEmpty {
-                        self.searchView.tableView.isHidden = true
-                        self.searchView.labelNtResult.isHidden = false
-                    } else {
-                        self.searchView.tableView.isHidden = false
-                        self.searchView.labelNtResult.isHidden = true
-                    }
-                    self.searchView.tableView.reloadData()
-                }
-          })
-    }
+  
   
     func getUser(id: Int ) {
         takeUser = makeApi.getUserId(id: id)
@@ -212,25 +168,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         })
       }
 
-    func bindingNotAuth(name: String) {
-        takeBroadcast = fitMeetStream.getAllBroadcastNotAuth(name: name)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.filtredBroadcast = self.listBroadcast
-                    if self.listBroadcast.isEmpty {
-                        self.searchView.tableView.isHidden = true
-                        self.searchView.labelNtResult.isHidden = false
-                    } else {
-                        self.searchView.tableView.isHidden = false
-                        self.searchView.labelNtResult.isHidden = true
-                    }
-                    self.searchView.tableView.reloadData()
-                 
-                }
-          })
-    }
+ 
     func getUsers(name: String) {
         takeUser = fitMeetStream.getListUser(name: name)
             .mapError({ (error) -> Error in return error })
@@ -311,6 +249,7 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
         searchController.searchResultsUpdater = self
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
+        
         searchController.dimsBackgroundDuringPresentation = false
         searchController.isActive = false
         self.searchController.searchBar.isTranslucent = false
@@ -336,38 +275,10 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     private func reloadView() {
             searchView.tableView.reloadData()
         }
-    func filterContentForSearchText(_ searchText: String,category: BroadcastResponce? = nil) {
-        
-        filtredBroadcast = listBroadcast.filter { (candy: BroadcastResponce) -> Bool in
-            return (candy.name?.lowercased().contains(searchText.lowercased()) ?? true)
-          }
-          
-        searchView.tableView.reloadData()
-    }
-    func filteringUser(_ searchText: String,category: Users? = nil) {
-        
-        filterListUser = listUsers.filter { //(candy: Users) -> Bool in
-            print("CAndy == \($0.fullName?.contains(searchText))")
-            return ($0.fullName?.contains(searchText) ?? true)
-          }
-          
-        searchView.tableView.reloadData()
-    }
-    func filteringCategory(_ searchText: String,category: Datum? = nil) {
-        filerlistCategory = listCategory.filter{ (list: Datum) -> Bool in
-            return (list.title?.lowercased().contains(searchText.lowercased()) ?? true)
-        }
-        searchView.tableView.reloadData()
-    }
-
-    //MARK: - Selectors
+  
+//MARK: - Selectors
     @objc private func refreshAlbumList() {
-        if token != nil {
-            self.binding(name: "a")
-        } else {
-            self.bindingNotAuth(name: "a")
-        }
-        stopSpiners()
+      
        }
     private func makeTableView() {
         searchView.tableView.delegate = self
@@ -410,31 +321,45 @@ class SearchVC: UIViewController, UISearchBarDelegate,SegmentControlSearchDelega
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
+    @objc func actionVideo() {
+        removeAllChildViewController(coachVC)
+        removeAllChildViewController(categoriesVC)
+        configureChildViewController(videoVC, onView: searchView.selfView )
+
+    }
+    @objc func actionCoach() {
+        removeAllChildViewController(videoVC)
+        removeAllChildViewController(categoriesVC)
+        configureChildViewController(coachVC, onView: searchView.selfView )
+    }
+    @objc func actionCategory() {
+        removeAllChildViewController(videoVC)
+        removeAllChildViewController(coachVC)
+        configureChildViewController(categoriesVC, onView: searchView.selfView )
+    }
 }
 
-   //MARK: - UISearchBarDelegate
-
+//MARK: - UISearchBarDelegate
 extension SearchVC: UISearchResultsUpdating {
 
     func updateSearchResults(for searchController: UISearchController) {
         if index == 0 {
             let searchBar = searchController.searchBar
-            if token != nil {
-                self.binding(name: searchBar.text!)
-            } else {
-                self.bindingNotAuth(name: searchBar.text!)
-            }
-            
+            videoVC.searchVideo(text: searchBar.text!)
         }
-        if index == 1 {
+        if index == 1 {           
             let searchBar = searchController.searchBar
-            getreversUsers(name: searchBar.text!)
-           
+            coachVC.searchUser(text: searchBar.text!)
         }
         if index == 2 {
             let searchBar = searchController.searchBar
-            getCategory(name: searchBar.text!)
+          //  getCategory(name: searchBar.text!)
            
+        }
+        func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+//token != nil ?  videoVC.bindingRec() :  videoVC.bindingNotAuth(name: "a")
+            
+  //          coachVC.getUsers(name: "a")
         }
 
     }

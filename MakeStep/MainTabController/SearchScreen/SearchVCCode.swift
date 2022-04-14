@@ -29,6 +29,12 @@ final class SearchVCCode: UIView {
         let table = UITableView()
         return table
     }()
+    let selfView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }()
     var segmentControll: SegmentControlSearch = {
         let segment = SegmentControlSearch()
         return segment
@@ -52,6 +58,9 @@ final class SearchVCCode: UIView {
         
         cardView.addSubview(tableView)
         tableView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
+        cardView.addSubview(selfView)
+        selfView.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
         cardView.addSubview(labelNtResult)
         labelNtResult.anchor(top: segmentControll.bottomAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 20)

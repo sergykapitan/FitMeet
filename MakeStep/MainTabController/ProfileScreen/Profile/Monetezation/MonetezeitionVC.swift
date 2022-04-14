@@ -8,11 +8,12 @@
 import UIKit
 
 class MonetezeitionVC: UIViewController {
-    
+
     let monetView = MonetezeitionVCode()
+    
     let loadingVC = MyTariff()
     let ch = CalculateVC()
-
+    let search = SearchVC()
     
     override func loadView() {
         super.loadView()
@@ -25,7 +26,6 @@ class MonetezeitionVC: UIViewController {
         makeNavItem()
         actionButton()
         actionBtnCalculate()
-   
     }
     func actionButton(){
         self.monetView.buttonIncomecalculator.addTarget(self, action: #selector(actionBtnCalculate), for: .touchUpInside)
@@ -74,3 +74,27 @@ class MonetezeitionVC: UIViewController {
     }
 
 }
+//MARK: - UISearchBarDelegate
+//extension MonetezeitionVC: UISearchResultsUpdating {
+//
+//    func updateSearchResults(for searchController: UISearchController) {
+//        
+//            let searchBar = searchController.searchBar
+//             print("Search == \(searchBar)")
+//           
+//
+//    }
+//    func connectUser (broadcastId:String?,channellId: String?) {
+//        
+//        guard let broadID = broadcastId,let id = channellId else { return }
+//        SocketWatcher.sharedInstance.getTokenChat()
+//        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
+//    }
+//}
+//extension MonetezeitionVC: SearchData {
+//    func searchData() {
+//        print("all")
+//    }
+//
+//
+//}
