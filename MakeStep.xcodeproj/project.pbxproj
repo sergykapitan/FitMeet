@@ -136,7 +136,6 @@
 		A512948E273A6EB7000CBBD9 /* NewStartStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C5A944267C880300010F88 /* NewStartStream.swift */; };
 		A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */; };
 		A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49376952639625900D38EC3 /* BroadcastRequest.swift */; };
-		A5129493273A6EB7000CBBD9 /* ExtentionSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */; };
 		A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */; };
 		A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4497D5526A836F800321AB8 /* PresentedViewController.swift */; };
 		A5129496273A6EB7000CBBD9 /* SendCoachCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43A6C7626F24DEE009E6DDE /* SendCoachCell.swift */; };
@@ -382,7 +381,6 @@
 		B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */; };
 		B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */; };
 		B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7B7267378B900EA0741 /* SearchVCCell.swift */; };
-		B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */; };
 		B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */; };
 		B46CF7C52678B90500EA0741 /* SearchVCCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */; };
 		B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46CF7C72678C1EF00EA0741 /* UserList.swift */; };
@@ -670,7 +668,6 @@
 		B46CF7A22672356C00EA0741 /* CategoryBroadcastCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryBroadcastCell.swift; sourceTree = "<group>"; };
 		B46CF7A52672357B00EA0741 /* ExtentionCategoryBroadcast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionCategoryBroadcast.swift; sourceTree = "<group>"; };
 		B46CF7B7267378B900EA0741 /* SearchVCCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCell.swift; sourceTree = "<group>"; };
-		B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchVC.swift; sourceTree = "<group>"; };
 		B46CF7C12678942100EA0741 /* SearchVCUserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCUserCell.swift; sourceTree = "<group>"; };
 		B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVCCategory.swift; sourceTree = "<group>"; };
 		B46CF7C72678C1EF00EA0741 /* UserList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserList.swift; sourceTree = "<group>"; };
@@ -1776,7 +1773,6 @@
 				A5EF20E6280701980051AA13 /* SearchVideo */,
 				A5EF20E5280701880051AA13 /* SearchUser */,
 				A5EF20E4280701730051AA13 /* SearchCategory */,
-				B46CF7BA26737B3B00EA0741 /* ExtentionSearchVC.swift */,
 			);
 			path = SearchScreen;
 			sourceTree = "<group>";
@@ -2207,7 +2203,6 @@
 				A542778F274D22780063BBEE /* ExButtonComming.swift in Sources */,
 				A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */,
 				A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */,
-				A5129493273A6EB7000CBBD9 /* ExtentionSearchVC.swift in Sources */,
 				A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */,
 				A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */,
 				A5129496273A6EB7000CBBD9 /* SendCoachCell.swift in Sources */,
@@ -2464,7 +2459,6 @@
 				A58E2948274D1BD500CC39BB /* ExButtonComming.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
-				B46CF7BB26737B3B00EA0741 /* ExtentionSearchVC.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,
 				A572949927FED8CC00675FD8 /* UITraitEnvironment.swift in Sources */,
 				B4497D5626A836F800321AB8 /* PresentedViewController.swift in Sources */,

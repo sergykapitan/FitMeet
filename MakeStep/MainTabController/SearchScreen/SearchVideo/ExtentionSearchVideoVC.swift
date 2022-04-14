@@ -23,13 +23,8 @@ extension SearchVideoVC: UITableViewDataSource {
         cell.buttonMore.isUserInteractionEnabled = true
         return cell
     }
-    @objc func actionMore() {
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.3
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        present(detailViewController, animated: true)
-
+    @objc func actionMore(_ sender: UIButton) {
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
     
 }

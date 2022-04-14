@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SearchVideoVC: UIViewController  {
+class SearchVideoVC: SheetableViewController  {
 
     let searchView = SearchVideoCode()
     
@@ -70,7 +70,6 @@ class SearchVideoVC: UIViewController  {
                 }
           })
     }
-    
     func binding(name: String) {
         takeBroadcast = fitMeetStream.getAllBroadcastPrivate(name: name)
             .mapError({ (error) -> Error in return error })
@@ -90,6 +89,13 @@ class SearchVideoVC: UIViewController  {
           })
     }
     
+    override func closeView() {
+        UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
+//            if let i = self.parent as? SearchVC {
+//                i.  .searchView.segmentControll.removeFromSuperview()
+//            }
+      }
+   }
     open func searchVideo(text: String) {
         token != nil ? self.binding(name: text) : self.bindingNotAuth(name: text)                    
     }

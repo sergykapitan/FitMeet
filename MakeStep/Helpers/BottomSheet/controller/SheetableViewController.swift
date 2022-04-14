@@ -69,11 +69,8 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     
     func showDownSheet(_ controller: DownSheetViewController, payload: Int?) {
    
-            self.view.addBlur()
-            self.addBlurEffect()
-     
-      
-
+          //  self.view.addBlur()
+         //   self.addBlurEffect()
         controller.payload = payload
         controller.modalPresentationStyle = .overCurrentContext
         controller.delegate = self
@@ -81,12 +78,21 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             vc.present(controller, animated: false)
         }
     }
-  
+    func showDownSheetAll(_ controller: DownSheetViewController, payload: Int?) {
+   
+       // self.addBlurEffect()
+        controller.payload = payload
+        controller.modalPresentationStyle = .overCurrentContext
+        controller.delegate = self
+        if let vc = view.getCurrentViewController() {
+            vc.present(controller, animated: false)
+        }
+    }
     func closeView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
             self.view.removeBlurA()
             self.visualEffectView.removeFromSuperview()
-        }
+            }
         }
     func addBlurEffect() {
         let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
