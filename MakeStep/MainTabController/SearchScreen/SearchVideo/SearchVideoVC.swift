@@ -22,13 +22,7 @@ class SearchVideoVC: UIViewController  {
     private var takeBroadcast: AnyCancellable?
  
 // MARK: - LifiCicle
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-       
-    }
+  
     override func loadView() {
         super.loadView()
         view = searchView

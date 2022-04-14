@@ -333,6 +333,8 @@
 		A5EF20FB280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */; };
 		A5EF20FD280723C10051AA13 /* ExtentionSearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */; };
 		A5EF20FE280723C10051AA13 /* ExtentionSearchUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */; };
+		A5EF210028085E000051AA13 /* ExtentionSearchCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FF28085E000051AA13 /* ExtentionSearchCategory.swift */; };
+		A5EF210128085E000051AA13 /* ExtentionSearchCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20FF28085E000051AA13 /* ExtentionSearchCategory.swift */; };
 		A5F2FF0227BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
 		A5F2FF0327BD02B100F6C518 /* CommissionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */; };
 		A5F2FF0527BD02C400F6C518 /* CommissionVCCde.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */; };
@@ -624,6 +626,7 @@
 		A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategoryCode.swift; sourceTree = "<group>"; };
 		A5EF20F9280705480051AA13 /* ExtentionSearchVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchVideoVC.swift; sourceTree = "<group>"; };
 		A5EF20FC280723C10051AA13 /* ExtentionSearchUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchUser.swift; sourceTree = "<group>"; };
+		A5EF20FF28085E000051AA13 /* ExtentionSearchCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionSearchCategory.swift; sourceTree = "<group>"; };
 		A5F2FF0127BD02B100F6C518 /* CommissionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVC.swift; sourceTree = "<group>"; };
 		A5F2FF0427BD02C400F6C518 /* CommissionVCCde.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommissionVCCde.swift; sourceTree = "<group>"; };
 		A5F2FF0927BF922200F6C518 /* PlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewVC.swift; sourceTree = "<group>"; };
@@ -1084,9 +1087,10 @@
 		A5EF20E4280701730051AA13 /* SearchCategory */ = {
 			isa = PBXGroup;
 			children = (
+				A5EF20ED280701E20051AA13 /* SearchCategory.swift */,
 				B46CF7C42678B90500EA0741 /* SearchVCCategory.swift */,
 				A5EF20F6280702490051AA13 /* SearchCategoryCode.swift */,
-				A5EF20ED280701E20051AA13 /* SearchCategory.swift */,
+				A5EF20FF28085E000051AA13 /* ExtentionSearchCategory.swift */,
 			);
 			path = SearchCategory;
 			sourceTree = "<group>";
@@ -2060,6 +2064,7 @@
 				A5129410273A6EB7000CBBD9 /* SlideInPresentationAnimator.swift in Sources */,
 				A5129411273A6EB7000CBBD9 /* LiveStreamViewController.swift in Sources */,
 				A5129412273A6EB7000CBBD9 /* ResetPassword.swift in Sources */,
+				A5EF210128085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
 				A5129413273A6EB7000CBBD9 /* EditProfile.swift in Sources */,
 				A5129414273A6EB7000CBBD9 /* CustomSlider.swift in Sources */,
 				A5129415273A6EB7000CBBD9 /* ImageRouter.swift in Sources */,
@@ -2314,6 +2319,7 @@
 				B4B1115B2692F8880006CA5A /* SlideInPresentationAnimator.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */,
+				A5EF210028085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4B113BB269856290006CA5A /* CustomSlider.swift in Sources */,
 				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
