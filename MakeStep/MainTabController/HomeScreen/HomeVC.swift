@@ -112,7 +112,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listBroadcast = response.data!
+                    self.listBroadcast = response.data!.filter{$0.type == "STANDARD"}
                     self.bindingOff(page: self.currentPage)
                   
                 } else {
@@ -125,7 +125,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
-                        self.listBroadcast = response.data!
+                        self.listBroadcast = response.data!.filter{$0.type == "STANDARD"}
                         self.bindingNotOff()
                     } else {
                         self.bindingNotOff()

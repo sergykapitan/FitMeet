@@ -25,12 +25,11 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     func optionSelected(option: String) {
         print("optionSelected===========\(option)")
     }
-    
+    var scrollViewBottomConstrain = NSLayoutConstraint()
+    var bottomConstraint = NSLayoutConstraint()
     
     let authView = NewStartStreamCode()
-    
 
-    
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
@@ -67,7 +66,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var url: String?
     var myuri: String?
     var myPublish: String?
-    var status = "STANDART"
+    var status = "STANDARD"
     let serviceProvider = Serviceprovider<CharacterProvider>()
   
     
@@ -91,6 +90,15 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     override func loadView() {
         super.loadView()
         view = authView
+        scrollViewBottomConstrain = authView.scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        NSLayoutConstraint.activate([
+ 
+            authView.scroll.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollViewBottomConstrain,
+            authView.scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            authView.scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+        ])
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -113,7 +121,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         bindingChanell()
     }
     override func viewDidDisappear(_ animated: Bool) {
@@ -146,36 +153,37 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
-  
+        bottomConstraint = authView.textFieldDescription.topAnchor.constraint(equalTo: authView.textFieldAviable.bottomAnchor, constant: 15)
+        bottomConstraint.isActive = true
       
-        authView.textFieldStartDate.optionArray = ["NOW", "Later"]
+        authView.textFieldStartDate.optionArray = ["Start now", "Schedule a stream"]
         
-        authView.textFieldAviable.optionArray = ["All","Private Stream"]
+        authView.textFieldAviable.optionArray = ["Available for all","Subscribers only","Private Stream"]
         
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
-        
+        authView.textFieldFree.isHidden = true
         changeData()
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
         
-            authView.textFieldCategory.didSelect { (ff, _, _) in
+        authView.textFieldCategory.didSelect { (ff, _, _) in
 
-                let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
-                if j.isEmpty {
-                    self.authView.tagView.addTag(ff)
-                } else {
-                    Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-                }
-                
-                
-            let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
-            self.IdCategory.append(contentsOf: p)
-            self.authView.tagView.layoutSubviews()
-            self.authView.textFieldCategory.placeholder = ""
-                        
-        }
-        authView.textFieldCategory.easy.layout(Height(>=39))
+            let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
+            if j.isEmpty {
+                self.authView.tagView.addTag(ff)
+            } else {
+                Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            }
+            
+            
+        let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+        self.IdCategory.append(contentsOf: p)
+        self.authView.tagView.layoutSubviews()
+        self.authView.textFieldCategory.placeholder = ""
+                    
+    }
+            authView.textFieldCategory.easy.layout(Height(>=39))
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
@@ -193,7 +201,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                                            name: UIResponder.keyboardWillHideNotification,
                                            object: nil)
   }
-    
     @objc func keyboardWillShown(_ notificiation: NSNotification) {
        
       // write source code handle when keyboard will show
@@ -206,15 +213,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func keyboardWillBeHidden(_ notification: NSNotification) {
         self.authView.scroll.contentOffset.y = 0
     }
-    
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
             self.view.endEditing(true) // anyone
         }
     func changeData() {
         authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-            if gg == "NOW" {
-                self.authView.buttonOK.setTitle("OK", for: .normal)
+            if gg == "Start now" {
+                self.authView.buttonOK.setTitle("Start stream", for: .normal)
                 self.authView.buttonOK.isUserInteractionEnabled = true
                 
             } else {
@@ -223,16 +229,29 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             }
         }
         authView.textFieldAviable.didSelect { (str, ind, col) in
-            if str == "All" || str == "Subscribers"{
-                self.authView.textFieldFree.isUserInteractionEnabled = false
-                
-        } else if str == "Only Sponsors" {
-            self.authView.textFieldFree.isUserInteractionEnabled = true
-       }
-   
+            if str == "Available for all" || str == "Subscribers only" {
+                    let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
+                        self.bottomConstraint.constant = 15
+                        self.authView.textFieldFree.isHidden = true
+                        self.authView.textFieldFree.isUserInteractionEnabled = false
+                    }
+                    self.view.layoutIfNeeded()
+                    trA.startAnimation()
+        } else if str == "PPV" {
+                let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: {
+                    
+                    self.bottomConstraint.constant = 65
+                    self.authView.textFieldFree.isHidden = false
+                    self.authView.textFieldFree.isUserInteractionEnabled = true
+                    
+                    })
+                    self.view.layoutIfNeeded()
+                transitionAnimator.startAnimation()
+           }
     }
+        
         authView.textFieldStartDate.didSelect { (ff, _, _) in
-                       if ff == "Later" {
+                       if ff == "Schedule a stream" {
                         self.showPicker()
                         self.authView.buttonOK.setTitle("Planned", for: .normal)
                         self.authView.buttonOK.isUserInteractionEnabled = true
@@ -241,7 +260,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 }
     private func showPicker() {
         var style = DefaultStyle()
-        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
+        style.pickerColor = StyleColor.colors([style.textColor, .red, .blueColor])
         style.pickerMode = .dateAndTime
         style.titleString = "Please Сhoose Date"
         style.returnDateFormat = .yyyy_To_ss
@@ -278,22 +297,22 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
         
-        if authView.textFieldStartDate.text == "NOW" {
+        if authView.textFieldStartDate.text == "Start now" {
             isPlan = false
             date = "\(Date())"
         } else {
-            
             isPlan = true
             date = authView.textFieldStartDate.text
         }
         
-        if authView.textFieldAviable.text == "All" {
+        if authView.textFieldAviable.text == "Available for all" {
              onlyForSponsors = false
              onlyForSubscribers = false
-            status = "STANDARD"
-        } else if authView.textFieldAviable.text == "Subscribers" {
+             status = "STANDARD"
+        } else if authView.textFieldAviable.text == "Subscribers only" {
             onlyForSponsors = false
             onlyForSubscribers = true
+            status = "STANDARD"
         } else if authView.textFieldAviable.text == "Only Sponsors" {
             onlyForSponsors = true
             onlyForSubscribers = false
@@ -466,7 +485,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         self.url = url
 
         
-        if self.authView.textFieldStartDate.text == "NOW" {
+        if self.authView.textFieldStartDate.text == "Start now" {
             let navVC = LiveStreamViewController()
             navVC.modalPresentationStyle = .fullScreen
             navVC.idBroad = id
@@ -474,9 +493,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 navVC.myuri = myuris
                 navVC.myPublish = myPublishh
 
-        if self.authView.textFieldAviable.text == "All" {
+        if self.authView.textFieldAviable.text == "Available for all" || self.authView.textFieldAviable.text == "Subscribers only" {
             navVC.isPrivate = false
-        } else {
+        } else if self.authView.textFieldAviable.text == "Private Stream"{
             navVC.isPrivate = true
             navVC.broadcastId = self.broadcast?.id
             navVC.privateUrlKey = self.broadcast?.privateUrlKey
@@ -519,8 +538,8 @@ extension NewStartStream: UITextFieldDelegate {
         }
         
         if textField == authView.textFieldStartDate {
-            if fullString == "NOW" {
-                authView.buttonOK.setTitle("OK", for: .normal)
+            if fullString == "Start now" {
+                authView.buttonOK.setTitle("Start stream", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             } else {
                 authView.buttonOK.setTitle("Planned", for: .normal)

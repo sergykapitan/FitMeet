@@ -16,15 +16,11 @@ import TimelineTableViewCell
 import Alamofire
 
 
-protocol DissmisPlayer: class {
-   func reloadbroadcast()
-}
-
-
 class PlayerViewVC: UIViewController, TagListViewDelegate {
     
    
     let background = UIView()
+    
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
     var arrayResolution = [String]()
@@ -33,7 +29,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     
     var bottomConstraint = NSLayoutConstraint()
  
-    weak var delegatePlayer: DissmisPlayer?
     
     var currentPage : Int = 1
     var currentPageCategory : Int = 1
@@ -54,9 +49,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                     }
                 }
             }
- 
-    
-
     var isPrivate: Bool = false
    
     
@@ -181,7 +173,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.navigationController?.popViewController(animated: true)
         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
-        self.delegatePlayer?.reloadbroadcast()
     }
   // MARK: - ViewDidLoad
     override func viewDidLoad() {
@@ -213,7 +204,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:            
                 self.dismiss(animated: true) {
-                    self.delegatePlayer?.reloadbroadcast()
+                    AppUtility.lockOrientation(.all, andRotateTo: .portrait)
                 }
             default:
                 break
@@ -470,7 +461,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.delegatePlayer?.reloadbroadcast()
         self.playerViewController?.player?.rate = 0
     }
    
@@ -1030,8 +1020,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         return i
     }
     public func addBack() {
-
-
         background.backgroundColor = .black
         background.alpha = 0.3
         playerViewController!.view.addSubview(background)

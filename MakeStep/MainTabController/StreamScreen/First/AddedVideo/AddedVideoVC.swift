@@ -105,20 +105,8 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.layoutIfNeeded()
-      //  authView.tagView.removeAllTags()
-      //  self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-
     }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-       // authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
-//        self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
-//        self.authView.buttonOK.setTitle("OK", for: .normal)
-//        self.authView.labelNameVOD.isHidden = true
-//        self.authView.resetVideo.isHidden = true
-//        self.authView.buttonUploadVideo.isHidden = false
-      
-    }
+ 
     override func viewDidLoad() {
         super.viewDidLoad()
         makeNavItem()
@@ -148,7 +136,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
        
         authView.textFieldAviable.isSearchEnable = false
         authView.textFieldFree.isSearchEnable = false
-        authView.textFieldAviable.optionArray = ["All","Suscribers","PPV"]
+        authView.textFieldAviable.optionArray = ["Available for all","Subscribers only"]
         authView.textFieldFree.optionArray = ["Free", "0,99","1,99","2,99","3,99","4,99","5,99","6,99", "7,99","8,99","9,99","10,99","11,99","12,99", "13,99","14,99","15,99","16,99","17,99", "18,99", "19,99", "20,99", "21,99", "22,99", "23,99", "24,99", "25,99", "26,99",  "27,99", "28,99","29,99","30,99", "31,99","32,99", "33,99", "34,99","35,99","36,99","37,99", "38,99", "39,99", "40,99", "41,99", "42,99","43,99","44,99","45,99","46,99","47,99", "48,99","49,99"]
         authView.textFieldFree.isHidden = true
         
@@ -197,7 +185,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
     func changeData() {
         authView.textFieldAviable.didSelect { (str, ind, col) in
-            if str == "All" || str == "Suscribers"{
+            if str == "Available for all" || str == "Subscribers only" {
                     let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
                         self.bottomConstraint.constant = 15
                         self.authView.textFieldFree.isHidden = true

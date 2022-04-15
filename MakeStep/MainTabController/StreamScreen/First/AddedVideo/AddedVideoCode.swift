@@ -13,12 +13,6 @@ import TagListView
 final class AddedVideoCode: UIView {
     
     //MARK: - UI
-//    let cardView: UIView = {
-//        let view = UIView()
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        view.backgroundColor = .white
-//        return view
-//    }()
     let buttonUploadVideo: UIButton = {
         let button = UIButton()
         button.setTitle(" Upload Video ", for: .normal)
@@ -98,7 +92,6 @@ final class AddedVideoCode: UIView {
             NSAttributedString(string: "Free", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
-        
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         textField.selectedRowColor = UIColor(hexString: "F9F9F9")
@@ -136,9 +129,7 @@ final class AddedVideoCode: UIView {
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.showsVerticalScrollIndicator = false
         scroll.alwaysBounceVertical = true
-       // scroll.contentSize.height = 1000
         scroll.backgroundColor = .white
-       
         return scroll
     }()
     var tagView: TagListView = {
@@ -161,25 +152,17 @@ final class AddedVideoCode: UIView {
         super.init(frame: CGRect.zero)
         initUI()
         initLayout()
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
         addSubview(scroll)
         scroll.fillFull(for: self)
-      //  scroll.addSubview(cardView)
  
     }
     private func initLayout() {
-       
-        
-        
-        // cardView.anchor(top: scroll.topAnchor,paddingTop: 0)
-//        cardView.anchor(top: scroll.topAnchor, left: scroll.leftAnchor, right: scroll.rightAnchor, bottom: scroll.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-        
+
         scroll.addSubview(buttonUploadVideo)
         buttonUploadVideo.anchor(top: scroll.topAnchor, left: scroll.leftAnchor,  paddingTop: 20, paddingLeft: 10,width: 130,  height: 36)
         
@@ -238,8 +221,6 @@ final class AddedVideoCode: UIView {
                        right: textFieldCategory.rightAnchor,
                        bottom: textFieldCategory.bottomAnchor,
                        paddingTop: 5,paddingLeft: 10, paddingRight: 40,paddingBottom: 5)
-      //  tagView.centerY(inView: textFieldCategory)
-
-        
+ 
     }
 }

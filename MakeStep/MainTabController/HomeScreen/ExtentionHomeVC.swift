@@ -76,7 +76,7 @@ extension HomeVC: UITableViewDataSource {
             cell.overlayPlan.isHidden = true
             cell.overlay.isHidden = true
             cell.overlayOffline.isHidden = false
-
+            cell.logoUserOnline.isHidden = true
             if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
                 cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
             } else {
@@ -165,13 +165,12 @@ extension HomeVC: UITableViewDelegate {
         
         guard  !self.listBroadcast.isEmpty else { return }
         let id = self.listBroadcast[indexPath.row].userId
-
+ 
           guard let broadcastID = self.listBroadcast[indexPath.row].id,
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
           self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
           let vc = PlayerViewVC()
-          vc.delegatePlayer = self
         if self.listBroadcast.isEmpty { return }
         
         if self.listBroadcast[indexPath.row].status == "ONLINE" {
@@ -242,8 +241,4 @@ extension HomeVC: HomeHorizontalListTableViewCellDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-extension HomeVC: DissmisPlayer {
-    func reloadbroadcast() {
-        self.refreshAlbumList()
-    }
-}
+

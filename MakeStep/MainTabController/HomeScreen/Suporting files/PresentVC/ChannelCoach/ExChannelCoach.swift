@@ -149,7 +149,6 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
-            vc.delegatePlayer = self
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
@@ -189,18 +188,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
 
 }
-extension ChannelCoach: DissmisPlayer {
-    func reloadbroadcast() {
-        brodcast.removeAll()
-        guard let id = user?.id else { return }
-        bindingChannel(userId: id)
-        if token != nil {
-            self.binding(id: "\(id)")
-        } else {
-            self.bindingBroadcastNotAuth(status: "OFFLINE", userId: "\(id)")
-        }
-    }
-}
+
 extension ChannelCoach {
     
      func layout() {

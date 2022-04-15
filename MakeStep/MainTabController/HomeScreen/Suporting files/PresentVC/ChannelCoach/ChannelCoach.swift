@@ -201,7 +201,6 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             vc.homeView.labelLike.text = "\(String(describing: broadcast.followersCount!))"
             vc.homeView.playerSlider.isHidden = true
         }
-        vc.delegatePlayer = self
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: true, completion: nil)
     }
