@@ -71,7 +71,7 @@ class SearchUserVC: UIViewController  {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    self.listUsers = response.data.sorted(by: {$0.channelFollowCount! > $1.channelFollowCount!})
+                    self.listUsers = response.data
                     guard let listUsers = self.listUsers else { return  }
 
                     if listUsers.isEmpty {
@@ -80,7 +80,7 @@ class SearchUserVC: UIViewController  {
                     } else {
                         self.searchView.tableView.isHidden = false
                         self.searchView.labelNtResult.isHidden = true
-                        let arrayUserId = listUsers.compactMap{$0.channelIds.last}
+                        let arrayUserId = listUsers.compactMap{$0.channelIds?.last}
                         self.getMapChannel(ids: arrayUserId)
                     }
                 }
@@ -117,7 +117,7 @@ class SearchUserVC: UIViewController  {
                           guard let listUsers = self.listUsers else { return }
                           let compUser = listUsers.compactMap { $0 }
                           if !self.channellsd.isEmpty {
-                              self.listUsers = compUser.sorted(by: {self.channellsd[$0.channelIds.last!]!.followersCount > self.channellsd[$1.channelIds.last!]!.followersCount })
+                              self.listUsers = compUser.sorted(by: {self.channellsd[($0.channelIds?.last!)!]!.followersCount > self.channellsd[($1.channelIds?.last!)!]!.followersCount })
                           self.searchView.tableView.reloadData()
                           }
                       }

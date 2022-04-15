@@ -124,9 +124,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         self.profileView.scroll.contentOffset.y = 0
     }
 
-    
-   
-   
     func setUserProfile() {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
         
@@ -138,15 +135,12 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     
     @objc func actionUploadImage(_ sender: UIButton) {
         self.imagePicker.present(from: sender)
-
     }
     @objc func actionSave() {        
         puteUser()
     }
     @objc func actionEditProfile() {
-        
-        
-        
+  
     }
     func bindingUser() {
         take = fitMeetApi.getUser()
@@ -221,10 +215,10 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     func changeData() {
-        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .touchDown)
+        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .touchUpInside)
     }
     @objc func myTargetFunction(textField: UITextField) {
-               showPicker()
+        showPicker()
     }
     private func showPicker() {
         var style = DefaultStyle()

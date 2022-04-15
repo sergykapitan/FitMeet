@@ -27,6 +27,7 @@ class SearchVC: UIViewController ,SegmentControlSearchDelegate  {
         }
         if index == 1 {
            actionCoach()
+            //coachVC.searchView.tableView.reloadData()
             self.index = index
         }
         if index == 2 {
