@@ -111,8 +111,8 @@ class SearchUserVC: UIViewController  {
         channelMap = makeApi.getChannelMap(ids: ids)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                  if !response.data.isEmpty  {
-                      if response.data.count != 0 {
+                
+                
                           self.channellsd = response.data
                           guard let listUsers = self.listUsers else { return }
                           let compUser = listUsers.compactMap { $0 }
@@ -120,10 +120,8 @@ class SearchUserVC: UIViewController  {
                               self.listUsers = compUser.sorted(by: {self.channellsd[($0.channelIds?.last!)!]!.followersCount > self.channellsd[($1.channelIds?.last!)!]!.followersCount })
                           self.searchView.tableView.reloadData()
                           }
-                      }
-            }
-        })
-      }
+                     })
+         }
     open func searchUser(text: String) {
         getreversUsers(name: text)
     }

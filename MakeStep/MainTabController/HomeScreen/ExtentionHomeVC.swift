@@ -143,9 +143,7 @@ extension HomeVC: UITableViewDataSource {
         guard let id = listBroadcast[sender.tag].userId else { return}
         vc.user = self.usersd[id]
         navigationController?.pushViewController(vc, animated: true)
-
     }
-    
 }
 extension HomeVC: UITableViewDelegate {
         

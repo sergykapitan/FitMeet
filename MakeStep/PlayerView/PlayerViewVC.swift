@@ -1035,7 +1035,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
 public extension UIView {
 
     @discardableResult
-    public func addBlur(style: UIBlurEffect.Style = .dark) -> UIVisualEffectView { //UIVisualEffectView {
+    public func addBlur(style: UIBlurEffect.Style = .dark) -> UIVisualEffectView { 
         let blurEffect = UIBlurEffect(style: style)
         let blurBackground = UIVisualEffectView(effect: blurEffect)
         
