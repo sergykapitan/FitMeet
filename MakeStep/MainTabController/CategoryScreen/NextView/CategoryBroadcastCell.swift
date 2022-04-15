@@ -98,7 +98,7 @@ class CategoryBroadcastCell: UITableViewCell {
         
         
         cardView.addSubview(titleLabel)
-        titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor,right: buttonLike.leftAnchor, paddingTop: 8, paddingLeft: 8,paddingRight: 5)
+        titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor,right: buttonMore.leftAnchor, paddingTop: 8, paddingLeft: 8,paddingRight: 5)
         
        
         

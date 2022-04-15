@@ -21,8 +21,8 @@ extension CategoryBroadcast: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.setImage(image: sortListCategory[indexPath.row].resizedPreview?["preview_l"]?.jpeg ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        cell.labelDescription.text = sortListCategory[indexPath.row].description
-        
+        cell.labelDescription.text = sortListCategory[indexPath.row].name
+        cell.buttonLike.isHidden = true
         
         
       
@@ -47,15 +47,6 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
 
-       
-        
-        if sortListCategory[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
-    
-      
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
         
@@ -94,11 +85,7 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.buttonLogo.tag = indexPath.row
         cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
         cell.buttonLogo.isUserInteractionEnabled = true
-        
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
-        
+
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
