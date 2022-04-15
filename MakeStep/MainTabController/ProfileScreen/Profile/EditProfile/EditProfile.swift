@@ -215,14 +215,14 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
     func changeData() {
-        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .touchUpInside)
+        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .allTouchEvents)
     }
     @objc func myTargetFunction(textField: UITextField) {
         showPicker()
     }
     private func showPicker() {
         var style = DefaultStyle()
-        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
+        style.pickerColor = StyleColor.colors([style.textColor, .red, .blueColor])
         style.pickerMode = .date
         style.titleString = "Please Сhoose Birhday Date"
         style.returnDateFormat = .d_m_yyyy
