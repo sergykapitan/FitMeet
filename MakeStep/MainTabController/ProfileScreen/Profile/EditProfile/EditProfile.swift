@@ -13,6 +13,8 @@ import Loaf
 class EditProfile: UIViewController, UIScrollViewDelegate {
     
     let profileView = EditProfileCode()
+    var scrollViewBottomConstrain = NSLayoutConstraint()
+    
     
     private var take: AnyCancellable?
     private var putUser: AnyCancellable?
@@ -33,7 +35,15 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     override func loadView() {
         super.loadView()
         view = profileView
-        
+        scrollViewBottomConstrain = profileView.scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        NSLayoutConstraint.activate([
+ 
+            profileView.scroll.topAnchor.constraint(equalTo: view.topAnchor),
+            scrollViewBottomConstrain,
+            profileView.scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            profileView.scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+        ])
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,7 +78,6 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
             self.navigationController?.navigationBar.isHidden = false
             profileView.alertLabel.isHidden = true
             profileView.alertImage.isHidden = true
-            profileView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
         }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -159,7 +168,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         })
     }
     func puteUser() {
-
+        Loaf("OK", state: Loaf.State.success, location: .top, sender:  self).show(.short)
         let usr = UserRequest( fullName: self.profileView.textFieldName.text,
                                username: self.profileView.textFieldUserName.text,
                                birthDate: self.profileView.textBirthday.text,

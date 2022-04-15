@@ -27,12 +27,14 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.authView.textFieldCategory.text = ""
     }
     var bottomConstraint = NSLayoutConstraint()
-
+    var scrollViewBottomConstrain = NSLayoutConstraint()
+    
+    
     let authView = AddedVideoCode()
     @Inject var fitMeetApi: FitMeetApi
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetChanell: FitMeetChannels
-    var scrollViewBottomConstrain = NSLayoutConstraint()
+    
     var imagePicker: ImagePicker!
     var videoPicker: VideoPicker!
     
