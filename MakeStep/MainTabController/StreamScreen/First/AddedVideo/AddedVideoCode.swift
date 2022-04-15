@@ -129,7 +129,7 @@ final class AddedVideoCode: UIView {
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.showsVerticalScrollIndicator = false
         scroll.alwaysBounceVertical = true
-        scroll.backgroundColor = .gray
+        scroll.backgroundColor = .white
         return scroll
     }()
     var tagView: TagListView = {
@@ -143,7 +143,7 @@ final class AddedVideoCode: UIView {
         tag.textColor = .black
         tag.paddingX = 10
         tag.paddingY = 5
-        tag.selectedTextColor = .white
+        tag.selectedTextColor = .black
         return tag
     }()
     

@@ -116,6 +116,7 @@ final class EditProfileCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     var labelBirthday: UILabel = {

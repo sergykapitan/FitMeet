@@ -24,6 +24,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     var imageUpload: UploadImage?
     var user: User?
     var imagePicker: ImagePicker!
+    var gender: String = ""
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
@@ -49,8 +50,8 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         actionButtonContinue()
         makeNavItem()
-        changeData()
         profileView.scroll.delegate = self
+        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .allTouchEvents)
         self.hideKeyboardWhenTappedAround() 
         registerForKeyboardNotifications()
         profileView.textFieldName.delegate = self
@@ -61,7 +62,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         profileView.textPhoneNumber.delegate = self
 
         profileView.textGender.isSearchEnable = false        
-        profileView.textGender.optionArray = ["MALE", "FEMALE"]
+        profileView.textGender.optionArray = ["Male", "Famale"]
         
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         
@@ -159,7 +160,12 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     self.user = response
                     self.profileView.textFieldName.text = self.user?.fullName
                     self.profileView.textFieldUserName.text = self.user?.username
-                    self.profileView.textGender.text = self.user?.gender
+                    if self.user?.gender == "MALE" {
+                        self.gender = "Male"
+                    }else if  self.user?.gender == "FEMALE" {
+                        self.gender = "Female"
+                    }
+                    self.profileView.textGender.text = self.gender
                     self.profileView.textBirthday.text = self.user?.birthDate?.getFormattedDate(format: "yyyy-MM-dd")
                     self.profileView.textEmail.text = self.user?.email
                     self.profileView.textPhoneNumber.text = self.user?.phone
@@ -169,10 +175,16 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     }
     func puteUser() {
         Loaf("OK", state: Loaf.State.success, location: .top, sender:  self).show(.short)
+        if self.profileView.textGender.text == "Male" {
+            self.gender = "MALE"
+        } else if self.profileView.textGender.text == "Famale" {
+            self.gender = "FEMALE"
+        }
+        
         let usr = UserRequest( fullName: self.profileView.textFieldName.text,
                                username: self.profileView.textFieldUserName.text,
                                birthDate: self.profileView.textBirthday.text,
-                               gender: self.profileView.textGender.text,
+                               gender: self.gender,
                                avatarPath: self.imageUpload?.data?.first?.filename)
         
         putUser = fitMeetApi.putUser(user: usr)
@@ -189,7 +201,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                 }
                 } else {
                     Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-                }
+            }
         })
     }
     func makeNavItem() {
@@ -223,9 +235,7 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    func changeData() {
-        profileView.textBirthday.addTarget(self, action: #selector(myTargetFunction), for: .allTouchEvents)
-    }
+ 
     @objc func myTargetFunction(textField: UITextField) {
         showPicker()
     }
