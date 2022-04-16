@@ -26,19 +26,10 @@ class CalculateVC: UIViewController {
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if view.bounds.height <= 488 {
-                    
-                   calculateView.sliderA.anchor(height:100)
-                   calculateView.sliderB.anchor(height:100)
-                   calculateView.sliderC.anchor(height:100)
-                   calculateView.labelComision.isHidden = true
-                   view.layoutIfNeeded()
-               } else {
                    calculateView.sliderA.anchor(height:120)
                    calculateView.sliderB.anchor(height:120)
                    calculateView.sliderC.anchor(height:120)
                    calculateView.labelComision.isHidden = false
-               }
     }
     private func actionButton() {
         calculateView.labelComision.addTarget(self, action: #selector(actionLabelComission), for: .touchUpInside)

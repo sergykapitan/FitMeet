@@ -153,18 +153,18 @@ final class CalculateVCCode: UIView {
         sliderA.anchor(top: cardView.topAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,height: 120)
+                       paddingTop: 10, paddingLeft: 16, paddingRight: 16,height: 120)
         cardView.addSubview(sliderB)
         sliderB.anchor(top: sliderA.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,
+                       paddingTop: 0, paddingLeft: 16, paddingRight: 16,
                        height: 120)
         cardView.addSubview(sliderC)
         sliderC.anchor(top: sliderB.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,
+                       paddingTop: 0, paddingLeft: 16, paddingRight: 16,
                        height: 120)
         
         cardView.addSubview(fourAndLine)
