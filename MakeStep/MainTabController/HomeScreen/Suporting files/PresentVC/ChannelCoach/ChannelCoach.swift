@@ -35,7 +35,7 @@ extension State {
     }
 }
 
-class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegate, TagListViewDelegate  {
+class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizerDelegate, TagListViewDelegate  {
     
     func addPurchase() {
         guard let userId = user?.id else { return }
@@ -529,19 +529,23 @@ class ChannelCoach: UIViewController, VeritiPurchase, UIGestureRecognizerDelegat
             if subPlans.isEmpty {
                 
             } else {
-                
-                let subscribe = SubscribeVC()
-                       subscribe.modalPresentationStyle = .custom
-                       subscribe.id = user?.id
-                       subscribe.delagatePurchase = self
-                if view.bounds.height <= 603 {
-                    actionChatTransitionManager.intHeight = 0.5
+               // let subscribeView = SubscribeVC()
+              //  var SheetVC = DownSheetViewController(customView: subscribeView.view, customViewHeight: 400)
+              //  showDownSheetAll(SheetVC, payload: nil)
+                let subscribeView = SubscribeVC()
+                       subscribeView.modalPresentationStyle = .custom
+                       subscribeView.id = user?.id
+                       subscribeView.delagatePurchase = self
+
+
+                if view.bounds.height <= 718 {
+                    actionChatTransitionManager.intHeight = 0.46
                 } else {
                     actionChatTransitionManager.intHeight = 0.4
                 }
                    actionChatTransitionManager.intWidth = 1
-                   subscribe.transitioningDelegate = actionChatTransitionManager
-                   present(subscribe, animated: true)
+                   subscribeView.transitioningDelegate = actionChatTransitionManager
+                   present(subscribeView, animated: true)
             }
         }
     }

@@ -39,6 +39,10 @@ class SubscribeVC: UIViewController, VeritifProduct {
         view = subscribeView
         self.view.backgroundColor = UIColor.white
     }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let i = view.frame.height
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()

@@ -458,6 +458,7 @@ extension UIViewController {
     }
 }
 extension UIView {
+    
     fileprivate func constrainViewEqual(_ view: UIView) {
         view.translatesAutoresizingMaskIntoConstraints = false
         let pinTop = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal,
