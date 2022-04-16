@@ -20,7 +20,6 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let name, title, welcome5Description: String?
     let backgroundUrl, facebookLink, instagramLink, twitterLink: String?
     let status: String?
-   // let banReason: Bool?
     let subscribersCount, followersCount: Int
     let updatedAt: String?
     let description: String?
@@ -28,7 +27,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let favoriteCategories: [Int]?
     let subscriptionPlans: [SubPlan]?
     let isSubscribe: Bool?
-  //  let subscriptionPlan: [PurpleSubscriptionPlan]
+    let isFollow: Bool?
 }
 struct SubPlan: Codable,Hashable {
     let subscriptionPriceId: Int?
@@ -85,10 +84,4 @@ struct NewPlan: Codable {
     let description: String?
     let appProductId: Int?
 }
-//struct PurpleSubscriptionPlan: Codable{
-//    let createdAt, deleted: String?
-//    let channelId, userId: Int?
-//    let endDate: String?
-//    let autoProlongation: Bool?
-//
-//}
+

@@ -587,13 +587,21 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         self.homeView.labelDescription.text = channel?.description
         self.homeView.labelNameCoach.text = fullName
         self.homeView.imageLogoProfileBottom.makeRounded()
+        guard let isFollow = channel?.isFollow else { return }
+               if isFollow {
+                       self.homeView.buttonFollow.backgroundColor = .white
+                       self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+                   } else {
+                       self.homeView.buttonFollow.backgroundColor = .blueColor
+                       self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                   }
+
         guard  let categorys = broadcast?.categories else { return }
         let s = categorys.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
         homeView.labelCategory.removeAllTags()
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
- 
     }
     
     func actionButtonContinue() {
