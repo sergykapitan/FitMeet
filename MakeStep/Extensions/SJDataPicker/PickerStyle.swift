@@ -65,7 +65,7 @@ protocol PickerStyle {
 struct DefaultStyle:PickerStyle {
     var backColor: UIColor = UIColor.pickBackgroundColor
     var textColor: UIColor = UIColor.titleBackgroundColor
-    var pickerColor: StyleColor? = StyleColor.color(UIColor.init(red: 10/255.0, green: 186/255.0, blue: 181/255.0, alpha: 1.0))
+    var pickerColor: StyleColor? = StyleColor.color(.blueColor)
     var timeZone: TimeZone? = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
     var minimumDate: Date?
     var maximumDate: Date?

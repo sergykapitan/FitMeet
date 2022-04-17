@@ -30,7 +30,7 @@ class PresentedViewController: UIViewController {
         let btnConfirm = UIButton(type: .custom)
         
         btnConfirm.setTitle("OK", for: .normal)
-        btnConfirm.backgroundColor = style.textColor
+        btnConfirm.backgroundColor = .blueColor//style.textColor
         btnConfirm.layer.cornerRadius = cornerRadius
         btnConfirm.layer.masksToBounds = true
         btnConfirm.addTarget(self, action: #selector(confirmButton_Click), for: .touchUpInside)
@@ -64,10 +64,10 @@ class PresentedViewController: UIViewController {
         
         if let title = style.titleString {
             let titleLabel:UILabel = UILabel(frame: .zero)
-            titleLabel.backgroundColor = style.backColor
+            titleLabel.backgroundColor = .blueColor//style.backColor
             titleLabel.layer.cornerRadius = cornerRadius
             titleLabel.layer.masksToBounds = true
-            titleLabel.textColor = style.textColor
+            titleLabel.textColor = .white//style.textColor
             titleLabel.textAlignment = .center
             titleLabel.font = style.titleFont
             titleLabel.text = title
