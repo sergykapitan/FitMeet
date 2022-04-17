@@ -244,10 +244,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                        if ff == "Schedule a stream" {
                         self.showPicker()
                            self.authView.buttonOK.setTitle("Planned", for: .normal)
-                           self.authView.buttonOK.isUserInteractionEnabled = true
+                          // self.authView.buttonOK.isUserInteractionEnabled = true
                        } else {
                            self.authView.buttonOK.setTitle("Start stream", for: .normal)
-                           self.authView.buttonOK.isUserInteractionEnabled = true
+                          // self.authView.buttonOK.isUserInteractionEnabled = true
                        }
                    }
 }
@@ -276,6 +276,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     @objc func actionSignUp() {
         if authView.textFieldAviable.text == "" {
             Loaf("Not Saved Available for ...", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            return
+        }
+        if authView.textFieldStartDate.text == "" {
+            Loaf("Not Saved Start Date", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            return
+        }
+        if image ==  nil {
+            Loaf("Not Saved Image preview", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
             return
         }
         guard let chanelId = listChanell.last?.id ,
