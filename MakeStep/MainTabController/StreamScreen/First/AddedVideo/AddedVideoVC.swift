@@ -167,8 +167,6 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
     }
-
-    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         self.authView.textFieldCategory.text = ""
@@ -377,19 +375,18 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
 extension AddedVideoVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        let fullString = (textField.text ?? "") + string
-
+     //   let fullString = (textField.text ?? "") + string
         if textField == authView.textFieldName {
             
-        if fullString == "" {
-            authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
-            authView.buttonOK.isUserInteractionEnabled = false
-        } else {
-            authView.buttonOK.backgroundColor = .blueColor
-            authView.buttonOK.isUserInteractionEnabled = true
-          }
+            let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
+            if text.isEmpty {
+                authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
+                authView.buttonOK.isUserInteractionEnabled = false
+            } else {
+                authView.buttonOK.backgroundColor = .blueColor
+                authView.buttonOK.isUserInteractionEnabled = true
+            }
         }
-
         return true
     }
    
