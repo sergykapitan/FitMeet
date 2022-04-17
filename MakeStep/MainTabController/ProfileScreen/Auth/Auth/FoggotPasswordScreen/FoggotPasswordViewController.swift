@@ -35,6 +35,7 @@ class FoggotPasswordViewController: UIViewController {
         super.viewDidLoad()
         passwordView.textFieldLogin.delegate = self
         passwordView.buttonContinue.isUserInteractionEnabled = false
+        passwordView.textFieldLogin.keyboardType = .numberPad
         actionButtonContinue()
         self.passwordView.alertImage.isHidden = true
         self.passwordView.alertLabel.isHidden = true
@@ -99,7 +100,7 @@ class FoggotPasswordViewController: UIViewController {
                          } completion: { (bool) in
                              if bool {
                                  self.passwordView.alertImage.isHidden = false
-                                 self.passwordView.alertLabel.text = "This username is taken, please choose diffrent."
+                                 self.passwordView.alertLabel.text = "phone must be a valid phone number"
                                  self.passwordView.alertLabel.isHidden = false
                              }
                          }
@@ -114,16 +115,15 @@ extension FoggotPasswordViewController: UITextFieldDelegate {
         let string = "formate"
         textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
-            passwordView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+            passwordView.buttonContinue.backgroundColor = .blueColor.alpha(0.4)
             passwordView.buttonContinue.isUserInteractionEnabled = false
         } else if  fullString.isValidPhone() || fullString.isValidEmail() {
-            passwordView.buttonContinue.backgroundColor = UIColor(hexString: "#3B58A4")
+            passwordView.buttonContinue.backgroundColor = .blueColor
             passwordView.buttonContinue.isUserInteractionEnabled = true
         } else {
-            passwordView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+            passwordView.buttonContinue.backgroundColor = .blueColor.alpha(0.4)
             passwordView.buttonContinue.isUserInteractionEnabled = false
         }
-
         return false
     }
     

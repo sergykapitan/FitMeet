@@ -49,7 +49,7 @@ final class SecurityCodeVCCode: UIView {
     }()
     let buttonSendCode: UIButton = {
         let button = UIButton()
-        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+        button.backgroundColor = .blueColor.alpha(0.4)
         button.setTitle("Send Code", for: .normal)
         button.layer.cornerRadius = 19
         return button

@@ -20,7 +20,7 @@ class SignInViewController: UIViewController {
    
     let signUpView = SignInViewControllerCode()
     private var userSubscriber: AnyCancellable?
-    
+    var bottomConstraint = NSLayoutConstraint()
     override  var shouldAutorotate: Bool {
         return false
     }
@@ -37,7 +37,9 @@ class SignInViewController: UIViewController {
         signUpView.textFieldLogin.delegate = self
         signUpView.buttonContinue.isUserInteractionEnabled = false
         actionButtonContinue()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        bottomConstraint = signUpView.buttonContinue.topAnchor.constraint(equalTo: signUpView.textFieldLogin.bottomAnchor, constant: 15)
+        bottomConstraint.isActive = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,7 +62,8 @@ class SignInViewController: UIViewController {
         self.present(signInVC, animated: true, completion: nil)
     }
     @objc func actionSignUp() {
-        self.dismiss(animated: true, completion: nil)
+        let signUpVC = AuthViewController()
+        self.present(signUpVC, animated: true, completion: nil)
     }
     private func openProfileViewController() {
         let viewController = MainTabBarViewController()
@@ -120,10 +123,8 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
 
             takeAppleSign = fitMeetApi.signWithApple(token: AppleAuthorizationRequest(id_token: tokenStr))
                 .mapError({ (error) -> Error in
-                    print("Error == \(error)")
                             return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    print("Responce == \(response)")
                     if let token = response.token?.token {
                         
                         UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
@@ -152,36 +153,22 @@ extension SignInViewController: ASAuthorizationControllerPresentationContextProv
 }
 extension SignInViewController: SignInDelegate {
     func changeAlert() {
-       
-        if self.signUpView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.signUpView.buttonContinue.frame.origin.y += 15
-           self.signUpView.labelAccount.frame.origin.y += 15
-            self.signUpView.buttonSignUp.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.signUpView.alertImage.isHidden = false
-                 self.signUpView.alertLabel.isHidden = false
-             }
-         }
-       }
+        let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
+            self.bottomConstraint.constant = 35
+            self.signUpView.alertImage.isHidden = false
+            self.signUpView.alertLabel.isHidden = false
+        }
+        self.view.layoutIfNeeded()
+        trA.startAnimation()
     }
     
     func changeMail() {
-        
-        if self.signUpView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.signUpView.buttonContinue.frame.origin.y += 15
-           self.signUpView.labelAccount.frame.origin.y += 15
-            self.signUpView.buttonSignUp.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.signUpView.alertImage.isHidden = false
-                 self.signUpView.alertMailLabel.isHidden = false
-             }
-         }
-       }
+        let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
+            self.bottomConstraint.constant = 35
+            self.signUpView.alertImage.isHidden = false
+            self.signUpView.alertMailLabel.isHidden = false
+        }
+        self.view.layoutIfNeeded()
+        trA.startAnimation()
     }    
 }

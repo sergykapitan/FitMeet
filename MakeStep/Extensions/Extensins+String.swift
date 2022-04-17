@@ -15,7 +15,7 @@ extension String {
    }
     //"^[0-9+]{0,1}+[0-9]{11,13}$"
    func isValidPhone() -> Bool {
-      let regularExpressionForPhone = "^[+]{0,1}+[0,1,2,3,4,5,6,7]{0,1}+[0-9]{10,14}$"
+      let regularExpressionForPhone = "^[+]{0,1}+[0,1,2,3,4,5,6,7]{0,1}+[0-9]{10,12}$"
       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
       return testPhone.evaluate(with: self)
    }

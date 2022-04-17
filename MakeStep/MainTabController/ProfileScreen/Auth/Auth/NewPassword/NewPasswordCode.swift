@@ -61,7 +61,7 @@ final class NewPasswordCode: UIView {
     }()
     let alertLabel: UILabel = {
         let label = UILabel()
-        label.text = "This username is taken, please choose diffrent."
+        label.text = "The password and confirm password fields do not match"
         label.font = UIFont.systemFont(ofSize: 8)
         label.textColor = UIColor(hexString: "#FF0000")
         label.textAlignment = .center
@@ -72,7 +72,7 @@ final class NewPasswordCode: UIView {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         return button
     }()
     

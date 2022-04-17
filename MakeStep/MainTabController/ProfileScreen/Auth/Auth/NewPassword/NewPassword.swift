@@ -105,7 +105,6 @@ class NewPassword: UIViewController {
                             }
                         })
         } else {
-            print("HHHH ==\(self.signUpView.textFieldUserName.frame.origin.y)")
                 if self.signUpView.textFieldUserName.frame.origin.y == 220.5 {
                       UIView.animate(withDuration: 0.5) {
                             self.self.signUpView.textFieldUserName.frame.origin.y += 15

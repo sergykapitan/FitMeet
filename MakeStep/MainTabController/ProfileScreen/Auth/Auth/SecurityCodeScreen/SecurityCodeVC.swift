@@ -13,7 +13,6 @@ import Alamofire
 class SecurityCodeVC: UIViewController, CodeErrorDelegate {
     
     func codeError() {
-        print("FRAMECode ===== \(self.securityView.buttonSendCode.frame.origin.y)")
         if self.securityView.buttonSendCode.frame.origin.y == 194.5 {
          
          UIView.animate(withDuration: 0.5) {
@@ -96,22 +95,18 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
 
-            
-     //   } else {
-            
         }
     }
 }
 extension SecurityCodeVC: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-      // let fullString = (textField.text ?? "") + string
-        
+ 
         if  securityView.textFieldCode.text == "" {
-            securityView.buttonSendCode.backgroundColor = UIColor(hexString: "#3B58A4")
+            securityView.buttonSendCode.backgroundColor = .blueColor.alpha(0.4)
             securityView.buttonSendCode.isUserInteractionEnabled = false
         } else {
-            securityView.buttonSendCode.backgroundColor = UIColor(hexString: "#3B58A4")
+            securityView.buttonSendCode.backgroundColor = .blueColor
             securityView.buttonSendCode.isUserInteractionEnabled = true
         }
         return true
