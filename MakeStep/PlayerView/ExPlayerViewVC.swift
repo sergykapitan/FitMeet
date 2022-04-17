@@ -9,8 +9,8 @@ import Foundation
 import UIKit
 import AVKit
 
-extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
 
+extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
     }
@@ -58,20 +58,6 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
 
-
-//        if brodcast[indexPath.row].isFollow ?? false {
-//            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-//        } else {
-//            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-//        }
-
-
-        guard let selfID = selfId else { return cell}
-        if self.usersd[id]?.id == Int(selfID) {
-            cell.buttonLike.isHidden = true
-        } else {
-            cell.buttonLike.isHidden = false
-        }
 
         cell.buttonLike.tag = indexPath.row
         cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
@@ -146,7 +132,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
-            self.bindingUser(id: user)
+            self.bindingUserNotApdate(id: user)
         } else if brodcastStatus == "ONLINE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = false
@@ -157,10 +143,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.labelEye.isHidden = false
             homeView.playerSlider.isHidden = true
             homeView.labelLike.text = "\(like)"
-            
             self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
             guard let user = brodcast[indexPath.row].userId else { return}
-            self.bindingUser(id: user)
+            self.bindingUserNotApdate(id: user)
         } else if brodcastStatus == "WAIT_FOR_APPROVE" {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
@@ -187,25 +172,14 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
-            self.bindingUser(id: user)
+            self.bindingUserNotApdate(id: user)
         }
-        
-        
-        guard let url = urlStream else { return }
-        isPlay = true
-//        playerViewController?.player?.pause()
-//        playerViewController!.view.removeFromSuperview()
-//        self.homeView.labelStreamInfo.text = brodcast[indexPath.row].name
-//        self.broadcast = brodcast[indexPath.row]
-//        self.loadPlayer()
-
     }
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {
             let cell = tableView.cellForRow(at: indexPath)
             let selectedColor: UIColor
             let selectedView = UIView(frame: CGRect.zero)
             if tableView.isEditing == true {
-
                 selectedColor = .clear
             } else {
                 selectedColor = .lightGray

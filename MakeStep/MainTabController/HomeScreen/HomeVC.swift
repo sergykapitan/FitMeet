@@ -65,8 +65,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        
-
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -93,12 +91,10 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         getUsers()
         bindingCategory()
         makeTableView()
-        
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-       
     }
    
     //MARK: - Selectors
@@ -114,7 +110,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                 if response.data != nil  {
                     self.listBroadcast = response.data!.filter{$0.type == "STANDARD"}
                     self.bindingOff(page: self.currentPage)
-                  
                 } else {
                     self.bindingOff(page: self.currentPage)
                 }
@@ -243,12 +238,10 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             }
         })
       }
-
     func loadMoreItemsForList(){
             currentPage += 1
             bindingOff(page: currentPage)
        }
- 
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self

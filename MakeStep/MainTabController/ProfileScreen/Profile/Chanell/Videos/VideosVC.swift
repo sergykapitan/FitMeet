@@ -14,8 +14,8 @@ class VideosVC: UIViewController {
 
    
     let videoView = VideosVCCode()
-    let buttonOffline = ButtonOffline()
-    let buttonComming = ButtonCommingg()
+   // let buttonOffline = ButtonOffline()
+   // let buttonComming = ButtonCommingg()
     
     var id: Int?
     var user: User?
@@ -48,11 +48,11 @@ class VideosVC: UIViewController {
         videoView.buttonOffline.backgroundColor = UIColor(hexString: "#3B58A4")
         videoView.buttonComing.backgroundColor = UIColor(hexString: "#BBBCBC")
         guard let userID = id else { return }
-               buttonOffline.userId = userID
-               buttonOffline.user = self.user
+             //  buttonOffline.userId = userID
+             //  buttonOffline.user = self.user
 
-        removeAllChildViewController(buttonComming)
-        configureChildViewController(buttonOffline, onView: videoView.selfView )
+       // removeAllChildViewController(buttonComming)
+      //  configureChildViewController(buttonOffline, onView: videoView.selfView )
        
     }
     @objc func actionComming() {
@@ -60,11 +60,11 @@ class VideosVC: UIViewController {
         videoView.buttonOffline.backgroundColor = UIColor(hexString: "#BBBCBC")
         videoView.buttonComing.backgroundColor = UIColor(hexString: "#3B58A4")
         guard let userID = id else { return }
-              buttonComming.userId = userID
-              buttonComming.user = self.user
-
-        removeAllChildViewController(buttonOffline)
-        configureChildViewController(buttonComming, onView: videoView.selfView )
+//              buttonComming.userId = userID
+//              buttonComming.user = self.user
+//
+//        removeAllChildViewController(buttonOffline)
+//        configureChildViewController(buttonComming, onView: videoView.selfView )
         
     }
   

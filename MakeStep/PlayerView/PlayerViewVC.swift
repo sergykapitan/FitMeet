@@ -14,6 +14,7 @@ import MMPlayerView
 import Kingfisher
 import TimelineTableViewCell
 import Alamofire
+import Algorithms
 
 
 class PlayerViewVC: UIViewController, TagListViewDelegate {
@@ -171,7 +172,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.popViewController(animated: true)
-        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
         SocketWatcher.sharedInstance.closeConnection()
     }
   // MARK: - ViewDidLoad
@@ -204,7 +204,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:            
                 self.dismiss(animated: true) {
-                    AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+                    AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
                 }
             default:
                 break
@@ -405,7 +405,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
           })
     }
-    
     func unFollowBroadcast(id: Int) {
         followBroad = fitMeetStream.unFollowBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
@@ -418,7 +417,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 }
          })
     }
-    
     @objc func actionBut(sender:UITapGestureRecognizer) {
         if isButton {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
@@ -437,7 +435,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
         }
     }
-   
     @objc func actionResize(sender:UIPinchGestureRecognizer) {
         switch sender.state {
         case .began:
@@ -462,6 +459,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.playerViewController?.player?.rate = 0
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
     }
    
  // MARK: - LoadPlayer
@@ -681,6 +679,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             }
             
         } else {
+           
             AppUtility.lockOrientation(.portrait)
             
             let detailViewController = ChatVCPlayer()
@@ -701,7 +700,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.subscribersCount != nil  {
-                   print(response)
                 }
             })
       }
@@ -723,6 +721,26 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                     if self.BoolTrack {
                        self.setUserProfile(user: self.user!)
                     }
+                    self.homeView.tableView.reloadData()
+ 
+                }
+            })
+        }
+    func bindingUserNotApdate(id: Int) {
+        takeUser = fitMeetApi.getUserId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.username != nil  {
+                    self.user = response
+                    self.homeView.setImage(image: self.user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
+                    self.homeView.labelStreamDescription.text = self.user?.fullName
+
+                    guard let categorys = self.broadcast?.categories else { return }
+                    let s = categorys.map{$0.title!}
+                    let arr = s.map { String("\u{0023}" + $0)}
+                    self.homeView.labelCategory.removeAllTags()
+                    self.homeView.labelCategory.addTags(arr)
+                    self.homeView.labelCategory.delegate = self
                     self.homeView.tableView.reloadData()
  
                 }
@@ -1059,7 +1077,6 @@ public extension UIView {
         }
     }
 }
-
 extension PlayerViewVC {
     func alphaButton() {
         self.homeView.overlay.alpha = 0

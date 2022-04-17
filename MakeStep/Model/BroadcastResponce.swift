@@ -12,7 +12,7 @@ struct BroadcastList: Codable,Equatable {
     let meta: MetaBroadcast?
 }
 
-struct BroadcastResponce:Codable,Equatable {
+struct BroadcastResponce:Codable,Equatable,Hashable {
     var message: String?
     var error: String?
     var createdAt: String?
@@ -47,7 +47,7 @@ struct ResizedPreview: Codable,Hashable,Equatable {
 }
 
 // MARK: - Category
-struct Category: Codable,Equatable{
+struct Category: Codable,Equatable,Hashable{
     var createdAt: String?
     var id: Int?
     var title, name, categoryDescription: String?
@@ -59,7 +59,7 @@ struct Category: Codable,Equatable{
     var isFollow: Bool?
    
 }
-struct Stream: Codable,Equatable {
+struct Stream: Codable,Equatable,Hashable {
     var createdAt: String?
     var id: Int?
     var userId: Int?
@@ -80,7 +80,7 @@ struct Stream: Codable,Equatable {
     var vodUrl: String?
     var vodLength: Int?
 }
-struct MetaBroadcast: Codable,Equatable {
+struct MetaBroadcast: Codable,Equatable,Hashable {
     var page: Int?
     var take: Int?
     var itemCount: Int?
