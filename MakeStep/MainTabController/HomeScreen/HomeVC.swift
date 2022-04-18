@@ -65,6 +65,15 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                vc .delegate = self
+                self.present(vc, animated: true, completion: nil)
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)

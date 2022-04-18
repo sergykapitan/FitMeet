@@ -270,6 +270,12 @@
 		A58EC19C27B1524100E920FB /* SendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9927AD7B75004BAEF1 /* SendStream.swift */; };
 		A58EC19D27B1524A00E920FB /* SendStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */; };
 		A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */; };
+		A58F0ABE280D6041003A8833 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0ABD280D6041003A8833 /* Reachability.swift */; };
+		A58F0ABF280D6041003A8833 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0ABD280D6041003A8833 /* Reachability.swift */; };
+		A58F0AC4280D66D8003A8833 /* NotInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC3280D66D8003A8833 /* NotInternetView.swift */; };
+		A58F0AC5280D66D8003A8833 /* NotInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC3280D66D8003A8833 /* NotInternetView.swift */; };
+		A58F0AC7280D66E9003A8833 /* NotInternetViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */; };
+		A58F0AC8280D66E9003A8833 /* NotInternetViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
 		A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
@@ -567,6 +573,9 @@
 		A580AE3827C0E82A00FCD682 /* AccountDeeplinkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountDeeplinkHandler.swift; sourceTree = "<group>"; };
 		A58EC19627B1384400E920FB /* AddedVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedVideoVC.swift; sourceTree = "<group>"; };
 		A58EC19927B1385500E920FB /* AddedVideoCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedVideoCode.swift; sourceTree = "<group>"; };
+		A58F0ABD280D6041003A8833 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		A58F0AC3280D66D8003A8833 /* NotInternetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInternetView.swift; sourceTree = "<group>"; };
+		A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInternetViewCode.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A59431E327E8B59C00374890 /* SignWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignWithApple.swift; sourceTree = "<group>"; };
 		A59431E727E8CC0500374890 /* OverlayLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLive.swift; sourceTree = "<group>"; };
@@ -952,6 +961,16 @@
 			path = AddedVideo;
 			sourceTree = "<group>";
 		};
+		A58F0ABC280D601C003A8833 /* InternetConection */ = {
+			isa = PBXGroup;
+			children = (
+				A58F0ABD280D6041003A8833 /* Reachability.swift */,
+				A58F0AC3280D66D8003A8833 /* NotInternetView.swift */,
+				A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */,
+			);
+			path = InternetConection;
+			sourceTree = "<group>";
+		};
 		A59431E627E8CBDF00374890 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1228,6 +1247,7 @@
 		B47828A126CFF3D20068292A /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A58F0ABC280D601C003A8833 /* InternetConection */,
 				A572948C27FED54200675FD8 /* BottomSheet */,
 				A59431E627E8CBDF00374890 /* CustomView */,
 				A5B635AD27185C010097A127 /* CoverView */,
@@ -2040,6 +2060,7 @@
 				A512943C273A6EB7000CBBD9 /* SendCoach.swift in Sources */,
 				A512943D273A6EB7000CBBD9 /* TokenWatcher.swift in Sources */,
 				A512943E273A6EB7000CBBD9 /* Timetable.swift in Sources */,
+				A58F0AC8280D66E9003A8833 /* NotInternetViewCode.swift in Sources */,
 				A57294A027FEEFFD00675FD8 /* SheetableViewController.swift in Sources */,
 				A5129440273A6EB7000CBBD9 /* StreamResponce.swift in Sources */,
 				A572949427FED5B300675FD8 /* DownSheetViewController.swift in Sources */,
@@ -2182,6 +2203,7 @@
 				A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */,
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
+				A58F0ABF280D6041003A8833 /* Reachability.swift in Sources */,
 				A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
 				A52FA7BF27C79499004F570F /* ChannelCoach.swift in Sources */,
@@ -2205,6 +2227,7 @@
 				A51294D2273A6EB7000CBBD9 /* ResponcePassword.swift in Sources */,
 				A51294D3273A6EB7000CBBD9 /* CategoryVC.swift in Sources */,
 				A51294D5273A6EB7000CBBD9 /* ExMytariff.swift in Sources */,
+				A58F0AC5280D66D8003A8833 /* NotInternetView.swift in Sources */,
 				A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */,
 				A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */,
@@ -2284,6 +2307,7 @@
 				B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */,
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
 				A572949F27FEEFFD00675FD8 /* SheetableViewController.swift in Sources */,
+				A58F0AC7280D66E9003A8833 /* NotInternetViewCode.swift in Sources */,
 				B493769326394A5000D38EC3 /* StreamResponce.swift in Sources */,
 				B493768D2638796600D38EC3 /* ParentViewController.swift in Sources */,
 				A572949327FED5B300675FD8 /* DownSheetViewController.swift in Sources */,
@@ -2426,6 +2450,7 @@
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
+				A58F0ABE280D6041003A8833 /* Reachability.swift in Sources */,
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A52FA7BE27C79499004F570F /* ChannelCoach.swift in Sources */,
@@ -2449,6 +2474,7 @@
 				B493768A2638622700D38EC3 /* ResponcePassword.swift in Sources */,
 				B4F204D6266F501800ED11B5 /* CategoryVC.swift in Sources */,
 				A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */,
+				A58F0AC4280D66D8003A8833 /* NotInternetView.swift in Sources */,
 				A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
@@ -2495,7 +2521,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.17;
+				MARKETING_VERSION = 2.0.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2523,7 +2549,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.17;
+				MARKETING_VERSION = 2.0.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

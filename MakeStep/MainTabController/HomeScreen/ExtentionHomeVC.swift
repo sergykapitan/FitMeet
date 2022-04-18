@@ -239,4 +239,10 @@ extension HomeVC: HomeHorizontalListTableViewCellDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-
+extension HomeVC: ReloadView {
+    func reloadView() {
+        if listBroadcast.isEmpty {
+            self.getUsers()
+        }
+    }
+}

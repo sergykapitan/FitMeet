@@ -13,7 +13,6 @@ extension CategoryVC: UICollectionViewDataSource {
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      //  return listBroadcast.count
         return filtredBroadcast.count
     }
 
@@ -87,5 +86,18 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
       return CGSize.zero
+    }
+}
+extension CategoryVC: ReloadView {
+    func reloadView() {
+        if filtredBroadcast.isEmpty {
+            if token != nil {
+                binding()
+                self.searchView.buttonLikes.isHidden = false
+            } else {
+                bindingNotAuth()
+                self.searchView.buttonLikes.isHidden = true
+            }
+        }
     }
 }

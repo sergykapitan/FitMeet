@@ -14,7 +14,7 @@ import MMPlayerView
 import Kingfisher
 import TimelineTableViewCell
 import Alamofire
-import Algorithms
+
 
 
 class PlayerViewVC: UIViewController, TagListViewDelegate {

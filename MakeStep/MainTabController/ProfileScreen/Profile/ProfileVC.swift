@@ -51,7 +51,15 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
                    UINavigationBar.appearance().standardAppearance = appearance
                    UINavigationBar.appearance().scrollEdgeAppearance = appearance
                }
-        
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                vc .delegate = self
+                self.present(vc, animated: true, completion: nil)
+        }
         
         
     }
@@ -198,4 +206,10 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
     }
 }
 
-
+extension ProfileVC: ReloadView {
+    func reloadView() {
+        if self.user == nil {
+             self.setUserProfile()
+         }
+    }
+}

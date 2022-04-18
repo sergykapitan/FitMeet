@@ -16,6 +16,17 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
     override func loadView() {
         view = homeView
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                self.present(vc, animated: true, completion: nil)
+        }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationController?.navigationBar.isTranslucent = false
