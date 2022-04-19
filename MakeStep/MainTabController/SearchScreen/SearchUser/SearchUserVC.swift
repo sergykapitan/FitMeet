@@ -82,6 +82,7 @@ class SearchUserVC: UIViewController  {
                         self.searchView.labelNtResult.isHidden = true
                         let arrayUserId = listUsers.compactMap{$0.channelIds?.last}
                         self.getMapChannel(ids: arrayUserId)
+                        self.searchView.tableView.reloadData()
                     }
                 }
           })
