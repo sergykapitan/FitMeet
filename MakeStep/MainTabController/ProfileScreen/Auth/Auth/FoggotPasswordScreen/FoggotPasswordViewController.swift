@@ -59,7 +59,6 @@ class FoggotPasswordViewController: UIViewController {
     }
     private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
- //       -------------------------------------------------------------------------------------------------
             userSubscriber = fitMeetApi.resetPassword(phone: Phone(phone: phone  ))
                 .mapError({ (error) -> Error in
                     print(error)

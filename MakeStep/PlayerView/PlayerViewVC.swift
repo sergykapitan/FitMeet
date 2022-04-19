@@ -253,7 +253,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         guard token != nil else { return }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
-            vibrate()
+            let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
+            selectionFeedbackGenerator.selectionChanged()
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             if let id = self.broadcast?.id {
                 followBroadcast(id: id)
