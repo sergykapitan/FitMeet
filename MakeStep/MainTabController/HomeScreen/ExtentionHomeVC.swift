@@ -114,7 +114,7 @@ extension HomeVC: UITableViewDataSource {
             
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
-            
+            print("hop == \(cell.buttonLogo.frame.width)")
             if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
                 if self.itemCount > listBroadcast.count {
                     self.isLoadingList = true

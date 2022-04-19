@@ -24,7 +24,11 @@ final class PlayerViewVCCode: UIView {
         }()
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 12
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.makeRounded()
         return image
     }()
     var imageLogo: UIImageView = {
@@ -89,6 +93,7 @@ final class PlayerViewVCCode: UIView {
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
         tag.paddingX = 0
+        tag.translatesAutoresizingMaskIntoConstraints = false
         return tag
     }()
     var labelStreamInfo: UILabel = {
@@ -219,6 +224,10 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
+    var buttonLogo: UIButton = {
+        let but = UIButton()
+        return but
+    }()
     
     //MARK: - initial
     init() {
@@ -262,17 +271,41 @@ final class PlayerViewVCCode: UIView {
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
-
-        cardView.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
         
-        cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 100)
-        labelStreamDescription.centerY(inView: imageLogoProfile)
+        cardView.addSubview(buttonLogo)
+        buttonLogo.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
+        
+        buttonLogo.addSubview(imageLogoProfile)
+        imageLogoProfile.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
 
+     
+
+        buttonLogo.addSubview(labelStreamDescription)
+        labelStreamDescription.anchor( left: imageLogoProfile.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
+        labelStreamDescription.centerY(inView: imageLogoProfile)
+        
+       
         cardView.addSubview(labelCategory)
-        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
-        labelCategory.centerY(inView: labelStreamDescription)
+        NSLayoutConstraint.activate([
+            labelCategory.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 160),
+            labelCategory.trailingAnchor.constraint(equalTo: buttonLike.leadingAnchor, constant: -5),
+           
+        ])
+        labelCategory.centerY(inView: imageLogoProfile)
+        
+//        cardView.addSubview(imageLogoProfile)
+//        imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
+//        
+//        cardView.addSubview(labelStreamDescription)
+//        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 100)
+//        labelStreamDescription.centerY(inView: imageLogoProfile)
+//
+//        cardView.addSubview(labelCategory)
+//        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
+//        labelCategory.centerY(inView: labelStreamDescription)
+        
+        
+        
       
         cardView.addSubview(tableView)
         tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
@@ -311,6 +344,7 @@ final class PlayerViewVCCode: UIView {
     func setImage(image:String) {
         let url = URL(string: image)
         imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfile.makeRounded()
     }
     func setLabel(description: String,category: String) {
         labelStreamDescription.text = description

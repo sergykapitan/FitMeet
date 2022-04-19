@@ -123,6 +123,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
   // MARK: - LifeCicle
     override func loadView() {
         view = homeView
+        homeView.imageLogoProfile.makeRounded()
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -131,20 +132,8 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.backgroundColor = .white
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.layoutIfNeeded()
-        if #available(iOS 15, *) {
-            let appearance = UINavigationBarAppearance()
-            appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
-            appearance.shadowImage = UIImage()
-            appearance.shadowColor = .clear
-            UINavigationBar.appearance().standardAppearance = appearance
-            UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        }
+        self.navigationController?.navigationBar.isHidden = true
+        homeView.imageLogoProfile.makeRounded()
         alphaButton()
         if self.broadcast?.status == "ONLINE" {
             self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
@@ -180,7 +169,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         makeTableView()
         actionButton ()
         SocketIOManager.sharedInstance.getTokenChat()
-       
+        homeView.imageLogoProfile.makeRounded()
         _ = UserDefaults.standard.string(forKey: "tokenChat")
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
@@ -202,7 +191,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         if let swipeGesture = gesture as? UISwipeGestureRecognizer {
 
             switch swipeGesture.direction {
-            case UISwipeGestureRecognizer.Direction.down:            
+            case UISwipeGestureRecognizer.Direction.down:
                 self.dismiss(animated: true) {
                     AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
                 }
@@ -220,9 +209,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
-        homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
+        homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .allTouchEvents)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
+        homeView.buttonLogo.addTarget(self, action: #selector(actionCoach), for: .touchUpInside)
       
+    }
+    @objc func actionCoach() {
+        let vc = ChannelCoach()
+        guard let id = self.broadcast?.userId else { return}
+        vc.user = self.usersd[id]
+        self.present(vc, animated: true, completion: nil)
     }
     @objc func actionSkipNext() {
         if tracksInt <= self.brodcast.count - 1 {
@@ -250,7 +246,11 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         }
     }
     @objc func actionLike() {
-        guard token != nil else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return
+        }
         homeView.buttonLike.isSelected.toggle()
         if homeView.buttonLike.isSelected {
             let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
@@ -642,7 +642,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     @objc private func refreshAlbumList() {
        }
     @objc func rightBack() {
-        self.navigationController?.popViewController(animated: true)
+      //  self.navigationController?.popViewController(animated: true)
     }
  // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
@@ -1049,6 +1049,15 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         background.leadingAnchor.constraint(equalTo: playerViewController!.view.leadingAnchor).isActive = true
         background.trailingAnchor.constraint(equalTo: playerViewController!.view.trailingAnchor).isActive = true
 
+    }
+    func closeView() {
+        let transition = CATransition()
+        transition.duration = 0.5
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.push
+        transition.subtype = CATransitionSubtype.fromBottom
+        navigationController?.view.layer.add(transition, forKey: nil)
+        _ = navigationController?.popViewController(animated: true)
     }
  }
 

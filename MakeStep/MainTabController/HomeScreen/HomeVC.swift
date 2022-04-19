@@ -64,6 +64,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         if Connectivity.isConnectedToInternet {
             return } else {

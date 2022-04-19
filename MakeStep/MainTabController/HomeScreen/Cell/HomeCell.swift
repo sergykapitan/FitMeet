@@ -26,6 +26,7 @@ final class HomeCell: UITableViewCell {
         image.layer.masksToBounds = false
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
+        image.anchor(width: 24,height: 24)
         return image
         
     }()
@@ -94,8 +95,6 @@ final class HomeCell: UITableViewCell {
     
     var buttonLogo: UIButton = {
         let but = UIButton()
-        but.backgroundColor = .clear
-        
         return but
     }()
 
@@ -106,7 +105,7 @@ final class HomeCell: UITableViewCell {
         tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         tag.selectedTextColor = .black
         tag.paddingX = 0
-       
+        tag.translatesAutoresizingMaskIntoConstraints = false
         return tag
     }()
     var buttonstartStream: UIButton = {
@@ -121,9 +120,10 @@ final class HomeCell: UITableViewCell {
     var stackButton: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fillEqually
+        stack.distribution = .fillProportionally
         return stack
     }()
+  
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -137,8 +137,7 @@ final class HomeCell: UITableViewCell {
 
     func initialize() {
         clipsToBounds = true
-//        stackButton = UIStackView(arrangedSubviews: [tagView])
-//        stackButton.spacing = 10
+       
         
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
@@ -146,6 +145,8 @@ final class HomeCell: UITableViewCell {
                                right: contentView.rightAnchor,
                                paddingTop: 0, paddingLeft: 0, paddingRight: 0)
         backgroundImage.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
+        
+       
 
         contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
@@ -159,27 +160,31 @@ final class HomeCell: UITableViewCell {
 
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
+     
         
         bottomView.addSubview(buttonLogo)
-        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 2, paddingLeft: 16,width: 124,height: 24 )
-        
+        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 0, paddingLeft: 16)
+
         buttonLogo.addSubview(logoUserImage)
+        logoUserImage.anchor(width: 24,height: 24)
         logoUserImage.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
 
         buttonLogo.addSubview(logoUserOnline)
         logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
-        
+
         buttonLogo.addSubview(titleLabel)
-        titleLabel.anchor( left: logoUserImage.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 0)
+        titleLabel.anchor( left: logoUserImage.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
         titleLabel.centerY(inView: logoUserImage)
-
-        contentView.addSubview(buttonLike)
-        buttonLike.anchor(top:  bottomView.topAnchor, right: buttonMore.leftAnchor, paddingTop: 8, paddingRight: 0,width: 24,height: 24)
-
-        contentView.addSubview(tagView)
-        tagView.anchor(left: titleLabel.rightAnchor,right: bottomView.rightAnchor, paddingLeft: 5 ,paddingRight: 8)
-        tagView.centerY(inView: logoUserImage)
         
+       
+        bottomView.addSubview(tagView)
+        NSLayoutConstraint.activate([
+            tagView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 160),
+            tagView.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
+           
+        ])
+        tagView.centerY(inView: logoUserImage)
+
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,
                        left: contentView.leftAnchor,
@@ -203,6 +208,7 @@ final class HomeCell: UITableViewCell {
         
         
     }
+ 
     func setImage(image:String) {
         let url = URL(string: image)
         backgroundImage.kf.setImage(with: url,options: [
@@ -223,6 +229,7 @@ final class HomeCell: UITableViewCell {
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
         self.overlay.labelEye.text = nil
+       // self.titleLabel.text = nil
      
        }
 }

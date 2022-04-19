@@ -145,6 +145,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+        
         self.homeView.labelStreamInfo.isUserInteractionEnabled = true
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelAction))
         self.homeView.labelStreamInfo.addGestureRecognizer(tap)
@@ -209,6 +210,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
              switch swipeGesture.direction {
              case UISwipeGestureRecognizer.Direction.right:
+                // print("swipe")
                  self.navigationController?.popViewController(animated: true)
              default:
                  break
@@ -519,8 +521,11 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     }
  
     @objc func actionSubscribe() {
-        
-        guard let channel = channel,let _ = token else { return }
+       guard  let _ = token else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
+        guard let channel = channel else { return }
         guard let subscribe = channel.isSubscribe else { return }
         if subscribe {
            
@@ -677,7 +682,10 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     }
     @objc func actionFollow() {
       
-        guard let _ = token else { return }
+        guard let _ = token else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
         homeView.buttonFollow.isSelected.toggle()
         
         if homeView.buttonFollow.isSelected {
