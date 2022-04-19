@@ -130,6 +130,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUserNotApdate(id: user)
@@ -145,6 +146,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.labelLike.text = "\(like)"
             self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
             guard let user = brodcast[indexPath.row].userId else { return}
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
             self.bindingUserNotApdate(id: user)
         } else if brodcastStatus == "WAIT_FOR_APPROVE" {
             self.homeView.imageLogo.isHidden = true
@@ -156,6 +158,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.playerSlider.isHidden = false
             homeView.labelEye.isHidden = true
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
         }else if brodcastStatus == "PLANNED" {
             self.urlStream = nil
@@ -170,6 +173,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             playerViewController?.player?.pause()
             playerViewController!.view.removeFromSuperview()
             self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath!)
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUserNotApdate(id: user)

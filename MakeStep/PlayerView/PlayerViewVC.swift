@@ -891,6 +891,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             self.homeView.playerSlider.setValue(0, animated: true)
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             setTimeVideo()
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
             self.playerViewController?.player?.play()
             guard let user = self.broadcast?.userId else { return}
