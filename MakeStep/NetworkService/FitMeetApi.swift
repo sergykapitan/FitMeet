@@ -109,8 +109,8 @@ class FitMeetApi {
     
     public func putUser(user: UserRequest) -> AnyPublisher<User,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/user/users/profile", method: .put, parameters: user.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-            .validate(statusCode: 200..<300)
-            .validate(contentType: ["application/json"])
+            //.validate(statusCode: 200..<300)
+            //.validate(contentType: ["application/json"])
             .publishDecodable(type: User.self)
             .value()
             .mapError{ DifferentError.alamofire(wrapped: $0)}

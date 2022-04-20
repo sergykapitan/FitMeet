@@ -62,10 +62,10 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         profileView.textPhoneNumber.delegate = self
 
         profileView.textGender.isSearchEnable = false        
-        profileView.textGender.optionArray = ["Male", "Famale"]
+        profileView.textGender.optionArray = ["Male","Female","Undefined","Custom"]
         
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-        
+        changeData()
         bindingUser()
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
@@ -138,6 +138,18 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
         guard let userName = UserDefaults.standard.string(forKey: Constants.userFullName),let userFullName = UserDefaults.standard.string(forKey: Constants.userID) else { return }
         
     }
+    func changeData() {
+        profileView.textGender.didSelect { (str, ind, col) in
+            switch str {
+            case "Male" :  self.gender = "MALE"
+            case "Female": self.gender = "FEMALE"
+            case "Undefined": self.gender = "UNDEFINED"
+            case "Custom": self.gender = "CUSTOM"
+            default:
+                break
+            }
+        }
+   }
     func actionButtonContinue() {
         profileView.buttonSave.addTarget(self, action: #selector(actionSave), for: .touchUpInside)
         profileView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
@@ -160,10 +172,15 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     self.user = response
                     self.profileView.textFieldName.text = self.user?.fullName
                     self.profileView.textFieldUserName.text = self.user?.username
+                    
                     if self.user?.gender == "MALE" {
                         self.gender = "Male"
                     }else if  self.user?.gender == "FEMALE" {
                         self.gender = "Female"
+                    }else if  self.user?.gender == "UNDEFINED" {
+                        self.gender = "Undefined"
+                    }else if  self.user?.gender == "CUSTOM" {
+                        self.gender = "Custom"
                     }
                     self.profileView.textGender.text = self.gender
                     self.profileView.textBirthday.text = self.user?.birthDate?.getFormattedDate(format: "yyyy-MM-dd")
@@ -175,24 +192,25 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
     }
     func puteUser() {
         Loaf("OK", state: Loaf.State.success, location: .top, sender:  self).show(.short)
-        if self.profileView.textGender.text == "Male" {
-            self.gender = "MALE"
-        } else if self.profileView.textGender.text == "Famale" {
-            self.gender = "FEMALE"
-        }
+        
         
         let usr = UserRequest( fullName: self.profileView.textFieldName.text,
                                username: self.profileView.textFieldUserName.text,
                                birthDate: self.profileView.textBirthday.text,
                                gender: self.gender,
                                avatarPath: self.imageUpload?.data?.first?.filename)
-        
+        self.profileView.buttonSave.backgroundColor = .blueColor.alpha(0.4)
+        self.profileView.buttonSave.isUserInteractionEnabled = false
         putUser = fitMeetApi.putUser(user: usr)
-            .mapError({ (error) -> Error in return error })
+            .mapError({ (error) -> Error in
+                print(error.localizedDescription)
+                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     DispatchQueue.main.async {
                         Loaf("Saved in \(response.username!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                            self.profileView.buttonSave.backgroundColor = .blueColor
+                            self.profileView.buttonSave.isUserInteractionEnabled = true
                             switch disType {
                                      case .tapped:  self.navigationController?.popViewController(animated: true)
                                      case .timedOut: self.navigationController?.popViewController(animated: true)
@@ -200,7 +218,17 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     }
                 }
                 } else {
-                    Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+                   
+                    Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short){ disType in
+                        switch disType {
+                                 case .tapped:
+                            self.profileView.buttonSave.backgroundColor = .blueColor
+                            self.profileView.buttonSave.isUserInteractionEnabled = true
+                                 case .timedOut:
+                            self.profileView.buttonSave.backgroundColor = .blueColor
+                            self.profileView.buttonSave.isUserInteractionEnabled = true
+                    }
+                    }
             }
         })
     }
