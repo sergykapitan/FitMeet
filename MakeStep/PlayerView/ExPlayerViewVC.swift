@@ -66,13 +66,14 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
+       
         
-        if indexPath.row == brodcast.count - 1 {
+        if indexPath.row == brodcast.count - 1 && !isLoadingList {
             if self.itemCount > brodcast.count {
             self.isLoadingList = true
             self.loadMoreItemsForList()
             } else if self.itemCount == brodcast.count {
-                    bindingOff()
+                 token != nil ? bindingOff() : bindingOffNot()
             }
         }
   

@@ -31,9 +31,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var bottomConstraint = NSLayoutConstraint()
  
     
-    var currentPage : Int = 1
+    var currentPage : Int = 0
     var currentPageCategory : Int = 1
-    var isLoadingList : Bool = true
+    var isLoadingList : Bool = false
     var itemCount: Int = 0
     var categoryCount: Int = 0
     var allCount: Int = 0
@@ -451,6 +451,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     }
     func setUserProfile(user: User) {
         guard let id = user.id else { return }
+        self.currentPage = 1
         if token != nil {
             self.binding(id: "\(id)")
         } else {
@@ -709,7 +710,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
-                    print("USER == \(response.id)")
                     self.user = response
                     guard let categorys = self.broadcast?.categories else { return }
                     let s = categorys.map{$0.title!}
@@ -766,7 +766,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 if response.data != nil  {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
-                   
+                    self.isLoadingList = false
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                 }
@@ -784,9 +784,12 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 if response.data != nil {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
-                   
+                    
+                    self.isLoadingList = false
+                    self.homeView.tableView.reloadData()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
+                   
                 }
                 if response.meta != nil {
                     guard let itemCount = response.meta?.itemCount else { return }
@@ -833,7 +836,24 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
                 if response.data != nil  {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
-                    
+                    self.homeView.tableView.reloadData()
+                    let arrayUserId = self.brodcast.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
+                }
+                if response.meta != nil {
+                    guard let itemCount = response.meta?.itemCount else { return }
+                    self.allCount = itemCount
+                }
+            })
+    }
+    func bindingOffNot() {
+        takeOff = fitMeetStream.getOffNotAuthBroadcast(page: 1)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    guard let brod = response.data else { return }
+                    self.brodcast.append(contentsOf: brod)
+                    self.homeView.tableView.reloadData()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                 }

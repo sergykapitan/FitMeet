@@ -213,7 +213,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLive.text = "Wait for"
             vc.homeView.imageEye.isHidden = true
         } else if  self.brodcast[indexPath.row].status == "FINISHED" {
-            print("FINISHED")
             guard let streams = self.brodcast[indexPath.row].streams else { return }
             if streams.isEmpty  { return }
             guard let url = streams.first?.vodUrl else { return }
