@@ -75,7 +75,7 @@ final class AddedVideoCode: UIView {
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Available for...", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        NSAttributedString(string: "Available for all", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "000000")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1

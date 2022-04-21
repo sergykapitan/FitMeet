@@ -275,12 +275,10 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     }
     @objc func actionSignUp() {
         if authView.textFieldAviable.text == "" {
-            Loaf("Not Saved Available for ...", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-            return
+            authView.textFieldAviable.text = "Available for all"
         }
         if authView.textFieldStartDate.text == "" {
-            Loaf("Not Saved Start Date", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-            return
+            authView.textFieldStartDate.text == "Start now"
         }
         if image ==  nil {
             Loaf("Not Saved Image preview", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)

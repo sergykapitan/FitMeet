@@ -233,8 +233,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         self.authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
         self.authView.buttonOK.isUserInteractionEnabled = false
-        self.view.addBlur()
-       
+        self.view.addBlur()       
         self.encodeVideo(at: video) { url, error in
            
                     do {
