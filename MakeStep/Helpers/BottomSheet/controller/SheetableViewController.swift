@@ -10,11 +10,14 @@ import Combine
 import Loaf
 
 
-class SheetableViewController: UIViewController, DownSheetViewControllerDelegate {
+class SheetableViewController: UIViewController, DownSheetViewControllerDelegate, RefreshList {
+    
+    
     
     let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     @Inject var fitMeetStreams: FitMeetStream
     var deleteBroad: AnyCancellable?
+    var editBroad: AnyCancellable?
     
     lazy var moreArtworkOtherUserSheetVC = DownSheetViewController(items:[
         (ArtworkItemActionType.copyLink, .regular),
@@ -27,7 +30,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         (ArtworkItemActionType.share, .regular),
         (ArtworkItemActionType.copyLink, .regular),
         (ArtworkItemActionType.edit, .regular),
-        (ArtworkItemActionType.delete, .destructive),
+        (ArtworkItemActionType.delete, .regular),
     ]
     )
     
@@ -40,7 +43,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     lazy var deleteItemSheetVC = DownSheetViewController(items:[
         (DeleteItemActionType.delete, .regular),
         (DeleteItemActionType.notDelete, .regular),
-    ], topTitle: ("Do you really want to delete broadcast?", UIColor(red: 165.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0))
+    ], topTitle: ("Do you really want to delete broadcast?", .black)
     )
     
     lazy var linkCopiedSheetVC = DownSheetViewController(items:[
@@ -129,7 +132,9 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             case .delete:
                 showDownSheet(deleteItemSheetVC, payload: payload)
                 return
-            case .edit: showEditArtworkController(payload: payload)
+            case .edit:
+                guard let id = payload else { return }
+                showEditArtworkController(payload: id)
             case .sendComplaint: break
             case .block:
                 showDownSheet(blockUserSheetVC, payload: payload)
@@ -192,10 +197,21 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         
     }
     
-    func showEditArtworkController(payload: Int?) {
-        print("showEditArtworkController")
+    func showEditArtworkController(payload: Int) {
+        editBroad = fitMeetStreams.getBroadcastId(id: "\(payload)")
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil  {
+                    let vc = EditStreamVC()
+                    vc.broadcast = response
+                    vc.delegate = self
+                    self.present(vc, animated: true, completion: nil)
+            }
+        })
     }
-    
+    func refrechList() {
+        needUpdateAfterSuccessfullyCreate()
+    }
     func showFinalComplaintSheet() {
         showDownSheet(complaintFinalSheetVC, payload: nil)
     }

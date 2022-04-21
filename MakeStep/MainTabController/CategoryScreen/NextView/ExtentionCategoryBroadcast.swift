@@ -106,13 +106,8 @@ extension CategoryBroadcast: UITableViewDataSource {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        present(detailViewController, animated: true)
+        guard token != nil,let broadcastId = sortListCategory[sender.tag].id else { return }
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
     @objc func tappedCoach(_ sender: UIButton) -> Void {

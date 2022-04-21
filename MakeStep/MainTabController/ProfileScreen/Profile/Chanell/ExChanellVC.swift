@@ -24,26 +24,12 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-
-       
-        
-        if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
-            cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        } else {
-            cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        }
-
-
-      
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+        let defoultImage = "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg"
+        cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? defoultImage )
         cell.labelDescription.text = brodcast[indexPath.row].name
         cell.titleLabel.text = self.user?.fullName
-        
- 
-        guard let id = brodcast[indexPath.row].userId,
-              let broadcastID = self.brodcast[indexPath.row].id
-              else { return cell}
+        guard let id = brodcast[indexPath.row].userId else { return cell}
 
         if brodcast[indexPath.row].status == "OFFLINE" {
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
@@ -91,62 +77,23 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
 
 
-
-        if brodcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
-
-
-
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        guard let selfID = selfId else { return cell}
-        if self.usersd[id]?.id == Int(selfID) {
-            cell.buttonLike.isHidden = true
-          //  cell.buttonstartStream.isHidden = false
-        } else {
-            cell.buttonLike.isHidden = false
-          //  cell.buttonstartStream.isHidden = true
-        }
-
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
-
+       
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        
-//        cell.buttonstartStream.tag = indexPath.row
-//        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
-//        cell.buttonstartStream.isUserInteractionEnabled = true
-        
+   
         if indexPath.row == brodcast.count - 1 {
             if self.itemCount > brodcast.count {
                 self.isLoadingList = true
                 self.loadMoreItemsForList()
             }
-//            } else if self.itemCount == brodcast.count {
-//                self.bindingPlanned()
-//            }
         }
-      
-        
        return cell
     }
-    @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        if sender.currentImage == UIImage(named: "LikeNot") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.followBroadcast(id: id)
-        } else {
-            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.unFollowBroadcast(id: id)
-        }
-    }
+   
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
+        print("Sender = \(sender.tag)")
         guard let broadcastId = brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworKMeUserSheetVC, payload: broadcastId)
     }

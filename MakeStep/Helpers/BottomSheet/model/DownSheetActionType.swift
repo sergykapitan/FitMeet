@@ -14,7 +14,7 @@ enum DownSheetActionStyle {
 
 enum ArtworkItemActionType: DownSheetActionType {
     
-    case share, copyLink,makePrivate,  delete, edit, sendComplaint, block//
+    case share, copyLink,makePrivate,  delete, edit, sendComplaint, block
     
     var description : String {
         switch self {

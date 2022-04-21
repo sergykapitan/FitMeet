@@ -771,13 +771,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     }
   
     @objc func actionMore() {
-        guard token != nil else { return }
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = broadcast?.url
-        present(detailViewController, animated: true)
+        guard token != nil,let broadcastId = self.broadcast?.id else { return }
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {

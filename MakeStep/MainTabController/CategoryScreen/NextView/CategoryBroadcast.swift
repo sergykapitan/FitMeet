@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import UIKit
 
-class CategoryBroadcast: UIViewController  {
+class CategoryBroadcast: SheetableViewController  {
     
   
   

@@ -20,8 +20,6 @@ final class PlayerViewCell: UITableViewCell {
                 guard let Url = data?.previewPath, let urlVOD = data?.streams?.first?.vodUrl else { return }
                 let url = URL(string: Url)
                 self.backgroundImage.kf.setImage(with: url)
-                
-                       
             }
         }
     
@@ -66,6 +64,8 @@ final class PlayerViewCell: UITableViewCell {
     let buttonMore: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
     var titleLabel: UILabel =  {
@@ -188,7 +188,7 @@ final class PlayerViewCell: UITableViewCell {
         contentView.addSubview(buttonMore)
         buttonMore.anchor(right: contentView.rightAnchor ,
                           bottom: contentView.bottomAnchor,
-                          paddingRight: 10,paddingBottom: 8)
+                          paddingRight: 10,paddingBottom: 8,width: 40, height: 40)
         
 
     }

@@ -91,20 +91,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-                guard let coachID = user?.id,let userID = selfId else { return }
+            guard token != nil,let broadcastId = self.broadcast?.id else { return }
+            showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
         
-                if coachID == Int(userID)! {
-                    let detailViewController = SendCoach()
-                    actionSheetTransitionManager.height = 0.3
-                    detailViewController.modalPresentationStyle = .custom
-                    detailViewController.transitioningDelegate = actionSheetTransitionManager
-                    detailViewController.url = self.url
-                    detailViewController.broadcast = brodcast[sender.tag]
-                    present(detailViewController, animated: true)
-                } else {
-                    guard token != nil,let broadcastId = self.broadcast?.id else { return }
-                    showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
-        }
     }
     
     

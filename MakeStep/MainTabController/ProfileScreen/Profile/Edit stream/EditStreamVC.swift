@@ -13,13 +13,17 @@ import Combine
 import BottomPopup
 import Alamofire
 import Kingfisher
+import Loaf
+
+protocol RefreshList: AnyObject {
+    func refrechList()
+}
 
 class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate {
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
     }
-    
     func optionSelected(option: String) {
         print("optionSelected===========\(option)")
     }
@@ -46,7 +50,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     private var taskStream: AnyCancellable?
     
     
-   // let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
+    weak var delegate: RefreshList?
     let userId = UserDefaults.standard.string(forKey: Constants.userID)
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
@@ -226,14 +230,12 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        print("GUARD = \(authView.textFieldName.text)\n \(authView.textFieldDescription.text) \n \(authView.textFieldStartDate.text)")
         guard
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
               let img = image ,
               let planedDate = authView.textFieldStartDate.text else { return }
         
-      //  UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         var isPlan: Bool?
         var date: String?
         
@@ -284,40 +286,17 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    
-    
-//    func bindingChanell() {
-//        takeChannel = fitMeetChanell.listChannels()
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.data != nil  {
-//                    self.listChanell = response.data
-//                    print("ListChanel = ==== \(self.listChanell.last)")
-//                }
-//        })
-//    }
+ 
     func bindingImage(image: UIImage) {
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                print("RESPONSE======\(response)")
                 if response != nil  {
                     self.imageUpload = response
-                    
-                  
                 }
         })
     }
-//    func bindingUser() {
-//        take = fitMeetApi.getUser()
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.username != nil  {
-//                    self.user = response
-//
-//                }
-//        })
-//    }
+
     func nextView(
                   name: String ,
                   description: String,
@@ -325,12 +304,9 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                   isPlaned: Bool,
                   date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int])  {
         guard let id = broadcastID else { return }
-        
-        print("\(id)\n \(name)\n \(description)")
         takeChannel = fitMeetStream.editBroadcastId(id: id,
                                                     broadcast: EditBroadcast(
                                                         name: name,
-                                                       // type: "STANDARD",
                                                         access: "ALL",
                                                         hasChat: true,
                                                         scheduledStartDate: date,
@@ -346,14 +322,13 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if let id = response.id {
-                    print("Responce === \(response)")
-                    print("greate broadcast")
-                    self.dismiss(animated: true, completion: nil)
-
+                   
+                    self.dismiss(animated: true) {
+                        self.delegate?.refrechList()
                 }
-             })
-         
-         }
+            }
+        })
+    }
     
     func fetchStream(id:Int?,name: String?) {
         let UserId = UserDefaults.standard.string(forKey: Constants.userID)
@@ -371,8 +346,6 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.myuri = twoString.0
                     self.myPublish = twoString.1
                     self.url = url
-                    print(response)
-                    print("chat === \(self.authView.textFieldStartDate.text)")
                     
                     if self.authView.textFieldStartDate.text == "NOW" {
                         let navVC = LiveStreamViewController()
@@ -381,7 +354,6 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                         guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
                         navVC.myuri = myuris
                         navVC.myPublish = myPublishh
-                       // self.present(navVC, animated: true, completion: nil)
                         self.present(navVC, animated: true) {
                             self.authView.textFieldStartDate.text = ""
                         }
@@ -421,7 +393,6 @@ extension EditStreamVC: UITextFieldDelegate {
             authView.buttonOK.isUserInteractionEnabled = true
             authView.buttonOK.backgroundColor = UIColor(hexString: "#3B58A4")
         } else {
-           // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
             authView.buttonOK.backgroundColor = UIColor(hexString: "#3B58A4")
             authView.buttonOK.isUserInteractionEnabled = true
           }
@@ -429,12 +400,8 @@ extension EditStreamVC: UITextFieldDelegate {
         
         if textField == authView.textFieldStartDate {
             if fullString == "NOW" {
-               // authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-               // authView.buttonOK.setTitle("OK", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             } else {
-              //  authView.buttonOK.backgroundColor = UIColor(hexString: "2kWkNSZaD5T")
-               // authView.buttonOK.setTitle("Planned", for: .normal)
                 authView.buttonOK.isUserInteractionEnabled = true
             }
         }
