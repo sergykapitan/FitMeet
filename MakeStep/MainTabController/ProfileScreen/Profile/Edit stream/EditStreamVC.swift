@@ -123,7 +123,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let url = URL(string: image)
         self.authView.imageButton.kf.setImage(with:url , for: .normal)      
         self.authView.buttonOK.setTitle("Save", for: .normal)
-        self.authView.textFieldStartDate.text = self.broadcast?.scheduledStartDate
+       // self.authView.textFieldStartDate.text = self.broadcast?.scheduledStartDate
         self.image = broadcast?.previewPath
     }
     override func viewDidLoad() {
@@ -141,13 +141,12 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.scroll.delegate = self
    
         authView.textFieldCategory.delegate = self
-        authView.textFieldStartDate.delegate = self
+      //  authView.textFieldStartDate.delegate = self
         authView.textFieldAviable.delegate = self
        
-        authView.textFieldStartDate.isSearchEnable = true
+      //  authView.textFieldStartDate.isSearchEnable = true
         authView.textFieldAviable.isSearchEnable = false
         
-        authView.textFieldStartDate.optionArray = ["Start now", "Schedule a stream"]
         authView.textFieldAviable.optionArray = ["Available for all","Subscribers only"]
       
         
@@ -198,25 +197,25 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             self.view.endEditing(true) // anyone
         }
     func changeData() {
-        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-            if gg == "Start now" {
-                self.authView.buttonOK.setTitle("Start", for: .normal)
-                self.authView.buttonOK.isUserInteractionEnabled = true
-                
-            } else {
-                self.authView.buttonOK.setTitle("Save", for: .normal)
-                self.authView.buttonOK.isUserInteractionEnabled = true
-            }
-        }
+//        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
+//            if gg == "Start now" {
+//                self.authView.buttonOK.setTitle("Start", for: .normal)
+//                self.authView.buttonOK.isUserInteractionEnabled = true
+//
+//            } else {
+//                self.authView.buttonOK.setTitle("Save", for: .normal)
+//                self.authView.buttonOK.isUserInteractionEnabled = true
+//            }
+//        }
         authView.textFieldAviable.didSelect { (str, ind, col) in
         }
-        authView.textFieldStartDate.didSelect { (ff, _, _) in
-                       if ff == "Schedule a stream" {
-                        self.showPicker()
-                        self.authView.buttonOK.setTitle("Save", for: .normal)
-                        self.authView.buttonOK.isUserInteractionEnabled = true
-            }
-        }
+//        authView.textFieldStartDate.didSelect { (ff, _, _) in
+//                       if ff == "Schedule a stream" {
+//                        self.showPicker()
+//                        self.authView.buttonOK.setTitle("Save", for: .normal)
+//                        self.authView.buttonOK.isUserInteractionEnabled = true
+//            }
+//        }
         authView.textFieldCategory.didSelect { (ff, _, _) in
 
                 let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
@@ -250,7 +249,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         let pick:PresentedViewController = PresentedViewController()
         pick.style = style
         pick.block = { [weak self] (date) in
-            self?.authView.textFieldStartDate.text = date
+          //  self?.authView.textFieldStartDate.text = date
         }
         self.present(pick, animated: true, completion: nil)
     }
@@ -262,8 +261,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         guard
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
-              let img = image ,
-              let _ = authView.textFieldStartDate.text else { return }
+              let img = image  else { return }
         
         var isPlan: Bool?
         var date: String?
@@ -271,13 +269,13 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
         
-        if authView.textFieldStartDate.text == "Start now" {
-            isPlan = false
-            date = "\(Date())"
-        } else {
-            isPlan = true
-            date = authView.textFieldStartDate.text
-        }
+//        if authView.textFieldStartDate.text == "Start now" {
+//            isPlan = false
+//            date = "\(Date())"
+//        } else {
+//            isPlan = true
+//            date = authView.textFieldStartDate.text
+//        }
         if authView.textFieldAviable.text == "Available for all"  {
              onlyForSponsors = false
              onlyForSubscribers = false
@@ -358,22 +356,22 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.myPublish = twoString.1
                     self.url = url
                     
-                    if self.authView.textFieldStartDate.text == "NOW" {
-                        let navVC = LiveStreamViewController()
-                        navVC.modalPresentationStyle = .fullScreen
-                        navVC.idBroad = id
-                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
-                        navVC.myuri = myuris
-                        navVC.myPublish = myPublishh
-                        self.present(navVC, animated: true) {
-                            self.authView.textFieldStartDate.text = ""
-                        }
-                    } else {
-                        let channelVC = ChanellVC()
-                        channelVC.user = self.user
-                        self.navigationController?.pushViewController(channelVC, animated: true)
-                    
-                    }
+//                    if self.authView.textFieldStartDate.text == "NOW" {
+//                        let navVC = LiveStreamViewController()
+//                        navVC.modalPresentationStyle = .fullScreen
+//                        navVC.idBroad = id
+//                        guard let myuris = self.myuri,let myPublishh = self.myPublish else { return }
+//                        navVC.myuri = myuris
+//                        navVC.myPublish = myPublishh
+//                        self.present(navVC, animated: true) {
+//                            self.authView.textFieldStartDate.text = ""
+//                        }
+//                    } else {
+//                        let channelVC = ChanellVC()
+//                        channelVC.user = self.user
+//                        self.navigationController?.pushViewController(channelVC, animated: true)
+//
+//                    }
                })
            }
     func removeUrl(url: String) -> (url:String,publish: String) {
@@ -418,10 +416,10 @@ extension EditStreamVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-        if textField == authView.textFieldStartDate {
-            self.authView.textFieldName.resignFirstResponder()
-            return true
-        }
+//        if textField == authView.textFieldStartDate {
+//            self.authView.textFieldName.resignFirstResponder()
+//            return true
+//        }
         if textField == authView.textFieldAviable {
             self.authView.textFieldName.resignFirstResponder()
             return true

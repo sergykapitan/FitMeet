@@ -50,19 +50,19 @@ final class EditStreamCode: UIView {
         textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
-    let textFieldStartDate: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Start Date", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
-        return textField
-    }()
+//    let textFieldStartDate: DropDown = {
+//        let textField = DropDown()
+//        textField.layer.cornerRadius = 19
+//        textField.backgroundColor = UIColor(hexString: "F9F9F9")
+//        textField.attributedPlaceholder =
+//            NSAttributedString(string: "Start Date", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+//        textField.setLeftPaddingPoints(25)
+//        textField.textColor = .black
+//        textField.layer.borderWidth = 1
+//        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+//        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
+//        return textField
+//    }()
     let textFieldAviable: DropDown = {
         let textField = DropDown()
         textField.layer.cornerRadius = 19
@@ -164,14 +164,14 @@ final class EditStreamCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10)
         
-        scroll.addSubview(textFieldStartDate)
-        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        scroll.addSubview(textFieldStartDate)
+//        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
+//                              left: cardView.leftAnchor,
+//                              right: cardView.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldAviable)
-        textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
+        textFieldAviable.anchor(top: textFieldCategory.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)

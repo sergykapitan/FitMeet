@@ -14,7 +14,7 @@ struct ChageChannel: Codable {
     let addFavoriteCategoryIds: [Int]?
   //  let removeFavoriteCategoryIds: [Int]?
    // let backgroundUrl: String
-    let facebookLink, instagramLink, twitterLink: String
+    let facebookLink, instagramLink, twitterLink: String?
 
    
 }

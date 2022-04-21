@@ -230,15 +230,31 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
     }
     @objc func changeChannel() {
         guard let id = self.channel?.id else { return }
-        
+        let f : String?
+        if self.textViewFacebook.text == "" {
+            f = nil
+        } else {
+            f = self.textViewFacebook.text
+        }
+        let i : String?
+        if self.textViewInstagram.text == "" {
+            i = nil
+        } else {
+            i = self.textViewInstagram.text
+        }
+        let t: String?
+        if  self.textViewTwitter.text == "" {
+            t = nil
+        } else {
+            t =  self.textViewTwitter.text
+        }
         channels = fitMeetApi.changeChannels(id: id, changeChannel: ChageChannel(
             name: self.textViewNameChannel.text,
             description: self.textViewDescription.text,
             addFavoriteCategoryIds: self.IdCategory,
-           // removeFavoriteCategoryIds: self.removeIdCategory,
-            facebookLink:self.textViewFacebook.text,
-            instagramLink: self.textViewInstagram.text,
-            twitterLink: self.textViewTwitter.text))
+            facebookLink: f,
+            instagramLink: i,
+            twitterLink: t))
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil  {
@@ -283,10 +299,8 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         self.navigationController?.popViewController(animated: true)
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
-           print("Tag Remove pressed: \(title), \(sender)")
            sender.removeTagView(tagView)
         let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
-        print(p)
         self.removeIdCategory.append(contentsOf: p)
        }
     
@@ -422,8 +436,6 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         
 
     }
-    
-    
     internal func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
            if(text == "\n") {
                self.textViewNameChannel.resignFirstResponder()

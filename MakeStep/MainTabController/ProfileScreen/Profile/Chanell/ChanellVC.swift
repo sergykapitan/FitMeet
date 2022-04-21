@@ -237,7 +237,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
         case .began:
             
             // start the animations
-            animateTransitionIfNeeded(to: currentState.opposite, duration: 1)
+            animateTransitionIfNeeded(to: currentState.opposite, duration: 0.2)
             
             // pause all animations, since the next event may be a pan changed
             runningAnimators.forEach { $0.pauseAnimation() }
