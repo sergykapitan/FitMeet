@@ -276,6 +276,8 @@
 		A58F0AC5280D66D8003A8833 /* NotInternetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC3280D66D8003A8833 /* NotInternetView.swift */; };
 		A58F0AC7280D66E9003A8833 /* NotInternetViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */; };
 		A58F0AC8280D66E9003A8833 /* NotInternetViewCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */; };
+		A58F0ACA281156EB003A8833 /*  Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC9281156EB003A8833 /*  Refreshable.swift */; };
+		A58F0ACB281156EB003A8833 /*  Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC9281156EB003A8833 /*  Refreshable.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
 		A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
@@ -576,6 +578,7 @@
 		A58F0ABD280D6041003A8833 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		A58F0AC3280D66D8003A8833 /* NotInternetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInternetView.swift; sourceTree = "<group>"; };
 		A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInternetViewCode.swift; sourceTree = "<group>"; };
+		A58F0AC9281156EB003A8833 /*  Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " Refreshable.swift"; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A59431E327E8B59C00374890 /* SignWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignWithApple.swift; sourceTree = "<group>"; };
 		A59431E727E8CC0500374890 /* OverlayLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLive.swift; sourceTree = "<group>"; };
@@ -1628,6 +1631,7 @@
 				B471E65F26EA25D9007B63BE /* ResetOldPassword.swift */,
 				B470790D2705F06700921821 /* EdetBroadcast.swift */,
 				A591C3662715AB910015B0E6 /* ChangeChannel.swift */,
+				A58F0AC9281156EB003A8833 /*  Refreshable.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -2097,6 +2101,7 @@
 				A512945F273A6EB7000CBBD9 /* DeleteTariffVC.swift in Sources */,
 				A52FA7C227C794A7004F570F /* ChanellCoachCode.swift in Sources */,
 				A5129460273A6EB7000CBBD9 /* FoggotPasswordViewController.swift in Sources */,
+				A58F0ACB281156EB003A8833 /*  Refreshable.swift in Sources */,
 				A5129461273A6EB7000CBBD9 /* CoreDataModel.xcdatamodeld in Sources */,
 				A5129462273A6EB7000CBBD9 /* EditChannelCode.swift in Sources */,
 				A5129463273A6EB7000CBBD9 /* NullEncodable.swift in Sources */,
@@ -2344,6 +2349,7 @@
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				A52FA7C127C794A7004F570F /* ChanellCoachCode.swift in Sources */,
 				B4D9D7B326297D21007CFB71 /* ResponceLogin.swift in Sources */,
+				A58F0ACA281156EB003A8833 /*  Refreshable.swift in Sources */,
 				A5950E562737D59D002C1500 /* DeleteTariffVC.swift in Sources */,
 				B4D9D79B262850F4007CFB71 /* FoggotPasswordViewController.swift in Sources */,
 				B4C4996D263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld in Sources */,

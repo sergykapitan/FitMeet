@@ -102,13 +102,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
                     detailViewController.broadcast = brodcast[sender.tag]
                     present(detailViewController, animated: true)
                 } else {
-        
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        present(detailViewController, animated: true)
+                    guard token != nil,let broadcastId = self.broadcast?.id else { return }
+                    showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
         }
     }
     

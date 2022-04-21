@@ -226,32 +226,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         actionChatTransitionManager.intHeight = 0.7
         actionChatTransitionManager.isLandscape = isLandscape
         present(chatVC, animated: true)
-        
-        
-        
-        
-        
-//        if isLandscape {
-//            chatVC.isLand = true
-//            actionChatTransitionManager.intWidth = 0.5
-//            actionChatTransitionManager.intHeight = 1
-//            present(chatVC, animated: true, completion: nil)
-//        } else {
-//            chatVC.isLand = false
-//            actionChatTransitionManager.intWidth = 1
-//            actionChatTransitionManager.intHeight = 0.7
-//            actionChatTransitionManager.isLandscape = isLandscape
-//            present(chatVC, animated: true)
-//        }
-//
-//        streamView.recButton.isHidden = true
-//        streamView.stopButton.isHidden = true
-//        streamView.microfoneButton.isHidden = true
-//        streamView.cameraModeButton.isHidden = true
-//        streamView.cameraButton.isHidden = true
-//        streamView.chatButton.isHidden = true
-//        streamView.StartStreamButton.isHidden = true
- 
+
     }
     @objc func openUserOnline() {
         

@@ -147,26 +147,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-                guard let coachID = user?.id,let userID = selfId else { return }
-        
-                if coachID == Int(userID)! {
-                    let detailViewController = SendCoach()
-                    actionSheetTransitionManager.height = 0.3
-                    detailViewController.modalPresentationStyle = .custom
-                    detailViewController.transitioningDelegate = actionSheetTransitionManager
-                    detailViewController.url = self.url
-                    detailViewController.broadcast = brodcast[sender.tag]
-                    present(detailViewController, animated: true)
-                } else {
-        
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        present(detailViewController, animated: true)
-        }
-
+        guard let broadcastId = brodcast[sender.tag].id else { return }
+        showDownSheet(moreArtworKMeUserSheetVC, payload: broadcastId)
     }
     @objc func actionStartStream(_ sender: UIButton) {
         guard let broadcastID = brodcast[sender.tag].id else { return }

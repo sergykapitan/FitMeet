@@ -6,11 +6,16 @@
 //
 
 import UIKit
+import Combine
+import Loaf
 
 
 class SheetableViewController: UIViewController, DownSheetViewControllerDelegate {
     
     let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
+    @Inject var fitMeetStreams: FitMeetStream
+    var deleteBroad: AnyCancellable?
+    
     lazy var moreArtworkOtherUserSheetVC = DownSheetViewController(items:[
         (ArtworkItemActionType.copyLink, .regular),
         (ArtworkItemActionType.share, .regular),
@@ -35,11 +40,11 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     lazy var deleteItemSheetVC = DownSheetViewController(items:[
         (DeleteItemActionType.delete, .regular),
         (DeleteItemActionType.notDelete, .regular),
-    ], topTitle: ("Do you really want to delete item", UIColor(red: 165.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0))
+    ], topTitle: ("Do you really want to delete broadcast?", UIColor(red: 165.0/255.0, green: 0.0/255.0, blue: 0.0/255.0, alpha: 1.0))
     )
     
     lazy var linkCopiedSheetVC = DownSheetViewController(items:[
-//        (LinkCopiedActionType.copied, .regular)
+        (LinkCopiedActionType.copied, .regular)
     ], topTitle: ("Link copied", .black)
     )
     
@@ -68,9 +73,6 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     
     
     func showDownSheet(_ controller: DownSheetViewController, payload: Int?) {
-   
-          //  self.view.addBlur()
-         //   self.addBlurEffect()
         controller.payload = payload
         controller.modalPresentationStyle = .overCurrentContext
         controller.delegate = self
@@ -79,8 +81,6 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         }
     }
     func showDownSheetAll(_ controller: DownSheetViewController, payload: Int?) {
-   
-       // self.addBlurEffect()
         controller.payload = payload
         controller.modalPresentationStyle = .overCurrentContext
         controller.delegate = self
@@ -94,15 +94,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             self.visualEffectView.removeFromSuperview()
             }
         }
-    func addBlurEffect() {
-        let statusBarHeight = UIApplication.shared.statusBarFrame.size.height
-        let bounds = self.navigationController?.navigationBar.bounds.insetBy(dx: 0, dy: -(statusBarHeight)).offsetBy(dx: 0, dy: -(statusBarHeight))
-        visualEffectView.frame = bounds ?? CGRect.zero
-        visualEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-        visualEffectView.backgroundColor = .black
-        visualEffectView.alpha = 0.2
-        self.navigationController?.navigationBar.addSubview(visualEffectView)
-    }
+  
     func downSheetItemTappedWith(_ controller: DownSheetViewController, type: DownSheetActionType, payload: Int?) {
       
 
@@ -129,7 +121,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             switch type {
             case .share:
                 guard let id = payload else { return }
-                shareAtrwork(id: id)
+                shareBroadcast(id: id)
             case .copyLink:
                 guard let id = payload else { return }
                 copyLink(id: id)
@@ -157,7 +149,8 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         if let type = type as? DeleteItemActionType {
             switch type {
             case .delete:
-                print("delete")
+                guard let id = payload else { return }
+                deleteBroadcast(with: id)
             case .notDelete:
                 break
             }
@@ -165,21 +158,34 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         
     }
     
-    private func shareAtrwork(id: Int) {
+    private func shareBroadcast(id: Int) {
         #if QA
-            "https://makestep.com/broadcastQA/\(id)".share()
+            "https://dev.makestep.com/broadcastQA/\(id)".share()
         #elseif DEBUG
             "https://makestep.com/broadcast/\(id)".share()
         #endif
     }
     
     private func copyLink(id: Int) {
+       
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
         let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+        Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
         UIPasteboard.general.string = urlShare
     }
     
-    func deleteArtwork(with id: Int32) {
-        
+    func deleteBroadcast(with id: Int) {
+        deleteBroad = fitMeetStreams.deleteBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil  {
+                    self.needUpdateAfterSuccessfullyCreate()
+                    Loaf("Delete Broadcaast : " + response.name!, state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
+            }
+        })
     }
     
     func blockUserById(with id: Int32) {
@@ -197,7 +203,9 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     func needUpdateAfterSuccessfullyCreate() {
         guard let nc = self.navigationController else {return}
         for i in nc.viewControllers {
-            print("refrech")
+            if let r = i as? Refreshable {
+                r.refresh()
+            }
         }
     }
     

@@ -72,6 +72,11 @@ class DownSheetViewController: UIViewController {
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
+    private lazy var dimmingView: UIView = {
+        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
+        let view = UIVisualEffectView(effect: blurEffect)
+        return view
+    }()
     
     private var customView: UIView? = nil
     private var customViewHeight: CGFloat = 0
@@ -84,13 +89,15 @@ class DownSheetViewController: UIViewController {
     var items: [(DownSheetActionType, DownSheetActionStyle)]
     var topTitle: (String , UIColor)?
     var payload: Int?
-    
+    private let panGestureRecognizer = UIPanGestureRecognizer()
     weak var delegate: DownSheetViewControllerDelegate?
-    
+    var height: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        panGestureRecognizer.addTarget(self, action: #selector(handlePan))
+        view?.addGestureRecognizer(panGestureRecognizer)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -106,13 +113,11 @@ class DownSheetViewController: UIViewController {
                 height = tableView.contentSize.height + 10 + 10 + titleLabel.frame.height + 32 + safeAreaBottomPadding
             }
         }
-        
-       
-        
-    
-      
         animatePresentContainer(height)
         defaultHeight = height
+    }
+    @objc func handlePan(sender: UIPanGestureRecognizer) {
+        animateDismissView(action: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -208,7 +213,12 @@ class DownSheetViewController: UIViewController {
     }
     
     func animatePresentContainer(_ height: CGFloat) {
+        dimmingView.frame = backView.bounds
+        dimmingView.alpha = 0
+        backView.addSubview(dimmingView)
+
         UIView.animate(withDuration: 0.3) {
+            self.dimmingView.alpha = 0.6
             self.containerViewBottomConstraint.constant = 0
             self.containerViewHeightConstraint.constant = height
             self.view.layoutIfNeeded()

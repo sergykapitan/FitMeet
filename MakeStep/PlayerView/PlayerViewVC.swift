@@ -21,7 +21,7 @@ protocol OpenCoachDelegate: AnyObject {
 
 
 
-class PlayerViewVC: UIViewController, TagListViewDelegate {
+class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     
    
     let background = UIView()
@@ -274,13 +274,9 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         self.present()
     }
     @objc func actionMore() {
-        guard token != nil else { return }
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = broadcast?.url
-        present(detailViewController, animated: true)
+        guard token != nil,let broadcastId = self.broadcast?.id else { return }
+      
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
     private func makeTableView() {
@@ -352,7 +348,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { response in
                   broadcasrRet = response
-                  print("RES = \(response.categories)")
           })
         guard let broadcasrRet = broadcasrRet else {  return self.broadcast! }
         return broadcasrRet
@@ -1073,15 +1068,6 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         background.leadingAnchor.constraint(equalTo: playerViewController!.view.leadingAnchor).isActive = true
         background.trailingAnchor.constraint(equalTo: playerViewController!.view.trailingAnchor).isActive = true
 
-    }
-    func closeView() {
-        let transition = CATransition()
-        transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        transition.type = CATransitionType.push
-        transition.subtype = CATransitionSubtype.fromBottom
-        navigationController?.view.layer.add(transition, forKey: nil)
-        _ = navigationController?.popViewController(animated: true)
     }
  }
 

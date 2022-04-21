@@ -58,8 +58,8 @@ enum DeleteItemActionType: DownSheetActionType {
     
     var description : String {
         switch self {
-        case .delete: return "Yes, delete the item"
-        case .notDelete: return "No, don't delete the item"
+        case .delete: return "Yes, delete the broadcast"
+        case .notDelete: return "No, don't delete the broadcast"
         }
     }
 }

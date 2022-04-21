@@ -31,7 +31,8 @@ extension State {
     }
 }
 
-class ChanellVC: UIViewController  {
+class ChanellVC: SheetableViewController,Refreshable  {
+   
 
     let videoVC = VideosVC()
     let timeTable = TimetableVC()
@@ -123,6 +124,13 @@ class ChanellVC: UIViewController  {
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
     }
+    func refresh() {
+        self.brodcast.removeAll()
+        currentPage = 1
+        guard let id = user?.id else { return }
+        self.binding(id: "\(id)", page: currentPage)
+    }
+       
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -378,6 +386,7 @@ class ChanellVC: UIViewController  {
             guard let id = user?.id else { return }
             self.binding(id: "\(id)", page: currentPage)
        }
+
     
     //  MARK:  - Animation Top View
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
