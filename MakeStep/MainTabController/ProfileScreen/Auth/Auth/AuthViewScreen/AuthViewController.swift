@@ -17,6 +17,7 @@ class AuthViewController: UIViewController{
     private let signInButton = ASAuthorizationAppleIDButton(type: .default, style: .black)
     private var takeAppleSign: AnyCancellable?
     @Inject var fitMeetApi: FitMeetApi
+ 
     
     override  var shouldAutorotate: Bool {
         return false
@@ -66,8 +67,11 @@ class AuthViewController: UIViewController{
         self.present(signUpVC, animated: true, completion: nil)
     }
     @objc func actionSignIn() {
-        let signUpVC = SignInViewController()
-        self.present(signUpVC, animated: true, completion: nil)
+        weak var pvc = self.presentingViewController
+        self.dismiss(animated: true, completion: {
+            let signUpVC = SignInViewController()
+            pvc?.present(signUpVC, animated: true, completion: nil)
+        })
     }
     @objc func actionSocialNetwork() {
         self.avtorizete()

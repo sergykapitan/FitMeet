@@ -17,6 +17,7 @@ class SignInViewController: UIViewController {
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeAppleSign: AnyCancellable?
+  
    
     let signUpView = SignInViewControllerCode()
     private var userSubscriber: AnyCancellable?
@@ -62,8 +63,11 @@ class SignInViewController: UIViewController {
         self.present(signInVC, animated: true, completion: nil)
     }
     @objc func actionSignUp() {
-        let signUpVC = AuthViewController()
-        self.present(signUpVC, animated: true, completion: nil)
+        weak var pvc = self.presentingViewController
+        self.dismiss(animated: true, completion: {
+            let signUpVC = AuthViewController()
+            pvc?.present(signUpVC, animated: true, completion: nil)
+        })
     }
     private func openProfileViewController() {
         let viewController = MainTabBarViewController()
