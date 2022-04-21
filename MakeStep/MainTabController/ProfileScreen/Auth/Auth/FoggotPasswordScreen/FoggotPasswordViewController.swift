@@ -59,7 +59,8 @@ class FoggotPasswordViewController: UIViewController {
     }
     private func fetchSicurityCode() {
         guard let phone = passwordView.textFieldLogin.text else { return }
-            userSubscriber = fitMeetApi.resetPassword(phone: Phone(phone: phone  ))
+        let userPhoneOreMail = phone.format(phoneNumber: phone, shouldRemoveLastDigt: phone.count == 1)
+            userSubscriber = fitMeetApi.resetPassword(phone: Phone(phone: userPhoneOreMail ))
                 .mapError({ (error) -> Error in
                     print(error)
                     return error
@@ -67,13 +68,13 @@ class FoggotPasswordViewController: UIViewController {
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     print(response)
                     if response.hash != nil {
+                        let userPhoneOreMail = phone.format(phoneNumber: phone, shouldRemoveLastDigt: phone.count == 1)
                         let securityCode = SecurityCodeVC()
                         securityCode.getHash = response.hash
-                        securityCode.userPhoneOreEmail = phone
+                        securityCode.userPhoneOreEmail = userPhoneOreMail
                         self.present(securityCode, animated: true, completion: nil)
 
                     } else if response.message == "phone must be a valid phone number" {
-                        print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
                         if self.passwordView.buttonContinue.frame.origin.y == 209.0 {
                          
                          UIView.animate(withDuration: 0.5) {
@@ -89,7 +90,6 @@ class FoggotPasswordViewController: UIViewController {
                          }
                       }
                     } else if response.message == "error.user.notFound" {
-                        print("FRAMECONT======\(self.passwordView.buttonContinue.frame.origin.y)")
                         if self.passwordView.buttonContinue.frame.origin.y == 209.0 {
                          
                          UIView.animate(withDuration: 0.5) {
@@ -104,15 +104,14 @@ class FoggotPasswordViewController: UIViewController {
                              }
                          }
                       }
-                    }
+                  }
             })
     }
 }
 extension FoggotPasswordViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-      //  let string = "formate"
-      //  textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+    
         if fullString == "" {
             passwordView.buttonContinue.backgroundColor = .blueColor.alpha(0.4)
             passwordView.buttonContinue.isUserInteractionEnabled = false

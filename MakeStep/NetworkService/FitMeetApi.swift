@@ -39,6 +39,13 @@ class FitMeetApi {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func codeReview(hashs: Hashs,code: String) -> AnyPublisher<Hashs, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/codeReview/\(code)", method: .post, parameters: hashs.asDictionary(), encoding: JSONEncoding.default)
+                 .publishDecodable(type: Hashs.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
 
     //MARK: - requestSecurityCode
     public func requestSecurityCode(phone:Phone) -> AnyPublisher< Bool, DifferentError> {

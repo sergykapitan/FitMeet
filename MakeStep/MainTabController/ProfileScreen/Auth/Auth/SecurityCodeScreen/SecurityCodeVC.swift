@@ -13,33 +13,15 @@ import Alamofire
 class SecurityCodeVC: UIViewController, CodeErrorDelegate {
     
     func codeError() {
-        if self.securityView.buttonSendCode.frame.origin.y == 194.5 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.securityView.buttonSendCode.frame.origin.y += 15
-           self.securityView.alertLabel.text = "The security code is incorrect."
-           self.securityView.alertImage.isHidden = false
-           self.securityView.alertLabel.isHidden = false
-            
-         } completion: { (bool) in
-             if bool {
-                 
-             }
-         }
-       }
+        animateError()
     }
     
     
     @Inject var fitMeetApi: FitMeetApi
-    @Inject var fitMeetchannel: FitMeetChannels
-    
     let securityView = SecurityCodeVCCode()
     var getHash: String?
-    
-    private var userSubscriber: AnyCancellable?
-    private var takeListChannel: AnyCancellable?
-    private var takeChannel: AnyCancellable?
-    
+    private var codeReview: AnyCancellable?
+    var bottomConstraint = NSLayoutConstraint()
     var userPhoneOreEmail: String?
     override  var shouldAutorotate: Bool {
         return false
@@ -61,7 +43,9 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
         actionButtonContinue()
         self.securityView.alertImage.isHidden = true
         self.securityView.alertLabel.isHidden = true
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        bottomConstraint = securityView.buttonSendCode.topAnchor.constraint(equalTo: securityView.textFieldCode.bottomAnchor, constant: 15)
+        bottomConstraint.isActive = true
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -85,17 +69,33 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
         guard let code = securityView.textFieldCode.text ,let phone = userPhoneOreEmail,let hash = getHash else { return }
         
         if phone.isValidPhone() {
-            
-            
-            let vc = NewPassword()
-            vc.verCode = code
-            vc.userPhoneOreEmail = phone
-            vc.getHash = hash
-            vc.delegateCode = self
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-
+            codeReview = fitMeetApi.codeReview(hashs: Hashs(hash: hash), code: code)
+                .mapError({ (error) -> Error in
+                    self.animateError()
+                    return error  })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response != nil {
+                                let vc = NewPassword()
+                                vc.verCode = code
+                                vc.userPhoneOreEmail = phone
+                                vc.getHash = hash
+                                vc.delegateCode = self
+                                vc.modalPresentationStyle = .fullScreen
+                                self.present(vc, animated: true, completion: nil)
+                    }
+                })
+            }
         }
+    private func animateError() {
+        let transitionAnimator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 1, animations: {
+            self.bottomConstraint.constant = 65
+            self.securityView.alertLabel.text = "The security code is incorrect."
+            self.securityView.alertImage.isHidden = false
+            self.securityView.alertLabel.isHidden = false
+            
+            })
+            self.view.layoutIfNeeded()
+        transitionAnimator.startAnimation()
     }
 }
 extension SecurityCodeVC: UITextFieldDelegate {

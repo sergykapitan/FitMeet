@@ -78,25 +78,8 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
 
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-
-
-
-        if brodcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
-
-
-
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        guard let selfID = selfId else { return cell}
-        if self.usersd[id]?.id == Int(selfID) {
-            cell.buttonLike.isHidden = true
-        } else {
-            cell.buttonLike.isHidden = false
-        }
-
+        
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
@@ -114,7 +97,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
  
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        guard token != nil,let broadcastId = self.broadcast?.id else { return }
+        guard token != nil,let broadcastId = self.brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
     }
     @objc func actionStartStream(_ sender: UIButton) {
