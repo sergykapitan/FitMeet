@@ -111,8 +111,8 @@ class FoggotPasswordViewController: UIViewController {
 extension FoggotPasswordViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-        let string = "formate"
-        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+      //  let string = "formate"
+      //  textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
             passwordView.buttonContinue.backgroundColor = .blueColor.alpha(0.4)
             passwordView.buttonContinue.isUserInteractionEnabled = false
@@ -123,7 +123,7 @@ extension FoggotPasswordViewController: UITextFieldDelegate {
             passwordView.buttonContinue.backgroundColor = .blueColor.alpha(0.4)
             passwordView.buttonContinue.isUserInteractionEnabled = false
         }
-        return false
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {

@@ -56,7 +56,10 @@ class AuthViewController: UIViewController{
         authView.appleLogInButton.button.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        let userPhoneOreMail = authView.textFieldLogin.text
+        guard let text = authView.textFieldLogin.text else { return }
+        //  let string = "formate"
+        //  textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+        let userPhoneOreMail = text.format(phoneNumber: text, shouldRemoveLastDigt: text.count == 1)
         let signUpVC = SignUpViewController()
         signUpVC.userPhoneOreEmail = userPhoneOreMail
         signUpVC.delegate = self
@@ -69,7 +72,6 @@ class AuthViewController: UIViewController{
     @objc func actionSocialNetwork() {
         self.avtorizete()
     }
-
     private func openProfileViewController() {
         let viewController = MainTabBarViewController()
         viewController.selectedIndex = 4
@@ -90,8 +92,7 @@ extension AuthViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-        let string = "formate"
-        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+       
         if fullString == "" {
             authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
@@ -102,16 +103,15 @@ extension AuthViewController: UITextFieldDelegate {
             authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
         }
-
-        return false
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == authView.textFieldLogin {
             self.authView.textFieldLogin.resignFirstResponder()
-        }
+       }
         return true
-    }  
+    }
 }
 
 extension AuthViewController: ASAuthorizationControllerDelegate {
@@ -143,7 +143,6 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
         print("Error: \(error.localizedDescription)")
     }
 }
-
 extension AuthViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window ?? UIWindow()

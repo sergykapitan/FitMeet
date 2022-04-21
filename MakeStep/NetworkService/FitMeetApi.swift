@@ -24,8 +24,6 @@ class FitMeetApi {
     //MARK: - signupPassword
     public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary() , encoding: JSONEncoding.default, headers: nil)
-                // .validate(statusCode: 200..<300)
-                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: ResponceLogin.self)
                  .value()
                  .mapError{ DifferentError.alamofire(wrapped: $0)}

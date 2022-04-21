@@ -168,6 +168,7 @@ extension HomeVC: UITableViewDelegate {
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
 
           let vc = PlayerViewVC()
+          vc.delegate = self
         if self.listBroadcast.isEmpty { return }
         
         if self.listBroadcast[indexPath.row].status == "ONLINE" {
@@ -244,5 +245,13 @@ extension HomeVC: ReloadView {
         if listBroadcast.isEmpty {
             self.getUsers()
         }
+    }
+}
+extension HomeVC: OpenCoachDelegate {
+    func coachTapped(userId: Int) {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.usersd[userId]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

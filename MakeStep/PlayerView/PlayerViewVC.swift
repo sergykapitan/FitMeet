@@ -15,6 +15,10 @@ import Kingfisher
 import TimelineTableViewCell
 import Alamofire
 
+protocol OpenCoachDelegate: AnyObject {
+    func coachTapped(userId: Int)
+}
+
 
 
 class PlayerViewVC: UIViewController, TagListViewDelegate {
@@ -27,7 +31,7 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
     var arrayResolution = [String]()
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
-    
+    weak var delegate: OpenCoachDelegate?
     var bottomConstraint = NSLayoutConstraint()
  
     
@@ -209,16 +213,16 @@ class PlayerViewVC: UIViewController, TagListViewDelegate {
         
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
-        homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .allTouchEvents)
+        homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         homeView.buttonLogo.addTarget(self, action: #selector(actionCoach), for: .touchUpInside)
       
     }
     @objc func actionCoach() {
-        let vc = ChannelCoach()
-        guard let id = self.broadcast?.userId else { return}
-        vc.user = self.usersd[id]
-        self.present(vc, animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            guard let id = self.broadcast?.userId else { return }
+            self.delegate?.coachTapped(userId: id)
+        }
     }
     @objc func actionSkipNext() {
         if tracksInt <= self.brodcast.count - 1 {

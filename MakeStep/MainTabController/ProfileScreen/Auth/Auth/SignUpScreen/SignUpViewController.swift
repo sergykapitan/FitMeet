@@ -56,21 +56,24 @@ class SignUpViewController: UIViewController {
         signUpView.textFieldPassword.textContentType = .password
         self.signUpView.textFieldPassword.isSecureTextEntry = true
         buttonSignUp()
-        self.hideKeyboardWhenTappedAround() 
-
+        self.hideKeyboardWhenTappedAround()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
         signUpView.alertLabel.isHidden = true
         signUpView.alertImage.isHidden = true
     }
+    
     func buttonSignUp() {
         signUpView.buttonContinue.addTarget(self, action: #selector(buttonSignUpAction), for: .touchUpInside)
     }
+    
     @objc func buttonSignUpAction() {
         fetchUser()
     }
+    
     private func openProfileViewController() {
         let viewController = MainTabBarViewController()
         viewController.selectedIndex = 4
@@ -80,7 +83,6 @@ class SignUpViewController: UIViewController {
  
     private func fetchUser(){
         if signUpView.textFieldName.text == "" || signUpView.textFieldUserName.text == "" || signUpView.textFieldPassword.text == "" {
-            //print("ведите значения для текста")
             self.alertControl(message: "Error TextField")
             return
         }
@@ -95,10 +97,12 @@ class SignUpViewController: UIViewController {
             .mapError({ (error) -> Error in
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                print("RES == \(response)")
                 if let token = response.token?.token {
                 UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                 UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                 UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
+                    
                     self.openProfileViewController()
                 } else if response.message == "error.user.phoneExist"{
                     self.delegate?.changeAlert()
@@ -111,9 +115,7 @@ class SignUpViewController: UIViewController {
                     self.dismiss(animated: true, completion: nil)
                 }
                 else if response.message == "error.user.usernameExist"{
-                    
-                    print("HHHH ==\(self.signUpView.textFieldPassword.frame.origin.y)")
-                    
+                              
                     if self.signUpView.textFieldPassword.frame.origin.y == 209.0 {
                     
                     UIView.animate(withDuration: 0.5) {
@@ -179,7 +181,6 @@ class SignUpViewController: UIViewController {
               })
            }
         }
-
     private func alertControl(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
