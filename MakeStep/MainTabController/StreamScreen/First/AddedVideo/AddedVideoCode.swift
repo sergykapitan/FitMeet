@@ -57,7 +57,6 @@ final class AddedVideoCode: UIView {
     }()
     let textFieldCategory: DropDown = {
         let textField = DropDown()
-      
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =

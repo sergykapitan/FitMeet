@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import iOSDropDown
+import TagListView
 
 final class EditStreamCode: UIView {
     
@@ -41,13 +42,12 @@ final class EditStreamCode: UIView {
     let textFieldCategory: DropDown = {
         let textField = DropDown()
         textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
+        textField.backgroundColor = UIColor(hexString: "F9F9F9")        
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldStartDate: DropDown = {
@@ -60,6 +60,7 @@ final class EditStreamCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldAviable: DropDown = {
@@ -72,20 +73,7 @@ final class EditStreamCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        return textField
-    }()
-    var textFieldFree: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Free", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     let textFieldDescription: UITextField = {
@@ -112,7 +100,7 @@ final class EditStreamCode: UIView {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+        button.backgroundColor = .blueColor
         return button
     }()
     let scroll: UIScrollView = {
@@ -121,6 +109,20 @@ final class EditStreamCode: UIView {
         scroll.contentSize.height = 800
         scroll.backgroundColor = .white
         return scroll
+    }()
+    var tagView: TagListView = {
+        let tag = TagListView()
+        tag.textFont = UIFont.systemFont(ofSize: 18)
+        tag.cornerRadius = 15
+        tag.enableRemoveButton = true
+        tag.removeIconLineColor = .black
+        tag.removeButtonIconSize = 10
+        tag.tagBackgroundColor = UIColor(hexString: "#E5E5E5")
+        tag.textColor = .black
+        tag.paddingX = 10
+        tag.paddingY = 5
+        tag.selectedTextColor = .black
+        return tag
     }()
     
     // MARK: - Init
@@ -160,7 +162,7 @@ final class EditStreamCode: UIView {
         textFieldCategory.anchor(top: textFieldName.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10)
         
         scroll.addSubview(textFieldStartDate)
         textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
@@ -174,14 +176,9 @@ final class EditStreamCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        scroll.addSubview(textFieldFree)
-        textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(textFieldDescription)
-        textFieldDescription.anchor(top: textFieldFree.bottomAnchor,
+        textFieldDescription.anchor(top: textFieldAviable.bottomAnchor,
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
@@ -191,6 +188,13 @@ final class EditStreamCode: UIView {
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        textFieldCategory.addSubview(tagView)
+        tagView.anchor(top:textFieldCategory.topAnchor,
+                       left: textFieldCategory.leftAnchor,
+                       right: textFieldCategory.rightAnchor,
+                       bottom: textFieldCategory.bottomAnchor,
+                       paddingTop: 5,paddingLeft: 10, paddingRight: 40,paddingBottom: 5)
 
         
     }
