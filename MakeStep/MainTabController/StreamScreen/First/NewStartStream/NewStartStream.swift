@@ -582,11 +582,9 @@ extension NewStartStream: UITextFieldDelegate {
 extension NewStartStream: ImagePickerDelegate {
     func didSelect(image: UIImage?) {
         self.authView.imageButton.setImage(image, for: .normal)
-        
         guard let imagee = image else { return }
         bindingImage(image: imagee)
-        let imageData:Data = imagee.pngData()!
-       
+        let imageData:Data = imagee.pngData()!       
         let imageStr = imageData.base64EncodedString()
         self.image = imageStr
     }

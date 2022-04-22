@@ -490,7 +490,6 @@ extension AddedVideoVC: VideoPickerDelegate {
         })
     }
     func didSelectVideo(video: URL?) {
-      
         guard let video = video else { return }
         self.videoURl = video
         self.authView.buttonUploadVideo.isHidden = true
