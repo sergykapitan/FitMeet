@@ -46,14 +46,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         
     }
     func changeBackgroundColor() {
-       
-//        streamView.recButton.isHidden = false
-//        streamView.stopButton.isHidden = false
-//        streamView.microfoneButton.isHidden = false
-//        streamView.cameraModeButton.isHidden = false
-//        streamView.cameraButton.isHidden = false
-//        streamView.chatButton.isHidden = false
-//        streamView.StartStreamButton.isHidden = false
     }
     
     
@@ -420,23 +412,20 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.microfoneButton.isSelected.toggle()
         
         if streamView.microfoneButton.isSelected {
-           
-            streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
-            self.rtmpStream.audioSettings = [
-                .muted: false,
-                .bitrate: 32 * 1000,
-            
-            ]
-            
-        } else {
-            
+
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "notmicrofone"), for: [])
-            self.rtmpStream.audioSettings = [
-                .muted: true,
-                .bitrate: 32 * 1000,
-            
-            ]
-            
+                       self.rtmpStream.audioSettings = [
+                           .muted: true,
+                           .bitrate: 32 * 1000,
+                       
+                       ]
+        } else {
+            streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
+                        self.rtmpStream.audioSettings = [
+                            .muted: false,
+                            .bitrate: 32 * 1000,
+                        
+                        ]
         }
     }
     
@@ -480,13 +469,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         times.append("\(seconds)s")
         
         streamView.timerLabel.text = times.joined(separator: " ")
-    //  }
+    
     }
-    
-    
-    
-    
-    
+
     @objc func timerAction() {
            counter += 1
            updateTimer(timeElapsed: counter)

@@ -85,7 +85,6 @@ class CategoryBroadcastCell: UITableViewCell {
     func initialize() {
         addSubview(cardView)
         cardView.fillSuperview()
-       // cardView.fillFull(for: self)
         cardView.addSubview(backgroundImage)
         backgroundImage.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 0, paddingLeft: 0, paddingRight: 0,height:208)
         cardView.addSubview(logoUserImage)
@@ -99,9 +98,6 @@ class CategoryBroadcastCell: UITableViewCell {
         
         cardView.addSubview(titleLabel)
         titleLabel.anchor(top: backgroundImage.bottomAnchor, left: logoUserImage.rightAnchor,right: buttonMore.leftAnchor, paddingTop: 8, paddingLeft: 8,paddingRight: 5)
-        
-       
-        
         
         
         cardView.addSubview(labelDescription)

@@ -145,7 +145,7 @@ class DownSheetViewController: UIViewController {
         }
         
         containerViewHeightConstraint = containerView.heightAnchor.constraint(equalToConstant: defaultHeight)
-        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: safeAreaBottomPadding)
+        containerViewBottomConstraint = containerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: defaultHeight)
         
         NSLayoutConstraint.activate([
             
@@ -181,7 +181,7 @@ class DownSheetViewController: UIViewController {
                 customView.topAnchor.constraint(equalTo: gripView.bottomAnchor),
                 customView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 customView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-                customView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: safeAreaBottomPadding),
+                customView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -safeAreaBottomPadding),
             ])
             return
         }

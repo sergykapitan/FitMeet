@@ -151,12 +151,10 @@ class CategoryBroadcast: SheetableViewController  {
     func rightHandAction() {
         print("right bar button action")
     }
-
     @objc
     func leftHandAction() {
         print("left bar button action")
     }
-    
     @objc
     func rightBack() {
         self.navigationController?.popViewController(animated: true)
@@ -166,41 +164,30 @@ class CategoryBroadcast: SheetableViewController  {
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-
         sortListCategory = listBroadcast
         self.categoryView.tableView.reloadData()
     }
     @objc func actionPopular() {
-        
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = .blueColor
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
-        
         sortListCategory = listBroadcast.filter { ($0.categories?.first?.isPopular ?? false) }
         self.categoryView.tableView.reloadData()
     }
     @objc func actionNew() {
-        
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = .blueColor
         categoryView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
         sortListCategory = listBroadcast.filter { ($0.categories?.first?.isNew ?? false) }
         self.categoryView.tableView.reloadData()
     }
-
     @objc func actionViewers() {
-        
         categoryView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         categoryView.buttonViewers.backgroundColor = .blueColor
-      
         sortListCategory = listBroadcast.filter{ $0.followersCount ?? 0 > 1}
         self.categoryView.tableView.reloadData()
     }
@@ -251,36 +238,14 @@ class CategoryBroadcast: SheetableViewController  {
           })
     }
     func getMapWather(ids: [Int])   {
-        
         watcherMap = fitMeetApi.getWatcherMap(ids: ids)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                 
                     self.watch = response.data["\(ids.first!)"]!
-             
                 }
           })
     }
-    func followBroadcast(id: Int) {
-        followBroad = fitMeetStream.followBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                
-                if response != nil {
-                    print(response)
-                }
-          })
-    }
-    func unFollowBroadcast(id: Int) {
-        followBroad = fitMeetStream.unFollowBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil {
-                }
-         })
-    }
-
     private func makeTableView() {
         categoryView.tableView.dataSource = self
         categoryView.tableView.delegate = self
@@ -288,7 +253,7 @@ class CategoryBroadcast: SheetableViewController  {
         categoryView.tableView.separatorStyle = .none
     }
     func connectUser (broadcastId:String?,channellId: String?) {
-        guard let broadID = broadcastId,let id = channellId else { return }     
+        guard let broadID = broadcastId,let id = channellId else { return }
         SocketWatcher.sharedInstance.getTokenChat()
         SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
     }
