@@ -517,11 +517,11 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
         
         self.view.addSubview(self.homeView.buttonSkipPrevious)
-        self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 0)
+        self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 15)
         self.homeView.buttonSkipPrevious.centerY(inView: self.homeView.buttonPlayPause)
                
         self.view.addSubview(self.homeView.buttonSkipNext)
-        self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 0)
+        self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 15)
         self.homeView.buttonSkipNext.centerY(inView: self.homeView.buttonPlayPause)
         
         self.view.addSubview(self.homeView.labelTimeStart)
@@ -595,11 +595,11 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 40)
                 self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
                 self.view.addSubview(self.homeView.buttonSkipPrevious)
-                self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 0)
+                self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 15)
                 self.homeView.buttonSkipPrevious.centerY(inView: self.homeView.buttonPlayPause)
                        
                 self.view.addSubview(self.homeView.buttonSkipNext)
-                self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 0)
+                self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 15)
                 self.homeView.buttonSkipNext.centerY(inView: self.homeView.buttonPlayPause)
                 self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
@@ -752,7 +752,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.homeView.labelLike.text = "\(likeCount)"
 
         guard let like = self.broadcast?.isFollow else { return }
-        print("LIKE == \(like)")
         like ?  homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal) :  homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         self.homeView.buttonLike.isSelected = like
         
