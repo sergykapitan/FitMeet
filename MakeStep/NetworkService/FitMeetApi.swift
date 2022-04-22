@@ -156,7 +156,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UploadImage.self)
             .value()
-            .print("uploadImage")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
         

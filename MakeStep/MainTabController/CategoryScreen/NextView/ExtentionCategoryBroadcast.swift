@@ -52,8 +52,8 @@ extension CategoryBroadcast: UITableViewDataSource {
         
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
-        
-        switch listBroadcast[indexPath.row].status {
+        guard let status = sortListCategory[indexPath.row].status  else { return cell}
+        switch status {
             
         case .online:
             cell.overlayPlan.isHidden = true
@@ -171,7 +171,8 @@ extension CategoryBroadcast: UITableViewDelegate {
         if self.listBroadcast[indexPath.row].id == nil {
         return
     }
-        switch self.listBroadcast[indexPath.row].status {
+        guard let status = self.listBroadcast[indexPath.row].status else { return}
+        switch status {
             
         case .online:
             vc.broadcast = self.listBroadcast[indexPath.row]

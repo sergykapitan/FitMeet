@@ -39,7 +39,8 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
-        switch brodcast[indexPath.row].status {
+        guard let status = brodcast[indexPath.row].status else { return cell}
+        switch status {
             
         case .online:
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
@@ -136,8 +137,9 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
         if self.brodcast[indexPath.row] == nil { return }
-        switch self.brodcast[indexPath.row].status {
-            
+        
+        guard let status = self.brodcast[indexPath.row].status else { return}
+        switch status {            
         case .online:
             guard let streams = brodcast[indexPath.row].streams else { return }
             if streams.isEmpty  { return }

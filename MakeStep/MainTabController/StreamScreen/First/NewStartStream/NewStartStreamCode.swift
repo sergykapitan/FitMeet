@@ -53,7 +53,7 @@ final class NewStartStreamCode: UIView {
         textField.layer.cornerRadius = 19
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
-            NSAttributedString(string: "Start Now ", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "000000")])
+            NSAttributedString(string: "Start now ", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "000000")])
         textField.setLeftPaddingPoints(25)
         textField.textColor = .black
         textField.layer.borderWidth = 1

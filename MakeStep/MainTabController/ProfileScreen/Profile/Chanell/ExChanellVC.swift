@@ -30,7 +30,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.labelDescription.text = brodcast[indexPath.row].name
         cell.titleLabel.text = self.user?.fullName
         guard let id = brodcast[indexPath.row].userId else { return cell}
-        switch brodcast[indexPath.row].status {
+        guard let status =  brodcast[indexPath.row].status else { return  cell}
+        switch status {
             
         case .online:
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
@@ -139,7 +140,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-        switch self.brodcast[indexPath.row].status {
+        guard let status = self.brodcast[indexPath.row].status else { return }
+        switch status {
             
         case .online:
             vc.broadcast = self.brodcast[indexPath.row]

@@ -56,9 +56,9 @@ class SignInViewController: UIViewController {
         signUpView.buttonSocialNetwork.button.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
     }
     @objc func actionContinue() {
-        let userPhoneOreMail = signUpView.textFieldLogin.text
+        guard let userPhoneOreMail = signUpView.textFieldLogin.text else {return}
         let signInVC = SignInPasswordViewController()
-        signInVC.userPhoneOreEmail = userPhoneOreMail
+        signInVC.userPhoneOreEmail = userPhoneOreMail.format(phoneNumber: userPhoneOreMail, shouldRemoveLastDigt: userPhoneOreMail.count == 1)
         signInVC.delegate = self
         self.present(signInVC, animated: true, completion: nil)
     }
@@ -93,8 +93,6 @@ extension SignInViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-//        let string = "formate"
-//        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         if fullString == "" {
             signUpView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             signUpView.buttonContinue.isUserInteractionEnabled = false

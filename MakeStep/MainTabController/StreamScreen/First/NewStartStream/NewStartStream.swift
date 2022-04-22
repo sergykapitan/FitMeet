@@ -43,6 +43,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 
     private var take: AnyCancellable?
     private var takeChannel: AnyCancellable?
+    private var takeImage: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
     private var taskStream: AnyCancellable?
     
@@ -136,7 +137,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         registerForKeyboardNotifications()
         authView.tagView.delegate = self
         self.authView.buttonOK.isUserInteractionEnabled = false
-        
+        setupTapGesture()
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
         scrollViewTap.numberOfTapsRequired = 1
         authView.scroll.addGestureRecognizer(scrollViewTap)
@@ -278,7 +279,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             authView.textFieldAviable.text = "Available for all"
         }
         if authView.textFieldStartDate.text == "" {
-            authView.textFieldStartDate.text == "Start now"
+            authView.textFieldStartDate.text = "Start now"
         }
         if image ==  nil {
             Loaf("Not Saved Image preview", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
@@ -393,14 +394,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         })
     }
     func bindingImage(image: UIImage) {
-        takeChannel = fitMeetApi.uploadImage(image: image)
-            .mapError({ (error) -> Error in return error })
+        takeImage = fitMeetApi.uploadImage(image: image)
+            .mapError({ (error) -> Error in  return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.imageUpload = response
-                    
-                  
-                }
+            }
         })
     }
     func bindingUser() {
@@ -412,6 +411,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     
                 }
         })
+    }
+    func setupTapGesture() {
+        authView.tagView.isUserInteractionEnabled = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelector))
+        authView.tagView.addGestureRecognizer(tap)
+    }
+    @objc func tapGestureSelector() {
+        authView.textFieldCategory.showList()
     }
     func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int],type: String)  {
 
@@ -442,14 +449,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
                     self.authView.imageButton.setImage(nil, for: .normal)
-
                 } else {
                     guard let mess = response.message else { return }
                     Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-                }
-             })
-         
-         }
+            }
+        })
+    }
     func fetchStream(id:Int?,name: String?) {
         let UserId = UserDefaults.standard.string(forKey: Constants.userID)
         guard let id = id , let name = name , let userId = UserId  else{ return }
@@ -523,8 +528,6 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
 extension NewStartStream: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-       // let fullString = (textField.text ?? "") + string
-
         if textField == authView.textFieldName {
             let text = (textField.text! as NSString).replacingCharacters(in: range, with: string)
             if text.isEmpty {
@@ -569,7 +572,6 @@ extension NewStartStream: UITextFieldDelegate {
     }
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
             self.view.endEditing(true)
-       
         if textField == authView.textFieldCategory {
             self.authView.textFieldName.resignFirstResponder()
             return true
@@ -578,7 +580,6 @@ extension NewStartStream: UITextFieldDelegate {
   }
 }
 extension NewStartStream: ImagePickerDelegate {
-
     func didSelect(image: UIImage?) {
         self.authView.imageButton.setImage(image, for: .normal)
         
@@ -588,6 +589,5 @@ extension NewStartStream: ImagePickerDelegate {
        
         let imageStr = imageData.base64EncodedString()
         self.image = imageStr
-
     }
 }

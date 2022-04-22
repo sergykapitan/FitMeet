@@ -71,8 +71,8 @@ extension HomeVC: UITableViewDataSource {
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
         cell.buttonLike.isHidden = true
-            
-        switch listBroadcast[indexPath.row].status {
+       guard let status = listBroadcast[indexPath.row].status  else { return cell}
+        switch status {
 
         case .online:
                 cell.overlayPlan.isHidden = true
@@ -205,7 +205,8 @@ extension HomeVC: UITableViewDelegate {
           let vc = PlayerViewVC()
           vc.delegate = self
         if self.listBroadcast.isEmpty { return }
-        switch self.listBroadcast[indexPath.row].status {
+        guard let status = listBroadcast[indexPath.row].status  else { return }
+        switch status {
             
         case .online:
             self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")

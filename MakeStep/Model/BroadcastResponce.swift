@@ -20,7 +20,7 @@ struct BroadcastResponce:Codable,Equatable,Hashable {
     var deleted: String?
     var userId: Int?
     var name, type, access: String?
-    let status: BroadcastStatus
+    let status: BroadcastStatus?
     var hasChat, isPlanned: Bool?
     var scheduledStartDate, startDate, endDate: String?
    // let onlyForSubscribers, onlyForSponsors: Bool?
@@ -103,5 +103,5 @@ enum BroadcastStatus :String, Codable,Equatable,Hashable{
 //        case .finished: return "FINISHED"
 //        case .wait_for_approve: return "WAIT_FOR_APPROVE"
 //        }
- //   }
+//    }
 }

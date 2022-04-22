@@ -16,7 +16,7 @@ struct UploadImage: Codable {
     
 }
 
-// MARK: - Datum
+// MARK: - ReqImage
 struct ReqImage: Codable {
     let mimetype: Int?
     let filename: String?

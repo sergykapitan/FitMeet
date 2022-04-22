@@ -31,7 +31,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
-        switch brodcast[indexPath.row].status {
+        guard let status = brodcast[indexPath.row].status else { return cell}
+        switch status {
             
         case .online:
             cell.buttonstartStream.isHidden = true
@@ -115,7 +116,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //let brodcastStatus = brodcast[indexPath.row].status,
         guard  let like = self.brodcast[indexPath.row].followersCount else { return }
-        switch brodcast[indexPath.row].status {
+        guard let status = brodcast[indexPath.row].status  else { return }
+        switch status {
             
         case .online:
             self.homeView.imageLogo.isHidden = true
