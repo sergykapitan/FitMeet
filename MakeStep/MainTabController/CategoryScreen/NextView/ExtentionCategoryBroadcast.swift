@@ -53,7 +53,15 @@ extension CategoryBroadcast: UITableViewDataSource {
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         
-        if listBroadcast[indexPath.row].status == "OFFLINE" {
+        switch listBroadcast[indexPath.row].status {
+            
+        case .online:
+            cell.overlayPlan.isHidden = true
+            cell.overlayOffline.isHidden = true
+            cell.overlay.isHidden = false
+            cell.logoUserOnline.isHidden = false
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+        case .offline:
             cell.overlayPlan.isHidden = true
             cell.overlay.isHidden = true
             cell.overlayOffline.isHidden = false
@@ -64,23 +72,49 @@ extension CategoryBroadcast: UITableViewDataSource {
                 cell.overlayOffline.labelLive.text = "00:00"
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
-            
-        } else if listBroadcast[indexPath.row].status == "ONLINE" {
-            cell.overlayPlan.isHidden = true
-            cell.overlayOffline.isHidden = true
-            cell.overlay.isHidden = false
-            
-            cell.logoUserOnline.isHidden = false
-            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        } else if listBroadcast[indexPath.row].status == "PLANNED" {
+        case .planned:
             cell.overlay.isHidden = true
             cell.overlayOffline.isHidden = true
             cell.overlayPlan.isHidden = false
             
             cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.logoUserOnline.isHidden = true
-
+        case .banned:
+            break
+        case .finished:
+            break
+        case .wait_for_approve:
+            break
         }
+        
+//        if listBroadcast[indexPath.row].status == "OFFLINE" {
+//            cell.overlayPlan.isHidden = true
+//            cell.overlay.isHidden = true
+//            cell.overlayOffline.isHidden = false
+//
+//            if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+//                cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
+//            } else {
+//                cell.overlayOffline.labelLive.text = "00:00"
+//            }
+//            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
+//
+//        } else if listBroadcast[indexPath.row].status == "ONLINE" {
+//            cell.overlayPlan.isHidden = true
+//            cell.overlayOffline.isHidden = true
+//            cell.overlay.isHidden = false
+//
+//            cell.logoUserOnline.isHidden = false
+//            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+//        } else if listBroadcast[indexPath.row].status == "PLANNED" {
+//            cell.overlay.isHidden = true
+//            cell.overlayOffline.isHidden = true
+//            cell.overlayPlan.isHidden = false
+//
+//            cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            cell.logoUserOnline.isHidden = true
+//
+//        }
             
         cell.buttonLogo.tag = indexPath.row
         cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
@@ -137,37 +171,69 @@ extension CategoryBroadcast: UITableViewDelegate {
         if self.listBroadcast[indexPath.row].id == nil {
         return
     }
-    if self.listBroadcast[indexPath.row].status == "ONLINE" {
-        vc.broadcast = self.listBroadcast[indexPath.row]
-        vc.id =  self.listBroadcast[indexPath.row].userId
-        vc.homeView.buttonChat.isHidden = false
-        vc.homeView.playerSlider.isHidden = true
-        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-    } else if  self.listBroadcast[indexPath.row].status == "OFFLINE" {
-        guard let _ = listBroadcast[indexPath.row].streams?.first else { return }
-        vc.broadcast = self.listBroadcast[indexPath.row]
-        vc.id = self.listBroadcast[indexPath.row].userId
-        vc.homeView.buttonChat.isHidden = true
-        vc.homeView.overlay.isHidden = true
-        vc.homeView.imageLive.isHidden = true
-        vc.homeView.labelLive.isHidden = true
-        vc.homeView.imageEye.isHidden = true
-        vc.homeView.labelEye.isHidden = true
-        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
-    } else if  self.listBroadcast[indexPath.row].status == "PLANNED" {
-        print("PLANNED")
-        return
-    } else if  self.listBroadcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
-        print("WAIT_FOR_APPROVE")
-        return
-    } else if  self.listBroadcast[indexPath.row].status == "FINISHED" {
-        print("FINISHED")
-        return
-    }
+        switch self.listBroadcast[indexPath.row].status {
+            
+        case .online:
+            vc.broadcast = self.listBroadcast[indexPath.row]
+            vc.id =  self.listBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = false
+            vc.homeView.playerSlider.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        case .offline:
+            guard let _ = listBroadcast[indexPath.row].streams?.first else { return }
+            vc.broadcast = self.listBroadcast[indexPath.row]
+            vc.id = self.listBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
+            vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
+        case .planned:
+            break
+        case .banned:
+            break
+        case .finished:
+            break
+        case .wait_for_approve:
+            break
+        }
+//    if self.listBroadcast[indexPath.row].status == "ONLINE" {
+//        vc.broadcast = self.listBroadcast[indexPath.row]
+//        vc.id =  self.listBroadcast[indexPath.row].userId
+//        vc.homeView.buttonChat.isHidden = false
+//        vc.homeView.playerSlider.isHidden = true
+//        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
+//    } else if  self.listBroadcast[indexPath.row].status == "OFFLINE" {
+//        guard let _ = listBroadcast[indexPath.row].streams?.first else { return }
+//        vc.broadcast = self.listBroadcast[indexPath.row]
+//        vc.id = self.listBroadcast[indexPath.row].userId
+//        vc.homeView.buttonChat.isHidden = true
+//        vc.homeView.overlay.isHidden = true
+//        vc.homeView.imageLive.isHidden = true
+//        vc.homeView.labelLive.isHidden = true
+//        vc.homeView.imageEye.isHidden = true
+//        vc.homeView.labelEye.isHidden = true
+//        vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
+//        vc.modalPresentationStyle = .fullScreen
+//        self.present(vc, animated: true, completion: nil)
+//    } else if  self.listBroadcast[indexPath.row].status == "PLANNED" {
+//        print("PLANNED")
+//        return
+//    } else if  self.listBroadcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+//        print("WAIT_FOR_APPROVE")
+//        return
+//    } else if  self.listBroadcast[indexPath.row].status == "FINISHED" {
+//        print("FINISHED")
+//        return
+//    }
 }
 
     }

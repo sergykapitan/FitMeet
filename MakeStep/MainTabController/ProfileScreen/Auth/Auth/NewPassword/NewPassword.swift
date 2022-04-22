@@ -11,9 +11,7 @@ import Combine
 import Alamofire
 
 protocol CodeErrorDelegate: class {
-    
     func codeError()
-
 }
 
 
@@ -22,6 +20,8 @@ class NewPassword: UIViewController {
     @Inject var fitMeetApi: FitMeetApi
     private var takePassword: AnyCancellable?
     private var takeUser: AnyCancellable?
+    
+    var bottomConstraint = NSLayoutConstraint()
     
     let signUpView = NewPasswordCode()
     weak var delegate: SignUpDelegate?
@@ -45,17 +45,15 @@ class NewPassword: UIViewController {
     override func loadView() {
         super.loadView()
         view = signUpView
-        
     }
-        
     override func viewDidLoad() {
         super.viewDidLoad()
         signUpView.textFieldName.delegate = self
         signUpView.textFieldUserName.delegate = self
-       // signUpView.textFieldPassword.textContentType = .password
-       // self.signUpView.textFieldPassword.isSecureTextEntry = true
         buttonSignUp()
-        self.hideKeyboardWhenTappedAround() 
+        self.hideKeyboardWhenTappedAround()
+        bottomConstraint = signUpView.buttonContinue.topAnchor.constraint(equalTo: signUpView.textFieldUserName.bottomAnchor, constant: 15)
+        bottomConstraint.isActive = true
 
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +77,7 @@ class NewPassword: UIViewController {
 
     private func fetchUser(){
         if signUpView.textFieldName.text == "" || signUpView.textFieldUserName.text == ""   {
-            self.alertControl(message: "Error TextField")
+            self.animateView()
             return
         }
 
@@ -92,9 +90,7 @@ class NewPassword: UIViewController {
         if password1 == password2 {
             takePassword = fitMeetApi.resetOldPassword(code: code, resetOld: ResetOldPassword(password: password1, phone: phone, hash: hash))
                         .mapError({ (error) -> Error in
-                                    print("Erorrrorororro == \(error.localizedDescription)")
                             if error.localizedDescription == "The operation couldn’t be completed. (MakeStep.FitMeetApi.DifferentError error 0.)" {
-                                print("!@#$%%^^&*&*(")
                                 self.delegateCode?.codeError()
                                 self.dismiss(animated: true, completion: nil)
                             }
@@ -104,26 +100,8 @@ class NewPassword: UIViewController {
                                 self.fetchToken(phone: phone, password: password1)
                             }
                         })
-        } else {
-                if self.signUpView.textFieldUserName.frame.origin.y == 220.5 {
-                      UIView.animate(withDuration: 0.5) {
-                            self.self.signUpView.textFieldUserName.frame.origin.y += 15
-                            self.signUpView.buttonContinue.frame.origin.y += 15
-                                } completion: { (bool) in
-                                    if bool {
-                                        self.signUpView.alertImage.isHidden = false
-                                        self.signUpView.alertLabel.isHidden = false
-                                }
-                }
-            }
-        }
+        } else {self.animateView()  }
    }
-
-    private func alertControl(message: String) {
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-        self.present(alert, animated: true)
-    }
     private func openMainViewController() {
           let mainVC = MainTabBarViewController()
           mainVC.modalPresentationStyle = .fullScreen
@@ -148,13 +126,6 @@ class NewPassword: UIViewController {
 extension NewPassword: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        
-//        if textField == signUpView.textFieldPassword {
-//        let fullString = (textField.text ?? "") + string
-//            if fullString.isValidPassword() {
-//                return true
-//            }
-//        }
         return true
     }
     
@@ -164,5 +135,16 @@ extension NewPassword: UITextFieldDelegate {
         self.signUpView.textFieldUserName.resignFirstResponder()
         
         return true
+    }
+}
+extension NewPassword {
+    func animateView() {
+    let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
+        self.bottomConstraint.constant = 45
+        self.signUpView.alertImage.isHidden = false
+        self.signUpView.alertLabel.isHidden = false
+    }
+    self.view.layoutIfNeeded()
+    trA.startAnimation()
     }
 }

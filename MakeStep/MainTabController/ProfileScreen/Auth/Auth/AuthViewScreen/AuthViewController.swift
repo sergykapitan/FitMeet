@@ -58,8 +58,6 @@ class AuthViewController: UIViewController{
     }
     @objc func actionSignUp() {
         guard let text = authView.textFieldLogin.text else { return }
-        //  let string = "formate"
-        //  textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
         let userPhoneOreMail = text.format(phoneNumber: text, shouldRemoveLastDigt: text.count == 1)
         let signUpVC = SignUpViewController()
         signUpVC.userPhoneOreEmail = userPhoneOreMail

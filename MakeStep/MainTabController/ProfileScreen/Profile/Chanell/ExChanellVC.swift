@@ -30,8 +30,16 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.labelDescription.text = brodcast[indexPath.row].name
         cell.titleLabel.text = self.user?.fullName
         guard let id = brodcast[indexPath.row].userId else { return cell}
-
-        if brodcast[indexPath.row].status == "OFFLINE" {
+        switch brodcast[indexPath.row].status {
+            
+        case .online:
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.labelLive.text = "Live"
+            cell.imageEye.isHidden = false
+            cell.labelEye.isHidden = false
+            cell.logoUserOnline.isHidden = false
+            cell.buttonstartStream.isHidden = true
+        case .offline:
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)
             cell.labelLive.text = "Offline"
@@ -39,24 +47,18 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
             cell.buttonstartStream.isHidden = true
-   
-        } else if brodcast[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
-            cell.logoUserOnline.isHidden = false
-            cell.buttonstartStream.isHidden = true
-
-        } else if brodcast[indexPath.row].status == "PLANNED" {
+        case .planned:
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
             cell.buttonstartStream.isHidden = false
-
-        } else if brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+        case .banned:
+            break
+        case .finished:
+            break
+        case .wait_for_approve:
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
@@ -64,6 +66,40 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonstartStream.isHidden = true
             cell.labelLive.text = "Wait for"
         }
+
+//        if brodcast[indexPath.row].status == "OFFLINE" {
+//            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+//            cell.imageLive.setImageColor(color: .gray)
+//            cell.labelLive.text = "Offline"
+//            cell.imageEye.isHidden = true
+//            cell.labelEye.isHidden = true
+//            cell.logoUserOnline.isHidden = true
+//            cell.buttonstartStream.isHidden = true
+//
+//        } else if brodcast[indexPath.row].status == "ONLINE" {
+//            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+//            cell.labelLive.text = "Live"
+//            cell.imageEye.isHidden = false
+//            cell.labelEye.isHidden = false
+//            cell.logoUserOnline.isHidden = false
+//            cell.buttonstartStream.isHidden = true
+//
+//        } else if brodcast[indexPath.row].status == "PLANNED" {
+//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+//            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            cell.imageEye.isHidden = true
+//            cell.labelEye.isHidden = true
+//            cell.logoUserOnline.isHidden = true
+//            cell.buttonstartStream.isHidden = false
+//
+//        } else if brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+//            cell.imageEye.isHidden = true
+//            cell.labelEye.isHidden = true
+//            cell.logoUserOnline.isHidden = true
+//            cell.buttonstartStream.isHidden = true
+//            cell.labelLive.text = "Wait for"
+//        }
         
         let categorys = brodcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -103,14 +139,15 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-        
-        if self.brodcast[indexPath.row].status == "ONLINE" {
+        switch self.brodcast[indexPath.row].status {
+            
+        case .online:
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = false
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
+        case .offline:
             guard let streams = brodcast[indexPath.row].streams else { return }
             if streams.isEmpty  { return }
             guard let url = streams.first?.vodUrl else { return }
@@ -125,7 +162,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        } else if  self.brodcast[indexPath.row].status == "PLANNED" {
+        case .planned:
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
@@ -134,14 +171,9 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.labelLive.text = "Wait for"
-            vc.homeView.imageEye.isHidden = true
-        } else if  self.brodcast[indexPath.row].status == "FINISHED" {
+        case .banned:
+            break
+        case .finished:
             guard let streams = self.brodcast[indexPath.row].streams else { return }
             if streams.isEmpty  { return }
             guard let url = streams.first?.vodUrl else { return }
@@ -156,7 +188,68 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
+        case .wait_for_approve:
+            vc.broadcast = self.brodcast[indexPath.row]
+            vc.id =  self.brodcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+            vc.homeView.labelLive.text = "Wait for"
+            vc.homeView.imageEye.isHidden = true
         }
+        
+//        if self.brodcast[indexPath.row].status == "ONLINE" {
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = false
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+//        } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
+//            guard let streams = brodcast[indexPath.row].streams else { return }
+//            if streams.isEmpty  { return }
+//            guard let url = streams.first?.vodUrl else { return }
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id = self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.overlay.isHidden = true
+//            vc.homeView.imageLive.isHidden = true
+//            vc.homeView.labelLive.isHidden = true
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.labelEye.isHidden = true
+//            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+//        } else if  self.brodcast[indexPath.row].status == "PLANNED" {
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+//        } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            vc.homeView.labelLive.text = "Wait for"
+//            vc.homeView.imageEye.isHidden = true
+//        } else if  self.brodcast[indexPath.row].status == "FINISHED" {
+//            guard let streams = self.brodcast[indexPath.row].streams else { return }
+//            if streams.isEmpty  { return }
+//            guard let url = streams.first?.vodUrl else { return }
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id = self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.overlay.isHidden = true
+//            vc.homeView.imageLive.isHidden = true
+//            vc.homeView.labelLive.isHidden = true
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.labelEye.isHidden = true
+//            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
+//        }
     }
 }
 

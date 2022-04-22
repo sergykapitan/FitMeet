@@ -139,7 +139,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.navigationController?.navigationBar.isHidden = true
         homeView.imageLogoProfile.makeRounded()
         alphaButton()
-        if self.broadcast?.status == "ONLINE" {
+        if self.broadcast?.status == .online {
             self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
         } else {
             self.urlStream = self.broadcast?.streams?.first?.vodUrl
@@ -326,7 +326,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                       self.broadcast = response
-                  if self.broadcast?.status == "ONLINE" {
+                  if self.broadcast?.status == .online {
                       self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
                       self.homeView.playerSlider.isHidden = true
                       loadPlayer()
@@ -357,7 +357,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                       self.broadcast = response
-                  if self.broadcast?.status == "ONLINE" {
+                  if self.broadcast?.status == .online {
                       self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
                       self.homeView.playerSlider.isHidden = true
                       loadPlayer()
@@ -537,7 +537,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                
         
         guard let broadcast = self.broadcast else { return }
-        if broadcast.status == "ONLINE" {
+        if broadcast.status == .online {
             self.homeView.playerSlider.maximumValue = 1
         } else {
             self.homeView.playerSlider.maximumValue = Float(seconds)
@@ -892,7 +892,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 }
         let track = tracks[nextIndexPath.row]
  
-        if track.status == "OFFLINE" {
+        if track.status == .offline {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true

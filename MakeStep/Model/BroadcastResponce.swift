@@ -20,9 +20,10 @@ struct BroadcastResponce:Codable,Equatable,Hashable {
     var deleted: String?
     var userId: Int?
     var name, type, access: String?
+    let status: BroadcastStatus
     var hasChat, isPlanned: Bool?
-    var scheduledStartDate, startDate, endDate, status: String?
-   // let onlyForSubscribers, onlyForSponsors,followersCount: Bool?
+    var scheduledStartDate, startDate, endDate: String?
+   // let onlyForSubscribers, onlyForSponsors: Bool?
     var updatedAt: String?
     var gcoreId, gcoreClientId: Int?
     var gcoreStatus: String?
@@ -85,4 +86,22 @@ struct MetaBroadcast: Codable,Equatable,Hashable {
     var take: Int?
     var itemCount: Int?
     var pageCount: Int?
+}
+enum BroadcastStatus :String, Codable,Equatable,Hashable{
+    case online = "ONLINE"
+    case offline = "OFFLINE"
+    case planned = "PLANNED"
+    case banned = "BANNED"
+    case finished = "FINISHED"
+    case wait_for_approve = "WAIT_FOR_APPROVE"
+//    var description : String {
+//        switch self {
+//        case .online: return "ONLINE"
+//        case .offline: return "OFFLINE"
+//        case .planned: return "PLANNED"
+//        case .banned: return "BANNED"
+//        case .finished: return "FINISHED"
+//        case .wait_for_approve: return "WAIT_FOR_APPROVE"
+//        }
+ //   }
 }

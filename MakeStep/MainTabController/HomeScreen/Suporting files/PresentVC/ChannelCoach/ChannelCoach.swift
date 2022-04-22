@@ -195,7 +195,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     @objc func labelAction(gr:UITapGestureRecognizer) {
         let vc = PlayerViewVC()
         guard let broadcast = broadcast else { return }
-        if broadcast.status == "ONLINE" {
+        if broadcast.status == .online {
             vc.broadcast = broadcast
             vc.id =  broadcast.userId
             vc.homeView.buttonChat.isHidden = false

@@ -13,7 +13,7 @@ import UIKit
 
 class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     
-
+    let status: BroadcastStatus = .online
     var ids = [Int]()
     var complishionHandler: ((Bool) -> Void)?
     var watch = 0
@@ -139,7 +139,9 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         }
     func bindingOff(page:Int) {
         takeOff = fitMeetStream.getOffBroadcast(page: page)
-              .mapError({ (error) -> Error in return error })
+              .mapError({ (error) -> Error in
+                  print("ERROR == \(error)")
+                  return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { response in
                   if response.data != nil  {
                       self.listBroadcast.append(contentsOf: response.data!)

@@ -61,7 +61,7 @@ class SearchUserVC: UIViewController  {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
-                    let arrayBroadcast = response.data?.filter{ $0.status == "ONLINE"}
+                    let arrayBroadcast = response.data?.filter{ $0.status == .online}
                     self.broadcast = response.data?.first
                 }
          })

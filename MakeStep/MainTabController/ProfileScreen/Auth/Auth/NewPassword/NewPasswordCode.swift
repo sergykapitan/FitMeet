@@ -117,19 +117,18 @@ final class NewPasswordCode: UIView {
                               right: cardView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        textFieldName.addSubview(alertImage)
-        alertImage.anchor( right: textFieldName.rightAnchor, paddingRight: 15)
-        alertImage.centerY(inView: textFieldName)
+        textFieldUserName.addSubview(alertImage)
+        alertImage.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
+        alertImage.centerY(inView: textFieldUserName)
         
         cardView.addSubview(alertLabel)
-        alertLabel.anchor(top: textFieldName.bottomAnchor, paddingTop: 5)
+        alertLabel.anchor(top: textFieldUserName.bottomAnchor, paddingTop: 5)
         alertLabel.centerX(inView: cardView)
         
         cardView.addSubview(buttonContinue)
-        buttonContinue.anchor(top: textFieldUserName.bottomAnchor,
-                              left: cardView.leftAnchor,
+        buttonContinue.anchor(left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                              paddingLeft: 10, paddingRight: 10,height: 39)
 
         
     }
