@@ -28,6 +28,7 @@ final class PlayerViewVCCode: UIView {
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.anchor(width: 24,height: 24)
         image.makeRounded()
         return image
     }()
@@ -86,16 +87,7 @@ final class PlayerViewVCCode: UIView {
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
-    var labelCategory: TagListView = {
-        var tag = TagListView()
-        tag.textFont = UIFont.systemFont(ofSize: 12)
-        tag.tagBackgroundColor = .clear
-        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-        tag.selectedTextColor = .black
-        tag.paddingX = 0
-        tag.translatesAutoresizingMaskIntoConstraints = false
-        return tag
-    }()
+   
     var labelStreamInfo: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#000000")
@@ -109,6 +101,7 @@ final class PlayerViewVCCode: UIView {
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
+        label.sizeToFit()
         return label
     }()
     var labelLike: UILabel = {
@@ -224,11 +217,26 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
-    var buttonLogo: UIButton = {
-        let but = UIButton()
-        return but
+    var stackButton: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        return stack
     }()
-    
+    var labelCategory: TagListView = {
+           var tag = TagListView()
+           tag.textFont = UIFont.systemFont(ofSize: 12)
+           tag.tagBackgroundColor = .clear
+           tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+           tag.selectedTextColor = .black
+           tag.paddingX = 2
+           tag.paddingY = 7
+          // tag.marginUp = 4
+           tag.tagLineBreakMode = .byWordWrapping
+           tag.translatesAutoresizingMaskIntoConstraints = false
+           tag.anchor( width: 200)
+           return tag
+       }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -238,8 +246,11 @@ final class PlayerViewVCCode: UIView {
     }
     
     //MARK: - constraint First Layer
-    private func initUI() {        
+    private func initUI() {
+        
         addSubview(cardView)
+        stackButton = UIStackView(arrangedSubviews: [imageLogoProfile,labelStreamDescription,labelCategory])
+        stackButton.spacing = 10
     }
     func createCardViewLayer() {
 
@@ -272,26 +283,30 @@ final class PlayerViewVCCode: UIView {
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
         
-        cardView.addSubview(buttonLogo)
-        buttonLogo.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
-        
-        buttonLogo.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
-
-     
-
-        buttonLogo.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor( left: imageLogoProfile.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
-        labelStreamDescription.centerY(inView: imageLogoProfile)
-        
        
-        cardView.addSubview(labelCategory)
-        NSLayoutConstraint.activate([
-            labelCategory.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 160),
-            labelCategory.trailingAnchor.constraint(equalTo: buttonLike.leadingAnchor, constant: -5),
-           
-        ])
-        labelCategory.centerY(inView: imageLogoProfile)
+        
+//        buttonLogo.addSubview(imageLogoProfile)
+//        imageLogoProfile.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
+//
+//
+//
+//        buttonLogo.addSubview(labelStreamDescription)
+//        labelStreamDescription.anchor( left: imageLogoProfile.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
+//        labelStreamDescription.centerY(inView: imageLogoProfile)
+        cardView.addSubview(stackButton)
+        stackButton.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,right:buttonLike.leftAnchor, paddingTop: 5, paddingLeft: 16,paddingRight: 5)
+       
+        
+//        cardView.addSubview(labelCategory)
+//        labelCategory.anchor(top: labelStreamInfo.bottomAnchor, left: labelStreamDescription.rightAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingRight: 5)
+//        labelCategory.centerY(inView: imageLogoProfile)
+//        cardView.addSubview(labelCategory)
+//        NSLayoutConstraint.activate([
+//            labelCategory.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 160),
+//            labelCategory.trailingAnchor.constraint(equalTo: buttonLike.leadingAnchor, constant: -5),
+//
+//        ])
+//        labelCategory.centerY(inView: imageLogoProfile)
     
       
         cardView.addSubview(tableView)
@@ -342,7 +357,6 @@ final class PlayerViewVCCode: UIView {
     }
     
     required init?(coder: NSCoder) {
-        //super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -215,7 +215,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
-        homeView.buttonLogo.addTarget(self, action: #selector(actionCoach), for: .touchUpInside)
+       // homeView.buttonLogo.addTarget(self, action: #selector(actionCoach), for: .touchUpInside)
       
     }
     @objc func actionCoach() {
@@ -710,6 +710,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
                     self.user = response
+                    self.homeView.labelStreamDescription.text = self.user?.fullName
                     guard let categorys = self.broadcast?.categories else { return }
                     let s = categorys.map{$0.title!}
                     let arr = s.map { String("\u{0023}" + $0)}
@@ -717,7 +718,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                     self.homeView.labelCategory.addTags(arr)
                     self.homeView.labelCategory.delegate = self
                     self.homeView.setImage(image: self.user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-                    self.homeView.labelStreamDescription.text = self.user?.fullName
+                    
                     if self.BoolTrack {
                        self.setUserProfile(user: self.user!)
                     }
