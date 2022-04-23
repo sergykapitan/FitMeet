@@ -49,6 +49,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     let delay = 3
     var isButton: Bool = false {
                 didSet {
+                    print(isButton)
                     if self.isButton {
                     timer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(actionBut), userInfo: nil, repeats: false)
                     }
@@ -132,7 +133,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-      
+        NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnd), name:
+        NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -178,7 +180,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         _ = UserDefaults.standard.string(forKey: Constants.broadcastID)
         _ = UserDefaults.standard.string(forKey: Constants.chanellID)
         
-        homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut(sender:))))
+        homeView.imagePromo.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(actionBut)))
        
 
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
@@ -189,6 +191,14 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil
+        NotificationCenter.default.removeObserver(self)
+    }
+    @objc func videoDidEnd(notification: NSNotification) {
+       
+       // isButton = false
+       // self.timer.invalidate()
+        actionBut()
+        actionPlayPause()
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
@@ -244,8 +254,10 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonPlayPause.isSelected.toggle()
         if homeView.buttonPlayPause.isSelected {
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
+            self.timer.invalidate()
             self.playerViewController?.player?.pause()
         } else {
+            isButton = true
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
             self.playerViewController?.player?.play()
         }
@@ -276,9 +288,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc func actionMore() {
         guard token != nil,let broadcastId = self.broadcast?.id else { return }
-      
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
-
     }
     private func makeTableView() {
         homeView.tableView.dataSource = self
@@ -418,7 +428,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 }
          })
     }
-    @objc func actionBut(sender:UITapGestureRecognizer) {
+    @objc func actionBut(_ sender: UITapGestureRecognizer? = nil) {
         if isButton {
             UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {
                 self.alphaButton()
@@ -559,7 +569,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 self.playerViewController!.view.frame = self.view.bounds
                 self.view.addSubview(self.playerViewController!.view)
                 self.playerViewController!.didMove(toParent: self)
-                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut)))
                 self.playerViewController!.view.addGestureRecognizer(UIPinchGestureRecognizer.init(target: self, action: #selector(self.actionResize(sender:))))
                 
                 self.view.addSubview(self.homeView.playerSlider)
