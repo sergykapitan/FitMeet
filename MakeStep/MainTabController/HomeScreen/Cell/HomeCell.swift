@@ -120,10 +120,9 @@ final class HomeCell: UITableViewCell {
            tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
            tag.selectedTextColor = .black
            tag.paddingX = 2
-        
+           tag.marginUp = 4
            tag.tagLineBreakMode = .byWordWrapping
            tag.translatesAutoresizingMaskIntoConstraints = false
-        //   tag.anchor( width: 250)
            return tag
        }()
 

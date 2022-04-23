@@ -111,10 +111,6 @@ extension HomeVC: UITableViewDataSource {
             break
         }
 
-           
-        cell.buttonLogo.tag = indexPath.row
-        cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
-        cell.buttonLogo.isUserInteractionEnabled = true
   
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -154,15 +150,6 @@ extension HomeVC: UITableViewDataSource {
    @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         guard !listBroadcast.isEmpty else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
-    }
-
-    @objc func tappedCoach(_ sender: UIButton) -> Void {
-        guard !listBroadcast.isEmpty else { return }
-        let vc = ChannelCoach()
-        vc.modalPresentationStyle = .fullScreen
-        guard let id = listBroadcast[sender.tag].userId else { return}
-        vc.user = self.usersd[id]
-        navigationController?.pushViewController(vc, animated: true)
     }
 }
 extension HomeVC: UITableViewDelegate {

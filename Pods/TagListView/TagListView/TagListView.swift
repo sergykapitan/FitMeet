@@ -121,6 +121,11 @@ open class TagListView: UIView {
             rearrangeViews()
         }
     }
+    @IBInspectable open dynamic var marginUp: CGFloat = 0 {
+        didSet {
+            rearrangeViews()
+        }
+    }
     
     @objc public enum Alignment: Int {
         case left
@@ -286,7 +291,7 @@ open class TagListView: UIView {
             tagBackgroundView.transform = directionTransform
             tagBackgroundView.frame.origin = CGPoint(
                 x: currentRowWidth,
-                y: 5)
+                y: marginUp)
             tagBackgroundView.frame.size = tagView.bounds.size
             tagBackgroundView.layer.shadowColor = shadowColor.cgColor
             tagBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: tagBackgroundView.bounds, cornerRadius: cornerRadius).cgPath
