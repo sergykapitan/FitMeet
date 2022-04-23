@@ -153,14 +153,12 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                 
                 if j.isEmpty {
                     self.authView.tagView.addTag(ff)
+                    let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+                    self.IdCategory.append(contentsOf: p)
+                    self.authView.tagView.layoutSubviews()
                 } else {
                     Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
                 }
-                
-                
-            let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
-            self.IdCategory.append(contentsOf: p)
-            self.authView.tagView.layoutSubviews()
             self.authView.textFieldCategory.placeholder = ""
                         
         }
@@ -175,12 +173,17 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
-           let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
-       
+            let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
+            guard let id = p.first else { return }
+            if IdCategory.contains(id) {
+                    let index = IdCategory.firstIndex(of: id)
+                    IdCategory.remove(at: index!)
+                    print(IdCategory)
+            }
        }
     @objc func scrollViewTapped() {
             authView.scroll.endEditing(true)
-            self.view.endEditing(true) // anyone
+            self.view.endEditing(true) 
         }
     func changeData() {
         authView.textFieldAviable.didSelect { (str, ind, col) in

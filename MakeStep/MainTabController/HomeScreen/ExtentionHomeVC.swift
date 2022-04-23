@@ -65,9 +65,7 @@ extension HomeVC: UITableViewDataSource {
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
             
-        
-//        cell.tagView.anchor(top:cell.labelDescription.bottomAnchor,left: cell.titleLabel.rightAnchor, right: cell.bottomView.rightAnchor,bottom:cell.bottomView.bottomAnchor,paddingTop: 0, paddingLeft: 10, paddingRight: 10,paddingBottom: 0)
-            
+
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self

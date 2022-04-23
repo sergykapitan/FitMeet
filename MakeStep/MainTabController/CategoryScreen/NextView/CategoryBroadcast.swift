@@ -202,7 +202,7 @@ class CategoryBroadcast: SheetableViewController  {
                     self.sortListCategory = response.data!
                     let arrayUserId = self.sortListCategory.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
-                    self.categoryView.tableView.reloadData()
+                   // self.categoryView.tableView.reloadData()
                 }
         })
     }

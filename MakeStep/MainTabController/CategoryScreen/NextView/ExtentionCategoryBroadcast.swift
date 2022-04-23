@@ -33,13 +33,13 @@ extension CategoryBroadcast: UITableViewDataSource {
               let id = sortListCategory[indexPath.row].userId,
               let broadcastID = self.sortListCategory[indexPath.row].id
               else { return cell}
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
 
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
         cell.overlay.labelEye.text = "\(self.watch)"
-        
-     
- 
+  
         let categorys = sortListCategory[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
@@ -50,13 +50,11 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
 
-        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.usersd[id]?.fullName
+        
         
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         guard let status = sortListCategory[indexPath.row].status  else { return cell}
-        print("STATUS == \(status)")
         switch status {
             
         case .online:
@@ -107,9 +105,6 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        
-        
-        
         return cell
     }
    

@@ -20,6 +20,7 @@ extension SendStream: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {        
         let cell = tableView.dequeueReusableCell(withIdentifier: SendStreamCell.reuseID, for: indexPath) as! SendStreamCell
         cell.labelCategory.text = list[indexPath.row]
+        cell.selectionStyle = .none
          return cell
     }
 }
@@ -44,6 +45,15 @@ extension SendStream: UITableViewDelegate {
                 }
             }
         }
+    }
+    func tableView(_ tableView: UITableView, didHighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath)
+        cell!.contentView.backgroundColor = .clear
+    }
+
+    func tableView(_ tableView: UITableView, didUnhighlightRowAt indexPath: IndexPath) {
+        let cell  = tableView.cellForRow(at: indexPath)
+        cell!.contentView.backgroundColor = .clear
     }
 }
 

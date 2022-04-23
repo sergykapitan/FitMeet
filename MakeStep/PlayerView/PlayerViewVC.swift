@@ -215,8 +215,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
-       // homeView.buttonLogo.addTarget(self, action: #selector(actionCoach), for: .touchUpInside)
-      
+       
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
+        homeView.stackButton.addGestureRecognizer(tap)
     }
     @objc func actionCoach() {
         self.dismiss(animated: true) {

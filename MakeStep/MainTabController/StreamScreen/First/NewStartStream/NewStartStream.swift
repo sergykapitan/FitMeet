@@ -173,16 +173,14 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
             let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
             if j.isEmpty {
                 self.authView.tagView.addTag(ff)
+                let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+                self.IdCategory.append(contentsOf: p)
+                print("Category == \(self.IdCategory)")
+                self.authView.tagView.layoutSubviews()
             } else {
                 Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
             }
-            
-            
-        let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
-        self.IdCategory.append(contentsOf: p)
-        self.authView.tagView.layoutSubviews()
-        self.authView.textFieldCategory.placeholder = ""
-                    
+        self.authView.textFieldCategory.placeholder = ""                    
     }
             authView.textFieldCategory.easy.layout(Height(>=39))
     }
@@ -192,6 +190,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     }
     func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
            sender.removeTagView(tagView)
+          let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
+          guard let id = p.first else { return }
+        if IdCategory.contains(id) {
+            let index = IdCategory.firstIndex(of: id)
+                IdCategory.remove(at: index!)
+               print(IdCategory)
+            }
        }
     func registerForKeyboardNotifications() {
         
@@ -245,10 +250,8 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                        if ff == "Schedule a stream" {
                         self.showPicker()
                            self.authView.buttonOK.setTitle("Planned", for: .normal)
-                          // self.authView.buttonOK.isUserInteractionEnabled = true
                        } else {
                            self.authView.buttonOK.setTitle("Start stream", for: .normal)
-                          // self.authView.buttonOK.isUserInteractionEnabled = true
                        }
                    }
 }
@@ -448,6 +451,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     self.authView.textFieldFree.text = ""
                     self.authView.textFieldDescription.text = ""
                     self.authView.textFieldCategory.text = ""
+                    self.IdCategory.removeAll()
                     self.authView.imageButton.setImage(nil, for: .normal)
                 } else {
                     guard let mess = response.message else { return }
