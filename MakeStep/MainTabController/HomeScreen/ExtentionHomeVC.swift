@@ -47,15 +47,15 @@ extension HomeVC: UITableViewDataSource {
         cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg" )
             
         cell.labelDescription.text = listBroadcast[indexPath.row].name
-       
+        
 
         guard
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
         else { return cell}
-            
-     
-
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
+           
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
@@ -65,12 +65,17 @@ extension HomeVC: UITableViewDataSource {
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
             
+        
+//        cell.tagView.anchor(top:cell.labelDescription.bottomAnchor,left: cell.titleLabel.rightAnchor, right: cell.bottomView.rightAnchor,bottom:cell.bottomView.bottomAnchor,paddingTop: 0, paddingLeft: 10, paddingRight: 10,paddingBottom: 0)
+            
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
         cell.buttonLike.isHidden = true
+        
+            
        guard let status = listBroadcast[indexPath.row].status  else { return cell}
         switch status {
 
@@ -115,8 +120,9 @@ extension HomeVC: UITableViewDataSource {
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
             
-        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.usersd[id]?.fullName
+        cell.stackButton.tag = indexPath.row
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
+        cell.stackButton.addGestureRecognizer(tap)
             
             if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
                 if self.itemCount > listBroadcast.count {
@@ -133,12 +139,23 @@ extension HomeVC: UITableViewDataSource {
         }
         return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
     }
-   
+    @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
+        let tappedView = sender.view
+        guard let viewTag = tappedView?.tag else { return }
+        guard !listBroadcast.isEmpty else { return }
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        guard let id = listBroadcast[viewTag].userId else { return}
+        vc.user = self.usersd[id]
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
 
    @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         guard !listBroadcast.isEmpty else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
+
     @objc func tappedCoach(_ sender: UIButton) -> Void {
         guard !listBroadcast.isEmpty else { return }
         let vc = ChannelCoach()

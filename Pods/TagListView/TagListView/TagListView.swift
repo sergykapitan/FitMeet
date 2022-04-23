@@ -286,7 +286,7 @@ open class TagListView: UIView {
             tagBackgroundView.transform = directionTransform
             tagBackgroundView.frame.origin = CGPoint(
                 x: currentRowWidth,
-                y: 0)
+                y: 5)
             tagBackgroundView.frame.size = tagView.bounds.size
             tagBackgroundView.layer.shadowColor = shadowColor.cgColor
             tagBackgroundView.layer.shadowPath = UIBezierPath(roundedRect: tagBackgroundView.bounds, cornerRadius: cornerRadius).cgPath

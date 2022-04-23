@@ -62,6 +62,7 @@ final class HomeCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        label.sizeToFit()
         return label
     }()
     var labelDescription: UILabel = {
@@ -97,17 +98,6 @@ final class HomeCell: UITableViewCell {
         let but = UIButton()
         return but
     }()
-
-    var tagView: TagListView = {
-        let tag = TagListView()
-        tag.textFont = UIFont.systemFont(ofSize: 12)
-        tag.tagBackgroundColor = .clear
-        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-        tag.selectedTextColor = .black
-        tag.paddingX = 0
-        tag.translatesAutoresizingMaskIntoConstraints = false
-        return tag
-    }()
     var buttonstartStream: UIButton = {
         var button = UIButton()
         button.backgroundColor = UIColor(hexString: "#3B58A4")
@@ -120,13 +110,26 @@ final class HomeCell: UITableViewCell {
     var stackButton: UIStackView = {
         let stack = UIStackView()
         stack.axis = .horizontal
-        stack.distribution = .fillProportionally
+        stack.distribution = .equalSpacing
         return stack
     }()
-  
-    
+    var tagView: TagListView = {
+           let tag = TagListView()
+           tag.textFont = UIFont.systemFont(ofSize: 12)
+           tag.tagBackgroundColor = .clear
+           tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+           tag.selectedTextColor = .black
+           tag.paddingX = 2
+        
+           tag.tagLineBreakMode = .byWordWrapping
+           tag.translatesAutoresizingMaskIntoConstraints = false
+        //   tag.anchor( width: 250)
+           return tag
+       }()
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.initUI()
         self.initialize()
         selectionStyle = .none
     }
@@ -134,20 +137,20 @@ final class HomeCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    private func initUI() {
+        stackButton = UIStackView(arrangedSubviews: [logoUserImage,titleLabel])
+        stackButton.spacing = 10
+ 
+    }
 
     func initialize() {
         clipsToBounds = true
-       
-        
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
                                right: contentView.rightAnchor,
                                paddingTop: 0, paddingLeft: 0, paddingRight: 0)
         backgroundImage.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
-        
-       
-
         contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
                           left: contentView.leftAnchor,
@@ -160,31 +163,13 @@ final class HomeCell: UITableViewCell {
 
         bottomView.addSubview(labelDescription)
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor , paddingTop: 8, paddingLeft: 16,paddingRight: 8)
-     
-        
-        bottomView.addSubview(buttonLogo)
-        buttonLogo.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor,paddingTop: 0, paddingLeft: 16)
-
-        buttonLogo.addSubview(logoUserImage)
-        logoUserImage.anchor(width: 24,height: 24)
-        logoUserImage.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
-
-        buttonLogo.addSubview(logoUserOnline)
-        logoUserOnline.anchor( right: logoUserImage.rightAnchor, bottom: logoUserImage.bottomAnchor, paddingRight: 0, paddingBottom: 0, width: 8, height: 8)
-
-        buttonLogo.addSubview(titleLabel)
-        titleLabel.anchor( left: logoUserImage.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
-        titleLabel.centerY(inView: logoUserImage)
-        
        
+        bottomView.addSubview(stackButton)
+        stackButton.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor, paddingTop: 5, paddingLeft: 16)
+ 
         bottomView.addSubview(tagView)
-        NSLayoutConstraint.activate([
-            tagView.leadingAnchor.constraint(equalTo: bottomView.leadingAnchor, constant: 160),
-            tagView.trailingAnchor.constraint(equalTo: bottomView.trailingAnchor, constant: -16),
-           
-        ])
-        tagView.centerY(inView: logoUserImage)
-
+        tagView.anchor(top: labelDescription.bottomAnchor, left: stackButton.rightAnchor, right: bottomView.rightAnchor, bottom: bottomView.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingRight: 5, paddingBottom: 5)
+        
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,
                        left: contentView.leftAnchor,
@@ -204,9 +189,6 @@ final class HomeCell: UITableViewCell {
         contentView.addSubview(buttonstartStream)
         buttonstartStream.anchor( bottom: backgroundImage.bottomAnchor, paddingBottom: 30, width: 100, height: 26)
         buttonstartStream.centerX(inView: backgroundImage)
-        
-        
-        
     }
  
     func setImage(image:String) {
@@ -219,6 +201,7 @@ final class HomeCell: UITableViewCell {
             
         ])
     }
+
     func setImageLogo(image:String) {
         let url = URL(string: image)
         logoUserImage.kf.setImage(with: url)
@@ -229,7 +212,6 @@ final class HomeCell: UITableViewCell {
         self.backgroundImage.image = nil
         self.logoUserImage.image = nil
         self.overlay.labelEye.text = nil
-       // self.titleLabel.text = nil
-     
+        self.titleLabel.text = nil
        }
 }

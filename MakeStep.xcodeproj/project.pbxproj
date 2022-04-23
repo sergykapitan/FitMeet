@@ -3,13 +3,12 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		650A8D824E1B9C5489E21FB4 /* Pods_MakeStepQA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F68A54FB8B1D2D80BBEFF5 /* Pods_MakeStepQA.framework */; };
 		839D27D98E644C564AB48A83 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
-		8CE87683280C5DAA003A5811 /* Algorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 8CE87682280C5DAA003A5811 /* Algorithms */; };
 		8CFA5B88280B5C68009CAA03 /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFA5B87280B5C68009CAA03 /* InstantPanGestureRecognizer.swift */; };
 		8CFA5B89280B5C68009CAA03 /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFA5B87280B5C68009CAA03 /* InstantPanGestureRecognizer.swift */; };
 		A5129404273A6EB7000CBBD9 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
@@ -805,7 +804,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8CE87683280C5DAA003A5811 /* Algorithms in Frameworks */,
 				839D27D98E644C564AB48A83 /* (null) in Frameworks */,
 				A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */,
 				C47DB2CC3CAC9849C15E3C28 /* (null) in Frameworks */,
@@ -1849,7 +1847,6 @@
 			);
 			name = MakeStep;
 			packageProductDependencies = (
-				8CE87682280C5DAA003A5811 /* Algorithms */,
 			);
 			productName = FitMeet;
 			productReference = B4D9D71B26257D8C007CFB71 /* MakeStep.app */;
@@ -1879,7 +1876,6 @@
 			);
 			mainGroup = B4D9D71226257D8C007CFB71;
 			packageReferences = (
-				8CE87681280C5DAA003A5811 /* XCRemoteSwiftPackageReference "swift-algorithms" */,
 			);
 			productRefGroup = B4D9D71C26257D8C007CFB71 /* Products */;
 			projectDirPath = "";
@@ -2533,7 +2529,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.22;
+				MARKETING_VERSION = 2.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2561,7 +2557,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.22;
+				MARKETING_VERSION = 2.0.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2774,25 +2770,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		8CE87681280C5DAA003A5811 /* XCRemoteSwiftPackageReference "swift-algorithms" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/apple/swift-algorithms.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		8CE87682280C5DAA003A5811 /* Algorithms */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 8CE87681280C5DAA003A5811 /* XCRemoteSwiftPackageReference "swift-algorithms" */;
-			productName = Algorithms;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		B4C4996B263ADB9600BFD1EE /* CoreDataModel.xcdatamodeld */ = {

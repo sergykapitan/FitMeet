@@ -479,6 +479,18 @@ extension UIView {
     @objc func tapGestureSelector() {
         self.endEditing(true)
     }
+    func setupTapGestureMy() {
+        self.isUserInteractionEnabled = true
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
+        self.addGestureRecognizer(tap)
+    }
+    @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
+        print("SENDER = \(sender)")
+        let tappedView = sender.view
+        let viewTag = tappedView?.tag
+        print("FACK = \(viewTag)")
+        self.endEditing(true)
+    }
     func getCurrentViewController() -> UIViewController? {
 
         if let rootController = UIApplication.shared.windows.filter({$0.isKeyWindow}).first?.rootViewController {

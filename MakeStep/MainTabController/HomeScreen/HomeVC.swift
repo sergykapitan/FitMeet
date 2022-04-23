@@ -23,6 +23,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     var currentPage : Int = 0
     var pageCount: Int = 0
+    private let panGestureRecognizer = UITapGestureRecognizer()
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
@@ -125,6 +126,38 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                 }
         })
     }
+    func bindingOff(page:Int) {
+           takeOff = fitMeetStream.getOffBroadcast(page: page)
+                 .mapError({ (error) -> Error in
+                     print("ERROR == \(error)")
+                     return error })
+                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                     if response.data != nil  {
+                         self.listBroadcast.append(contentsOf: response.data!)
+                         let arrayUserId = self.listBroadcast.map{$0.userId!}
+                         self.bindingUserMap(ids: arrayUserId)
+                         self.isLoadingList = false
+                         self.refreshControl.endRefreshing()
+                     }
+                     if response.meta != nil {
+                         guard let itemCount = response.meta?.itemCount , let pageCount = response.meta?.page else { return }
+                         self.itemCount = itemCount
+                         self.pageCount = pageCount
+                     }
+                 })
+         }
+    func bindingUserMap(ids: [Int])  {
+               if ids.isEmpty { return } else {
+               takeUser = fitMeetApi.getUserIdMap(ids: ids)
+                   .mapError({ (error) -> Error in return error })
+                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                       if response.data.count != 0 {
+                           self.usersd = response.data
+                           self.homeView.tableView.reloadData()
+                       }
+                 })
+              }
+           }
     func bindingNotAuht() {
             takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
                 .mapError({ (error) -> Error in return error })
@@ -137,28 +170,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                     }
             })
         }
-    func bindingOff(page:Int) {
-        takeOff = fitMeetStream.getOffBroadcast(page: page)
-              .mapError({ (error) -> Error in
-                  print("ERROR == \(error)")
-                  return error })
-              .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                  if response.data != nil  {
-                      self.listBroadcast.append(contentsOf: response.data!)
-                      let arrayUserId = self.listBroadcast.map{$0.userId!}
-                      self.bindingUserMap(ids: arrayUserId)
-                      self.isLoadingList = false
-                      self.refreshControl.endRefreshing()
-                      self.homeView.tableView.reloadData()
-
-                  } 
-                  if response.meta != nil {
-                      guard let itemCount = response.meta?.itemCount , let pageCount = response.meta?.page else { return }
-                      self.itemCount = itemCount
-                      self.pageCount = pageCount
-                  }
-              })
-      }
+   
     func bindingNotOff() {
             takeOff = fitMeetStream.getNotOffBroadcast()
                 .mapError({ (error) -> Error in return error })
@@ -179,7 +191,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                         self.listBroadcast.append(contentsOf: response.data!)
                         let arrayUserId = self.listBroadcast.map{$0.userId!}
                         self.bindingUserMap(ids: arrayUserId)
-                        self.homeView.tableView.reloadData()
                         self.refreshControl.endRefreshing()
                     }
                 })
@@ -198,18 +209,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             })
        }
     
-    func bindingUserMap(ids: [Int])  {
-           if ids.isEmpty { return } else {
-           takeUser = fitMeetApi.getUserIdMap(ids: ids)
-               .mapError({ (error) -> Error in return error })
-               .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                   if response.data.count != 0 {
-                       self.usersd = response.data
-                       self.homeView.tableView.reloadData()
-                   }
-             })
-          }
-       }
+    
     
     func bindingCategory() {
         takeCategory = fitMeetStream.getCategory()
@@ -261,6 +261,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         homeView.tableView.register(HomeHorizontalListTableViewCell.self, forCellReuseIdentifier: "HomeHorizontalListTableViewCell")
         homeView.tableView.separatorStyle = .none
     }
+    
     func connectUser (broadcastId:String?,channellId: String?) {
         
         guard let broadID = broadcastId,let id = channellId else { return }

@@ -173,24 +173,21 @@ final class PlayerViewCell: UITableViewCell {
                                left: contentView.leftAnchor,
                                bottom: contentView.bottomAnchor,
                                paddingTop: 5, paddingLeft: 18,paddingBottom: 5,width: contentView.bounds.width / 2,height: (contentView.bounds.width / 1.9) / 1.8)
- 
-        contentView.addSubview(titleLabel)
-        titleLabel.anchor(left: backgroundImage.rightAnchor,
-                          bottom: contentView.bottomAnchor,
-                          paddingLeft: 8, paddingBottom: 8 )
-        
-        contentView.addSubview(labelDescription)
-        labelDescription.anchor(top: contentView.topAnchor,
-                                left: backgroundImage.rightAnchor,
-                                right: contentView.rightAnchor,
-                                paddingTop: 8, paddingLeft: 8 ,paddingRight: 8)
-        
         contentView.addSubview(buttonMore)
         buttonMore.anchor(right: contentView.rightAnchor ,
                           bottom: contentView.bottomAnchor,
                           paddingRight: 10,paddingBottom: 8,width: 40, height: 40)
         
-
+        contentView.addSubview(labelDescription)
+        labelDescription.anchor(top: contentView.topAnchor,
+                                        left: backgroundImage.rightAnchor,
+                                        right: contentView.rightAnchor,
+                                        paddingTop: 8, paddingLeft: 8 ,paddingRight: 3)
+        contentView.addSubview(titleLabel)
+        titleLabel.anchor(left: backgroundImage.rightAnchor,
+                          right: buttonMore.leftAnchor,
+                          bottom: contentView.bottomAnchor,
+                          paddingLeft: 8,paddingRight: 8, paddingBottom: 8 )
     }
     func setImage(image:String) {
         let url = URL(string: image)

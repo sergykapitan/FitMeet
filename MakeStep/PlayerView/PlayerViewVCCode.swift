@@ -292,20 +292,7 @@ final class PlayerViewVCCode: UIView {
            
         ])
         labelCategory.centerY(inView: imageLogoProfile)
-        
-//        cardView.addSubview(imageLogoProfile)
-//        imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
-//        
-//        cardView.addSubview(labelStreamDescription)
-//        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 100)
-//        labelStreamDescription.centerY(inView: imageLogoProfile)
-//
-//        cardView.addSubview(labelCategory)
-//        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
-//        labelCategory.centerY(inView: labelStreamDescription)
-        
-        
-        
+    
       
         cardView.addSubview(tableView)
         tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)

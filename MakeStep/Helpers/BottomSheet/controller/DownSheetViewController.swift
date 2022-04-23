@@ -90,12 +90,14 @@ class DownSheetViewController: UIViewController {
     var topTitle: (String , UIColor)?
     var payload: Int?
     private let panGestureRecognizer = UIPanGestureRecognizer()
+    
     weak var delegate: DownSheetViewControllerDelegate?
     var height: CGFloat = 0
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupConstraints()
+        
         panGestureRecognizer.addTarget(self, action: #selector(handlePan))
         view?.addGestureRecognizer(panGestureRecognizer)
     }

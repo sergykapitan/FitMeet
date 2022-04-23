@@ -13,11 +13,6 @@ import EasyPeasy
 
 extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if self.profileView.mmPlayerLayer.isShrink { return }
-//        self.destrtoyMMPlayerInstance()
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
     }
@@ -68,39 +63,6 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             cell.labelLive.text = "Wait for"
         }
 
-//        if brodcast[indexPath.row].status == "OFFLINE" {
-//            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-//            cell.imageLive.setImageColor(color: .gray)
-//            cell.labelLive.text = "Offline"
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.logoUserOnline.isHidden = true
-//            cell.buttonstartStream.isHidden = true
-//
-//        } else if brodcast[indexPath.row].status == "ONLINE" {
-//            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-//            cell.labelLive.text = "Live"
-//            cell.imageEye.isHidden = false
-//            cell.labelEye.isHidden = false
-//            cell.logoUserOnline.isHidden = false
-//            cell.buttonstartStream.isHidden = true
-//
-//        } else if brodcast[indexPath.row].status == "PLANNED" {
-//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-//            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.logoUserOnline.isHidden = true
-//            cell.buttonstartStream.isHidden = false
-//
-//        } else if brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
-//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.logoUserOnline.isHidden = true
-//            cell.buttonstartStream.isHidden = true
-//            cell.labelLive.text = "Wait for"
-//        }
         
         let categorys = brodcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -134,12 +96,9 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         guard let broadcastId = brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworKMeUserSheetVC, payload: broadcastId)
     }
-    @objc func actionStartStream(_ sender: UIButton) {
-        guard let broadcastID = brodcast[sender.tag].id else { return }
-          //  self.nextView(broadcastId: broadcastID)
-    }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+        let defoultImage = "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg"
         guard let status = self.brodcast[indexPath.row].status else { return }
         switch status {
             
@@ -170,6 +129,8 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.homeView.buttonChat.isHidden = true
             vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             vc.homeView.imageEye.isHidden = true
+            vc.homeView.imageLogo.isHidden = false
+            vc.homeView.setImagePromo(image: self.brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? defoultImage)
             vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
