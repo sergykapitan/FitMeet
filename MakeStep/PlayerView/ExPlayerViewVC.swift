@@ -146,6 +146,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
+            self.homeView.playerSlider.setValue(0, animated: true)
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
