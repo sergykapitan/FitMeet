@@ -206,7 +206,7 @@ final class PlayerViewVCCode: UIView {
     }()
     var buttonMore: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         return button
     }()
     let labelNotToken: UILabel = {
@@ -221,21 +221,21 @@ final class PlayerViewVCCode: UIView {
         let stack = UIStackView()
         stack.axis = .horizontal
         stack.distribution = .equalSpacing
+        stack.anchor(height: 30)
         return stack
     }()
     var labelCategory: TagListView = {
-           var tag = TagListView()
-           tag.textFont = UIFont.systemFont(ofSize: 12)
-           tag.tagBackgroundColor = .clear
-           tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-           tag.selectedTextColor = .black
-           tag.paddingX = 2
-           tag.paddingY = 7
-          // tag.marginUp = 4
-           tag.tagLineBreakMode = .byWordWrapping
-           tag.translatesAutoresizingMaskIntoConstraints = false
-           tag.anchor( width: 200)
-           return tag
+       var tag = TagListView()
+       tag.textFont = UIFont.systemFont(ofSize: 12)
+       tag.tagBackgroundColor = .clear
+       tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+       tag.selectedTextColor = .black
+       tag.paddingX = 2
+       tag.paddingY = 5
+       tag.tagLineBreakMode = .byTruncatingHead
+       tag.translatesAutoresizingMaskIntoConstraints = false
+       tag.anchor( width: 200)
+       return tag
        }()
     //MARK: - initial
     init() {
@@ -268,52 +268,26 @@ final class PlayerViewVCCode: UIView {
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 10,width: 24,height: 24)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 10,width: 24,height: 40)
         
         cardView.addSubview(labelStreamInfo)
         labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 16, paddingRight: 2)
         
         cardView.addSubview(labelLike)
-        labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 10, width: 24, height: 24)
+        labelLike.anchor(top: labelStreamInfo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 10, width: 24, height: 24)
 
         cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: imagePromo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
+        buttonLike.anchor(top: labelStreamInfo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
 
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
-        
-       
-        
-//        buttonLogo.addSubview(imageLogoProfile)
-//        imageLogoProfile.anchor(top: buttonLogo.topAnchor, left: buttonLogo.leftAnchor,paddingTop: 2, paddingLeft: 0,width: 24,height: 24)
-//
-//
-//
-//        buttonLogo.addSubview(labelStreamDescription)
-//        labelStreamDescription.anchor( left: imageLogoProfile.rightAnchor,right: buttonLogo.rightAnchor, paddingLeft: 8,paddingRight: 5)
-//        labelStreamDescription.centerY(inView: imageLogoProfile)
+
         cardView.addSubview(stackButton)
-        stackButton.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,right:buttonLike.leftAnchor, paddingTop: 5, paddingLeft: 16,paddingRight: 5)
-       
-        
-//        cardView.addSubview(labelCategory)
-//        labelCategory.anchor(top: labelStreamInfo.bottomAnchor, left: labelStreamDescription.rightAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 5, paddingRight: 5)
-//        labelCategory.centerY(inView: imageLogoProfile)
-//        cardView.addSubview(labelCategory)
-//        NSLayoutConstraint.activate([
-//            labelCategory.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 160),
-//            labelCategory.trailingAnchor.constraint(equalTo: buttonLike.leadingAnchor, constant: -5),
-//
-//        ])
-//        labelCategory.centerY(inView: imageLogoProfile)
-    
-      
+        stackButton.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
+  
         cardView.addSubview(tableView)
-        tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-
-
-       
+        tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
 
         cardView.addSubview(labelNotToken)
         labelNotToken.anchor( left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingLeft: 16, paddingRight: 16)

@@ -24,13 +24,17 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         } else {
             cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         }
-
+       
         cell.labelDescription.text = brodcast[indexPath.row].name
        
 
         guard let id = brodcast[indexPath.row].userId,
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
+        
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
+
         guard let status = brodcast[indexPath.row].status else { return cell}
         switch status {
             
@@ -47,20 +51,6 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         case .wait_for_approve:
             break
         }
-
-//        if brodcast[indexPath.row].status == "OFFLINE" {
-//
-//            cell.buttonstartStream.isHidden = true
-//
-//        } else if brodcast[indexPath.row].status == "ONLINE" {
-//
-//            cell.buttonstartStream.isHidden = true
-//
-//        } else if brodcast[indexPath.row].status == "PLANNED" {
-//
-//            cell.buttonstartStream.isHidden = false
-//
-//        }
         
         guard let categorys = brodcast[indexPath.row].categories else { return cell }
         let s = categorys.map{$0.title!}
@@ -71,8 +61,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         cell.tagView.tag = indexPath.row
 
         cell.backgroundColor = UIColor(hexString: "#F6F6F6")
-        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.usersd[id]?.fullName
+       
 
 
         cell.buttonLike.tag = indexPath.row
@@ -116,6 +105,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard  let like = self.brodcast[indexPath.row].followersCount else { return }
         guard let status = brodcast[indexPath.row].status  else { return }
+        self.videoEnd = false
         switch status {
             
         case .online:
@@ -145,10 +135,12 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             guard let url = urlStream else { return }
+            self.setTimeVideo()
             guard let videoURL = URL(string: url) else { return}
             self.homeView.playerSlider.setValue(0, animated: true)
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             self.homeView.labelStreamInfo.text = self.broadcast?.name
+            
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUserNotApdate(id: user)

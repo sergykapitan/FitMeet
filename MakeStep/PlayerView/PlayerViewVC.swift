@@ -50,8 +50,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     var isButton: Bool = false {
                 didSet {
                     print(isButton)
-                    if self.isButton {
+                    if self.isButton && !videoEnd{
                     timer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(actionBut), userInfo: nil, repeats: false)
+                        self.videoEnd = false
                     }
                 }
             }
@@ -97,7 +98,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     private var followBroad: AnyCancellable?
     
     var channel: ChannelResponce?
-   
+    var videoEnd: Bool = false
    
   
     var brodcast: [BroadcastResponce] = []
@@ -194,11 +195,10 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         NotificationCenter.default.removeObserver(self)
     }
     @objc func videoDidEnd(notification: NSNotification) {
-       
-       // isButton = false
-       // self.timer.invalidate()
+        
         actionBut()
         actionPlayPause()
+        self.videoEnd = true
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 
@@ -239,6 +239,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         if tracksInt <= self.brodcast.count - 1 {
             let indexPath = IndexPath(row: tracksInt, section: 0)
             self.homeView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+            self.videoEnd = false
             getTrack(isForwardTrack: true)
         } else { return }
         
@@ -247,20 +248,21 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         if tracksInt != 0 {
             let indexPath = IndexPath(row: tracksInt, section: 0)
             self.homeView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
+            self.videoEnd = false
             getTrack(isForwardTrack: false)
         } else { return }
     }
     @objc func actionPlayPause() {
+        if videoEnd { return } else {
         homeView.buttonPlayPause.isSelected.toggle()
         if homeView.buttonPlayPause.isSelected {
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "Play"), for: .normal)
-            self.timer.invalidate()
             self.playerViewController?.player?.pause()
         } else {
-            isButton = true
             homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
             self.playerViewController?.player?.play()
         }
+      }
     }
     @objc func actionLike() {
         guard token != nil else {
@@ -542,7 +544,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
         
     }
-    private func setTimeVideo() {
+    func setTimeVideo() {
         let duration : CMTime = (self.playerViewController?.player?.currentItem!.asset.duration)!
         let seconds : Float64 = CMTimeGetSeconds(duration)
                

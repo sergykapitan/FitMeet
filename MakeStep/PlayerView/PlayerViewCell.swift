@@ -176,7 +176,7 @@ final class PlayerViewCell: UITableViewCell {
         contentView.addSubview(buttonMore)
         buttonMore.anchor(right: contentView.rightAnchor ,
                           bottom: contentView.bottomAnchor,
-                          paddingRight: 10,paddingBottom: 8,width: 40, height: 40)
+                          paddingRight: 4,paddingBottom: 2,width: 40, height: 40)
         
         contentView.addSubview(labelDescription)
         labelDescription.anchor(top: contentView.topAnchor,
