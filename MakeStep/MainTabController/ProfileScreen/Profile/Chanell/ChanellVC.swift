@@ -202,6 +202,11 @@ class ChanellVC: SheetableViewController,Refreshable  {
                       self.profileView.tableView.reloadData()
 
                  }
+                  if response.meta != nil {
+                      guard let itemCount = response.meta?.itemCount else { return }
+                      self.itemCount = itemCount
+                      self.profileView.labelINTVideo.text = "\(self.itemCount)"
+                  }
           })
       }
    

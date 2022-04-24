@@ -52,7 +52,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                     print(isButton)
                     if self.isButton && !videoEnd{
                     timer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(actionBut), userInfo: nil, repeats: false)
-                        self.videoEnd = false
+                        //self.videoEnd = false
                     }
                 }
             }
@@ -239,7 +239,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         if tracksInt <= self.brodcast.count - 1 {
             let indexPath = IndexPath(row: tracksInt, section: 0)
             self.homeView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-            self.videoEnd = false
             getTrack(isForwardTrack: true)
         } else { return }
         
@@ -248,7 +247,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         if tracksInt != 0 {
             let indexPath = IndexPath(row: tracksInt, section: 0)
             self.homeView.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-            self.videoEnd = false
             getTrack(isForwardTrack: false)
         } else { return }
     }
@@ -778,6 +776,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 if response.data != nil  {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
+                    self.brodcast = Array(Set(self.brodcast))
                     self.isLoadingList = false
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -848,6 +847,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 if response.data != nil  {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
+                    self.brodcast = Array(Set(self.brodcast))
                     self.homeView.tableView.reloadData()
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
@@ -904,8 +904,14 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                    
                 }
         let track = tracks[nextIndexPath.row]
- 
-        if track.status == .offline {
+        guard let status = track.status else { return }
+        self.videoEnd = false
+        self.isButton = true
+        switch status {
+        case .online: print("online")
+        case .planned: print("planned")
+        case .finished: print("fineshed")
+        case .offline:
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true
@@ -924,13 +930,16 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             setTimeVideo()
             self.homeView.labelStreamInfo.text = self.broadcast?.name
-            homeView.buttonPlayPause.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
-            self.playerViewController?.player?.play()
+            homeView.buttonPlayPause.isSelected = true
+            self.actionPlayPause()
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+       
+        case .banned:print("banned")
+        case .wait_for_approve:print("wait_for_approve")
         }
-
+ 
    }
     private func action(for type: String, title: String) -> UIAlertAction? {
         return UIAlertAction(title: title, style: .default) { [unowned self] _ in

@@ -227,13 +227,13 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 if response.data != nil {
                     guard let brod = response.data else { return }
                     self.brodcast.append(contentsOf: brod)
-                   
                     let arrayUserId = self.brodcast.map{$0.userId!}
                     self.bindingUserMap(ids: arrayUserId)
                 }
                 if response.meta != nil {
                     guard let itemCount = response.meta?.itemCount else { return }
                     self.itemCount = itemCount
+                    self.homeView.labelINTVideo.text = "\(self.itemCount)"
                 }
            })
        }
@@ -592,6 +592,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         self.homeView.labelDescription.text = channel?.description
         self.homeView.labelNameCoach.text = fullName
         self.homeView.imageLogoProfileBottom.makeRounded()
+        
         guard let isFollow = channel?.isFollow else { return }
                if isFollow {
                        self.homeView.buttonFollow.backgroundColor = .white
@@ -698,7 +699,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
 
         }
     }
-    
     private func followChannel(id: Int) {
         follow = firMeetChanell.followChannels(id: id)
             .mapError({ (error) -> Error in return error })
