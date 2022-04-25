@@ -166,7 +166,28 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         case .banned:
             break
         case .finished:
-            break
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = true
+            homeView.buttonChat.isHidden = true
+            homeView.imageLive.isHidden = true
+            homeView.labelLive.isHidden = true
+            homeView.imageEye.isHidden = true
+            homeView.labelEye.isHidden = true
+            homeView.playerSlider.isHidden = false
+            self.broadcast = brodcast[indexPath.row]
+            self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
+            self.bindingLike()
+            guard let url = urlStream else { return }
+            guard let videoURL = URL(string: url) else { return}
+            self.homeView.playerSlider.setValue(0, animated: true)
+            self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            setTimeVideo()
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
+            homeView.buttonPlayPause.isSelected = true
+            self.actionPlayPause()
+            guard let user = self.broadcast?.userId else { return}
+            self.BoolTrack = false
+            self.bindingUser(id: user)
         case .wait_for_approve:
            self.homeView.imageLogo.isHidden = true
            self.homeView.buttonChat.isHidden = true
