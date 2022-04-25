@@ -915,14 +915,14 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true
-            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
-            homeView.imageLive.setImageColor(color: .gray)
-            homeView.labelLive.text = ""
+            homeView.imageLive.isHidden = true
+            homeView.labelLive.isHidden = true
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
             self.broadcast = track
             self.urlStream = track.streams?.first?.vodUrl
+            
             self.bindingLike()
             guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}

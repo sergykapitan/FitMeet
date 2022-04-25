@@ -134,21 +134,18 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.playerSlider.isHidden = false
             self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
-            guard let url = urlStream else { return }
             self.bindingLike()
-            self.videoEnd = false
-            self.isButton = true
-            homeView.buttonPlayPause.isSelected = true
-            self.actionPlayPause()
+            guard let url = urlStream else { return }
             guard let videoURL = URL(string: url) else { return}
             self.homeView.playerSlider.setValue(0, animated: true)
-            
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            setTimeVideo()
             self.homeView.labelStreamInfo.text = self.broadcast?.name
-            self.setTimeVideo()
-            homeView.labelLike.text = "\(like)"
-            guard let user = brodcast[indexPath.row].userId else { return}
-            self.bindingUserNotApdate(id: user)
+            homeView.buttonPlayPause.isSelected = true
+            self.actionPlayPause()
+            guard let user = self.broadcast?.userId else { return}
+            self.BoolTrack = false
+            self.bindingUser(id: user)
         case .planned:
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
