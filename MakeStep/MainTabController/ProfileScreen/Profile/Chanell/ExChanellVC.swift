@@ -93,6 +93,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
    
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
         guard !brodcast.isEmpty else { return }
+        
         guard let broadcastId = brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworKMeUserSheetVC, payload: broadcastId)
     }

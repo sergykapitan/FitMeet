@@ -151,7 +151,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
                 if !response.data.isEmpty  {
                     let dict = response.data
                     self.usersd = dict
-                    self.chatView.tableView.reloadData()
+                  //  self.chatView.tableView.reloadData()
                 }
           })
     }
@@ -357,11 +357,11 @@ extension ChatVC: UITableViewDataSource {
                 guard  let ids = id as? Int else { return cell}
         print("USER == \(usersd.keys)")
         print("USERId == \(ids)")
-        print("~SD == \(usersd)")
+        
                 cell.bottomLabel.text = ""
                 guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
                 cell.setImageLogo(image: avatar)
-        
+        print("AVATAR == \(avatar)")
                 return cell
   
     }

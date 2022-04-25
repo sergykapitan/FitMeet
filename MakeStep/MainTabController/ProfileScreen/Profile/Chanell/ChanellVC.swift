@@ -14,6 +14,7 @@ import TimelineTableViewCell
 import MMPlayerView
 import AVFoundation
 import EasyPeasy
+import Loaf
 
 
 // MARK: - State
@@ -343,6 +344,23 @@ class ChanellVC: SheetableViewController,Refreshable  {
         profileView.tableView.register(PlayerViewCell.self, forCellReuseIdentifier: PlayerViewCell.reuseID)
         profileView.tableView.separatorStyle = .none
         profileView.tableView.showsVerticalScrollIndicator = false
+    }
+    override func deleteBroadcast(with id: Int) {
+        deleteBroad = fitMeetStreams.deleteBroadcast(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil  {
+                    self.view.addBlur()  
+                    self.needUpdateAfterSuccessfullyCreate()
+                    Loaf("Delete Broadcaast : " + response.name!, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+                        switch disType {
+                        case .tapped: self.view.removeBlurA()
+                        case .timedOut: self.view.removeBlurA()
+                    }
+                }
+                   
+            }
+        })
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
