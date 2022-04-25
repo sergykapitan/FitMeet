@@ -288,7 +288,12 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.present()
     }
     @objc func actionMore() {
-        guard token != nil,let broadcastId = self.broadcast?.id else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return
+        }
+        guard let broadcastId = self.broadcast?.id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
     }
     private func makeTableView() {
@@ -544,7 +549,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         
     }
     func setTimeVideo() {
-        let duration : CMTime = (self.playerViewController?.player?.currentItem!.asset.duration)!
+        guard let dur = self.playerViewController?.player?.currentItem!.asset.duration else { return }
+        let duration : CMTime = dur
         let seconds : Float64 = CMTimeGetSeconds(duration)
                
         
@@ -1111,6 +1117,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         return i
     }
     public func addBack() {
+        
         background.backgroundColor = .black
         background.alpha = 0.3
         playerViewController!.view.addSubview(background)

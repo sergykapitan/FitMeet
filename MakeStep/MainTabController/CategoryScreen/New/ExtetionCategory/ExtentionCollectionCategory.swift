@@ -45,8 +45,6 @@ extension CategoryVC: UICollectionViewDataSource {
 
         
         
-        
-        
         cell.contentView.layer.cornerRadius = 8
         cell.contentView.layer.borderWidth = 1.0
         cell.contentView.layer.borderColor = UIColor.clear.cgColor

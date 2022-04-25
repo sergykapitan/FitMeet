@@ -109,7 +109,11 @@ extension CategoryBroadcast: UITableViewDataSource {
     }
    
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        guard token != nil,let broadcastId = sortListCategory[sender.tag].id else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
+        guard let broadcastId = sortListCategory[sender.tag].id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
@@ -172,7 +176,12 @@ extension CategoryBroadcast: UITableViewDelegate {
         case .banned:
             break
         case .finished:
+            guard let streams = sortListCategory[indexPath.row].streams else { return }
+           
+            if streams.isEmpty  { return }
+                        guard let url = streams.first?.vodUrl else { return }
             guard let stream = sortListCategory[indexPath.row].streams?.first else { return }
+            
             vc.broadcast = self.sortListCategory[indexPath.row]
             vc.id = self.sortListCategory[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true

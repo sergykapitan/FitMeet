@@ -97,7 +97,11 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     }
  
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        guard token != nil,let broadcastId = self.brodcast[sender.tag].id else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
+        guard ,let broadcastId = self.brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
     }
     @objc func actionStartStream(_ sender: UIButton) {
@@ -138,7 +142,20 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         case .banned:
             break
         case .finished:
-            break
+            guard let streams = brodcast[indexPath.row].streams else { return }
+            if streams.isEmpty  { return }
+            guard let url = streams.first?.vodUrl else { return }
+            vc.broadcast = self.brodcast[indexPath.row]
+            vc.id = self.brodcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
+            vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         case .wait_for_approve:
             break
         }

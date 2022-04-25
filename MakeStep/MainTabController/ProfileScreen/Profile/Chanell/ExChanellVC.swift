@@ -83,6 +83,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.isUserInteractionEnabled = true
    
         if indexPath.row == brodcast.count - 1 {
+
             if self.itemCount > brodcast.count {
                 self.isLoadingList = true
                 self.loadMoreItemsForList()
@@ -125,16 +126,17 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .planned:
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.imageLogo.isHidden = false
-            vc.homeView.setImagePromo(image: self.brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? defoultImage)
-            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+            print("planed")
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.imageLogo.isHidden = false
+//            vc.homeView.setImagePromo(image: self.brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? defoultImage)
+//            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
         case .banned:
             break
         case .finished:
@@ -153,14 +155,15 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .wait_for_approve:
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.labelLive.text = "Wait for"
-            vc.homeView.imageEye.isHidden = true
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
+            print("wait_for_approve")
+//            vc.broadcast = self.brodcast[indexPath.row]
+//            vc.id =  self.brodcast[indexPath.row].userId
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
+//            vc.homeView.labelLive.text = "Wait for"
+//            vc.homeView.imageEye.isHidden = true
+//            vc.modalPresentationStyle = .fullScreen
+//            self.present(vc, animated: true, completion: nil)
         }
     }
 }

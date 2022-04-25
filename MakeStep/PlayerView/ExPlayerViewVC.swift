@@ -96,7 +96,12 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         }
     }
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-            guard token != nil,let broadcastId = self.broadcast?.id else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return
+        }
+            guard let broadcastId = self.broadcast?.id else { return }
             showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
         
     }

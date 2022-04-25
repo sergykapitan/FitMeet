@@ -124,6 +124,9 @@ class ChanellVC: SheetableViewController,Refreshable  {
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
+        guard let id = user?.id else { return }
+        bindingChannel(userId: id)
+        self.binding(id: "\(id)", page: currentPage)
     }
     func refresh() {
         self.brodcast.removeAll()
@@ -166,12 +169,13 @@ class ChanellVC: SheetableViewController,Refreshable  {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-        self.brodcast.removeAll()
+       
+       // self.brodcast.removeAll()
         self.navigationController?.navigationBar.isHidden = false
         
-        guard let id = user?.id else { return }
-        bindingChannel(userId: id)
-        self.binding(id: "\(id)", page: currentPage)
+//        guard let id = user?.id else { return }
+//        bindingChannel(userId: id)
+//        self.binding(id: "\(id)", page: currentPage)
        
         AppUtility.lockOrientation(.portrait)
         
@@ -193,6 +197,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
           })
       }
     func binding(id: String,page:Int) {
+        self.isLoadingList = false
         takeBroadcast = fitMeetStream.getBroadcastPrivateChannel(userId: id, page: page)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
@@ -405,6 +410,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
         self.navigationController?.popViewController(animated: true)
     }
     func loadMoreItemsForList(){
+        print("Curent == \(currentPage)")
             currentPage += 1
             guard let id = user?.id else { return }
             self.binding(id: "\(id)", page: currentPage)

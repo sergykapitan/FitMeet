@@ -210,7 +210,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
              switch swipeGesture.direction {
              case UISwipeGestureRecognizer.Direction.right:
-                // print("swipe")
                  self.navigationController?.popViewController(animated: true)
              default:
                  break
@@ -252,6 +251,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 if response.meta != nil {
                     guard let itemCount = response.meta?.itemCount else { return }
                     self.itemCount = itemCount
+                    self.homeView.labelINTVideo.text = "\(self.itemCount)"
                 }
            })
        }

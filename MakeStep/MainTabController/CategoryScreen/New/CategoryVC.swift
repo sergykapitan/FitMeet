@@ -227,7 +227,10 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         print("refrech")
        }
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        guard token != nil else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
 
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
