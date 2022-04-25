@@ -102,8 +102,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
         super.viewDidLoad()
         chatView.backgroundColor =  .white
         actionButton()
-        chatView.tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
+      
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         chatView.buttonChat.addTarget(self, action: #selector(buttonJoin), for: .touchUpInside)
         if isLand {
@@ -159,11 +158,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
 
  
     //MARK: - Selectors
-    @objc private func refreshAlbumList() {
-       // binding()
-        self.chatView.tableView.reloadData()
-      
-       }
+   
     @objc func sendMessage() {
            let name = UserDefaults.standard.string(forKey: Constants.userFullName)
            if textView.text.count > 0 {
@@ -174,7 +169,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
                              self.bindingUserMap(ids: array)
                         }
                self.nickname = name
-               self.chatView.tableView.reloadData()
+              // self.chatView.tableView.reloadData()
                scrollToBottom()
                textView.text = ""
                textView.resignFirstResponder()
@@ -249,9 +244,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
     }
     @objc func handleConnectedUserUpdateNotification(notification: NSNotification) {
         let connectedUserInfo = notification.object as! [String: AnyObject]
-        let connectedUserNickname = connectedUserInfo["user"] //as? String
+        let connectedUserNickname = connectedUserInfo["user"]
         guard  let id = connectedUserNickname?["userId"] as? Int else { return }
-      //  var setId: Set<Int> = []
         setId.insert(id)
         let array = Array(setId)  
         self.bindingUserMap(ids: array)
@@ -361,6 +355,9 @@ extension ChatVC: UITableViewDataSource {
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message as? String
                 guard  let ids = id as? Int else { return cell}
+        print("USER == \(usersd.keys)")
+        print("USERId == \(ids)")
+        print("~SD == \(usersd)")
                 cell.bottomLabel.text = ""
                 guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
                 cell.setImageLogo(image: avatar)

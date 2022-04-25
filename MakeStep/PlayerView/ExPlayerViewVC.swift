@@ -106,8 +106,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         guard  let like = self.brodcast[indexPath.row].followersCount else { return }
         guard let status = brodcast[indexPath.row].status  else { return }
         self.videoEnd = false
+        print(status)
         switch status {
-            
+          
         case .online:
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = false
@@ -126,24 +127,25 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true
-            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
-            homeView.imageLive.setImageColor(color: .gray)
-            homeView.labelLive.text = "  Offline"
+            homeView.imageLive.isHidden = true
+            homeView.labelLive.isHidden = true
             homeView.imageEye.isHidden = true
             homeView.labelEye.isHidden = true
             homeView.playerSlider.isHidden = false
             self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             guard let url = urlStream else { return }
-            self.setTimeVideo()
+            self.bindingLike()
             self.videoEnd = false
             self.isButton = true
             homeView.buttonPlayPause.isSelected = true
             self.actionPlayPause()
             guard let videoURL = URL(string: url) else { return}
             self.homeView.playerSlider.setValue(0, animated: true)
+            
             self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
             self.homeView.labelStreamInfo.text = self.broadcast?.name
+            self.setTimeVideo()
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUserNotApdate(id: user)
