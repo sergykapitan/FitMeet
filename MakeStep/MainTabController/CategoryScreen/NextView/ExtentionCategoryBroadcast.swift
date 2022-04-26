@@ -97,10 +97,10 @@ extension CategoryBroadcast: UITableViewDataSource {
         case .wait_for_approve:
             break
         }
-   
-        cell.buttonLogo.tag = indexPath.row
-        cell.buttonLogo.addTarget(self, action: #selector(tappedCoach), for: .touchUpInside)
-        cell.buttonLogo.isUserInteractionEnabled = true
+  
+        cell.stackButton.tag = indexPath.row
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
+        cell.stackButton.addGestureRecognizer(tap)
 
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -124,7 +124,22 @@ extension CategoryBroadcast: UITableViewDataSource {
         vc.user = self.usersd[id]
         navigationController?.pushViewController(vc, animated: true)
 
-    }    
+    }
+    @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
+//        guard token != nil else {
+//            let sign = SignInViewController()
+//            self.present(sign, animated: true, completion: nil)
+//            return }
+        let tappedView = sender.view
+        guard let viewTag = tappedView?.tag else { return }
+        guard !listBroadcast.isEmpty else { return }
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        guard let id = listBroadcast[viewTag].userId else { return}
+        vc.user = self.usersd[id]
+        navigationController?.pushViewController(vc, animated: true)
+        
+    }
 }
 extension CategoryBroadcast: UITableViewDelegate {
     

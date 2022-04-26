@@ -122,14 +122,14 @@ class CategoryBroadcast: SheetableViewController  {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
                     let titleLabel = UILabel()
-                    titleLabel.text = categoryTitle
+                    titleLabel.text =  categoryTitle 
                     titleLabel.textAlignment = .center
                     titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                     titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                     let backButton = UIButton()
-                    backButton.anchor( width: 40, height: 30)
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                   // backButton.anchor( width: 40, height: 30)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
   
                    let stackView = UIStackView(arrangedSubviews: [backButton ,titleLabel])
@@ -213,7 +213,8 @@ class CategoryBroadcast: SheetableViewController  {
                 if response.data != nil  {
                     self.listBroadcast = response.data!
                     self.sortListCategory = response.data!
-                    self.categoryView.tableView.reloadData()
+                    let arrayUserId = self.sortListCategory.map{$0.userId!}
+                    self.bindingUserMap(ids: arrayUserId)
                 }
         })
     }

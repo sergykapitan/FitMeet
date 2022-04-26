@@ -23,7 +23,8 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     
     var chatMessages = [[String: Any]]()
     var bannerLabelTimer: Timer!
-    
+    var setId: Set<Int> = []
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     var color: UIColor?
     var tint: UIColor?
     let sectionHeaderTitleArray = ["test1","test2","test3"]
@@ -90,8 +91,15 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
             SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
                 DispatchQueue.main.async { () -> Void in
                     self.chatMessages.append(messageInfo)
-                    self.chatView.tableView.reloadData()
-                    self.chatView.tableView.scrollToBottom()
+                    print("MM == \(messageInfo)")
+                    let id = messageInfo["id"]
+                    guard  let ids = id as? Int else { return }
+                    print("USER == \(self.usersd.keys)")
+                     print("USERId == \(ids)")
+                 //  guard let idf = Int(ids) else { return }
+                    self.setId.insert(ids)
+                    let array = Array(self.setId)
+                    self.bindingUserMap(ids: array)
                 }
             }
         }
@@ -115,8 +123,6 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
-        chatView.tableView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         registerForKeyboardNotifications()
         if isLand {
@@ -242,10 +248,18 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                               self.bindingUserMap(ids: array)
                          }
                 self.nickname = name
-                scrollToBottom()
+                guard  let ids = selfId else { return }
+                print("USER == \(ids)")
+             //    print("USERId == \(ids)")
+                guard let idf = Int(ids) else { return }
+                self.setId.insert(idf)
+                let array = Array(self.setId)
+                self.bindingUserMap(ids: array)
+               // scrollToBottom()
+                
                 textView.text = ""
                 textView.resignFirstResponder()
-                self.chatView.tableView.reloadData()
+               // self.chatView.tableView.reloadData()
              }
          }
     }
@@ -258,24 +272,24 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         }
     }
     //MARK: - Selectors
-    @objc private func refreshAlbumList() {
-        binding()
-    }
+//    @objc private func refreshAlbumList() {
+//        binding()
+//    }
     @objc  func buttonJoin() {
         delegate?.changeBackgroundColor()
         dismiss(animated: true)
     }
-    func binding() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.chatView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                }
-        })
-    }
+//    func binding() {
+//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.listBroadcast = response.data!
+//                    self.chatView.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+//                }
+//        })
+//    }
     func bindingUserMap(ids: [Int])  {
         takeUser = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
@@ -284,7 +298,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                     let dict = response.data
                     self.usersd = dict
                     self.chatView.tableView.reloadData()
-   
+                  //  self.scrollToBottom()
                 }
           })
     }
@@ -304,6 +318,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
                          
                         } else {
                             if  let id = i.user?.userId {
+                                self.setId.insert(id)
                                 messageDictionary["id"] = "\(id)"
                                 messageDictionary["username"] = i.user?.fullName
                                 messageDictionary["message"] = i.payload?.message?.text
@@ -312,14 +327,10 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
 
                                 
                             }
-  
-                       
-                        
-                        self.chatView.tableView.reloadData()
-                        self.chatView.tableView.scrollToBottom()
                         }
                     }
-                    self.refreshControl.endRefreshing()
+                    let array = Array(self.setId)
+                    self.bindingUserMap(ids: array)
                 }
             })
         }
@@ -392,8 +403,8 @@ extension ChatVCPlayer: UITableViewDataSource {
         
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
-              let messageDate = currentChatMessage["timestamp"],
-              let id = currentChatMessage["id"]
+              let messageDate = currentChatMessage["timestamp"]//,
+            //  let id = currentChatMessage["id"]
         else { return UITableViewCell()}
         
     
@@ -405,10 +416,18 @@ extension ChatVCPlayer: UITableViewDataSource {
                 cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message as? String
-                guard  let ids = id as? Int else { return cell}
-                cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
-                cell.setImageLogo(image: avatar)
+//                guard  let ids = id as? Int else { return cell}
+//                cell.bottomLabel.text = ""
+//                guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
+//                cell.setImageLogo(image: avatar)
+        if let str = currentChatMessage["id"] as? String, let i = Int(str) {
+            guard let avatar = self.usersd[i]?.avatarPath else { return cell }
+            cell.setImageLogo(image: avatar)
+        }
+        if let str = currentChatMessage["id"] as? Int {
+            guard let avatar = self.usersd[str]?.avatarPath else { return cell }
+            cell.setImageLogo(image: avatar)
+        }
                 return cell
     
     }

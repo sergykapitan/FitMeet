@@ -101,7 +101,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             let sign = SignInViewController()
             self.present(sign, animated: true, completion: nil)
             return }
-        guard ,let broadcastId = self.brodcast[sender.tag].id else { return }
+        guard let broadcastId = self.brodcast[sender.tag].id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
     }
     @objc func actionStartStream(_ sender: UIButton) {

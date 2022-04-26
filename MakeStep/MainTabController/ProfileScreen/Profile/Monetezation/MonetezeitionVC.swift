@@ -47,13 +47,13 @@ class MonetezeitionVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = attributes
         
                     let backButton = UIButton()
-                    backButton.anchor( width: 40, height: 30)
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                  //  backButton.anchor( width: 40, height: 30)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                    
         
                     let titleLabel = UILabel()
-                   titleLabel.text = "Monetization"
+                   titleLabel.text = " Monetization"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)

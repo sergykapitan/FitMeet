@@ -203,7 +203,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                        self.listBroadcast.append(contentsOf: response.data!)
                        let arrayUserId = self.listBroadcast.map{$0.userId!}
                        self.bindingUserMap(ids: arrayUserId)
-                       self.homeView.tableView.reloadData()
+                       //self.homeView.tableView.reloadData()
                        self.refreshControl.endRefreshing()
                    }
             })

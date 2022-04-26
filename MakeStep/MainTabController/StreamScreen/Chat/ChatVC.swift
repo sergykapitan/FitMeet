@@ -32,7 +32,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
     var user: User?
     var usersd = [Int: User]()
     var setId: Set<Int> = []
-
+    let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     private lazy var textView = UITextView(frame: CGRect.zero)
     private var isOversized = false {
             didSet {
@@ -94,7 +94,17 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
         SocketIOManager.sharedInstance.getChatMessage { (messageInfo) -> Void in
             DispatchQueue.main.async { () -> Void in
                 self.chatMessages.append(messageInfo)
-                self.chatView.tableView.reloadData()
+                print("MM == \(messageInfo)")
+                let id = messageInfo["id"]
+                guard  let ids = id as? Int else { return }
+                print("USER == \(self.usersd.keys)")
+                 print("USERId == \(ids)")
+             //  guard let idf = Int(ids) else { return }
+                self.setId.insert(ids)
+                let array = Array(self.setId)
+                self.bindingUserMap(ids: array)
+             //   self.chatView.tableView.reloadData()
+               // bindingUserMap(ids)
             }
         }
     }
@@ -133,10 +143,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
         bindingMessage(broad: intBroad)
       
     }
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-       
-    }
+   
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -151,7 +158,8 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
                 if !response.data.isEmpty  {
                     let dict = response.data
                     self.usersd = dict
-                  //  self.chatView.tableView.reloadData()
+                    self.chatView.tableView.reloadData()
+                  //  self.scrollToBottom()
                 }
           })
     }
@@ -162,15 +170,24 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
     @objc func sendMessage() {
            let name = UserDefaults.standard.string(forKey: Constants.userFullName)
            if textView.text.count > 0 {
-               SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: "\(name)")
+              // SocketIOManager.sharedInstance.sendStartTypingMessage(nickname: "\(name)")
                SocketIOManager.sharedInstance.sendMessage( message: ["text" : textView.text!], withNickname: "\(name)")
                SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "\(name)") { arrayId in
                              guard let array = arrayId else { return }
                              self.bindingUserMap(ids: array)
                         }
+              
+               guard  let ids = selfId else { return }
+               print("USER == \(ids)")
+            //    print("USERId == \(ids)")
+               guard let idf = Int(ids) else { return }
+               self.setId.insert(idf)
+               let array = Array(self.setId)
+               self.bindingUserMap(ids: array)
+             //  self.chatView.tableView.reloadData()
                self.nickname = name
               // self.chatView.tableView.reloadData()
-               scrollToBottom()
+              // scrollToBottom()
                textView.text = ""
                textView.resignFirstResponder()
            }
@@ -180,17 +197,17 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
         dismiss(animated: true)
 
     }
-    func binding() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast = response.data!
-                    self.chatView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                }
-        })
-    }
+//    func binding() {
+//        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.data != nil  {
+//                    self.listBroadcast = response.data!
+//                    self.chatView.tableView.reloadData()
+//                    self.refreshControl.endRefreshing()
+//                }
+//        })
+//    }
     private func makeTableView() {
         chatView.tableView.dataSource = self
         chatView.tableView.delegate = self
@@ -245,8 +262,9 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
     @objc func handleConnectedUserUpdateNotification(notification: NSNotification) {
         let connectedUserInfo = notification.object as! [String: AnyObject]
         let connectedUserNickname = connectedUserInfo["user"]
-        guard  let id = connectedUserNickname?["userId"] as? Int else { return }
-        setId.insert(id)
+        guard  let id = connectedUserNickname?["userId"] as? String else { return }
+        guard let u = Int(id) else { return }
+        setId.insert(u)
         let array = Array(setId)  
         self.bindingUserMap(ids: array)
     }
@@ -269,23 +287,23 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
             }
         }
     }
-    func showBannerLabelAnimated() {
-        UIView.animate(withDuration: 0.75, animations: { () -> Void in
-            
-            }) { (finished) -> Void in
-            self.bannerLabelTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: Selector(("hideBannerLabel")), userInfo: nil, repeats: false)
-        }
-    }
-    func hideBannerLabel() {
-        if bannerLabelTimer != nil {
-            bannerLabelTimer.invalidate()
-            bannerLabelTimer = nil
-        }
-        
-        UIView.animate(withDuration: 0.75, animations: { () -> Void in
-            }) { (finished) -> Void in
-        }
-    }
+//    func showBannerLabelAnimated() {
+//        UIView.animate(withDuration: 0.75, animations: { () -> Void in
+//
+//            }) { (finished) -> Void in
+//            self.bannerLabelTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: Selector(("hideBannerLabel")), userInfo: nil, repeats: false)
+//        }
+//    }
+//    func hideBannerLabel() {
+//        if bannerLabelTimer != nil {
+//            bannerLabelTimer.invalidate()
+//            bannerLabelTimer = nil
+//        }
+//
+//        UIView.animate(withDuration: 0.75, animations: { () -> Void in
+//            }) { (finished) -> Void in
+//        }
+//    }
     func bindingMessage(broad: Int) {
         takeMessage = fitMeetChat.getHistoryMessage(broadId: broad)
             .mapError({ (error) -> Error in return error })
@@ -302,6 +320,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
                          
                         } else {
                             if  let id = i.user?.userId {
+                                self.setId.insert(id)
                                 messageDictionary["id"] = "\(id)"
                                 messageDictionary["username"] = i.user?.fullName
                                 messageDictionary["message"] = i.payload?.message?.text
@@ -310,14 +329,10 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
 
                                 
                             }
-  
-                       
-                        
-                        self.chatView.tableView.reloadData()
-                        self.chatView.tableView.scrollToBottom()
                         }
                     }
-                    self.refreshControl.endRefreshing()
+                    let array = Array(self.setId)
+                    self.bindingUserMap(ids: array)
                 }
             })
         }
@@ -341,10 +356,11 @@ extension ChatVC: UITableViewDataSource {
 
         let currentChatMessage = chatMessages[indexPath.row]
         
+        
         guard let senderNickname = currentChatMessage["username"],
               let message = currentChatMessage["message"],
-              let messageDate = currentChatMessage["timestamp"],
-              let id = currentChatMessage["id"] 
+              let messageDate = currentChatMessage["timestamp"]
+             // let id = currentChatMessage["id"] as? String
              
         else { return UITableViewCell()}
  
@@ -354,14 +370,27 @@ extension ChatVC: UITableViewDataSource {
                 cell.topLabel.text = senderNickname as? String
                 cell.timeLabel.text = (messageDate as? String)!.getFormattedDate(format: "HH:mm")
                 cell.textView.text = message as? String
-                guard  let ids = id as? Int else { return cell}
-        print("USER == \(usersd.keys)")
-        print("USERId == \(ids)")
         
-                cell.bottomLabel.text = ""
-                guard let avatar = self.usersd[ids]?.resizedAvatar?["preview_m"]?.jpeg else { return cell }
-                cell.setImageLogo(image: avatar)
-        print("AVATAR == \(avatar)")
+        if let str = currentChatMessage["id"] as? String, let i = Int(str) {
+            guard let avatar = self.usersd[i]?.avatarPath else { return cell }
+            cell.setImageLogo(image: avatar)
+        }
+        if let str = currentChatMessage["id"] as? Int {
+            guard let avatar = self.usersd[str]?.avatarPath else { return cell }
+            cell.setImageLogo(image: avatar)
+        }
+          //      guard  let ids = id as? Int else { return cell}
+    
+       // print("USERId == \(ids)")
+//        guard let idf = Int(id) else { return cell }
+//     //   let i = Int(id!)
+//        print("USERIdfffnhgdfdjfghjdjfhjdyfjdyjd == \(id)")
+//                cell.bottomLabel.text = ""
+//        print("fffffffffff== \(self.usersd[idf])")
+//               guard let avatar = self.usersd[idf]?.avatarPath else { return cell }
+//       // print("USER == \(usersd.keys)")
+//                cell.setImageLogo(image: avatar)
+//        print("AVATAR == \(avatar)")
                 return cell
   
     }

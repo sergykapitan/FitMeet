@@ -137,7 +137,7 @@ class SocketIOManager: NSObject {
             messageDictionary["username"] = user!["fullName"] as! String
             messageDictionary["message"] = text!["text"] as! String
             messageDictionary["timestamp"] = dict!["timestamp"] as! String
-            messageDictionary["id"] = user!["userId"] as! Int
+            messageDictionary["id"] = user!["userId"]// as! Int
 
             completionHandler(messageDictionary) 
         }

@@ -392,7 +392,7 @@ class FitMeetStream {
     }
 
     public func getCategoryPrivate() -> AnyPublisher<CategoryResponce,DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private?take=40", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private?take=200", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
