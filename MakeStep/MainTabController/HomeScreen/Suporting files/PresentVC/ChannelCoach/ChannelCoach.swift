@@ -41,7 +41,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         guard let userId = user?.id else { return }
         self.bindingChannel(userId: userId)
     }
-
+    var arrayResolution = [String]()
     let popupOffset: CGFloat = -350
     var bottomConstraint = NSLayoutConstraint()
     
@@ -486,6 +486,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
           })
     }
     func loadPlayer(url: String) {
+        print("URL == \(url)")
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
@@ -614,6 +615,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.labelCategory.delegate = self
     }
     func actionButtonContinue() {
+        homeView.buttonSetting.addTarget(self, action: #selector(actionSetting), for: .touchUpInside)
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
@@ -643,6 +645,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 self.view.addSubview(self.homeView.labelTimeStart)
                 let imageL = UIImage(named: "minimize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
                 self.homeView.buttonLandScape.setImage(imageL, for: .normal)
+                self.navigationController?.navigationBar.isHidden = true
+                self.tabBarController?.tabBar.isHidden = true
                 self.view.layoutIfNeeded()
             
             })
@@ -658,6 +662,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                    self.playerViewController!.didMove(toParent: self)
                    let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
                    self.homeView.buttonLandScape.setImage(imageL, for: .normal)
+                   self.navigationController?.navigationBar.isHidden = false
+                   self.tabBarController?.tabBar.isHidden = false
                    self.view.layoutIfNeeded()
                    })
                transitionAnimator.startAnimation()
@@ -665,6 +671,9 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
            }
     }
     // MARK: - ButtonLandscape
+    @objc func actionSetting() {
+        self.present()
+    }
     @objc func rightHandAction() {
         if isPlaying {
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
@@ -801,6 +810,126 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     }
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
+    }
+    public func present() {
+        
+        guard let urlStream = url else { return }
+        guard let url = URL(string: urlStream) else { return }
+        var streamResolution = [StreamResolution]()
+        var alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                         
+        if UIDevice.current.orientation == .portrait {
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        } else if UIDevice.current.orientation == .landscapeLeft {
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        } else if UIDevice.current.orientation == .landscapeRight {
+                alertController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+            }
+        
+        self.getPlaylist(from: url) { result in
+            switch result {
+            case .success( let raw ):
+                self.arrayResolution = self.getStreamResolutions(from: raw)
+                streamResolution = self.getStreamResolutionsAll(from: raw)
+                streamResolution.forEach {
+                    
+                    let action = self.action(for: $0.stringHeight, title: $0.stringHeight + "p")
+                    guard let action = action else {return  }
+                    DispatchQueue.main.async {
+                        alertController.addAction(action)
+                    }
+                }
+                if let action = self.action(for: "Auto", title: "Auto") {
+                    DispatchQueue.main.async {
+                    alertController.addAction(action)
+                    }
+                }
+                DispatchQueue.main.async {
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                }
+                if UIDevice.current.userInterfaceIdiom == .pad {
+                    alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
+                }
+                DispatchQueue.main.async {
+                   self.present(alertController, animated: true)
+                }
+            case .failure(let error):
+                print("Error = \(error)")
+            }
+        }
+    }
+    private func action(for type: String, title: String) -> UIAlertAction? {
+        return UIAlertAction(title: title, style: .default) { [unowned self] _ in
+            guard let url = URL(string: url!) else { return }
+      
+            switch type {
+            case "Auto" :
+                print("TO DO")
+                //self.replaceItem(with: url)
+            default:
+               break
+            }
+           
+        }
+    }
+    /// Downloads the stream file and converts it to the raw playlist.
+    /// - Parameter completion: In successful case should return the `RawPlalist` which contains the url with which was the request performed
+    /// and the string representation of the downloaded file as `content: String` parameter.
+func getPlaylist(from url: URL, completion: @escaping (Swift.Result<RawPlaylist,Error>) -> Void)  {
+        let task = URLSession.shared.dataTask(with: url ){ data, response, error in
+            if let error = error {
+                completion(.failure(error))
+            } else if let data = data, let string = String(data: data, encoding: .utf8) {
+                completion(.success(RawPlaylist(url: url, content: string)))
+            } else {
+               print("TO DO:")
+            }
+        }
+        task.resume()
+    }
+  /// Iterates over the provided playlist contetn and fetches all the stream info data under the `#EXT-X-STREAM-INF"` key.
+  /// - Parameter playlist: Playlist object obtained from the stream url.
+  /// - Returns: All available stream resolutions for respective bandwidth.
+func getStreamResolutions(from playlist: RawPlaylist) -> [String] {
+    let band = playlist.content.components(separatedBy: "\n")
+    let arrayResolution = band.filter(){$0.hasSuffix("m3u8")}
+    return arrayResolution
+}
+func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
+    var resolutions = [StreamResolution]()
+    playlist.content.enumerateLines { line, shouldStop in
+        let infoline = line.replacingOccurrences(of: "#EXT-X-STREAM-INF", with: "")
+        let infoItems = infoline.components(separatedBy: ",")
+        let bandwidthItem = infoItems.first(where: { $0.contains(":BANDWIDTH") })
+        let resolutionItem = infoItems.first(where: { $0.contains("RESOLUTION")})
+        if let bandwidth = bandwidthItem?.components(separatedBy: "=").last,
+           let numericBandwidth = Double(bandwidth),
+           let resolution = resolutionItem?.components(separatedBy: "=").last?.components(separatedBy: "x"),
+           let strignWidth = resolution.first,
+           let stringHeight = resolution.last,
+           let width = Double(strignWidth),
+           let height = Double(stringHeight) {
+           resolutions.append(StreamResolution(maxBandwidth: numericBandwidth,
+                                                averageBandwidth: numericBandwidth,
+                                               resolution: CGSize(width: width, height: height), stringHeight: stringHeight))
+        }
+    }
+    return resolutions
+    }
+    private func replaceItem(with newResolution: URL ) {
+            let currentTime: CMTime
+        if let currentItem = self.playerViewController?.player?.currentItem {
+                currentTime = currentItem.currentTime()
+            } else {
+                currentTime = .zero
+            }
+            
+        self.playerViewController?.player?.replaceCurrentItem(with: AVPlayerItem(url: newResolution))
+        self.playerViewController?.player?.seek(to: currentTime, toleranceBefore: .zero, toleranceAfter: .zero)
+        }
+    func changeUrl(url: String,end: String) -> (String) {
+        let i = url.replacingOccurrences(of: "playlist.m3u8", with: end)
+        return i
     }
     // MARK: - Animation
     /// The current state of the animation. This variable is changed only when an animation completes.
