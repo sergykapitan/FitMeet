@@ -52,12 +52,22 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
     
     
     var listBroadcast: [BroadcastResponce] = []
-    
     var broadcast: BroadcastResponce?
     
-    private let refreshControl = UIRefreshControl()
-    
-   
+    private lazy var textView = UITextView(frame: CGRect.zero)
+    private var isOversized = false {
+        didSet {
+                   guard oldValue != isOversized else {
+                       return
+                   }
+                   
+                   textView.easy.reload()
+                   textView.isScrollEnabled = isOversized
+                   textView.setNeedsUpdateConstraints()
+               }
+        }
+    private let maxHeight: CGFloat = 100
+
     //MARK - LifeCicle
     override func loadView() {
         view = chatView
@@ -100,19 +110,7 @@ class ChatVCPlayer: UIViewController, UITabBarControllerDelegate, UITableViewDel
         }
     }
   
-    private lazy var textView = UITextView(frame: CGRect.zero)
-    private var isOversized = false {
-        didSet {
-                   guard oldValue != isOversized else {
-                       return
-                   }
-                   
-                   textView.easy.reload()
-                   textView.isScrollEnabled = isOversized
-                   textView.setNeedsUpdateConstraints()
-               }
-        }
-    private let maxHeight: CGFloat = 100
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -396,7 +394,6 @@ extension ChatVCPlayer: UITextViewDelegate {
     }
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            self.chatView.tableView.scrollToBottom()
             isOversized = false
             textView.text = "Send a message..."
             textView.textColor = UIColor.lightGray.alpha(0.5)

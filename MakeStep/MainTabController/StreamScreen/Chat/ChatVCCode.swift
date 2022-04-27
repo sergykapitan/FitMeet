@@ -61,16 +61,13 @@ final class ChatVCCode: UIView {
     }()
    
 
-    //MARK: - initial
-    
+ //MARK: - initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         createCardViewLayer()
-    
     }
     
-    //MARK: - constraint First Layer
-    
+ //MARK: - constraint First Layer
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillSuperview()
@@ -80,21 +77,16 @@ final class ChatVCCode: UIView {
         buttonChat.centerX(inView: cardView)
         
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
+       // sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
         
         cardView.addSubview(View)
         View.anchor( left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 20, paddingRight: 0, paddingBottom: 30, height: 18)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: buttonChat.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: sendMessage.topAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
- 
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
 }
 
