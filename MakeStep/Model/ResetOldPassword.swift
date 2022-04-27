@@ -12,3 +12,7 @@ struct ResetOldPassword: Codable {
     let phone: String
     let hash: String
 }
+struct ResetPasswordSms: Codable {
+    let password: String
+    let hash: String
+}

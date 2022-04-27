@@ -78,9 +78,8 @@ class SecurityCodeVC: UIViewController, CodeErrorDelegate {
                                 let vc = NewPassword()
                                 vc.verCode = code
                                 vc.userPhoneOreEmail = phone
-                                vc.getHash = hash
+                                vc.getHash = response.hash
                                 vc.delegateCode = self
-                                vc.modalPresentationStyle = .fullScreen
                                 self.present(vc, animated: true, completion: nil)
                     }
                 })

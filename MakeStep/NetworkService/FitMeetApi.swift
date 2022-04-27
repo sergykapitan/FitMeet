@@ -71,7 +71,13 @@ class FitMeetApi {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    
+    public func resetPasswordSms(reset:ResetPasswordSms) -> AnyPublisher< Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/changePasswordBySms", method: .put, parameters: reset.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: Bool.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
 
     //MARK: - requestLogin
     public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {

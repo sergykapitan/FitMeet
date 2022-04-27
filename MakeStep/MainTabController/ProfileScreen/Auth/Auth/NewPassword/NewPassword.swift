@@ -88,8 +88,9 @@ class NewPassword: UIViewController {
                let hash = getHash else { return }
         
         if password1 == password2 {
-            takePassword = fitMeetApi.resetOldPassword(code: code, resetOld: ResetOldPassword(password: password1, phone: phone, hash: hash))
+            takePassword = fitMeetApi.resetPasswordSms(reset: ResetPasswordSms(password:  password1, hash: hash))
                         .mapError({ (error) -> Error in
+                            print("error = \(error)")
                             if error.localizedDescription == "The operation couldn’t be completed. (MakeStep.FitMeetApi.DifferentError error 0.)" {
                                 self.delegateCode?.codeError()
                                 self.dismiss(animated: true, completion: nil)
