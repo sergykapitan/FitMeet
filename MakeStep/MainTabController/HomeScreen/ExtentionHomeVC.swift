@@ -98,13 +98,21 @@ extension HomeVC: UITableViewDataSource {
                 cell.overlay.isHidden = true
                 cell.overlayOffline.isHidden = true
                 cell.overlayPlan.isHidden = false
-
                 cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
                 cell.logoUserOnline.isHidden = true
         case .banned:
             break
         case .finished:
-            break
+            cell.overlayPlan.isHidden = true
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = false
+            cell.logoUserOnline.isHidden = true
+            if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+                cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
+            } else {
+                cell.overlayOffline.labelLive.text = "00:00"
+            }
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         case .wait_for_approve:
             break
         }

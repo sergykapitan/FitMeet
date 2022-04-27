@@ -155,7 +155,7 @@ extension CategoryBroadcast: UITableViewDelegate {
 
      
     let vc = PlayerViewVC()
-
+        vc.delegate = self
         if self.sortListCategory[indexPath.row].id == nil {
         return
     }
@@ -224,5 +224,13 @@ extension CategoryBroadcast: TagListViewDelegate {
         ta.isSelected = false
         }
       }
+    }
+}
+extension CategoryBroadcast: OpenCoachDelegate {
+    func coachTapped(userId: Int) {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.usersd[userId]
+        navigationController?.pushViewController(vc, animated: true)
     }
 }

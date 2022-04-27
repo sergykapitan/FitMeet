@@ -173,14 +173,18 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
               }
            }
     func bindingNotAuht() {
-            takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
+            takeBroadcast = fitMeetStream.getBroadcastN(status: "ONLINE")
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
-                        self.listBroadcast = response.data!.filter{$0.type == "STANDARD"}
-                        self.bindingNotOff()
+                        //self.listBroadcast = response.data!.filter{$0.type == "STANDARD"}
+                        self.listBroadcast = response.data!
+                        let arrayUserId = self.listBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                        self.refreshControl.endRefreshing()
+                      //  self.bindingNotOff()
                     } else {
-                        self.bindingNotOff()
+                      //  self.bindingNotOff()
                     }
             })
         }

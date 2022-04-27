@@ -122,6 +122,16 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func getBroadcastN(status: String) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=1&take=56&sort=status&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcast")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
 
     public func getBroadcastPrivate(status: String,userId: String,type: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=100&status=\(status)&sort=userId&userId=\(userId)&type=\(type)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
