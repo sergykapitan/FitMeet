@@ -193,6 +193,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
    
     override func copyLink(id: Int) {
         self.homeView.tableView.isUserInteractionEnabled = false
+        self.homeView.buttonMore.isUserInteractionEnabled = false
     #if QA
         let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
     #elseif DEBUG
@@ -200,8 +201,12 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     #endif
        Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
            switch disType {
-           case .tapped:  self.homeView.tableView.isUserInteractionEnabled = true
-           case .timedOut:  self.homeView.tableView.isUserInteractionEnabled = true
+           case .tapped:
+               self.homeView.tableView.isUserInteractionEnabled = true
+               self.homeView.buttonMore.isUserInteractionEnabled = true
+           case .timedOut:
+               self.homeView .tableView.isUserInteractionEnabled = true
+               self.homeView.buttonMore.isUserInteractionEnabled = true
            }
          }
     UIPasteboard.general.string = urlShare
