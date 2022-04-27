@@ -187,14 +187,16 @@ final class ChanellCoachCode: UIView {
     var buttonLandScape: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
   
     var buttonSetting: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .right
         return button
     }()
     var buttonVolum: UIButton = {
@@ -276,6 +278,23 @@ final class ChanellCoachCode: UIView {
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
+        return label
+    }()
+    var labelTimeStart: UILabel = {
+        var label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.text = "00:00"
+        return label
+    }()
+    var labelTimeEnd: UILabel = {
+        var label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 1
+        label.textAlignment = .center
         return label
     }()
 

@@ -59,6 +59,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
       homeView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
       homeView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
       homeView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
+      homeView.buttonTerms.addTarget(self, action: #selector(actionContact), for: .touchUpInside)
     }
 
     func makeNavItem() {
@@ -144,6 +145,11 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
     @objc func actionDisclaimer() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "disclaimer"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    @objc func actionContact() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = "https://dev.makestep.com/contact_us_webview"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
 

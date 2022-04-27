@@ -562,7 +562,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.homeView.playerSlider.isContinuous = true
             self.homeView.playerSlider.tintColor = .blueColor
             self.homeView.labelTimeEnd.text = " / " + Int(seconds).secondsToTime()
-            
         }
     }
   

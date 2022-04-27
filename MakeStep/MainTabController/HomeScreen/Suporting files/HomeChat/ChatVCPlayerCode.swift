@@ -82,7 +82,7 @@ final class ChatVCPlayerCode: UIView {
         cardView.fillSuperview()
           
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
+       // sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
         
         cardView.addSubview(View)
         View.anchor( left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 20, paddingRight: 0, paddingBottom: 30, height: 18)

@@ -184,7 +184,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                    self.bindingChannelNotAuth(userId: id)
                    self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
                }
-         }
+          }
       }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -499,27 +499,38 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
-        playPauseButton = PlayPauseButton()
-        playPauseButton.avPlayer = player
+       
+        let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
+        playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
+            if self.playerViewController?.player!.currentItem?.status == .readyToPlay {
+                 let timeLabel : Float64 = CMTimeGetSeconds((self.playerViewController?.player!.currentTime())!)
+                 guard let time = self.playerViewController?.player!.currentTime() else { return }
+                 self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
+             }
+         }
         
-
-        self.homeView.imagePromo.addSubview(playPauseButton)
-        playPauseButton.setup(in: self)
         self.view.addSubview(self.homeView.buttonLandScape)
-        self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 20, paddingBottom: 10,width: 20,height: 20)
+        let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+        self.homeView.buttonLandScape.setImage(imageL, for: .normal)
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 5,width: 50,height: 30)
         
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 10,  width: 20, height: 20)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
-  
-        self.view.addSubview(self.homeView.buttonVolum)
-        self.homeView.buttonVolum.anchor(right:self.homeView.buttonSetting.leftAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5 , paddingBottom: 10,width: 20,height: 20)
+
+        self.view.addSubview(self.homeView.labelTimeStart)
+        self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
         
-       
-        
+        self.view.addSubview(self.homeView.labelTimeEnd)
+        self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
     }
- 
+    
+    
+    
+    
+    
+    
+    
     @objc func actionSubscribe() {
        guard  let _ = token else {
             let sign = SignInViewController()
@@ -532,11 +543,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         } else {
           guard let subPlans = channel.subscriptionPlans else { return }
             if subPlans.isEmpty {
-                
             } else {
-               // let subscribeView = SubscribeVC()
-              //  var SheetVC = DownSheetViewController(customView: subscribeView.view, customViewHeight: 400)
-              //  showDownSheetAll(SheetVC, payload: nil)
                 let subscribeView = SubscribeVC()
                        subscribeView.modalPresentationStyle = .custom
                        subscribeView.id = user?.id
@@ -579,10 +586,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         
        
     }
-    
-
     func setUserProfile() {
-
         homeView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
         guard let follow = self.channel?.followersCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
         homeView.labelFollow.text = "Followers:" + "\(follow)"
@@ -609,9 +613,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.labelCategory.addTags(arr)
         homeView.labelCategory.delegate = self
     }
-    
     func actionButtonContinue() {
-      
         homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         homeView.buttonTwiter.addTarget(self, action: #selector(actionTwitter), for: .touchUpInside)
         homeView.buttonfaceBook.addTarget(self, action: #selector(actionFacebook), for: .touchUpInside)
@@ -630,46 +632,37 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
        
         if UIDevice.current.orientation.isLandscape {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                guard let playerViewController = self.playerViewController else {
-                    return
-                }
-
-                playerViewController.view.frame = self.view.bounds
-                self.view.addSubview(playerViewController.view)
-                playerViewController.didMove(toParent: self)
-                playerViewController.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut(sender:))))
+                self.playerViewController!.view.frame = self.view.bounds
+                self.view.addSubview(self.playerViewController!.view)
+                self.playerViewController!.didMove(toParent: self)
+                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut)))
+                self.playerViewController!.view.addGestureRecognizer(UIPinchGestureRecognizer.init(target: self, action: #selector(self.actionResize(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
-                self.view.addSubview(self.homeView.buttonVolum)
-                playerViewController.view.addSubview(self.playPauseButton)
-                self.playPauseButton.updatePosition()
-                self.homeView.buttonLandScape.setImage(UIImage(named: "scale-down"), for: .normal)
-                self.navigationController?.navigationBar.isHidden = true
-                self.tabBarController?.tabBar.isHidden = true
+                self.view.addSubview(self.homeView.labelTimeEnd)
+                self.view.addSubview(self.homeView.labelTimeStart)
+                let imageL = UIImage(named: "minimize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+                self.homeView.buttonLandScape.setImage(imageL, for: .normal)
                 self.view.layoutIfNeeded()
             
             })
             transitionAnimator.startAnimation()
-          //  playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
            } else {
-               let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: { [self] in
-                guard let playerViewController = playerViewController else {
-                    return
-                }
-                let playerFrame = self.homeView.imagePromo.bounds
-                playerViewController.view.frame = playerFrame
-                playerViewController.showsPlaybackControls = false
-                playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
-                self.homeView.imagePromo.addSubview(playerViewController.view)
-                playerViewController.didMove(toParent: self)
-                self.homeView.buttonLandScape.setImage(UIImage(named: "enlarge"), for: .normal)
-                self.navigationController?.navigationBar.isHidden = false
-                self.tabBarController?.tabBar.isHidden = false
-                self.view.layoutIfNeeded()
-                })
-            transitionAnimator.startAnimation()
-        //    playerViewController.videoGravity = AVLayerVideoGravity.resizeAspectFill
-            }
+               let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                   let playerFrame = self.homeView.imagePromo.bounds
+                   self.playerViewController!.view.frame = playerFrame
+                   self.playerViewController!.showsPlaybackControls = false
+                   self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+                   self.homeView.imagePromo.addSubview(self.playerViewController!.view)
+                   self.playerViewController!.didMove(toParent: self)
+                   let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+                   self.homeView.buttonLandScape.setImage(imageL, for: .normal)
+                   self.view.layoutIfNeeded()
+                   })
+               transitionAnimator.startAnimation()
+                  playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
+           }
     }
     // MARK: - ButtonLandscape
     @objc func rightHandAction() {
@@ -677,12 +670,24 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
             self.isPlaying = false
         } else {
-            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeLeft)
+            AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeRight)
             self.isPlaying =  true
         }
     }
+    @objc func actionResize(sender:UIPinchGestureRecognizer) {
+        switch sender.state {
+        case .began:
+             let scale = sender.scale
+            sender.scale = 1.0
+            if  scale > 1 {
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            } else  {
+                self.playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect}
+        @unknown default:
+            print("def")
+        }
+    }
     @objc func actionFollow() {
-      
         guard let _ = token else {
             let sign = SignInViewController()
             self.present(sign, animated: true, completion: nil)
@@ -724,7 +729,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             }
         })
     }
-
     @objc func actionTwitter() {
         guard let link = self.channel?.twitterLink else { return }
         if let url = URL(string: link) {
@@ -743,41 +747,25 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                     UIApplication.shared.open(url, options: [:], completionHandler: nil)
                 }
     }
-  
     // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
-
-     
-         
             isButton = false
-            
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
             detailViewController.transitioningDelegate = actionChatTransitionManager
             detailViewController.broadcast = broadcast
             detailViewController.color = .white
-
-
             AppUtility.lockOrientation(.portrait)
-            
-           
-           
-           
             actionChatTransitionManager.intWidth = 1
             actionChatTransitionManager.intHeight = 0.7
             present(detailViewController, animated: true)
-        
-       
     }
-  
     @objc func actionMore() {
         guard token != nil,let broadcastId = self.broadcast?.id else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
     @objc func actionBut(sender:UITapGestureRecognizer) {
-        
-        
         if isButton {
             homeView.overlay.isHidden = true
             homeView.imageLive.isHidden = true
@@ -804,8 +792,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             isButton = true
         }
     }
-    
-  
     private func createTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
@@ -813,12 +799,10 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.tableView.separatorStyle = .none
         homeView.tableView.showsVerticalScrollIndicator = false
     }
-  
     @objc func rightBack() {
         self.navigationController?.popViewController(animated: true)
     }
     // MARK: - Animation
-    
     /// The current state of the animation. This variable is changed only when an animation completes.
     private var currentState: State = .closed
     
