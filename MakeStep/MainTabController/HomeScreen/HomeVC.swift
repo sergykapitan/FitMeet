@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import UIKit
+import Loaf
 
 
 
@@ -107,13 +108,26 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
     }
-   
+    override func copyLink(id: Int) {
+        self.homeView.tableView.isUserInteractionEnabled = false
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
+        let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+           switch disType {
+           case .tapped:  self.homeView.tableView.isUserInteractionEnabled = true
+           case .timedOut:  self.homeView.tableView.isUserInteractionEnabled = true
+           }
+         }
+    UIPasteboard.general.string = urlShare
+    }
     //MARK: - Selectors
     @objc  func refreshAlbumList() {
         self.listBroadcast.removeAll()
         getUsers()
      }
-    
     func binding() {
         takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
             .mapError({ (error) -> Error in return error })
@@ -170,7 +184,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                     }
             })
         }
-   
     func bindingNotOff() {
             takeOff = fitMeetStream.getNotOffBroadcast()
                 .mapError({ (error) -> Error in return error })
@@ -208,9 +221,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                    }
             })
        }
-    
-    
-    
     func bindingCategory() {
         takeCategory = fitMeetStream.getCategory()
                 .mapError({ (error) -> Error in return error })
@@ -221,7 +231,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                     }
             })
         }
-
     func getUsers() {
         takeUser = fitMeetStream.getListAllUser()
             .mapError({ (error) -> Error in return error })
@@ -261,7 +270,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         homeView.tableView.register(HomeHorizontalListTableViewCell.self, forCellReuseIdentifier: "HomeHorizontalListTableViewCell")
         homeView.tableView.separatorStyle = .none
     }
-    
     func connectUser (broadcastId:String?,channellId: String?) {
         
         guard let broadID = broadcastId,let id = channellId else { return }

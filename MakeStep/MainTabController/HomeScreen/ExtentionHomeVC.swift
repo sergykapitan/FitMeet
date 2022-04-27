@@ -134,10 +134,6 @@ extension HomeVC: UITableViewDataSource {
         return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
     }
     @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
-//        guard token != nil else {
-//            let sign = SignInViewController()
-//            self.present(sign, animated: true, completion: nil)
-//            return }
         let tappedView = sender.view
         guard let viewTag = tappedView?.tag else { return }
         guard !listBroadcast.isEmpty else { return }

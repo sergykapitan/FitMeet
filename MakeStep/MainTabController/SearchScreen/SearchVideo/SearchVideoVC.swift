@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Loaf
 
 class SearchVideoVC: SheetableViewController  {
 
@@ -31,6 +32,21 @@ class SearchVideoVC: SheetableViewController  {
         super.viewDidLoad()
         makeTableView()
         token != nil ?  bindingRec() :  self.bindingNotAuth(name: "a")
+    }
+    override func copyLink(id: Int) {
+        self.searchView.tableView.isUserInteractionEnabled = false
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
+        let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+           switch disType {
+           case .tapped:  self.searchView.tableView.isUserInteractionEnabled = true
+           case .timedOut:  self.searchView.tableView.isUserInteractionEnabled = true
+           }
+         }
+    UIPasteboard.general.string = urlShare
     }
 //MARK: - Metods
     func bindingRec() {

@@ -367,6 +367,21 @@ class ChanellVC: SheetableViewController,Refreshable  {
             }
         })
     }
+    override func copyLink(id: Int) {
+        self.profileView.tableView.isUserInteractionEnabled = false
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
+        let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+           switch disType {
+           case .tapped:  self.profileView.tableView.isUserInteractionEnabled = true
+           case .timedOut:  self.profileView.tableView.isUserInteractionEnabled = true
+           }
+         }
+    UIPasteboard.general.string = urlShare
+    }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes

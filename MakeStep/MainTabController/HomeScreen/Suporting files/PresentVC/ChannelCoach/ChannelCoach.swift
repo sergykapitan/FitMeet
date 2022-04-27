@@ -17,6 +17,7 @@ import EasyPeasy
 import AVKit
 import TagListView
 import CloudKit
+import Loaf
 
 
 // MARK: - State
@@ -25,7 +26,6 @@ private enum State {
     case closed
     case open
 }
-
 extension State {
     var opposite: State {
         switch self {
@@ -191,7 +191,22 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.imageLogoProfile.makeRounded()
         setUserProfile()
     }
-    
+    override func copyLink(id: Int) {
+        self.homeView.tableView.isUserInteractionEnabled = false
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
+        let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+           switch disType {
+           case .tapped:  self.homeView.tableView.isUserInteractionEnabled = true
+           case .timedOut:  self.homeView.tableView.isUserInteractionEnabled = true
+           }
+         }
+    UIPasteboard.general.string = urlShare
+    }
+
     @objc func labelAction(gr:UITapGestureRecognizer) {
         let vc = PlayerViewVC()
         guard let broadcast = broadcast else { return }

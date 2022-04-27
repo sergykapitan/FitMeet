@@ -190,6 +190,22 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.view.addGestureRecognizer(swipeDown)
 
     }
+   
+    override func copyLink(id: Int) {
+        self.homeView.tableView.isUserInteractionEnabled = false
+    #if QA
+        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
+    #elseif DEBUG
+        let urlShare = "https://makestep.com/broadcast/\(id)"
+    #endif
+       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+           switch disType {
+           case .tapped:  self.homeView.tableView.isUserInteractionEnabled = true
+           case .timedOut:  self.homeView.tableView.isUserInteractionEnabled = true
+           }
+         }
+    UIPasteboard.general.string = urlShare
+    }
     deinit {
         offsetObservation?.invalidate()
         offsetObservation = nil

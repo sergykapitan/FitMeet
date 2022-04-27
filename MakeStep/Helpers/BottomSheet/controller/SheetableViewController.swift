@@ -171,7 +171,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         #endif
     }
     
-    private func copyLink(id: Int) {
+    func copyLink(id: Int) {
        
     #if QA
         let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
