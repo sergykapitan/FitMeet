@@ -194,7 +194,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         }
         binding(id: "\(id)")
            if self.brodcast.isEmpty {
-               
                token != nil ? bindingChannel(userId: id): bindingChannelNotAuth(userId: id)
           }
       }
