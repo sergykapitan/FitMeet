@@ -684,6 +684,11 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
  // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return
+        }
 
         if isPlaying {
             homeView.overlay.isHidden = true

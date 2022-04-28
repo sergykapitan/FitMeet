@@ -178,7 +178,14 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     #elseif DEBUG
         let urlShare = "https://makestep.com/broadcast/\(id)"
     #endif
-        Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
+        Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+                       switch disType {
+                       case .tapped:
+                           self.stopLoaf()
+                       case .timedOut:
+                           self.stopLoaf()
+                       }
+                     }
         UIPasteboard.general.string = urlShare
     }
     
@@ -191,6 +198,9 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
                     Loaf("Delete Broadcaast : " + response.name!, state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
             }
         })
+    }
+    func stopLoaf() {
+        
     }
     
     func blockUserById(with id: Int32) {

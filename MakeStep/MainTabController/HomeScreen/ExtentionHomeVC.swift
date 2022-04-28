@@ -178,16 +178,11 @@ extension HomeVC: UITableViewDelegate {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        guard  !self.listBroadcast.isEmpty else { return }
-        let id = self.listBroadcast[indexPath.row].userId
- 
-          guard let broadcastID = self.listBroadcast[indexPath.row].id,
+        guard !self.listBroadcast.isEmpty,let broadcastID = self.listBroadcast[indexPath.row].id,
                 let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
+        let vc = PlayerViewVC()
+        vc.delegate = self
 
-          let vc = PlayerViewVC()
-          vc.delegate = self
-        if self.listBroadcast.isEmpty { return }
         guard let status = listBroadcast[indexPath.row].status  else { return }
         switch status {
             
@@ -204,7 +199,7 @@ extension HomeVC: UITableViewDelegate {
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .offline:
-            guard let stream = listBroadcast[indexPath.row].streams?.first else { return }
+            guard let _ = listBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id = self.listBroadcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
@@ -221,7 +216,7 @@ extension HomeVC: UITableViewDelegate {
         case .banned:
             break
         case .finished:
-            guard let stream = listBroadcast[indexPath.row].streams?.first else { return }
+            guard let _ = listBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id = self.listBroadcast[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true

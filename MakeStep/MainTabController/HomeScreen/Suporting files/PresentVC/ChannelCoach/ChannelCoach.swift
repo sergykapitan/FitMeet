@@ -142,6 +142,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         layout()
         homeView.viewTop.addGestureRecognizer(panRecognizer)
         
+        
+       // bindingNotAuht(id: Int(id), page: currentPage)
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -176,35 +178,44 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
            
            self.navigationController?.navigationBar.isHidden = false
            guard let id = user?.id else { return }
+        if self.broadcast != nil {
+            self.homeView.imagePromo.isHidden = false
+            self.homeView.imageLogo.isHidden = false
+            self.homeView.labelStreamInfo.isHidden = false
+            self.homeView.buttonMore.isHidden = false
+            self.homeView.cardView.addSubview(self.homeView.tableView)
+            self.homeView.tableView.anchor(top: self.homeView.imageLogoProfileBottom.bottomAnchor,
+                                           left: self.homeView.cardView.leftAnchor,
+                                           right: self.homeView.cardView.rightAnchor,
+                                           bottom: self.homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+          self.loadPlayer(url: (self.broadcast?.streams?.first?.hlsPlaylistUrl)!)
+          guard let nameStream = self.broadcast?.streams?.first?.name else { return }
+            self.homeView.labelStreamInfo.text = "\(nameStream)"
+        }
+        binding(id: "\(id)")
            if self.brodcast.isEmpty {
-               if token != nil {
-                   self.bindingChannel(userId: id)
-                   self.binding(id: "\(id)")
-               } else {
-                   self.bindingChannelNotAuth(userId: id)
-                   self.bindingBroadcastNotAuth(status: "ONLINE", userId: "\(id)")
-               }
+               
+               token != nil ? bindingChannel(userId: id): bindingChannelNotAuth(userId: id)
           }
       }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-        setUserProfile()
+       // setUserProfile()
+    }
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.broadcast = nil
+        self.playerViewController?.player?.rate = 0
     }
     override func copyLink(id: Int) {
+        super.copyLink(id: id)
         self.homeView.tableView.isUserInteractionEnabled = false
-    #if QA
-        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
-    #elseif DEBUG
-        let urlShare = "https://makestep.com/broadcast/\(id)"
-    #endif
-       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
-           switch disType {
-           case .tapped:  self.homeView.tableView.isUserInteractionEnabled = true
-           case .timedOut:  self.homeView.tableView.isUserInteractionEnabled = true
-           }
-         }
-    UIPasteboard.general.string = urlShare
+        self.homeView.buttonMore.isUserInteractionEnabled = false
+    }
+    override func stopLoaf() {
+        self.homeView.tableView.isUserInteractionEnabled = true
+        self.homeView.buttonMore.isUserInteractionEnabled = true
     }
 
     @objc func labelAction(gr:UITapGestureRecognizer) {
@@ -232,89 +243,13 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
          }
      }
    
-    
-    func bindingChanellVOD(userId: String,page: Int) {
-        self.isLoadingList = false
-        take = fitMeetStream.getBroadcastPrivateVOD(userId: "\(userId)", page: page, type: "STANDARD_VOD")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil {
-                    guard let brod = response.data else { return }
-                    self.brodcast.append(contentsOf: brod)
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                }
-                if response.meta != nil {
-                    guard let itemCount = response.meta?.itemCount else { return }
-                    self.itemCount = itemCount
-                    self.homeView.labelINTVideo.text = "\(self.itemCount)"
-                }
-           })
-       }
-    func bindingChanellVODNotAuth(userId: String,page: Int) {
-        self.isLoadingList = false
-        take = fitMeetStream.getBroadcastPrivateVODNotAuth(userId: "\(userId)", page: page, type: "STANDARD_VOD")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil {
-                    guard let brod = response.data else { return }
-                    self.brodcast.append(contentsOf: brod)
-                   
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                }
-                if response.meta != nil {
-                    guard let itemCount = response.meta?.itemCount else { return }
-                    self.itemCount = itemCount
-                    self.homeView.labelINTVideo.text = "\(self.itemCount)"
-                }
-           })
-       }
-    func bindingCategory(categoryId: Int,page: Int) {
-        self.isLoadingList = false
-        takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId, page: page)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    guard let brod = response.data else { return }
-                    self.brodcast.append(contentsOf: brod)
-                    
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                }
-                if response.meta != nil {
-                    guard let itemCount = response.meta?.itemCount else { return }
-                    self.categoryCount = itemCount
-                }
-        })
-    }
-    func bindingOff() {
-        takeOff = fitMeetStream.getOffBroadcast(page: 1)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    guard let brod = response.data else { return }
-                    self.brodcast.append(contentsOf: brod)
-                    
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                }
-                if response.meta != nil {
-                    guard let itemCount = response.meta?.itemCount else { return }
-                    self.allCount = itemCount
-                }
-            })
-    }
+
     func loadMoreItemsForList(){
-            currentPage += 1
-            guard let id = user?.id else { return }
-            bindingChanellVOD(userId: "\(id)", page: currentPage)
+        currentPage += 1
+        guard let id = user?.id else { return }
+        bindingNotAuht(id: id, page: currentPage)
        }
-    func loadMoreCaategoryForList(){
-            currentPageCategory += 1
-            guard let id = self.broadcast?.categories?.first?.id else { return }
-            bindingCategory(categoryId: id,page: currentPageCategory)
-       }
+
     func bindingChannel(userId: Int?) {
         guard let id = userId else { return }
         takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
@@ -322,6 +257,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil  {
                     self.channel = response.data.last
+                    self.setUserProfile()
                     guard let channel = self.channel else {
                         self.homeView.buttonSubscribe.backgroundColor = .lightGray
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
@@ -361,7 +297,9 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil  {
+                  
                     self.channel = response.data.last
+                    self.setUserProfile()
                     guard let channel = self.channel else {
                         self.homeView.buttonSubscribe.backgroundColor = .lightGray
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
@@ -383,26 +321,13 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 }
         })
     }
-    func bindingBroadcast(status: String,userId: String,type: String) {
-        take = fitMeetStream.getBroadcastPrivate(status: status, userId: userId,type: type)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                   
-                    self.brodcast = response.data!
-                    let arrayUserId = self.brodcast.map{$0.userId!}
-                    
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                }
-           })
-       }
+
     func binding(id: String) {
           takeBroadcast = fitMeetStream.getBroadcastPrivateTime(status: "ONLINE", userId: id)
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
-                      self.brodcast.append(contentsOf: response.data!)
+                      self.broadcast = response.data?.first
                       if !response.data!.isEmpty  {
                           self.homeView.imagePromo.isHidden = false
                           self.homeView.imageLogo.isHidden = false
@@ -413,8 +338,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                                            left: homeView.cardView.leftAnchor,
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-                          loadPlayer(url: (self.brodcast.first?.streams?.first?.hlsPlaylistUrl)!)
-                          guard let nameStream = self.brodcast.first?.streams?.first?.name else { return }
+                          loadPlayer(url: (self.broadcast?.streams?.first?.hlsPlaylistUrl)!)
+                          guard let nameStream = self.broadcast?.streams?.first?.name else { return }
                           self.homeView.labelStreamInfo.text = "\(nameStream)"
                       } else {
                           self.homeView.imagePromo.isHidden = true
@@ -427,7 +352,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                       }
-                      self.bindingChanellVOD(userId: id, page: currentPage)
+                    //  bindingNotAuht(id: Int(id), page: currentPage)
             }
         })
       }
@@ -444,52 +369,28 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         }
 
     }
-    func bindingPlanned(id: String) {
-          takeBroadcastPlanned = fitMeetStream.getBroadcastPrivateTime(status: "PLANNED", userId: id)
-              .mapError({ (error) -> Error in return error })
-              .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
-                  if response.data != nil  {
-                      self.brodcast.append(contentsOf: response.data!)
-                      self.homeView.tableView.reloadData()
+    func bindingNotAuht(id: Int?,page: Int) {
+        guard let id = id else {return }
+        self.isLoadingList = false
+        takeBroadcast = fitMeetStream.getBroadcastForUser(idUser: id, page: page)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
 
-                 }
-          })
-      }
-    func bindingBroadcastNotAuth(status: String,userId: String) {
-        take = fitMeetStream.getBroadcastNotAuth(status: status, userId: userId)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.brodcast.append(contentsOf: response.data!)
-                    if !response.data!.isEmpty  {
-                        self.homeView.imagePromo.isHidden = false
-                        self.homeView.imageLogo.isHidden = false
-                        self.homeView.labelStreamInfo.isHidden = false
-                        self.homeView.buttonMore.isHidden = false
-                        self.homeView.cardView.addSubview(self.homeView.tableView)
-                        self.homeView.tableView.anchor(top: self.homeView.imageLogoProfileBottom.bottomAnchor,
-                                                       left: self.homeView.cardView.leftAnchor,
-                                                       right: self.homeView.cardView.rightAnchor,
-                                                       bottom: self.homeView.cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-                        self.loadPlayer(url: (self.brodcast.first?.streams?.first?.hlsPlaylistUrl)!)
-                        guard let nameStream = self.brodcast.first?.streams?.first?.name else { return }
-                        self.homeView.labelStreamInfo.text = "\(nameStream)"
-                    } else {
-                        self.homeView.imagePromo.isHidden = true
-                        self.homeView.imageLogo.isHidden = true
-                        self.homeView.labelStreamInfo.isHidden = true
-                        self.homeView.buttonMore.isHidden = true
-                        self.homeView.cardView.addSubview(self.homeView.tableView)
-                        self.homeView.tableView.anchor(top: self.homeView.cardView.topAnchor,
-                                                       left: self.homeView.cardView.leftAnchor,
-                                                       right: self.homeView.cardView.rightAnchor,
-                                                       bottom: self.homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+
+                        guard let brod = response.data else { return }
+                        self.brodcast.append(contentsOf: brod)
+                       
+                        let arrayUserId = self.brodcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
                     }
-                    
-                    self.bindingChanellVODNotAuth(userId: userId, page: self.currentPage)
+                    if response.meta != nil {
+                        guard let itemCount = response.meta?.itemCount else { return }
+                        self.itemCount = itemCount
+                        self.homeView.labelINTVideo.text = "\(self.itemCount)"
                 }
-           })
-       }
+            })
+        }
     func bindingUserMap(ids: [Int])  {
         take = fitMeetApi.getUserIdMap(ids: ids)
             .mapError({ (error) -> Error in return error })
@@ -540,13 +441,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         self.view.addSubview(self.homeView.labelTimeEnd)
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
     }
-    
-    
-    
-    
-    
-    
-    
     @objc func actionSubscribe() {
        guard  let _ = token else {
             let sign = SignInViewController()
@@ -578,7 +472,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         }
     }
     func makeNavItem() {
-        
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
                     let titleLabel = UILabel()
@@ -640,8 +533,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.buttonChat.addTarget(self, action: #selector(actionChat), for: .touchUpInside)
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonVolum.addTarget(self, action: #selector(actionVolume), for: .touchUpInside)
-       
-
     }
     //MARK: - Transishion
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
