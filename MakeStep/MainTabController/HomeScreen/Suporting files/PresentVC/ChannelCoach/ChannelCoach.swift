@@ -91,7 +91,13 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     @Inject var fitMeetApi: FitMeetApi
     @Inject var firMeetChanell: FitMeetChannels
     @Inject var fitMeetStream: FitMeetStream
-    var user: User?
+    var user: User? {
+        didSet {
+//            guard let id = self.user?.id else { return }
+//            bindingNotAuht(id: id, page: currentPage)
+        }
+    }
+    
     var brodcast: [BroadcastResponce] = []
     var indexButton: Int = 0
     let actionChatTransitionManager = ActionTransishionChatManadger()
@@ -143,7 +149,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.viewTop.addGestureRecognizer(panRecognizer)
         
         
-       // bindingNotAuht(id: Int(id), page: currentPage)
+       
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
         swipeRight.direction = UISwipeGestureRecognizer.Direction.right
         self.view.addGestureRecognizer(swipeRight)
@@ -152,6 +158,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelAction))
         self.homeView.labelStreamInfo.addGestureRecognizer(tap)
         tap.delegate = self
+//        guard let id = self.user?.id else { return }
+//        bindingNotAuht(id: id, page: currentPage)
     }
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
@@ -192,7 +200,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
           guard let nameStream = self.broadcast?.streams?.first?.name else { return }
             self.homeView.labelStreamInfo.text = "\(nameStream)"
         }
-        binding(id: "\(id)")
+        bindingNotAuht(id: id, page: currentPage)
+         binding(id: "\(id)")
            if self.brodcast.isEmpty {
                token != nil ? bindingChannel(userId: id): bindingChannelNotAuth(userId: id)
           }
@@ -355,19 +364,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             }
         })
       }
-    @objc func actionVolume() {
-        guard token != nil else { return }
-        homeView.buttonVolum.isSelected.toggle()
-        if homeView.buttonVolum.isSelected {
-            let highlightedImage = UIImage(named: "volumeMute")?.withTintColor(.white, renderingMode: .alwaysOriginal)
-            homeView.buttonVolum.setImage(highlightedImage, for: .normal)
-            self.playerViewController?.player?.volume = 0
-        } else {
-            homeView.buttonVolum.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
-            self.playerViewController?.player?.volume = 1
-        }
-
-    }
+   
     func bindingNotAuht(id: Int?,page: Int) {
         guard let id = id else {return }
         self.isLoadingList = false
@@ -439,6 +436,19 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         
         self.view.addSubview(self.homeView.labelTimeEnd)
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
+    }
+    @objc func actionVolume() {
+        guard token != nil else { return }
+        homeView.buttonVolum.isSelected.toggle()
+        if homeView.buttonVolum.isSelected {
+            let highlightedImage = UIImage(named: "volumeMute")?.withTintColor(.white, renderingMode: .alwaysOriginal)
+            homeView.buttonVolum.setImage(highlightedImage, for: .normal)
+            self.playerViewController?.player?.volume = 0
+        } else {
+            homeView.buttonVolum.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
+            self.playerViewController?.player?.volume = 1
+        }
+
     }
     @objc func actionSubscribe() {
        guard  let _ = token else {
