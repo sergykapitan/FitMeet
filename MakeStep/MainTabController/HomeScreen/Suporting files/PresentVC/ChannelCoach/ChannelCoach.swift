@@ -198,8 +198,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
           guard let nameStream = self.broadcast?.streams?.first?.name else { return }
             self.homeView.labelStreamInfo.text = "\(nameStream)"
         }
-      //  bindingNotAuht(id: id, page: currentPage)
-         binding(id: "\(id)")
+        binding(id: "\(id)")
            if self.brodcast.isEmpty {
                token != nil ? bindingChannel(userId: id): bindingChannelNotAuth(userId: id)
           }
@@ -207,7 +206,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         homeView.imageLogoProfile.makeRounded()
-       // setUserProfile()
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -368,6 +366,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         takeOff = fitMeetStream.getBroadcastForUser(idUser: id, page: page)
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    print("Res == \(response)")
                     if response.data != nil  {
 
 
