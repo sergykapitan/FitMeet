@@ -175,18 +175,10 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         self.authView.textFieldCategory.text = ""
     }
     @objc func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-
          if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-
              switch swipeGesture.direction {
              case UISwipeGestureRecognizer.Direction.right:
                  self.navigationController?.popViewController(animated: true)
-             case UISwipeGestureRecognizer.Direction.down:
-                 print("Swiped down")
-             case UISwipeGestureRecognizer.Direction.left:
-                 print("Swiped left")
-             case UISwipeGestureRecognizer.Direction.up:
-                 print("Swiped up")
              default:
                  break
              }
@@ -302,9 +294,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         takeChannel = fitMeetApi.uploadImage(image: image)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response != nil  {
                     self.imageUpload = response
-                }
         })
     }
     func nextView(
@@ -416,10 +406,7 @@ extension EditStreamVC: UITextFieldDelegate {
             self.authView.textFieldName.resignFirstResponder()
             return true
         }
-//        if textField == authView.textFieldStartDate {
-//            self.authView.textFieldName.resignFirstResponder()
-//            return true
-//        }
+
         if textField == authView.textFieldAviable {
             self.authView.textFieldName.resignFirstResponder()
             return true
