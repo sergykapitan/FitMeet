@@ -126,12 +126,18 @@ extension HomeVC: UITableViewDataSource {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
         cell.stackButton.addGestureRecognizer(tap)
             
-            if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
+//            if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
+//                if self.itemCount > listBroadcast.count {
+//                    self.isLoadingList = true
+//                    self.loadMoreItemsForList()
+//                } else if self.itemCount == listBroadcast.count {
+//                    self.bindingPlanned()
+//                }
+//            }
+            if indexPath.row == listBroadcast.count - 2 {
                 if self.itemCount > listBroadcast.count {
                     self.isLoadingList = true
                     self.loadMoreItemsForList()
-                } else if self.itemCount == listBroadcast.count {
-                    self.bindingPlanned()
                 }
             }
         return cell
