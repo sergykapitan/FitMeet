@@ -501,11 +501,11 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     }
     func setUserProfile() {
         homeView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = self.channel?.followersCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
+        guard let follow = self.channel?.followersCount,let fullName = user?.fullName,let subCount = channel?.subscribersCount  else { return }
         homeView.labelFollow.text = "Followers:" + "\(follow)"
         self.homeView.welcomeLabel.text = fullName
         self.homeView.labelINTFollows.text = "\(follow)"
-        self.homeView.labelINTFolowers.text = "\(sub)"
+        self.homeView.labelINTFolowers.text = "\(subCount)"
         self.homeView.labelDescription.text = channel?.description
         self.homeView.labelNameCoach.text = fullName
         self.homeView.imageLogoProfileBottom.makeRounded()

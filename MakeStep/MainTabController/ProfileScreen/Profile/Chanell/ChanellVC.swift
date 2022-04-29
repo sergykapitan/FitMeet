@@ -169,14 +169,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-       
-       // self.brodcast.removeAll()
         self.navigationController?.navigationBar.isHidden = false
-        
-//        guard let id = user?.id else { return }
-//        bindingChannel(userId: id)
-//        self.binding(id: "\(id)", page: currentPage)
-       
         AppUtility.lockOrientation(.portrait)
         
     }
@@ -226,80 +219,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
                 }
           })
     }
-    // MARK: - Animation
-    
-    /// The current state of the animation. This variable is changed only when an animation completes.
-    private var currentState: State = .closed
-    
-    /// All of the currently running animators.
-    private var runningAnimators = [UIViewPropertyAnimator]()
-    
-    /// The progress of each animator. This array is parallel to the `runningAnimators` array.
-    private var animationProgress = [CGFloat]()
-    
-    private lazy var panRecognizer: InstantPanGestureRecognizer = {
-        let recognizer = InstantPanGestureRecognizer()
-        recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
-        return recognizer
-    }()
-    
-    @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
-        switch recognizer.state {
-        case .began:
-            
-            // start the animations
-            animateTransitionIfNeeded(to: currentState.opposite, duration: 0.2)
-            
-            // pause all animations, since the next event may be a pan changed
-            runningAnimators.forEach { $0.pauseAnimation() }
-            
-            // keep track of each animator's progress
-            animationProgress = runningAnimators.map { $0.fractionComplete }
-            
-        case .changed:
-            
-            // variable setup
-            let translation = recognizer.translation(in: profileView.viewTop)
-            var fraction = -translation.y / popupOffset
-            
-            // adjust the fraction for the current state and reversed state
-            if currentState == .open { fraction *= -1 }
-            if runningAnimators[0].isReversed { fraction *= -1 }
-            
-            // apply the new fraction
-            for (index, animator) in runningAnimators.enumerated() {
-                animator.fractionComplete = fraction + animationProgress[index]
-            }
-            
-        case .ended:
-            
-            // variable setup
-            let yVelocity = recognizer.velocity(in: profileView.viewTop).y
-            let shouldClose = yVelocity < 0
-            
-            // if there is no motion, continue all animations and exit early
-            if yVelocity == 0 {
-                runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-                break
-            }
-            
-            // reverse the animations based on their current state and pan motion
-            switch currentState {
-            case .open:
-                if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            case .closed:
-                if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-                if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
-            }
-            
-            // continue all animations
-            runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
-            
-        default:
-            ()
-        }
-    }
+
     @objc func actionSubscribe() {
         let vc = EdetChannelVC()
         vc.modalPresentationStyle = .fullScreen
@@ -309,12 +229,12 @@ class ChanellVC: SheetableViewController,Refreshable  {
     func setUserProfile() {
 
         profileView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let sub = user?.channelSubscribeCount!  else { return }
+        guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let subCount = channel?.subscribersCount   else { return }
         profileView.labelFollow.text = "Followers:" + "\(follow)"
         self.profileView.welcomeLabel.text = fullName
         self.profileView.labelINTFollows.text = "\(follow)"
-        self.profileView.labelINTFolowers.text = "\(sub)"
-        self.profileView.labelDescription.text = channel?.description 
+        self.profileView.labelINTFolowers.text = "\(subCount)"
+        self.profileView.labelDescription.text = channel?.description
  
     }
     func actionButtonContinue() {
@@ -340,8 +260,8 @@ class ChanellVC: SheetableViewController,Refreshable  {
     @objc func actionFacebook() {
         guard let link = self.channel?.facebookLink else { return }
         if let url = URL(string: link) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+       }
     }
     private func createTableView() {
         profileView.tableView.dataSource = self
@@ -368,19 +288,11 @@ class ChanellVC: SheetableViewController,Refreshable  {
         })
     }
     override func copyLink(id: Int) {
+        super.copyLink(id: id)
         self.profileView.tableView.isUserInteractionEnabled = false
-    #if QA
-        let urlShare = "https://dev.makestep.com/broadcastQA/\(id)"
-    #elseif DEBUG
-        let urlShare = "https://makestep.com/broadcast/\(id)"
-    #endif
-       Loaf("Copy Link :" + urlShare, state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
-           switch disType {
-           case .tapped:  self.profileView.tableView.isUserInteractionEnabled = true
-           case .timedOut:  self.profileView.tableView.isUserInteractionEnabled = true
-           }
-         }
-    UIPasteboard.general.string = urlShare
+    }
+    override func stopLoaf() {
+        self.profileView.tableView.isUserInteractionEnabled = true
     }
     func makeNavItem() {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
@@ -415,8 +327,6 @@ class ChanellVC: SheetableViewController,Refreshable  {
         print("timeHandAction")
         let tvc = Timetable()
         navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
     }
     @objc func notificationHandAction() {
         print("notificationHandAction")
@@ -425,13 +335,83 @@ class ChanellVC: SheetableViewController,Refreshable  {
         self.navigationController?.popViewController(animated: true)
     }
     func loadMoreItemsForList(){
-        print("Curent == \(currentPage)")
             currentPage += 1
             guard let id = user?.id else { return }
             self.binding(id: "\(id)", page: currentPage)
        }
-
-    
+    // MARK: - Animation
+      /// The current state of the animation. This variable is changed only when an animation completes.
+      private var currentState: State = .closed
+      
+      /// All of the currently running animators.
+      private var runningAnimators = [UIViewPropertyAnimator]()
+      
+      /// The progress of each animator. This array is parallel to the `runningAnimators` array.
+      private var animationProgress = [CGFloat]()
+      
+      private lazy var panRecognizer: InstantPanGestureRecognizer = {
+          let recognizer = InstantPanGestureRecognizer()
+          recognizer.addTarget(self, action: #selector(popupViewPanned(recognizer:)))
+          return recognizer
+      }()
+      @objc private func popupViewPanned(recognizer: UIPanGestureRecognizer) {
+          switch recognizer.state {
+          case .began:
+              
+              // start the animations
+              animateTransitionIfNeeded(to: currentState.opposite, duration: 0.2)
+              
+              // pause all animations, since the next event may be a pan changed
+              runningAnimators.forEach { $0.pauseAnimation() }
+              
+              // keep track of each animator's progress
+              animationProgress = runningAnimators.map { $0.fractionComplete }
+              
+          case .changed:
+              
+              // variable setup
+              let translation = recognizer.translation(in: profileView.viewTop)
+              var fraction = -translation.y / popupOffset
+              
+              // adjust the fraction for the current state and reversed state
+              if currentState == .open { fraction *= -1 }
+              if runningAnimators[0].isReversed { fraction *= -1 }
+              
+              // apply the new fraction
+              for (index, animator) in runningAnimators.enumerated() {
+                  animator.fractionComplete = fraction + animationProgress[index]
+              }
+              
+          case .ended:
+              
+              // variable setup
+              let yVelocity = recognizer.velocity(in: profileView.viewTop).y
+              let shouldClose = yVelocity < 0
+              
+              // if there is no motion, continue all animations and exit early
+              if yVelocity == 0 {
+                  runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+                  break
+              }
+              
+              // reverse the animations based on their current state and pan motion
+              switch currentState {
+              case .open:
+                  if !shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                  if shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+              case .closed:
+                  if shouldClose && !runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+                  if !shouldClose && runningAnimators[0].isReversed { runningAnimators.forEach { $0.isReversed = !$0.isReversed } }
+              }
+              
+              // continue all animations
+              runningAnimators.forEach { $0.continueAnimation(withTimingParameters: nil, durationFactor: 0) }
+              
+          default:
+              ()
+          }
+      }
+      
     //  MARK:  - Animation Top View
     private func animateTransitionIfNeeded(to state: State, duration: TimeInterval) {
         
@@ -650,6 +630,5 @@ class ChanellVC: SheetableViewController,Refreshable  {
         runningAnimators.append(outTitleAnimator)
         
     }
-
 }
 

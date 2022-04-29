@@ -151,7 +151,7 @@ final class ChanellCoachCode: UIView {
         let label  = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.textAlignment = .center
-        label.text = "Followers"
+        label.text = "Following"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -166,7 +166,7 @@ final class ChanellCoachCode: UIView {
         let label  = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.textAlignment = .center
-        label.text = "Following"
+        label.text = "Followers"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
