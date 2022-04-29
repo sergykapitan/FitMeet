@@ -93,8 +93,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     @Inject var fitMeetStream: FitMeetStream
     var user: User? {
         didSet {
-//            guard let id = self.user?.id else { return }
-//            bindingNotAuht(id: id, page: currentPage)
+            guard let id = self.user?.id else { return }
+            bindingNotAuht(id: id, page: currentPage)
         }
     }
     
@@ -158,8 +158,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(labelAction))
         self.homeView.labelStreamInfo.addGestureRecognizer(tap)
         tap.delegate = self
-//        guard let id = self.user?.id else { return }
-//        bindingNotAuht(id: id, page: currentPage)
     }
     override func viewWillAppear(_ animated: Bool) {
            super.viewWillAppear(animated)
@@ -200,7 +198,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
           guard let nameStream = self.broadcast?.streams?.first?.name else { return }
             self.homeView.labelStreamInfo.text = "\(nameStream)"
         }
-        bindingNotAuht(id: id, page: currentPage)
+      //  bindingNotAuht(id: id, page: currentPage)
          binding(id: "\(id)")
            if self.brodcast.isEmpty {
                token != nil ? bindingChannel(userId: id): bindingChannelNotAuth(userId: id)
@@ -360,15 +358,14 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                                            right: homeView.cardView.rightAnchor,
                                            bottom: homeView.cardView.bottomAnchor, paddingTop: 110, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
                       }
-                    //  bindingNotAuht(id: Int(id), page: currentPage)
-            }
-        })
-      }
+                   }
+               })
+           }
    
     func bindingNotAuht(id: Int?,page: Int) {
         guard let id = id else {return }
         self.isLoadingList = false
-        takeBroadcast = fitMeetStream.getBroadcastForUser(idUser: id, page: page)
+        takeOff = fitMeetStream.getBroadcastForUser(idUser: id, page: page)
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
@@ -398,7 +395,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
           })
     }
     func loadPlayer(url: String) {
-        print("URL == \(url)")
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
