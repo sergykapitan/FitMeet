@@ -51,7 +51,6 @@ extension CategoryVC: UICollectionViewDataSource {
         cell.contentView.layer.masksToBounds = true
         cell.backgroundColor = .white
         cell.configureCell(albumName: filtredBroadcast[indexPath.row].followersCount, url: url, artistName: title)
-        stopSpiners()
         return cell
     }
 }
@@ -74,7 +73,7 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (self.view.frame.size.width - 12 * 4) / 2 //some width
-        let height = width * 1.4 //ratio
+        let height = width * 1.2 //ratio
 
       return CGSize(width: width,
                     height: height)

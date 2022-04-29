@@ -23,15 +23,7 @@ final class CategoryCell: UICollectionViewCell {
         imageView.clipsToBounds = true
         return imageView
     }()
-    private let albumNameLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.textAlignment = .left
-        label.font = UIFont.systemFont(ofSize: 14)
-        label.textColor = .white
-        return label
-    }()
-    private let artistNameLabel: UILabel = {
+    private let nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .left
@@ -95,8 +87,7 @@ final class CategoryCell: UICollectionViewCell {
         contentView.addSubview(bottomView)
         photoImage.addSubview(viewOverlay)
         viewOverlay.addSubview(textOverlay)
-        bottomView.addSubview(artistNameLabel)
-        bottomView.addSubview(albumNameLabel)
+        bottomView.addSubview(nameLabel)
         bottomView.addSubview(buttonLike)
         contentView.addSubview(spinner)
         
@@ -125,45 +116,19 @@ final class CategoryCell: UICollectionViewCell {
                           bottom: contentView.bottomAnchor,
                           paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        artistNameLabel.anchor(top: bottomView.topAnchor,
+        nameLabel.anchor(top: bottomView.topAnchor,
                                left: bottomView.leftAnchor,
                                right: buttonLike.leftAnchor,
                                paddingTop: 8,paddingLeft: 12,paddingRight: 5 )
         buttonLike.anchor(top: bottomView.topAnchor,
                           right: bottomView.rightAnchor,
                           paddingTop: 8, paddingRight: 12,width: 30,height: 30)
-        albumNameLabel.anchor(top: artistNameLabel.bottomAnchor,
-                              left: bottomView.leftAnchor,
-                              right: bottomView.rightAnchor,
-                              paddingTop: 5,paddingLeft: 12,paddingRight: 5)
-        
-        
-        NSLayoutConstraint.activate([
-            spinner.centerXAnchor.constraint(equalTo: centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: centerYAnchor)
-        ])
-    }
-    
-    //MARK: - Methods
-    func showSpinner() {
-        spinner.startAnimating()
+
     }
 
-    private func hideSpinner() {
-        spinner.stopAnimating()
-    }
-    
-    func hideSpinner(withDelay delay: TimeInterval) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [unowned self] in
-            self.hideSpinner()
-        }
-    }
-    
     func configureCell(albumName: Int, url: URL,artistName: String) {
         photoImage.kf.setImage(with: url)
-        artistNameLabel.text = artistName
-        albumNameLabel.text = "\(albumName)" + " Viewers"
+        nameLabel.text = artistName
     }
-  
 }
 
