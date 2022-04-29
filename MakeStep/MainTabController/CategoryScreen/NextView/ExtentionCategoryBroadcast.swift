@@ -37,9 +37,6 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.titleLabel.text = self.usersd[id]?.fullName
 
         self.ids.append(broadcastID)
-        self.getMapWather(ids: [broadcastID])
-        cell.overlay.labelEye.text = "\(self.watch)"
-  
         let categorys = sortListCategory[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
@@ -49,9 +46,6 @@ extension CategoryBroadcast: UITableViewDataSource {
         cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
-
-        
-        
        
         self.url = self.sortListCategory[indexPath.row].streams?.first?.hlsPlaylistUrl
         guard let status = sortListCategory[indexPath.row].status  else { return cell}
@@ -117,19 +111,8 @@ extension CategoryBroadcast: UITableViewDataSource {
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
 
     }
-    @objc func tappedCoach(_ sender: UIButton) -> Void {
-        let vc = ChannelCoach()
-        vc.modalPresentationStyle = .fullScreen
-        guard let id = listBroadcast[sender.tag].userId else { return}
-        vc.user = self.usersd[id]
-        navigationController?.pushViewController(vc, animated: true)
 
-    }
     @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
-//        guard token != nil else {
-//            let sign = SignInViewController()
-//            self.present(sign, animated: true, completion: nil)
-//            return }
         let tappedView = sender.view
         guard let viewTag = tappedView?.tag else { return }
         guard !listBroadcast.isEmpty else { return }
@@ -144,7 +127,7 @@ extension CategoryBroadcast: UITableViewDataSource {
 extension CategoryBroadcast: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 330
+        return 310
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -192,11 +175,7 @@ extension CategoryBroadcast: UITableViewDelegate {
             break
         case .finished:
             guard let streams = sortListCategory[indexPath.row].streams else { return }
-           
-            if streams.isEmpty  { return }
-                        guard let url = streams.first?.vodUrl else { return }
-            guard let stream = sortListCategory[indexPath.row].streams?.first else { return }
-            
+
             vc.broadcast = self.sortListCategory[indexPath.row]
             vc.id = self.sortListCategory[indexPath.row].userId
             vc.homeView.buttonChat.isHidden = true
