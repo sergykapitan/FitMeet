@@ -71,41 +71,7 @@ final class ProfileVCCode: UIView {
         let line = OneLine()
         return line
     }()
-//    var imageLogo:UIImageView = {
-//        let image = UIImageView()
-//        image.image =  #imageLiteral(resourceName: "history 1")
-//        return image
-//        }()
-//
-//    var labelHistory: UILabel = {
-//        let label = UILabel()
-//        label.text = "History"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        return label
-//    }()
-//    var buttonHistory: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-//    var imageStudio:UIImageView = {
-//        let image = UIImageView()
-//        image.image =  #imageLiteral(resourceName: "video 2-1")
-//        return image
-//        }()
-//
-//    var labelStudio: UILabel = {
-//        let label = UILabel()
-//        label.text = "Studio"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        return label
-//    }()
-//    var buttonStudio: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-    
+ 
     var imageChanell:UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "youtube")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
@@ -145,59 +111,7 @@ final class ProfileVCCode: UIView {
         let line = OneLine()
         return line
     }()
-//    var imageSettinh: UIImageView = {
-//        let image = UIImageView()
-//        image.image =  #imageLiteral(resourceName: "settings 1-1")
-//        return image
-//        }()
-//    var labelSetting: UILabel = {
-//        let label = UILabel()
-//        label.text = "Setting"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        return label
-//    }()
-//    var buttonSetting: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-//    var imageLanguage: UIImageView = {
-//        let image = UIImageView()
-//        image.image =  #imageLiteral(resourceName: "globe 1-1")
-//        return image
-//        }()
-//    var labelLanguage: UILabel = {
-//        let label = UILabel()
-//        label.text = "Language"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        return label
-//    }()
-//    var buttonLanguage: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-//    var treeLine: OneLine = {
-//        let line = OneLine()
-//        return line
-//    }()
-//
-//    var imageHelp: UIImageView = {
-//        let image = UIImageView()
-//        image.image =  #imageLiteral(resourceName: "help-circle 1-1")
-//        return image
-//        }()
-//    var labelHelp: UILabel = {
-//        let label = UILabel()
-//        label.text = "Help"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 18)
-//        return label
-//    }()
-//    var buttonHelp: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
+
     var fourLine: OneLine = {
         let line = OneLine()
         return line
@@ -223,30 +137,30 @@ final class ProfileVCCode: UIView {
         return line
     }()
     
-//    var labelAbout: UILabel = {
-//        let label = UILabel()
-//        label.text = "About"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 16)
-//        return label
-//    }()
-//    var buttonAbout: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-//
-//    var labelPartners: UILabel = {
-//        let label = UILabel()
-//        label.text = "How it works"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 16)
-//        return label
-//    }()
-//    var buttonPartners: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
-//
+    var labelAbout: UILabel = {
+        let label = UILabel()
+        label.text = "About"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    var buttonAbout: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+
+    var labelPartners: UILabel = {
+        let label = UILabel()
+        label.text = "How it works"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    var buttonPartners: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+
     var labelCommunityGuidelines: UILabel = {
         let label = UILabel()
         label.text = "Terms of service"
@@ -295,17 +209,17 @@ final class ProfileVCCode: UIView {
         return button
     }()
     
-//    var labelTerms: UILabel = {
-//        let label = UILabel()
-//        label.text = "Contact us"
-//        label.textColor = UIColor(hexString: "#7C7C7C")
-//        label.font = UIFont.systemFont(ofSize: 16)
-//        return label
-//    }()
-//    var buttonTerms: UIButton = {
-//        let button = UIButton()
-//        return button
-//    }()
+    var labelContact: UILabel = {
+        let label = UILabel()
+        label.text = "Contact us"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 16)
+        return label
+    }()
+    var buttonContact: UIButton = {
+        let button = UIButton()
+        return button
+    }()
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -356,17 +270,7 @@ final class ProfileVCCode: UIView {
         
         scroll.addSubview(firstAndLine)
         firstAndLine.anchor(top: buttonProfile.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-        
-//        scroll.addSubview(buttonStudio)
-//        buttonStudio.anchor(top: firstAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        buttonStudio.addSubview(imageStudio)
-//        imageStudio.anchor(top: buttonStudio.topAnchor, left: buttonStudio.leftAnchor,  bottom: buttonStudio.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-//        buttonStudio.addSubview(labelStudio)
-//        labelStudio.anchor(left: imageStudio.rightAnchor,paddingLeft: 5)
-//        labelStudio.centerY(inView: buttonStudio)
-//
-        
+ 
         scroll.addSubview(buttonChanell)
         buttonChanell.anchor(top: firstAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
@@ -376,15 +280,6 @@ final class ProfileVCCode: UIView {
         labelChanell.anchor(left: imageChanell.rightAnchor,paddingLeft: 5)
         labelChanell.centerY(inView: buttonChanell)
 
-//        scroll.addSubview(buttonHistory)
-//        buttonHistory.anchor(top: buttonChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        buttonHistory.addSubview(imageLogo)
-//        imageLogo.anchor(top: buttonHistory.topAnchor, left: buttonHistory.leftAnchor,  bottom: buttonHistory.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-//        buttonHistory.addSubview(labelHistory)
-//        labelHistory.anchor(left: imageLogo.rightAnchor,paddingLeft: 5)
-//        labelHistory.centerY(inView: buttonHistory)
-        
         scroll.addSubview(secondLine)
         secondLine.anchor(top: buttonChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
@@ -397,39 +292,7 @@ final class ProfileVCCode: UIView {
         buttonWallet.addSubview(labelWallet)
         labelWallet.anchor(left: imageWallet.rightAnchor,paddingLeft: 5)
         labelWallet.centerY(inView: buttonWallet)
-        
-//        scroll.addSubview(buttonSetting)
-//        buttonSetting.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        buttonSetting.addSubview(imageSettinh)
-//        imageSettinh.anchor(top: buttonSetting.topAnchor, left: buttonSetting.leftAnchor,  bottom: buttonSetting.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-//
-//        buttonSetting.addSubview(labelSetting)
-//        labelSetting.anchor(left: imageSettinh.rightAnchor,paddingLeft: 5)
-//        labelSetting.centerY(inView: buttonSetting)
-//
-//        scroll.addSubview(buttonLanguage)
-//        buttonLanguage.anchor(top: buttonSetting.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        buttonLanguage.addSubview(imageLanguage)
-//        imageLanguage.anchor(top: buttonLanguage.topAnchor, left: buttonLanguage.leftAnchor,  bottom: buttonLanguage.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-//
-//        buttonLanguage.addSubview(labelLanguage)
-//        labelLanguage.anchor(left: imageLanguage.rightAnchor,paddingLeft: 5)
-//        labelLanguage.centerY(inView: buttonLanguage)
-//
-//        scroll.addSubview(treeLine)
-//        treeLine.anchor(top: buttonLanguage.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        scroll.addSubview(buttonHelp)
-//        buttonHelp.anchor(top: treeLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//
-//        scroll.addSubview(imageHelp)
-//        imageHelp.anchor(top: buttonHelp.topAnchor, left: buttonHelp.leftAnchor,  bottom: buttonHelp.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
-//
-//        buttonHelp.addSubview(labelHelp)
-//        labelHelp.anchor(left: imageHelp.rightAnchor,paddingLeft: 5)
-//        labelHelp.centerY(inView: buttonHelp)
+  
         
         scroll.addSubview(fourLine)
         fourLine.anchor(top: buttonWallet.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
@@ -448,22 +311,22 @@ final class ProfileVCCode: UIView {
         fourAndLine.anchor(top: buttonSignOut.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         
-//        scroll.addSubview(buttonAbout)
-//        buttonAbout.anchor(top: fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
-//        buttonAbout.addSubview(labelAbout)
-//        labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
-//        labelAbout.centerY(inView: buttonAbout)
-//
-//
-//        scroll.addSubview(buttonPartners)
-//        buttonPartners.anchor(top: buttonAbout.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
-//        buttonPartners.addSubview(labelPartners)
-//        labelPartners.anchor(left: buttonPartners.leftAnchor,paddingLeft: 5)
-//        labelPartners.centerY(inView: buttonPartners)
+        scroll.addSubview(buttonAbout)
+        buttonAbout.anchor(top: fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
+        buttonAbout.addSubview(labelAbout)
+        labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
+        labelAbout.centerY(inView: buttonAbout)
+
+
+        scroll.addSubview(buttonPartners)
+        buttonPartners.anchor(top: buttonAbout.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16, paddingRight: 16)
+        buttonPartners.addSubview(labelPartners)
+        labelPartners.anchor(left: buttonPartners.leftAnchor,paddingLeft: 5)
+        labelPartners.centerY(inView: buttonPartners)
         
         
         scroll.addSubview(buttonCommunityGuidelines)
-        buttonCommunityGuidelines.anchor(top:fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        buttonCommunityGuidelines.anchor(top:buttonPartners.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         buttonCommunityGuidelines.addSubview(labelCommunityGuidelines)
         labelCommunityGuidelines.anchor(left: buttonCommunityGuidelines.leftAnchor,paddingLeft: 5)
         labelCommunityGuidelines.centerY(inView: buttonCommunityGuidelines)
@@ -487,11 +350,11 @@ final class ProfileVCCode: UIView {
         labelSecurity.centerY(inView: buttonSecurity)
         
         
-//        scroll.addSubview(buttonTerms)
-//        buttonTerms.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
-//        buttonTerms.addSubview(labelTerms)
-//        labelTerms.anchor(left: buttonTerms.leftAnchor,paddingLeft: 5)
-//        labelTerms.centerY(inView: buttonTerms)
+        scroll.addSubview(buttonContact)
+        buttonContact.anchor(top: buttonSecurity.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        buttonContact.addSubview(labelContact)
+        labelContact.anchor(left: buttonContact.leftAnchor,paddingLeft: 5)
+        labelContact.centerY(inView: buttonContact)
         
 
     }

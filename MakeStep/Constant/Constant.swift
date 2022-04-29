@@ -11,7 +11,7 @@ class Constants {
     #if QA
     ///URL Address of testing api server
     static let apiEndpoint = "https://dev.makestep.com/api/v0"
-    static let webViewPwa = "https://dev.makestep.com/api/v0/legal/legals/html/"
+    static let webViewPwa = "https://api.makestep.com/api/v0/legal/legals/html/"
     #elseif DEBUG
     ///URL Address of production api server
     static let apiEndpoint = "https://api.makestep.com/api/v0"

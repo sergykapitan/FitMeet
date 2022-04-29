@@ -90,11 +90,17 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         profileView.buttonSignOut.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
         profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
+        profileView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
+
         profileView.buttonCommunityGuidelines.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
         profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
         profileView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
         profileView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
-        profileView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
+        profileView.buttonContact.addTarget(self, action: #selector(actionContact), for: .touchUpInside)
+        
+        profileView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
+        profileView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
+        
     }
     @objc func actionSignUp() {
         UserDefaults.standard.removeObject(forKey: Constants.accessTokenKeyUserDefaults)
@@ -115,34 +121,40 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
-    //1
     @objc func actionAbout() {
         let helpWebViewController = WebViewController()
-      //  helpWebViewController.url = Constants.webViewPwa + "about"
+        helpWebViewController.url = "https://dev.makestep.com/about-us-webview/"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //3
-       @objc func actionTerms() {
+    
+    @objc func actionHowIt() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = "https://join.makestep.com"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    @objc func actionTerms() {
            let helpWebViewController = WebViewController()
            helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
            self.navigationController?.pushViewController(helpWebViewController, animated: true)
        }
-    //4
     @objc func actionPrivacyPolicy() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //5
     @objc func actionDMCA() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "dmca"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //6
     @objc func actionDisclaimer() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "disclaimer"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    @objc func actionContact() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = "https://dev.makestep.com/contact_us_webview"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
    

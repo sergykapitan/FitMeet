@@ -200,20 +200,12 @@ final class StartScreenCode: UIView {
     //MARK: - constraint First Layer
     
     func createCardViewLayer() {
-        
-        
-       // addSubview(cardView)
-        //  cardView.fillSuperview()
+
         cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
 
-      //  cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
-        
-        
         scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20)
-        
-//        scroll.addSubview(segmentControll)
-//        segmentControll.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20, height: 30)
+  
         
         scroll.addSubview(buttonSignUp)
         buttonSignUp.anchor(top: welcomeLabel.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 20,width: 64, height: 30)
