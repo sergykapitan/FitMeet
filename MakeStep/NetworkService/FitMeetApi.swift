@@ -173,10 +173,11 @@ class FitMeetApi {
         return AF.upload( multipartFormData: { multipartFormData in
 
             multipartFormData.append( image, withName: "file",fileName: "\(Data()).mp4", mimeType: "video/mp4")
-                           let data1 = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: categoryId), count: categoryId.count, deallocator: .none)
-            
+            let stringifiedNumberList = categoryId
+                    .map { String($0) }
+                    .joined(separator: ", ")
                            multipartFormData.append(channelId.data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
-                           multipartFormData.append(data1, withName: "categoryIds")
+                           multipartFormData.append(stringifiedNumberList.data(using: .utf8, allowLossyConversion: false)!, withName: "categoryIds")
                            multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
                            multipartFormData.append(title.data(using: .utf8, allowLossyConversion: false)!, withName: "title")
                            multipartFormData.append(description.data(using: .utf8, allowLossyConversion: false)!, withName: "description")

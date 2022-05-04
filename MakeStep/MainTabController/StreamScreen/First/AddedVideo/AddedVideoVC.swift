@@ -148,18 +148,17 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         actionButtonContinue()
         authView.buttonContinue.isUserInteractionEnabled = false
         authView.textFieldCategory.didSelect { (ff, _, _) in
-
-                let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
-                
-                if j.isEmpty {
-                    self.authView.tagView.addTag(ff)
-                    let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
-                    self.IdCategory.append(contentsOf: p)
-                    self.authView.tagView.layoutSubviews()
-                } else {
-                    Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-                }
-            self.authView.textFieldCategory.placeholder = ""
+            let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
+            if j.isEmpty {
+                self.authView.tagView.addTag(ff)
+                let p = self.listCategory.filter{$0.title == ff}.compactMap{$0.id}
+                self.IdCategory.append(contentsOf: p)
+                print("Category == \(self.IdCategory)")
+                self.authView.tagView.layoutSubviews()
+            } else {
+                Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            }
+        self.authView.textFieldCategory.placeholder = ""  
                         
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
@@ -257,6 +256,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                                            self.authView.textFieldAviable.text = ""
                                            self.authView.textFieldDescription.text = ""
                                            self.authView.tagView.removeAllTags()
+                                           self.IdCategory.removeAll()
                                            self.resetVideo()
                                          
                                            Loaf("Upload Video  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
