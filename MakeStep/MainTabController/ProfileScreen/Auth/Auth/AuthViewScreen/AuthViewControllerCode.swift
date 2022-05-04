@@ -160,10 +160,10 @@ final class AuthViewControllerCode: UIView {
         alertMailLabel.centerX(inView: cardView)
         
         cardView.addSubview(buttonContinue)
-        buttonContinue.anchor(top: textFieldLogin.bottomAnchor,
+        buttonContinue.anchor(
                               left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                               paddingLeft: 10, paddingRight: 10,height: 39)
         
         cardView.addSubview(viewSignIn)
         viewSignIn.centerX(inView: cardView)

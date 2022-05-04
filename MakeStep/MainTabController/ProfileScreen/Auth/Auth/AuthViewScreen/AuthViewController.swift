@@ -17,7 +17,7 @@ class AuthViewController: UIViewController{
     private let signInButton = ASAuthorizationAppleIDButton(type: .default, style: .black)
     private var takeAppleSign: AnyCancellable?
     @Inject var fitMeetApi: FitMeetApi
- 
+    var topPhoneConstraint = NSLayoutConstraint()
     
     override  var shouldAutorotate: Bool {
         return false
@@ -55,6 +55,8 @@ class AuthViewController: UIViewController{
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
         authView.appleLogInButton.button.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+        topPhoneConstraint = authView.buttonContinue.topAnchor.constraint(equalTo: authView.textFieldLogin.bottomAnchor, constant: 15)
+        topPhoneConstraint.isActive = true
     }
     @objc func actionSignUp() {
         guard let text = authView.textFieldLogin.text else { return }
@@ -153,52 +155,43 @@ extension AuthViewController: ASAuthorizationControllerPresentationContextProvid
 extension AuthViewController: SignUpDelegate {
     
     func changeAlert() {
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
+            self.authView.alertLabel.isHidden = false
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
   
-       if self.authView.buttonContinue.frame.origin.y == 219.0 {
-        
-        UIView.animate(withDuration: 0.5) {
-          self.authView.buttonContinue.frame.origin.y += 15
-          self.authView.labelAccount.frame.origin.y += 15
-          self.authView.buttonSignIn.frame.origin.y += 15
-        } completion: { (bool) in
-            if bool {
-                self.authView.alertImage.isHidden = false
-                self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
-                self.authView.alertLabel.isHidden = false
-            }
-        }
-      }
+      
     }
     func changeMail() {
-        
-        if self.authView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.authView.buttonContinue.frame.origin.y += 15
-           self.authView.labelAccount.frame.origin.y += 15
-           self.authView.buttonSignIn.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.authView.alertMailLabel.isHidden = false
-                 self.authView.alertImage.isHidden = false
-             }
-         }
-       }
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertMailLabel.isHidden = false
+            self.authView.alertImage.isHidden = false
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
+     
     }
     func changePhone() {
-            if self.authView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.authView.buttonContinue.frame.origin.y += 15
-           self.authView.labelAccount.frame.origin.y += 15
-           self.authView.buttonSignIn.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.authView.alertImage.isHidden = false
-                 self.authView.alertLabel.text = "phone must be a valid phone number"
-                 self.authView.alertLabel.isHidden = false
-             }
-         }
-       }
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.text = "phone must be a valid phone number"
+            self.authView.alertLabel.isHidden = false
+
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
+          
     }
 }
