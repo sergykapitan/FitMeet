@@ -522,6 +522,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         
 
         self.homeView.playerSlider.minimumValue = 0
+        self.homeView.playerSlider.addTapGesture()
         self.homeView.playerSlider.setValue(0, animated: true)
         setTimeVideo()
  
