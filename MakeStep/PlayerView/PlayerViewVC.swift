@@ -34,7 +34,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     let selfId = UserDefaults.standard.string(forKey: Constants.userID)
     weak var delegate: OpenCoachDelegate?
     var bottomConstraint = NSLayoutConstraint()
- 
+    var safeAction:String = "Auto"
     
     var currentPage : Int = 0
     var currentPageCategory : Int = 1
@@ -1008,24 +1008,30 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
       
             switch type {
             case "Auto" :
+                safeAction = type
                 self.replaceItem(with: url)
             case "240" :
+                safeAction = type
                 let change = changeUrl(url: urlStream!, end: arrayResolution[0])
                 guard let urls = URL(string: change) else { return }
                 self.replaceItem(with: urls)
             case "360" :
+                safeAction = type
                 let change = changeUrl(url: urlStream!, end: arrayResolution[1])
                 guard let urls = URL(string: change) else { return }
                 self.replaceItem(with: urls)
             case "480" :
+                safeAction = type
                 let change = changeUrl(url: urlStream!, end: arrayResolution[2])
                 guard let urls = URL(string: change) else { return }
                 self.replaceItem(with: urls)
             case "720" :
+                safeAction = type
                 let change = changeUrl(url: urlStream!, end: arrayResolution[3])
                 guard let urls = URL(string: change) else { return }
                 self.replaceItem(with: urls)
             case "1080" :
+                safeAction = type
                 let change = changeUrl(url: urlStream!, end: arrayResolution[4])
                 guard let urls = URL(string: change) else { return }
                 self.replaceItem(with: urls)
@@ -1057,13 +1063,20 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 self.arrayResolution = self.getStreamResolutions(from: raw)
                 streamResolution = self.getStreamResolutionsAll(from: raw)
                 streamResolution.forEach {
+                   
                     let action = self.action(for: $0.stringHeight, title: $0.stringHeight + "p")
+                    if $0.stringHeight == self.safeAction {
+                        action?.setValue(UIColor.black, forKey: "titleTextColor")
+                    }
                     guard let action = action else {return  }
                     DispatchQueue.main.async {
                         alertController.addAction(action)
                     }
                 }
                 if let action = self.action(for: "Auto", title: "Auto") {
+                    if action.title == self.safeAction {
+                        action.setValue(UIColor.black, forKey: "titleTextColor")
+                    }
                     DispatchQueue.main.async {
                     alertController.addAction(action)
                     }
