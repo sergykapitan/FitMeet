@@ -23,35 +23,42 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-      //  self.tabBar.isTranslucent = false
-        self.tabBar.tintColor = .blueColor// UIColor(hexString: "#3B58A4")
-      //  navigationVC.tabBarItem.image?.withTintColor(UIColor(hexString: "#3B58A4"))
+        self.tabBar.tintColor = .blueColor
         self.tabBar.barTintColor = .white
-
-       
-        
         self.delegate = self
-        
         let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
         
         if token != nil {
             profile = ProfileVC()
             streamView = NewStartStream()
-            
+            viewControllers = [
+                generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
+                generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
+                generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
+                generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
+                generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
+            ]
+
         } else {
             profile = StartScreen()
             streamView = NotTokenView()
+            viewControllers = [
+                generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
+                generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
+               // generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
+                generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
+                generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
+            ]
           }
-      
 
-        viewControllers = [
-            generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
-            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
-            generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
-            generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
-            generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
-        ]
+
+//        viewControllers = [
+//            generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
+//            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
+//            generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
+//            generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
+//            generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
+//        ]
     }
     deinit {
            NotificationCenter.default.removeObserver(self)
