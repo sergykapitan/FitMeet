@@ -15,27 +15,47 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         return titleSection.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        switch section {
+            case 0 :
+            return  listBroadcast.count
+            case 1:
+            return  listBroadcast.count
+            case 2:
+            return  listBroadcast.count
+            
+        default:
+            break
+        }
         return  listBroadcast.count
     }
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return titleSection[section]
     }
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        if let view = view as? UITableViewHeaderFooterView {
+            
+            view.textLabel?.backgroundColor = UIColor.clear
+            view.textLabel?.textColor = UIColor.black
+        }
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-
-        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-        cell.setImage(image: listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        cell.labelDescription.text = listBroadcast[indexPath.row].name
-        guard let id = listBroadcast[indexPath.row].userId else { return cell}
-        
-        cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.userMap[id]?.fullName
-        
-        cell.buttonMore.tag = indexPath.row
-        cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
-        cell.buttonMore.isUserInteractionEnabled = true
-       
-       return cell
+    
+     
+   
+              let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+               cell.setImage(image: listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+               cell.labelDescription.text = listBroadcast[indexPath.row].name
+               guard let id = listBroadcast[indexPath.row].userId else { return cell}
+               
+               cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+               cell.titleLabel.text = self.userMap[id]?.fullName
+               
+               cell.buttonMore.tag = indexPath.row
+               cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+               cell.buttonMore.isUserInteractionEnabled = true
+            return cell
+      
     }
   
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
