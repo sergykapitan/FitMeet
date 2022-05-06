@@ -102,11 +102,17 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         getUsers()
         bindingCategory()
         makeTableView()
-        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
+        makeNavItem(title: "", hide: true)
     }
+    override func makeNavItem(title: String, hide: Bool) {
+        super.makeNavItem(title: title, hide: hide)
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+    }
+
     override func copyLink(id: Int) {
         super.copyLink(id: id)
         self.homeView.tableView.isUserInteractionEnabled = false

@@ -718,9 +718,9 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         homeView.tableView.separatorStyle = .none
         homeView.tableView.showsVerticalScrollIndicator = false
     }
-    @objc func rightBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
+//    @objc func rightBack() {
+//        self.navigationController?.popViewController(animated: true)
+//    }
     public func present() {
         
         guard let urlStream = url else { return }

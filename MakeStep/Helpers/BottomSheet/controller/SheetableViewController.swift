@@ -234,5 +234,46 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             }
         }
     }
+    func makeNavItem(title: String,hide: Bool) {
+        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
+        UINavigationBar.appearance().titleTextAttributes = attributes
+                    let titleLabel = UILabel()
+                    titleLabel.text = title
+                    titleLabel.textAlignment = .center
+                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+                    let backButton = UIButton()
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+                    backButton.isHidden = hide
+                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
+                    stackView.distribution = .equalSpacing
+                    stackView.alignment = .center
+                    stackView.axis = .horizontal
+
+                   let customTitles = UIBarButtonItem.init(customView: stackView)
+                   self.navigationItem.leftBarButtonItems = [customTitles]
+        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action:  #selector(searchAction))
+        startItem.tintColor = UIColor(hexString: "#7C7C7C")
+//        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
+//        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
+        
+        
+        self.navigationItem.rightBarButtonItems = [startItem]
+    }
+    @objc func timeHandAction() {
+        print("timeHandAction")
+        let tvc = Timetable()
+        navigationController?.present(tvc, animated: true, completion: nil)
+        
+        
+    }
+    @objc func searchAction() {
+        let searchvc = SearchVC()
+        navigationController?.pushViewController(searchvc, animated: true)
+        print("searchAction")
+    }
+    @objc func rightBack() {
+        self.navigationController?.popViewController(animated: true)
+    }
     
 }

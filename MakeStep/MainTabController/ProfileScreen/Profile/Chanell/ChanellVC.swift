@@ -323,17 +323,17 @@ class ChanellVC: SheetableViewController,Refreshable  {
         
      //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    @objc func timeHandAction() {
-        print("timeHandAction")
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-    }
+//    @objc func timeHandAction() {
+//        print("timeHandAction")
+//        let tvc = Timetable()
+//        navigationController?.present(tvc, animated: true, completion: nil)
+//    }
     @objc func notificationHandAction() {
         print("notificationHandAction")
     }
-    @objc func rightBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
+//    @objc func rightBack() {
+//        self.navigationController?.popViewController(animated: true)
+//    }
     func loadMoreItemsForList(){
             currentPage += 1
             guard let id = user?.id else { return }

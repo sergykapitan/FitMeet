@@ -11,7 +11,7 @@ import CoreData
 import Combine
 
 
-class SearchVC: UIViewController ,SegmentControlSearchDelegate  {
+class SearchVC: SheetableViewController ,SegmentControlSearchDelegate  {
     
     let videoVC = SearchVideoVC()
     let coachVC = SearchUserVC()
@@ -27,7 +27,6 @@ class SearchVC: UIViewController ,SegmentControlSearchDelegate  {
         }
         if index == 1 {
            actionCoach()
-            //coachVC.searchView.tableView.reloadData()
             self.index = index
         }
         if index == 2 {
@@ -78,7 +77,7 @@ class SearchVC: UIViewController ,SegmentControlSearchDelegate  {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        makeNavItem()
+        makeNavItem(title: " Search", hide: false)
         searchView.segmentControll.setButtonTitles(buttonTitles: ["Video","Coaches","Categories"])
         searchView.segmentControll.delegate = self
         actionVideo()
@@ -91,44 +90,12 @@ class SearchVC: UIViewController ,SegmentControlSearchDelegate  {
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
         searchController.searchBar.showsScopeBar = true
-        searchController.dimsBackgroundDuringPresentation = false
+       // searchController.dimsBackgroundDuringPresentation = false
         searchController.isActive = false
         self.searchController.searchBar.isTranslucent = false
     }
 //MARK: - Selectors
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Search"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
-    @objc func timeHandAction() {
-        print("timeHandAction")
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
     @objc func actionVideo() {
         removeAllChildViewController(coachVC)
         removeAllChildViewController(categoriesVC)

@@ -680,9 +680,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc private func refreshAlbumList() {
        }
-    @objc func rightBack() {
+  //  @objc func rightBack() {
       //  self.navigationController?.popViewController(animated: true)
-    }
+ //   }
  // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
         guard token != nil else {

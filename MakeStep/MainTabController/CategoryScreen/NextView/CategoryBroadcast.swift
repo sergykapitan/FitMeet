@@ -139,9 +139,9 @@ class CategoryBroadcast: SheetableViewController  {
     @objc  func leftHandAction() {
         print("left bar button action")
     }
-    @objc func rightBack() {
-        self.navigationController?.popViewController(animated: true)
-    }
+//    @objc func rightBack() {
+//        self.navigationController?.popViewController(animated: true)
+//    }
 
     func binding(categoryId: Int) {
         takeBroadcast = fitMeetStream.getBroadcastCategoryId(categoryId: categoryId, page: 1)
