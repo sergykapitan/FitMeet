@@ -221,6 +221,12 @@
 		A54ACC9A27AD7B75004BAEF1 /* SendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9927AD7B75004BAEF1 /* SendStream.swift */; };
 		A54ACC9C27AD7B8A004BAEF1 /* SendStreamCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */; };
 		A54ACC9E27AD7B9D004BAEF1 /* ExSendStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */; };
+		A54E98782825116C00475A25 /* LiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E98772825116C00475A25 /* LiveVC.swift */; };
+		A54E98792825116C00475A25 /* LiveVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E98772825116C00475A25 /* LiveVC.swift */; };
+		A54E987B2825117F00475A25 /* LiveVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E987A2825117E00475A25 /* LiveVCCode.swift */; };
+		A54E987C2825117F00475A25 /* LiveVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E987A2825117E00475A25 /* LiveVCCode.swift */; };
+		A54E987E2825119B00475A25 /* ExLiveVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E987D2825119B00475A25 /* ExLiveVc.swift */; };
+		A54E987F2825119B00475A25 /* ExLiveVc.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54E987D2825119B00475A25 /* ExLiveVc.swift */; };
 		A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A54F9B85273156B5008E7E60 /* StoreKit.framework */; };
 		A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8827315C4C008E7E60 /* IAPProducts.swift */; };
 		A54F9B8C27315CF8008E7E60 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
@@ -549,6 +555,9 @@
 		A54ACC9927AD7B75004BAEF1 /* SendStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStream.swift; sourceTree = "<group>"; };
 		A54ACC9B27AD7B8A004BAEF1 /* SendStreamCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendStreamCell.swift; sourceTree = "<group>"; };
 		A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExSendStream.swift; sourceTree = "<group>"; };
+		A54E98772825116C00475A25 /* LiveVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVC.swift; sourceTree = "<group>"; };
+		A54E987A2825117E00475A25 /* LiveVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVCCode.swift; sourceTree = "<group>"; };
+		A54E987D2825119B00475A25 /* ExLiveVc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExLiveVc.swift; sourceTree = "<group>"; };
 		A54F9B85273156B5008E7E60 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		A54F9B8827315C4C008E7E60 /* IAPProducts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPProducts.swift; sourceTree = "<group>"; };
 		A54F9B8B27315CF8008E7E60 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = "<group>"; };
@@ -849,6 +858,25 @@
 				A54ACC9D27AD7B9D004BAEF1 /* ExSendStream.swift */,
 			);
 			path = SendStream;
+			sourceTree = "<group>";
+		};
+		A54E98722825111600475A25 /* TimeTable */ = {
+			isa = PBXGroup;
+			children = (
+				B475A94726BA7A8400EF96A4 /* Timetable.swift */,
+				B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */,
+			);
+			path = TimeTable;
+			sourceTree = "<group>";
+		};
+		A54E98732825113700475A25 /* Live */ = {
+			isa = PBXGroup;
+			children = (
+				A54E98772825116C00475A25 /* LiveVC.swift */,
+				A54E987A2825117E00475A25 /* LiveVCCode.swift */,
+				A54E987D2825119B00475A25 /* ExLiveVc.swift */,
+			);
+			path = Live;
 			sourceTree = "<group>";
 		};
 		A54F9B8727315C26008E7E60 /* IAPProducts */ = {
@@ -1239,8 +1267,8 @@
 		B475A94626BA7A4B00EF96A4 /* NavBar */ = {
 			isa = PBXGroup;
 			children = (
-				B475A94726BA7A8400EF96A4 /* Timetable.swift */,
-				B475A94B26BA7F1600EF96A4 /* TimeTableCode.swift */,
+				A54E98722825111600475A25 /* TimeTable */,
+				B4D9D7D5262DA7B8007CFB71 /* SearchScreen */,
 			);
 			path = NavBar;
 			sourceTree = "<group>";
@@ -1685,7 +1713,7 @@
 				B4CD87E92704539300D065ED /* WebViewController.swift */,
 				B475A94626BA7A4B00EF96A4 /* NavBar */,
 				B4D9D7D4262DA7A4007CFB71 /* HomeScreen */,
-				B4D9D7D5262DA7B8007CFB71 /* SearchScreen */,
+				A54E98732825113700475A25 /* Live */,
 				B4D9D7D6262DA7D5007CFB71 /* StreamScreen */,
 				B4D9D7D7262DA7EA007CFB71 /* CategoryScreen */,
 				B4D9D7D8262DA807007CFB71 /* ProfileScreen */,
@@ -2111,11 +2139,13 @@
 				A5129470273A6EB7000CBBD9 /* HomeVC.swift in Sources */,
 				A5129472273A6EB7000CBBD9 /* CalculateVC.swift in Sources */,
 				A5129473273A6EB7000CBBD9 /* UploadImage.swift in Sources */,
+				A54E987F2825119B00475A25 /* ExLiveVc.swift in Sources */,
 				A5129474273A6EB7000CBBD9 /* CustomPresentationController.swift in Sources */,
 				A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				A5129475273A6EB7000CBBD9 /* ResetOldPassword.swift in Sources */,
 				A5EF20EC280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A5129476273A6EB7000CBBD9 /* SearchVCUserCell.swift in Sources */,
+				A54E98792825116C00475A25 /* LiveVC.swift in Sources */,
 				A5129477273A6EB7000CBBD9 /* ChatVCPlayer.swift in Sources */,
 				A5129478273A6EB7000CBBD9 /* SignInViewController.swift in Sources */,
 				A5129479273A6EB7000CBBD9 /* SignInViewControllerCode.swift in Sources */,
@@ -2193,6 +2223,7 @@
 				A51294BE273A6EB7000CBBD9 /* Label.swift in Sources */,
 				A51294BF273A6EB7000CBBD9 /* ChangeChannel.swift in Sources */,
 				A58F0ACE28118CB5003A8833 /* Hash.swift in Sources */,
+				A54E987C2825117F00475A25 /* LiveVCCode.swift in Sources */,
 				A51294C0273A6EB7000CBBD9 /* VideoClip.swift in Sources */,
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
@@ -2359,11 +2390,13 @@
 				B41D06A32664C67600C28C29 /* HomeCell.swift in Sources */,
 				B4D2B94026E7C7BE0080E7E3 /* SwipeableView.swift in Sources */,
 				B41D069B2664C61B00C28C29 /* HomeVC.swift in Sources */,
+				A54E987E2825119B00475A25 /* ExLiveVc.swift in Sources */,
 				A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
 				A5EF20EB280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
+				A54E98782825116C00475A25 /* LiveVC.swift in Sources */,
 				B471E66026EA25D9007B63BE /* ResetOldPassword.swift in Sources */,
 				B46CF7C22678942100EA0741 /* SearchVCUserCell.swift in Sources */,
 				B4E3CC9026AE70F2001E78BA /* ChatVCPlayer.swift in Sources */,
@@ -2441,6 +2474,7 @@
 				B4D9D7432625C0BD007CFB71 /* Extensions+UIView.swift in Sources */,
 				A5B635B127185C010097A127 /* CoverA.swift in Sources */,
 				A58F0ACD28118CB5003A8833 /* Hash.swift in Sources */,
+				A54E987B2825117F00475A25 /* LiveVCCode.swift in Sources */,
 				B404922926D6456600A2F417 /* Label.swift in Sources */,
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,

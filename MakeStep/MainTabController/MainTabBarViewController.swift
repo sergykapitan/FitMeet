@@ -33,8 +33,8 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
             streamView = NewStartStream()
             viewControllers = [
                 generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
-                generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
-                generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
+                generateViewController(rootViewController: LiveVC(), image: #imageLiteral(resourceName: "Act1"), title: ""),
+                generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "StreamN") , title: ""),
                 generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
                 generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
             ]
@@ -44,21 +44,11 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
             streamView = NotTokenView()
             viewControllers = [
                 generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
-                generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
-               // generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
+                generateViewController(rootViewController: LiveVC(), image: #imageLiteral(resourceName: "Act1"), title: ""),
                 generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
                 generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
             ]
-          }
-
-
-//        viewControllers = [
-//            generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
-//            generateViewController(rootViewController: SearchVC(), image: #imageLiteral(resourceName: "search 51"), title: ""),
-//            generateViewController(rootViewController: streamView ?? NotTokenView() , image: #imageLiteral(resourceName: "Act1") , title: ""),
-//            generateViewController(rootViewController: CategoryVC(), image: #imageLiteral(resourceName: "Group 25931"), title: ""),
-//            generateViewController(rootViewController: profile ?? StartScreen(), image: #imageLiteral(resourceName: "user(2) 11") , title: "")
-//        ]
+        }
     }
     deinit {
            NotificationCenter.default.removeObserver(self)
@@ -70,8 +60,8 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
                   if self.boolStream {
                       self.viewControllers = [
                         self.generateViewController(rootViewController: HomeVC(), image:  #imageLiteral(resourceName: "home(1) 31"), title: ""),
-                        self.generateViewController(rootViewController: SearchVC(), image:  #imageLiteral(resourceName: "search 51"), title: ""),
-                        self.generateViewController(rootViewController: self.streamView ?? NotTokenView(), image:  #imageLiteral(resourceName: "Act1"),title: ""),
+                        self.generateViewController(rootViewController: LiveVC(), image:  #imageLiteral(resourceName: "Act1"), title: ""),
+                        self.generateViewController(rootViewController: self.streamView ?? NotTokenView(), image:  #imageLiteral(resourceName: "StreamN"),title: ""),
                         self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
                         self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
 
@@ -81,8 +71,8 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
                   } else {
                       self.viewControllers = [
                         self.generateViewController(rootViewController: HomeVC(), image:  #imageLiteral(resourceName: "home(1) 31"), title: ""),
-                        self.generateViewController(rootViewController: SearchVC(), image:  #imageLiteral(resourceName: "search 51"), title: ""),
-                        self.generateViewController(rootViewController: AddedVideoVC(), image:  #imageLiteral(resourceName: "Act1"),title: ""),
+                        self.generateViewController(rootViewController: LiveVC(), image:  #imageLiteral(resourceName: "Act1"), title: ""),
+                        self.generateViewController(rootViewController: AddedVideoVC(), image:  #imageLiteral(resourceName: "StreamN"),title: ""),
                         self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
                         self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
 

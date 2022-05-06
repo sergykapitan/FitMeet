@@ -83,6 +83,10 @@ class SearchVC: SheetableViewController ,SegmentControlSearchDelegate  {
         actionVideo()
         setupSearchBar()
     }
+    override func makeNavItem(title: String, hide: Bool) {
+        super.makeNavItem(title: title, hide: hide)
+        self.navigationItem.rightBarButtonItems = []
+    }
 // MARK: - Metods
     private func setupSearchBar() {
         navigationItem.searchController = searchController
@@ -90,7 +94,6 @@ class SearchVC: SheetableViewController ,SegmentControlSearchDelegate  {
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
         searchController.searchBar.showsScopeBar = true
-       // searchController.dimsBackgroundDuringPresentation = false
         searchController.isActive = false
         self.searchController.searchBar.isTranslucent = false
     }
@@ -117,8 +120,7 @@ class SearchVC: SheetableViewController ,SegmentControlSearchDelegate  {
 extension SearchVC: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let searchBar = searchController.searchBar
-        if searchBar.text == "" {
-            print("SearchText == \(searchBar.text)")
+        if searchBar.text == "" {                                                                                                                                                                                                                                                                                                                                                                                                      
         } else {
         videoVC.searchVideo(text: searchBar.text!)
         coachVC.searchUser(text: searchBar.text!)
