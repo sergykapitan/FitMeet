@@ -66,6 +66,7 @@ final class PlayerViewCell: UITableViewCell {
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         button.contentVerticalAlignment = .center
         button.contentHorizontalAlignment = .center
+        var intS : Int = 0
         return button
     }()
     var titleLabel: UILabel =  {

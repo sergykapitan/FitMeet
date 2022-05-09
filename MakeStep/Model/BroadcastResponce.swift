@@ -94,14 +94,14 @@ enum BroadcastStatus :String, Codable,Equatable,Hashable{
     case banned = "BANNED"
     case finished = "FINISHED"
     case wait_for_approve = "WAIT_FOR_APPROVE"
-//    var description : String {
-//        switch self {
-//        case .online: return "ONLINE"
-//        case .offline: return "OFFLINE"
-//        case .planned: return "PLANNED"
-//        case .banned: return "BANNED"
-//        case .finished: return "FINISHED"
-//        case .wait_for_approve: return "WAIT_FOR_APPROVE"
-//        }
-//    }
+    var description : String {
+        switch self {
+        case .online: return "ONLINE"
+        case .offline: return "OFFLINE"
+        case .planned: return "PLANNED"
+        case .banned: return "BANNED"
+        case .finished: return "FINISHED"
+        case .wait_for_approve: return "WAIT_FOR_APPROVE"
+        }
+    }
 }

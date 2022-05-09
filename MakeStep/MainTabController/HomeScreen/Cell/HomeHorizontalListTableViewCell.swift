@@ -89,7 +89,7 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
         if let type = type {
       
             cell.setup(indexPath.row, item: type[indexPath.row])
-         
+            
         }
         
         cell.delegate = self

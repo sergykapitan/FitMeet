@@ -17,26 +17,29 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0 :
-            return  listBroadcast.count
+            return  liveBroadcast.count
             case 1:
-            return  listBroadcast.count
+            return  recentBroadcast.count
             case 2:
-            return  listBroadcast.count
+            return  plannedBroadcast.count
             
         default:
             break
         }
         return  listBroadcast.count
     }
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return titleSection[section]
-    }
-    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        if let view = view as? UITableViewHeaderFooterView {
-            
-            view.textLabel?.backgroundColor = UIColor.clear
-            view.textLabel?.textColor = UIColor.black
-        }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+       
+            let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+            view.backgroundColor = .white
+            let label = UILabel(frame: CGRect(x: 16, y: 5, width: tableView.frame.width, height: 20))
+            label.text = titleSection[section]
+            label.backgroundColor = UIColor.clear
+            label.font = UIFont.boldSystemFont(ofSize: 20)
+            view.addSubview(label)
+            return view
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -44,16 +47,44 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
      
    
               let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-               cell.setImage(image: listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-               cell.labelDescription.text = listBroadcast[indexPath.row].name
-               guard let id = listBroadcast[indexPath.row].userId else { return cell}
-               
-               cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-               cell.titleLabel.text = self.userMap[id]?.fullName
-               
-               cell.buttonMore.tag = indexPath.row
-               cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
-               cell.buttonMore.isUserInteractionEnabled = true
+        switch indexPath.section {
+        case 0:
+              cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+              cell.labelDescription.text = liveBroadcast[indexPath.row].name
+              guard let id = liveBroadcast[indexPath.row].userId else { return cell}
+              
+              cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+              cell.titleLabel.text = self.userMap[id]?.fullName
+              
+              cell.buttonMore.tag = self.liveBroadcast[indexPath.row].id!
+              cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+              cell.buttonMore.isUserInteractionEnabled = true
+        case 1:
+            cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            cell.labelDescription.text = recentBroadcast[indexPath.row].name
+            guard let id = recentBroadcast[indexPath.row].userId else { return cell}
+            
+            cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+            cell.titleLabel.text = self.userMap[id]?.fullName
+            
+            cell.buttonMore.tag = self.recentBroadcast[indexPath.row].id!
+            cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+            cell.buttonMore.isUserInteractionEnabled = true
+        case 2:
+            cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            cell.labelDescription.text = plannedBroadcast[indexPath.row].name
+            guard let id = plannedBroadcast[indexPath.row].userId else { return cell}
+            
+            cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+            cell.titleLabel.text = self.userMap[id]?.fullName
+            
+            cell.buttonMore.tag = self.plannedBroadcast[indexPath.row].id!
+            cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
+            cell.buttonMore.isUserInteractionEnabled = true
+            
+        default:
+            break
+        }
             return cell
       
     }
@@ -64,29 +95,63 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             self.present(sign, animated: true, completion: nil)
             return
         }
-        guard let broadcastId = self.listBroadcast[sender.tag].id else { return }
-            showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
-        
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: sender.tag)
     }
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard  let like = listBroadcast[indexPath.row].followersCount else { return }
-        guard let status = listBroadcast[indexPath.row].status  else { return }
+        let vc = PlayerViewVC()
+        var status:BroadcastStatus  = .offline
+        switch indexPath.section {
+        case 0:
+            guard let statuslive = liveBroadcast[indexPath.row].status  else { return }
+            status = statuslive
+        case 1:
+            guard let statuslive = recentBroadcast[indexPath.row].status  else { return }
+            status = statuslive
+        case 2:
+            guard let statuslive = plannedBroadcast[indexPath.row].status  else { return }
+            status = statuslive
+        default:
+            break
+        }
         switch status {
           
         case .online:
-           print("To Do")
+            guard let broadcastID = self.liveBroadcast[indexPath.row].id,
+                    let channelId = self.liveBroadcast[indexPath.row].channelIds else { return }
+            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+            vc.broadcast = self.liveBroadcast[indexPath.row]
+            vc.id =  self.liveBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = false
+            vc.homeView.playerSlider.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.liveBroadcast[indexPath.row].followersCount!))"
+            vc.homeView.buttonPlayPause.isHidden = true
+            vc.homeView.buttonSkipNext.isHidden = true
+            vc.homeView.buttonSkipPrevious.isHidden = true
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         case .offline:
-            print("To Do")
+            guard let _ = recentBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
+            vc.broadcast = self.recentBroadcast[indexPath.row]
+            vc.id = self.recentBroadcast[indexPath.row].userId
+            vc.homeView.buttonChat.isHidden = true
+            vc.homeView.overlay.isHidden = true
+            vc.homeView.imageLive.isHidden = true
+            vc.homeView.labelLive.isHidden = true
+            vc.homeView.imageEye.isHidden = true
+            vc.homeView.labelEye.isHidden = true
+            vc.homeView.labelLike.text = "\(String(describing: self.recentBroadcast[indexPath.row].followersCount!))"
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         case .planned:
-            print("To Do")
+            break
         case .banned:
-            print("To Do")
+            break
         case .finished:
-            print("To Do")
+           break
         case .wait_for_approve:
-            print("To Do")
+            break
         }
     }
     func tableView(_ tableView: UITableView, shouldHighlightRowAt indexPath: IndexPath) -> Bool {

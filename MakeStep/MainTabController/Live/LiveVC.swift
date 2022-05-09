@@ -8,6 +8,7 @@
 import Combine
 import UIKit
 import Loaf
+import SwiftUI
 
 
 class LiveVC: SheetableViewController {
@@ -16,12 +17,19 @@ class LiveVC: SheetableViewController {
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
     @Inject var fitMeetStream: FitMeetStream
+    private var takeLiveBroadcast: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
+    private var takePlannedBroadcast: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
     
     var listBroadcast: [BroadcastResponce] = []
+    var liveBroadcast: [BroadcastResponce] = []
+    var recentBroadcast: [BroadcastResponce] = []
+    var plannedBroadcast: [BroadcastResponce] = []
+    
+    
     var itemCount: Int = 0
 
     private let refreshControl = UIRefreshControl()
@@ -50,8 +58,10 @@ class LiveVC: SheetableViewController {
         super.viewDidLoad()
         makeTableView()
         actionButton ()
-        bindingNotAuht(page: 1)
-        makeNavItem(title: " Live", hide: true)
+        bindingLive()
+        bindingRecent()
+        bindingPlanned()
+        makeNavItem(title: "Live", hide: true)
     }
    
     override func copyLink(id: Int) {
@@ -83,35 +93,61 @@ class LiveVC: SheetableViewController {
     }
  
  // MARK: - NetworkMetod
-    func bindingNotAuht(page: Int) {
-           self.isLoadingList = false
-           takeBroadcast = fitMeetStream.getBroadcastN(page: page)
-                   .mapError({ (error) -> Error in return error })
-                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                       if response.data != nil  {
-                           guard let responceUnrap = response.data else { return }
-                           self.listBroadcast.append(contentsOf:responceUnrap)
-                          
-                           let arrayUserId =  self.listBroadcast.map{$0.userId!}
-                           self.bindingUserMap(ids: arrayUserId)
-                       }
-                       if response.meta != nil {
-                           guard let itemCount = response.meta?.itemCount else { return }
-                           self.itemCount = itemCount
-                   }
-               })
-           }
-       func bindingUserMap(ids: [Int])  {
-                  if ids.isEmpty { return } else {
-                  takeUser = fitMeetApi.getUserIdMap(ids: ids)
-                      .mapError({ (error) -> Error in return error })
-                      .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                          if response.data.count != 0 {
-                              self.userMap = response.data
-                              self.refreshControl.endRefreshing()
-                              self.liveView.tableView.reloadData()
-                          }
-                     })
-                 }
+    func bindingLive() {
+        takeLiveBroadcast = fitMeetStream.getBroadcastinLive(status: .online)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        guard let responceUnrap = response.data else { return }
+                        self.liveBroadcast = responceUnrap
+
+                        let arrayUserId =  self.liveBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+            })
+    }
+    func bindingRecent() {
+        takeBroadcast = fitMeetStream.getBroadcastinLive(status: .offline)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        guard let responceUnrap = response.data else { return }
+                        self.recentBroadcast = responceUnrap.filter{$0.resizedPreview != nil}
+
+                        let arrayUserId =  self.recentBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+            })
+    }
+    func bindingPlanned() {
+        takePlannedBroadcast = fitMeetStream.getBroadcastinLive(status: .planned)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        guard let responceUnrap = response.data else { return }
+                        self.plannedBroadcast = responceUnrap
+
+                        let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+            })
+    }
+   func bindingUserMap(ids: [Int])  {
+              if ids.isEmpty { return } else {
+              takeUser = fitMeetApi.getUserIdMap(ids: ids)
+                  .mapError({ (error) -> Error in return error })
+                  .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                      if response.data.count != 0 {
+                          self.userMap = response.data
+                          self.refreshControl.endRefreshing()
+                          self.liveView.tableView.reloadData()
+                      }
+                 })
              }
+         }
+    func connectUser (broadcastId:String?,channellId: String?) {
+        guard let broadID = broadcastId,let id = channellId else { return }     
+        SocketWatcher.sharedInstance.getTokenChat()
+        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
+    }
  }

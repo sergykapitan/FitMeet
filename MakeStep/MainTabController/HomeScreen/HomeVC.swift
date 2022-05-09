@@ -153,7 +153,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if !response.data.isEmpty {
-                    let result = response.data.filter({ $0.avatarPath != nil })
+                    let result = response.data.filter({ $0.resizedAvatar != nil })
                     self.listUsers = result
                     self.currentPage = 1
                     self.bindingNotAuht(page: self.currentPage)
