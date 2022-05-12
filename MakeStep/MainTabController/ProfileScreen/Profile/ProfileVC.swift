@@ -91,6 +91,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         profileView.buttonProfile.addTarget(self, action: #selector(actionEditProfile), for: .touchUpInside)
         profileView.buttonChanell.addTarget(self, action: #selector(actionChanell), for: .touchUpInside)
         profileView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
+        profileView.buttonEditChanell.addTarget(self, action: #selector(actionEditChanell), for: .touchUpInside)
 
         profileView.buttonCommunityGuidelines.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
         profileView.buttonCookiePolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
@@ -179,6 +180,12 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         channelUs.user = self.user
         channelUs.modalPresentationStyle = .fullScreen
         self.navigationController?.pushViewController(channelUs, animated: true)
+    }
+    @objc func actionEditChanell() {
+        let vc = EdetChannelVC()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.user
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     func makeNavItem() {

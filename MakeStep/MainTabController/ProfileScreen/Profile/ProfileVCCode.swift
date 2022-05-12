@@ -71,6 +71,10 @@ final class ProfileVCCode: UIView {
         let line = OneLine()
         return line
     }()
+    var firstAndLineChannel: OneLine = {
+        let line = OneLine()
+        return line
+    }()
  
     var imageChanell:UIImageView = {
         let image = UIImageView()
@@ -87,6 +91,23 @@ final class ProfileVCCode: UIView {
     }()
     var buttonChanell: UIButton = {
         let button = UIButton()   
+        return button
+    }()
+    var imageEditChanell:UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "edit")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
+        return image
+        }()
+    
+    var labelEditChanell: UILabel = {
+        let label = UILabel()
+        label.text = "Edit Channel"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
+    var buttonEditChanell: UIButton = {
+        let button = UIButton()
         return button
     }()
 
@@ -290,9 +311,22 @@ final class ProfileVCCode: UIView {
         buttonChanell.addSubview(labelChanell)
         labelChanell.anchor(left: imageChanell.rightAnchor,paddingLeft: 5)
         labelChanell.centerY(inView: buttonChanell)
-
+        
+        scroll.addSubview(firstAndLineChannel)
+        firstAndLineChannel.anchor(top: buttonChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        
+        scroll.addSubview(buttonEditChanell)
+        buttonEditChanell.anchor(top: firstAndLineChannel.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        
+        buttonEditChanell.addSubview(imageEditChanell)
+        imageEditChanell.anchor(top: buttonEditChanell.topAnchor, left: buttonEditChanell.leftAnchor,  bottom: buttonEditChanell.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
+        
+        buttonEditChanell.addSubview(labelEditChanell)
+        labelEditChanell.anchor(left: imageEditChanell.rightAnchor,paddingLeft: 5)
+        labelEditChanell.centerY(inView: buttonEditChanell)
+        
         scroll.addSubview(secondLine)
-        secondLine.anchor(top: buttonChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        secondLine.anchor(top: buttonEditChanell.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         scroll.addSubview(buttonWallet)
         buttonWallet.anchor(top: secondLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
