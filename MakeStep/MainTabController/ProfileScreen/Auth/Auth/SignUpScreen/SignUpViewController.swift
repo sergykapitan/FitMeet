@@ -77,6 +77,9 @@ class SignUpViewController: UIViewController {
     
     func buttonSignUp() {
         signUpView.buttonContinue.addTarget(self, action: #selector(buttonSignUpAction), for: .touchUpInside)
+        signUpView.buttonTerms.addTarget(self, action: #selector(actionTerms), for:.touchUpInside )
+        signUpView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionPrivacyPolicy), for: .touchUpInside)
+        signUpView.buttonPrivacyDMCA.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
         
         nameConstraint = signUpView.textFieldUserName.topAnchor.constraint(equalTo: signUpView.textFieldName.bottomAnchor, constant: 15)
         nameConstraint.isActive = true
@@ -87,6 +90,23 @@ class SignUpViewController: UIViewController {
         passwordConstraint = signUpView.buttonContinue.topAnchor.constraint(equalTo: signUpView.textFieldPassword.bottomAnchor, constant: 15)
         passwordConstraint.isActive = true
 
+    }
+    @objc func actionTerms() {
+           let helpWebViewController = WebViewController()
+           helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
+           self.present(helpWebViewController, animated: true, completion: nil)
+       }
+   
+    @objc func actionPrivacyPolicy() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
+        self.present(helpWebViewController, animated: true, completion: nil)
+    }
+
+    @objc func actionDMCA() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = Constants.webViewPwa + "dmca"
+        self.present(helpWebViewController, animated: true, completion: nil)
     }
     
     @objc func buttonSignUpAction() {

@@ -82,12 +82,33 @@ final class SignUpViewControllerCode: UIView {
     }()
     let textPrivacyPolice: UILabel = {
         let label = UILabel()
-        label.text = "By signing up, you agree to our Terms , Data Policy and Cookies Policy"
+        label.text = "By signing up, you agree to our "
         label.textColor = UIColor(hexString: "#BBBCBC")
         label.font = UIFont.systemFont(ofSize: 10)
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
+    }()
+    let buttonTerms: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.blueColor, for: .normal)
+        let font = UIFont.systemFont(ofSize: 10)
+        button.setAttributedTitle(NSAttributedString(string: "Terms", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+        return button
+    }()
+    let buttonPrivacyPolicy: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.blueColor, for: .normal)
+        let font = UIFont.systemFont(ofSize: 10)
+        button.setAttributedTitle(NSAttributedString(string: ",Privacy Policy", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+        return button
+    }()
+    let buttonPrivacyDMCA: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.blueColor, for: .normal)
+        let font = UIFont.systemFont(ofSize: 10)
+        button.setAttributedTitle(NSAttributedString(string: ", DMCA", attributes: [NSAttributedString.Key.font: font]), for: .normal)
+        return button
     }()
     let alertImage2: UIImageView = {
         let image = UIImageView()
@@ -173,10 +194,20 @@ final class SignUpViewControllerCode: UIView {
                                paddingLeft: 10, paddingRight: 10,height: 39)
 
         cardView.addSubview(textPrivacyPolice)
-        textPrivacyPolice.anchor(top: buttonContinue.bottomAnchor,
-                                 left: cardView.leftAnchor,
-                                 right: cardView.rightAnchor,
-                                 paddingTop: 11, paddingLeft: 32, paddingRight: 32)
+        textPrivacyPolice.anchor(top: buttonContinue.bottomAnchor,right: cardView.centerXAnchor,
+                                 paddingTop: 11,paddingRight: 0)
+        
+        cardView.addSubview(buttonTerms)
+        buttonTerms.anchor(left: textPrivacyPolice.rightAnchor, paddingLeft: 2)
+        buttonTerms.centerY(inView: textPrivacyPolice)
+       
+        cardView.addSubview(buttonPrivacyPolicy)
+        buttonPrivacyPolicy.anchor(left: buttonTerms.rightAnchor, paddingLeft: 2)
+        buttonPrivacyPolicy.centerY(inView: textPrivacyPolice)
+        
+        cardView.addSubview(buttonPrivacyDMCA)
+        buttonPrivacyDMCA.anchor(left: buttonPrivacyPolicy.rightAnchor, paddingLeft: 2)
+        buttonPrivacyDMCA.centerY(inView: textPrivacyPolice)
         
         textFieldUserName.addSubview(alertImage2)
         alertImage2.anchor( right: textFieldUserName.rightAnchor, paddingRight: 15)
