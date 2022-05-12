@@ -220,6 +220,17 @@ final class ProfileVCCode: UIView {
         let button = UIButton()
         return button
     }()
+    lazy var appVersionLabel:  UILabel = {
+        let label = UILabel()
+        if let text = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+            label.text = "App version: \(text)"
+        }
+        label.textAlignment = .center
+        label.textColor = .lightGray
+        label.font = UIFont(name: "AvenirNext-Medium", size: 12)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
@@ -355,6 +366,10 @@ final class ProfileVCCode: UIView {
         buttonContact.addSubview(labelContact)
         labelContact.anchor(left: buttonContact.leftAnchor,paddingLeft: 5)
         labelContact.centerY(inView: buttonContact)
+        
+        scroll.addSubview(appVersionLabel)
+        appVersionLabel.centerX(inView: cardView)
+        appVersionLabel.anchor(top: buttonContact.bottomAnchor, paddingTop: 10)
         
 
     }
