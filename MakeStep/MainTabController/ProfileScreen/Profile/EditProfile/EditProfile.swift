@@ -251,6 +251,8 @@ class EditProfile: UIViewController, UIScrollViewDelegate {
                     stackView.distribution = .equalSpacing
                     stackView.alignment = .center
                     stackView.axis = .horizontal
+                    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightBack))
+                    stackView.addGestureRecognizer(tap)
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]

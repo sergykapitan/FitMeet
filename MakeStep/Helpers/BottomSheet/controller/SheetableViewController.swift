@@ -249,9 +249,12 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
                     stackView.distribution = .equalSpacing
                     stackView.alignment = .center
                     stackView.axis = .horizontal
+                    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightBack))
+                    stackView.addGestureRecognizer(tap)
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
+       
         let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Search"), style: .plain, target: self, action:  #selector(searchAction))
         startItem.tintColor = UIColor(hexString: "#7C7C7C")
 //        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))

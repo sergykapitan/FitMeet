@@ -485,7 +485,6 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
         
                     let backButton = UIButton()
-                   // backButton.anchor( width: 40, height: 30)
                     backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
         
@@ -493,6 +492,9 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                     stackView.distribution = .equalSpacing
                     stackView.alignment = .center
                     stackView.axis = .horizontal
+
+                    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightBack))
+                    stackView.addGestureRecognizer(tap)
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
