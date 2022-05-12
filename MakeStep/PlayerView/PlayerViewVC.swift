@@ -42,6 +42,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     var itemCount: Int = 0
     var categoryCount: Int = 0
     var allCount: Int = 0
+    var topTableConstraint = NSLayoutConstraint()
    
   
 
@@ -247,9 +248,45 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
+        homeView.buttonOpen.addTarget(self, action: #selector(actionTable), for: .touchUpInside)
+        self.homeView.labelCategory.alpha = 0
+        self.homeView.labelDescription.alpha = 0
+        
+        topTableConstraint = homeView.tableView.topAnchor.constraint(equalTo: homeView.buttonSubscribe.bottomAnchor, constant: 15)
+        topTableConstraint.isActive = true
        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
         homeView.stackButton.addGestureRecognizer(tap)
+    }
+    @objc func actionTable() {
+        homeView.buttonOpen.isSelected.toggle()
+        if homeView.buttonOpen.isSelected {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                let image = UIImage(named: "Back1-2")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+                self.homeView.buttonOpen.setImage(image, for: .normal)
+                self.topTableConstraint.constant = 225
+                self.homeView.labelCategory.alpha = 1
+                self.homeView.labelDescription.alpha = 1
+
+            })
+            self.view.layoutIfNeeded()
+        transitionAnimator.startAnimation()
+        } else {
+            let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+                let image = UIImage(named: "Back11")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+                self.homeView.buttonOpen.setImage(image, for: .normal)
+                self.topTableConstraint.constant = 15
+                self.homeView.labelCategory.alpha = 0
+                self.homeView.labelDescription.alpha = 0
+
+            })
+            self.view.layoutIfNeeded()
+        transitionAnimator.startAnimation()
+        }
+       
+        
+        
+        
     }
     @objc func actionCoach() {
         self.dismiss(animated: true) {
@@ -761,6 +798,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                     self.homeView.labelCategory.removeAllTags()
                     self.homeView.labelCategory.addTags(arr)
                     self.homeView.labelCategory.delegate = self
+                    self.homeView.labelDescription.text = self.broadcast?.description
                     self.homeView.setImage(image: self.user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
                     
                     if self.BoolTrack {
@@ -793,8 +831,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         }
     func bindingLike() {
         
-        guard let likeCount = self.broadcast?.followersCount else { return }
+        guard let likeCount = self.broadcast?.followersCount,let viewCount = self.broadcast?.viewersCount else { return }
         self.homeView.labelLike.text = "\(likeCount)"
+        self.homeView.labelEyeView.text = "\(viewCount)"
 
         guard let like = self.broadcast?.isFollow else { return }
         like ?  homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal) :  homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
