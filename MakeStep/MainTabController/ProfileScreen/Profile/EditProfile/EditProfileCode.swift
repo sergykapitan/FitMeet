@@ -255,7 +255,7 @@ final class EditProfileCode: UIView {
                                 paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
         
         scroll.addSubview(imageRed)
-        imageRed.anchor( right: imageButton.rightAnchor, bottom: imageButton.bottomAnchor, paddingRight: -5, paddingBottom: -5, width: 30, height: 30)
+        imageRed.anchor( right: imageButton.rightAnchor, bottom: imageButton.bottomAnchor, paddingRight: -15, paddingBottom: -15, width: 50, height: 50)
         
         scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(left: imageButton.rightAnchor, paddingLeft: 10)
