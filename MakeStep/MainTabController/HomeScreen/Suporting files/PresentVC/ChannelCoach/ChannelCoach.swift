@@ -515,9 +515,11 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
         guard let isFollow = channel?.isFollow else { return }
                if isFollow {
                        self.homeView.buttonFollow.backgroundColor = .white
+                       self.homeView.buttonFollow.setTitle("Following", for: .normal)
                        self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
                    } else {
                        self.homeView.buttonFollow.backgroundColor = .blueColor
+                       self.homeView.buttonFollow.setTitle("Follow", for: .normal)
                        self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
                    }
 
@@ -632,7 +634,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 if response.id != nil {
                     self.homeView.buttonFollow.backgroundColor = .white
                     self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
-                   // guard let follow =  response.followersCount else { return }
+                    self.homeView.buttonFollow.setTitle("Following", for: .normal)
                     self.homeView.labelINTFollows.text = "\(response.followersCount)"
                     
             }
@@ -645,7 +647,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 if response.id != nil {
                     self.homeView.buttonFollow.backgroundColor = .blueColor
                     self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
-                   // guard let follow =  response.followersCount else { return }
+                    self.homeView.buttonFollow.setTitle("Follow", for: .normal)
                     self.homeView.labelINTFollows.text = "\(response.followersCount)"
             }
         })
