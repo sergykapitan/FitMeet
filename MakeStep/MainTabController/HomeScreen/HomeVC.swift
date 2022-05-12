@@ -41,6 +41,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     
     
     @Inject var fitMeetApi: FitMeetApi
+    private var channelMap: AnyCancellable?
     private var takeUser: AnyCancellable?
     private var followBroad: AnyCancellable?
     private var watcherMap: AnyCancellable?
@@ -58,6 +59,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     var index = 0
     var url:String?
     var usersd = [Int: User]()
+    var channellsd = [Int: ChannelResponce]()
   
     //MARK - LifeCicle
     override func loadView() {
@@ -132,12 +134,31 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
                        if response.data.count != 0 {
                            self.usersd = response.data
+                         //  let arrayUserId = self.usersd.compactMap{$0.value.channelIds?.last}
+                         //  self.getMapChannel(ids: arrayUserId)
                            self.refreshControl.endRefreshing()
                            self.homeView.tableView.reloadData()
                        }
                   })
               }
           }
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                
+                
+                          self.channellsd = response.data
+                          self.refreshControl.endRefreshing()
+                          self.homeView.tableView.reloadData()
+//                          guard let listUsers = self.listUsers else { return }
+//                          let compUser = listUsers.compactMap { $0 }
+//                          if !self.channellsd.isEmpty {
+//                              self.listUsers = compUser.sorted(by: {self.channellsd[($0.channelIds?.last!)!]!.followersCount > self.channellsd[($1.channelIds?.last!)!]!.followersCount })
+//                          self.searchView.tableView.reloadData()
+//                          }
+                     })
+         }
     func bindingCategory() {
         takeCategory = fitMeetStream.getCategory()
                 .mapError({ (error) -> Error in return error })

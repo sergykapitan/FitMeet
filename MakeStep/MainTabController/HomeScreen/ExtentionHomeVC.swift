@@ -55,6 +55,7 @@ extension HomeVC: UITableViewDataSource {
         else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
+         //   cell.titleLabel.text = self.channellsd[id]?.name
            
         
         self.ids.append(broadcastID)
@@ -125,15 +126,7 @@ extension HomeVC: UITableViewDataSource {
         cell.stackButton.tag = indexPath.row
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
         cell.stackButton.addGestureRecognizer(tap)
-            
-//            if indexPath.row == listBroadcast.count - 1 && !isLoadingList{
-//                if self.itemCount > listBroadcast.count {
-//                    self.isLoadingList = true
-//                    self.loadMoreItemsForList()
-//                } else if self.itemCount == listBroadcast.count {
-//                    self.bindingPlanned()
-//                }
-//            }
+ 
             if indexPath.row == listBroadcast.count - 2 {
                 if self.itemCount > listBroadcast.count {
                     self.isLoadingList = true
@@ -176,7 +169,7 @@ extension HomeVC: UITableViewDelegate {
         case 0:
             return UITableView.automaticDimension
         case 1:
-            return 310
+            return 315
         default:
             break
         }
