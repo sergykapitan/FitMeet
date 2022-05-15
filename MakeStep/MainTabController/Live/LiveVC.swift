@@ -35,7 +35,7 @@ class LiveVC: SheetableViewController {
     private let refreshControl = UIRefreshControl()
     var isLoadingList : Bool = false
     var userMap = [Int: User]()
-    let titleSection = ["Live Now","Recent Live Streams","Upcoming Live Streams"]
+    var titleSection = ["Live Now","Recent Live Streams","Upcoming Live Streams"]
    
     
   // MARK: - LifeCicle
@@ -129,6 +129,8 @@ class LiveVC: SheetableViewController {
 
                         let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
                         self.bindingUserMap(ids: arrayUserId)
+                    } else {
+                        self.titleSection.removeLast()
                     }
             })
     }

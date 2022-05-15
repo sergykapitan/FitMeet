@@ -17,6 +17,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch section {
             case 0 :
+            if liveBroadcast.count == 0 {
+                return 1
+            }
             return  liveBroadcast.count
             case 1:
             return  recentBroadcast.count
@@ -33,7 +36,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
        
             let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             view.backgroundColor = .white
-            let label = UILabel(frame: CGRect(x: 16, y: 5, width: tableView.frame.width, height: 20))
+            let label = UILabel(frame: CGRect(x: 20, y: 0, width: tableView.frame.width, height: 20))
             label.text = titleSection[section]
             label.backgroundColor = UIColor.clear
             label.font = UIFont.boldSystemFont(ofSize: 20)
@@ -41,14 +44,42 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             return view
         
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.section {
+        case 0:
+            if liveBroadcast.isEmpty {
+                return 20
+            }
+            return UITableView.automaticDimension
+        case 1:
+            return UITableView.automaticDimension
+        case 2:
+            return UITableView.automaticDimension
+        default:
+            break
+        }
+       
+        return UITableView.automaticDimension
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
      
    
-              let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+       let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+        
+        
         switch indexPath.section {
+           
         case 0:
+            if liveBroadcast.count == 0 {
+                cell.textLabel?.text = "No Live Streams"
+                cell.labelDescription.text = nil
+                cell.titleLabel.text = nil
+                cell.buttonMore.isHidden = true
+                cell.backgroundImage.isHidden = true
+                return cell
+            }
               cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
               cell.labelDescription.text = liveBroadcast[indexPath.row].name
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
@@ -59,7 +90,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
               cell.buttonMore.tag = self.liveBroadcast[indexPath.row].id!
               cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
               cell.buttonMore.isUserInteractionEnabled = true
+            
         case 1:
+            cell.textLabel?.text = nil
             cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
             cell.labelDescription.text = recentBroadcast[indexPath.row].name
             guard let id = recentBroadcast[indexPath.row].userId else { return cell}
@@ -71,6 +104,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
             cell.buttonMore.isUserInteractionEnabled = true
         case 2:
+            cell.textLabel?.text = nil
             cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
             cell.labelDescription.text = plannedBroadcast[indexPath.row].name
             guard let id = plannedBroadcast[indexPath.row].userId else { return cell}
