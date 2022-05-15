@@ -232,11 +232,11 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
-              let video = self.videoURl,
-              let image = self.imageUpload?.data?.first?.filename   else {
+              let video = self.videoURl
+            else {
                   Loaf("Not Saved video and image", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
                   return }
-        
+        let image = self.imageUpload?.data?.first?.filename
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         self.authView.buttonOK.backgroundColor = .blueColor.alpha(0.4)
         self.authView.buttonOK.isUserInteractionEnabled = false
@@ -245,7 +245,7 @@ class AddedVideoVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
            
                     do {
                         let data = try Data(contentsOf: url!, options: .mappedIfSafe)
-                        self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview: image, title: name, description: description, categoryId: self.IdCategory)
+                        self.takeChannel = self.fitMeetApi.uploadVideo(image: data, channelId: "\(chanelId)", preview: image ?? "", title: name, description: description, categoryId: self.IdCategory)
                                    .mapError({ (error) -> Error in
                                        return error })
                                    .sink(receiveCompletion: { _ in }, receiveValue: { response in

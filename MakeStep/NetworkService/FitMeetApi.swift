@@ -178,7 +178,7 @@ class FitMeetApi {
                     .joined(separator: ", ")
                            multipartFormData.append(channelId.data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
                            multipartFormData.append(stringifiedNumberList.data(using: .utf8, allowLossyConversion: false)!, withName: "categoryIds")
-                           multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
+                           multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)! , withName: "previewPath")
                            multipartFormData.append(title.data(using: .utf8, allowLossyConversion: false)!, withName: "title")
                            multipartFormData.append(description.data(using: .utf8, allowLossyConversion: false)!, withName: "description")
                          //  multipartFormData.append("false".data(using: .utf8, allowLossyConversion: false)!, withName: "onlyForSubscribers")

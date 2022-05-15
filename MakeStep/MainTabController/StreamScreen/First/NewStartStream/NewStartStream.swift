@@ -284,15 +284,12 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         if authView.textFieldStartDate.text == "" {
             authView.textFieldStartDate.text = "Start now"
         }
-        if image ==  nil {
-            Loaf("Not Saved Image preview", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-            return
-        }
+        
         guard let chanelId = listChanell.last?.id ,
               let name = authView.textFieldName.text ,
-              let description = authView.textFieldDescription.text,
-              let img = image  else { return }
-        
+              let description = authView.textFieldDescription.text
+               else { return }
+        let img = image ?? ""
         UserDefaults.standard.set(self.listChanell.last?.id, forKey: Constants.chanellID)
         var isPlan: Bool?
         var date: String?
