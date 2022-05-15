@@ -15,12 +15,24 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
     
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if brodcast.count == 0 {
+            return 1
+        }
         return  brodcast.count
     }    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+        if brodcast.count == 0 {
+            cell.textLabel?.text = "This user hasn't uploaded any videos"
+            cell.labelDescription.text = nil
+            cell.titleLabel.text = nil
+            cell.buttonMore.isHidden = true
+            cell.backgroundImage.isHidden = true
+            return cell
+        } else {
+            cell.textLabel?.text = nil
+        }
        
         
         if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
