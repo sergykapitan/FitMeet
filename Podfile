@@ -21,7 +21,7 @@ target 'MakeStep' do
   pod 'TagListView', '~> 1.0'
   pod 'MMPlayerView'
   pod 'iLabeledSeekSlider', '~> 1.0.2'
-  pod ‘MahsaHLSParser’
+  pod 'SkeletonView'
 
 
 
@@ -48,5 +48,6 @@ target 'MakeStepQA' do
   pod 'TagListView', '~> 1.0'
   pod 'MMPlayerView'
   pod 'iLabeledSeekSlider', '~> 1.0.2'
-  pod ‘MahsaHLSParser’
+  pod 'SkeletonView'
+ 
 end

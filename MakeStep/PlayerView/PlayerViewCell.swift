@@ -27,6 +27,7 @@ final class PlayerViewCell: UITableViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
+        image.isSkeletonable = true
         return image
         
     }()
@@ -66,6 +67,7 @@ final class PlayerViewCell: UITableViewCell {
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
         button.contentVerticalAlignment = .center
         button.contentHorizontalAlignment = .center
+        button.isSkeletonable = true
         var intS : Int = 0
         return button
     }()
@@ -73,6 +75,7 @@ final class PlayerViewCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        label.isSkeletonable = true
         return label
     }()
     var labelDescription: UILabel = {
@@ -80,6 +83,8 @@ final class PlayerViewCell: UITableViewCell {
         label.numberOfLines = 3
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
+        label.isSkeletonable = true
+      //  label.text = "iwhfebgouweyrgpiwercgninerwhjgoiwerngcgiyweirygnygernouygffncwouygfycwnrgywgn"
         return label
     }()
     var labelCategory : UILabel = {
@@ -160,8 +165,17 @@ final class PlayerViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.initialize()
         selectionStyle = .none
+        [backgroundImage,labelDescription].forEach{
+            $0.showAnimatedGradientSkeleton()
+        }
+        buttonMore.alpha = 0
     }
-
+    func hideAnimation() {
+        [backgroundImage,labelDescription].forEach{
+            $0.hideSkeleton()
+        }
+        buttonMore.alpha = 1
+    }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -183,12 +197,12 @@ final class PlayerViewCell: UITableViewCell {
         labelDescription.anchor(top: contentView.topAnchor,
                                         left: backgroundImage.rightAnchor,
                                         right: contentView.rightAnchor,
-                                        paddingTop: 8, paddingLeft: 8 ,paddingRight: 3)
+                                        paddingTop: 8, paddingLeft: 8 ,paddingRight: 3,width: 400)
         contentView.addSubview(titleLabel)
         titleLabel.anchor(left: backgroundImage.rightAnchor,
                           right: buttonMore.leftAnchor,
                           bottom: contentView.bottomAnchor,
-                          paddingLeft: 8,paddingRight: 8, paddingBottom: 8 )
+                          paddingLeft: 8,paddingRight: 8, paddingBottom: 8,width: 300)
     }
     func setImage(image:String) {
         let url = URL(string: image)

@@ -11,6 +11,7 @@ import AVFoundation
 import AVKit
 import UIKit
 import TagListView
+import SkeletonView
 
 
 extension HomeVC: UITableViewDataSource {
@@ -19,12 +20,16 @@ extension HomeVC: UITableViewDataSource {
         return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        switch section {
+            
+        case 0 :
             return 1
-        } else if section == 1 {
-            return listBroadcast.count
+        case 1 :
+            if listBroadcast.isEmpty { return 3 } else { return listBroadcast.count}
+        default:
+            break
         }
-      return 0
+        return 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
@@ -36,16 +41,12 @@ extension HomeVC: UITableViewDataSource {
             }
          cell.delegate = self
          return cell
-        
         case 1:
-           
-            
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-            
-        guard !listBroadcast.isEmpty  else { return cell }
-
-        cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg" )
-            
+            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
+        guard !listBroadcast.isEmpty  else { return cell }    
+        cell.hideAnimation()
+        cell.setupImage(urlString:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? defoultImage)
         cell.labelDescription.text = listBroadcast[indexPath.row].name
         
 
@@ -133,12 +134,13 @@ extension HomeVC: UITableViewDataSource {
                     self.loadMoreItemsForList()
                 }
             }
+       // }
         return cell
         
         default:
             break
         }
-        return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
+        return tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath)
     }
     @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
         let tappedView = sender.view

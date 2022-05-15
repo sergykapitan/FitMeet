@@ -7,6 +7,7 @@
 
 
 import UIKit
+import SkeletonView
 
 extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     
@@ -22,8 +23,15 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             }
             return  liveBroadcast.count
             case 1:
+            if recentBroadcast.count == 0 {
+                return 3
+            }
+            
             return  recentBroadcast.count
             case 2:
+            if plannedBroadcast.count == 0 {
+                return 3
+            }
             return  plannedBroadcast.count
             
         default:
@@ -67,20 +75,20 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
      
    
        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-        
-        
+        let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
         switch indexPath.section {
            
         case 0:
             if liveBroadcast.count == 0 {
+                cell.hideAnimation()
                 cell.textLabel?.text = "No Live Streams"
-                cell.labelDescription.text = nil
-                cell.titleLabel.text = nil
-                cell.buttonMore.isHidden = true
+                cell.labelDescription.text = ""
+                cell.titleLabel.text = ""
                 cell.backgroundImage.isHidden = true
                 return cell
             }
-              cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+              cell.hideAnimation()
+              cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
               cell.labelDescription.text = liveBroadcast[indexPath.row].name
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
               
@@ -93,7 +101,10 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             
         case 1:
             cell.textLabel?.text = nil
-            cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            if recentBroadcast.count != 0 {
+            cell.hideAnimation()
+            
+            cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
             cell.labelDescription.text = recentBroadcast[indexPath.row].name
             guard let id = recentBroadcast[indexPath.row].userId else { return cell}
             
@@ -103,9 +114,13 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.tag = self.recentBroadcast[indexPath.row].id!
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
             cell.buttonMore.isUserInteractionEnabled = true
+            }
         case 2:
             cell.textLabel?.text = nil
-            cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+            if plannedBroadcast.count != 0 {
+            cell.hideAnimation()
+           
+            cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
             cell.labelDescription.text = plannedBroadcast[indexPath.row].name
             guard let id = plannedBroadcast[indexPath.row].userId else { return cell}
             
@@ -115,7 +130,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.tag = self.plannedBroadcast[indexPath.row].id!
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
             cell.buttonMore.isUserInteractionEnabled = true
-            
+            }
         default:
             break
         }

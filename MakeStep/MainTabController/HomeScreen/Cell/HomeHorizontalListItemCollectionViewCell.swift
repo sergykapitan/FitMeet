@@ -20,6 +20,7 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isSkeletonable = true
         return iv
     }()
     
@@ -28,6 +29,8 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.masksToBounds = true
         iv.translatesAutoresizingMaskIntoConstraints = false
+        iv.isSkeletonable = true
+        iv.showAnimatedGradientSkeleton()
         return iv
     }()
     
@@ -103,9 +106,17 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
             nameLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor,constant: 2),
         ])
         
-        //imageView.showAnimatedGradientSkeleton()
+        [imageView,placeholderImage].forEach{
+            $0.showAnimatedGradientSkeleton()
+        }
+        
         setupTapGesture()
         
+    }
+    func hideAnimation() {
+        [imageView,placeholderImage].forEach{
+            $0.hideSkeleton()
+        }
     }
     
 

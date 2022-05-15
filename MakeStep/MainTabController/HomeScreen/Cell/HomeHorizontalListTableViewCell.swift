@@ -77,7 +77,7 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
 extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let type = type else {return 0}
+        guard let type = type else {return 10}
         
          return type.count
        
@@ -87,7 +87,7 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHorizontalListItemCollectionViewCell", for: indexPath) as! HomeHorizontalListItemCollectionViewCell
         if let type = type {
-      
+            cell.hideAnimation()
             cell.setup(indexPath.row, item: type[indexPath.row])
             
         }

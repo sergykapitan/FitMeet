@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		650A8D824E1B9C5489E21FB4 /* Pods_MakeStepQA.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37F68A54FB8B1D2D80BBEFF5 /* Pods_MakeStepQA.framework */; };
-		839D27D98E644C564AB48A83 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		839D27D98E644C564AB48A83 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
+		8C2350B84570089D92C333EC /* Pods_MakeStep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E940C7337B77220FE7BF748E /* Pods_MakeStep.framework */; };
 		8CFA5B88280B5C68009CAA03 /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFA5B87280B5C68009CAA03 /* InstantPanGestureRecognizer.swift */; };
 		8CFA5B89280B5C68009CAA03 /* InstantPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CFA5B87280B5C68009CAA03 /* InstantPanGestureRecognizer.swift */; };
 		A5129404273A6EB7000CBBD9 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54F9B8B27315CF8008E7E60 /* IAPManager.swift */; };
@@ -505,7 +506,7 @@
 		B4F58069263156CC000095BB /* FitMeetStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4F58068263156CC000095BB /* FitMeetStream.swift */; };
 		B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF0D26BEC15800C25304 /* Message.swift */; };
 		B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */; };
-		C47DB2CC3CAC9849C15E3C28 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
+		C47DB2CC3CAC9849C15E3C28 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -794,6 +795,7 @@
 		B4F58068263156CC000095BB /* FitMeetStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitMeetStream.swift; sourceTree = "<group>"; };
 		B4FCCF0D26BEC15800C25304 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageRouter.swift; sourceTree = "<group>"; };
+		E940C7337B77220FE7BF748E /* Pods_MakeStep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MakeStep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -810,9 +812,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				839D27D98E644C564AB48A83 /* (null) in Frameworks */,
+				839D27D98E644C564AB48A83 /* BuildFile in Frameworks */,
 				A54F9B86273156B5008E7E60 /* StoreKit.framework in Frameworks */,
-				C47DB2CC3CAC9849C15E3C28 /* (null) in Frameworks */,
+				C47DB2CC3CAC9849C15E3C28 /* BuildFile in Frameworks */,
+				8C2350B84570089D92C333EC /* Pods_MakeStep.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1129,6 +1132,7 @@
 				A5A7960227FB132700F3B45E /* EasyPeasy.framework */,
 				A54F9B85273156B5008E7E60 /* StoreKit.framework */,
 				37F68A54FB8B1D2D80BBEFF5 /* Pods_MakeStepQA.framework */,
+				E940C7337B77220FE7BF748E /* Pods_MakeStep.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1862,8 +1866,6 @@
 			dependencies = (
 			);
 			name = MakeStep;
-			packageProductDependencies = (
-			);
 			productName = FitMeet;
 			productReference = B4D9D71B26257D8C007CFB71 /* MakeStep.app */;
 			productType = "com.apple.product-type.application";
@@ -1891,8 +1893,6 @@
 				Base,
 			);
 			mainGroup = B4D9D71226257D8C007CFB71;
-			packageReferences = (
-			);
 			productRefGroup = B4D9D71C26257D8C007CFB71 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";

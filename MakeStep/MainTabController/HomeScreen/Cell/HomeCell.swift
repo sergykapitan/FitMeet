@@ -18,6 +18,15 @@ final class HomeCell: UITableViewCell {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
         image.clipsToBounds = true
+        image.isSkeletonable = true
+        return image
+        
+    }()
+    var placeholderImage: UIImageView = {
+        let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
+        image.isSkeletonable = true
         return image
         
     }()
@@ -27,8 +36,8 @@ final class HomeCell: UITableViewCell {
         image.clipsToBounds = true
         image.layer.cornerRadius = 12
         image.anchor(width: 24,height: 24)
+        image.isSkeletonable = true
         return image
-        
     }()
     var logoUserOnline: UIView = {
         let image = UIView()
@@ -44,6 +53,7 @@ final class HomeCell: UITableViewCell {
     }()
     let bottomView : UIView = {
         let view = UIView()
+        view.isSkeletonable = true
         return view
     }()
     let buttonLike: UIButton = {
@@ -63,6 +73,7 @@ final class HomeCell: UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         label.sizeToFit()
+        label.isSkeletonable = true
         return label
     }()
     var labelDescription: UILabel = {
@@ -71,6 +82,7 @@ final class HomeCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
         label.numberOfLines = 2
+        label.isSkeletonable = true
         return label
     }()
     var labelCategory : UILabel = {
@@ -83,14 +95,17 @@ final class HomeCell: UITableViewCell {
     }()
     var overlay : OverlayLive = {
         let view = OverlayLive()
+        view.isSkeletonable = true
         return view
     }()
     var overlayPlan : OverlayPlanned = {
         let view = OverlayPlanned()
+        view.isSkeletonable = true
         return view
     }()
     var overlayOffline : OverlayOffline = {
         let view = OverlayOffline()
+        view.isSkeletonable = true
         return view
     }()
     
@@ -131,6 +146,20 @@ final class HomeCell: UITableViewCell {
         self.initUI()
         self.initialize()
         selectionStyle = .none
+        [placeholderImage,logoUserImage,labelDescription,].forEach{
+            $0.showAnimatedGradientSkeleton()
+        }
+        [overlay,overlayPlan,overlayOffline,buttonMore].forEach{
+            $0.alpha = 0
+        }
+    }
+    func hideAnimation() {
+        [placeholderImage,logoUserImage,labelDescription,overlay,overlayPlan,overlayOffline].forEach{
+            $0.hideSkeleton()
+        }
+        [overlay,overlayPlan,overlayOffline,buttonMore].forEach{
+            $0.alpha = 1
+        }
     }
 
     required init?(coder: NSCoder) {
@@ -150,6 +179,11 @@ final class HomeCell: UITableViewCell {
                                right: contentView.rightAnchor,
                                paddingTop: 0, paddingLeft: 0, paddingRight: 0)
         backgroundImage.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
+        contentView.addSubview(placeholderImage)
+        placeholderImage.anchor(top: contentView.topAnchor,
+                               left: contentView.leftAnchor,
+                               right: contentView.rightAnchor,
+                               paddingTop: 0, paddingLeft: 0, paddingRight: 0,width: 500,height: 220)
         contentView.addSubview(bottomView)
         bottomView.anchor(top: backgroundImage.bottomAnchor,
                           left: contentView.leftAnchor,
@@ -161,7 +195,7 @@ final class HomeCell: UITableViewCell {
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
 
         bottomView.addSubview(labelDescription)
-        labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor, paddingTop: 5, paddingLeft: 15,paddingRight: 8)
+        labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor, paddingTop: 5, paddingLeft: 15,paddingRight: 8,width: 300)
        
         bottomView.addSubview(stackButton)
         stackButton.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor, paddingTop: 5, paddingLeft: 15)
@@ -199,6 +233,18 @@ final class HomeCell: UITableViewCell {
                     .transition(.fade(0.25))
             
         ])
+    }
+    func setupImage(urlString: String) {
+        self.backgroundImage.image = nil
+        self.placeholderImage.isHidden = false
+        if let imageUrl = URL(string: urlString) {
+            backgroundImage.kf.setImage(with: imageUrl, options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))]) { result in
+                switch result {
+                case .success(_):  self.placeholderImage.isHidden = true
+                case .failure(_): break
+                }
+            }
+        }
     }
 
     func setImageLogo(image:String) {

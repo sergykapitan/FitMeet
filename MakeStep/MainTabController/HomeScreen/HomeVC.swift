@@ -97,6 +97,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -223,6 +224,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
         homeView.tableView.register(HomeHorizontalListTableViewCell.self, forCellReuseIdentifier: "HomeHorizontalListTableViewCell")
         homeView.tableView.separatorStyle = .none
+     
     }
     func connectUser (broadcastId:String?,channellId: String?) {
         

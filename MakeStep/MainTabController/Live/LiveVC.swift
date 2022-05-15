@@ -112,6 +112,7 @@ class LiveVC: SheetableViewController {
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
                         guard let responceUnrap = response.data else { return }
+                        sleep(1)
                         self.recentBroadcast = responceUnrap.filter{$0.resizedPreview != nil}
 
                         let arrayUserId =  self.recentBroadcast.map{$0.userId!}
@@ -125,6 +126,7 @@ class LiveVC: SheetableViewController {
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
                         guard let responceUnrap = response.data else { return }
+                        sleep(1)
                         self.plannedBroadcast = responceUnrap
 
                         let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
