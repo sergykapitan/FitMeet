@@ -15,14 +15,14 @@ class Validation {
       return isValidateName
    }
    public func validatePassword(password: String) -> Bool {
-      let passRegEx = "^[0-9a-zA-Z!#$%&*@^А-я-]{8,}$"
+      let passRegEx = "^[0-9a-zA-Z!#$%&*@^А-я-]{8,64}$"
       let trimmedString = password.trimmingCharacters(in: .whitespaces)
       let validatePassord = NSPredicate(format:"SELF MATCHES %@", passRegEx)
       let isvalidatePass = validatePassord.evaluate(with: trimmedString)
       return isvalidatePass
    }
     public func validateUserName(userName: String) -> Bool {
-       let passRegEx = "^(?=.*[A-Za-z])[0-9a-zA-Z]{3,}$"
+       let passRegEx = "^(?=.*[A-Za-z])[0-9a-zA-Z]{3,64}$"
        let trimmedString = userName.trimmingCharacters(in: .whitespaces)
        let validatePassord = NSPredicate(format:"SELF MATCHES %@", passRegEx)
        let isvalidatePass = validatePassord.evaluate(with: trimmedString)
