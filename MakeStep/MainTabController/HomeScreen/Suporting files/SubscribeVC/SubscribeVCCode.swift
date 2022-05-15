@@ -70,7 +70,7 @@ final class SubscribeVCCode: UIView {
     }()
     var buttonPay: UIButton = {
         var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor                                                                                                               //UIColor(hexString: "#3B58A4")
         button.setTitle(" Pay ", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 20)
         button.layer.cornerRadius = 30

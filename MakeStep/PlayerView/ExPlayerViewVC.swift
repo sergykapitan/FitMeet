@@ -223,3 +223,10 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         }
   
 }
+extension PlayerViewVC: VeritiPurchase {
+    func addPurchase() {        
+        guard let userId = user?.id else { return }
+        self.bindingChannel(userId: userId)
+        
+    }
+}

@@ -85,6 +85,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
     private var takeOff: AnyCancellable?
+    private var followChannel : AnyCancellable?
     private var takeBroadcastPlanned: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
@@ -120,7 +121,14 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
   
     var urlStream: String?
     var playPauseButton: PlayPauseButton!
-    var user: User?
+    var user: User? {
+        didSet {
+            bindingChannel(userId: user?.id)
+           
+        }
+    }
+    
+    
     var usersd = [Int: User]()
     var url: String?
     var heightBar: CGFloat?
@@ -251,6 +259,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonOpen.addTarget(self, action: #selector(actionTable), for: .touchUpInside)
         self.homeView.labelCategory.alpha = 0
         self.homeView.labelDescription.alpha = 0
+            
+        homeView.buttonFollow.addTarget(self, action: #selector(actionFollow), for: .touchUpInside)
+        homeView.buttonSubscribe.addTarget(self, action: #selector(actionSubscribe), for: .touchUpInside)
         
         topTableConstraint = homeView.tableView.topAnchor.constraint(equalTo: homeView.buttonSubscribe.bottomAnchor, constant: 15)
         topTableConstraint.isActive = true
@@ -258,13 +269,60 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
         homeView.stackButton.addGestureRecognizer(tap)
     }
+    @objc func actionSubscribe() {
+        guard  let _ = token else {
+             let sign = SignInViewController()
+             self.present(sign, animated: true, completion: nil)
+             return }
+         guard let channel = channel else { return }
+         guard let subscribe = channel.isSubscribe else { return }
+         if subscribe {
+            
+         } else {
+           guard let subPlans = channel.subscriptionPlans else { return }
+             if subPlans.isEmpty {
+             } else {
+                 let subscribeView = SubscribeVC()
+                        subscribeView.modalPresentationStyle = .custom
+                        subscribeView.id = user?.id
+                        subscribeView.delagatePurchase = self
+
+
+                 if view.bounds.height <= 718 {
+                     actionChatTransitionManager.intHeight = 0.46
+                 } else {
+                     actionChatTransitionManager.intHeight = 0.4
+                 }
+                    actionChatTransitionManager.intWidth = 1
+                    subscribeView.transitioningDelegate = actionChatTransitionManager
+                    present(subscribeView, animated: true)
+             }
+         }
+    }
+    @objc func actionFollow() {
+        guard let _ = token else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
+        homeView.buttonFollow.isSelected.toggle()
+        
+        if homeView.buttonFollow.isSelected {
+            guard let id = self.channel?.id else { return }
+            followChannel(id: id)
+
+        } else {
+            guard let id = self.channel?.id else { return }
+            unFollowChannel(id: id)
+
+        }
+    }
     @objc func actionTable() {
         homeView.buttonOpen.isSelected.toggle()
         if homeView.buttonOpen.isSelected {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 let image = UIImage(named: "Back1-2")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
                 self.homeView.buttonOpen.setImage(image, for: .normal)
-                self.topTableConstraint.constant = 225
+                self.topTableConstraint.constant = 25 + self.homeView.labelCategory.frame.height + self.homeView.labelDescription.frame.height + 20
                 self.homeView.labelCategory.alpha = 1
                 self.homeView.labelDescription.alpha = 1
 
@@ -283,10 +341,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.view.layoutIfNeeded()
         transitionAnimator.startAnimation()
         }
-       
-        
-        
-        
     }
     @objc func actionCoach() {
         self.dismiss(animated: true) {
@@ -320,6 +374,48 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.playerViewController?.player?.play()
         }
       }
+    }
+    func bindingChannel(userId: Int?) {
+        guard let id = userId else { return }
+        takeChanell = fitMeetChannel.listChannelsPrivate(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.channel = response.data.last
+                    guard let channel = self.channel else {
+                        self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+                        return
+                    }
+                    if channel.isFollow! {
+                        self.homeView.buttonFollow.backgroundColor = .white
+                        self.homeView.buttonFollow.setTitle("Following", for: .normal)
+                        self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+                    } else {
+                        self.homeView.buttonFollow.backgroundColor = .blueColor
+                        self.homeView.buttonFollow.setTitle("Follow", for: .normal)
+                        self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                    }
+                    if channel.isSubscribe! {
+                        self.homeView.buttonSubscribe.setTitle("Subscribers", for: .normal)
+                        self.homeView.buttonSubscribe.setTitleColor(.blueColor, for: .normal)
+                        self.homeView.buttonSubscribe.backgroundColor = .white
+                    } else {
+                        if  channel.subscriptionPlans != nil {
+                        self.homeView.buttonSubscribe.backgroundColor = .blueColor
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        } else {
+                            self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                            self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                            self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                            self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+                        }
+                    }
+                }
+        })
     }
     @objc func actionLike() {
         guard token != nil else {
@@ -777,14 +873,38 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
        
     }
  // MARK: - NetworkMetod
-    func followChannels(id: Int) {
-        takeChannels = fitMeetChannels.followChannels(id: id)
+    private func followChannel(id: Int) {
+        followChannel = fitMeetChannels.followChannels(id: id)
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.subscribersCount != nil  {
-                }
-            })
-      }
+                if response.id != nil {
+                    self.homeView.buttonFollow.backgroundColor = .white
+                    self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+                    self.homeView.buttonFollow.setTitle("Following", for: .normal)
+                   
+                    
+            }
+        })
+    }
+    private func unFollowChannel(id: Int) {
+        followChannel = fitMeetChannels.unFollowChannels(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.id != nil {
+                    self.homeView.buttonFollow.backgroundColor = .blueColor
+                    self.homeView.buttonFollow.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                    self.homeView.buttonFollow.setTitle("Follow", for: .normal)
+            }
+        })
+    }
+//    func followChannels(id: Int) {
+//        takeChannels = fitMeetChannels.followChannels(id: id)
+//            .mapError({ (error) -> Error in return error })
+//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                if response.subscribersCount != nil  {
+//                }
+//            })
+//      }
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
