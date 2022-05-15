@@ -161,6 +161,7 @@ extension AuthViewController: SignUpDelegate {
             self.authView.alertImage.isHidden = false
             self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
             self.authView.alertLabel.isHidden = false
+            self.authView.alertImage.isHidden = true
 
         })
         self.view.layoutIfNeeded()
@@ -174,6 +175,7 @@ extension AuthViewController: SignUpDelegate {
             self.topPhoneConstraint.constant = 45
             self.authView.alertMailLabel.isHidden = false
             self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.isHidden = true
 
         })
         self.view.layoutIfNeeded()
@@ -187,6 +189,7 @@ extension AuthViewController: SignUpDelegate {
             self.authView.alertImage.isHidden = false
             self.authView.alertLabel.text = "phone must be a valid phone number"
             self.authView.alertLabel.isHidden = false
+            self.authView.alertImage.isHidden = true
 
 
         })
