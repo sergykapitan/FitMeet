@@ -24,6 +24,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
         if brodcast.count == 0 {
+            cell.hideAnimation()
             cell.textLabel?.text = "This user hasn't uploaded any videos"
             cell.labelDescription.text = nil
             cell.titleLabel.text = nil
@@ -34,7 +35,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = nil
         }
        
-        
+        cell.hideAnimation()
         if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
             cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         } else {

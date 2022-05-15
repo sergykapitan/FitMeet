@@ -102,6 +102,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+       
         getUsers()
         bindingCategory()
         makeTableView()
@@ -176,6 +177,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if !response.data.isEmpty {
                     let result = response.data.filter({ $0.resizedAvatar != nil })
+                    sleep(2)
                     self.listUsers = result
                     self.currentPage = 1
                     self.bindingNotAuht(page: self.currentPage)

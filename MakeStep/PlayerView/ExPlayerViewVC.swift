@@ -12,13 +12,18 @@ import AVKit
 
 extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if brodcast.isEmpty {
+            return 10
+        }
         return  brodcast.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
 
         let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-
+                 guard !brodcast.isEmpty  else { return cell }
+        cell.hideAnimation()
         if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
             cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
         } else {

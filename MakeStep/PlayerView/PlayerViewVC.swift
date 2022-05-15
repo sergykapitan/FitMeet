@@ -910,6 +910,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.username != nil  {
+                    
                     self.user = response
                     self.homeView.labelStreamDescription.text = self.user?.fullName
                     guard let categorys = self.broadcast?.categories else { return }
