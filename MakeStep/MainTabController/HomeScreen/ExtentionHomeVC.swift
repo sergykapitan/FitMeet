@@ -43,10 +43,10 @@ extension HomeVC: UITableViewDataSource {
          return cell
         case 1:
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
+           
         guard !listBroadcast.isEmpty  else { return cell }    
         cell.hideAnimation()
-        cell.setupImage(urlString:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? defoultImage)
+        cell.setupImage(urlString:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? Constants.defoultImage)
         cell.labelDescription.text = listBroadcast[indexPath.row].name
         
 
@@ -56,7 +56,7 @@ extension HomeVC: UITableViewDataSource {
         else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
-         //   cell.titleLabel.text = self.channellsd[id]?.name
+         print("NAME == \(cell.titleLabel.text)")
            
         
         self.ids.append(broadcastID)
@@ -179,59 +179,12 @@ extension HomeVC: UITableViewDelegate {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard !self.listBroadcast.isEmpty,let broadcastID = self.listBroadcast[indexPath.row].id,
-                let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
         let vc = PlayerViewVC()
-        vc.delegate = self
-
-        guard let status = listBroadcast[indexPath.row].status  else { return }
-        switch status {
-            
-        case .online:
-            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+            vc.delegate = self
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id =  self.listBroadcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = false
-            vc.homeView.playerSlider.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-            vc.homeView.buttonPlayPause.isHidden = true
-            vc.homeView.buttonSkipNext.isHidden = true
-            vc.homeView.buttonSkipPrevious.isHidden = true
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        case .offline:
-            guard let _ = listBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
-            vc.broadcast = self.listBroadcast[indexPath.row]
-            vc.id = self.listBroadcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .planned:
-            break
-        case .banned:
-            break
-        case .finished:
-            guard let _ = listBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
-            vc.broadcast = self.listBroadcast[indexPath.row]
-            vc.id = self.listBroadcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .wait_for_approve:
-            break
-        }
 
     }
 }

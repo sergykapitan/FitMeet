@@ -21,7 +21,7 @@ extension CategoryBroadcast: UITableViewDataSource {
 
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
         cell.hideAnimation()
-        cell.setImage(image: sortListCategory[indexPath.row].resizedPreview?["preview_l"]?.jpeg ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
+        cell.setupImage(urlString: sortListCategory[indexPath.row].resizedPreview?["preview_l"]?.jpeg ?? Constants.defoultImage)
         cell.labelDescription.text = sortListCategory[indexPath.row].name
         
         cell.buttonLike.isHidden = false
@@ -133,64 +133,13 @@ extension CategoryBroadcast: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-
-      guard let broadcastID = self.sortListCategory[indexPath.row].id,
-            let channelId = self.sortListCategory[indexPath.row].channelIds else { return }
-
-     
     let vc = PlayerViewVC()
         vc.delegate = self
-        if self.sortListCategory[indexPath.row].id == nil {
-        return
-    }
-        guard let status = self.sortListCategory[indexPath.row].status else { return}
-        
-        print("Statustape=\(status)")
-        switch status {
-            
-        case .online:
-            vc.broadcast = self.sortListCategory[indexPath.row]
-            vc.id =  self.sortListCategory[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = false
-            vc.homeView.playerSlider.isHidden = true
-            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .offline:
-            guard let _ = sortListCategory[indexPath.row].streams?.first else { return }
-            vc.broadcast = self.sortListCategory[indexPath.row]
-            vc.id = self.sortListCategory[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.listBroadcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .planned:
-            break
-        case .banned:
-            break
-        case .finished:
-            guard let streams = sortListCategory[indexPath.row].streams else { return }
+        vc.broadcast = self.sortListCategory[indexPath.row]
+        vc.id =  self.sortListCategory[indexPath.row].userId
+        vc.modalPresentationStyle = .fullScreen
+        self.present(vc, animated: true, completion: nil)
 
-            vc.broadcast = self.sortListCategory[indexPath.row]
-            vc.id = self.sortListCategory[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.sortListCategory[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .wait_for_approve:
-            break
-        }
     }
 }
 

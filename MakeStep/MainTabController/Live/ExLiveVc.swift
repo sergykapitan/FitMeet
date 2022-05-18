@@ -75,7 +75,6 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
      
    
        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-        let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
         switch indexPath.section {
            
         case 0:
@@ -88,7 +87,8 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
               cell.hideAnimation()
-              cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
+              cell.backgroundImage.isHidden = false
+            cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
               cell.labelDescription.text = liveBroadcast[indexPath.row].name
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
               
@@ -100,11 +100,12 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
               cell.buttonMore.isUserInteractionEnabled = true
             
         case 1:
+            cell.backgroundImage.isHidden = false
             cell.textLabel?.text = nil
             if recentBroadcast.count != 0 {
             cell.hideAnimation()
             
-            cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
+                cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
             cell.labelDescription.text = recentBroadcast[indexPath.row].name
             guard let id = recentBroadcast[indexPath.row].userId else { return cell}
             
@@ -116,11 +117,12 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.isUserInteractionEnabled = true
             }
         case 2:
+            cell.backgroundImage.isHidden = false
             cell.textLabel?.text = nil
             if plannedBroadcast.count != 0 {
             cell.hideAnimation()
            
-            cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? defoultImage)
+                cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
             cell.labelDescription.text = plannedBroadcast[indexPath.row].name
             guard let id = plannedBroadcast[indexPath.row].userId else { return cell}
             
@@ -167,34 +169,37 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         switch status {
           
         case .online:
-            guard let broadcastID = self.liveBroadcast[indexPath.row].id,
-                    let channelId = self.liveBroadcast[indexPath.row].channelIds else { return }
-            self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
+          //  guard let broadcastID = self.liveBroadcast[indexPath.row].id,
+          //          let channelId = self.liveBroadcast[indexPath.row].channelIds else { return }
+          //  self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
             vc.broadcast = self.liveBroadcast[indexPath.row]
             vc.id =  self.liveBroadcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = false
-            vc.homeView.playerSlider.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.liveBroadcast[indexPath.row].followersCount!))"
-            vc.homeView.buttonPlayPause.isHidden = true
-            vc.homeView.buttonSkipNext.isHidden = true
-            vc.homeView.buttonSkipPrevious.isHidden = true
+//            vc.homeView.buttonChat.isHidden = false
+//            vc.homeView.playerSlider.isHidden = true
+//            vc.homeView.labelLike.text = "\(String(describing: self.liveBroadcast[indexPath.row].followersCount!))"
+//            vc.homeView.buttonPlayPause.isHidden = true
+//            vc.homeView.buttonSkipNext.isHidden = true
+//            vc.homeView.buttonSkipPrevious.isHidden = true
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .offline:
-            guard let _ = recentBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
+         //   guard let _ = recentBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.recentBroadcast[indexPath.row]
             vc.id = self.recentBroadcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.recentBroadcast[indexPath.row].followersCount!))"
+//            vc.homeView.buttonChat.isHidden = true
+//            vc.homeView.overlay.isHidden = true
+//            vc.homeView.imageLive.isHidden = true
+//            vc.homeView.labelLive.isHidden = true
+//            vc.homeView.imageEye.isHidden = true
+//            vc.homeView.labelEye.isHidden = true
+//            vc.homeView.labelLike.text = "\(String(describing: self.recentBroadcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .planned:
-            break
+            vc.broadcast = self.plannedBroadcast[indexPath.row]
+            vc.id = self.plannedBroadcast[indexPath.row].userId
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
         case .banned:
             break
         case .finished:

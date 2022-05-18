@@ -442,7 +442,13 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                     guard let usId = self.userId else { return }
                     self.broadcast = response
                     UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+                    if self.authView.textFieldStartDate.text == "Start now" {
                     self.fetchStream(id: self.broadcast?.id, name: name)
+                    } else {
+                        let channelVC = ChanellVC()
+                        channelVC.user = self.user
+                        self.navigationController?.pushViewController(channelVC, animated: true)
+                    }
                     self.authView.tagView.removeAllTags()
                     self.authView.textFieldName.text = ""
                     self.authView.textFieldFree.text = ""

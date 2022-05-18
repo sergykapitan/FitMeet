@@ -367,9 +367,9 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     print("Res == \(response)")
-                    if response.data != nil  {
-
-
+                    guard let responce = response.data else { return }
+                    if !responce.isEmpty  {
+                       
                         guard let brod = response.data else { return }
                         self.brodcast.append(contentsOf: brod)
                        
@@ -633,7 +633,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil {
                     self.homeView.buttonFollow.backgroundColor = .white
-                    self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)
+                    self.homeView.buttonFollow.setTitleColor(.blueColor, for: .normal)       
                     self.homeView.buttonFollow.setTitle("Following", for: .normal)
                     self.homeView.labelINTFollows.text = "\(response.followersCount)"
                     

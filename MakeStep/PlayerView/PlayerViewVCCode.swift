@@ -35,6 +35,8 @@ final class PlayerViewVCCode: UIView {
     var imageLogo: UIImageView = {
         let image = UIImageView()
         image.isHidden =  true
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
     var imagePromo: UIView = {
@@ -86,6 +88,15 @@ final class PlayerViewVCCode: UIView {
         label.textColor = UIColor(hexString: "#727272")
         label.font = UIFont.systemFont(ofSize: 12)
         return label
+    }()
+    var buttonstartStream: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = .blueColor
+        button.setTitle("StartStream", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 13
+        button.isHidden = true
+        return button
     }()
    
     var labelStreamInfo: UILabel = {
@@ -304,6 +315,10 @@ final class PlayerViewVCCode: UIView {
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
+        cardView.addSubview(buttonstartStream)
+        buttonstartStream.centerX(inView: imagePromo)
+        buttonstartStream.anchor(bottom: imagePromo.bottomAnchor, paddingBottom: 50,width: 100)
+        
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 0,paddingRight: 10,width: 24,height: 35)
         
@@ -323,7 +338,7 @@ final class PlayerViewVCCode: UIView {
         imageEyeТ.anchor(top: labelStreamInfo.bottomAnchor, right: labelEyeView.leftAnchor, paddingTop: 5, paddingRight: 4, width: 24, height: 24)
 
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 24, height: 24)
+        buttonChat.anchor(right: imageEyeТ.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
 
         cardView.addSubview(stackButton)
@@ -388,6 +403,10 @@ final class PlayerViewVCCode: UIView {
     func setImagePromo(image:String) {
         let url = URL(string: image)
         imageLogo.kf.setImage(with: url)
+    }
+    func setImagePromoN(image:String) {
+        let url = URL(string: image)
+       // imagePromo.kf.setImage(with: url)
     }
     
     required init?(coder: NSCoder) {

@@ -210,6 +210,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
 
                         guard let responceUnrap = response.data else { return }
                         self.listBroadcast.append(contentsOf:responceUnrap)
+                       // self.homeView.tableView.reloadData()
                        
                         let arrayUserId =  self.listBroadcast.map{$0.userId!}
                         self.bindingUserMap(ids: arrayUserId)

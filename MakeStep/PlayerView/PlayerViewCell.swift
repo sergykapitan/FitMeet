@@ -84,7 +84,6 @@ final class PlayerViewCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
         label.isSkeletonable = true
-      //  label.text = "iwhfebgouweyrgpiwercgninerwhjgoiwerngcgiyweirygnygernouygffncwouygfycwnrgywgn"
         return label
     }()
     var labelCategory : UILabel = {
@@ -140,27 +139,14 @@ final class PlayerViewCell: UITableViewCell {
         tag.paddingX = 0
         return tag
     }()
-    var buttonstartStream: UIButton = {
-        var button = UIButton()
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
-        button.setTitle("StartStream", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        button.layer.cornerRadius = 13
-        button.isHidden = true
-        return button
-    }()
+  
     let buttonLandscape: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "fullscreen"), for: .normal)
         button.tintColor = .opaqueSeparator
         return button
     }()
-    let label: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 14)
-        return label
-    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.initialize()
@@ -213,11 +199,23 @@ final class PlayerViewCell: UITableViewCell {
         logoUserImage.kf.setImage(with: url)
        
     }
+    func setupImage(urlString: String) {
+        self.backgroundImage.image = nil
+        
+        if let imageUrl = URL(string: urlString) {
+            backgroundImage.kf.setImage(with: imageUrl, options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))]) { result in
+                switch result {
+                case .success(_): print("TO DO:")
+                case .failure(_): print("Fail")
+                }
+            }
+        }
+    }
     override func prepareForReuse() {
            super.prepareForReuse()
         self.accessoryType = .none
         self.backgroundImage.image = nil
-        self.logoUserImage.image = nil
+     //   self.logoUserImage.image = nil
         data = nil
        } 
 }

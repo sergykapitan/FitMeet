@@ -128,6 +128,11 @@ final class HomeCell: UITableViewCell {
         stack.distribution = .equalSpacing
         return stack
     }()
+    let buttonStack: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .red
+        return button
+    }()
     var tagView: TagListView = {
            let tag = TagListView()
            tag.textFont = UIFont.systemFont(ofSize: 12)
@@ -137,6 +142,7 @@ final class HomeCell: UITableViewCell {
            tag.paddingX = 2
            tag.marginUp = 4
            tag.tagLineBreakMode = .byWordWrapping
+           tag.anchor( width: 300)
            tag.translatesAutoresizingMaskIntoConstraints = false
            return tag
        }()
@@ -166,7 +172,7 @@ final class HomeCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        stackButton = UIStackView(arrangedSubviews: [logoUserImage,titleLabel])
+        stackButton = UIStackView(arrangedSubviews: [logoUserImage,titleLabel,tagView])
         stackButton.spacing = 10
  
     }
@@ -199,10 +205,7 @@ final class HomeCell: UITableViewCell {
        
         bottomView.addSubview(stackButton)
         stackButton.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor, paddingTop: 5, paddingLeft: 15)
- 
-        bottomView.addSubview(tagView)
-        tagView.anchor(top: labelDescription.bottomAnchor, left: stackButton.rightAnchor, right: bottomView.rightAnchor, bottom: bottomView.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingRight: 5, paddingBottom: 0,height: 30)
-        
+   
         contentView.addSubview(overlay)
         overlay.anchor(top: contentView.topAnchor,
                        left: contentView.leftAnchor,
@@ -224,16 +227,6 @@ final class HomeCell: UITableViewCell {
         buttonstartStream.centerX(inView: backgroundImage)
     }
  
-    func setImage(image:String) {
-        let url = URL(string: image)
-        backgroundImage.kf.setImage(with: url,options: [
-                    .loadDiskFileSynchronously,
-                    .scaleFactor(UIScreen.main.scale),
-                    .cacheOriginalImage,
-                    .transition(.fade(0.25))
-            
-        ])
-    }
     func setupImage(urlString: String) {
         self.backgroundImage.image = nil
         self.placeholderImage.isHidden = false

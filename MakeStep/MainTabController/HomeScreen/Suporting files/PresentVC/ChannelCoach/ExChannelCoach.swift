@@ -26,60 +26,22 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         if brodcast.count == 0 {
             cell.hideAnimation()
             cell.textLabel?.text = "This user hasn't uploaded any videos"
-            cell.labelDescription.text = nil
-            cell.titleLabel.text = nil
-            cell.buttonMore.isHidden = true
-            cell.backgroundImage.isHidden = true
+            cell.textLabel?.textColor = .lightGray
+            cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+                       cell.labelDescription.text = nil
+                       cell.titleLabel.text = nil
+                       cell.buttonMore.isHidden = true
+                       cell.backgroundImage.isHidden = true
             return cell
         } else {
             cell.textLabel?.text = nil
-        }
+            cell.backgroundImage.isHidden = false
        
         cell.hideAnimation()
-        if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
-            cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        } else {
-            cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        }
-
-
+        cell.setupImage(urlString: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? Constants.defoultImage)
         cell.labelDescription.text = brodcast[indexPath.row].name
         
-        guard let id = brodcast[indexPath.row].userId,
-              let broadcastID = self.brodcast[indexPath.row].id
-              else { return cell}
-        guard let status = brodcast[indexPath.row].status else { return cell}
-        switch status {
-            
-        case .online:
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
-            cell.logoUserOnline.isHidden = false
-            cell.buttonstartStream.isHidden = true
-        case .offline:
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.imageLive.setImageColor(color: .gray)
-            cell.labelLive.text = "Offline"
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
-            cell.buttonstartStream.isHidden = true
-        case .planned:
-            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
-            cell.buttonstartStream.isHidden = false
-        case .banned:
-            break
-        case .finished:
-            break
-        case .wait_for_approve:
-            break
-        }
+        guard let id = brodcast[indexPath.row].userId   else { return cell}
 
         let categorys = brodcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -105,7 +67,8 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
                 self.isLoadingList = true
                 self.loadMoreItemsForList()
             }
-        }
+          }
+       }
        return cell
     }
  
@@ -118,63 +81,16 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         showDownSheet(moreArtworkOtherUserSheetVC, payload: broadcastId)
     }
     @objc func actionStartStream(_ sender: UIButton) {
-        guard let broadcastID = brodcast[sender.tag].id else { return }
+       // guard let broadcastID = brodcast[sender.tag].id else { return }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if self.brodcast.isEmpty { return }
         let vc = PlayerViewVC()
-        if self.brodcast[indexPath.row] == nil { return }
-        
-        guard let status = self.brodcast[indexPath.row].status else { return}
-        switch status {            
-        case .online:
-            guard let streams = brodcast[indexPath.row].streams else { return }
-            if streams.isEmpty  { return }
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = false
-            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
-        case .offline:
-            guard let streams = brodcast[indexPath.row].streams else { return }
-            if streams.isEmpty  { return }
-            guard let url = streams.first?.vodUrl else { return }
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id = self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .planned:
-            break
-        case .banned:
-            break
-        case .finished:
-            guard let streams = brodcast[indexPath.row].streams else { return }
-            if streams.isEmpty  { return }
-            guard let url = streams.first?.vodUrl else { return }
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id = self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.overlay.isHidden = true
-            vc.homeView.imageLive.isHidden = true
-            vc.homeView.labelLive.isHidden = true
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelEye.isHidden = true
-            vc.homeView.labelLike.text = "\(String(describing: self.brodcast[indexPath.row].followersCount!))"
-            vc.modalPresentationStyle = .fullScreen
-            self.present(vc, animated: true, completion: nil)
-        case .wait_for_approve:
-            break
-        }
-        
     }
-
 }
 
 extension ChannelCoach {

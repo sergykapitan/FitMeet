@@ -54,7 +54,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                     print(isButton)
                     if self.isButton && !videoEnd{
                     timer = Timer.scheduledTimer(timeInterval: TimeInterval(delay), target: self, selector: #selector(actionBut), userInfo: nil, repeats: false)
-                        //self.videoEnd = false
                     }
                 }
             }
@@ -92,6 +91,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     private var takeUser: AnyCancellable?
     private var watcherMap: AnyCancellable?
     private var take: AnyCancellable?
+    private var taskStream: AnyCancellable?
+    private var takeChannel: AnyCancellable?
     
     @Inject var fitMeetChannels: FitMeetChannels
     private var takeChannels: AnyCancellable?
@@ -152,11 +153,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.navigationController?.navigationBar.isHidden = true
         homeView.imageLogoProfile.makeRounded()
         alphaButton()
-        if self.broadcast?.status == .online {
-            self.urlStream = self.broadcast?.streams?.first?.hlsPlaylistUrl
-        } else {
-            self.urlStream = self.broadcast?.streams?.first?.vodUrl
-        }
+        self.switchType()
         self.bindingLike()
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
@@ -257,6 +254,10 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonLike.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         homeView.buttonOpen.addTarget(self, action: #selector(actionTable), for: .touchUpInside)
+        homeView.buttonstartStream.addTarget(self, action: #selector(actionStartStream), for: .touchUpInside)
+        
+        
+        
         self.homeView.labelCategory.alpha = 0
         self.homeView.labelDescription.alpha = 0
             
@@ -268,6 +269,86 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
        
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
         homeView.stackButton.addGestureRecognizer(tap)
+    }
+    @objc func actionStartStream() {
+        fetchStream()
+//            takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
+//                                                        channelID: broadcast?.channelIds.last,
+//                                                        name: broadcast?.name,
+//                                                        type: broadcast?.type,
+//                                                        access: "ALL",
+//                                                        hasChat: broadcast?.hasChat,
+//                                                        isPlanned: broadcast?.isPlanned,
+//                                                        onlyForSponsors: nil,
+//                                                        onlyForSubscribers: self.broadcast?.isSubscriber,
+//                                                        categoryIDS: broadcast?.categories,
+//                                                        scheduledStartDate: broadcast?.scheduledStartDate,
+//                                                        description: broadcast?.description,
+//                                                        previewPath: broadcast?.previewPath))
+//
+//                .mapError({ (error) -> Error in return error })
+//                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+//                    if let id = response.id  {
+//                        guard let usId = self.userId else { return }
+//                        self.broadcast = response
+//                        UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+//                        self.fetchStream(id: self.broadcast?.id, name: name)
+//
+//                    } else {
+//                        guard let mess = response.message else { return }
+//                        Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+//                }
+//            })
+    }
+    func fetchStream() {
+        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+        let channelId = self.broadcast?.channelIds?.last
+        guard let id = self.broadcast?.id , let name = self.broadcast?.name  , let userId = UserId  else{ return }
+        let usId = Int(userId)
+        guard let usID = usId else { return }
+        taskStream = fitMeetStream.startStream(stream: StartStream(name: name + "ss", userId: channelId! , broadcastId: id))
+            .mapError({ (error) -> Error in
+                  print(error)
+                   return error })
+                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    guard let url = response.url else { return }
+                     if url != nil {
+                     DispatchQueue.main.async {
+                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                             switch disType {
+                             case .tapped:  self.startStream(id: id, url: url)
+                             case .timedOut: self.startStream(id: id, url: url)
+                         }
+                     }
+                 }
+             } else {
+                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+             }
+        })
+    }
+    private func startStream(id : Int, url : String) {
+        UserDefaults.standard.set(url, forKey: Constants.urlStream)
+        let twoString = self.dropUrl(url: url)
+        let myuri = twoString.0
+        let myPublish = twoString.1
+        self.url = url
+
+            let navVC = LiveStreamViewController()
+            navVC.modalPresentationStyle = .fullScreen
+            navVC.idBroad = id
+            navVC.myuri = myuri
+            navVC.myPublish = myPublish
+            navVC.isPrivate = false
+        self.present(navVC, animated: true) {
+            
+        }       
+    }
+    func dropUrl(url: String) -> (url:String,publish: String) {
+        let fullUrlArr = url.components(separatedBy: "/")
+        let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
+        let myPublish = fullUrlArr[4]
+        return (myuri,myPublish)
     }
     @objc func actionSubscribe() {
         guard  let _ = token else {
@@ -636,7 +717,26 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
    
  // MARK: - LoadPlayer
     func loadPlayer() {
-        guard let url = urlStream else { return }
+        guard let url = urlStream else {
+                self.homeView.imageLogo.isHidden = false
+            if  self.broadcast?.previewPath == "/api/v0/resizer?extension=webp&size=preview_s&path=%2Fqa-files%2Ffiles_e4e21a87-8d2e-477f-8345-e71c06889df8.png" {
+                self.homeView.setImagePromo(image: Constants.defoultImage)
+                self.homeView.overlay.alpha = 1
+                self.homeView.labelLive.alpha = 1
+                if self.broadcast?.status == .finished || self.broadcast?.status == .offline {
+                self.homeView.labelLive.text = "Not url"
+                }
+            } else {
+                self.homeView.setImagePromo(image: self.broadcast?.previewPath ?? Constants.defoultImage)
+                self.homeView.overlay.alpha = 1
+                self.homeView.labelLive.alpha = 1
+                if self.broadcast?.status == .finished || self.broadcast?.status == .offline {
+                self.homeView.labelLive.text = "Not url"
+                }
+            }
+                
+            
+            return }
 
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
@@ -813,9 +913,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc private func refreshAlbumList() {
        }
-  //  @objc func rightBack() {
-      //  self.navigationController?.popViewController(animated: true)
- //   }
+
  // MARK: - ActionChat
     @objc func actionChat(sender:UITapGestureRecognizer) {
         guard token != nil else {
@@ -825,13 +923,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         }
 
         if isPlaying {
-            homeView.overlay.isHidden = true
-            homeView.imageLive.isHidden = true
-            homeView.labelLive.isHidden = true
-            homeView.imageEye.isHidden = true
-            homeView.labelEye.isHidden = true
-            playPauseButton.isHidden = true
-            isButton = false
+//            homeView.overlay.isHidden = true
+//            homeView.imageLive.isHidden = true
+//            homeView.labelLive.isHidden = true
+//            homeView.imageEye.isHidden = true
+//            homeView.labelEye.isHidden = true
+//            playPauseButton.isHidden = true
+ //           isButton = false
             
             let detailViewController = ChatVCPlayer()
             detailViewController.modalPresentationStyle = .custom
@@ -897,14 +995,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             }
         })
     }
-//    func followChannels(id: Int) {
-//        takeChannels = fitMeetChannels.followChannels(id: id)
-//            .mapError({ (error) -> Error in return error })
-//            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                if response.subscribersCount != nil  {
-//                }
-//            })
-//      }
+
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
@@ -1316,15 +1407,15 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         return i
     }
     public func addBack() {
-        
+        guard let playerViewController  = playerViewController else { return }
         background.backgroundColor = .black
         background.alpha = 0.3
-        playerViewController!.view.addSubview(background)
+        playerViewController.view.addSubview(background)
         background.translatesAutoresizingMaskIntoConstraints = false
-        background.bottomAnchor.constraint(equalTo: playerViewController!.view.bottomAnchor).isActive = true
-        background.topAnchor.constraint(equalTo: playerViewController!.view.topAnchor).isActive = true
-        background.leadingAnchor.constraint(equalTo: playerViewController!.view.leadingAnchor).isActive = true
-        background.trailingAnchor.constraint(equalTo: playerViewController!.view.trailingAnchor).isActive = true
+        background.bottomAnchor.constraint(equalTo: playerViewController.view.bottomAnchor).isActive = true
+        background.topAnchor.constraint(equalTo: playerViewController.view.topAnchor).isActive = true
+        background.leadingAnchor.constraint(equalTo: playerViewController.view.leadingAnchor).isActive = true
+        background.trailingAnchor.constraint(equalTo: playerViewController.view.trailingAnchor).isActive = true
 
     }
  }
@@ -1358,33 +1449,120 @@ public extension UIView {
 }
 extension PlayerViewVC {
     func alphaButton() {
-        self.homeView.overlay.alpha = 0
-        self.homeView.imageLive.alpha = 0
-        self.homeView.labelLive.alpha = 0
-        self.homeView.labelEye.alpha = 0
-        self.homeView.buttonLandScape.alpha = 0
-        self.homeView.buttonSetting.alpha = 0
-        self.homeView.buttonPlayPause.alpha = 0
-        self.homeView.buttonSkipNext.alpha = 0
-        self.homeView.buttonSkipPrevious.alpha = 0
-        self.homeView.playerSlider.alpha = 0
-        self.homeView.labelTimeEnd.alpha = 0
-        self.homeView.labelTimeStart.alpha = 0
-        self.homeView.imageEye.alpha = 0
+        guard let status = broadcast?.status else { return }
+        switch status {
+        case .online:
+            self.homeView.overlay.alpha = 0
+            self.homeView.imageLive.alpha = 0
+            self.homeView.labelLive.alpha = 0
+            self.homeView.labelEye.alpha = 0
+            self.homeView.buttonLandScape.alpha = 0
+            self.homeView.buttonSetting.alpha = 0
+            self.homeView.buttonPlayPause.alpha = 0
+            self.homeView.buttonSkipNext.alpha = 0
+            self.homeView.buttonSkipPrevious.alpha = 0
+            self.homeView.playerSlider.alpha = 0
+            self.homeView.labelTimeEnd.alpha = 0
+            self.homeView.labelTimeStart.alpha = 0
+            self.homeView.imageEye.alpha = 0
+        case .offline:
+            self.homeView.overlay.alpha = 0
+            self.homeView.imageLive.alpha = 0
+            self.homeView.labelLive.alpha = 0
+            self.homeView.labelEye.alpha = 0
+            self.homeView.buttonLandScape.alpha = 0
+            self.homeView.buttonSetting.alpha = 0
+            self.homeView.buttonPlayPause.alpha = 0
+            self.homeView.buttonSkipNext.alpha = 0
+            self.homeView.buttonSkipPrevious.alpha = 0
+            self.homeView.playerSlider.alpha = 0
+            self.homeView.labelTimeEnd.alpha = 0
+            self.homeView.labelTimeStart.alpha = 0
+            self.homeView.imageEye.alpha = 0
+        case .planned:
+            self.homeView.overlay.alpha = 1
+            self.homeView.imageLive.alpha = 1
+            self.homeView.labelLive.alpha = 1
+        case .banned:
+            break
+        case .finished:
+            self.homeView.overlay.alpha = 0
+            self.homeView.imageLive.alpha = 0
+            self.homeView.labelLive.alpha = 0
+            self.homeView.labelEye.alpha = 0
+            self.homeView.buttonLandScape.alpha = 0
+            self.homeView.buttonSetting.alpha = 0
+            self.homeView.buttonPlayPause.alpha = 0
+            self.homeView.buttonSkipNext.alpha = 0
+            self.homeView.buttonSkipPrevious.alpha = 0
+            self.homeView.playerSlider.alpha = 0
+            self.homeView.labelTimeEnd.alpha = 0
+            self.homeView.labelTimeStart.alpha = 0
+            self.homeView.imageEye.alpha = 0
+        case .wait_for_approve:
+            self.homeView.overlay.alpha = 1
+            self.homeView.imageLive.alpha = 1
+            self.homeView.labelLive.alpha = 1
+        }
     }
     func addAlfabutton() {
-        self.homeView.overlay.alpha = 1
-        self.homeView.imageLive.alpha = 1
-        self.homeView.labelLive.alpha = 1
-        self.homeView.labelEye.alpha = 1
-        self.homeView.buttonLandScape.alpha = 1
-        self.homeView.buttonSetting.alpha = 1
-        self.homeView.buttonPlayPause.alpha = 1
-        self.homeView.buttonSkipNext.alpha = 1
-        self.homeView.buttonSkipPrevious.alpha = 1
-        self.homeView.playerSlider.alpha = 1
-        self.homeView.labelTimeEnd.alpha = 1
-        self.homeView.labelTimeStart.alpha = 1
-        self.homeView.imageEye.alpha = 1
+        guard let status = broadcast?.status else { return }
+        switch status {
+                
+           
+        case .online :
+            self.homeView.overlay.alpha = 1
+            self.homeView.imageLive.alpha = 1
+            self.homeView.labelLive.alpha = 1
+            self.homeView.labelEye.alpha = 1
+            self.homeView.buttonLandScape.alpha = 1
+            self.homeView.buttonSetting.alpha = 1
+            self.homeView.buttonPlayPause.alpha = 1
+            self.homeView.buttonSkipNext.alpha = 1
+            self.homeView.buttonSkipPrevious.alpha = 1
+            self.homeView.playerSlider.alpha = 1
+            self.homeView.labelTimeEnd.alpha = 1
+            self.homeView.labelTimeStart.alpha = 1
+            self.homeView.imageEye.alpha = 1
+        case .offline:
+            self.homeView.overlay.alpha = 0
+            self.homeView.imageLive.alpha = 0
+            self.homeView.labelLive.alpha = 0
+            self.homeView.labelEye.alpha = 0
+            self.homeView.buttonLandScape.alpha = 1
+            self.homeView.buttonSetting.alpha = 1
+            self.homeView.buttonPlayPause.alpha = 1
+            self.homeView.buttonSkipNext.alpha = 1
+            self.homeView.buttonSkipPrevious.alpha = 1
+            self.homeView.playerSlider.alpha = 1
+            self.homeView.labelTimeEnd.alpha = 1
+            self.homeView.labelTimeStart.alpha = 1
+            self.homeView.imageEye.alpha = 0
+        case .planned:
+            self.homeView.overlay.alpha = 1
+            self.homeView.imageLive.alpha = 1
+            self.homeView.labelLive.alpha = 1
+        case .banned:
+            break
+        case .finished:
+            self.homeView.overlay.alpha = 0
+            self.homeView.imageLive.alpha = 0
+            self.homeView.labelLive.alpha = 0
+            self.homeView.labelEye.alpha = 0
+            self.homeView.buttonLandScape.alpha = 1
+            self.homeView.buttonSetting.alpha = 1
+            self.homeView.buttonPlayPause.alpha = 1
+            self.homeView.buttonSkipNext.alpha = 1
+            self.homeView.buttonSkipPrevious.alpha = 1
+            self.homeView.playerSlider.alpha = 1
+            self.homeView.labelTimeEnd.alpha = 1
+            self.homeView.labelTimeStart.alpha = 1
+            self.homeView.imageEye.alpha = 0
+        case .wait_for_approve:
+            self.homeView.overlay.alpha = 1
+            self.homeView.imageLive.alpha = 1
+            self.homeView.labelLive.alpha = 1
+          
+        }
     }
 }
