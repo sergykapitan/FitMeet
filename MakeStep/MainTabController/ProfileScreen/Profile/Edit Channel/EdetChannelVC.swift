@@ -248,9 +248,22 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         } else {
             t =  self.textViewTwitter.text
         }
+        let o: String?
+        if   self.textViewNameChannel.text == "" {
+            o = nil
+        } else {
+            o =   self.textViewNameChannel.text
+        }
+        let k: String?
+        if   self.textViewDescription.text == "" {
+            k = nil
+        } else {
+            k = self.textViewDescription.text
+        }
+        
         channels = fitMeetApi.changeChannels(id: id, changeChannel: ChageChannel(
-            name: self.textViewNameChannel.text,
-            description: self.textViewDescription.text,
+            name: o,
+            description: k,
             addFavoriteCategoryIds: self.IdCategory,
             facebookLink: f,
             instagramLink: i,
