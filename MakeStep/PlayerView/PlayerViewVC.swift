@@ -372,6 +372,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc func actionTable() {
         homeView.buttonOpen.isSelected.toggle()
+        
         if homeView.buttonOpen.isSelected {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
                 let image = UIImage(named: "Back1-2")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
@@ -1165,11 +1166,41 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.videoEnd = false
         self.isButton = true
         switch status {
-        case .online: print("online")
+        case .online:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
+            self.homeView.buttonstartStream.isHidden = true
+            self.homeView.imageLogo.isHidden = true
+            self.homeView.buttonChat.isHidden = false
+            homeView.imageLive.image = #imageLiteral(resourceName: "rec")
+            homeView.labelLive.text = "Live ·"
+            homeView.labelEye.text = "3"
+            homeView.imageEye.isHidden = false
+            homeView.labelEye.isHidden = false
+            homeView.playerSlider.isHidden = true
+    
+            self.urlStream = brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+            playerViewController?.view.isHidden = false
+            if playerViewController == nil {
+                loadPlayer()
+            }
+            self.bindingLike()
+            guard let url = urlStream else { return }
+            guard let videoURL = URL(string: url) else { return}
+            self.homeView.playerSlider.setValue(0, animated: true)
+            self.playerViewController?.player!.replaceCurrentItem(with: AVPlayerItem(url: videoURL))
+            self.homeView.labelStreamInfo.text = self.broadcast?.name
+            guard let user = self.broadcast?.userId else { return}
+            self.BoolTrack = false
+            self.bindingUser(id: user)
         case .planned:
             Loaf("Status planned", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
             print("planned")
         case .finished:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.imageLogo.isHidden = true
             homeView.buttonChat.isHidden = true
             homeView.imageLive.isHidden = true
@@ -1193,6 +1224,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.BoolTrack = false
             self.bindingUser(id: user)
         case .offline:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.imageLogo.isHidden = true
             homeView.buttonChat.isHidden = true
             homeView.imageLive.isHidden = true

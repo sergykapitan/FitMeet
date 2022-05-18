@@ -103,6 +103,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         switch status {
           
         case .online:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.buttonstartStream.isHidden = true
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = false
@@ -122,6 +125,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             self.bindingUserNotApdate(id: user)
         case .offline:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.buttonstartStream.isHidden = true
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
@@ -147,6 +153,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.BoolTrack = false
             self.bindingUser(id: user)
         case .planned:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
             self.homeView.imageLogo.isHidden = false
@@ -168,6 +177,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         case .banned:
             break
         case .finished:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.buttonstartStream.isHidden = true
             self.homeView.overlay.alpha = 0
             self.homeView.imageLogo.isHidden = true
@@ -198,6 +210,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.BoolTrack = false
             self.bindingUser(id: user)
         case .wait_for_approve:
+            if homeView.buttonOpen.isSelected {
+                actionTable()
+            }
             self.homeView.buttonstartStream.isHidden = true
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
