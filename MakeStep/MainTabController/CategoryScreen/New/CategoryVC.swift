@@ -84,10 +84,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
   
     func actionButton() {
         searchView.buttonAll.addTarget(self, action: #selector(actionAll), for: .touchUpInside)
-        searchView.buttonPopular.addTarget(self, action: #selector(actionPopular), for: .touchUpInside)
-        searchView.buttonNew.addTarget(self, action: #selector(actionNew), for: .touchUpInside)
         searchView.buttonLikes.addTarget(self, action: #selector(actionLikes), for: .touchUpInside)
-        searchView.buttonViewers.addTarget(self, action: #selector(actionViewers), for: .touchUpInside)
 
     }
 
@@ -126,69 +123,19 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         print("notificationHandAction")
     }
     @objc func actionAll() {
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonAll.backgroundColor = .blueColor
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        if token != nil {
-            binding()
-        } else {
-            bindingNotAuth()
-        }
-        
+        token != nil ? binding() :  bindingNotAuth()
         filtredBroadcast = listBroadcast
         self.searchView.collectionView.reloadData()
     }
-    @objc func actionPopular() {
-        
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
-        
-        filtredBroadcast = listBroadcast.filter { $0.isPopular }
-        self.searchView.collectionView.reloadData()
-    }
-    @objc func actionNew() {
-        
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
-        filtredBroadcast = listBroadcast.filter { $0.isNew }
-        self.searchView.collectionView.reloadData()
-    }
+ 
     @objc func actionLikes() {
-        
         searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        if token != nil {
-           bindingLikes()
-        } else {
-          bindingLikesNot()
-        }
-        
-       
-    }
-    @objc func actionViewers() {
-        
-        searchView.buttonAll.backgroundColor = .blueColor
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
         searchView.buttonLikes.backgroundColor = .blueColor
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
-        filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
+        token != nil ? bindingLikes() :  bindingLikesNot()
     }
+  
 
     private func setupMainView() {
         searchView.collectionView.delegate = self
