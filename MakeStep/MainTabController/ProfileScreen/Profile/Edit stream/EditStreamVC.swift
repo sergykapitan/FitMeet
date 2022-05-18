@@ -253,21 +253,16 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         guard
               let name = authView.textFieldName.text ,
               let description = authView.textFieldDescription.text,
+              let  date = self.broadcast?.scheduledStartDate,
               let img = image  else { return }
         
-        var isPlan: Bool?
-        var date: String?
+       
         
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
+     
+       
         
-//        if authView.textFieldStartDate.text == "Start now" {
-//            isPlan = false
-//            date = "\(Date())"
-//        } else {
-//            isPlan = true
-//            date = authView.textFieldStartDate.text
-//        }
         if authView.textFieldAviable.text == "Available for all"  {
              onlyForSponsors = false
              onlyForSubscribers = false
@@ -278,12 +273,11 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             onlyForSponsors = true
             onlyForSubscribers = false
         }
-        guard let isP = isPlan,
-              let d = date,
+        guard
               let sponsor = onlyForSponsors,
               let sub = onlyForSubscribers else { return }
 
-        self.nextView( name: name, description: description, previewPath: img, isPlaned: isP, date: d, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
+        self.nextView( name: name, description: description, previewPath: img, isPlaned: false, date: date, onlyForSponsors: sponsor, onlyForSubscribers: sub, categoryId: self.IdCategory)
      
     }
     @objc func actionUploadImage(_ sender: UIButton) {
