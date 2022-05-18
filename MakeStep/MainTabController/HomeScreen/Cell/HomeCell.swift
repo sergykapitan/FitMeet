@@ -197,13 +197,13 @@ final class HomeCell: UITableViewCell {
                          // bottom: contentView.bottomAnchor,
                           paddingTop: 0, paddingLeft: 0,paddingRight: 0)
         
-        bottomView.addSubview(buttonMore)
+        contentView.addSubview(buttonMore)
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)
 
-        bottomView.addSubview(labelDescription)
+        contentView.addSubview(labelDescription)
         labelDescription.anchor(top: bottomView.topAnchor, left: bottomView.leftAnchor,right: buttonMore.leftAnchor, paddingTop: 5, paddingLeft: 15,paddingRight: 8,width: 300)
        
-        bottomView.addSubview(stackButton)
+        contentView.addSubview(stackButton)
         stackButton.anchor(top: labelDescription.bottomAnchor, left: bottomView.leftAnchor, paddingTop: 5, paddingLeft: 15)
    
         contentView.addSubview(overlay)
