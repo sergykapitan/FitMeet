@@ -94,6 +94,7 @@ class SearchVC: SheetableViewController ,SegmentControlSearchDelegate  {
         searchController.searchBar.placeholder = "Coaches, Streams or Categories"
         searchController.searchBar.delegate = self
         searchController.searchBar.showsScopeBar = true
+        navigationItem.hidesSearchBarWhenScrolling = false
         searchController.isActive = false
         self.searchController.searchBar.isTranslucent = false
     }
