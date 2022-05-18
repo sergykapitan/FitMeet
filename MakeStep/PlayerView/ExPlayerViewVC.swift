@@ -99,12 +99,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         guard let status = brodcast[indexPath.row].status  else { return }
         self.videoEnd = false
         print(status)
-      //  print("Player == \(playerViewController)")
-      //  guard let playerViewController = playerViewController else { return }
-      //  print("Player == \(playerViewController)")
-//        if playerViewController == nil {
-//            loadPlayer()
-//        }
+     
         switch status {
           
         case .online:
@@ -130,17 +125,9 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.homeView.buttonstartStream.isHidden = true
             self.homeView.imageLogo.isHidden = true
             self.homeView.buttonChat.isHidden = true
-   //         self.homeView.overlay.alpha = 0
-//            homeView.buttonChat.isHidden = true
-//            homeView.imageLive.isHidden = true
-//            homeView.labelLive.isHidden = true
-//            homeView.imageEye.isHidden = true
-//            homeView.labelEye.isHidden = true
             homeView.labelLive.alpha = 0
             homeView.imageLive.alpha = 0
             homeView.overlay.alpha = 0
-         //   alphaButton()
-           // homeView.playerSlider.isHidden = false
             self.broadcast = brodcast[indexPath.row]
             self.urlStream = brodcast[indexPath.row].streams?.first?.vodUrl
             self.bindingLike()
@@ -160,27 +147,20 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.BoolTrack = false
             self.bindingUser(id: user)
         case .planned:
-          //  self.homeView.overlay.alpha = 1
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
             self.homeView.imageLogo.isHidden = false
             self.homeView.buttonstartStream.isHidden = false
-            //alphaButton()
-           // homeView.labelEye.alpha = 1
-          //  homeView.imageEye.alpha = 1
+            alphaButton()
             homeView.labelLive.alpha = 1
             homeView.imageLive.alpha = 1
             homeView.overlay.alpha = 1
-//            homeView.playerSlider.isHidden = false
-
             homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
             self.broadcast = brodcast[indexPath.row]
             homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             playerViewController?.player?.pause()
             playerViewController?.view.isHidden = true
-            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
-            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath ?? defoultImage)
-            self.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath ?? Constants.defoultImage)
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
@@ -228,8 +208,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             self.broadcast = brodcast[indexPath.row]
             playerViewController?.player?.pause()
             playerViewController?.view.isHidden = true
-            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
-            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath ?? defoultImage)
+            self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath ?? Constants.defoultImage)
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
@@ -294,10 +273,17 @@ extension PlayerViewVC {
             self.bindingLike()
             self.homeView.labelStreamInfo.text = stream.name
         case .planned:
+            let selfId = UserDefaults.standard.string(forKey: Constants.userID)
+            let usId = Int(selfId ?? "0")
             self.urlStream = nil
             self.homeView.buttonChat.isHidden = true
             self.homeView.imageLogo.isHidden = false
-            self.homeView.buttonstartStream.isHidden = false
+            alphaButton()
+            if usId == broadcast?.userId {
+                self.homeView.buttonstartStream.isHidden = false
+            } else {
+                self.homeView.buttonstartStream.isHidden = true
+            }
             homeView.labelEye.alpha = 0
             homeView.imageEye.alpha = 0
             homeView.labelLive.alpha = 1
@@ -308,15 +294,16 @@ extension PlayerViewVC {
             homeView.labelLive.text = stream.scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             playerViewController?.player?.pause()
             playerViewController?.view.isHidden = true
-            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
-            self.homeView.setImagePromo(image: stream.previewPath ?? defoultImage)
-            self.homeView.labelLive.text = stream.scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+          
+            self.homeView.setImagePromo(image: stream.previewPath ?? Constants.defoultImage)
+       
             self.homeView.labelStreamInfo.text = stream.name
             homeView.labelLike.text = "\(like)"
         case .banned:
             break
         case .finished:
             guard let _ = stream.streams?.first?.vodUrl else { return }
+            self.homeView.buttonChat.isHidden = true
             self.homeView.buttonstartStream.isHidden = true
             self.homeView.overlay.alpha = 0
             self.homeView.imageLogo.isHidden = true
@@ -344,8 +331,7 @@ extension PlayerViewVC {
             self.broadcast = stream
             playerViewController?.player?.pause()
             playerViewController?.view.isHidden = true
-            let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
-            self.homeView.setImagePromo(image: stream.previewPath ?? defoultImage)
+            self.homeView.setImagePromo(image: stream.previewPath ?? Constants.defoultImage)
             self.homeView.labelStreamInfo.text = stream.name
             homeView.labelLike.text = "\(like)"
         }

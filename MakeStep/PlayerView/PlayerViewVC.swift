@@ -272,33 +272,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc func actionStartStream() {
         fetchStream()
-//            takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
-//                                                        channelID: broadcast?.channelIds.last,
-//                                                        name: broadcast?.name,
-//                                                        type: broadcast?.type,
-//                                                        access: "ALL",
-//                                                        hasChat: broadcast?.hasChat,
-//                                                        isPlanned: broadcast?.isPlanned,
-//                                                        onlyForSponsors: nil,
-//                                                        onlyForSubscribers: self.broadcast?.isSubscriber,
-//                                                        categoryIDS: broadcast?.categories,
-//                                                        scheduledStartDate: broadcast?.scheduledStartDate,
-//                                                        description: broadcast?.description,
-//                                                        previewPath: broadcast?.previewPath))
-//
-//                .mapError({ (error) -> Error in return error })
-//                .sink(receiveCompletion: { _ in }, receiveValue: { response in
-//                    if let id = response.id  {
-//                        guard let usId = self.userId else { return }
-//                        self.broadcast = response
-//                        UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
-//                        self.fetchStream(id: self.broadcast?.id, name: name)
-//
-//                    } else {
-//                        guard let mess = response.message else { return }
-//                        Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
-//                }
-//            })
     }
     func fetchStream() {
         let UserId = UserDefaults.standard.string(forKey: Constants.userID)
@@ -1198,7 +1171,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             print("planned")
         case .finished:
             self.homeView.imageLogo.isHidden = true
-            self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
@@ -1222,7 +1194,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.bindingUser(id: user)
         case .offline:
             self.homeView.imageLogo.isHidden = true
-            self.homeView.buttonChat.isHidden = true
             homeView.buttonChat.isHidden = true
             homeView.imageLive.isHidden = true
             homeView.labelLive.isHidden = true
