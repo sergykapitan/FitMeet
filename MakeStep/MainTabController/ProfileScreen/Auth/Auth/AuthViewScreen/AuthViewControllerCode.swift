@@ -141,6 +141,7 @@ final class AuthViewControllerCode: UIView {
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
                        paddingTop: 25, paddingLeft: 10, paddingRight: 10, height: 39)
+        
         cardView.addSubview(textFieldLogin)
         textFieldLogin.anchor(top: oneLine.bottomAnchor,
                               left: cardView.leftAnchor,

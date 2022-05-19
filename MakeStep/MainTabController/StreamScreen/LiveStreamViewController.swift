@@ -128,7 +128,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
         
- 
+      
+        
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
@@ -140,12 +141,20 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
+        
 
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.isTranslucent = true
         self.navigationController?.navigationBar.backgroundColor = .clear
         tabBarController?.tabBar.isHidden = true
+        self.navigationController?.navigationBar.isHidden = true
+        
+        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
+        
+        
+        
+        
         rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
             logger.warn(error.description)
         }
@@ -183,6 +192,18 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.chatButton.addTarget(self, action: #selector(openChat), for: .touchUpInside)
         streamView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
         streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
+        
+        streamView.close.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+        let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
+        scrollViewTap.numberOfTapsRequired = 1
+        streamView.capturePreviewView.addGestureRecognizer(scrollViewTap)
+    }
+    @objc func viewTapped() {
+            self.view.endEditing(true) // anyone
+        }
+    @objc func closeVideo() {
+        logger.info("close")
+        tabBarController!.selectedIndex = 0
     }
 
     @objc func rotateCamera() {
@@ -222,13 +243,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     @objc func openUserOnline() {
         
-        streamView.recButton.isHidden = true
-        streamView.stopButton.isHidden = true
-        streamView.microfoneButton.isHidden = true
-        streamView.cameraModeButton.isHidden = true
-        streamView.cameraButton.isHidden = true
-        streamView.chatButton.isHidden = true
-        streamView.StartStreamButton.isHidden = true
+//        streamView.recButton.isHidden = true
+//        streamView.stopButton.isHidden = true
+//        streamView.microfoneButton.isHidden = true
+//        streamView.cameraModeButton.isHidden = true
+//        streamView.cameraButton.isHidden = true
+//        streamView.chatButton.isHidden = true
+//        streamView.StartStreamButton.isHidden = true
         
 
         let chatVC = UserVC()
@@ -288,7 +309,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     @objc func startStream() {
       
-        if myuri != nil {            
+        if myuri != "" {
         if streamView.StartStreamButton.isSelected {
             UIApplication.shared.isIdleTimerDisabled = false
             rtmpConnection.close()
