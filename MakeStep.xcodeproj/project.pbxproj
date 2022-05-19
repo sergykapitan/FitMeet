@@ -317,6 +317,24 @@
 		A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */; };
 		A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */; };
 		A5D2E0A727147D1200986BAE /* EditChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D2E0A627147D1200986BAE /* EditChannelCode.swift */; };
+		A5E4EED2283686DF008D1F01 /* ModalTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */; };
+		A5E4EED3283686DF008D1F01 /* ModalTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */; };
+		A5E4EED4283686DF008D1F01 /* StandardInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */; };
+		A5E4EED5283686DF008D1F01 /* StandardInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */; };
+		A5E4EED6283686DF008D1F01 /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECD283686DF008D1F01 /* ModalPresentationController.swift */; };
+		A5E4EED7283686DF008D1F01 /* ModalPresentationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECD283686DF008D1F01 /* ModalPresentationController.swift */; };
+		A5E4EED8283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECE283686DF008D1F01 /* ModalTransitionAnimator.swift */; };
+		A5E4EED9283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECE283686DF008D1F01 /* ModalTransitionAnimator.swift */; };
+		A5E4EEDA283686DF008D1F01 /* CustomPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECF283686DF008D1F01 /* CustomPresentable.swift */; };
+		A5E4EEDB283686DF008D1F01 /* CustomPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECF283686DF008D1F01 /* CustomPresentable.swift */; };
+		A5E4EEDC283686DF008D1F01 /* InteractionControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EED0283686DF008D1F01 /* InteractionControlling.swift */; };
+		A5E4EEDD283686DF008D1F01 /* InteractionControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EED0283686DF008D1F01 /* InteractionControlling.swift */; };
+		A5E4EEDE283686DF008D1F01 /* UIViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EED1283686DF008D1F01 /* UIViewController+Transitions.swift */; };
+		A5E4EEDF283686DF008D1F01 /* UIViewController+Transitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EED1283686DF008D1F01 /* UIViewController+Transitions.swift */; };
+		A5E4EEE12836881D008D1F01 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EEE02836881D008D1F01 /* ViewFactory.swift */; };
+		A5E4EEE22836881D008D1F01 /* ViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EEE02836881D008D1F01 /* ViewFactory.swift */; };
+		A5E4EEE428368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EEE328368827008D1F01 /* OneWayPanGestureRecognizer.swift */; };
+		A5E4EEE528368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EEE328368827008D1F01 /* OneWayPanGestureRecognizer.swift */; };
 		A5EF20E8280701BD0051AA13 /* SearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */; };
 		A5EF20E9280701BD0051AA13 /* SearchVideoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */; };
 		A5EF20EB280701D30051AA13 /* SearchUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5EF20EA280701D30051AA13 /* SearchUserVC.swift */; };
@@ -613,6 +631,15 @@
 		A5CEF0B427F1FFF200D9C6BC /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		A5D2E0A427147D0000986BAE /* EdetChannelVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EdetChannelVC.swift; sourceTree = "<group>"; };
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
+		A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTransitionManager.swift; sourceTree = "<group>"; };
+		A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardInteractionController.swift; sourceTree = "<group>"; };
+		A5E4EECD283686DF008D1F01 /* ModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
+		A5E4EECE283686DF008D1F01 /* ModalTransitionAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTransitionAnimator.swift; sourceTree = "<group>"; };
+		A5E4EECF283686DF008D1F01 /* CustomPresentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPresentable.swift; sourceTree = "<group>"; };
+		A5E4EED0283686DF008D1F01 /* InteractionControlling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractionControlling.swift; sourceTree = "<group>"; };
+		A5E4EED1283686DF008D1F01 /* UIViewController+Transitions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Transitions.swift"; sourceTree = "<group>"; };
+		A5E4EEE02836881D008D1F01 /* ViewFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewFactory.swift; sourceTree = "<group>"; };
+		A5E4EEE328368827008D1F01 /* OneWayPanGestureRecognizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OneWayPanGestureRecognizer.swift; sourceTree = "<group>"; };
 		A5EF20E7280701BD0051AA13 /* SearchVideoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVideoVC.swift; sourceTree = "<group>"; };
 		A5EF20EA280701D30051AA13 /* SearchUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchUserVC.swift; sourceTree = "<group>"; };
 		A5EF20ED280701E20051AA13 /* SearchCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCategory.swift; sourceTree = "<group>"; };
@@ -1070,6 +1097,22 @@
 				A5D2E0A627147D1200986BAE /* EditChannelCode.swift */,
 			);
 			path = "Edit Channel";
+			sourceTree = "<group>";
+		};
+		A5E4EECA283686DF008D1F01 /* Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				A5E4EEE328368827008D1F01 /* OneWayPanGestureRecognizer.swift */,
+				A5E4EEE02836881D008D1F01 /* ViewFactory.swift */,
+				A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */,
+				A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */,
+				A5E4EECD283686DF008D1F01 /* ModalPresentationController.swift */,
+				A5E4EECE283686DF008D1F01 /* ModalTransitionAnimator.swift */,
+				A5E4EECF283686DF008D1F01 /* CustomPresentable.swift */,
+				A5E4EED0283686DF008D1F01 /* InteractionControlling.swift */,
+				A5E4EED1283686DF008D1F01 /* UIViewController+Transitions.swift */,
+			);
+			path = Transitions;
 			sourceTree = "<group>";
 		};
 		A5EF20E4280701730051AA13 /* SearchCategory */ = {
@@ -1557,6 +1600,7 @@
 		B4D9D7412625C097007CFB71 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				A5E4EECA283686DF008D1F01 /* Transitions */,
 				B4497D5426A836DE00321AB8 /* SJDataPicker */,
 				B4B111592692F8720006CA5A /* Presentashion */,
 				B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */,
@@ -2039,6 +2083,7 @@
 				A5129419273A6EB7000CBBD9 /* ActionChatPresentationController.swift in Sources */,
 				A512941A273A6EB7000CBBD9 /* PlayerViewCell.swift in Sources */,
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
+				A5E4EEE528368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,
 				A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */,
 				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
 				A572949727FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
@@ -2047,8 +2092,10 @@
 				A512941F273A6EB7000CBBD9 /* AddMonetezationVC.swift in Sources */,
 				A5129420273A6EB7000CBBD9 /* ChatVCPlayerCode.swift in Sources */,
 				A572949D27FED91100675FD8 /* CALayer.swift in Sources */,
+				A5E4EED9283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */,
 				A5129421273A6EB7000CBBD9 /* AppDelegate.swift in Sources */,
 				A5129422273A6EB7000CBBD9 /* StartStream.swift in Sources */,
+				A5E4EEDD283686DF008D1F01 /* InteractionControlling.swift in Sources */,
 				A5129423273A6EB7000CBBD9 /* NotTkenViewCode.swift in Sources */,
 				A5129424273A6EB7000CBBD9 /* Extensins+String.swift in Sources */,
 				A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */,
@@ -2076,6 +2123,7 @@
 				A5129438273A6EB7000CBBD9 /* EditMonetVC.swift in Sources */,
 				A5129439273A6EB7000CBBD9 /* CategoryResponce.swift in Sources */,
 				A512943A273A6EB7000CBBD9 /* CategoryBroadcast.swift in Sources */,
+				A5E4EEDB283686DF008D1F01 /* CustomPresentable.swift in Sources */,
 				A512943B273A6EB7000CBBD9 /* Calendar.swift in Sources */,
 				A512943C273A6EB7000CBBD9 /* SendCoach.swift in Sources */,
 				A512943D273A6EB7000CBBD9 /* TokenWatcher.swift in Sources */,
@@ -2108,9 +2156,11 @@
 				A5129458273A6EB7000CBBD9 /* SliderFloat.swift in Sources */,
 				A57294A327FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */,
 				A5129459273A6EB7000CBBD9 /* ChatVCCode.swift in Sources */,
+				A5E4EED7283686DF008D1F01 /* ModalPresentationController.swift in Sources */,
 				A512945A273A6EB7000CBBD9 /* EditProfileCode.swift in Sources */,
 				A512945B273A6EB7000CBBD9 /* EdetBroadcast.swift in Sources */,
 				A512945C273A6EB7000CBBD9 /* DeleteTariffVCCode.swift in Sources */,
+				A5E4EEE22836881D008D1F01 /* ViewFactory.swift in Sources */,
 				A5A7960127F7408000F3B45E /* RawPlaylist.swift in Sources */,
 				A512945D273A6EB7000CBBD9 /* AuthInterceptor.swift in Sources */,
 				A512945E273A6EB7000CBBD9 /* ResponceLogin.swift in Sources */,
@@ -2209,9 +2259,11 @@
 				A51294B0273A6EB7000CBBD9 /* Password.swift in Sources */,
 				A51294B1273A6EB7000CBBD9 /* DataExtensions.swift in Sources */,
 				A51294B2273A6EB7000CBBD9 /* RightToLeft.swift in Sources */,
+				A5E4EED5283686DF008D1F01 /* StandardInteractionController.swift in Sources */,
 				A51294B3273A6EB7000CBBD9 /* SocketIOManager.swift in Sources */,
 				A51294B4273A6EB7000CBBD9 /* EditStreamVC.swift in Sources */,
 				A51294B6273A6EB7000CBBD9 /* Responce.swift in Sources */,
+				A5E4EEDF283686DF008D1F01 /* UIViewController+Transitions.swift in Sources */,
 				A51294B7273A6EB7000CBBD9 /* BaseViewController.swift in Sources */,
 				A51294B8273A6EB7000CBBD9 /* ChannelRequest.swift in Sources */,
 				A51294B9273A6EB7000CBBD9 /* FitMeetStream.swift in Sources */,
@@ -2234,6 +2286,7 @@
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
+				A5E4EED3283686DF008D1F01 /* ModalTransitionManager.swift in Sources */,
 				A5CEF0B627F1FFF200D9C6BC /* SettingView.swift in Sources */,
 				A5EF20FB280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */,
 				A5671E8C2757A2BF00EE4191 /* VideosVCCode.swift in Sources */,
@@ -2290,6 +2343,7 @@
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
+				A5E4EEE428368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
 				A572949627FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
@@ -2298,8 +2352,10 @@
 				B4E3CC9326AE73AF001E78BA /* ChatVCPlayerCode.swift in Sources */,
 				B4D9D71F26257D8D007CFB71 /* AppDelegate.swift in Sources */,
 				A572949C27FED91100675FD8 /* CALayer.swift in Sources */,
+				A5E4EED8283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
+				A5E4EEDC283686DF008D1F01 /* InteractionControlling.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
@@ -2327,6 +2383,7 @@
 				B4A9F6202631A7FB000E00DE /* CategoryResponce.swift in Sources */,
 				B46CF79D2672354100EA0741 /* CategoryBroadcast.swift in Sources */,
 				B475A95826BCA65D00EF96A4 /* Calendar.swift in Sources */,
+				A5E4EEDA283686DF008D1F01 /* CustomPresentable.swift in Sources */,
 				B43A6C7326F24DC2009E6DDE /* SendCoach.swift in Sources */,
 				B404923426D8DF9800A2F417 /* TokenWatcher.swift in Sources */,
 				B475A94826BA7A8400EF96A4 /* Timetable.swift in Sources */,
@@ -2359,9 +2416,11 @@
 				B4C5A948267C881700010F88 /* NewStartStreamCode.swift in Sources */,
 				A57294A227FEF05100675FD8 /* ComplaintSuccessView.swift in Sources */,
 				B4E88E5326D3E3D3003E6B16 /* SendVCCell.swift in Sources */,
+				A5E4EED6283686DF008D1F01 /* ModalPresentationController.swift in Sources */,
 				A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */,
 				B4B113AA269739180006CA5A /* ChatVCCode.swift in Sources */,
 				B484E8ED26837CC400D75BE8 /* EditProfileCode.swift in Sources */,
+				A5E4EEE12836881D008D1F01 /* ViewFactory.swift in Sources */,
 				A5A7960027F7408000F3B45E /* RawPlaylist.swift in Sources */,
 				B470790E2705F06700921821 /* EdetBroadcast.swift in Sources */,
 				A5950E582737D5AA002C1500 /* DeleteTariffVCCode.swift in Sources */,
@@ -2460,9 +2519,11 @@
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
+				A5E4EED4283686DF008D1F01 /* StandardInteractionController.swift in Sources */,
 				B4D9D76B2626D438007CFB71 /* DataExtensions.swift in Sources */,
 				B4D4FADB26E502FF004AAC42 /* RightToLeft.swift in Sources */,
 				B41DCB74268E1BE9007096AB /* SocketIOManager.swift in Sources */,
+				A5E4EEDE283686DF008D1F01 /* UIViewController+Transitions.swift in Sources */,
 				B470790A2705B69500921821 /* EditStreamVC.swift in Sources */,
 				B4497D5026A7315500321AB8 /* Responce.swift in Sources */,
 				B484E8F22684512A00D75BE8 /* BaseViewController.swift in Sources */,
@@ -2485,6 +2546,7 @@
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,
+				A5E4EED2283686DF008D1F01 /* ModalTransitionManager.swift in Sources */,
 				A5CEF0B527F1FFF200D9C6BC /* SettingView.swift in Sources */,
 				A5EF20FA280705480051AA13 /* ExtentionSearchVideoVC.swift in Sources */,
 				B46CF7A62672357B00EA0741 /* ExtentionCategoryBroadcast.swift in Sources */,

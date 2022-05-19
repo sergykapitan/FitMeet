@@ -110,6 +110,63 @@ final class LiveStreamVCCode: UIView {
         view.backgroundColor = .white
         return view
     }()
+    var buttonStart: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = .blueColor
+        button.setTitle("START STREAM", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.cornerRadius = 14
+        button.anchor(width: 137,height: 28)
+        return button
+    }()
+    var buttonAvailable: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#4C4C4C")
+        button.setImage(UIImage(named: "All"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.cornerRadius = 23
+        button.anchor(width: 46,height: 46)
+        return button
+    }()
+    var labelAviable: UILabel = {
+        let label = UILabel()
+        label.text = "Available for all"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 10.2)
+        return label
+    }()
+    var buttonStartNow: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#4C4C4C")
+        button.setImage(UIImage(named: "startNow"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.cornerRadius = 23
+        button.anchor(width: 46,height: 46)
+        return button
+    }()
+    var labelStartNow: UILabel = {
+        let label = UILabel()
+        label.text = "Start now"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 10.2)
+        return label
+    }()
+    var buttonSetting: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = UIColor(hexString: "#4C4C4C")
+        button.setImage(UIImage(named: "Settings"), for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.layer.cornerRadius = 23
+        button.anchor(width: 46,height: 46)
+        return button
+    }()
+    var labelSetting: UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 10.2)
+        return label
+    }()
    
 
     // MARK: - Init
@@ -154,15 +211,48 @@ final class LiveStreamVCCode: UIView {
                         left: capturePreviewView.leftAnchor,
                         paddingTop: 45,paddingLeft: 35,height: 40)
         
+       
+        
+       
+        
+        capturePreviewView.addSubview(buttonStart)
+        buttonStart.centerX(inView: capturePreviewView)
+        buttonStart.anchor( bottom: capturePreviewView.bottomAnchor,paddingBottom: 43)
+        
+        capturePreviewView.addSubview(buttonAvailable)
+        buttonAvailable.centerX(inView: capturePreviewView)
+        buttonAvailable.anchor( bottom: buttonStart.topAnchor,paddingBottom: 58)
+        
+        capturePreviewView.addSubview(labelAviable)
+        labelAviable.centerX(inView: buttonAvailable)
+        labelAviable.anchor(top: buttonAvailable.bottomAnchor, paddingTop: 4)
+        
+        capturePreviewView.addSubview(buttonStartNow)
+        buttonStartNow.centerY(inView: buttonAvailable)
+        buttonStartNow.anchor( right: buttonAvailable.leftAnchor, paddingRight: 42)
+        
+        capturePreviewView.addSubview(labelStartNow)
+        labelStartNow.centerX(inView: buttonStartNow)
+        labelStartNow.anchor(top: buttonAvailable.bottomAnchor, paddingTop: 4)
+        
+        capturePreviewView.addSubview(buttonSetting)
+        buttonSetting.centerY(inView: buttonAvailable)
+        buttonSetting.anchor( left: buttonAvailable.rightAnchor, paddingLeft: 42)
+        
+        capturePreviewView.addSubview(labelSetting)
+        labelSetting.centerX(inView: buttonSetting)
+        labelSetting.anchor(top: buttonSetting.bottomAnchor, paddingTop: 4)
+        
         capturePreviewView.addSubview(textFieldNameStream)
         textFieldNameStream.centerX(inView: capturePreviewView)
-        textFieldNameStream.centerY(inView: capturePreviewView)
-        
+        textFieldNameStream.anchor( bottom: buttonAvailable.topAnchor ,paddingBottom: 32)
         capturePreviewView.addSubview(lineBottom)
         lineBottom.centerX(inView: capturePreviewView)
         lineBottom.anchor( left: textFieldNameStream.leftAnchor,
-                           right: textFieldNameStream.rightAnchor,
-                           bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: -10, paddingBottom: 0, height: 1)
+                                  right: textFieldNameStream.rightAnchor,
+                                  bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: -10, paddingBottom: 0, height: 1)
+        
+        
         
     capturePreviewView.addSubview(timerLabel)
     timerLabel.centerY(inView: labelFPS)

@@ -59,7 +59,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
     let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
     
-    
+    let actionTransitionManager = ActionTransishionChatManadger()
     
     
     private var takeChannel: AnyCancellable?
@@ -194,12 +194,31 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
         
         streamView.close.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+        streamView.buttonSetting.addTarget(self, action: #selector(settingTapped), for: .touchUpInside)
+        
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         scrollViewTap.numberOfTapsRequired = 1
         streamView.capturePreviewView.addGestureRecognizer(scrollViewTap)
     }
     @objc func viewTapped() {
-            self.view.endEditing(true) // anyone
+            self.view.endEditing(true)
+        }
+    @objc func settingTapped() {
+        let chatVC = NewStartStream()
+        chatVC.transitioningDelegate = actionChatTransitionManager
+        chatVC.modalPresentationStyle = .custom
+        130 + 39 + 39 + 60
+        actionChatTransitionManager.intWidth = 1
+        actionChatTransitionManager.intHeight = 0.4
+        self.present(chatVC, animated: true, completion: nil)
+//        let coolViewController = NewStartStream()
+//       let  interactionController = StandardInteractionController(viewController: coolViewController)
+//        let transitionManager = ModalTransitionManager(interactionController: interactionController)
+//        coolViewController.transitionManager = transitionManager
+//        coolViewController.transitioningDelegate = transitionManager
+//        coolViewController.modalPresentationStyle = .custom
+//        present(coolViewController, animated: true, completion: nil)
+//       // present(coolViewController, interactiveDismissalType: .standard)
         }
     @objc func closeVideo() {
         logger.info("close")

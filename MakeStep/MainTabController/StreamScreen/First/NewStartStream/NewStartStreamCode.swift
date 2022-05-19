@@ -13,6 +13,13 @@ import TagListView
 final class NewStartStreamCode: UIView {
     
     //MARK: - UI
+    let capturePreviewView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.backgroundColor = .white
+        return view
+    }()
     let imageButton: UIButton = {
         let button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
@@ -150,59 +157,60 @@ final class NewStartStreamCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        addSubview(scroll)
-        scroll.fillFull(for: self)
- 
+       // addSubview(scroll)
+       // scroll.fillFull(for: self)
+        addSubview(capturePreviewView)
+        capturePreviewView.fillFull(for: self)
     }
     private func initLayout() {
  
-        scroll.addSubview(imageButton)
-        imageButton.anchor(top: scroll.topAnchor,
-                               left: scroll.leftAnchor,
-                               right: scroll.rightAnchor,
-                               paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 160)
-        imageButton.centerX(inView: scroll)
+        capturePreviewView.addSubview(imageButton)
+        imageButton.anchor(top: capturePreviewView.topAnchor,
+                               left: capturePreviewView.leftAnchor,
+                                paddingTop: 20,paddingLeft: 10,width: 130,height: 82.5)
+    //    imageButton.centerX(inView: scroll)
 
-        scroll.addSubview(textFieldName)
-        textFieldName.anchor(top: imageButton.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//        scroll.addSubview(textFieldName)
+//        textFieldName.anchor(top: imageButton.bottomAnchor,
+//                              left: scroll.leftAnchor,
+//                              right: scroll.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        scroll.addSubview(textFieldCategory)
-        textFieldCategory.anchor(top: textFieldName.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
+        capturePreviewView.addSubview(textFieldCategory)
+        textFieldCategory.anchor(top: imageButton.bottomAnchor,
+                              left: capturePreviewView.leftAnchor,
+                              right: capturePreviewView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10)
         
-        scroll.addSubview(textFieldStartDate)
-        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
+//        scroll.addSubview(textFieldStartDate)
+//        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
+//                              left: scroll.leftAnchor,
+//                              right: scroll.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//
+//        scroll.addSubview(textFieldAviable)
+//        textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
+//                              left: scroll.leftAnchor,
+//                              right: scroll.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+//
+//        scroll.addSubview(textFieldFree)
+//        textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
+//                              left: scroll.leftAnchor,
+//                              right: scroll.rightAnchor,
+//                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        
+        capturePreviewView.addSubview(textFieldDescription)
+        textFieldDescription.anchor(top: textFieldCategory.bottomAnchor,
+                              left: capturePreviewView.leftAnchor,
+                              right: capturePreviewView.rightAnchor,
+                              
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         
-        scroll.addSubview(textFieldAviable)
-        textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(textFieldFree)
-        textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(textFieldDescription)
-        textFieldDescription.anchor(top: textFieldFree.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(buttonOK)
+        capturePreviewView.addSubview(buttonOK)
         buttonOK.anchor(top: textFieldDescription.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
+                              left: capturePreviewView.leftAnchor,
+                              right: capturePreviewView.rightAnchor,
                               paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
         textFieldCategory.addSubview(tagView)
         tagView.anchor(top:textFieldCategory.topAnchor,
