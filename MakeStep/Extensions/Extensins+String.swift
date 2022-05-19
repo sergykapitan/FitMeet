@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
  
 extension String {
    func isValidEmail() -> Bool {
@@ -15,7 +16,7 @@ extension String {
    }
     //"^[0-9+]{0,1}+[0-9]{11,13}$"
    func isValidPhone() -> Bool {
-      let regularExpressionForPhone = "^[+]{0,1}+[0,1,2,3,4,5,6,7]{0,1}+[0-9]{10,14}$"
+      let regularExpressionForPhone = "^[+]{0,1}+[0,1,2,3,4,5,6,7]{0,1}+[0-9]{10,12}$"
       let testPhone = NSPredicate(format:"SELF MATCHES %@", regularExpressionForPhone)
       return testPhone.evaluate(with: self)
    }
@@ -73,6 +74,17 @@ extension String {
       .replacingOccurrences(of: "\r", with: "")
       .replacingOccurrences(of: "\0", with: "")
   }
+        var stringWidth: CGFloat {
+            let constraintRect = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+            let boundingBox = self.trimmingCharacters(in: .whitespacesAndNewlines).boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
+            return boundingBox.width
+        }
+
+        var stringHeight: CGFloat {
+            let constraintRect = CGSize(width: UIScreen.main.bounds.width, height: .greatestFiniteMagnitude)
+            let boundingBox = self.trimmingCharacters(in: .whitespacesAndNewlines).boundingRect(with: constraintRect, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 14)], context: nil)
+            return boundingBox.height
+        }
 }
 
 extension TimeInterval {

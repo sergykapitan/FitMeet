@@ -24,11 +24,8 @@ class FitMeetApi {
     //MARK: - signupPassword
     public func signupPassword(authRequest: AuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/signupPassword", method: .post, parameters: authRequest.asDictionary() , encoding: JSONEncoding.default, headers: nil)
-                // .validate(statusCode: 200..<300)
-                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: ResponceLogin.self)
                  .value()
-                 .print("signupPassword")
                  .mapError{ DifferentError.alamofire(wrapped: $0)}
                  .eraseToAnyPublisher()
            }
@@ -39,7 +36,13 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/loginPassword", method: .post, parameters: login.asDictionary(), encoding: JSONEncoding.default,headers: nil)
                  .publishDecodable(type: ResponcePassword.self)
                  .value()
-                 .print("loginPassword")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    public func codeReview(hashs: Hashs,code: String) -> AnyPublisher<Hashs, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/codeReview/\(code)", method: .post, parameters: hashs.asDictionary(), encoding: JSONEncoding.default)
+                 .publishDecodable(type: Hashs.self)
+                 .value()
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -49,7 +52,6 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: Bool.self)
                  .value()
-                 .print("requestSecurityCode")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -58,7 +60,6 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/passwordResetSms", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: ResetPassword.self)
                  .value()
-                 .print("requestSecurityCode")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -67,11 +68,16 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/password/sms/\(code)", method: .put, parameters: resetOld.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: Bool.self)
                  .value()
-                 .print("resetOldPassword")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    
+    public func resetPasswordSms(reset:ResetPasswordSms) -> AnyPublisher< Bool, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/auth/sessions/changePasswordBySms", method: .put, parameters: reset.asDictionary(), encoding: JSONEncoding.default, headers: nil)
+                 .publishDecodable(type: Bool.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
 
     //MARK: - requestLogin
     public func requestLogin(phoneCode:PhoneCode) -> AnyPublisher<ResponceLogin, DifferentError> {
@@ -87,7 +93,6 @@ class FitMeetApi {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/password", method: .put, parameters: password.asDictionary(), encoding: JSONEncoding.default, headers: nil)
             .publishDecodable(type: Bool.self)
             .value()
-            .print("changePassword")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -95,13 +100,12 @@ class FitMeetApi {
     //MARK: - SignWithApple
     public func signWithApple(token: AppleAuthorizationRequest) -> AnyPublisher<ResponceLogin, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/auth/sessions/signupApple", method: .get, parameters: token.asDictionary(), encoding: URLEncoding.default, headers: nil)
-                // .validate(statusCode: 200..<300)
-                 .validate(contentType: ["application/json"])
-                 .publishDecodable(type: ResponceLogin.self)
-                 .value()
-                 .print("signWithApple")
-                 .mapError{ DifferentError.alamofire(wrapped: $0)}
-                 .eraseToAnyPublisher()
+                .validate(statusCode: 200..<300)
+                .validate(contentType: ["application/json"])
+                .publishDecodable(type: ResponceLogin.self)
+                .value()
+                .mapError{ DifferentError.alamofire(wrapped: $0)}
+                .eraseToAnyPublisher()
            }
     
     public func getUser() -> AnyPublisher<User,DifferentError> {
@@ -110,18 +114,16 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: User.self)
             .value()
-           // .print("getUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     
     public func putUser(user: UserRequest) -> AnyPublisher<User,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/user/users/profile", method: .put, parameters: user.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-           // .validate(statusCode: 200..<300)
-           // .validate(contentType: ["application/json"])
+            //.validate(statusCode: 200..<300)
+            //.validate(contentType: ["application/json"])
             .publishDecodable(type: User.self)
             .value()
-            .print("getUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -130,13 +132,12 @@ class FitMeetApi {
     public func getTokenChat() -> AnyPublisher<TokenChat,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/chat/chats/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .response(completionHandler: { ggg in
-                print("GGGGG====\(ggg)")
+                print("getToken Chat == \(ggg)")
             })
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: TokenChat.self)
             .value()
-            .print("TokenChat")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -146,7 +147,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UploadImage.self)
             .value()
-            .print("TokenChat")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -162,7 +162,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UploadImage.self)
             .value()
-            .print("uploadImage")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
         
@@ -174,11 +173,12 @@ class FitMeetApi {
         return AF.upload( multipartFormData: { multipartFormData in
 
             multipartFormData.append( image, withName: "file",fileName: "\(Data()).mp4", mimeType: "video/mp4")
-                           let data1 = Data(bytesNoCopy: UnsafeMutableRawPointer(mutating: categoryId), count: categoryId.count, deallocator: .none)
-            
+            let stringifiedNumberList = categoryId
+                    .map { String($0) }
+                    .joined(separator: ", ")
                            multipartFormData.append(channelId.data(using: .utf8, allowLossyConversion: false)!, withName: "channelId")
-                           multipartFormData.append(data1, withName: "categoryIds")
-                           multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)!, withName: "previewPath")
+                           multipartFormData.append(stringifiedNumberList.data(using: .utf8, allowLossyConversion: false)!, withName: "categoryIds")
+                           multipartFormData.append(preview.data(using: .utf8, allowLossyConversion: false)! , withName: "previewPath")
                            multipartFormData.append(title.data(using: .utf8, allowLossyConversion: false)!, withName: "title")
                            multipartFormData.append(description.data(using: .utf8, allowLossyConversion: false)!, withName: "description")
                          //  multipartFormData.append("false".data(using: .utf8, allowLossyConversion: false)!, withName: "onlyForSubscribers")
@@ -201,7 +201,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: User.self)
             .value()
-            .print("getUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -232,10 +231,25 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: MapWatcher.self)
             .value()
-            .print("getWatcherMap")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+    public func getChannelMap(ids: [Int]) -> AnyPublisher<MapChannel,DifferentError> {
+
+        let parameters = [
+            "ids": ids
+        ]
+        return AF.request(Constants.apiEndpoint + "/channel/channels/private/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: MapChannel.self)
+            .value()
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    
+    
+    
 ///api/v0/watcher/watchers/token токен для ватчера
     public func getTokenWatcher() -> AnyPublisher<TokenWatcher,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/watcher/watchers/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
@@ -243,7 +257,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: TokenWatcher.self)
             .value()
-            .print("getTokenWatcher")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -256,7 +269,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: AppleProduct.self)
             .value()
-            .print("GetAppleProduct")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -268,7 +280,6 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ProducctResponce.self)
             .value()
-            .print("Subscribe")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

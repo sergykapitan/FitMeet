@@ -12,3 +12,7 @@ struct MapWatcher: Codable {
     let data: [String: Int]
     
 }
+struct MapChannel: Codable {
+    let data: [Int: ChannelResponce]
+    
+}

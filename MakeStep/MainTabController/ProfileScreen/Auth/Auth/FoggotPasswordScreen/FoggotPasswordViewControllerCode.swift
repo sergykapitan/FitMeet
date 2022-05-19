@@ -48,8 +48,7 @@ final class FoggotPasswordViewControllerCode: UIView {
     }()
     let buttonContinue: UIButton = {
         let button = UIButton()
-       // button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-        button.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
+        button.backgroundColor = .blueColor.alpha(0.4)
         button.setTitle("Continue", for: .normal)
         button.layer.cornerRadius = 19
         return button
@@ -102,7 +101,6 @@ final class FoggotPasswordViewControllerCode: UIView {
  
     }
     private func initLayout() {
-       // cardView.fillSuperview()
         cardView.fillFull(for: self)
 
         cardView.addSubview(labelSignIn)

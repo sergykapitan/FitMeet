@@ -37,41 +37,15 @@ final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
 class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDelegate{
     
     func changeButton() {
-        
-        streamView.recButton.isHidden = false
-        streamView.stopButton.isHidden = false
-        streamView.microfoneButton.isHidden = false
-        streamView.cameraModeButton.isHidden = false
-        streamView.cameraButton.isHidden = false
-        streamView.chatButton.isHidden = false
-        streamView.StartStreamButton.isHidden = false
     }
-    
-    
-
     var isLandscape: Bool = false
-    
-    
-    
     func changeUp(key: CGFloat) {
         
     }
     func changeDown(key: CGFloat) {
         
     }
-    
-    
-    
-    
     func changeBackgroundColor() {
-        print("GoodStaf")
-        streamView.recButton.isHidden = false
-        streamView.stopButton.isHidden = false
-        streamView.microfoneButton.isHidden = false
-        streamView.cameraModeButton.isHidden = false
-        streamView.cameraButton.isHidden = false
-        streamView.chatButton.isHidden = false
-        streamView.StartStreamButton.isHidden = false
     }
     
     
@@ -82,10 +56,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     let UserId = UserDefaults.standard.string(forKey: Constants.userID)
     let userName = UserDefaults.standard.string(forKey: Constants.userFullName)
     let streanUrl = UserDefaults.standard.string(forKey: Constants.urlStream)
-    
     let channelId = UserDefaults.standard.string(forKey: Constants.chanellID)
-    
     let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
+    
+    
+    
     
     private var takeChannel: AnyCancellable?
     private var task: AnyCancellable?
@@ -99,6 +74,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     var idBroadcast: Int = 0
     var idBroad: Int?
     var chanell: Int?
+    var isPrivate: Bool = false
+    var privateUrlKey: String?
     
     
     var captureSession: AVCaptureSession!
@@ -113,6 +90,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     private var currentEffect: VideoEffect?
     private var currentPosition: AVCaptureDevice.Position = .back
     private var retryCount: Int = 0
+    var broadcastId: Int?
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
@@ -123,7 +101,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-
         actionButton()
         rtmpStream = RTMPStream(connection: rtmpConnection)
         if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
@@ -131,7 +108,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         }
         rtmpStream.captureSettings = [
             .sessionPreset: AVCaptureSession.Preset.hd1280x720,
-          //  .continuousAutofocus: true,
+            .continuousAutofocus: true,
             .continuousExposure: true,
            // .preferredVideoStabilizationMode: AVCaptureVideoStabilizationMode.auto
         ]
@@ -178,9 +155,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.previewView.videoGravity = AVLayerVideoGravity.resizeAspectFill
         rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
         streamView.previewView.attachStream(rtmpStream)
-        
-       
-        
+        if isPrivate {
+            streamView.stackButton.addArrangedSubview(streamView.privateStream)
+        } 
     }
     override func viewWillDisappear(_ animated: Bool) {
         logger.info("viewWillDisappear")
@@ -205,6 +182,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.stopButton.addTarget(self, action: #selector(stopStream), for: .touchUpInside)
         streamView.chatButton.addTarget(self, action: #selector(openChat), for: .touchUpInside)
         streamView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
+        streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
     }
 
     @objc func rotateCamera() {
@@ -215,6 +193,15 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             logger.warn(error.description)
         }
         currentPosition = position
+    }
+    @objc func shareLink() {        
+        guard let id = broadcastId,let privateKey = privateUrlKey else { return }
+ 
+        #if QA
+            "https://makestep.com/broadcastQA/\(id)/\(privateKey)".share()
+        #elseif DEBUG
+            "https://makestep.com/broadcast/\(id)/\(privateKey)".share()
+        #endif
     }
     // MARK: - presentChat
     
@@ -227,28 +214,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         guard let id = idBroad,let channel = channelId else { return }
         chatVC.broadcastId = "\(id)"
         chatVC.chanellId = channel
-        
-        if isLandscape {
-            chatVC.isLand = true
-            actionChatTransitionManager.intWidth = 0.5
-            actionChatTransitionManager.intHeight = 1
-            present(chatVC, animated: true, completion: nil)
-        } else {
-            chatVC.isLand = false
-            actionChatTransitionManager.intWidth = 1
-            actionChatTransitionManager.intHeight = 0.7
-            actionChatTransitionManager.isLandscape = isLandscape
-            present(chatVC, animated: true)
-        }
-        
-        streamView.recButton.isHidden = true
-        streamView.stopButton.isHidden = true
-        streamView.microfoneButton.isHidden = true
-        streamView.cameraModeButton.isHidden = true
-        streamView.cameraButton.isHidden = true
-        streamView.chatButton.isHidden = true
-        streamView.StartStreamButton.isHidden = true
- 
+        actionChatTransitionManager.intWidth = 1
+        actionChatTransitionManager.intHeight = 0.7
+        actionChatTransitionManager.isLandscape = isLandscape
+        present(chatVC, animated: true)
+
     }
     @objc func openUserOnline() {
         
@@ -318,17 +288,15 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     @objc func startStream() {
       
-        if myuri != nil {
-            
+        if myuri != nil {            
         if streamView.StartStreamButton.isSelected {
-            
             UIApplication.shared.isIdleTimerDisabled = false
             rtmpConnection.close()
             rtmpConnection.removeEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
             rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "startCamera"), for: [])
             createTimer()
-            
+            self.streamView.stackButton.addArrangedSubview(streamView.stopButton)
             streamView.recButton.isHidden = true
             streamView.stopButton.isHidden = false
             streamView.microfoneButton.isHidden = true
@@ -444,23 +412,20 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.microfoneButton.isSelected.toggle()
         
         if streamView.microfoneButton.isSelected {
-           
-            streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
-            self.rtmpStream.audioSettings = [
-                .muted: false,
-                .bitrate: 32 * 1000,
-            
-            ]
-            
-        } else {
-            
+
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "notmicrofone"), for: [])
-            self.rtmpStream.audioSettings = [
-                .muted: true,
-                .bitrate: 32 * 1000,
-            
-            ]
-            
+                       self.rtmpStream.audioSettings = [
+                           .muted: true,
+                           .bitrate: 32 * 1000,
+                       
+                       ]
+        } else {
+            streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
+                        self.rtmpStream.audioSettings = [
+                            .muted: false,
+                            .bitrate: 32 * 1000,
+                        
+                        ]
         }
     }
     
@@ -504,13 +469,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         times.append("\(seconds)s")
         
         streamView.timerLabel.text = times.joined(separator: " ")
-    //  }
+    
     }
+
     @objc func timerAction() {
            counter += 1
            updateTimer(timeElapsed: counter)
        }
-    
     func blurEffect(key: Bool) {
         let blur = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blur)

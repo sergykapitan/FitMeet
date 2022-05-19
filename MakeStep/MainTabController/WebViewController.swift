@@ -56,13 +56,13 @@ class WebViewController: UIViewController, WKNavigationDelegate, WKUIDelegate  {
             guard let urlTitle = change.newValue else { return }
  
                 self?.navigationItem.title = urlTitle
+        
             
         })
     }
     
     @objc func back() {
-        if(webKitView.canGoBack) {
-
+        if(webKitView.canGoBack) {       
             webKitView.goBack()
             } else {
                 self.navigationController?.popViewController(animated:true)

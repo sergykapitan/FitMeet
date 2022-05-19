@@ -20,7 +20,6 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/channel/channels", method: .post, parameters: channel.asDictionary(), encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
-                 .print("createChannel")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -38,7 +37,6 @@ class FitMeetChannels {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelModel.self)
                  .value()
-                 .print("listChannelprivate")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -48,7 +46,6 @@ class FitMeetChannels {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelModel.self)
             .value()
-            .print("listChannelsNotAuth")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -58,7 +55,6 @@ class FitMeetChannels {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelModel.self)
                  .value()
-                 .print("listChannelprivate")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -70,7 +66,6 @@ class FitMeetChannels {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
-                 .print("MonnetChanell")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -80,7 +75,6 @@ class FitMeetChannels {
                 .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
-                 .print("DelMonnetChanell")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -89,7 +83,6 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/sessions/phoneVerifyCode", method: .post, parameters: phone.asDictionary(), encoding: JSONEncoding.default, headers: nil)
                  .publishDecodable(type: Bool.self)
                  .value()
-                 .print("requestSecurityCode")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -98,7 +91,6 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/sessions/loginPhone", method: .post, parameters: phoneCode.asDictionary(), encoding: JSONEncoding.default, headers: nil)
             .publishDecodable(type: ResponceLogin.self)
             .value()
-            .print("requestLogin")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -107,7 +99,6 @@ class FitMeetChannels {
         return AF.request(Constants.apiEndpoint + "/sessions/password", method: .put, parameters: password.asDictionary(), encoding: JSONEncoding.default, headers: nil)
             .publishDecodable(type: Bool.self)
             .value()
-            .print("changePassword")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -118,31 +109,35 @@ class FitMeetChannels {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
-            .print("followChannels")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     
-    ///api/v0/channel/channels/{uniqField}
-    //, interceptor: Interceptor(interceptors: [AuthInterceptor()])
+    public func unFollowChannels(id: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)/follow", method: .delete, encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: ChannelResponce.self)
+            .value()
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     public func getChannelsUserName(username: String) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(username)", method: .get, encoding: JSONEncoding.default)
             //.validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
-            .print("getChannelsUserName")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     
     public func getChannelsId(id: Int) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)", method: .get, encoding: JSONEncoding.default)
-            //.validate(statusCode: 200..<300)
+            .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
-            .print("getChannelsUserName")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -150,11 +145,10 @@ class FitMeetChannels {
     //MARK: - Change Channels
     public func changeChannels(id: Int,changeChannel: ChageChannel) -> AnyPublisher<ChannelResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/channel/channels/\(id)", method: .put,parameters: changeChannel.asDictionary(), encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-           // .validate(statusCode: 200..<300)
-           // .validate(contentType: ["application/json"])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
-            .print("changeChannels")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

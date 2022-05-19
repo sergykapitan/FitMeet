@@ -11,6 +11,7 @@ import AVFoundation
 import AVKit
 import UIKit
 import TagListView
+import SkeletonView
 
 
 extension HomeVC: UITableViewDataSource {
@@ -18,16 +19,18 @@ extension HomeVC: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 1 {
-            return listBroadcast.count
-        } else if section == 0 {
-           return  1
+        switch section {
+            
+        case 0 :
+            return 1
+        case 1 :
+            if listBroadcast.isEmpty { return 3 } else { return listBroadcast.count}
+        default:
+            break
         }
-      return 0
+        return 0
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         switch  indexPath.section {
@@ -36,154 +39,155 @@ extension HomeVC: UITableViewDataSource {
             if let listUsers = listUsers {
                 cell.setup(type: listUsers)
             }
-            cell.delegate = self
+         cell.delegate = self
          return cell
-        
         case 1:
-            
         let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-        cell.setImage(image:  listBroadcast[indexPath.row].resizedPreview?["preview_m"]?.jpeg ??  "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        cell.labelDescription.text = listBroadcast[indexPath.row].description
-        cell.imageEye.isHidden = false
-        cell.labelEye.isHidden = false
+           
+        guard !listBroadcast.isEmpty  else { return cell }    
+        cell.hideAnimation()
+        cell.setupImage(urlString:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? Constants.defoultImage)
+        cell.labelDescription.text = listBroadcast[indexPath.row].name
+        
 
-        guard 
+        guard
               let id = listBroadcast[indexPath.row].userId,
               let broadcastID = self.listBroadcast[indexPath.row].id
         else { return cell}
-
-
+        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.titleLabel.text = self.usersd[id]?.fullName
+         print("NAME == \(cell.titleLabel.text)")
+           
         
         self.ids.append(broadcastID)
         self.getMapWather(ids: [broadcastID])
-        cell.labelEye.text = "\(self.watch)"
- 
+        cell.overlay.labelEye.text = "\(self.watch)"
+      
         let categorys = listBroadcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
         let arr = s.map { String("\u{0023}" + $0)}
             
+
         cell.tagView.removeAllTags()
         cell.tagView.addTags(arr)
         cell.tagView.delegate = self
         cell.tagView.isUserInteractionEnabled = true
         cell.tagView.tag = indexPath.row
-      
+        cell.buttonLike.isHidden = true
         
-        if listBroadcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
-  
-        
-        if listBroadcast[indexPath.row].status == "OFFLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.imageLive.setImageColor(color: .gray)
-            cell.labelLive.text = "Offline"
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
-            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
-        } else if listBroadcast[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
-            cell.logoUserOnline.isHidden = false
-            self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        } else if listBroadcast[indexPath.row].status == "PLANNED" {
-            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-            cell.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-            cell.imageEye.isHidden = true
-            cell.labelEye.isHidden = true
-            cell.logoUserOnline.isHidden = true
+            
+       guard let status = listBroadcast[indexPath.row].status  else { return cell}
+        switch status {
 
+        case .online:
+                cell.overlayPlan.isHidden = true
+                cell.overlayOffline.isHidden = true
+                cell.overlay.isHidden = false
+                cell.logoUserOnline.isHidden = false
+                self.url = self.listBroadcast[indexPath.row].streams?.first?.hlsPlaylistUrl
+        case .offline:
+                cell.overlayPlan.isHidden = true
+                cell.overlay.isHidden = true
+                cell.overlayOffline.isHidden = false
+                cell.logoUserOnline.isHidden = true
+                if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+                    cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
+                } else {
+                    cell.overlayOffline.labelLive.text = "00:00"
+                }
+                self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
+        case .planned:
+                cell.overlay.isHidden = true
+                cell.overlayOffline.isHidden = true
+                cell.overlayPlan.isHidden = false
+                cell.overlayPlan.labelLive.text = listBroadcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
+                cell.logoUserOnline.isHidden = true
+        case .banned:
+            break
+        case .finished:
+            cell.overlayPlan.isHidden = true
+            cell.overlay.isHidden = true
+            cell.overlayOffline.isHidden = false
+            cell.logoUserOnline.isHidden = true
+            if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
+                cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
+            } else {
+                cell.overlayOffline.labelLive.text = "00:00"
+            }
+            self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
+        case .wait_for_approve:
+            break
         }
-        
-        
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
-        
+
+  
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
             
-        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.usersd[id]?.fullName
-        
-
+        cell.stackButton.tag = indexPath.row
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.tapGestureSelectorMy(_:)))
+        cell.stackButton.addGestureRecognizer(tap)
+ 
+            if indexPath.row == listBroadcast.count - 2 {
+                if self.itemCount > listBroadcast.count {
+                    self.isLoadingList = true
+                    self.loadMoreItemsForList()
+                }
+            }
+       // }
         return cell
         
         default:
             break
         }
-        return tableView.dequeueReusableCell(withIdentifier: "SimpleType", for: indexPath)
+        return tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath)
+    }
+    @objc func tapGestureSelectorMy(_ sender: UITapGestureRecognizer) {
+        let tappedView = sender.view
+        guard let viewTag = tappedView?.tag else { return }
+        guard !listBroadcast.isEmpty else { return }
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        guard let id = listBroadcast[viewTag].userId else { return}
+        vc.user = self.usersd[id]
+        navigationController?.pushViewController(vc, animated: true)
+        
     }
 
-
-    @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        guard self.token != nil else {  return  }
-        if sender.currentImage == UIImage(named: "LikeNot") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
-            self.followBroadcast(id: id)
-        } else {
-            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = listBroadcast[sender.tag].id else { return }
-            self.unFollowBroadcast(id: id)
-        }
+   @objc func moreButtonTapped(_ sender: UIButton) -> Void {
+       guard token != nil else {
+           let sign = SignInViewController()
+           self.present(sign, animated: true, completion: nil)
+           return
+       }
+        guard !listBroadcast.isEmpty else { return }
+        showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
-    @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-        guard self.token != nil else {  return  }
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url        
-        present(detailViewController, animated: true)
-
-    }
-    
 }
 extension HomeVC: UITableViewDelegate {
-    
-    
+        
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.section {
         case 0:
             return UITableView.automaticDimension
         case 1:
-            return 330
+            return 315
         default:
             break
         }
        
         return UITableView.automaticDimension
     }
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-   
-            let id = self.listBroadcast[indexPath.row].userId
-
-          guard let broadcastID = self.listBroadcast[indexPath.row].id,
-                let channelId = self.listBroadcast[indexPath.row].channelIds else { return }
-
-          self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
-          let vc = ChannelCoach()
-          vc.modalPresentationStyle = .fullScreen
-          vc.user = self.usersd[id!]
-          vc.broadcast = self.listBroadcast[indexPath.row]
-          navigationController?.pushViewController(vc, animated: true)
-   
-     
-      
+        let vc = PlayerViewVC()
+            vc.delegate = self
+            vc.broadcast = self.listBroadcast[indexPath.row]
+            vc.id =  self.listBroadcast[indexPath.row].userId
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
 
     }
 }
-
-
 extension HomeVC: TagListViewDelegate {
     func tagPressed(_ title: String, tagView: TagView, sender: TagListView) {
         var st = title
@@ -209,14 +213,24 @@ extension HomeVC: TagListViewDelegate {
 }
 extension HomeVC: HomeHorizontalListTableViewCellDelegate {
     func horizontalListItemTapped(index: Int, type: [User]) {
-  
         let vc = ChannelCoach()
         vc.modalPresentationStyle = .fullScreen
         vc.user = type[index]       
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    
-  
-    
+}
+extension HomeVC: ReloadView {
+    func reloadView() {
+        if listBroadcast.isEmpty {
+            self.getUsers()
+        }
+    }
+}
+extension HomeVC: OpenCoachDelegate {
+    func coachTapped(userId: Int) {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.usersd[userId]
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

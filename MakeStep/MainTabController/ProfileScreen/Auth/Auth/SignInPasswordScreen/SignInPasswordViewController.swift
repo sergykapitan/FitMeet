@@ -65,8 +65,13 @@ class SignInPasswordViewController: UIViewController {
         fetchUser()
     }
     @objc func actionFoggotPassword() {
+//        weak var pvc = self.presentingViewController
+//        self.dismiss(animated: true, completion: {
+//            let signUpVC = AuthViewController()
+//            pvc?.present(signUpVC, animated: true, completion: nil)
+//        })
         let passwordVC = FoggotPasswordViewController()
-        passwordVC.modalPresentationStyle = .fullScreen
+     //   passwordVC.modalPresentationStyle = .fullScreen
         self.present(passwordVC, animated: true, completion: nil)
     }
  

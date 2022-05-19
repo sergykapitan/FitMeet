@@ -26,18 +26,7 @@ class NotTokenView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        actionButtonContinue()
         self.navigationItem.title = "Broadcast List"
     }
-    func actionButtonContinue() {
-
-    }
-    @objc func actionSignUp() {
-
-    }
-    @objc func actionSignIn() {
-
-    }
-
 }
 

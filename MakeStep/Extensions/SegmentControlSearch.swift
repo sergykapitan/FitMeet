@@ -63,18 +63,7 @@ class SegmentControlSearch: UIView {
                 selectedIndex = buttonIndex
                 delegate?.change(to: selectedIndex)
                 UIView.animate(withDuration: 0.3) {
-                    print("SELFHHHHHHH> ================== \(selectorPosition)")
-                    print("BTNFrame = \(btn.frame.midX)")
                     self.selectorView.frame.origin.x = btn.frame.minX
-//                    if buttonIndex == 2 {
-//                        self.selectorView.frame.origin.x = btn.frame.midX  + 12
-//                    } else if buttonIndex == 1 {
-//                        self.selectorView.frame.origin.x = btn.frame.midX  + 4
-//                    } else {
-//                        self.selectorView.frame.origin.x = btn.frame.midX + 2
-//                    }
-                   // selectorPosition //+ 60 //+ /5.5
-
                 }
                 btn.setTitleColor(selectorTextColor, for: .normal)
             }

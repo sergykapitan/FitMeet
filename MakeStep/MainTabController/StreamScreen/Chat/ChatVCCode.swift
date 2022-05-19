@@ -16,9 +16,6 @@ final class ChatVCCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-//        view.layer.cornerRadius = 8
-//        view.layer.borderWidth = 0.8
-//        view.layer.borderColor = .init(red: 0, green: 0, blue: 0, alpha: 0)
         return view
         }()
     var tableView: UITableView = {
@@ -28,7 +25,6 @@ final class ChatVCCode: UIView {
     var buttonChat: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Back1-2"), for: .normal)
-       // button.backgroundColor = .blue
         return button
     }()
     var textView: UITextView = {
@@ -36,25 +32,42 @@ final class ChatVCCode: UIView {
         text.layer.borderColor = UIColor(hexString: "DADADA").cgColor
         text.backgroundColor = UIColor(hexString: "#F6F6F6")
         text.textColor = .lightGray
+       
         return text
     }()
     var sendMessage: UIButton = {
         var button = UIButton()
         button.setBackgroundImage(#imageLiteral(resourceName: "Frame"), for: .normal)
+        button.layer.shadowOffset = CGSize(width: 10, height: 10)
+        button.layer.shadowOpacity = 0.8
+        button.layer.shadowRadius = 5
+        button.layer.shouldRasterize = true
+        button.layer.rasterizationScale = UIScreen.main.scale
+        button.layer.shadowColor = UIColor(hexString: "#D8D8D8").cgColor
         return button
+    }()
+    var View: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.shadowOffset = CGSize(width: 10,
+                                          height: 10)
+        view.layer.shadowColor = UIColor(hexString: "#D8D8D8").cgColor
+        view.layer.shadowRadius = 5
+        view.layer.shadowOpacity = 0.8
+        view.layer.shouldRasterize = true
+        view.layer.rasterizationScale = UIScreen.main.scale
+        view.layer.cornerRadius = 20
+        return view
     }()
    
 
-    //MARK: - initial
-    
+ //MARK: - initial
     override init(frame: CGRect) {
         super.init(frame: frame)
         createCardViewLayer()
-    
     }
     
-    //MARK: - constraint First Layer
-    
+ //MARK: - constraint First Layer
     func createCardViewLayer() {
         addSubview(cardView)
         cardView.fillSuperview()
@@ -63,26 +76,17 @@ final class ChatVCCode: UIView {
         buttonChat.anchor(top: cardView.topAnchor, paddingTop: 10,width: 12,height: 12)
         buttonChat.centerX(inView: cardView)
         
-//        cardView.addSubview(textView)
-//        textView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 10, paddingRight: 10, paddingBottom: 0, height: 40)
-        
-//        cardView.addSubview(sendMessage)
-//        sendMessage.anchor(right: textView.rightAnchor,paddingRight: 10,width: 25 ,height: 25)
-//        sendMessage.centerY(inView: textView)
-        
         cardView.addSubview(sendMessage)
-        sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
+       // sendMessage.anchor(right: cardView.rightAnchor,bottom: cardView.bottomAnchor,paddingRight: 2, paddingBottom: 18,width: 64 ,height: 60)
+        
+        cardView.addSubview(View)
+        View.anchor( left: cardView.leftAnchor, right: sendMessage.leftAnchor, bottom: cardView.bottomAnchor, paddingLeft: 20, paddingRight: 0, paddingBottom: 30, height: 18)
         
         cardView.addSubview(tableView)
         tableView.anchor(top: buttonChat.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: sendMessage.topAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
- 
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-
 }
 

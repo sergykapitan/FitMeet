@@ -50,9 +50,6 @@ open class ImagePicker: NSObject {
         if let action = self.action(for: .camera, title: "Take photo") {
             alertController.addAction(action)
         }
-        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
-            alertController.addAction(action)
-        }
         if let action = self.action(for: .photoLibrary, title: "Photo library") {
             alertController.addAction(action)
         }
@@ -117,63 +114,49 @@ open class VideoPicker: NSObject {
         self.pickerController.delegate = self
         self.pickerController.allowsEditing = true
         self.pickerController.mediaTypes = ["public.movie"]
-        //"public.movie"
     }
 
-    private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
-        guard UIImagePickerController.isSourceTypeAvailable(type) else {
-            return nil
-        }
-
-        return UIAlertAction(title: title, style: .default) { [unowned self] _ in
-            self.pickerController.sourceType = type
-            self.presentationController?.present(self.pickerController, animated: true)
-        }
-    }
+//    private func action(for type: UIImagePickerController.SourceType, title: String) -> UIAlertAction? {
+//        guard UIImagePickerController.isSourceTypeAvailable(type) else {
+//            return nil
+//        }
+//
+//        return UIAlertAction(title: title, style: .default) { [unowned self] _ in
+//            self.pickerController.sourceType = type
+//            self.presentationController?.present(self.pickerController, animated: true)
+//        }
+//    }
 
     public func present(from sourceView: UIView) {
+        self.pickerController.sourceType = .photoLibrary
+        self.presentationController?.present(self.pickerController, animated: true)
 
-        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-
-        if let action = self.action(for: .camera, title: "Take photo") {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
-            alertController.addAction(action)
-        }
-        if let action = self.action(for: .photoLibrary, title: "Video library") {
-            alertController.addAction(action)
-        }
-
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            alertController.popoverPresentationController?.sourceView = sourceView
-            alertController.popoverPresentationController?.sourceRect = sourceView.bounds
-            alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
-        }
-
-        self.presentationController?.present(alertController, animated: true)
-    }
-
-//    private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
-//        controller.dismiss(animated: true, completion: nil)
+//        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 //
-//        self.delegate?.didSelectVideo(image: image)
-//    }
+//        if let action = self.action(for: .camera, title: "Take photo") {
+//            alertController.addAction(action)
+//        }
+//        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
+//            alertController.addAction(action)
+//        }
+//        if let action = self.action(for: .photoLibrary, title: "Video library") {
+//            alertController.addAction(action)
+//        }
+//
+//        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//
+//        if UIDevice.current.userInterfaceIdiom == .pad {
+//            alertController.popoverPresentationController?.sourceView = sourceView
+//            alertController.popoverPresentationController?.sourceRect = sourceView.bounds
+//            alertController.popoverPresentationController?.permittedArrowDirections = [.down, .up]
+//        }
+//
+//        self.presentationController?.present(alertController, animated: true)
+    }
     private func pickerController(_ controller: UIImagePickerController, didSelect video: URL?) {
         controller.dismiss(animated: true, completion: nil)
-
         self.delegate?.didSelectVideo(video: video)
     }
-
-//    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-//
-//     let videoURL = info["UIImagePickerControllerReferenceURL"] as? NSURL
-//     print(videoURL!)
-//     controller.dismiss(animated: true, completion: nil)
-//    }
-    
 }
 
 extension VideoPicker: UIImagePickerControllerDelegate {
@@ -185,12 +168,6 @@ extension VideoPicker: UIImagePickerControllerDelegate {
     public func imagePickerController(_ picker: UIImagePickerController,
                                       didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let videoURL = info[.mediaURL] as? URL
-        print(videoURL!)
-      //  controller.dismiss(animated: true, completion: nil)
-        
-//        guard let image = info[.editedImage] as? UIImage else {
-//            return self.pickerController(picker, didSelect: nil)
-//        }
         self.pickerController(picker, didSelect: videoURL)
     }
 }

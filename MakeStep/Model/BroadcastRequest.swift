@@ -32,6 +32,7 @@ struct BroadcastRequest: Codable {
     let channelID: Int?
     let name, type, access: String?
     let hasChat, isPlanned, onlyForSponsors, onlyForSubscribers: Bool?
+    
     let categoryIDS: [Int]?
     let scheduledStartDate: String?
     let description: String?

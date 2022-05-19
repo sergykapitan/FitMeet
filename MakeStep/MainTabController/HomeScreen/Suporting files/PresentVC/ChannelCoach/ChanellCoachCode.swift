@@ -42,12 +42,15 @@ final class ChanellCoachCode: UIView {
     }()
     var imagePromo: UIView = {
         var image = UIView()
+        image.isHidden =  true
         return image
     }()
 
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.contentMode = .scaleAspectFill
+        image.layer.masksToBounds = true
         return image
     }()
     var labelStreamInfo: UILabel = {
@@ -56,13 +59,14 @@ final class ChanellCoachCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.text = "Stream information"
         label.numberOfLines = 1
-       
+        label.isHidden = true
         return label
     }()
   
     var buttonMore: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        button.isHidden = true
         return button
     }()
     var welcomeLabel: UILabel = {
@@ -147,7 +151,7 @@ final class ChanellCoachCode: UIView {
         let label  = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.textAlignment = .center
-        label.text = "Followers"
+        label.text = "Following"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -162,7 +166,7 @@ final class ChanellCoachCode: UIView {
         let label  = UILabel()
         label.textColor = UIColor(hexString: "#7C7C7C")
         label.textAlignment = .center
-        label.text = "Following"
+        label.text = "Followers"
         label.font = UIFont.boldSystemFont(ofSize: 14)
         return label
     }()
@@ -183,14 +187,16 @@ final class ChanellCoachCode: UIView {
     var buttonLandScape: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
   
     var buttonSetting: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .right
         return button
     }()
     var buttonVolum: UIButton = {
@@ -218,6 +224,7 @@ final class ChanellCoachCode: UIView {
         view.layer.borderColor = UIColor.gray.cgColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 12
+        view.isHidden = true
         return view
     }()
     var labelLive: UILabel = {
@@ -225,17 +232,20 @@ final class ChanellCoachCode: UIView {
         label.text = "Live"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.isHidden = true
         return label
     }()
     var imageLive: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "slider")
+        image.isHidden = true
         return image
         
     }()
     var imageEye: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "eye")
+        image.isHidden = true
         return image
         
     }()
@@ -244,6 +254,7 @@ final class ChanellCoachCode: UIView {
         label.text = "0"
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.isHidden = true
         return label
     }()
   
@@ -267,6 +278,23 @@ final class ChanellCoachCode: UIView {
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
+        return label
+    }()
+    var labelTimeStart: UILabel = {
+        var label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 1
+        label.textAlignment = .center
+        label.text = "00:00"
+        return label
+    }()
+    var labelTimeEnd: UILabel = {
+        var label = UILabel()
+        label.textColor = .white
+        label.font = UIFont.systemFont(ofSize: 12)
+        label.numberOfLines = 1
+        label.textAlignment = .center
         return label
     }()
 
@@ -342,7 +370,7 @@ final class ChanellCoachCode: UIView {
     }
     func setImage(image:String) {
         let url = URL(string: image)
-        imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfile.kf.setImage(with: url,options: [.retryStrategy(DelayRetryStrategy(maxRetryCount: 5, retryInterval: .seconds(1)))])
         imageLogoProfileBottom.kf.setImage(with: url)
     }
 

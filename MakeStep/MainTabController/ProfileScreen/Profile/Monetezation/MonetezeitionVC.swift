@@ -8,11 +8,12 @@
 import UIKit
 
 class MonetezeitionVC: UIViewController {
-    
+
     let monetView = MonetezeitionVCode()
+    
     let loadingVC = MyTariff()
     let ch = CalculateVC()
-
+    let search = SearchVC()
     
     override func loadView() {
         super.loadView()
@@ -25,16 +26,11 @@ class MonetezeitionVC: UIViewController {
         makeNavItem()
         actionButton()
         actionBtnCalculate()
-       // actionBtnTariff()
-
-      
     }
     func actionButton(){
-       // self.monetView.buttonMytariffs.addTarget(self, action: #selector(actionBtnTariff) , for: .touchUpInside)
         self.monetView.buttonIncomecalculator.addTarget(self, action: #selector(actionBtnCalculate), for: .touchUpInside)
     }
     @objc func actionBtnTariff() {
-       // self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#3B58A4")
         self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#BBBCBC")
         removeAllChildViewController(ch)
         configureChildViewController(loadingVC, onView:monetView.selfView )
@@ -42,7 +38,6 @@ class MonetezeitionVC: UIViewController {
     }
     @objc func actionBtnCalculate() {
         self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#3B58A4")
-      //  self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#BBBCBC")
         removeAllChildViewController(loadingVC)
         configureChildViewController(ch, onView:monetView.selfView )
     }
@@ -52,20 +47,23 @@ class MonetezeitionVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = attributes
         
                     let backButton = UIButton()
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
+                  //  backButton.anchor( width: 40, height: 30)
+                    backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
+                   
         
                     let titleLabel = UILabel()
-                   titleLabel.text = "Monetization"
+                   titleLabel.text = " Monetization"
                    titleLabel.textAlignment = .center
                    titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
                    titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
                    let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
                    stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
+                   stackView.alignment = .center
                    stackView.axis = .horizontal
+                    let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightBack))
+                    stackView.addGestureRecognizer(tap)
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
@@ -78,3 +76,27 @@ class MonetezeitionVC: UIViewController {
     }
 
 }
+//MARK: - UISearchBarDelegate
+//extension MonetezeitionVC: UISearchResultsUpdating {
+//
+//    func updateSearchResults(for searchController: UISearchController) {
+//        
+//            let searchBar = searchController.searchBar
+//             print("Search == \(searchBar)")
+//           
+//
+//    }
+//    func connectUser (broadcastId:String?,channellId: String?) {
+//        
+//        guard let broadID = broadcastId,let id = channellId else { return }
+//        SocketWatcher.sharedInstance.getTokenChat()
+//        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
+//    }
+//}
+//extension MonetezeitionVC: SearchData {
+//    func searchData() {
+//        print("all")
+//    }
+//
+//
+//}

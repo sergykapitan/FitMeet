@@ -10,17 +10,12 @@ import UIKit
 import Combine
 
 class CalculateVC: UIViewController {
-    
 
-   
     let calculateView = CalculateVCCode()
     var valueA: Float = 0
     var valueB: Float = 3.99
     var ValueC: Float = 1
-    
-    
-    
-    
+
     override func loadView() {
         super.loadView()
         view = calculateView
@@ -28,30 +23,13 @@ class CalculateVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         actionButton()
-        print( self.view.bounds.height)
-       
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-       
     }
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        if view.bounds.height <= 488 {
-                    
-                   calculateView.sliderA.anchor(height:100)
-                   calculateView.sliderB.anchor(height:100)
-                   calculateView.sliderC.anchor(height:100)
-                   calculateView.labelComision.isHidden = true
-                   view.layoutIfNeeded()
-               } else {
                    calculateView.sliderA.anchor(height:120)
                    calculateView.sliderB.anchor(height:120)
                    calculateView.sliderC.anchor(height:120)
                    calculateView.labelComision.isHidden = false
-               }
     }
     private func actionButton() {
         calculateView.labelComision.addTarget(self, action: #selector(actionLabelComission), for: .touchUpInside)
@@ -97,7 +75,7 @@ class CalculateVC: UIViewController {
     }
     private func calculate() -> String {
       let price = valueA * valueB * ValueC
-      let value = Double(calculatePercentage(value: price,percentageVal: 30))
+      let value = Double(calculatePercentage(value: price,percentageVal: 70))
        
         return value.roundToDecimal(2).formattedWithSeparator
     }

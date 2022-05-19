@@ -73,6 +73,9 @@ class SocketIOManager: NSObject {
     }
     
     func connectToServerWithNickname(nicname: String, completionHandler: @escaping (_ userList: [Int]?) -> Void) {
+        guard let socket = socket else {return}
+        listenForOtherMessages()
+        let name = nicname
         socket.connect()
         var arrayUserId = [Int]()
         var arrUser = [Any]()
@@ -93,6 +96,8 @@ class SocketIOManager: NSObject {
             }
             completionHandler(arrayUserId)
         }
+     //   socket.emit("connectUser", nickname)
+        socket.emit("connectUser", name)
        
     }
     
@@ -132,7 +137,7 @@ class SocketIOManager: NSObject {
             messageDictionary["username"] = user!["fullName"] as! String
             messageDictionary["message"] = text!["text"] as! String
             messageDictionary["timestamp"] = dict!["timestamp"] as! String
-            messageDictionary["id"] = user!["userId"] as! Int
+            messageDictionary["id"] = user!["userId"]// as! Int
 
             completionHandler(messageDictionary) 
         }
@@ -144,11 +149,11 @@ class SocketIOManager: NSObject {
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userWasConnectedNotification"), object: dataArray[0] as! [String: Any])
         }
         
-        socket.on("disconnectUser") { (dataArray, socketAck) -> Void in
-            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: dataArray[0] as! String)
-        }
+//        socket.on("disconnectUser") { (dataArray, socketAck) -> Void in
+//            NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userWasDisconnectedNotification"), object: dataArray[0] as! String)
+//        }
         
-        socket.on("userTypingUpdate") { (dataArray, socketAck) -> Void in
+        socket.on("connectUser") { (dataArray, socketAck) -> Void in
             NotificationCenter.default.post(name: NSNotification.Name(rawValue: "userTypingNotification"), object: dataArray[0] as? [String: Any])
         }
 

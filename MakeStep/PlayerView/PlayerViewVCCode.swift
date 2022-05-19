@@ -22,44 +22,65 @@ final class PlayerViewVCCode: UIView {
         view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
         }()
-
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
+        image.layer.masksToBounds = false
+        image.clipsToBounds = true
+        image.layer.cornerRadius = 12
         image.image = #imageLiteral(resourceName: "Group 17091")
+        image.anchor(width: 24,height: 24)
+        image.makeRounded()
         return image
     }()
     var imageLogo: UIImageView = {
         let image = UIImageView()
         image.isHidden =  true
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
     }()
     var imagePromo: UIView = {
         var image = UIView()
         return image
     }()
-
     var buttonLandScape: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "enlarge"), for: .normal)
+        button.setImage(#imageLiteral(resourceName: "maximize"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
     var playerSlider: UISlider = {
         var slider = UISlider()
-        slider.setThumbImage(UIImage(named:"SliderCircle"), for: .normal)
+        slider.setThumbImage(UIImage(named: "FrameSlider"), for: .normal)
         return slider
     }()
     var buttonSetting: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .right
         return button
     }()
-    var buttonVolum: UIButton = {
+    var buttonPlayPause: UIButton = {
         var button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "volume-11"), for: .normal)
-        button.contentVerticalAlignment = .fill
-        button.contentHorizontalAlignment = .fill
+        button.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
+    }()
+    var buttonSkipPrevious: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Skip Previous"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
+        return button
+    }()
+    var buttonSkipNext: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Skip Next"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .center
         return button
     }()
     var labelTimer: UILabel = {
@@ -68,16 +89,16 @@ final class PlayerViewVCCode: UIView {
         label.font = UIFont.systemFont(ofSize: 12)
         return label
     }()
-    
-    var labelCategory: TagListView = {
-        var tag = TagListView()
-        tag.textFont = UIFont.systemFont(ofSize: 12)
-        tag.tagBackgroundColor = .clear
-        tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
-        tag.selectedTextColor = .black
-        tag.paddingX = 0
-        return tag
+    var buttonstartStream: UIButton = {
+        var button = UIButton()
+        button.backgroundColor = .blueColor
+        button.setTitle("StartStream", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
+        button.layer.cornerRadius = 13
+        button.isHidden = true
+        return button
     }()
+   
     var labelStreamInfo: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#000000")
@@ -88,9 +109,10 @@ final class PlayerViewVCCode: UIView {
     }()
     var labelStreamDescription: UILabel = {
         var label = UILabel()
-        label.textColor = .gray //UIColor(hexString: "#F6F6F6")
+        label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 14)
         label.numberOfLines = 1
+        label.sizeToFit()
         return label
     }()
     var labelLike: UILabel = {
@@ -101,13 +123,22 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
+    var labelEyeView: UILabel = {
+        var label = UILabel()
+        label.textColor = .gray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.numberOfLines = 1
+        label.text = "123"
+        label.textAlignment = .center
+        return label
+    }()
     var labelTimeStart: UILabel = {
         var label = UILabel()
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 12)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.text = "0.0"
+        label.text = "00:00"
         return label
     }()
     var labelTimeEnd: UILabel = {
@@ -121,16 +152,25 @@ final class PlayerViewVCCode: UIView {
     var buttonChat: UIButton = {
         var button = UIButton()
         button.setImage(UIImage(named: "ChatPlayer"), for: .normal)
+        button.isHidden = true
         return button
     }()
-
-
     var tableView: UITableView = {
         let table = UITableView()
         return table
     }()
     var overlay : UIView = {
         let view = UIView()
+        view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+        view.layer.borderWidth = 0.5
+        view.layer.masksToBounds = false
+        view.layer.borderColor = UIColor.gray.cgColor
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 12
+        return view
+    }()
+    var settingView : SettingView = {
+        let view = SettingView()
         view.backgroundColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
         view.layer.borderWidth = 0.5
         view.layer.masksToBounds = false
@@ -156,22 +196,19 @@ final class PlayerViewVCCode: UIView {
         image.image = #imageLiteral(resourceName: "eye")
         return image
     }()
+    var imageEyeТ: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "eye")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+        return image
+    }()
     var labelEye: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 12)
         label.textColor = .white
+        label.text = "2"
         return label
     }()
-    var buttonSubscribe: UIButton = {
-        var button = UIButton()
-        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-        button.layer.borderWidth = 1
-        button.layer.masksToBounds = false
-        button.layer.borderColor = UIColor(hexString: "#3B58A4").cgColor
-        button.clipsToBounds = true
-        button.layer.cornerRadius = 12
-        return button
-    }() 
+
     var labelDescription : UILabel  = {
         let label  = UILabel()
         label.textColor = .black
@@ -184,12 +221,17 @@ final class PlayerViewVCCode: UIView {
         button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
-    var buttonMore: UIButton = {
+    var buttonOpen: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "More"), for: .normal)
+        let image = UIImage(named: "Back11")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
+        button.setImage(image, for: .normal)
         return button
     }()
-  
+    var buttonMore: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "Menu Kebab1"), for: .normal)
+        return button
+    }()
     let labelNotToken: UILabel = {
         let label = UILabel()
         label.numberOfLines = 0
@@ -198,7 +240,52 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
-    
+    var stackButton: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.anchor(height: 30)
+        return stack
+    }()
+    var labelCategory: TagListView = {
+       var tag = TagListView()
+       tag.textFont = UIFont.systemFont(ofSize: 12)
+       tag.tagBackgroundColor = .clear
+       tag.textColor = UIColor(red: 0.145, green: 0.145, blue: 0.145, alpha: 0.6)
+       tag.selectedTextColor = .black
+       tag.paddingX = 2
+       tag.paddingY = 5
+       tag.tagLineBreakMode = .byTruncatingHead
+       tag.translatesAutoresizingMaskIntoConstraints = false
+       tag.anchor( width: 200)
+       return tag
+       }()
+    var buttonSubscribe: UIButton = {
+        var button = UIButton()
+        button.setTitle("Subscribe", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = .blueColor
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "#0066FF").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
+    var buttonFollow: UIButton = {
+        var button = UIButton()
+        button.setTitle("Follow", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+        button.backgroundColor = .blueColor
+        button.layer.borderWidth = 1
+        button.layer.masksToBounds = false
+        button.layer.borderColor = UIColor(hexString: "#0066FF").cgColor
+        button.clipsToBounds = true
+        button.layer.cornerRadius = 12
+        return button
+    }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -208,8 +295,11 @@ final class PlayerViewVCCode: UIView {
     }
     
     //MARK: - constraint First Layer
-    private func initUI() {        
+    private func initUI() {
+        
         addSubview(cardView)
+        stackButton = UIStackView(arrangedSubviews: [imageLogoProfile,labelStreamDescription])
+        stackButton.spacing = 10
     }
     func createCardViewLayer() {
 
@@ -219,48 +309,61 @@ final class PlayerViewVCCode: UIView {
         imagePromo.anchor(top: cardView.topAnchor,
                           left: cardView.leftAnchor,
                           right: cardView.rightAnchor,
-                          paddingTop: 40, paddingLeft: 0, paddingRight: 0)
+                          paddingTop: 45, paddingLeft: 0, paddingRight: 0)
         
         imagePromo.widthEqualToMultiplier(inView: self, multiplier: 9.0 / 16.0)
         
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
         
-        cardView.addSubview(buttonLandScape)
-        buttonLandScape.anchor(right: imagePromo.rightAnchor,bottom: imagePromo.bottomAnchor,paddingRight: 20, paddingBottom: 20,width: 30,height: 30)
+        cardView.addSubview(buttonstartStream)
+        buttonstartStream.centerX(inView: imagePromo)
+        buttonstartStream.anchor(bottom: imagePromo.bottomAnchor, paddingBottom: 50,width: 100)
         
         cardView.addSubview(buttonMore)
-        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: 0,width: 20,height: 20)
+        buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 0,paddingRight: 10,width: 24,height: 35)
         
         cardView.addSubview(labelStreamInfo)
-        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 24, paddingRight: 2)
+        labelStreamInfo.anchor(top: imagePromo.bottomAnchor,  left: cardView.leftAnchor,right: buttonMore.leftAnchor,paddingTop: 11, paddingLeft: 16, paddingRight: 2)
         
         cardView.addSubview(labelLike)
-        labelLike.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
+        labelLike.anchor(top: labelStreamInfo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingRight: 10, width: 24, height: 24)
 
         cardView.addSubview(buttonLike)
-        buttonLike.anchor(top: imagePromo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 30, paddingRight: 0, width: 24, height: 24)
+        buttonLike.anchor(top: labelStreamInfo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
+        
+        cardView.addSubview(labelEyeView)
+        labelEyeView.anchor(top: labelStreamInfo.bottomAnchor,right: buttonLike.leftAnchor, paddingTop: 5, paddingRight: 5, width: 24, height: 24)
+
+        cardView.addSubview(imageEyeТ)
+        imageEyeТ.anchor(top: labelStreamInfo.bottomAnchor, right: labelEyeView.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
 
         cardView.addSubview(buttonChat)
-        buttonChat.anchor(right: buttonLike.leftAnchor,paddingRight: 5,width: 40, height: 40)
+        buttonChat.anchor(right: imageEyeТ.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
 
-        cardView.addSubview(imageLogoProfile)
-        imageLogoProfile.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,  paddingTop: 5, paddingLeft: 16, width: 24, height: 24)
+        cardView.addSubview(stackButton)
+        stackButton.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
         
-        cardView.addSubview(labelStreamDescription)
-        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 5,width: 120)
-        labelStreamDescription.centerY(inView: imageLogoProfile)
-
+        
+        cardView.addSubview(buttonSubscribe)
+        buttonSubscribe.anchor(top: stackButton.bottomAnchor, left: cardView.leftAnchor,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
+        
+        cardView.addSubview(buttonFollow)
+        buttonFollow.anchor(top: stackButton.bottomAnchor, left: buttonSubscribe.rightAnchor ,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
+        
+        cardView.addSubview(buttonOpen)
+        buttonOpen.anchor(top: stackButton.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: -10, width: 60, height: 30)
+        buttonOpen.centerY(inView: buttonFollow)
+        
         cardView.addSubview(labelCategory)
-        labelCategory.anchor( left: labelStreamDescription.rightAnchor, right: buttonChat.leftAnchor, paddingLeft: 0,paddingRight: 5)
-        labelCategory.centerY(inView: labelStreamDescription)
-                
+        labelCategory.anchor(top: buttonFollow.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 15, paddingLeft: 15, paddingRight: 15)
+        cardView.addSubview(labelDescription)
+        labelDescription.anchor(top: labelCategory.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 15, paddingLeft: 15, paddingRight: 15)
+        
+  
         cardView.addSubview(tableView)
-        tableView.anchor(top: labelStreamDescription.bottomAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 10, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
-
-
-       
+        tableView.anchor(left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
 
         cardView.addSubview(labelNotToken)
         labelNotToken.anchor( left: cardView.leftAnchor, right: cardView.rightAnchor,  paddingLeft: 16, paddingRight: 16)
@@ -272,13 +375,7 @@ final class PlayerViewVCCode: UIView {
                        left: imagePromo.leftAnchor,
                        paddingTop: 10,
                        paddingLeft: 16,  width: 90, height: 24)
-        
-       
-        
-        cardView.addSubview(buttonSetting)
-        buttonSetting.anchor( right: buttonLandScape.leftAnchor,  paddingRight: 10,  width: 30, height: 30)
-        buttonSetting.centerY(inView: buttonLandScape)
-        
+    
         cardView.addSubview(imageLive)
         imageLive.anchor( left: overlay.leftAnchor, paddingLeft: 6, width: 12, height: 12)
         imageLive.centerY(inView: overlay)
@@ -299,6 +396,7 @@ final class PlayerViewVCCode: UIView {
     func setImage(image:String) {
         let url = URL(string: image)
         imageLogoProfile.kf.setImage(with: url)
+        imageLogoProfile.makeRounded()
     }
     func setLabel(description: String,category: String) {
         labelStreamDescription.text = description
@@ -307,9 +405,12 @@ final class PlayerViewVCCode: UIView {
         let url = URL(string: image)
         imageLogo.kf.setImage(with: url)
     }
+    func setImagePromoN(image:String) {
+        let url = URL(string: image)
+       // imagePromo.kf.setImage(with: url)
+    }
     
     required init?(coder: NSCoder) {
-        //super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
     

@@ -80,7 +80,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
                chatVC.transitioningDelegate = actionChatTransitionManager
                chatVC.modalPresentationStyle = .custom
                actionChatTransitionManager.intWidth = 1
-               actionChatTransitionManager.intHeight = 0.2
+                   actionChatTransitionManager.intHeight = 0.25
                curvaView.present(chatVC, animated: true, completion: nil)
 
                return false

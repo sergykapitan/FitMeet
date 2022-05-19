@@ -13,18 +13,18 @@ import Kingfisher
 final class EditProfileCode: UIView {
     
     //MARK: - UI
-    let cardView: UIView = {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
+    let imageButtonss: UIButton = {
+        let button = UIButton()
+        button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        button.imageView?.clipsToBounds = true
+        button.imageView?.contentMode = .scaleAspectFill
+        return button
     }()
     var imageLogoProfile: UIImageView = {
         let image = UIImageView()
         image.image = #imageLiteral(resourceName: "Group 17091")
         return image
     }()
-    
     let imageRed: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "redProfile")
@@ -41,7 +41,6 @@ final class EditProfileCode: UIView {
         button.layer.cornerRadius = 40
         return button
     }()
-    
     var welcomeLabel: UILabel = {
         let label = UILabel()
         label.text = "Edit Profile"
@@ -56,7 +55,6 @@ final class EditProfileCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
-
     let textFieldName: UITextField = {
         let textField = UITextField()
         textField.layer.cornerRadius = 19
@@ -118,6 +116,7 @@ final class EditProfileCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
     var labelBirthday: UILabel = {
@@ -220,52 +219,43 @@ final class EditProfileCode: UIView {
         button.backgroundColor = UIColor(hexString: "#3B58A4")
         return button
     }()
-    
     let buttonSave : UIButton = {
         let button = UIButton()
         button.setTitle("Save", for: .normal)
         button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(hexString: "#3B58A4")
+        button.backgroundColor = .blueColor
         return button
     }()
     let scroll: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.contentSize.height = 1000
+        scroll.showsVerticalScrollIndicator = false
+        scroll.alwaysBounceVertical = true
         scroll.backgroundColor = .white
         return scroll
     }()
-    
- 
+
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
         initUI()
         initLayout()
-        
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        
-        
       addSubview(scroll)
       scroll.fillFull(for: self)
-      scroll.addSubview(cardView)
        
     }
     private func initLayout() {
-    
-        cardView.anchor(top: scroll.topAnchor,paddingTop: 0,width: 400)
-
         scroll.addSubview(imageButton)
-        imageButton.anchor(top: cardView.topAnchor, left: cardView.leftAnchor,
+        imageButton.anchor(top: scroll.topAnchor, left: scroll.leftAnchor,
                                 paddingTop: 10, paddingLeft: 20, width: 80, height: 80)
         
         scroll.addSubview(imageRed)
-        imageRed.anchor( right: imageButton.rightAnchor, bottom: imageButton.bottomAnchor, paddingRight: -5, paddingBottom: -5, width: 30, height: 30)
+        imageRed.anchor( right: imageButton.rightAnchor, bottom: imageButton.bottomAnchor, paddingRight: -15, paddingBottom: -15, width: 50, height: 50)
         
         scroll.addSubview(welcomeLabel)
         welcomeLabel.anchor(left: imageButton.rightAnchor, paddingLeft: 10)
@@ -274,21 +264,21 @@ final class EditProfileCode: UIView {
         
         scroll.addSubview(labelFullName)
         labelFullName.anchor(top: imageButton.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
      
 
         scroll.addSubview(textFieldName)
         textFieldName.anchor(top: labelFullName.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right:  cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right:  scroll.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(labelUserName)
         labelUserName.anchor(top: textFieldName.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
         
@@ -296,8 +286,8 @@ final class EditProfileCode: UIView {
         
         scroll.addSubview(textFieldUserName)
         textFieldUserName.anchor(top: labelUserName.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         textFieldUserName.addSubview(alertImage)
@@ -306,56 +296,56 @@ final class EditProfileCode: UIView {
         
         scroll.addSubview(alertLabel)
         alertLabel.anchor(top: textFieldUserName.bottomAnchor, paddingTop: 5)
-        alertLabel.centerX(inView: cardView)
+        alertLabel.centerX(inView: scroll)
         
         
         scroll.addSubview(labelGender)
         labelGender.anchor(top: textFieldUserName.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
         scroll.addSubview(textGender)
         textGender.anchor(top: labelGender.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         
         scroll.addSubview(labelBirthday)
         labelBirthday.anchor(top: textGender.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
         scroll.addSubview(textBirthday)
         textBirthday.anchor(top: labelBirthday.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 1, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(labelEmail)
         labelEmail.anchor(top: textBirthday.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
         scroll.addSubview(textEmail)
         textEmail.anchor(top: labelEmail.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
         
         scroll.addSubview(labelPhoneNumber)
         labelPhoneNumber.anchor(top: textEmail.bottomAnchor,
-                             left: cardView.leftAnchor,
-                             right: cardView.rightAnchor,
+                             left: scroll.leftAnchor,
+                             right: scroll.rightAnchor,
                              paddingTop: 5, paddingLeft: 10, paddingRight: 10,height: 39)
      
         scroll.addSubview(textPhoneNumber)
         textPhoneNumber.anchor(top: labelPhoneNumber.bottomAnchor,
-                              left: cardView.leftAnchor,
-                              right: cardView.rightAnchor,
+                              left: scroll.leftAnchor,
+                              right: scroll.rightAnchor,
                               paddingTop: 0, paddingLeft: 10, paddingRight: 10,height: 39)
         
 //        scroll.addSubview(labelSoshial)
@@ -392,7 +382,14 @@ final class EditProfileCode: UIView {
         
         scroll.addSubview(buttonSave)
         buttonSave.anchor(top: textPhoneNumber.bottomAnchor, paddingTop: 30, width: 137)
-        buttonSave.centerX(inView: cardView)
+        buttonSave.centerX(inView: scroll)
+        
+        scroll.addSubview(imageButtonss)
+        imageButtonss.anchor(top: buttonSave.bottomAnchor,
+                               left: scroll.leftAnchor,
+                               right: scroll.rightAnchor,
+                               paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 1)
+        imageButtonss.centerX(inView: scroll)
 
         
     }

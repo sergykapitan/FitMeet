@@ -27,7 +27,7 @@ final class CalculateVCCode: UIView {
         slide.limitValueIndicator = "Max"
         slide.minValue = 0
         slide.maxValue = 10000
-        slide.defaultValue = 10
+        slide.defaultValue = 0
         slide.trackHeight = 14
         slide.activeTrackColor = UIColor(hexString: "#3B58A4")
         slide.inactiveTrackColor = UIColor(red: 0.91, green: 0.91, blue: 0.91, alpha: 1.0)
@@ -54,7 +54,7 @@ final class CalculateVCCode: UIView {
         slide.unitPosition = .back
         slide.minValue = 3.99
         slide.maxValue = 39.99
-        slide.defaultValue = 10.99
+        slide.defaultValue = 3.99
         slide.slidingInterval = 1
         slide.trackHeight = 14
         slide.activeTrackColor = UIColor(hexString: "#F9A000")
@@ -83,7 +83,7 @@ final class CalculateVCCode: UIView {
         slide.unitPosition = .back
         slide.minValue = 1
         slide.maxValue = 12
-        slide.defaultValue = 6
+        slide.defaultValue = 1
         slide.slidingInterval = 1
         slide.trackHeight = 14
         slide.activeTrackColor = UIColor(hexString: "#41C75F")
@@ -114,7 +114,6 @@ final class CalculateVCCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 26)
         return label
     }()
-    
     var labelTotal: UILabel = {
         let label = UILabel()
         label.text = "$ 0.00"
@@ -122,14 +121,6 @@ final class CalculateVCCode: UIView {
         label.textColor = UIColor(hexString: "#3B58A4")
         return label
     }()
-    
-//    var labelComision: UILabel = {
-//        let label = UILabel()
-//        label.text = "Service commission 30%" + " ➔"
-//        label.font = UIFont.boldSystemFont(ofSize: 16)
-//        label.textColor = UIColor(hexString: "#868686")
-//        return label
-//    }()
     var labelComision: UIButton = {
         let button = UIButton()
         button.setTitle("Service commission 30%" + " ➔", for: .normal)
@@ -137,7 +128,6 @@ final class CalculateVCCode: UIView {
         button.setTitleColor(UIColor.init(hexString: "#868686"), for: .normal)
         return button
     }()
-    
     var labelAfterComision: UILabel = {
         let label = UILabel()
         label.text = "After deducting the service commission"
@@ -145,15 +135,12 @@ final class CalculateVCCode: UIView {
         label.textColor = UIColor(hexString: "#3B58A4")
         return label
     }()
-   
-   
+      
     // MARK: - Init
     init() {
         super.init(frame: CGRect.zero)
         initUI()
-      
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -166,18 +153,18 @@ final class CalculateVCCode: UIView {
         sliderA.anchor(top: cardView.topAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,height: 120)
+                       paddingTop: 10, paddingLeft: 16, paddingRight: 16,height: 120)
         cardView.addSubview(sliderB)
         sliderB.anchor(top: sliderA.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,
+                       paddingTop: 0, paddingLeft: 16, paddingRight: 16,
                        height: 120)
         cardView.addSubview(sliderC)
         sliderC.anchor(top: sliderB.bottomAnchor,
                        left: cardView.leftAnchor,
                        right: cardView.rightAnchor,
-                       paddingTop: 20, paddingLeft: 16, paddingRight: 16,
+                       paddingTop: 0, paddingLeft: 16, paddingRight: 16,
                        height: 120)
         
         cardView.addSubview(fourAndLine)

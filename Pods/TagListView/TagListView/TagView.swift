@@ -169,7 +169,6 @@ open class TagView: UIButton {
     
     private func setupView() {
         titleLabel?.lineBreakMode = titleLineBreakMode
-
         frame.size = intrinsicContentSize
         addSubview(removeButton)
         removeButton.tagView = self

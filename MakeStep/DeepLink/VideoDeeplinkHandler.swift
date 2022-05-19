@@ -36,7 +36,7 @@ final class VideoDeeplinkHandler: DeeplinkHandlerProtocol {
        
         
         mainVC.modalPresentationStyle = .fullScreen
-        home?.navigationController?.pushViewController(PresentVC(), animated: true)
+       // home?.navigationController?.pushViewController(PresentVC(), animated: true)
         rootViewController?.present(mainVC, animated: true, completion: {
           //  home?.navigationController?.pushViewController(PresentVC(), animated: true)
             

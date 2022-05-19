@@ -15,11 +15,6 @@ import Combine
 
 class CategoryVC: UIViewController, UISearchBarDelegate {
     
-
-    var isSearchBarEmpty: Bool {
-        navigationItem.searchController = searchController
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
     
     @Inject var fitMeetStream: FitMeetStream
     
@@ -31,11 +26,7 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     var filtredBroadcast: [Datum] = []
     let searchView = CategoryCode()
     var categories: [Int: String] = [:]
-   // let viewModel = ViewModel()
-    
-    
-    private let refreshControl = UIRefreshControl()
-    private let searchController = UISearchController(searchResultsController: nil)
+  
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     
     // MARK: - LifiCicle
@@ -44,6 +35,15 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = false
         makeNavItem()
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                vc .delegate = self
+                self.present(vc, animated: true, completion: nil)
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -81,17 +81,10 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         actionButton()
 
     }
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-       // searchView.scrollView.contentSize = CGSize(width: searchView.stackHFirst.frame.width, height: searchView.stackHFirst.frame.height)
-    }
-    
+  
     func actionButton() {
         searchView.buttonAll.addTarget(self, action: #selector(actionAll), for: .touchUpInside)
-        searchView.buttonPopular.addTarget(self, action: #selector(actionPopular), for: .touchUpInside)
-        searchView.buttonNew.addTarget(self, action: #selector(actionNew), for: .touchUpInside)
         searchView.buttonLikes.addTarget(self, action: #selector(actionLikes), for: .touchUpInside)
-        searchView.buttonViewers.addTarget(self, action: #selector(actionViewers), for: .touchUpInside)
 
     }
 
@@ -130,82 +123,23 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
         print("notificationHandAction")
     }
     @objc func actionAll() {
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
+        searchView.buttonAll.backgroundColor = .blueColor
         searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        if token != nil {
-            binding()
-        } else {
-            bindingNotAuth()
-        }
-        
+        token != nil ? binding() :  bindingNotAuth()
         filtredBroadcast = listBroadcast
         self.searchView.collectionView.reloadData()
     }
-    @objc func actionPopular() {
-        
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
-        
-        filtredBroadcast = listBroadcast.filter { $0.isPopular }
-        self.searchView.collectionView.reloadData()
-    }
-    @objc func actionNew() {
-        
-        searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        
-        
-        filtredBroadcast = listBroadcast.filter { $0.isNew }
-        self.searchView.collectionView.reloadData()
-    }
+ 
     @objc func actionLikes() {
-        
         searchView.buttonAll.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = UIColor(hexString: "#3B58A4")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#BBBCBC")
-        if token != nil {
-           bindingLikes()
-        } else {
-          bindingLikesNot()
-        }
-        
-       
+        searchView.buttonLikes.backgroundColor = .blueColor
+        token != nil ? bindingLikes() :  bindingLikesNot()
     }
-    @objc func actionViewers() {
-        
-        searchView.buttonAll.backgroundColor = .blueColor//UIColor(hexString: "#BBBCBC")
-        searchView.buttonPopular.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonNew.backgroundColor = UIColor(hexString: "#BBBCBC")
-        searchView.buttonLikes.backgroundColor = .blueColor// UIColor(hexString: "#BBBCBC")
-        searchView.buttonViewers.backgroundColor = UIColor(hexString: "#3B58A4")
-      
-        filtredBroadcast = listBroadcast.filter{ $0.followersCount > 1}
-    }
+  
 
     private func setupMainView() {
         searchView.collectionView.delegate = self
         searchView.collectionView.dataSource = self
-        searchView.collectionView.refreshControl = refreshControl
-        refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
-    }
-    func makeReguest(searchText: String) {
-       // searchView.showSpinner()
-    }
-    func stopSpiners() {
-        refreshControl.endRefreshing()
     }
     private func showAlert(title: String, message: String) {
         let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -214,11 +148,11 @@ class CategoryVC: UIViewController, UISearchBarDelegate {
     }
 
     //MARK: - Selectors
-    @objc private func refreshAlbumList() {
-        print("refrech")
-       }
     @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        guard token != nil else { return }
+        guard token != nil else {
+            let sign = SignInViewController()
+            self.present(sign, animated: true, completion: nil)
+            return }
 
         if sender.currentImage == UIImage(named: "LikeNot") {
             sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)

@@ -6,69 +6,18 @@
 //
 
 import UIKit
-import ContextMenuSwift
 import AuthenticationServices
 import Combine
 
-class AuthViewController: UIViewController,SignUpDelegate {
+class AuthViewController: UIViewController{
     
-    func changeAlert() {
   
-       if self.authView.buttonContinue.frame.origin.y == 219.0 {
-        
-        UIView.animate(withDuration: 0.5) {
-          self.authView.buttonContinue.frame.origin.y += 15
-          self.authView.labelAccount.frame.origin.y += 15
-          self.authView.buttonSignIn.frame.origin.y += 15
-        } completion: { (bool) in
-            if bool {
-                self.authView.alertImage.isHidden = false
-                self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
-                self.authView.alertLabel.isHidden = false
-            }
-        }
-      }
-    }
-    func changeMail() {
-        
-        if self.authView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.authView.buttonContinue.frame.origin.y += 15
-           self.authView.labelAccount.frame.origin.y += 15
-           self.authView.buttonSignIn.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.authView.alertMailLabel.isHidden = false
-                 self.authView.alertImage.isHidden = false
-             }
-         }
-       }
-    }
-    func changePhone() {
-        
-        print("4444 ===== \(self.authView.buttonContinue.frame.origin.y)")
-        
-        if self.authView.buttonContinue.frame.origin.y == 219.0 {
-         
-         UIView.animate(withDuration: 0.5) {
-           self.authView.buttonContinue.frame.origin.y += 15
-           self.authView.labelAccount.frame.origin.y += 15
-           self.authView.buttonSignIn.frame.origin.y += 15
-         } completion: { (bool) in
-             if bool {
-                 self.authView.alertImage.isHidden = false
-                 self.authView.alertLabel.text = "phone must be a valid phone number"
-                 self.authView.alertLabel.isHidden = false
-             }
-         }
-       }
-    }
     
     let authView = AuthViewControllerCode()
     private let signInButton = ASAuthorizationAppleIDButton(type: .default, style: .black)
     private var takeAppleSign: AnyCancellable?
     @Inject var fitMeetApi: FitMeetApi
+    var topPhoneConstraint = NSLayoutConstraint()
     
     override  var shouldAutorotate: Bool {
         return false
@@ -105,35 +54,28 @@ class AuthViewController: UIViewController,SignUpDelegate {
     func actionButtonContinue() {
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
-        authView.buttonSocialNetwork.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+        authView.appleLogInButton.button.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+        topPhoneConstraint = authView.buttonContinue.topAnchor.constraint(equalTo: authView.textFieldLogin.bottomAnchor, constant: 15)
+        topPhoneConstraint.isActive = true
     }
     @objc func actionSignUp() {
-        let userPhoneOreMail = authView.textFieldLogin.text
+        guard let text = authView.textFieldLogin.text else { return }
+        let userPhoneOreMail = text.format(phoneNumber: text, shouldRemoveLastDigt: text.count == 1)
         let signUpVC = SignUpViewController()
         signUpVC.userPhoneOreEmail = userPhoneOreMail
         signUpVC.delegate = self
         self.present(signUpVC, animated: true, completion: nil)
     }
     @objc func actionSignIn() {
-        let signUpVC = SignInViewController()
-        self.present(signUpVC, animated: true, completion: nil)
+        weak var pvc = self.presentingViewController
+        self.dismiss(animated: true, completion: {
+            let signUpVC = SignInViewController()
+            pvc?.present(signUpVC, animated: true, completion: nil)
+        })
     }
     @objc func actionSocialNetwork() {
-     
-      //  let FaceBookButton = ContextMenuItemWithImage(title: "Facebook", image: #imageLiteral(resourceName: "facebook"))
-      //  let GoogleButton = ContextMenuItemWithImage(title: "Google", image: #imageLiteral(resourceName: "Google"))
-      //  let TwitterButton = ContextMenuItemWithImage(title: "Twitter", image: #imageLiteral(resourceName: "Vector1-3"))
-        let Applebutton = ContextMenuItemWithImage(title: "Sign in with Apple", image: #imageLiteral(resourceName: "Apple"))
-        
-        
-        CM.items = [ Applebutton ]
-        CM.MenuConstants.MenuWidth = self.authView.buttonSocialNetwork.frame.width
-        CM.MenuConstants.HorizontalMarginSpace = 17
-        CM.MenuConstants.LabelDefaultColor = UIColor(hexString: "#C4C4C4")
-        CM.showMenu(viewTargeted: authView.buttonSocialNetwork, delegate: self,animated: true)
-  
+        self.avtorizete()
     }
-
     private func openProfileViewController() {
         let viewController = MainTabBarViewController()
         viewController.selectedIndex = 4
@@ -148,16 +90,13 @@ class AuthViewController: UIViewController,SignUpDelegate {
         controller.delegate = self
         controller.presentationContextProvider = self
         controller.performRequests()
-       // CM.closeAllViews()
     }
-
 }
 extension AuthViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let fullString = (textField.text ?? "") + string
-        let string = "formate"
-        textField.text = string.format(phoneNumber: fullString, shouldRemoveLastDigt: range.length == 1)
+       
         if fullString == "" {
             authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
@@ -168,84 +107,26 @@ extension AuthViewController: UITextFieldDelegate {
             authView.buttonContinue.backgroundColor = UIColor(red: 0.231, green: 0.345, blue: 0.643, alpha: 0.5)
             authView.buttonContinue.isUserInteractionEnabled = false
         }
-
-        return false
+        return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == authView.textFieldLogin {
             self.authView.textFieldLogin.resignFirstResponder()
-        }
+       }
         return true
-    }  
+    }
 }
-extension AuthViewController : ContextMenuDelegate {
-    func contextMenuDidSelect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) -> Bool {
-       
-        if index == 0 {
-            let request = ASAuthorizationAppleIDProvider().createRequest()
-            request.requestedScopes = [.fullName, .email]
 
-            let controller = ASAuthorizationController(authorizationRequests: [request])
-            controller.delegate = self
-            controller.presentationContextProvider = self
-            controller.performRequests()
-            return false
-        }
-        if index == 1 {
-            print("Facebook")
-            return false
-        }
-        if index == 2 {
-            print("Google")
-            return false
-        }
-        if index == 3 {
-            print("Twitter")
-            return false
-        }
-        return false
-       
-    }
-    
-    func contextMenuDidDeselect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) {
-        if index == 0 {
-           // CM.closeAllViews()
-          //  contextMenu.closeAllViews()
-            self.avtorizete()
-//            let request = ASAuthorizationAppleIDProvider().createRequest()
-//            request.requestedScopes = [.fullName, .email]
-//
-//            let controller = ASAuthorizationController(authorizationRequests: [request])
-//            controller.delegate = self
-//            controller.presentationContextProvider = self
-//            controller.performRequests()
-
-        }
-    }
-    
-    func contextMenuDidAppear(_ contextMenu: ContextMenu) {
-        print("contextMenuDidAppear")
-    }
-    
-    func contextMenuDidDisappear(_ contextMenu: ContextMenu) {
-        print("contextMenuDidDisappear")
-       // CM.closeAllViews()
-    }
-    
-    
-    
-    
-}
 extension AuthViewController: ASAuthorizationControllerDelegate {
+    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         switch authorization.credential {
         case let credential as ASAuthorizationAppleIDCredential:
             
             let token = credential.identityToken!
             let tokenStr = String(data: token, encoding: .utf8)!
-            
-            print("Token == \(tokenStr)")
+
             takeAppleSign = fitMeetApi.signWithApple(token: AppleAuthorizationRequest(id_token: tokenStr))
                 .mapError({ (error) -> Error in
                             return error })
@@ -254,38 +135,66 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
                         
                         UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                         UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
-                        UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                        
+                        UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)                        
                         self.openProfileViewController()
-               
                   }
             })
-            
-            let code = credential.authorizationCode!
-            let codeStr = String(data: code, encoding: .utf8)
-            print("User Code: ", codeStr)
-            let userId = credential.user
-            print("User Identifier: ", userId)
-        
-            if let fullname = credential.fullName {
-                print(fullname)
-            }
-            
-            if let email = credential.email {
-                print("Email: ", email)
-            }
         default:
             break
         }
     }
-    
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Error: \(error.localizedDescription)")
     }
 }
-
 extension AuthViewController: ASAuthorizationControllerPresentationContextProviding {
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         return view.window ?? UIWindow()
+    }
+}
+extension AuthViewController: SignUpDelegate {
+    
+    func changeAlert() {
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.text = "This phone number is taken, please choose diffrent"
+            self.authView.alertLabel.isHidden = false
+            self.authView.alertImage.isHidden = true
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
+  
+      
+    }
+    func changeMail() {
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertMailLabel.isHidden = false
+            self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.isHidden = true
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
+     
+    }
+    func changePhone() {
+        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
+            
+            self.topPhoneConstraint.constant = 45
+            self.authView.alertImage.isHidden = false
+            self.authView.alertLabel.text = "phone must be a valid phone number"
+            self.authView.alertLabel.isHidden = false
+            self.authView.alertImage.isHidden = true
+
+
+        })
+        self.view.layoutIfNeeded()
+    transitionAnimator.startAnimation()
+          
     }
 }

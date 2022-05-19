@@ -13,79 +13,52 @@ import EasyPeasy
 
 extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if self.profileView.mmPlayerLayer.isShrink { return }
-//        self.destrtoyMMPlayerInstance()
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return  brodcast.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
-
-       
-        
-        if brodcast[indexPath.row].previewPath == "/path/to/file.jpg" {
-            cell.setImage(image:"https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        } else {
-            cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? "https://dev.fitliga.com/fitmeet-test-storage/azure-qa/files_8b12f58d-7b10-4761-8b85-3809af0ab92f.jpeg")
-        }
-
-
-      
-
-        cell.labelDescription.text = brodcast[indexPath.row].description
+        let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
+        cell.hideAnimation()
+        cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? Constants.defoultImage )
+        cell.labelDescription.text = brodcast[indexPath.row].name
         cell.titleLabel.text = self.user?.fullName
-        
- 
-        guard let id = brodcast[indexPath.row].userId,
-              let broadcastID = self.brodcast[indexPath.row].id
-              else { return cell}
-      
-//       if brodcast[indexPath.row].status == "PLANNED" {
-//
-//
-//            cell.label.text = self.brodcast[indexPath.row].name
-//            cell.backgroundImage.removeBlur()
-//            cell.backgroundImage.backgroundColor = .clear
-//            cell.imageLive.image = #imageLiteral(resourceName: "clock")
-//            cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-//            cell.backgroundImage.applyBlurEffect()
-//
-//            cell.imageEye.isHidden = true
-//            cell.labelEye.isHidden = true
-//            cell.overlay.anchor(width: 80)
-//
-//        }
-        if brodcast[indexPath.row].status == "OFFLINE" {
+        guard let id = brodcast[indexPath.row].userId else { return cell}
+        guard let status =  brodcast[indexPath.row].status else { return  cell}
+        switch status {
+            
+        case .online:
+            cell.imageLive.image = #imageLiteral(resourceName: "rec")
+            cell.labelLive.text = "Live"
+            cell.imageEye.isHidden = false
+            cell.labelEye.isHidden = false
+            cell.logoUserOnline.isHidden = false
+        case .offline:
             cell.imageLive.image = #imageLiteral(resourceName: "rec")
             cell.imageLive.setImageColor(color: .gray)
             cell.labelLive.text = "Offline"
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
-            cell.buttonstartStream.isHidden = true
-   
-        } else if brodcast[indexPath.row].status == "ONLINE" {
-            cell.imageLive.image = #imageLiteral(resourceName: "rec")
-            cell.labelLive.text = "Live"
-            cell.imageEye.isHidden = false
-            cell.labelEye.isHidden = false
-            cell.logoUserOnline.isHidden = false
-            cell.buttonstartStream.isHidden = true
-
-        } else if brodcast[indexPath.row].status == "PLANNED" {
+        case .planned:
             cell.imageLive.image = #imageLiteral(resourceName: "clock")
             cell.labelLive.text = brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
             cell.imageEye.isHidden = true
             cell.labelEye.isHidden = true
             cell.logoUserOnline.isHidden = true
-            cell.buttonstartStream.isHidden = false
-
+        case .banned:
+            break
+        case .finished:
+            break
+        case .wait_for_approve:
+            cell.imageLive.image = #imageLiteral(resourceName: "clock")
+            cell.imageEye.isHidden = true
+            cell.labelEye.isHidden = true
+            cell.logoUserOnline.isHidden = true
+            cell.labelLive.text = "Wait for"
         }
+
         
         let categorys = brodcast[indexPath.row].categories
         let s = categorys!.map{$0.title!}
@@ -99,109 +72,34 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
 
 
-
-        if brodcast[indexPath.row].isFollow ?? false {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-        } else {
-            cell.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
-        }
-
-
-
         self.url = self.brodcast[indexPath.row].streams?.first?.hlsPlaylistUrl
-        guard let selfID = selfId else { return cell}
-        if self.usersd[id]?.id == Int(selfID) {
-            cell.buttonLike.isHidden = true
-          //  cell.buttonstartStream.isHidden = false
-        } else {
-            cell.buttonLike.isHidden = false
-          //  cell.buttonstartStream.isHidden = true
-        }
-
-        cell.buttonLike.tag = indexPath.row
-        cell.buttonLike.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        cell.buttonLike.isUserInteractionEnabled = true
-
+       
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true
-        
-//        cell.buttonstartStream.tag = indexPath.row
-//        cell.buttonstartStream.addTarget(self, action: #selector(actionStartStream(_:)), for: .touchUpInside)
-//        cell.buttonstartStream.isUserInteractionEnabled = true
-      
-      
-        
+   
+        if indexPath.row == brodcast.count - 1 {
+
+            if self.itemCount > brodcast.count {
+                self.isLoadingList = true
+                self.loadMoreItemsForList()
+            }
+        }
        return cell
     }
-    @objc func editButtonTapped(_ sender: UIButton) -> Void {
-        if sender.currentImage == UIImage(named: "LikeNot") {
-            sender.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.followBroadcast(id: id)
-        } else {
-            sender.setImage(UIImage(named: "LikeNot"), for: .normal)
-           guard let id = brodcast[sender.tag].id else { return }
-           // self.unFollowBroadcast(id: id)
-        }
-    }
+   
     @objc func moreButtonTapped(_ sender: UIButton) -> Void {
-                guard let coachID = user?.id,let userID = selfId else { return }
+        guard !brodcast.isEmpty else { return }
         
-                if coachID == Int(userID)! {
-                    let detailViewController = SendCoach()
-                    actionSheetTransitionManager.height = 0.3
-                    detailViewController.modalPresentationStyle = .custom
-                    detailViewController.transitioningDelegate = actionSheetTransitionManager
-                    detailViewController.url = self.url
-                    detailViewController.broadcast = brodcast[sender.tag]
-                    present(detailViewController, animated: true)
-                } else {
-        
-        let detailViewController = SendVC()
-        actionSheetTransitionManager.height = 0.2
-        detailViewController.modalPresentationStyle = .custom
-        detailViewController.transitioningDelegate = actionSheetTransitionManager
-        detailViewController.url = self.url
-        present(detailViewController, animated: true)
-        }
-
-    }
-    @objc func actionStartStream(_ sender: UIButton) {
-        guard let broadcastID = brodcast[sender.tag].id else { return }
-          //  self.nextView(broadcastId: broadcastID)
+        guard let broadcastId = brodcast[sender.tag].id else { return }
+        showDownSheet(moreArtworKMeUserSheetVC, payload: broadcastId)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
-        if self.brodcast[indexPath.row].status == "ONLINE" {
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = false
-        } else if  self.brodcast[indexPath.row].status == "OFFLINE" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image = #imageLiteral(resourceName: "rec")
-            vc.homeView.imageLive.setImageColor(color: .gray)
-            vc.homeView.labelLive.text = "  Offline"
-            vc.homeView.imageEye.isHidden = true
-        } else if  self.brodcast[indexPath.row].status == "PLANNED" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.imageEye.isHidden = true
-            vc.homeView.labelLive.text = self.brodcast[indexPath.row].scheduledStartDate?.getFormattedDate(format: "dd.MM.yy")
-        } else if  self.brodcast[indexPath.row].status == "WAIT_FOR_APPROVE" {
-            vc.broadcast = self.brodcast[indexPath.row]
-            vc.id =  self.brodcast[indexPath.row].userId
-            vc.homeView.buttonChat.isHidden = true
-            vc.homeView.imageLive.image =  #imageLiteral(resourceName: "clock")
-            vc.homeView.labelLive.text = "Wait for"
-            vc.homeView.imageEye.isHidden = true
-        }
-        vc.modalPresentationStyle = .fullScreen
-        self.present(vc, animated: true, completion: nil)
+            vc.modalPresentationStyle = .fullScreen
+            self.present(vc, animated: true, completion: nil)
     }
 }
 

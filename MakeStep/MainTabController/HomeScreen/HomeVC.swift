@@ -8,24 +8,30 @@
 import Foundation
 import Combine
 import UIKit
+import Loaf
 
 
 
-class HomeVC: UIViewController, UITabBarControllerDelegate{
+class HomeVC: SheetableViewController, UITabBarControllerDelegate{
     
-
+    let status: BroadcastStatus = .online
     var ids = [Int]()
     var complishionHandler: ((Bool) -> Void)?
     var watch = 0
-
+    var itemCount: Int = 0
+    var isLoadingList : Bool = false
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionSheetTransitionManager = ActionSheetTransitionManager()
+    var currentPage : Int = 0
+    var pageCount: Int = 0
+    private let panGestureRecognizer = UITapGestureRecognizer()
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let homeView = HomeVCCode()
 
     @Inject var fitMeetStream: FitMeetStream
     private var takeBroadcast: AnyCancellable?
+    private var takeCategory: AnyCancellable?
     private var takePlan: AnyCancellable?
     private var takeOff: AnyCancellable?
     
@@ -35,6 +41,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     
     
     @Inject var fitMeetApi: FitMeetApi
+    private var channelMap: AnyCancellable?
     private var takeUser: AnyCancellable?
     private var followBroad: AnyCancellable?
     private var watcherMap: AnyCancellable?
@@ -44,7 +51,7 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     var listBroadcast: [BroadcastResponce] = []
     var listCategory: [Datum] = []
     private let refreshControl = UIRefreshControl()
-   // var  playerContainerView: PlayerContainerView?
+   
     var user: User?
     var ar =  [User]()
     var listUsers : [User]?
@@ -52,17 +59,25 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
     var index = 0
     var url:String?
     var usersd = [Int: User]()
-    
-    
+    var channellsd = [Int: ChannelResponce]()
+  
     //MARK - LifeCicle
     override func loadView() {
         view = homeView
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isHidden = false
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-        getUsers()
-
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                vc .delegate = self
+                self.present(vc, animated: true, completion: nil)
+        }
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
@@ -82,281 +97,137 @@ class HomeVC: UIViewController, UITabBarControllerDelegate{
             UINavigationBar.appearance().standardAppearance = appearance
             UINavigationBar.appearance().scrollEdgeAppearance = appearance
         }
-    
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.8039215803, green: 0.8039215803, blue: 0.8039215803, alpha: 1)
+       
+        getUsers()
+        bindingCategory()
         makeTableView()
-       // makeNavItem()
-        if token != nil {
-            binding()
-        } else {
-            bindingNotAuht()
-        }
-        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
-      
         
         homeView.tableView.refreshControl = refreshControl
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
-      
-      
-        
+        makeNavItem(title: "", hide: true)
     }
-    func makeNavItem() {
-        let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
-        UINavigationBar.appearance().titleTextAttributes = attributes
-        let titleLabel = UILabel()
-                   titleLabel.text = "Make Step"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+    override func makeNavItem(title: String, hide: Bool) {
+        super.makeNavItem(title: title, hide: hide)
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+    }
 
-                   let stackView = UIStackView(arrangedSubviews: [titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .center
-                   stackView.axis = .vertical
-
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-           self.navigationItem.leftBarButtonItems = [customTitles]
-           self.navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-       // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
+    override func copyLink(id: Int) {
+        super.copyLink(id: id)
+        self.homeView.tableView.isUserInteractionEnabled = false
     }
-    @objc func timeHandAction() {
-        let tvc = Timetable()
-        tvc.modalPresentationStyle = .fullScreen
-        navigationController?.pushViewController(tvc, animated: true)
-        
+    override func stopLoaf() {
+        self.homeView.tableView.isUserInteractionEnabled = true
     }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
-    }
- 
     //MARK: - Selectors
-    @objc private func refreshAlbumList() {
-        if index == 0 {
-            if token != nil {
-                binding()
-               
-            } else {
-                bindingNotAuht()
-            }
-        } else if index == 1 {
-            self.listBroadcast.removeAll()
-            bindingRecomandate()
-        } else if index == 2 {
-            self.listBroadcast.removeAll()
-            onlyFollowBroadcast(follow: true)
+    @objc  func refreshAlbumList() {
+        self.listBroadcast.removeAll()
+        getUsers()
+     }
+    func bindingUserMap(ids: [Int])  {
+               if ids.isEmpty { return } else {
+               takeUser = fitMeetApi.getUserIdMap(ids: ids)
+                   .mapError({ (error) -> Error in return error })
+                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                       if response.data.count != 0 {
+                           self.usersd = response.data
+                         //  let arrayUserId = self.usersd.compactMap{$0.value.channelIds?.last}
+                         //  self.getMapChannel(ids: arrayUserId)
+                           self.refreshControl.endRefreshing()
+                           self.homeView.tableView.reloadData()
+                       }
+                  })
+              }
+          }
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                
+                
+                          self.channellsd = response.data
+                          self.refreshControl.endRefreshing()
+                          self.homeView.tableView.reloadData()
+//                          guard let listUsers = self.listUsers else { return }
+//                          let compUser = listUsers.compactMap { $0 }
+//                          if !self.channellsd.isEmpty {
+//                              self.listUsers = compUser.sorted(by: {self.channellsd[($0.channelIds?.last!)!]!.followersCount > self.channellsd[($1.channelIds?.last!)!]!.followersCount })
+//                          self.searchView.tableView.reloadData()
+//                          }
+                     })
+         }
+    func bindingCategory() {
+        takeCategory = fitMeetStream.getCategory()
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+                        self.listCategory = response.data!
+      
+                    }
+            })
         }
-        
-       }
-    func binding() {
-        takeBroadcast = fitMeetStream.getListBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.homeView.tableView.isHidden = false
-                    self.listBroadcast.removeAll()
-                    self.listBroadcast = response.data!
-                    self.bindingPlanned()
-                  
-                } else {
-                    self.listBroadcast.removeAll()
-                    self.bindingPlanned()
-                }
-        })
-    }
     func getUsers() {
         takeUser = fitMeetStream.getListAllUser()
             .mapError({ (error) -> Error in return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    var list = response.data
-                    let result = list.filter({ $0.avatarPath != nil })
+                if !response.data.isEmpty {
+                    let result = response.data.filter({ $0.resizedAvatar != nil })
+                    sleep(2)
                     self.listUsers = result
-                    self.homeView.tableView.reloadData()
-                   
-                }
-          })
-    }
-    func bindingPlanned() {
-        takePlan = fitMeetStream.getListPlanBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    self.bindingOff()
-                } else {
-                    self.bindingOff()
-                }
-            })
-    }
-    func bindingOff() {
-        takeOff = fitMeetStream.getOffBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    self.bindingCategory()
-                }
-            })
-    }
-    func bindingNotAuht() {
-        takeBroadcast = fitMeetStream.getBroadcast(status: "ONLINE")
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.homeView.tableView.isHidden = false
-                   
-                    self.listBroadcast.removeAll()
-                    self.listBroadcast = response.data!
-                    self.bindingNotPlanned()
-                } else {
-                    self.listBroadcast.removeAll()
-                    self.bindingNotPlanned()
-                }
-        })
-    }
-    func bindingNotPlanned() {
-        takePlan = fitMeetStream.getNotPlanBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    self.bindingNotOff()
-                } else {
-                    self.bindingNotOff()
-                }
-            })
-    }
-    func bindingNotOff() {
-        takeOff = fitMeetStream.getNotOffBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listBroadcast.append(contentsOf: response.data!)
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                    self.bindingCategory()
-                }
-            })
-    }
-
-    func getMapWather(ids: [Int])   {
-        watcherMap = fitMeetApi.getWatcherMap(ids: ids)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.watch = response.data["\(ids.first!)"]!
-             
-                }
-          })
-    }
-    func bindingRecomandate() {
-        takeBroadcast = fitMeetStream.getRecomandateBroadcast()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data?.first?.id != nil  {
-                    self.homeView.tableView.isHidden = false
-                   
-                    self.listBroadcast.removeAll()
-                    self.listBroadcast = response.data!
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                } else {
-                    self.homeView.tableView.isHidden = true
-                  
-                }
-          })
-    }
-    func bindingUser(id: Int)  {
-        takeUser = fitMeetApi.getUserId(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.username != nil  {
-                    self.user = response
-                    self.ar.append(self.user!)
-                }
-          })
-    }
-    func bindingUserMap(ids: [Int])  {
-        if ids.isEmpty { return } else {
-        takeUser = fitMeetApi.getUserIdMap(ids: ids)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data.count != 0 {
-                    self.usersd = response.data
-                    self.homeView.tableView.reloadData()
-                }
-          })
-       }
-    }
-
-    func followBroadcast(id: Int) {
-        followBroad = fitMeetStream.followBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-          
-          })
-    }
-    func unFollowBroadcast(id: Int) {
-        followBroad = fitMeetStream.unFollowBroadcast(id: id)
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-            
-         })
-    }
-    
-    func onlyFollowBroadcast(follow: Bool) {
-        followBroad = fitMeetStream.getBroadcastSubscription()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                self.listBroadcast.removeAll()
-                self.homeView.tableView.reloadData()
-                if response.data?.first?.id != nil {
-                   
-                    self.listBroadcast = response.data!
-                    let arrayUserId = self.listBroadcast.map{$0.userId!}
-                    self.bindingUserMap(ids: arrayUserId)
-                    self.homeView.tableView.reloadData()
-                    self.refreshControl.endRefreshing()
-                } else {
-                    self.homeView.tableView.isHidden = true
-                  
-                }
-         })
-    }
-    func bindingCategory() {
-        takeBroadcast = fitMeetStream.getCategory()
-            .mapError({ (error) -> Error in return error })
-            .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                if response.data != nil  {
-                    self.listCategory = response.data!
+                    self.currentPage = 1
+                    self.bindingNotAuht(page: self.currentPage)
   
+                } else {
+                    self.getUsers()
                 }
-        })
+          })
     }
- 
+    func getMapWather(ids: [Int])   {
+          watcherMap = fitMeetApi.getWatcherMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                  if !response.data.isEmpty  {
+                      self.watch = response.data["\(ids.first!)"]!
+            }
+        })
+      }
+    func loadMoreItemsForList(){
+            currentPage += 1
+            self.bindingNotAuht(page: self.currentPage)
+       }
+    func bindingNotAuht(page: Int) {
+        self.isLoadingList = false
+        takeOff = fitMeetStream.getBroadcastN(page: page)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+
+
+                        guard let responceUnrap = response.data else { return }
+                        self.listBroadcast.append(contentsOf:responceUnrap)
+                       // self.homeView.tableView.reloadData()
+                       
+                        let arrayUserId =  self.listBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+                    if response.meta != nil {
+                        guard let itemCount = response.meta?.itemCount else { return }
+                        self.itemCount = itemCount
+                }
+            })
+        }
     private func makeTableView() {
         homeView.tableView.dataSource = self
         homeView.tableView.delegate = self
         homeView.tableView.register(HomeCell.self, forCellReuseIdentifier: HomeCell.reuseID)
         homeView.tableView.register(HomeHorizontalListTableViewCell.self, forCellReuseIdentifier: "HomeHorizontalListTableViewCell")
         homeView.tableView.separatorStyle = .none
+     
     }
     func connectUser (broadcastId:String?,channellId: String?) {
         

@@ -13,7 +13,8 @@ import UIKit
 
 class SendCoach: UIViewController,UITabBarControllerDelegate {
     
-    
+    @Inject var fitMeetStream: FitMeetStream
+    var deleteBroadcast: AnyCancellable?
 
     var list = ["Share with...","Copy link","Available for...","Edit","Delete stream"]
     var url: String?

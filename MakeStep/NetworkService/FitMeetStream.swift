@@ -25,6 +25,15 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
+    public func deleteBroadcast(id: Int) -> AnyPublisher<BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)", method: .delete, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastResponce.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
     public func getNotPlanBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&status=PLANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -45,7 +54,7 @@ class FitMeetStream {
            }
     //MARK: - list Broadcast//GET
     public func getListBroadcast(status:String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=\(status)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=10&status=\(status)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -62,8 +71,17 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    public func getOffBroadcast() -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&status=OFFLINE&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+    public func getOffBroadcast(page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=12&sort=viewersCount&status=OFFLINE&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                // .validate(statusCode: 200..<300)
+                // .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    public func getOffNotAuthBroadcast(page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?page=\(page)&take=12&sort=viewersCount&status=OFFLINE&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -103,9 +121,26 @@ class FitMeetStream {
                  .print("getBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
-        
            }
-    //&type=STANDARD_VOD"
+    public func getBroadcastN(page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&sort=status&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    public func getBroadcastForUser(idUser:Int,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&sort=status&userId=\(idUser)&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+
     public func getBroadcastPrivate(status: String,userId: String,type: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=100&status=\(status)&sort=userId&userId=\(userId)&type=\(type)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
@@ -118,7 +153,18 @@ class FitMeetStream {
         
            }
     public func getBroadcastPrivateTime(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=50&status=\(status)&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=50&status=\(status)&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcastPrivate")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
+    public func getBroadcastPrivateChannel(userId: String,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=10&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -150,10 +196,10 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
-   
-    public func getBroadcastPrivateVOD(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=1&take=200&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-                 //.validate(statusCode: 200..<300)
+   //&type=\(type)
+    public func getBroadcastPrivateVOD(userId: String,page: Int,type: String ) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
@@ -162,13 +208,13 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
-    public func getBroadcastPrivateVODNotAuth(userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=1&take=200&userId=\(userId)&type=STANDARD_VOD", method: .get, encoding: JSONEncoding.default)
+    public func getBroadcastPrivateVODNotAuth(userId: String,page: Int,type: String ) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&userId=\(userId)", method: .get, encoding: JSONEncoding.default)
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                 .print("getBroadcast")
+                 //.print("getBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
         
@@ -180,6 +226,17 @@ class FitMeetStream {
                  .publishDecodable(type: BroadcastList.self)
                  .value()
                  .print("getBroadcast")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
+    public func getBroadcastinLive(status: BroadcastStatus) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=10&status=\(status.description)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcastLive")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
         
@@ -218,8 +275,8 @@ class FitMeetStream {
         
            }
     ///stream/broadcasts?take=200&broadcastCategoryId=\(categoryId)
-    public func getBroadcastCategoryId(categoryId: Int) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?take=200&broadcastCategoryId=\(categoryId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+    public func getBroadcastCategoryId(categoryId: Int,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?page=\(page)&take=10&broadcastCategoryId=\(categoryId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -246,7 +303,6 @@ class FitMeetStream {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                 .print("getRecomandateBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -260,26 +316,43 @@ class FitMeetStream {
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-
-    //MARK: - getBrotcastId//GET//AUTH
-    public func getBroadcastId(id: Int) -> AnyPublisher< Bool, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?id=\(id)", method: .get, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+//?privateUrlKey=ca3bb948-19a0-4ec3-957a-bb02b100076c
+    public func getBroadcastId(id: String,key:String) -> AnyPublisher< BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)?privateUrlKey=\(key)", method: .get, encoding: JSONEncoding.default)
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
-                 .publishDecodable(type: Bool.self)
+                 .publishDecodable(type: BroadcastResponce.self)
                  .value()
                  .print("getBroadcastId")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
-    //MARK: - startBrotcastId//GET//AUTH
+    public func getBroadcastId(id: String) -> AnyPublisher< BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                // .validate(statusCode: 200..<300)
+                // .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastResponce.self)
+                 .value()
+                 .print("getBroadcastId")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    public func getPrivateBroadcastId(id: String) -> AnyPublisher< BroadcastResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private/\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastResponce.self)
+                 .value()
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+           }
+    //MARK: - startBrotcastId//GET//AUTH //stream/broadcasts/7
     public func startBroadcastId(id: Int) -> AnyPublisher< BroadcastResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)/start", method: .put, parameters: [:], encoding: JSONEncoding.default, interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastResponce.self)
                  .value()
-                 .print("getBroadcastId")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -323,18 +396,16 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: BroadcastResponce.self)
             .value()
-            .print("followBroadcast")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     //MARK: - Un Follow broadcast id//DELETE//AUTH
-    public func unFollowBroadcast(id: Int) -> AnyPublisher<Bool, DifferentError> {
+    public func unFollowBroadcast(id: Int) -> AnyPublisher<BroadcastResponce, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts/\(id)/follow", method: .delete, parameters: [:], encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
-            .publishDecodable(type: Bool.self)
+            .publishDecodable(type: BroadcastResponce.self)
             .value()
-            .print("UnFollowBroadcast")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -350,7 +421,7 @@ class FitMeetStream {
     }
 
     public func getCategoryPrivate() -> AnyPublisher<CategoryResponce,DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private?take=40", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/private?take=200", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
@@ -370,8 +441,8 @@ class FitMeetStream {
  
     public func getCategoryId(id: Int) -> AnyPublisher<Datum,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories/\(id)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
-          //  .validate(statusCode: 200..<300)
-          //  .validate(contentType: ["application/json"])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
             .publishDecodable(type: Datum.self)
             .value()
             .print("getBroadcastCategoryId")
@@ -400,7 +471,15 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: CategoryResponce.self)
             .value()
-            .print("getBroadcastCategory")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
+    public func getAlltCategory() -> AnyPublisher<CategoryResponce, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcastCategories?take=40", method:.get, parameters: [:])
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["application/json"])
+            .publishDecodable(type: CategoryResponce.self)
+            .value()
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -432,7 +511,6 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: Bool.self)
             .value()
-            .print("changePassword")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -445,17 +523,15 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UserList.self)
             .value()
-            .print("getListUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
     public func getListAllUser() -> AnyPublisher<UserList,DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/user/users?take=100&sort=fullName", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/user/users?take=50&sort=fullName", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UserList.self)
             .value()
-            .print("getListUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -465,7 +541,6 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UserList.self)
             .value()
-            .print("getListUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -477,7 +552,6 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: Category.self)
             .value()
-            .print("getListUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     
@@ -488,7 +562,6 @@ class FitMeetStream {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: Category.self)
             .value()
-            .print("getListUser")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     

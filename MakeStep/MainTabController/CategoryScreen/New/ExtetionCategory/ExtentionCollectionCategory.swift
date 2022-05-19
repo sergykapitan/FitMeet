@@ -13,7 +13,6 @@ extension CategoryVC: UICollectionViewDataSource {
     
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-      //  return listBroadcast.count
         return filtredBroadcast.count
     }
 
@@ -46,15 +45,12 @@ extension CategoryVC: UICollectionViewDataSource {
 
         
         
-        
-        
         cell.contentView.layer.cornerRadius = 8
         cell.contentView.layer.borderWidth = 1.0
         cell.contentView.layer.borderColor = UIColor.clear.cgColor
         cell.contentView.layer.masksToBounds = true
         cell.backgroundColor = .white
         cell.configureCell(albumName: filtredBroadcast[indexPath.row].followersCount, url: url, artistName: title)
-        stopSpiners()
         return cell
     }
 }
@@ -77,7 +73,7 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let width = (self.view.frame.size.width - 12 * 4) / 2 //some width
-        let height = width * 1.4 //ratio
+        let height = width * 1.2 //ratio
 
       return CGSize(width: width,
                     height: height)
@@ -87,5 +83,18 @@ extension CategoryVC: UICollectionViewDelegateFlowLayout {
                         layout collectionViewLayout: UICollectionViewLayout,
                         referenceSizeForHeaderInSection section: Int) -> CGSize {
       return CGSize.zero
+    }
+}
+extension CategoryVC: ReloadView {
+    func reloadView() {
+        if filtredBroadcast.isEmpty {
+            if token != nil {
+                binding()
+                self.searchView.buttonLikes.isHidden = false
+            } else {
+                bindingNotAuth()
+                self.searchView.buttonLikes.isHidden = true
+            }
+        }
     }
 }

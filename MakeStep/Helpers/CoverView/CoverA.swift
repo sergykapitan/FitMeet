@@ -64,29 +64,29 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
     }
     
     @IBAction func btnLandTwo(_ sender: UIButton) {
-        let cc = ButtonOffline()
-        sender.isSelected.toggle()
-        
-        if sender.isSelected {
-            viewBtn.isUserInteractionEnabled = true
-            AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
-            self.playLayer?.fullScreenWhenLandscape = true
-            self.playLayer!.landView(isHiddenVC: false, maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height) { [weak self] () -> UIView? in
-            
-                   guard  let path = cc.findCurrentPath() else {return nil}
-                   let cell = cc.findCurrentCell(path: path) as! PlayerViewCell
-                   let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
-                   cc.offlineView.mmPlayerLayer.set(url: url)
-                   cc.offlineView.mmPlayerLayer.resume()
-                   return cell.backgroundImage
-               }
-        } else {
-            viewBtn.isUserInteractionEnabled = false
-            self.playLayer?.fullScreenWhenLandscape = false
-            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
-            self.playLayer?.dissmisLand()
-            self.playLayer?.setCoverView(enable: true)
-        }
+      //  let cc = ButtonOffline()
+//        sender.isSelected.toggle()
+//        
+//        if sender.isSelected {
+//            viewBtn.isUserInteractionEnabled = true
+//            AppUtility.lockOrientation(.all, andRotateTo: .landscapeLeft)
+//            self.playLayer?.fullScreenWhenLandscape = true
+//            self.playLayer!.landView(isHiddenVC: false, maxWidth: UIScreen.main.bounds.width, maxHeight: UIScreen.main.bounds.height) { [weak self] () -> UIView? in
+//            
+//                   guard  let path = cc.findCurrentPath() else {return nil}
+//                   let cell = cc.findCurrentCell(path: path) as! PlayerViewCell
+//                   let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
+//                   cc.offlineView.mmPlayerLayer.set(url: url)
+//                   cc.offlineView.mmPlayerLayer.resume()
+//                   return cell.backgroundImage
+//               }
+//        } else {
+//            viewBtn.isUserInteractionEnabled = false
+//            self.playLayer?.fullScreenWhenLandscape = false
+//            AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+//            self.playLayer?.dissmisLand()
+//            self.playLayer?.setCoverView(enable: true)
+//        }
     }
     
     @IBOutlet weak var viewBtn: UIButton!
@@ -96,15 +96,15 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
                 
     }
     @IBAction func btnLandscapeAction(_ sender: Any) {
-        let ch = ButtonOffline()
-        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
-            guard let self = self, let path = ch.findCurrentPath() else {return nil}
-            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
-            let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
-            ch.offlineView.mmPlayerLayer.set(url: url)
-            ch.offlineView.mmPlayerLayer.resume()
-            return cell.backgroundImage
-        }
+//        let ch = ButtonOffline()
+//        self.playLayer!.shrinkView(onVC: ch, isHiddenVC: false) { [weak self] () -> UIView? in
+//            guard let self = self, let path = ch.findCurrentPath() else {return nil}
+//            let cell = ch.findCurrentCell(path: path) as! PlayerViewCell
+//            let url = URL(string: (cell.data?.streams?.first?.vodUrl)!)
+//            ch.offlineView.mmPlayerLayer.set(url: url)
+//            ch.offlineView.mmPlayerLayer.resume()
+//            return cell.backgroundImage
+//        }
        
     }
     func Player() {
@@ -168,42 +168,42 @@ class CoverA: UIView, MMPlayerCoverViewProtocol {
 extension CoverA : ContextMenuDelegate {
     func contextMenuDidSelect(_ contextMenu: ContextMenu, cell: ContextMenuCell, targetedView: UIView, didSelect item: ContextMenuItem, forRowAt index: Int) -> Bool {
        
-        if index == 0 {
-           print("360")
-            guard let stream = stream360 else { return true}
-            let cc = ButtonOffline()
-            let url = URL(string: stream)
-            cc.offlineView.mmPlayerLayer.set(url: url)
-            cc.offlineView.mmPlayerLayer.resume()
-            return true
-        }
-        if index == 1 {
-            print("480")
-            guard let stream = stream480 else { return true}
-            let cc = ButtonOffline()
-            let url = URL(string: stream)
-            cc.offlineView.mmPlayerLayer.set(url: url)
-            cc.offlineView.mmPlayerLayer.resume()
-            return true
-        }
-        if index == 2 {
-            print("720")
-            guard let stream = stream720 else { return true}
-            let cc = ButtonOffline()
-            let url = URL(string: stream)
-            cc.offlineView.mmPlayerLayer.set(url: url)
-            cc.offlineView.mmPlayerLayer.resume()
-            return true
-        }
-        if index == 3 {
-            print("1080")
-            guard let stream = stream1080 else { return true}
-            let cc = ButtonOffline()
-            let url = URL(string: stream)
-            cc.offlineView.mmPlayerLayer.set(url: url)
-            cc.offlineView.mmPlayerLayer.resume()
-            return true
-        }
+//        if index == 0 {
+//           print("360")
+//            guard let stream = stream360 else { return true}
+//            let cc = ButtonOffline()
+//            let url = URL(string: stream)
+//            cc.offlineView.mmPlayerLayer.set(url: url)
+//            cc.offlineView.mmPlayerLayer.resume()
+//            return true
+//        }
+//        if index == 1 {
+//            print("480")
+//            guard let stream = stream480 else { return true}
+//            let cc = ButtonOffline()
+//            let url = URL(string: stream)
+//            cc.offlineView.mmPlayerLayer.set(url: url)
+//            cc.offlineView.mmPlayerLayer.resume()
+//            return true
+//        }
+//        if index == 2 {
+//            print("720")
+//            guard let stream = stream720 else { return true}
+//            let cc = ButtonOffline()
+//            let url = URL(string: stream)
+//            cc.offlineView.mmPlayerLayer.set(url: url)
+//            cc.offlineView.mmPlayerLayer.resume()
+//            return true
+//        }
+//        if index == 3 {
+//            print("1080")
+//            guard let stream = stream1080 else { return true}
+//            let cc = ButtonOffline()
+//            let url = URL(string: stream)
+//            cc.offlineView.mmPlayerLayer.set(url: url)
+//            cc.offlineView.mmPlayerLayer.resume()
+//            return true
+//        }
         return false
        
     }

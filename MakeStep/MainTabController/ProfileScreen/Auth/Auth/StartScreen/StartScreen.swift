@@ -16,6 +16,17 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
     override func loadView() {
         view = homeView
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if Connectivity.isConnectedToInternet {
+            return } else {
+                let vc = NotInternetView()
+                vc.modalPresentationStyle = .overFullScreen
+                vc.modalTransitionStyle = .crossDissolve
+                vc.modalPresentationCapturesStatusBarAppearance = true
+                self.present(vc, animated: true, completion: nil)
+        }
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         self.navigationController?.navigationBar.isTranslucent = false
@@ -46,6 +57,9 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
       homeView.buttonPrivacyPolicy.addTarget(self, action: #selector(actionDMCA), for: .touchUpInside)
       homeView.buttonSecurity.addTarget(self, action: #selector(actionDisclaimer), for: .touchUpInside)
       homeView.buttonWallet.addTarget(self, action: #selector(actionMonetezation), for: .touchUpInside)
+      homeView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
+      homeView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
+      homeView.buttonTerms.addTarget(self, action: #selector(actionContact), for: .touchUpInside)
     }
 
     func makeNavItem() {
@@ -72,13 +86,10 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         
        // self.navigationItem.rightBarButtonItems = [startItem,timeTable]
     }
-    @objc
-    func rightHandAction() {
+    @objc func rightHandAction() {
         print("right bar button action")
     }
-
-    @objc
-    func leftHandAction() {
+    @objc func leftHandAction() {
         print("left bar button action")
     }
     @objc func actionMonetezation() {
@@ -86,6 +97,7 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         self.navigationController?.pushViewController(vc, animated: true)
 
     }
+  
     @objc func actionSignUp() {
         homeView.buttonSignUp.backgroundColor = .blueColor
         homeView.buttonSignIn.backgroundColor = UIColor(hexString: "#BBBCBC")
@@ -99,34 +111,45 @@ class StartScreen: UIViewController,UITabBarControllerDelegate, UIScrollViewDele
         let sign = SignInViewController()
         self.present(sign, animated: true, completion: nil)
     }
-    //1
+ 
     @objc func actionAbout() {
         let helpWebViewController = WebViewController()
-          helpWebViewController.url = Constants.webViewPwa + "about"
+        helpWebViewController.url = "https://dev.makestep.com/about-us-webview/"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //3
-       @objc func actionTerms() {
+    
+    @objc func actionHowIt() {
+        let helpWebViewController = WebViewController()
+          helpWebViewController.url = "https://join.makestep.com"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    
+    @objc func actionTerms() {
            let helpWebViewController = WebViewController()
            helpWebViewController.url = Constants.webViewPwa + "terms_of_service"
            self.navigationController?.pushViewController(helpWebViewController, animated: true)
        }
-    //4
+   
     @objc func actionPrivacyPolicy() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "privacy_policy"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //5
+
     @objc func actionDMCA() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "dmca"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
-    //6
+  
     @objc func actionDisclaimer() {
         let helpWebViewController = WebViewController()
         helpWebViewController.url = Constants.webViewPwa + "disclaimer"
+        self.navigationController?.pushViewController(helpWebViewController, animated: true)
+    }
+    @objc func actionContact() {
+        let helpWebViewController = WebViewController()
+        helpWebViewController.url = "https://dev.makestep.com/contact_us_webview"
         self.navigationController?.pushViewController(helpWebViewController, animated: true)
     }
 

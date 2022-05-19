@@ -25,11 +25,9 @@ final class SignInViewControllerCode: UIView {
         label.font = UIFont.boldSystemFont(ofSize: 19)
         return label
     }()
-    let buttonSocialNetwork: UIButton = {
-        let button = UIButton()
-        button.backgroundColor = .blueColor
-        button.setTitle("Sign up with Social Network", for: .normal)
-        button.layer.cornerRadius = 19
+    let buttonSocialNetwork: SignWithApple = {
+        let button = SignWithApple()
+        button.labelRight.text = "Sign in with Apple"
         return button
     }()
     let textFieldLogin: UITextField = {
@@ -151,10 +149,9 @@ final class SignInViewControllerCode: UIView {
         
  
         cardView.addSubview(buttonContinue)
-        buttonContinue.anchor(top: textFieldLogin.bottomAnchor,
-                              left: cardView.leftAnchor,
+        buttonContinue.anchor( left: cardView.leftAnchor,
                               right: cardView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                               paddingLeft: 10, paddingRight: 10,height: 39)
         cardView.addSubview(viewSignIn)
         viewSignIn.centerX(inView: cardView)
         viewSignIn.anchor(top: buttonContinue.bottomAnchor, paddingBottom: 10)

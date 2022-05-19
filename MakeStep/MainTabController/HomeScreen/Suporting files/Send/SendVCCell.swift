@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 import Kingfisher
 
-//protocol NewsfeedCodeCellDelegate: AnyObject {
-//    func reavalPost(for cell: HomeCell)
-//}
+
 
 final class SendVCCell: UITableViewCell {
     

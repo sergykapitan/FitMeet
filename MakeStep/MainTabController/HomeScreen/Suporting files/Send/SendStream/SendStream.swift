@@ -16,6 +16,7 @@ class SendStream: UIViewController,UITabBarControllerDelegate {
     
 
     var list = ["Upload video","Start New Stream"]
+    var image = [UIImage(named: "upload"),UIImage(named: "uploadStream")]
     var url: String?
     
     // MARK: Views
@@ -33,24 +34,24 @@ class SendStream: UIViewController,UITabBarControllerDelegate {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         makeTableView()
-        // Subviews
         [butH, tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
         
         butH.setContentHuggingPriority(.required, for: .vertical)
-  //.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 5),
-            butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 5),
+            butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            //butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
             butH.heightAnchor.constraint(equalToConstant:35),
             butH.widthAnchor.constraint(equalToConstant: 45),
+           
             
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5)
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            tableView.topAnchor.constraint(equalTo: butH.bottomAnchor, constant: -15)
            
         ])
 
@@ -63,6 +64,7 @@ class SendStream: UIViewController,UITabBarControllerDelegate {
         self.tableView.delegate = self
         self.tableView.register(SendStreamCell.self, forCellReuseIdentifier: SendStreamCell.reuseID)
         self.tableView.separatorStyle = .none
+        self.tableView.isScrollEnabled = false
     }
 }
 
