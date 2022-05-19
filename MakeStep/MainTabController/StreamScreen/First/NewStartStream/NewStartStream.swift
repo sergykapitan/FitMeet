@@ -185,6 +185,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
                 self.IdCategory.append(contentsOf: p)
                 print("Category == \(self.IdCategory)")
                 self.authView.tagView.layoutSubviews()
+                self.updatePresentationLayout(animated: true)
             } else {
                 Loaf("Not Saved \(ff)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
             }
@@ -286,7 +287,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
     }
     @objc func actionSignUp() {
-        updatePresentationLayout(animated: true)
+//        updatePresentationLayout(animated: true)
 //        if authView.textFieldAviable.text == "" {
 //            authView.textFieldAviable.text = "Available for all"
 //        }

@@ -57,12 +57,13 @@ class ModalPresentationController: UIPresentationController {
             withHorizontalFittingPriority: .required,
             verticalFittingPriority: .defaultLow
         ).height
-
+       // let tar = presentedView.imageButton.frame.height
+        var height =  presentedView.systemLayoutSizeFitting(UIView.layoutFittingCompressedSize).height
         var frame = safeAreaFrame
         frame.origin.x += inset
         frame.origin.y += 8.0
         frame.size.width = targetWidth
-        frame.size.height = targetHeight
+        frame.size.height = height// 300//targetHeight
 
         return frame
     }

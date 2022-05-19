@@ -211,7 +211,8 @@ final class NewStartStreamCode: UIView {
         buttonOK.anchor(top: textFieldDescription.bottomAnchor,
                               left: capturePreviewView.leftAnchor,
                               right: capturePreviewView.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+                        bottom: capturePreviewView.bottomAnchor,
+                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,paddingBottom: 0,height: 39)
         textFieldCategory.addSubview(tagView)
         tagView.anchor(top:textFieldCategory.topAnchor,
                        left: textFieldCategory.leftAnchor,

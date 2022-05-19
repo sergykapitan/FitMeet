@@ -205,12 +205,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         }
     @objc func settingTapped() {
         let chatVC = NewStartStream()
-        chatVC.transitioningDelegate = actionChatTransitionManager
-        chatVC.modalPresentationStyle = .custom
-        130 + 39 + 39 + 60
-        actionChatTransitionManager.intWidth = 1
-        actionChatTransitionManager.intHeight = 0.4
-        self.present(chatVC, animated: true, completion: nil)
+//        chatVC.transitioningDelegate = actionChatTransitionManager
+//        chatVC.modalPresentationStyle = .custom
+//        130 + 39 + 39 + 60
+//        actionChatTransitionManager.intWidth = 1
+//        actionChatTransitionManager.intHeight = 0.4
+//        self.present(chatVC, animated: true, completion: nil)
 //        let coolViewController = NewStartStream()
 //       let  interactionController = StandardInteractionController(viewController: coolViewController)
 //        let transitionManager = ModalTransitionManager(interactionController: interactionController)
@@ -219,6 +219,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
 //        coolViewController.modalPresentationStyle = .custom
 //        present(coolViewController, animated: true, completion: nil)
 //       // present(coolViewController, interactiveDismissalType: .standard)
+       
+        self.present(chatVC, interactiveDismissalType: .standard)
         }
     @objc func closeVideo() {
         logger.info("close")
