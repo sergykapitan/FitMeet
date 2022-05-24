@@ -24,14 +24,11 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             return  liveBroadcast.count
             case 1:
             if recentBroadcast.count == 0 {
-                return 3
+                return 10
             }
             
             return  recentBroadcast.count
             case 2:
-            if plannedBroadcast.count == 0 {
-                return 3
-            }
             return  plannedBroadcast.count
             
         default:
@@ -133,6 +130,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
             cell.buttonMore.isUserInteractionEnabled = true
             }
+
         default:
             break
         }
@@ -161,6 +159,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             guard let statuslive = recentBroadcast[indexPath.row].status  else { return }
             status = statuslive
         case 2:
+            if plannedBroadcast.isEmpty { return }
             guard let statuslive = plannedBroadcast[indexPath.row].status  else { return }
             status = statuslive
         default:
@@ -169,30 +168,13 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         switch status {
           
         case .online:
-          //  guard let broadcastID = self.liveBroadcast[indexPath.row].id,
-          //          let channelId = self.liveBroadcast[indexPath.row].channelIds else { return }
-          //  self.connectUser(broadcastId:"\(broadcastID)", channellId: "\(channelId)")
             vc.broadcast = self.liveBroadcast[indexPath.row]
             vc.id =  self.liveBroadcast[indexPath.row].userId
-//            vc.homeView.buttonChat.isHidden = false
-//            vc.homeView.playerSlider.isHidden = true
-//            vc.homeView.labelLike.text = "\(String(describing: self.liveBroadcast[indexPath.row].followersCount!))"
-//            vc.homeView.buttonPlayPause.isHidden = true
-//            vc.homeView.buttonSkipNext.isHidden = true
-//            vc.homeView.buttonSkipPrevious.isHidden = true
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .offline:
-         //   guard let _ = recentBroadcast[indexPath.row].streams?.first?.vodUrl else { return }
             vc.broadcast = self.recentBroadcast[indexPath.row]
             vc.id = self.recentBroadcast[indexPath.row].userId
-//            vc.homeView.buttonChat.isHidden = true
-//            vc.homeView.overlay.isHidden = true
-//            vc.homeView.imageLive.isHidden = true
-//            vc.homeView.labelLive.isHidden = true
-//            vc.homeView.imageEye.isHidden = true
-//            vc.homeView.labelEye.isHidden = true
-//            vc.homeView.labelLike.text = "\(String(describing: self.recentBroadcast[indexPath.row].followersCount!))"
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
         case .planned:
