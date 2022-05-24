@@ -104,7 +104,11 @@ class PresentedViewController: UIViewController {
         let df:DateFormatter = DateFormatter.init()
         df.dateFormat = style.returnDateFormat?.rawValue
         df.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
-        let returnDate:String = df.string(from: picker.date)
+        var returnDate:String = df.string(from: picker.date)
+        let date = Date()
+        if returnDate == df.string(from: date) {
+            returnDate = ""
+        }
         block?(returnDate)
     }
 }

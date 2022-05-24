@@ -13,30 +13,38 @@ import TagListView
 final class NewStartStreamCode: UIView {
     
     //MARK: - UI
+    let capturePreviewView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 30
+        return view
+    }()
+    var butH: UIButton = {
+        let button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "icons8"), for: .normal)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    let labelSettings: UILabel = {
+        let label = UILabel()
+        label.text = "Settings"
+        label.textColor = .black
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
     let imageButton: UIButton = {
         let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle 966gggg"), for: .normal)
+        button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle"), for: .normal)
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleAspectFill
         return button
     }()
 
-    let textFieldName: UITextField = {
-        let textField = UITextField()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        return textField
-    }()
     let textFieldCategory: DropDown = {
-        let textField = DropDown()
-      
-        textField.layer.cornerRadius = 19
+        let textField = DropDown()      
+        textField.layer.cornerRadius = 23
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
         NSAttributedString(string: "Category", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
@@ -48,49 +56,10 @@ final class NewStartStreamCode: UIView {
         textField.selectedRowColor = UIColor(hexString: "F9F9F9")
         return textField
     }()
-    let textFieldStartDate: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Start now ", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "000000")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
-        return textField
-    }()
-    let textFieldAviable: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-        NSAttributedString(string: "Available for all", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "000000")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
-        return textField
-    }()
-    var textFieldFree: DropDown = {
-        let textField = DropDown()
-        textField.layer.cornerRadius = 19
-        textField.backgroundColor = UIColor(hexString: "F9F9F9")
-        textField.attributedPlaceholder =
-            NSAttributedString(string: "Free", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
-        textField.setLeftPaddingPoints(25)
-        textField.textColor = .black
-        
-        textField.layer.borderWidth = 1
-        textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
-        textField.selectedRowColor = UIColor(hexString: "F9F9F9")
-        return textField
-    }()
+
     let textFieldDescription: UITextField = {
         let textField = UITextField()
-        textField.layer.cornerRadius = 19
+        textField.layer.cornerRadius = 23
         textField.backgroundColor = UIColor(hexString: "F9F9F9")
         textField.attributedPlaceholder =
             NSAttributedString(string: "Description", attributes: [NSAttributedString.Key.foregroundColor : UIColor(hexString: "BBBCBC")])
@@ -98,31 +67,36 @@ final class NewStartStreamCode: UIView {
         textField.textColor = .black
         textField.layer.borderWidth = 1
         textField.layer.borderColor = UIColor(hexString: "DADADA").cgColor
+        textField.clipsToBounds = true
         return textField
     }()
+    let spinner: IMProgressHUD = {
+        let hud = IMProgressHUD()
+        hud.configuration.isUserInteractionEnabled = false
+        hud.configuration.contentInsets = .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        hud.configuration.cornerRadius = 8.0
+        hud.configuration.backgroundColor = .clear
+        hud.configuration.color = .clear
+        hud.configuration.indicatorSize = CGSize(width: 18.0, height: 18.0)
+        hud.configuration.lineWidth = 2.0
+        hud.configuration.dimmingColor = .clear
+        hud.configuration.indicatorColor = .lightGray    
+        hud.axis = .horizontal
+        hud.setActivity(.circle)
+       // hud.hide()
+        
+        hud.translatesAutoresizingMaskIntoConstraints = false
+        return hud
+    }()
+    let labelSaved: UILabel = {
+        let label = UILabel()
+        label.text = "Saved"
+        label.textColor = .lightGray
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.alpha = 0
+        return label
+    }()
 
-    let buttonContinue: UIButton = {
-        let button = UIButton()
-        button.setTitle("Planned", for: .normal)
-        button.layer.cornerRadius = 19
-        button.backgroundColor = UIColor(red: 0, green: 0.601, blue: 0.683, alpha: 0.5)
-        return button
-    }()
-    let buttonOK: UIButton = {
-        let button = UIButton()
-        button.setTitle("Start stream", for: .normal)
-        button.layer.cornerRadius = 19
-        button.backgroundColor = .blueColor.alpha(0.4)
-        return button
-    }()
-    let scroll: UIScrollView = {
-        let scroll = UIScrollView()
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.showsVerticalScrollIndicator = false
-        scroll.alwaysBounceVertical = true
-        scroll.backgroundColor = .white
-        return scroll
-    }()
     var tagView: TagListView = {
         let tag = TagListView()
         tag.textFont = UIFont.systemFont(ofSize: 18)
@@ -150,60 +124,49 @@ final class NewStartStreamCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-        addSubview(scroll)
-        scroll.fillFull(for: self)
- 
+        addSubview(capturePreviewView)
+        capturePreviewView.fillFull(for: self)
+        capturePreviewView.addSubview(butH)
+        butH.setContentHuggingPriority(.required, for: .vertical)
+        NSLayoutConstraint.activate([
+            butH.centerXAnchor.constraint(equalTo: capturePreviewView.centerXAnchor),
+            butH.topAnchor.constraint(equalTo: capturePreviewView.topAnchor, constant: 0),
+            butH.heightAnchor.constraint(equalToConstant:35),
+            butH.widthAnchor.constraint(equalToConstant: 45)
+           
+        ])
     }
     private func initLayout() {
- 
-        scroll.addSubview(imageButton)
-        imageButton.anchor(top: scroll.topAnchor,
-                               left: scroll.leftAnchor,
-                               right: scroll.rightAnchor,
-                               paddingTop: 20,paddingLeft: 10, paddingRight: 10,height: 160)
-        imageButton.centerX(inView: scroll)
-
-        scroll.addSubview(textFieldName)
-        textFieldName.anchor(top: imageButton.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        capturePreviewView.addSubview(labelSettings)
+        labelSettings.anchor(top: butH.bottomAnchor,
+                             left: capturePreviewView.leftAnchor,
+                              paddingTop: 20,paddingLeft: 10)
+        capturePreviewView.addSubview(spinner)
+        spinner.centerY(inView: labelSettings)
+        spinner.anchor(right: capturePreviewView.rightAnchor, paddingRight: 20)
+        spinner.alpha = 0
         
-        scroll.addSubview(textFieldCategory)
-        textFieldCategory.anchor(top: textFieldName.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10)
+        capturePreviewView.addSubview(labelSaved)
+        labelSaved.centerY(inView: labelSettings)
+        labelSaved.anchor(right: capturePreviewView.rightAnchor, paddingRight: 20)
         
-        scroll.addSubview(textFieldStartDate)
-        textFieldStartDate.anchor(top: textFieldCategory.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        capturePreviewView.addSubview(imageButton)
+        imageButton.anchor(top: labelSettings.bottomAnchor,
+                               left: capturePreviewView.leftAnchor,
+                                paddingTop: 20,paddingLeft: 10,width: 130,height: 82.5)
+  
+        capturePreviewView.addSubview(textFieldCategory)
+        textFieldCategory.anchor(top: imageButton.bottomAnchor,
+                              left: capturePreviewView.leftAnchor,
+                              right: capturePreviewView.rightAnchor,
+                              paddingTop: 23, paddingLeft: 10, paddingRight: 10)
         
-        scroll.addSubview(textFieldAviable)
-        textFieldAviable.anchor(top: textFieldStartDate.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(textFieldFree)
-        textFieldFree.anchor(top: textFieldAviable.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(textFieldDescription)
-        textFieldDescription.anchor(top: textFieldFree.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
-        
-        scroll.addSubview(buttonOK)
-        buttonOK.anchor(top: textFieldDescription.bottomAnchor,
-                              left: scroll.leftAnchor,
-                              right: scroll.rightAnchor,
-                              paddingTop: 15, paddingLeft: 10, paddingRight: 10,height: 39)
+        capturePreviewView.addSubview(textFieldDescription)
+        textFieldDescription.anchor(top: textFieldCategory.bottomAnchor,
+                              left: capturePreviewView.leftAnchor,
+                              right: capturePreviewView.rightAnchor,
+                              bottom: capturePreviewView.bottomAnchor,
+                              paddingTop: 27, paddingLeft: 10, paddingRight: 10,paddingBottom: 30)
         textFieldCategory.addSubview(tagView)
         tagView.anchor(top:textFieldCategory.topAnchor,
                        left: textFieldCategory.leftAnchor,

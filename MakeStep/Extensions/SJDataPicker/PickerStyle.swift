@@ -41,7 +41,7 @@ enum DateFormat:String{
     /** 日期格式：HH:mm:ss */
     case h_mm_ss = "HH:mm:ss"
     /** 日期格式：yyyy/MM/dd HH:mm:ss */
-    case yyyy_To_ss = "yyyy/MM/dd HH:mm:ss"
+    case yyyy_To_ss = "yyyy/MM/dd HH:mm"
 }
 
 enum StyleColor {

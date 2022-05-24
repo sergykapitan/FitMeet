@@ -79,7 +79,7 @@ class UserVC: UIViewController, UITabBarControllerDelegate, UITableViewDelegate 
         guard let broadId = broadcastId,let channelId = chanellId else { return }
       
             SocketIOManager.sharedInstance.getTokenChat()
-            SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(chanellId)")
+            SocketIOManager.sharedInstance.establishConnection(broadcastId: broadId, chanelId: "\(channelId)")
             SocketIOManager.sharedInstance.connectToServerWithNickname(nicname: "OLD") { arrayId in
                   
                 guard let array = arrayId else { return }

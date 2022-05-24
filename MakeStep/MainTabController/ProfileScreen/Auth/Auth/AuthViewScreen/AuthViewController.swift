@@ -55,6 +55,7 @@ class AuthViewController: UIViewController{
         authView.buttonContinue.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.buttonSignIn.addTarget(self, action: #selector(actionSignIn), for: .touchUpInside)
         authView.appleLogInButton.button.addTarget(self, action: #selector(actionSocialNetwork), for: .touchUpInside)
+        
         topPhoneConstraint = authView.buttonContinue.topAnchor.constraint(equalTo: authView.textFieldLogin.bottomAnchor, constant: 15)
         topPhoneConstraint.isActive = true
     }

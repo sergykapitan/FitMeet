@@ -30,7 +30,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         if token != nil {
             profile = ProfileVC()
-            streamView = NewStartStream()
+            streamView = LiveStreamViewController()//NewStartStream()
             viewControllers = [
                 generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
                 generateViewController(rootViewController: LiveVC(), image: #imageLiteral(resourceName: "Act1"), title: ""),
