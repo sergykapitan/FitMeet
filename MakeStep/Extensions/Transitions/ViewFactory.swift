@@ -66,6 +66,7 @@ extension UIView {
         view.layer.borderColor = borderColor.cgColor
         view.layer.borderWidth = borderWidth
         view.layer.cornerRadius = cornerRadius
+        view.clipsToBounds = true
         if let height = height { view.heightAnchor.constraint(equalToConstant: height).isActive = true }
         if let width = width { view.widthAnchor.constraint(equalToConstant: width).isActive = true }
         return view

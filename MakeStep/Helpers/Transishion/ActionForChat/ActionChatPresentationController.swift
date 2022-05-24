@@ -11,7 +11,7 @@ final class ActionChatPresentationController: UIPresentationController {
     
     // MARK: Constants
     private static let actionSheetCornerRadius: CGFloat = 30
-    private static let dimmingViewMaxAlpha: CGFloat = 0.2
+    private static let dimmingViewMaxAlpha: CGFloat = 0.3
     
     var intWith: CGFloat?
     var intHeight: CGFloat?

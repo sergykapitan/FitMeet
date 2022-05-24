@@ -140,7 +140,7 @@ class ChatVC: UIViewController, UITabBarControllerDelegate, UIGestureRecognizerD
         guard let broadID = broadcastId,let name = UserDefaults.standard.string(forKey: Constants.userFullName) else { return }
 
         self.nickname = name
-        guard let intBroad = Int(broadId) else { return }
+        guard let intBroad = Int(broadID) else { return }
         bindingMessage(broad: intBroad)
       
     }

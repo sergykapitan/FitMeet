@@ -63,6 +63,7 @@ class SocketIOManager: NSObject {
     func getTokenChat() {
         takeTokenChat = fitMeetApi.getTokenChat()
             .mapError({ (error) -> Error in
+                print("errr == \(error.localizedDescription)")
                         return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 guard let token = response.token else { return }

@@ -284,6 +284,36 @@
 		A58F0ACB281156EB003A8833 /*  Refreshable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0AC9281156EB003A8833 /*  Refreshable.swift */; };
 		A58F0ACD28118CB5003A8833 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0ACC28118CB5003A8833 /* Hash.swift */; };
 		A58F0ACE28118CB5003A8833 /* Hash.swift in Sources */ = {isa = PBXBuildFile; fileRef = A58F0ACC28118CB5003A8833 /* Hash.swift */; };
+		A5915C2E283BC4B00075FF06 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C2D283BC4B00075FF06 /* Spinner.swift */; };
+		A5915C2F283BC4B00075FF06 /* Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C2D283BC4B00075FF06 /* Spinner.swift */; };
+		A5915C36283BD3F70075FF06 /* CircleLotationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C31283BD3F70075FF06 /* CircleLotationSet.swift */; };
+		A5915C37283BD3F70075FF06 /* CircleLotationSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C31283BD3F70075FF06 /* CircleLotationSet.swift */; };
+		A5915C38283BD3F70075FF06 /* CircleLotateLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C32283BD3F70075FF06 /* CircleLotateLayer.swift */; };
+		A5915C39283BD3F70075FF06 /* CircleLotateLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C32283BD3F70075FF06 /* CircleLotateLayer.swift */; };
+		A5915C3A283BD3F70075FF06 /* CommonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C33283BD3F70075FF06 /* CommonAnimation.swift */; };
+		A5915C3B283BD3F70075FF06 /* CommonAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C33283BD3F70075FF06 /* CommonAnimation.swift */; };
+		A5915C3C283BD3F70075FF06 /* BPCircleActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C34283BD3F70075FF06 /* BPCircleActivityIndicator.swift */; };
+		A5915C3D283BD3F70075FF06 /* BPCircleActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C34283BD3F70075FF06 /* BPCircleActivityIndicator.swift */; };
+		A5915C3E283BD3F70075FF06 /* CircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C35283BD3F70075FF06 /* CircleLayer.swift */; };
+		A5915C3F283BD3F70075FF06 /* CircleLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C35283BD3F70075FF06 /* CircleLayer.swift */; };
+		A5915C5B283BDEE90075FF06 /* UIApplication+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C50283BDEE90075FF06 /* UIApplication+Window.swift */; };
+		A5915C5C283BDEE90075FF06 /* UIApplication+Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C50283BDEE90075FF06 /* UIApplication+Window.swift */; };
+		A5915C5D283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C51283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift */; };
+		A5915C5E283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C51283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift */; };
+		A5915C5F283BDEE90075FF06 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C52283BDEE90075FF06 /* UIView+Layout.swift */; };
+		A5915C60283BDEE90075FF06 /* UIView+Layout.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C52283BDEE90075FF06 /* UIView+Layout.swift */; };
+		A5915C61283BDEE90075FF06 /* CAAnimation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C53283BDEE90075FF06 /* CAAnimation+Ext.swift */; };
+		A5915C62283BDEE90075FF06 /* CAAnimation+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C53283BDEE90075FF06 /* CAAnimation+Ext.swift */; };
+		A5915C63283BDEE90075FF06 /* IMProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C55283BDEE90075FF06 /* IMProgressIndicator.swift */; };
+		A5915C64283BDEE90075FF06 /* IMProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C55283BDEE90075FF06 /* IMProgressIndicator.swift */; };
+		A5915C65283BDEE90075FF06 /* IMAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C56283BDEE90075FF06 /* IMAnimator.swift */; };
+		A5915C66283BDEE90075FF06 /* IMAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C56283BDEE90075FF06 /* IMAnimator.swift */; };
+		A5915C67283BDEE90075FF06 /* StateIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C57283BDEE90075FF06 /* StateIndicator.swift */; };
+		A5915C68283BDEE90075FF06 /* StateIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C57283BDEE90075FF06 /* StateIndicator.swift */; };
+		A5915C69283BDEE90075FF06 /* IMActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C58283BDEE90075FF06 /* IMActivityIndicator.swift */; };
+		A5915C6A283BDEE90075FF06 /* IMActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C58283BDEE90075FF06 /* IMActivityIndicator.swift */; };
+		A5915C6B283BDEE90075FF06 /* IMProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C59283BDEE90075FF06 /* IMProgressHUD.swift */; };
+		A5915C6C283BDEE90075FF06 /* IMProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5915C59283BDEE90075FF06 /* IMProgressHUD.swift */; };
 		A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A591C3662715AB910015B0E6 /* ChangeChannel.swift */; };
 		A59431E427E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
 		A59431E527E8B59D00374890 /* SignWithApple.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59431E327E8B59C00374890 /* SignWithApple.swift */; };
@@ -607,6 +637,22 @@
 		A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInternetViewCode.swift; sourceTree = "<group>"; };
 		A58F0AC9281156EB003A8833 /*  Refreshable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = " Refreshable.swift"; sourceTree = "<group>"; };
 		A58F0ACC28118CB5003A8833 /* Hash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
+		A5915C2D283BC4B00075FF06 /* Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Spinner.swift; sourceTree = "<group>"; };
+		A5915C31283BD3F70075FF06 /* CircleLotationSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLotationSet.swift; sourceTree = "<group>"; };
+		A5915C32283BD3F70075FF06 /* CircleLotateLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLotateLayer.swift; sourceTree = "<group>"; };
+		A5915C33283BD3F70075FF06 /* CommonAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonAnimation.swift; sourceTree = "<group>"; };
+		A5915C34283BD3F70075FF06 /* BPCircleActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BPCircleActivityIndicator.swift; sourceTree = "<group>"; };
+		A5915C35283BD3F70075FF06 /* CircleLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircleLayer.swift; sourceTree = "<group>"; };
+		A5915C4D283BDEE90075FF06 /* IMProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMProgressHUD.h; sourceTree = "<group>"; };
+		A5915C50283BDEE90075FF06 /* UIApplication+Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIApplication+Window.swift"; sourceTree = "<group>"; };
+		A5915C51283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSLayoutConstraint+Ext.swift"; sourceTree = "<group>"; };
+		A5915C52283BDEE90075FF06 /* UIView+Layout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Layout.swift"; sourceTree = "<group>"; };
+		A5915C53283BDEE90075FF06 /* CAAnimation+Ext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CAAnimation+Ext.swift"; sourceTree = "<group>"; };
+		A5915C55283BDEE90075FF06 /* IMProgressIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMProgressIndicator.swift; sourceTree = "<group>"; };
+		A5915C56283BDEE90075FF06 /* IMAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMAnimator.swift; sourceTree = "<group>"; };
+		A5915C57283BDEE90075FF06 /* StateIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StateIndicator.swift; sourceTree = "<group>"; };
+		A5915C58283BDEE90075FF06 /* IMActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMActivityIndicator.swift; sourceTree = "<group>"; };
+		A5915C59283BDEE90075FF06 /* IMProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IMProgressHUD.swift; sourceTree = "<group>"; };
 		A591C3662715AB910015B0E6 /* ChangeChannel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannel.swift; sourceTree = "<group>"; };
 		A59431E327E8B59C00374890 /* SignWithApple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignWithApple.swift; sourceTree = "<group>"; };
 		A59431E727E8CC0500374890 /* OverlayLive.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayLive.swift; sourceTree = "<group>"; };
@@ -1028,6 +1074,59 @@
 				A58F0AC6280D66E9003A8833 /* NotInternetViewCode.swift */,
 			);
 			path = InternetConection;
+			sourceTree = "<group>";
+		};
+		A5915C30283BD3F70075FF06 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				A5915C31283BD3F70075FF06 /* CircleLotationSet.swift */,
+				A5915C32283BD3F70075FF06 /* CircleLotateLayer.swift */,
+				A5915C33283BD3F70075FF06 /* CommonAnimation.swift */,
+				A5915C34283BD3F70075FF06 /* BPCircleActivityIndicator.swift */,
+				A5915C35283BD3F70075FF06 /* CircleLayer.swift */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		A5915C4C283BDEE90075FF06 /* IMProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A5915C4D283BDEE90075FF06 /* IMProgressHUD.h */,
+				A5915C4E283BDEE90075FF06 /* Classes */,
+			);
+			path = IMProgressHUD;
+			sourceTree = "<group>";
+		};
+		A5915C4E283BDEE90075FF06 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				A5915C4F283BDEE90075FF06 /* Extension */,
+				A5915C54283BDEE90075FF06 /* Animations */,
+				A5915C59283BDEE90075FF06 /* IMProgressHUD.swift */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		A5915C4F283BDEE90075FF06 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				A5915C50283BDEE90075FF06 /* UIApplication+Window.swift */,
+				A5915C51283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift */,
+				A5915C52283BDEE90075FF06 /* UIView+Layout.swift */,
+				A5915C53283BDEE90075FF06 /* CAAnimation+Ext.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		A5915C54283BDEE90075FF06 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				A5915C55283BDEE90075FF06 /* IMProgressIndicator.swift */,
+				A5915C56283BDEE90075FF06 /* IMAnimator.swift */,
+				A5915C57283BDEE90075FF06 /* StateIndicator.swift */,
+				A5915C58283BDEE90075FF06 /* IMActivityIndicator.swift */,
+			);
+			path = Animations;
 			sourceTree = "<group>";
 		};
 		A59431E627E8CBDF00374890 /* CustomView */ = {
@@ -1476,6 +1575,7 @@
 				B4B1115E2692F8AA0006CA5A /* SlideInPresentationController.swift */,
 				B4B111612692F8C80006CA5A /* SlideInPresentationManager.swift */,
 				B4FCCF1526BFE0A000C25304 /* ImageRouter.swift */,
+				A5915C2D283BC4B00075FF06 /* Spinner.swift */,
 			);
 			path = Presentashion;
 			sourceTree = "<group>";
@@ -1603,6 +1703,8 @@
 				A5E4EECA283686DF008D1F01 /* Transitions */,
 				B4497D5426A836DE00321AB8 /* SJDataPicker */,
 				B4B111592692F8720006CA5A /* Presentashion */,
+				A5915C30283BD3F70075FF06 /* Sources */,
+				A5915C4C283BDEE90075FF06 /* IMProgressHUD */,
 				B4D9D7422625C0BD007CFB71 /* Extensions+UIView.swift */,
 				B4D9D7492625D4F6007CFB71 /* Extentsions+ UIColor.swift */,
 				B4D9D74C2625E725007CFB71 /* Extesions+ UITextField.swift */,
@@ -2060,6 +2162,7 @@
 				A580AE3A27C0E82A00FCD682 /* AccountDeeplinkHandler.swift in Sources */,
 				A5129405273A6EB7000CBBD9 /* ChatVC.swift in Sources */,
 				A59431EC27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
+				A5915C68283BDEE90075FF06 /* StateIndicator.swift in Sources */,
 				A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				A5129407273A6EB7000CBBD9 /* SearchVCCell.swift in Sources */,
@@ -2072,6 +2175,7 @@
 				A512940E273A6EB7000CBBD9 /* UserList.swift in Sources */,
 				A512940F273A6EB7000CBBD9 /* FitMeetChannels.swift in Sources */,
 				A5129410273A6EB7000CBBD9 /* SlideInPresentationAnimator.swift in Sources */,
+				A5915C6C283BDEE90075FF06 /* IMProgressHUD.swift in Sources */,
 				A5129411273A6EB7000CBBD9 /* LiveStreamViewController.swift in Sources */,
 				A5129412273A6EB7000CBBD9 /* ResetPassword.swift in Sources */,
 				A5EF210128085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
@@ -2083,9 +2187,11 @@
 				A5129419273A6EB7000CBBD9 /* ActionChatPresentationController.swift in Sources */,
 				A512941A273A6EB7000CBBD9 /* PlayerViewCell.swift in Sources */,
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
+				A5915C5C283BDEE90075FF06 /* UIApplication+Window.swift in Sources */,
 				A5E4EEE528368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,
 				A512941C273A6EB7000CBBD9 /* AuthViewController.swift in Sources */,
 				A5671E8D2757A2C400EE4191 /* VideosVC.swift in Sources */,
+				A5915C5E283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift in Sources */,
 				A572949727FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A512941E273A6EB7000CBBD9 /* DropDownTextField.swift in Sources */,
 				A5EF20F8280702490051AA13 /* SearchCategoryCode.swift in Sources */,
@@ -2094,10 +2200,13 @@
 				A572949D27FED91100675FD8 /* CALayer.swift in Sources */,
 				A5E4EED9283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */,
 				A5129421273A6EB7000CBBD9 /* AppDelegate.swift in Sources */,
+				A5915C3B283BD3F70075FF06 /* CommonAnimation.swift in Sources */,
 				A5129422273A6EB7000CBBD9 /* StartStream.swift in Sources */,
 				A5E4EEDD283686DF008D1F01 /* InteractionControlling.swift in Sources */,
 				A5129423273A6EB7000CBBD9 /* NotTkenViewCode.swift in Sources */,
+				A5915C3D283BD3F70075FF06 /* BPCircleActivityIndicator.swift in Sources */,
 				A5129424273A6EB7000CBBD9 /* Extensins+String.swift in Sources */,
+				A5915C39283BD3F70075FF06 /* CircleLotateLayer.swift in Sources */,
 				A5129425273A6EB7000CBBD9 /* TabySegmentedControl.swift in Sources */,
 				A5C4172D27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5129426273A6EB7000CBBD9 /* SlideInPresentationManager.swift in Sources */,
@@ -2145,6 +2254,7 @@
 				A512944E273A6EB7000CBBD9 /* BaseCell.swift in Sources */,
 				A512944F273A6EB7000CBBD9 /* SubscribeVCCode.swift in Sources */,
 				A5129450273A6EB7000CBBD9 /* ExSendCoach.swift in Sources */,
+				A5915C60283BDEE90075FF06 /* UIView+Layout.swift in Sources */,
 				A5129452273A6EB7000CBBD9 /* ServiceProvider.swift in Sources */,
 				A5129453273A6EB7000CBBD9 /* PopUpView.swift in Sources */,
 				A59431EF27E8D09B00374890 /* OverlayOffline.swift in Sources */,
@@ -2163,6 +2273,7 @@
 				A5E4EEE22836881D008D1F01 /* ViewFactory.swift in Sources */,
 				A5A7960127F7408000F3B45E /* RawPlaylist.swift in Sources */,
 				A512945D273A6EB7000CBBD9 /* AuthInterceptor.swift in Sources */,
+				A5915C37283BD3F70075FF06 /* CircleLotationSet.swift in Sources */,
 				A512945E273A6EB7000CBBD9 /* ResponceLogin.swift in Sources */,
 				A512945F273A6EB7000CBBD9 /* DeleteTariffVC.swift in Sources */,
 				A52FA7C227C794A7004F570F /* ChanellCoachCode.swift in Sources */,
@@ -2193,6 +2304,7 @@
 				A5129474273A6EB7000CBBD9 /* CustomPresentationController.swift in Sources */,
 				A51294EF273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				A5129475273A6EB7000CBBD9 /* ResetOldPassword.swift in Sources */,
+				A5915C6A283BDEE90075FF06 /* IMActivityIndicator.swift in Sources */,
 				A5EF20EC280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A5129476273A6EB7000CBBD9 /* SearchVCUserCell.swift in Sources */,
 				A54E98792825116C00475A25 /* LiveVC.swift in Sources */,
@@ -2203,6 +2315,7 @@
 				A580AE3727C0E81400FCD682 /* DeeplinkCoordinator.swift in Sources */,
 				A512947C273A6EB7000CBBD9 /* User.swift in Sources */,
 				A512947D273A6EB7000CBBD9 /* SecurityCodeVC.swift in Sources */,
+				A5915C3F283BD3F70075FF06 /* CircleLayer.swift in Sources */,
 				A512947E273A6EB7000CBBD9 /* ActionSheetPresentationController.swift in Sources */,
 				A512947F273A6EB7000CBBD9 /* AddMonetezationCode.swift in Sources */,
 				A580AE3127C0E7E400FCD682 /* VideoDeeplinkHandler.swift in Sources */,
@@ -2211,6 +2324,7 @@
 				A5129482273A6EB7000CBBD9 /* ExtentionCollectionCategory.swift in Sources */,
 				A5129483273A6EB7000CBBD9 /* ActionSheetTransitionManager.swift in Sources */,
 				A5129484273A6EB7000CBBD9 /* FoggotPasswordViewControllerCode.swift in Sources */,
+				A5915C66283BDEE90075FF06 /* IMAnimator.swift in Sources */,
 				A5129485273A6EB7000CBBD9 /* ProfileVCCode.swift in Sources */,
 				A5129487273A6EB7000CBBD9 /* MainTabBarViewController.swift in Sources */,
 				A5129489273A6EB7000CBBD9 /* PickerStyle.swift in Sources */,
@@ -2256,6 +2370,7 @@
 				A51294AE273A6EB7000CBBD9 /* SignInPasswordViewController.swift in Sources */,
 				A572949127FED59500675FD8 /* DownSheetActionType.swift in Sources */,
 				A51294AF273A6EB7000CBBD9 /* URLRequstBilder.swift in Sources */,
+				A5915C64283BDEE90075FF06 /* IMProgressIndicator.swift in Sources */,
 				A51294B0273A6EB7000CBBD9 /* Password.swift in Sources */,
 				A51294B1273A6EB7000CBBD9 /* DataExtensions.swift in Sources */,
 				A51294B2273A6EB7000CBBD9 /* RightToLeft.swift in Sources */,
@@ -2281,8 +2396,10 @@
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A58F0ABF280D6041003A8833 /* Reachability.swift in Sources */,
 				A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */,
+				A5915C2F283BC4B00075FF06 /* Spinner.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
 				A52FA7BF27C79499004F570F /* ChannelCoach.swift in Sources */,
+				A5915C62283BDEE90075FF06 /* CAAnimation+Ext.swift in Sources */,
 				A51294C3273A6EB7000CBBD9 /* MapWatcher.swift in Sources */,
 				A51294C4273A6EB7000CBBD9 /* SecurityCodeVCCode.swift in Sources */,
 				A51294C5273A6EB7000CBBD9 /* ExtentionCategoryBroadcast.swift in Sources */,
@@ -2320,6 +2437,7 @@
 				A580AE3927C0E82A00FCD682 /* AccountDeeplinkHandler.swift in Sources */,
 				B4B113A7269739090006CA5A /* ChatVC.swift in Sources */,
 				A59431EB27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
+				A5915C67283BDEE90075FF06 /* StateIndicator.swift in Sources */,
 				A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */,
 				A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
@@ -2332,6 +2450,7 @@
 				B46CF7C82678C1EF00EA0741 /* UserList.swift in Sources */,
 				B4F580662631531A000095BB /* FitMeetChannels.swift in Sources */,
 				B4B1115B2692F8880006CA5A /* SlideInPresentationAnimator.swift in Sources */,
+				A5915C6B283BDEE90075FF06 /* IMProgressHUD.swift in Sources */,
 				B4858A72263A80A500EC276B /* LiveStreamViewController.swift in Sources */,
 				B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */,
 				A5EF210028085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
@@ -2343,9 +2462,11 @@
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
+				A5915C5B283BDEE90075FF06 /* UIApplication+Window.swift in Sources */,
 				A5E4EEE428368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,
 				B4D9D72326257D8D007CFB71 /* AuthViewController.swift in Sources */,
 				B4C5A957267C965200010F88 /* DropDownTextField.swift in Sources */,
+				A5915C5D283BDEE90075FF06 /* NSLayoutConstraint+Ext.swift in Sources */,
 				A572949627FED5C200675FD8 /* DownSheetTableViewCell.swift in Sources */,
 				A5457EA5272AAE1E006A8F2D /* AddMonetezationVC.swift in Sources */,
 				A5EF20F7280702490051AA13 /* SearchCategoryCode.swift in Sources */,
@@ -2354,10 +2475,13 @@
 				A572949C27FED91100675FD8 /* CALayer.swift in Sources */,
 				A5E4EED8283686DF008D1F01 /* ModalTransitionAnimator.swift in Sources */,
 				B4BAAD5E2639EAE400D2D6AE /* StartStream.swift in Sources */,
+				A5915C3A283BD3F70075FF06 /* CommonAnimation.swift in Sources */,
 				B41097F62640C0F500DFEC19 /* NotTkenViewCode.swift in Sources */,
 				A5E4EEDC283686DF008D1F01 /* InteractionControlling.swift in Sources */,
 				B4D9D7502625F0C6007CFB71 /* Extensins+String.swift in Sources */,
+				A5915C3C283BD3F70075FF06 /* BPCircleActivityIndicator.swift in Sources */,
 				B46CF7E6267A427D00EA0741 /* TabySegmentedControl.swift in Sources */,
+				A5915C38283BD3F70075FF06 /* CircleLotateLayer.swift in Sources */,
 				B4B111622692F8C80006CA5A /* SlideInPresentationManager.swift in Sources */,
 				A5C4172C27CCFC4F00BC1224 /* HomeHorizontalListTableViewCell.swift in Sources */,
 				A5D2E0A527147D0000986BAE /* EdetChannelVC.swift in Sources */,
@@ -2405,6 +2529,7 @@
 				A5671E892757A2AE00EE4191 /* VideosVC.swift in Sources */,
 				A54ACC9E27AD7B9D004BAEF1 /* ExSendStream.swift in Sources */,
 				A54F9B902732D7FC008E7E60 /* SubscribeVCCode.swift in Sources */,
+				A5915C5F283BDEE90075FF06 /* UIView+Layout.swift in Sources */,
 				B43A6C7926F24DFE009E6DDE /* ExSendCoach.swift in Sources */,
 				B4497D4D26A72E6B00321AB8 /* ServiceProvider.swift in Sources */,
 				A59431EE27E8D09B00374890 /* OverlayOffline.swift in Sources */,
@@ -2423,6 +2548,7 @@
 				A5E4EEE12836881D008D1F01 /* ViewFactory.swift in Sources */,
 				A5A7960027F7408000F3B45E /* RawPlaylist.swift in Sources */,
 				B470790E2705F06700921821 /* EdetBroadcast.swift in Sources */,
+				A5915C36283BD3F70075FF06 /* CircleLotationSet.swift in Sources */,
 				A5950E582737D5AA002C1500 /* DeleteTariffVCCode.swift in Sources */,
 				B4A9F61A2631A388000E00DE /* AuthInterceptor.swift in Sources */,
 				A52FA7C127C794A7004F570F /* ChanellCoachCode.swift in Sources */,
@@ -2453,6 +2579,7 @@
 				A5950E5127371A2F002C1500 /* CalculateVC.swift in Sources */,
 				B475A93C26B91CE000EF96A4 /* UploadImage.swift in Sources */,
 				B4497D5F26A8371500321AB8 /* CustomPresentationController.swift in Sources */,
+				A5915C69283BDEE90075FF06 /* IMActivityIndicator.swift in Sources */,
 				A5EF20EB280701D30051AA13 /* SearchUserVC.swift in Sources */,
 				A51294EE273D7A9F000CBBD9 /* ValidateProduct.swift in Sources */,
 				A54E98782825116C00475A25 /* LiveVC.swift in Sources */,
@@ -2463,6 +2590,7 @@
 				A580AE3627C0E81400FCD682 /* DeeplinkCoordinator.swift in Sources */,
 				B4D9D78E26282719007CFB71 /* SignInViewControllerCode.swift in Sources */,
 				A5950E5327371A40002C1500 /* CalculateVCCode.swift in Sources */,
+				A5915C3E283BD3F70075FF06 /* CircleLayer.swift in Sources */,
 				B4D9D76F2626D511007CFB71 /* User.swift in Sources */,
 				B4D9D7AA262965E8007CFB71 /* SecurityCodeVC.swift in Sources */,
 				A580AE3027C0E7E400FCD682 /* VideoDeeplinkHandler.swift in Sources */,
@@ -2471,6 +2599,7 @@
 				B48D8292262DAD4400F5A0D9 /* ProfileVC.swift in Sources */,
 				B4F204DA266F50BA00ED11B5 /* ExtentionCollectionCategory.swift in Sources */,
 				B47828A526CFF40C0068292A /* ActionSheetTransitionManager.swift in Sources */,
+				A5915C65283BDEE90075FF06 /* IMAnimator.swift in Sources */,
 				B4D9D79F26285104007CFB71 /* FoggotPasswordViewControllerCode.swift in Sources */,
 				B48D82A5262DAE1300F5A0D9 /* ProfileVCCode.swift in Sources */,
 				B4D9D7CE262D8F1F007CFB71 /* MainTabBarViewController.swift in Sources */,
@@ -2516,6 +2645,7 @@
 				B4D2B93D26E78EA00080E7E3 /* CoachCode.swift in Sources */,
 				A572949027FED59500675FD8 /* DownSheetActionType.swift in Sources */,
 				B4D9D73B2625BFDA007CFB71 /* AuthViewControllerCode.swift in Sources */,
+				A5915C63283BDEE90075FF06 /* IMProgressIndicator.swift in Sources */,
 				B4D9D792262848F1007CFB71 /* SignInPasswordViewController.swift in Sources */,
 				B4497D4A26A71CDE00321AB8 /* URLRequstBilder.swift in Sources */,
 				B4D9D7BA2629ABB5007CFB71 /* Password.swift in Sources */,
@@ -2541,8 +2671,10 @@
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				A58F0ABE280D6041003A8833 /* Reachability.swift in Sources */,
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
+				A5915C2E283BC4B00075FF06 /* Spinner.swift in Sources */,
 				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A52FA7BE27C79499004F570F /* ChannelCoach.swift in Sources */,
+				A5915C61283BDEE90075FF06 /* CAAnimation+Ext.swift in Sources */,
 				B4D9D7BD2629ACFE007CFB71 /* LoginPassword.swift in Sources */,
 				B404923826D8FA1500A2F417 /* MapWatcher.swift in Sources */,
 				B4D9D7AD262965FB007CFB71 /* SecurityCodeVCCode.swift in Sources */,

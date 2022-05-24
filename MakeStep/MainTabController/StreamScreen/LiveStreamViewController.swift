@@ -52,6 +52,15 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     let streamView = LiveStreamVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetchannel: FitMeetChannels
+    @Inject var fitMeetApi: FitMeetApi
+    var textFieldBottomConstraint = NSLayoutConstraint()
+    var user: User?
+    var listChanell: [ChannelResponce] = []
+    //var imagePicker: ImagePicker!
+    var imagePath: String?
+    var category: [Int]?
+    var descriptionStream : String?
+    var broadcast:  BroadcastResponce?
     
     let UserId = UserDefaults.standard.string(forKey: Constants.userID)
     let userName = UserDefaults.standard.string(forKey: Constants.userFullName)
@@ -60,11 +69,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     let urls = UserDefaults.standard.string(forKey: Constants.urlStream)
     
     let actionTransitionManager = ActionTransishionChatManadger()
+   
     
     
     private var takeChannel: AnyCancellable?
     private var task: AnyCancellable?
     private var taskStream: AnyCancellable?
+    private var takeUser: AnyCancellable?
+    
     private static let maxRetryCount: Int = 5
     var nameStream: String?
     var url: String?
@@ -101,7 +113,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        actionButton()
+        self.actionButton()
+        self.bindingChanell()
+        self.bindingUser()
+        setupKeyboardNotifications()
+        self.hideKeyboardWhenTappedAround()
+        streamView.textFieldNameStream.delegate = self
         rtmpStream = RTMPStream(connection: rtmpConnection)
         if let orientation = DeviceUtil.videoOrientation(by: UIApplication.shared.statusBarOrientation) {
             rtmpStream.orientation = orientation
@@ -151,7 +168,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         self.navigationController?.navigationBar.isHidden = true
         
         [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
-        
+        [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 1 }
         
         
         
@@ -164,9 +181,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.previewView.videoGravity = AVLayerVideoGravity.resizeAspectFill
         rtmpStream.addObserver(self, forKeyPath: "currentFPS", options: .new, context: nil)
         streamView.previewView.attachStream(rtmpStream)
-        if isPrivate {
-            streamView.stackButton.addArrangedSubview(streamView.privateStream)
-        } 
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         logger.info("viewWillDisappear")
@@ -181,6 +196,17 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         myuri = ""
         myPublish = ""
         Loaf.dismiss(sender: LiveStreamViewController())
+        streamView.labelStartNow.text = "Start now"
+        streamView.labelAviable.text = "Available for all"
+        streamView.textFieldNameStream.text = nil
+        streamView.timerLabel.text = "00:00:00"
+        
+        streamView.stopButton.isHidden = true
+        
+       
+        streamView.microfoneButton.isHidden = false
+        streamView.cameraModeButton.isHidden = false
+        streamView.cameraButton.isHidden = false
     }
 
     func actionButton() {
@@ -188,45 +214,43 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.StartStreamButton.addTarget(self, action: #selector(startStream), for: .touchUpInside)
         streamView.microfoneButton.addTarget(self, action: #selector(stopMicrofone), for: .touchUpInside)
         streamView.cameraButton.addTarget(self, action: #selector(settingStream), for: .touchUpInside)
-        streamView.stopButton.addTarget(self, action: #selector(stopStream), for: .touchUpInside)
+        streamView.stopButton.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
         streamView.chatButton.addTarget(self, action: #selector(openChat), for: .touchUpInside)
         streamView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
         streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
         
         streamView.close.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
         streamView.buttonSetting.addTarget(self, action: #selector(settingTapped), for: .touchUpInside)
+        streamView.buttonStartNow.addTarget(self, action: #selector(timeTapped), for: .touchUpInside)
+        streamView.buttonAvailable.addTarget(self, action: #selector(aviableTapped), for: .touchUpInside)
+        streamView.buttonStart.addTarget(self, action: #selector(actionStartStream), for: .touchUpInside)
         
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(viewTapped))
         scrollViewTap.numberOfTapsRequired = 1
         streamView.capturePreviewView.addGestureRecognizer(scrollViewTap)
+        
+        textFieldBottomConstraint = streamView.textFieldNameStream.bottomAnchor.constraint(equalTo: streamView.buttonAvailable.topAnchor, constant: -32)
+        textFieldBottomConstraint.isActive = true
     }
+    @objc func aviableTapped() {
+        self.presentAviable()
+        }
     @objc func viewTapped() {
             self.view.endEditing(true)
         }
+    @objc func timeTapped() {
+        self.showPicker()
+        }
     @objc func settingTapped() {
         let chatVC = NewStartStream()
-//        chatVC.transitioningDelegate = actionChatTransitionManager
-//        chatVC.modalPresentationStyle = .custom
-//        130 + 39 + 39 + 60
-//        actionChatTransitionManager.intWidth = 1
-//        actionChatTransitionManager.intHeight = 0.4
-//        self.present(chatVC, animated: true, completion: nil)
-//        let coolViewController = NewStartStream()
-//       let  interactionController = StandardInteractionController(viewController: coolViewController)
-//        let transitionManager = ModalTransitionManager(interactionController: interactionController)
-//        coolViewController.transitionManager = transitionManager
-//        coolViewController.transitioningDelegate = transitionManager
-//        coolViewController.modalPresentationStyle = .custom
-//        present(coolViewController, animated: true, completion: nil)
-//       // present(coolViewController, interactiveDismissalType: .standard)
-       
+        chatVC.delegate = self
         self.present(chatVC, interactiveDismissalType: .standard)
         }
     @objc func closeVideo() {
         logger.info("close")
+        self.timer?.invalidate()
         tabBarController!.selectedIndex = 0
     }
-
     @objc func rotateCamera() {
         logger.info("rotateCamera")
         let position: AVCaptureDevice.Position = currentPosition == .back ? .front : .back
@@ -238,7 +262,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     @objc func shareLink() {        
         guard let id = broadcastId,let privateKey = privateUrlKey else { return }
- 
         #if QA
             "https://makestep.com/broadcastQA/\(id)/\(privateKey)".share()
         #elseif DEBUG
@@ -253,9 +276,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         chatVC.transitioningDelegate = actionChatTransitionManager
         chatVC.modalPresentationStyle = .custom
         chatVC.delegate = self
-        guard let id = idBroad,let channel = channelId else { return }
+        guard let id = self.broadcast?.id, let channelId = listChanell.last?.id else { return }
         chatVC.broadcastId = "\(id)"
-        chatVC.chanellId = channel
+        chatVC.chanellId = "\(channelId)"
         actionChatTransitionManager.intWidth = 1
         actionChatTransitionManager.intHeight = 0.7
         actionChatTransitionManager.isLandscape = isLandscape
@@ -263,20 +286,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
 
     }
     @objc func openUserOnline() {
-        
-//        streamView.recButton.isHidden = true
-//        streamView.stopButton.isHidden = true
-//        streamView.microfoneButton.isHidden = true
-//        streamView.cameraModeButton.isHidden = true
-//        streamView.cameraButton.isHidden = true
-//        streamView.chatButton.isHidden = true
-//        streamView.StartStreamButton.isHidden = true
-        
-
+ 
         let chatVC = UserVC()
-        guard let id = idBroad,let channel = channelId else { return }
+        guard let id = self.broadcast?.id, let channelId = listChanell.last?.id else { return }
         chatVC.broadcastId = "\(id)"
-        chatVC.chanellId = channel
+        chatVC.chanellId = "\(channelId)"
         chatVC.delegate = self
         
         chatVC.transitioningDelegate = actionChatTransitionManager
@@ -296,7 +310,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         }
      
     }
-
     @objc func settingStream() {
         streamView.cameraButton.isSelected.toggle()
         captureSession = AVCaptureSession()
@@ -325,9 +338,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         alertController.addAction(cancelAction);
         present(alertController, animated: true, completion: nil)
     }
-    
-    
-    
     @objc func startStream() {
       
         if myuri != "" {
@@ -339,8 +349,10 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "startCamera"), for: [])
             createTimer()
             self.streamView.stackButton.addArrangedSubview(streamView.stopButton)
-            streamView.recButton.isHidden = true
+            
             streamView.stopButton.isHidden = false
+            
+            streamView.recButton.isHidden = true
             streamView.microfoneButton.isHidden = true
             streamView.cameraModeButton.isHidden = true
             streamView.cameraButton.isHidden = true
@@ -354,11 +366,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
             rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
             rtmpConnection.connect(myuri)
-            streamView.recButton.isHidden = false
+            
             
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "pause"), for: [])
             streamView.stopButton.isHidden = true
             
+            streamView.recButton.isHidden = false
             streamView.microfoneButton.isHidden = false
             streamView.cameraModeButton.isHidden = false
             streamView.cameraButton.isHidden = false
@@ -373,8 +386,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             alertNameStream()
         }
     }
-    @objc
-    private func rtmpStatusHandler(_ notification: Notification) {
+    @objc private func rtmpStatusHandler(_ notification: Notification) {
         let e = Event.from(notification)
         guard let data: ASObject = e.data as? ASObject, let code: String = data["code"] as? String else {
             return
@@ -411,20 +423,14 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             break
         }
     }
-
-    @objc
-    private func rtmpErrorHandler(_ notification: Notification) {
+    @objc private func rtmpErrorHandler(_ notification: Notification) {
         logger.error(notification)
         rtmpConnection.connect(myuri)
     }
-    
-    @objc
-    private func didEnterBackground(_ notification: Notification) {
+    @objc private func didEnterBackground(_ notification: Notification) {
          rtmpStream.receiveVideo = false
     }
-
-    @objc
-    private func didBecomeActive(_ notification: Notification) {
+    @objc private func didBecomeActive(_ notification: Notification) {
          rtmpStream.receiveVideo = true
     }
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
@@ -441,15 +447,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             rtmpStream.setPointOfInterest(pointOfInterest, exposure: pointOfInterest)
         }
     }
-    @objc
-    private func on(_ notification: Notification) {
+    @objc  private func on(_ notification: Notification) {
         //UIApplication.shared.statusBarOrientation deprecated in iOS 13.0
         guard let orientation = DeviceUtil.videoOrientation(by: (UIApplication.shared.windows.first?.windowScene!.interfaceOrientation)!) else {
             return
         }
         rtmpStream.orientation = orientation
     }
-
     @objc func stopMicrofone() {
         streamView.microfoneButton.isSelected.toggle()
         
@@ -469,11 +473,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
                         
                         ]
         }
-    }
-    
-    @objc func stopStream() {
-        AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-        self.dismiss(animated: true, completion: nil)
     }
 
     func createTimer() {
@@ -557,5 +556,243 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             isLandscape = false
            }
        }
+    private func showPicker() {
+        var style = DefaultStyle()
+        style.pickerColor = StyleColor.colors([style.textColor, .red, .blueColor])
+        style.pickerMode = .dateAndTime
+        style.titleString = "Please Сhoose Date"
+        style.returnDateFormat = .yyyy_To_ss
+        style.minimumDate = Date()
+        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
+        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
+    
+        style.textColor = UIColor(hexString: "#3B58A4")
+        let pick:PresentedViewController = PresentedViewController()
+        pick.style = style
+        pick.block = { [weak self] (date) in
+            if date == "" {
+            self?.streamView.labelStartNow.text = "Start Now"
+            } else {
+            self?.streamView.labelStartNow.text = self?.removeUrl(str: date!)
+            }
+        }
+        self.present(pick, animated: true, completion: nil)
+    }
+    func removeUrl(str: String) -> (String) {
+        let fullUrlArr = str.components(separatedBy: " ")
+        let myuri = fullUrlArr[0] + "\n"  + "     " + fullUrlArr[1]
+        return (myuri)
+    }
 }
 
+extension LiveStreamViewController: SendDataToLive {
+    func sendDatatoLive(category: [Int], description: String?, imagePath: String?) {
+        self.imagePath = imagePath
+        self.category = category
+        self.descriptionStream = description
+    }
+    public func presentAviable() {
+        
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+                let action = self.action(for: "Available for all", title: " Available for all")
+                     DispatchQueue.main.async {
+                     alertController.addAction(action!)
+                     }
+                
+       let action2 = self.action(for: "Private stream", title: "Private stream")
+                    DispatchQueue.main.async {
+                    alertController.addAction(action2!)
+                    }
+                DispatchQueue.main.async {
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                }
+                
+                DispatchQueue.main.async {
+                   self.present(alertController, animated: true)
+                }
+       
+            
+        
+    }
+    private func action(for type: String, title: String) -> UIAlertAction? {
+        return UIAlertAction(title: title, style: .default) { [unowned self] _ in
+           
+            switch type {
+            case "Available for all" :
+                self.streamView.labelAviable.text = type
+            case "Private stream" :
+                self.streamView.labelAviable.text = type
+            default:
+               break
+            }
+           
+        }
+    }
+}
+extension LiveStreamViewController {
+    func bindingUser() {
+        takeUser = fitMeetApi.getUser()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.username != nil  {
+                    self.user = response
+                    
+                }
+        })
+    }
+    func bindingChanell() {
+        takeChannel = fitMeetchannel.listChannels()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if !response.data.isEmpty  {
+                    self.listChanell = response.data
+                 
+                }
+        })
+    }
+    @objc func actionStartStream() {
+        guard let chanelId = listChanell.last?.id else { return }
+                var isPlan: Bool?
+                var date: String?
+                var status: String?
+      
+        
+                var onlyForSponsors : Bool?
+                var onlyForSubscribers: Bool?
+        
+                if streamView.labelStartNow.text == "Start now" {
+                    isPlan = false
+                    date = "\(Date())"
+                } else {
+                    isPlan = true
+                    date = streamView.labelStartNow.text
+                }
+        if streamView.labelAviable.text == "Available for all" {
+                     status = "STANDARD"
+        }  else if streamView.labelAviable.text == "Private stream" {
+                    status = "PRIVATE_LINK"
+        }
+        let image =  self.imagePath ?? ""
+        guard let date = date,let status = status,let isPlan = isPlan,var name = streamView.textFieldNameStream.text else {  return }
+        if name.isEmpty {
+            name = "TITLE OF THE STREAM"
+        }
+
+        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: false, categoryId: self.category ?? [], type: status )
+    }
+    func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int],type: String)  {
+
+        takeChannel = fitMeetStream.createBroadcas(broadcast: BroadcastRequest(
+                                                    channelID: chanellId,
+                                                    name: name,
+                                                    type: type,
+                                                    access: "ALL",
+                                                    hasChat: true,
+                                                    isPlanned: isPlaned,
+                                                    onlyForSponsors: onlyForSponsors,
+                                                    onlyForSubscribers: onlyForSubscribers,
+                                                    categoryIDS: categoryId,
+                                                    scheduledStartDate: date,
+                                                    description: description,
+                                                    previewPath: previewPath))
+
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let id = response.id  {
+                    self.broadcast = response
+                    UserDefaults.standard.set(self.broadcast?.id, forKey: Constants.broadcastID)
+                    if self.streamView.labelStartNow.text == "Start now" {
+                    self.fetchStream(id: id, name: name)
+                    } else {
+                        guard let user = self.user else { return }
+                        let channelVC = ChanellVC()
+                        channelVC.user = user
+                        self.navigationController?.pushViewController(channelVC, animated: true)
+                    }
+                } else {
+                    guard let mess = response.message else { return }
+                    Loaf("Not Saved \(mess)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+            }
+        })
+    }
+    func fetchStream(id:Int?,name: String?) {
+        let UserId = UserDefaults.standard.string(forKey: Constants.userID)
+        guard let id = id , let name = name , let userId = UserId  else{ return }
+        let usId = Int(userId)
+        guard let usID = usId else { return }
+        taskStream = fitMeetStream.startStream(stream: StartStream(name: name, userId: usID , broadcastId: id))
+            .mapError({ (error) -> Error in
+                  print(error)
+                   return error })
+                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    guard let url = response.url else { return }
+                     if url != nil {
+                     DispatchQueue.main.async {
+                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
+                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
+                             switch disType {
+                             case .tapped:  self.startStreams(id: id, url: url)
+                             case .timedOut: self.startStreams(id: id, url: url)
+                         }
+                     }
+                 }
+             } else {
+                 Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+             }
+        })
+    }
+    private func startStreams(id : Int, url : String) {
+        UserDefaults.standard.set(url, forKey: Constants.urlStream)
+        let twoString = self.removeUrl(url: url)
+        self.myuri = twoString.0
+        self.myPublish = twoString.1
+        self.url = url
+ 
+                if self.streamView.labelAviable.text == "Available for all" {
+                    self.isPrivate = false
+                } else  {
+                    self.isPrivate = true
+                    streamView.stackButton.addArrangedSubview(streamView.privateStream)
+                    self.broadcastId = self.broadcast?.id
+                    self.privateUrlKey = self.broadcast?.privateUrlKey
+                }
+      
+        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
+        [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
+        
+        
+        
+        
+    }
+    func removeUrl(url: String) -> (url:String,publish: String) {
+        let fullUrlArr = url.components(separatedBy: "/")
+        let myuri = fullUrlArr[0] + "//" + fullUrlArr[2] + "/" + fullUrlArr[3]
+        let myPublish = fullUrlArr[4]
+        return (myuri,myPublish)
+    }
+}
+extension LiveStreamViewController {
+    override func keyboardWillShow(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            if streamView.textFieldNameStream.isFirstResponder {
+                    self.textFieldBottomConstraint.constant = -180
+            }
+        }
+    }
+    
+    override func keyboardWillHide(notification: NSNotification) {
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+                self.textFieldBottomConstraint.constant = -32
+ 
+        }
+    }
+}
+extension LiveStreamViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == streamView.textFieldNameStream {
+            self.streamView.textFieldNameStream.resignFirstResponder()
+            return true
+        }
+     return false
+  }
+}

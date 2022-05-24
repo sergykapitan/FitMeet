@@ -149,6 +149,7 @@ final class LiveStreamVCCode: UIView {
         label.text = "Start now"
         label.textColor = .white
         label.font = UIFont.systemFont(ofSize: 10.2)
+        label.numberOfLines = 2
         return label
     }()
     var buttonSetting: UIButton = {
@@ -245,7 +246,8 @@ final class LiveStreamVCCode: UIView {
         
         capturePreviewView.addSubview(textFieldNameStream)
         textFieldNameStream.centerX(inView: capturePreviewView)
-        textFieldNameStream.anchor( bottom: buttonAvailable.topAnchor ,paddingBottom: 32)
+        
+        
         capturePreviewView.addSubview(lineBottom)
         lineBottom.centerX(inView: capturePreviewView)
         lineBottom.anchor( left: textFieldNameStream.leftAnchor,
