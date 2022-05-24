@@ -198,10 +198,7 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         self.textViewInstagram.text = channel?.instagramLink
         self.textViewTwitter.text = channel?.twitterLink
         guard let categories = channel?.favoriteCategories else { return }
-        self.IdCategory = categories
-        self.bindingMapCategory(categoryId: categories)
-  
-      
+        self.bindingMapCategory(categoryId: categories) 
     }
     func actionButtonContinue() {
         profileView.buttonOK.addTarget(self, action: #selector(changeChannel), for: .touchUpInside)
@@ -264,11 +261,13 @@ class EdetChannelVC: UIViewController, UIScrollViewDelegate, UITextViewDelegate,
         channels = fitMeetApi.changeChannels(id: id, changeChannel: ChageChannel(
             name: o,
             description: k,
-            addFavoriteCategoryIds: self.IdCategory,
+            addFavoriteCategoryIds: self.IdCategory, removeFavoriteCategoryIds: self.removeIdCategory,
             facebookLink: f,
             instagramLink: i,
             twitterLink: t))
-            .mapError({ (error) -> Error in return error })
+            .mapError({ (error) -> Error in
+                print(error.localizedDescription)
+                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.id != nil  {
                     DispatchQueue.main.async {
