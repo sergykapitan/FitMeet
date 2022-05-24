@@ -159,6 +159,7 @@ extension SignInViewController: SignInDelegate {
             self.bottomConstraint.constant = 35
             self.signUpView.alertImage.isHidden = false
             self.signUpView.alertLabel.isHidden = false
+            self.signUpView.alertMailLabel.isHidden = true
         }
         self.view.layoutIfNeeded()
         trA.startAnimation()
@@ -168,6 +169,7 @@ extension SignInViewController: SignInDelegate {
         let trA = UIViewPropertyAnimator(duration: 0.2, dampingRatio: 1) {
             self.bottomConstraint.constant = 35
             self.signUpView.alertImage.isHidden = false
+            self.signUpView.alertLabel.isHidden = true
             self.signUpView.alertMailLabel.isHidden = false
         }
         self.view.layoutIfNeeded()
