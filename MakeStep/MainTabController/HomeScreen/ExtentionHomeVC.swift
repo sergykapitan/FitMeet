@@ -42,10 +42,10 @@ extension HomeVC: UITableViewDataSource {
          cell.delegate = self
          return cell
         case 1:
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell
-           
+        let cell = tableView.dequeueReusableCell(withIdentifier: "HomeCell", for: indexPath) as! HomeCell       
         guard !listBroadcast.isEmpty  else { return cell }    
         cell.hideAnimation()
+        self.navigationController?.navigationBar.isUserInteractionEnabled = true
         cell.setupImage(urlString:  listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? Constants.defoultImage)
         cell.labelDescription.text = listBroadcast[indexPath.row].name
         
@@ -56,7 +56,7 @@ extension HomeVC: UITableViewDataSource {
         else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         cell.titleLabel.text = self.usersd[id]?.fullName
-         print("NAME == \(cell.titleLabel.text)")
+       
            
         
         self.ids.append(broadcastID)

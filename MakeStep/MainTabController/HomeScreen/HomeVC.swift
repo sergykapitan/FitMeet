@@ -111,10 +111,13 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
         refreshControl.addTarget(self, action: #selector(refreshAlbumList), for: .valueChanged)
         self.tabBarController?.delegate = UIApplication.shared.delegate as? UITabBarControllerDelegate
         makeNavItem(title: "", hide: true)
+      
     }
     override func makeNavItem(title: String, hide: Bool) {
         super.makeNavItem(title: title, hide: hide)
         self.navigationItem.titleView = UIImageView(image: UIImage(named: "Logo"))
+        self.navigationController?.navigationBar.isUserInteractionEnabled = false
+       
     }
 
     override func copyLink(id: Int) {
@@ -136,8 +139,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
                        if response.data.count != 0 {
                            self.usersd = response.data
-                         //  let arrayUserId = self.usersd.compactMap{$0.value.channelIds?.last}
-                         //  self.getMapChannel(ids: arrayUserId)
                            self.refreshControl.endRefreshing()
                            self.homeView.tableView.reloadData()
                        }
@@ -210,7 +211,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
 
                         guard let responceUnrap = response.data else { return }
                         self.listBroadcast.append(contentsOf:responceUnrap)
-                       // self.homeView.tableView.reloadData()
+                      
                        
                         let arrayUserId =  self.listBroadcast.map{$0.userId!}
                         self.bindingUserMap(ids: arrayUserId)
