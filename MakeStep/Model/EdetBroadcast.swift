@@ -11,9 +11,9 @@ import Foundation
 struct EditBroadcast: Codable {
     let name, access: String?
     let hasChat: Bool?
-    let scheduledStartDate: String?
+  //  let scheduledStartDate: String?
     let onlyForSponsors, onlyForSubscribers: Bool?
-    let addCategoryIDS, removeCategoryIDS: [Int]?
+    let addCategoryIds, removeCategoryIds: [Int]?
     let previewPath: String?
     let rate: Int?
     let description: String?

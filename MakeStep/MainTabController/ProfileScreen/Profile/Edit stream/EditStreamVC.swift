@@ -22,6 +22,8 @@ protocol RefreshList: AnyObject {
 }
 
 class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate,TagListViewDelegate {
+    var transitionManager: UIViewControllerTransitioningDelegate?
+    
     
     func menuDidAnimate(up: Bool) {
         self.authView.textFieldCategory.text = ""
@@ -33,6 +35,7 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     
     let authView = EditStreamCode()
     var IdCategory = [Int]()
+    var removeIdCategory = [Int]()
     private var isOversized = false {
             didSet {
                 self.authView.textFieldCategory.easy.reload()
@@ -110,26 +113,13 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         authView.cardView.anchor( left: view.leftAnchor, right: view.rightAnchor, paddingLeft: 0, paddingRight: 0)
-        guard let image = self.broadcast?.previewPath else { return }
-        self.authView.textFieldName.text = self.broadcast?.name
-        self.authView.textFieldAviable.text = "Available for all"
-        self.authView.textFieldDescription.text = self.broadcast?.description
-        let categorys = broadcast?.categories
-        let s = categorys!.map{$0.title!}
-        let stringRepresentation = s.joined(separator:",")
-        
-        authView.tagView.addTags(s)
-        broadcastID = broadcast?.id
-        let url = URL(string: image)
-        self.authView.imageButton.kf.setImage(with:url , for: .normal)      
-        self.authView.buttonOK.setTitle("Save", for: .normal)
-       // self.authView.textFieldStartDate.text = self.broadcast?.scheduledStartDate
-        self.image = broadcast?.previewPath
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround() 
         self.bindingCategory()
+        self.setBroadcast()
         
         authView.tagView.delegate = self
         let scrollViewTap = UITapGestureRecognizer(target: self, action: #selector(self.scrollViewTapped))
@@ -141,12 +131,8 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         authView.scroll.delegate = self
    
         authView.textFieldCategory.delegate = self
-      //  authView.textFieldStartDate.delegate = self
         authView.textFieldAviable.delegate = self
-       
-      //  authView.textFieldStartDate.isSearchEnable = true
-        authView.textFieldAviable.isSearchEnable = false
-        
+        authView.textFieldAviable.isSearchEnable = false        
         authView.textFieldAviable.optionArray = ["Available for all","Subscribers only"]
       
         
@@ -189,25 +175,9 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
             self.view.endEditing(true) // anyone
         }
     func changeData() {
-//        authView.textFieldStartDate.didSelect { (gg, tt, hh) in
-//            if gg == "Start now" {
-//                self.authView.buttonOK.setTitle("Start", for: .normal)
-//                self.authView.buttonOK.isUserInteractionEnabled = true
-//
-//            } else {
-//                self.authView.buttonOK.setTitle("Save", for: .normal)
-//                self.authView.buttonOK.isUserInteractionEnabled = true
-//            }
-//        }
         authView.textFieldAviable.didSelect { (str, ind, col) in
         }
-//        authView.textFieldStartDate.didSelect { (ff, _, _) in
-//                       if ff == "Schedule a stream" {
-//                        self.showPicker()
-//                        self.authView.buttonOK.setTitle("Save", for: .normal)
-//                        self.authView.buttonOK.isUserInteractionEnabled = true
-//            }
-//        }
+
         authView.textFieldCategory.didSelect { (ff, _, _) in
 
                 let j =  self.authView.tagView.tagViews.filter {$0.titleLabel?.text == ff}
@@ -226,25 +196,15 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                         
         }
         authView.textFieldCategory.easy.layout(Height(>=39))
-}
-    private func showPicker() {
-        var style = DefaultStyle()
-        style.pickerColor = StyleColor.colors([style.textColor, .red, .blue])
-        style.pickerMode = .dateAndTime
-        style.titleString = "Please Сhoose Date"
-        style.returnDateFormat = .yyyy_To_ss
-        style.minimumDate = Date()
-        style.maximumDate = Date().addingTimeInterval(3600*24*7*52)
-        style.titleFont = UIFont.systemFont(ofSize: 25, weight: .bold)
-    
-        style.textColor = UIColor(hexString: "#3B58A4")
-        let pick:PresentedViewController = PresentedViewController()
-        pick.style = style
-        pick.block = { [weak self] (date) in
-          //  self?.authView.textFieldStartDate.text = date
-        }
-        self.present(pick, animated: true, completion: nil)
     }
+    func tagRemoveButtonPressed(_ title: String, tagView: TagView, sender: TagListView) {
+           sender.removeTagView(tagView)
+          let p = self.listCategory.filter{$0.title == title}.compactMap{$0.id}
+          guard let id = p.first else { return }
+         self.removeIdCategory.append(id)
+
+       }
+   
     func actionButtonContinue() {
         authView.buttonOK.addTarget(self, action: #selector(actionSignUp), for: .touchUpInside)
         authView.imageButton.addTarget(self, action: #selector(actionUploadImage), for: .touchUpInside)
@@ -252,12 +212,11 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     @objc func actionSignUp() {
         guard
               let name = authView.textFieldName.text ,
-              let description = authView.textFieldDescription.text,
-              let  date = self.broadcast?.scheduledStartDate,
-              let img = image  else { return }
+              let description = authView.textFieldDescription.text else { return }
         
        
-        
+        let img = image ?? ""
+        let  date = self.broadcast?.scheduledStartDate ?? ""
         var onlyForSponsors : Bool?
         var onlyForSubscribers: Bool?
      
@@ -269,9 +228,6 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
         } else if authView.textFieldAviable.text == "Subscribers only" {
             onlyForSponsors = false
             onlyForSubscribers = true
-        } else if authView.textFieldAviable.text == "Only Sponsors" {
-            onlyForSponsors = true
-            onlyForSubscribers = false
         }
         guard
               let sponsor = onlyForSponsors,
@@ -291,6 +247,23 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                     self.imageUpload = response
         })
     }
+    private func setBroadcast() {
+        self.authView.textFieldName.text = self.broadcast?.name
+        self.authView.textFieldAviable.text = "Available for all"
+        self.authView.textFieldDescription.text = self.broadcast?.description
+        let categorys = broadcast?.categories
+        let s = categorys!.map{$0.title!}
+        let stringRepresentation = s.joined(separator:",")
+        
+        authView.tagView.addTags(s)
+        broadcastID = broadcast?.id
+        
+        guard let image = self.broadcast?.previewPath else { return }
+        let url = URL(string: image)
+        self.authView.imageButton.kf.setImage(with:url , for: .normal)
+        self.authView.buttonOK.setTitle("Save", for: .normal)
+        self.image = broadcast?.previewPath
+    }
     func nextView(
                   name: String ,
                   description: String,
@@ -303,11 +276,10 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
                                                         name: name,
                                                         access: "ALL",
                                                         hasChat: true,
-                                                        scheduledStartDate: date,
                                                         onlyForSponsors: onlyForSponsors,
                                                         onlyForSubscribers: onlyForSubscribers,
-                                                        addCategoryIDS: categoryId,
-                                                        removeCategoryIDS: [0],
+                                                        addCategoryIds: categoryId,
+                                                        removeCategoryIds: removeIdCategory,
                                                         previewPath: self.imageUpload?.data?.first?.filename,
                                                         rate: 0,
                                                         description: description, price: nil))
