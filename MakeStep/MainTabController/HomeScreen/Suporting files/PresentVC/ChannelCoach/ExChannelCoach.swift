@@ -35,6 +35,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
             return cell
         } else {
             cell.textLabel?.text = nil
+            cell.buttonMore.isHidden = false
             cell.backgroundImage.isHidden = false
        
         cell.hideAnimation()
