@@ -204,8 +204,18 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
+   
+    public func incrementViewersCount(id: Int) -> AnyPublisher<Bool,DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/incrementViewersCount/\(id)", method: .put)
+            .validate(statusCode: 200..<300)
+            .validate(contentType: ["text/html"])
+            .publishDecodable(type: Bool.self)
+            .value()
+            .print("ViewersCount")
+            .mapError{ DifferentError.alamofire(wrapped: $0)}
+            .eraseToAnyPublisher()
+    }
     
-    //
     public func getUserIdMap(ids: [Int]) -> AnyPublisher<UploadMapUser,DifferentError> {
 
         let parameters = [

@@ -85,6 +85,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     private var takeBroadcast: AnyCancellable?
     private var takeOff: AnyCancellable?
     private var followChannel : AnyCancellable?
+    private var viewrsCount : AnyCancellable?
     private var takeBroadcastPlanned: AnyCancellable?
     
     @Inject var fitMeetApi: FitMeetApi
@@ -715,7 +716,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
-             
+        guard let id = self.broadcast?.id else { return}
+        self.incrementViewersCount(id: id)
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
         player.rate = 1
@@ -969,7 +971,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             }
         })
     }
-
+    func incrementViewersCount(id: Int) {
+        viewrsCount = fitMeetApi.incrementViewersCount(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+              
+        })
+    }
     func bindingUser(id: Int) {
         takeUser = fitMeetApi.getUserId(id: id)
             .mapError({ (error) -> Error in return error })
@@ -1194,6 +1202,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         case .planned:
             Loaf("Status planned", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
             print("planned")
@@ -1223,6 +1233,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         case .offline:
             if homeView.buttonOpen.isSelected {
                 actionTable()
@@ -1249,6 +1261,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
        
         case .banned:
             Loaf("Status banned", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)

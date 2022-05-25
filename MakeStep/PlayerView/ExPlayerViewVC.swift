@@ -124,6 +124,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             guard let user = brodcast[indexPath.row].userId else { return}
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             self.bindingUserNotApdate(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         case .offline:
             if homeView.buttonOpen.isSelected {
                 actionTable()
@@ -152,6 +154,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         case .planned:
             if homeView.buttonOpen.isSelected {
                 actionTable()
@@ -209,6 +213,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             guard let user = self.broadcast?.userId else { return}
             self.BoolTrack = false
             self.bindingUser(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         case .wait_for_approve:
             if homeView.buttonOpen.isSelected {
                 actionTable()
@@ -228,6 +234,8 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
             self.bindingUserNotApdate(id: user)
+            guard let id = self.broadcast?.id else { return}
+            self.incrementViewersCount(id: id)
         }
 
     }
