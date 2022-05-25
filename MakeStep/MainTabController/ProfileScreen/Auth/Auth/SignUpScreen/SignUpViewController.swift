@@ -325,8 +325,26 @@ class SignUpViewController: UIViewController {
 extension SignUpViewController: UITextFieldDelegate {
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-
-        return true
+        if textField == self.signUpView.textFieldName {
+            let maxLength = 120
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        if textField == self.signUpView.textFieldPassword {
+            let maxLength = 64
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        if textField == self.signUpView.textFieldUserName {
+            let maxLength = 64
+            let currentString: NSString = (textField.text ?? "") as NSString
+            let newString: NSString = currentString.replacingCharacters(in: range, with: string) as NSString
+            return newString.length <= maxLength
+        }
+        
+        return false
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
