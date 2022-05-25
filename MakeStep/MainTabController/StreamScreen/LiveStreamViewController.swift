@@ -14,7 +14,9 @@ import Foundation
 import Combine
 import Loaf
 
-
+protocol DissmisPlayer: class {
+    func dissmissPlayer()    
+}
 
 final class ExampleRecorderDelegate: DefaultAVRecorderDelegate {
     static let `default` = ExampleRecorderDelegate()
@@ -48,6 +50,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     func changeBackgroundColor() {
     }
     
+    weak var delegatePlayer: DissmisPlayer?
     
     let streamView = LiveStreamVCCode()
     @Inject var fitMeetStream: FitMeetStream
@@ -167,10 +170,16 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         tabBarController?.tabBar.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
         
+        if myuri == "" {
+        
         [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
         [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 1 }
         
-        
+        } else {
+            [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
+            [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
+            
+        }
         
         rtmpStream.attachAudio(AVCaptureDevice.default(for: .audio)) { error in
             logger.warn(error.description)
@@ -249,7 +258,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     @objc func closeVideo() {
         logger.info("close")
         self.timer?.invalidate()
-        tabBarController!.selectedIndex = 0
+        if let tabBar = tabBarController {
+            tabBar.selectedIndex = 0
+        } else {
+            dismiss(animated: true) {
+                self.delegatePlayer?.dissmissPlayer()
+            }
+        }
     }
     @objc func rotateCamera() {
         logger.info("rotateCamera")

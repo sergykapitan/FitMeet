@@ -19,6 +19,9 @@ import Loaf
 protocol OpenCoachDelegate: AnyObject {
     func coachTapped(userId: Int)
 }
+protocol RefreshChannel: AnyObject {
+    func refrechChannel()
+}
 
 
 
@@ -26,7 +29,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     
    
     let background = UIView()
-    
+    weak var delegateChannel: RefreshChannel?
     var offsetObservation: NSKeyValueObservation?
     var myCell: PlayerViewCell?
     var arrayResolution = [String]()
@@ -152,6 +155,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
+    
         homeView.imageLogoProfile.makeRounded()
         alphaButton()
         self.switchType()
@@ -314,6 +318,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             navVC.myuri = myuri
             navVC.myPublish = myPublish
             navVC.isPrivate = false
+            navVC.delegatePlayer = self
+        
         self.present(navVC, animated: true) {
             
         }       
@@ -1466,7 +1472,13 @@ public extension UIView {
         }
     }
 }
-extension PlayerViewVC {
+extension PlayerViewVC : DissmisPlayer{
+    func dissmissPlayer() {
+        dismiss(animated: true) {
+            self.delegateChannel?.refrechChannel()
+        }
+    }
+    
     func alphaButton() {
         guard let status = broadcast?.status else { return }
         switch status {
@@ -1585,3 +1597,4 @@ extension PlayerViewVC {
         }
     }
 }
+

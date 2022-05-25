@@ -157,6 +157,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             guard let id = self.broadcast?.id else { return}
             self.incrementViewersCount(id: id)
         case .planned:
+            self.homeView.imageLogo.removeBlur()
             if homeView.buttonOpen.isSelected {
                 actionTable()
             }
@@ -174,6 +175,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
             playerViewController?.player?.pause()
             playerViewController?.view.isHidden = true
             self.homeView.setImagePromo(image: brodcast[indexPath.row].previewPath ?? Constants.defoultImage)
+            self.homeView.imageLogo.blurImage()
             self.homeView.labelStreamInfo.text = self.broadcast?.name
             homeView.labelLike.text = "\(like)"
             guard let user = brodcast[indexPath.row].userId else { return}
@@ -296,6 +298,7 @@ extension PlayerViewVC {
             self.bindingLike()
             self.homeView.labelStreamInfo.text = stream.name
         case .planned:
+            self.homeView.imageLogo.removeBlur()
             let selfId = UserDefaults.standard.string(forKey: Constants.userID)
             let usId = Int(selfId ?? "0")
             self.urlStream = nil
@@ -319,7 +322,7 @@ extension PlayerViewVC {
             playerViewController?.view.isHidden = true
           
             self.homeView.setImagePromo(image: stream.previewPath ?? Constants.defoultImage)
-       
+            self.homeView.imageLogo.blurImage()
             self.homeView.labelStreamInfo.text = stream.name
             homeView.labelLike.text = "\(like)"
         case .banned:

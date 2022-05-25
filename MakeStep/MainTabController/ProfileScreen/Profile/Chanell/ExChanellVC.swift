@@ -96,6 +96,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+            vc.delegateChannel = self
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.modalPresentationStyle = .fullScreen
@@ -234,5 +235,10 @@ extension ChanellVC {
         profileView.buttonHelpCoach.centerX(inView: profileView.viewTop)
         profileView.buttonHelpCoach.isUserInteractionEnabled = false
     
+    }
+}
+extension ChanellVC: RefreshChannel {
+    func refrechChannel() {
+        self.needUpdateAfterSuccessfullyCreate()
     }
 }

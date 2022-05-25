@@ -302,13 +302,21 @@ extension UIView {
 extension UIImageView {
 
     func makeRounded() {
-
-      //  self.layer.borderWidth = 2
         self.layer.masksToBounds = false
-      //  self.layer.borderColor = UIColor.red.cgColor
         self.layer.cornerRadius = self.frame.height / 2
         self.clipsToBounds = true
     }
+    func blurImage()  {
+        
+        let blurEffect = UIBlurEffect(style: .dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.backgroundColor = .black
+        blurEffectView.alpha = 0.4
+        blurEffectView.frame = self.bounds
+
+        blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        self.addSubview(blurEffectView)
+        }
 }
 extension UIView {
 

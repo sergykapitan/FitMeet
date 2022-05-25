@@ -318,7 +318,8 @@ final class PlayerViewVCCode: UIView {
         
         cardView.addSubview(buttonstartStream)
         buttonstartStream.centerX(inView: imagePromo)
-        buttonstartStream.anchor(bottom: imagePromo.bottomAnchor, paddingBottom: 50,width: 100)
+        buttonstartStream.centerY(inView: imagePromo)
+        buttonstartStream.anchor(width: 100)
         
         cardView.addSubview(buttonMore)
         buttonMore.anchor(top: imagePromo.bottomAnchor,right: cardView.rightAnchor, paddingTop: 0,paddingRight: 10,width: 24,height: 35)
