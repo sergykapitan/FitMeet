@@ -34,28 +34,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Purchases.default.initialize()
         // Initialise the Audio Session, you should do this in your AppDelegate.swift
-        let session = AVAudioSession.sharedInstance()
-        do {
+    //    let session = AVAudioSession.sharedInstance()
+    
+        
+    //    do {
             // https://stackoverflow.com/questions/51010390/avaudiosession-setcategory-swift-4-2-ios-12-play-sound-on-silent
-            if #available(iOS 10.0, *) {
-                try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-            } else {
-                session.perform(NSSelectorFromString("setCategory:withOptions:error:"), with: AVAudioSession.Category.playAndRecord, with: [
-                    AVAudioSession.CategoryOptions.allowBluetooth,
-                    AVAudioSession.CategoryOptions.defaultToSpeaker
-                ])
-                try session.setMode(.default)
-            }
-            try session.setActive(true)
-        } catch {
-            logger.error(error)
-        }
-      //  let audioSession = AVAudioSession.sharedInstance()
-        do {
-          try session.setCategory(.playback, mode: .moviePlayback)
-        } catch {
-          print("Failed to set audioSession category to playback")
-        }
+//if #available(iOS 10.0, *) {
+            //   try session.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+             //  try session.setCategory(.playback, mode: .moviePlayback)
+         //   } else {
+//                session.perform(NSSelectorFromString("setCategory:withOptions:error:"), with: AVAudioSession.Category.playAndRecord, with: [
+//                    AVAudioSession.CategoryOptions.allowBluetooth,
+//                    AVAudioSession.CategoryOptions.defaultToSpeaker
+//                ])
+//                try session.setMode(.default)
+//             //   try session.setCategory(.playback, mode: .moviePlayback)
+      //     }
+          //  try session.setActive(true)
+  //      } catch {
+  //          logger.error(error)
+  //          print("Failed to set audioSession category to playback")
+  //      }
+//        let audioSession = AVAudioSession.sharedInstance()
+//        do {
+//          try audioSession.setCategory(.playback, mode: .moviePlayback)
+//        } catch {
+//          print("Failed to set audioSession category to playback")
+//        }
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()

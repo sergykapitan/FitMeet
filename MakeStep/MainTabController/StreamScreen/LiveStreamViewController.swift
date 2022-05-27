@@ -116,6 +116,10 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+     //   let audioSession = AVAudioSession.sharedInstance()
+     // _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
+     // _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+     //    _ = try? audioSession.setActive(true)
         self.actionButton()
         self.bindingChanell()
         self.bindingUser()
@@ -161,7 +165,10 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
-        
+           let audioSession = AVAudioSession.sharedInstance()
+         _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
+         _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
+            _ = try? audioSession.setActive(true)
 
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
