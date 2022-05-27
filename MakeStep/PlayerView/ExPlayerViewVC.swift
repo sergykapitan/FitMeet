@@ -24,8 +24,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
         let cell = tableView.dequeueReusableCell(withIdentifier: PlayerViewCell.reuseID, for: indexPath) as! PlayerViewCell
                  guard !brodcast.isEmpty  else { return cell }
         cell.hideAnimation()
-        let defoultImage = "https://dev.makestep.com/api/v0/resizer?extension=jpeg&size=preview_m&path=%2Fqa-files%2Ffiles_95a4838f-6970-4728-afab-9d6a2345b943.jpeg"
-        cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? defoultImage)
+        cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? Constants.defoultImage)
         
        
         cell.labelDescription.text = brodcast[indexPath.row].name
@@ -363,3 +362,51 @@ extension PlayerViewVC {
         }
     }
 }
+// MARK: - AVPictureInPictureDelegate
+
+//extension PlayerViewVC: AVPictureInPictureControllerDelegate{
+//
+//
+////    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, setPlaying playing: Bool) {
+////        print("\(#function)")
+////        if playing {
+////            player?.rate = 1
+////        } else {
+////            player?.rate = 0
+////        }
+////    }
+////    func pictureInPictureControllerTimeRangeForPlayback(_ pictureInPictureController: AVPictureInPictureController) -> CMTimeRange {
+////        print("\(#function)")
+////        return CMTimeRange(start: .negativeInfinity, duration: .positiveInfinity)
+////    }
+//  public func pictureInPictureControllerWillStartPictureInPicture( _ pictureInPictureController: AVPictureInPictureController) {
+//    activeCustomPlayerViewControllers.insert(self)
+//  }
+//
+//  public func pictureInPictureControllerDidStartPictureInPicture( _ pictureInPictureController: AVPictureInPictureController ) {
+//    dismiss(animated: true, completion: nil)
+//  }
+//
+//  public func pictureInPictureController( _ pictureInPictureController: AVPictureInPictureController, failedToStartPictureInPictureWithError error: Error ) {
+//    activeCustomPlayerViewControllers.remove(self)
+//  }
+//
+//  public func pictureInPictureControllerDidStopPictureInPicture( _ pictureInPictureController: AVPictureInPictureController ) {
+//    activeCustomPlayerViewControllers.remove(self)
+//  }
+//
+//  public func pictureInPictureController( _ pictureInPictureController: AVPictureInPictureController, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void ) {
+//    delegatePicInPic?.playerViewController(self, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler: completionHandler)
+//  }
+//}
+//protocol CustomPlayerViewControllerDelegate: AnyObject {
+//  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart( _ playerViewController: PlayerViewVC ) -> Bool
+//
+//  func playerViewController( _ playerViewController: PlayerViewVC, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+//  )
+//}
+//extension PlayerViewVC: AVPlayerViewControllerDelegate{
+//    func playerViewControllerWillStartPictureInPicture(_ playerViewController: AVPlayerViewController) {
+//        activeCustomPlayerViewControllers.insert(self)
+//    }
+//}

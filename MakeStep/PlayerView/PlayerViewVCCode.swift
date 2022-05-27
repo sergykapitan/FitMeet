@@ -62,6 +62,13 @@ final class PlayerViewVCCode: UIView {
         button.contentHorizontalAlignment = .right
         return button
     }()
+    var buttonPicInPic: UIButton = {
+        var button = UIButton()
+        button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
+        button.contentVerticalAlignment = .center
+        button.contentHorizontalAlignment = .right
+        return button
+    }()
     var buttonPlayPause: UIButton = {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "PausePlayer"), for: .normal)
@@ -84,6 +91,12 @@ final class PlayerViewVCCode: UIView {
         return button
     }()
     var labelTimer: UILabel = {
+        var label = UILabel()
+        label.textColor = UIColor(hexString: "#727272")
+        label.font = UIFont.systemFont(ofSize: 12)
+        return label
+    }()
+    var labelX: UILabel = {
         var label = UILabel()
         label.textColor = UIColor(hexString: "#727272")
         label.font = UIFont.systemFont(ofSize: 12)

@@ -23,10 +23,21 @@ protocol RefreshChannel: AnyObject {
     func refrechChannel()
 }
 
-
+// var activeCustomPlayerViewControllers = Set<PlayerViewVC>()
 
 class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     
+ //   public var player: AVPlayer?// {
+//      didSet {
+//        playerLayer = AVPlayerLayer(player: player)
+//      }
+//    }
+//
+//    private var playerLayer: AVPlayerLayer?
+//    private var pictureInPictureController: AVPictureInPictureController?
+    
+    
+ //   weak var delegatePicInPic: CustomPlayerViewControllerDelegate?
    
     let background = UIView()
     weak var delegateChannel: RefreshChannel?
@@ -139,7 +150,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     var heightBar: CGFloat?
     var tracksInt = 1
     var isPlay: Bool = true
-   
+    var picInPic:Bool = true
     
   // MARK: - LifeCicle
     override func loadView() {
@@ -155,10 +166,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-    
+        
         homeView.imageLogoProfile.makeRounded()
         alphaButton()
+     //   if picInPic {
         self.switchType()
+      
+ 
         self.bindingLike()
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
@@ -176,7 +190,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 bindingUser(id: idU)
             }
         }
-    }
+  //  }
+}
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         self.navigationController?.popViewController(animated: true)
@@ -261,7 +276,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.buttonOpen.addTarget(self, action: #selector(actionTable), for: .touchUpInside)
         homeView.buttonstartStream.addTarget(self, action: #selector(actionStartStream), for: .touchUpInside)
         
-        
+      //  homeView.buttonPicInPic.addTarget(self, action: #selector(actionPicInPic), for: .touchUpInside)
         
         self.homeView.labelCategory.alpha = 0
         self.homeView.labelDescription.alpha = 0
@@ -275,6 +290,10 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
         homeView.stackButton.addGestureRecognizer(tap)
     }
+   // @objc func actionPicInPic() {
+       // pictureInPictureController?.startPictureInPicture()
+       // playerViewController?
+  //  }
     @objc func actionStartStream() {
         fetchStream()
     }
@@ -722,13 +741,27 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 let videoURL = URL(string: url)
                 let player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
+//        guard let player = player else { return  }
+ //       self.playerViewController?.delegate = self
+//        guard let playerLayer = playerLayer else {
+//          fatalError("Missing AVPlayerLayer")
+//        }
+//
+//        view.backgroundColor = .black
+//        view.layer.addSublayer(playerLayer)
+//
+//        pictureInPictureController = AVPictureInPictureController(
+//          playerLayer: playerLayer)
+//        pictureInPictureController?.delegate = self
+
         guard let id = self.broadcast?.id else { return}
         self.incrementViewersCount(id: id)
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
+        //playerViewController?.player.layer
         player.rate = 1
         playerViewController!.view.frame = playerFrame
-        playerViewController!.showsPlaybackControls = false
+        playerViewController!.showsPlaybackControls = true
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
@@ -761,6 +794,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         self.view.addSubview(self.homeView.buttonSetting)
         self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
+        
+//        self.view.addSubview(self.homeView.buttonPicInPic)
+//        self.homeView.buttonPicInPic.anchor( right: self.homeView.buttonSetting.leftAnchor,  paddingRight: 1,width: 50,height: 30)
+//        self.homeView.buttonPicInPic.centerY(inView: self.homeView.buttonLandScape)
+//        self.homeView.buttonPicInPic.setTitle("", for: .normal)
+//        let image = AVPictureInPictureController.pictureInPictureButtonStartImage.withTintColor(.white, renderingMode: .alwaysOriginal)
+//        self.homeView.buttonPicInPic.setImage(image, for: .normal)
        
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 1,height: 20)
@@ -823,6 +863,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 self.view.addSubview(self.homeView.buttonPlayPause)
                 self.view.addSubview(self.homeView.buttonSkipNext)
                 self.view.addSubview(self.homeView.buttonSkipPrevious)
+               // self.view.addSubview(self.homeView.buttonPicInPic)
                 self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 130)
                 
                

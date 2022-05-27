@@ -548,11 +548,13 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
        
         if UIDevice.current.orientation.isLandscape {
             let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-                self.playerViewController!.view.frame = self.view.bounds
-                self.view.addSubview(self.playerViewController!.view)
-                self.playerViewController!.didMove(toParent: self)
-                self.playerViewController!.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut)))
-                self.playerViewController!.view.addGestureRecognizer(UIPinchGestureRecognizer.init(target: self, action: #selector(self.actionResize(sender:))))
+                guard let playerViewController = self.playerViewController else { return }
+
+                playerViewController.view.frame = self.view.bounds
+                self.view.addSubview(playerViewController.view)
+                playerViewController.didMove(toParent: self)
+                playerViewController.view.addGestureRecognizer(UITapGestureRecognizer.init(target: self, action: #selector(self.actionBut)))
+                playerViewController.view.addGestureRecognizer(UIPinchGestureRecognizer.init(target: self, action: #selector(self.actionResize(sender:))))
                 self.view.addSubview(self.homeView.buttonLandScape)
                 self.view.addSubview(self.homeView.buttonSetting)
                 self.view.addSubview(self.homeView.labelTimeEnd)
