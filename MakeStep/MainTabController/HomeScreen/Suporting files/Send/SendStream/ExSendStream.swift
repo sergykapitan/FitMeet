@@ -12,20 +12,20 @@ import UIKit
 
 
 extension SendStream: UITableViewDataSource {
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
-        view.backgroundColor = .white
-        let label = UILabel(frame: CGRect(x: 10, y: -10, width: tableView.frame.width, height: 20))
-        label.text = "Create"
-        label.backgroundColor = UIColor.clear
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        view.addSubview(label)
-        return view
-        
-    }
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 1
+//    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
+//        view.backgroundColor = .white
+//        let label = UILabel(frame: CGRect(x: 10, y: -10, width: tableView.frame.width, height: 20))
+//        label.text = "Create"
+//        label.backgroundColor = UIColor.clear
+//        label.font = UIFont.boldSystemFont(ofSize: 20)
+//        view.addSubview(label)
+//        return view
+//        
+//    }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return list.count

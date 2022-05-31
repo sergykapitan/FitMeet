@@ -168,7 +168,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
            let audioSession = AVAudioSession.sharedInstance()
          _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
          _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-            _ = try? audioSession.setActive(true)
+         _ = try? audioSession.setActive(true)
 
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()

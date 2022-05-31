@@ -12,6 +12,8 @@ import UIKit
 
 
 class SendStream: UIViewController,UITabBarControllerDelegate {
+   
+    
     
     
 
@@ -29,12 +31,19 @@ class SendStream: UIViewController,UITabBarControllerDelegate {
         let table = UITableView()
         return table
     }()
+    var label: UILabel = {
+        let label = UILabel()
+        label.text = "Create"
+        label.backgroundColor = UIColor.clear
+        label.font = UIFont.boldSystemFont(ofSize: 20)
+        return label
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 1, green: 1, blue: 1, alpha: 1)
         makeTableView()
-        [butH, tableView].forEach {
+        [butH, label,tableView].forEach {
             view.addSubview($0)
             $0.translatesAutoresizingMaskIntoConstraints = false
         }
@@ -43,15 +52,18 @@ class SendStream: UIViewController,UITabBarControllerDelegate {
         NSLayoutConstraint.activate([
             butH.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             butH.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            //butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
+           // butH.bottomAnchor.constraint(equalTo: tableView.topAnchor, constant: 0),
             butH.heightAnchor.constraint(equalToConstant:35),
             butH.widthAnchor.constraint(equalToConstant: 45),
            
+            label.topAnchor.constraint(equalTo: butH.bottomAnchor,constant: 3),
+            label.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 15),
+            
             
             tableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 5),
             tableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -5),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
-            tableView.topAnchor.constraint(equalTo: butH.bottomAnchor, constant: -15)
+            tableView.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 5)
            
         ])
 
