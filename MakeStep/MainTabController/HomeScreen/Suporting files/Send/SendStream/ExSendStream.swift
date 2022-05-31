@@ -44,22 +44,21 @@ extension SendStream: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        let cell  = tableView.cellForRow(at: indexPath) as! SendStreamCell
-        print(cell.imageCell.frame.size.width)
         UIView.animate(withDuration: 0.5) {
             cell.imageCell.backgroundColor = .lightGray.alpha(0.2)
         } completion: { tr in
         if indexPath.row == 0 {
             self.dismiss(animated: true) {
-                if let tabBC = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
-                tabBC.boolStream = false
-                NotificationCenter.default.post(Notification(name: .refreshAllTabs))
-                tabBC.selectedIndex = 2
+                if let vc = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+                    vc.boolStream = false
+                    NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+                    vc.selectedIndex = 2
                 }
             }
         }
         if indexPath.row == 1 {
             self.dismiss(animated: true) {
-                if let tabBC = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
+                if let tabBC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController{///UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
                     tabBC.boolStream = true
                     NotificationCenter.default.post(Notification(name: .refreshAllTabs))
                     tabBC.selectedIndex = 2

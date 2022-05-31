@@ -61,6 +61,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
 //        } catch {
 //          print("Failed to set audioSession category to playback")
 //        }
+        let audioSession = AVAudioSession.sharedInstance()
+        _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
+        _ = try? audioSession.setCategory(.playback, mode: .moviePlayback)
+        _ = try? audioSession.setActive(true)
+        
         if #available(iOS 15, *) {
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()

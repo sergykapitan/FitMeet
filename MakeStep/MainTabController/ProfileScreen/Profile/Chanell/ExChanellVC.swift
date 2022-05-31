@@ -97,6 +97,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
             vc.delegateChannel = self
+            vc.delegatePicInPic = self
             vc.broadcast = self.brodcast[indexPath.row]
             vc.id =  self.brodcast[indexPath.row].userId
             vc.modalPresentationStyle = .fullScreen
@@ -241,4 +242,34 @@ extension ChanellVC: RefreshChannel {
     func refrechChannel() {
         self.needUpdateAfterSuccessfullyCreate()
     }
+}
+extension ChanellVC: CustomPlayerViewControllerDelegate {
+  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
+    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
+    return true
+  }
+
+  func playerViewController(
+    _ playerViewController: PlayerViewVC,
+    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+  ) {
+      playerViewController.picInPic = false
+    restore(playerViewController: playerViewController, completionHandler: completionHandler)
+  }
+}
+extension ChanellVC {
+  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
+    if let presentedViewController = presentedViewController as? PlayerViewVC {
+      presentedViewController.playerViewController?.player?.rate = 0
+      presentedViewController.dismiss(animated: true) { [weak self] in
+        self?.present(playerViewController, animated: true) {
+          completionHandler(true)
+        }
+      }
+    } else {
+      present(playerViewController, animated: true) {
+        completionHandler(true)
+      }
+    }
+  }
 }

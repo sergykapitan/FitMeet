@@ -59,7 +59,7 @@ final class PlayerViewVCCode: UIView {
         var button = UIButton()
         button.setImage(#imageLiteral(resourceName: "settings1-1"), for: .normal)
         button.contentVerticalAlignment = .center
-        button.contentHorizontalAlignment = .right
+        button.contentHorizontalAlignment = .center
         return button
     }()
     var buttonPicInPic: UIButton = {

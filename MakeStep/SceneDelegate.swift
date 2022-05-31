@@ -65,6 +65,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.rootViewController = viewController
         self.window?.makeKeyAndVisible()
     }
+    func openMain() {
+        let tabBC =  MainTabBarViewController()
+        tabBC.boolStream = false
+        NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+        tabBC.selectedIndex = 2
+        
+    }
 }
 
 extension SceneDelegate {

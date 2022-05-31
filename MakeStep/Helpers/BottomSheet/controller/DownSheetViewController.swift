@@ -223,6 +223,7 @@ class DownSheetViewController: UIViewController {
             self.dimmingView.alpha = 0.6
             self.containerViewBottomConstraint.constant = 0
             self.containerViewHeightConstraint.constant = height
+            print("Height === \(height)")
             self.view.layoutIfNeeded()
         }
     }
@@ -230,6 +231,7 @@ class DownSheetViewController: UIViewController {
     func animateContainerHeight(_ height: CGFloat) {
         UIView.animate(withDuration: 0.3) {
             self.containerViewHeightConstraint.constant = height
+            print("Height === \(height)")
             self.view.layoutIfNeeded()
         }
     }

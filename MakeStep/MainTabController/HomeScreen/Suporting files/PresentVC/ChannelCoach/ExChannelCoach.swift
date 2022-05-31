@@ -88,40 +88,42 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         if self.brodcast.isEmpty { return }
         let vc = PlayerViewVC()
             vc.broadcast = self.brodcast[indexPath.row]
-          //  vc.delegatePicInPic = self
+            vc.delegatePicInPic = self
             vc.id =  self.brodcast[indexPath.row].userId
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
     }
 }
-//extension ChannelCoach: CustomPlayerViewControllerDelegate {
-//  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
-//    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
-//    return true
-//  }
-//
-//  func playerViewController(
-//    _ playerViewController: PlayerViewVC,
-//    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
-//  ) {
-//    restore(playerViewController: playerViewController, completionHandler: completionHandler)
-//  }
-//}
-//extension ChannelCoach {
-//  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
-//    if let presentedViewController = presentedViewController {
-//      presentedViewController.dismiss(animated: true) { [weak self] in
-//        self?.present(playerViewController, animated: true) {
-//          completionHandler(true)
-//        }
-//      }
-//    } else {
-//      present(playerViewController, animated: true) {
-//        completionHandler(true)
-//      }
-//    }
-//  }
-//}
+extension ChannelCoach: CustomPlayerViewControllerDelegate {
+  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
+    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
+    return true
+  }
+
+  func playerViewController(
+    _ playerViewController: PlayerViewVC,
+    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+  ) {
+    playerViewController.picInPic = false
+    restore(playerViewController: playerViewController, completionHandler: completionHandler)
+  }
+}
+extension ChannelCoach {
+  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
+      if let presentedViewController = presentedViewController as? PlayerViewVC {
+        presentedViewController.playerViewController?.player?.rate = 0
+      presentedViewController.dismiss(animated: true) { [weak self] in
+        self?.present(playerViewController, animated: true) {
+          completionHandler(true)
+        }
+      }
+    } else {
+      present(playerViewController, animated: true) {
+        completionHandler(true)
+      }
+    }
+  }
+}
 extension ChannelCoach {
     
      func layout() {

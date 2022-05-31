@@ -160,6 +160,14 @@ extension HomeVC: UITableViewDataSource {
            self.present(sign, animated: true, completion: nil)
            return
        }
+       if #available(iOS 13.0, *) {
+           let window = UIApplication.shared.windows.first
+           let topPadding = window?.safeAreaInsets.top
+           let bottomPadding = window?.safeAreaInsets.bottom
+          // window?.safeAreaInsets.bottom = 34
+           print("bottomPadding ==\(bottomPadding)")
+       }
+
         guard !listBroadcast.isEmpty else { return }
         showDownSheet(moreArtworkOtherUserSheetVC, payload: listBroadcast[sender.tag].id)
     }
@@ -181,7 +189,7 @@ extension HomeVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
             vc.delegate = self
-            //vc.delegatePicInPic = self
+            vc.delegatePicInPic = self
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id =  self.listBroadcast[indexPath.row].userId
             vc.modalPresentationStyle = .fullScreen
@@ -235,31 +243,32 @@ extension HomeVC: OpenCoachDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
 }
-//extension HomeVC: CustomPlayerViewControllerDelegate {
-//  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
-//    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
-//    return true
-//  }
-//
-//  func playerViewController( _ playerViewController: PlayerViewVC, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
-//  ) {
-//      playerViewController.picInPic = false
-//    restore(playerViewController: playerViewController, completionHandler: completionHandler)
-//  }
-//}
-//extension HomeVC {
-//  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
-//
-//    if let presentedViewController = presentedViewController {
-//      presentedViewController.dismiss(animated: true) { [weak self] in
-//        self?.present(playerViewController, animated: true) {
-//          completionHandler(true)
-//        }
-//      }
-//    } else {
-//      present(playerViewController, animated: true) {
-//        completionHandler(true)
-//      }
-//    }
-//  }
-//}
+extension HomeVC: CustomPlayerViewControllerDelegate {
+  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
+    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
+    return true
+  }
+
+  func playerViewController( _ playerViewController: PlayerViewVC, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+  ) {
+      playerViewController.picInPic = false
+    restore(playerViewController: playerViewController, completionHandler: completionHandler)
+  }
+}
+extension HomeVC {
+  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
+
+      if let presentedViewController = presentedViewController as? PlayerViewVC {
+        presentedViewController.playerViewController?.player?.rate = 0
+      presentedViewController.dismiss(animated: true) { [weak self] in
+        self?.present(playerViewController, animated: true) {
+          completionHandler(true)
+        }
+      }
+    } else {
+      present(playerViewController, animated: true) {
+        completionHandler(true)
+      }
+    }
+  }
+}

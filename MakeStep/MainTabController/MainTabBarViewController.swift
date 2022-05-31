@@ -17,7 +17,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
     
     var profile: UIViewController?
     var streamView : UIViewController?
-    var boolStream: Bool = true
+    var boolStream: Bool  = true
     
     
 
@@ -30,7 +30,13 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
         if token != nil {
             profile = ProfileVC()
-            streamView = LiveStreamViewController()//NewStartStream()
+           // guard let boolStream = boolStream else { return}
+            print("Bool = \(boolStream)")
+            if boolStream {
+                streamView = LiveStreamViewController()
+            } else {
+                streamView = AddedVideoVC()
+            }//NewStartStream()
             viewControllers = [
                 generateViewController(rootViewController: HomeVC(), image: #imageLiteral(resourceName: "home(1) 31"), title: ""),
                 generateViewController(rootViewController: LiveVC(), image: #imageLiteral(resourceName: "Act1"), title: ""),
@@ -57,7 +63,9 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         super.viewWillAppear(animated)
         
         NotificationCenter.default.addObserver(forName: .refreshAllTabs, object: nil, queue: .main) { (notification) in
-                  if self.boolStream {
+          //  guard let boolStream = self.boolStream else { return }
+
+            if self.boolStream {
                       self.viewControllers = [
                         self.generateViewController(rootViewController: HomeVC(), image:  #imageLiteral(resourceName: "home(1) 31"), title: ""),
                         self.generateViewController(rootViewController: LiveVC(), image:  #imageLiteral(resourceName: "Act1"), title: ""),

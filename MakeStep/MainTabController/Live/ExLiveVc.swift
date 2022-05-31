@@ -150,6 +150,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+        vc.delegatePicInPic = self
         var status:BroadcastStatus  = .offline
         switch indexPath.section {
         case 0:
@@ -204,4 +205,34 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             return true
         }
   
+}
+extension LiveVC: CustomPlayerViewControllerDelegate {
+  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
+    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
+    return true
+  }
+
+  func playerViewController(
+    _ playerViewController: PlayerViewVC,
+    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+  ) {
+    playerViewController.picInPic = false
+    restore(playerViewController: playerViewController, completionHandler: completionHandler)
+  }
+}
+extension LiveVC {
+  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
+      if let presentedViewController = presentedViewController as? PlayerViewVC {
+        presentedViewController.playerViewController?.player?.rate = 0
+      presentedViewController.dismiss(animated: true) { [weak self] in
+        self?.present(playerViewController, animated: true) {
+          completionHandler(true)
+        }
+      }
+    } else {
+      present(playerViewController, animated: true) {
+        completionHandler(true)
+      }
+    }
+  }
 }

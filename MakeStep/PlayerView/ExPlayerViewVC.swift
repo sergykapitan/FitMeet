@@ -366,21 +366,10 @@ extension PlayerViewVC {
 
 extension PlayerViewVC: AVPictureInPictureControllerDelegate{
 
-
-//    func pictureInPictureController(_ pictureInPictureController: AVPictureInPictureController, setPlaying playing: Bool) {
-//        print("\(#function)")
-//        if playing {
-//            player?.rate = 1
-//        } else {
-//            player?.rate = 0
-//        }
-//    }
-//    func pictureInPictureControllerTimeRangeForPlayback(_ pictureInPictureController: AVPictureInPictureController) -> CMTimeRange {
-//        print("\(#function)")
-//        return CMTimeRange(start: .negativeInfinity, duration: .positiveInfinity)
-//    }
   public func pictureInPictureControllerWillStartPictureInPicture( _ pictureInPictureController: AVPictureInPictureController) {
-    activeCustomPlayerViewControllers.insert(self)
+     
+      activeCustomPlayerViewControllers.insert(self)
+   
   }
 
   public func pictureInPictureControllerDidStartPictureInPicture( _ pictureInPictureController: AVPictureInPictureController ) {
@@ -392,6 +381,7 @@ extension PlayerViewVC: AVPictureInPictureControllerDelegate{
   }
 
   public func pictureInPictureControllerDidStopPictureInPicture( _ pictureInPictureController: AVPictureInPictureController ) {
+   // self.playerViewController?.player?.pause()
     activeCustomPlayerViewControllers.remove(self)
   }
 
@@ -405,8 +395,4 @@ protocol CustomPlayerViewControllerDelegate: AnyObject {
   func playerViewController( _ playerViewController: PlayerViewVC, restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
   )
 }
-//extension PlayerViewVC: AVPlayerViewControllerDelegate{
-//    func playerViewControllerWillStartPictureInPicture(_ playerViewController: AVPlayerViewController) {
-//        activeCustomPlayerViewControllers.insert(self)
-//    }
-//}
+

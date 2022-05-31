@@ -166,18 +166,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.isHidden = true
-                let audioSession = AVAudioSession.sharedInstance()
-                do {
-                 // try audioSession.setCategory(.playback, mode: .moviePlayback)
-                } catch {
-                  print("Failed to set audioSession category to playback")
-                }
+        AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
         homeView.imageLogoProfile.makeRounded()
         alphaButton()
-     //   if picInPic {
+        if picInPic {
         self.switchType()
-      
- 
+         
+            print("Player == \(playerLayer?.player)")
         self.bindingLike()
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
@@ -195,7 +190,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 bindingUser(id: idU)
             }
         }
-  //  }
+    }
 }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -208,23 +203,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         makeTableView()
         actionButton ()
 //        SocketIOManager.sharedInstance.getTokenChat()
-//                let audioSession = AVAudioSession.sharedInstance()
-//                do {
-//         //           try audioSession.setCategory(.playAndRecord, mode: .spokenAudio,options: [.allowAirPlay])
-//                } catch {
-//           //       print("Failed to set audioSession category to playback")
-//                }
-//        let session = AVAudioSession.sharedInstance()
-//
-//        do {
-//            try session.setCategory(AVAudioSession.Category.playback,
-//                                    mode: .default,
-//                                    policy: .longFormAudio,
-//                                    options: [])
-//        } catch let error {
-//            fatalError("*** Unable to set up the audio session: \(error.localizedDescription) ***")
-//        }
-        
+
        
         homeView.imageLogoProfile.makeRounded()
         _ = UserDefaults.standard.string(forKey: "tokenChat")
@@ -278,6 +257,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             switch swipeGesture.direction {
             case UISwipeGestureRecognizer.Direction.down:
                 self.dismiss(animated: true) {
+                    self.playerViewController?.player?.rate = 0
                     AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
                 }
             default:
@@ -315,7 +295,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     @objc func actionPicInPic() {
         pictureInPictureController?.startPictureInPicture()
-       // playerViewController?
     }
     @objc func actionStartStream() {
         fetchStream()
@@ -734,10 +713,16 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        self.playerViewController?.player?.rate = 0
+       // self.playerViewController?.player?.rate = 0
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
+      
     }
-   
+    override public func viewDidLayoutSubviews() {
+      super.viewDidLayoutSubviews()
+        let playerFrame = self.homeView.imagePromo.bounds
+        playerLayer?.frame = playerFrame
+    }
+    private var controlsView: CustomPlayerControlsView?
  // MARK: - LoadPlayer
     func loadPlayer() {
         guard let url = urlStream else {
@@ -769,35 +754,39 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         guard let playerLayer = playerLayer else {
           fatalError("Missing AVPlayerLayer")
         }
+        let controlsViewHeight: CGFloat = 180.0
+       
 
-        view.backgroundColor = .black
-        view.layer.addSublayer(playerLayer)
+         view.backgroundColor = .black
+        self.homeView.imagePromo.layer.addSublayer(playerLayer)
 
-        pictureInPictureController = AVPictureInPictureController(
-          playerLayer: playerLayer)
+        pictureInPictureController = AVPictureInPictureController( playerLayer: playerLayer)
+      
         pictureInPictureController?.delegate = self
 
+        additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: controlsViewHeight, right: 0)
         guard let id = self.broadcast?.id else { return}
         self.incrementViewersCount(id: id)
         let playerFrame = self.homeView.imagePromo.bounds
         playerViewController!.player = player
         playerViewController?.allowsPictureInPicturePlayback = true
-        
+//
         player.rate = 1
+     //   showControls()
         playerViewController!.view.frame = playerFrame
         playerViewController!.showsPlaybackControls = false
         playerViewController!.videoGravity = AVLayerVideoGravity.resizeAspect
         addChild(playerViewController!)
         homeView.imagePromo.addSubview(playerViewController!.view)
         playerViewController!.didMove(toParent: self)
-     
-        
+
+
 
         self.homeView.playerSlider.minimumValue = 0
         self.homeView.playerSlider.addTapGesture()
         self.homeView.playerSlider.setValue(0, animated: true)
         setTimeVideo()
- 
+
 
         let interval: CMTime = CMTimeMakeWithSeconds(0.001, preferredTimescale: Int32(NSEC_PER_SEC))
         playerViewController?.player!.addPeriodicTimeObserver(forInterval: interval, queue: DispatchQueue.main) { (CMTime) -> Void in
@@ -808,46 +797,72 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                  self.homeView.labelTimeStart.text = Int(timeLabel).secondsToTime()
              }
          }
-    
-       
+
+
         self.view.addSubview(self.homeView.buttonLandScape)
         let imageL = UIImage(named: "maximize")?.withTintColor(.white, renderingMode: .alwaysOriginal)
         self.homeView.buttonLandScape.setImage(imageL, for: .normal)
-        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 5, paddingBottom: 5,width: 50,height: 30)
-        
+        self.homeView.buttonLandScape.anchor(right:self.playerViewController!.view.rightAnchor,bottom: self.playerViewController!.view.bottomAnchor,paddingRight: 15, paddingBottom: 5,width: 30,height: 30)
+
         self.view.addSubview(self.homeView.buttonSetting)
-        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 50,height: 30)
+        self.homeView.buttonSetting.anchor( right: self.homeView.buttonLandScape.leftAnchor,  paddingRight: 1,width: 40,height: 30)
         self.homeView.buttonSetting.centerY(inView: self.homeView.buttonLandScape)
-        
+
         self.view.addSubview(self.homeView.buttonPicInPic)
         self.homeView.buttonPicInPic.anchor( right: self.homeView.buttonSetting.leftAnchor,  paddingRight: 1,width: 50,height: 30)
         self.homeView.buttonPicInPic.centerY(inView: self.homeView.buttonLandScape)
         self.homeView.buttonPicInPic.setTitle("", for: .normal)
         let image = AVPictureInPictureController.pictureInPictureButtonStartImage.withTintColor(.white, renderingMode: .alwaysOriginal)
         self.homeView.buttonPicInPic.setImage(image, for: .normal)
-       
+
         self.view.addSubview(self.homeView.playerSlider)
         self.homeView.playerSlider.anchor(left: self.playerViewController!.view.leftAnchor, right: self.playerViewController!.view.rightAnchor, bottom: self.homeView.buttonSetting.topAnchor, paddingLeft: 2, paddingRight: 2, paddingBottom: 1,height: 20)
-        
+
         self.view.addSubview(self.homeView.buttonPlayPause)
         self.homeView.buttonPlayPause.anchor(bottom: self.homeView.playerSlider.topAnchor, paddingBottom: 40)
-      
+
         self.homeView.buttonPlayPause.centerX(inView: self.homeView.tableView)
-        
+
         self.view.addSubview(self.homeView.buttonSkipPrevious)
         self.homeView.buttonSkipPrevious.anchor(right: self.homeView.buttonPlayPause.leftAnchor, paddingRight: 15)
         self.homeView.buttonSkipPrevious.centerY(inView: self.homeView.buttonPlayPause)
-               
+
         self.view.addSubview(self.homeView.buttonSkipNext)
         self.homeView.buttonSkipNext.anchor(left: self.homeView.buttonPlayPause.rightAnchor, paddingLeft: 15)
         self.homeView.buttonSkipNext.centerY(inView: self.homeView.buttonPlayPause)
-        
+
         self.view.addSubview(self.homeView.labelTimeStart)
         self.homeView.labelTimeStart.anchor(left: self.playerViewController!.view.leftAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 16, paddingBottom: 10)
-        
+
         self.view.addSubview(self.homeView.labelTimeEnd)
         self.homeView.labelTimeEnd.anchor(left: self.homeView.labelTimeStart.rightAnchor, bottom: self.playerViewController!.view.bottomAnchor, paddingLeft: 2, paddingBottom: 10)
         
+    }
+   private func showControls() {
+      let controlsView = CustomPlayerControlsView(player: player, pipController: pictureInPictureController)
+      controlsView.delegate = self
+      controlsView.translatesAutoresizingMaskIntoConstraints = false
+
+      controlsView.alpha = 0.0
+
+      let controlsViewHeight: CGFloat = 180.0
+
+       self.homeView.imagePromo.addSubview(controlsView)
+      NSLayoutConstraint.activate([
+        controlsView.heightAnchor.constraint(equalToConstant: controlsViewHeight),
+        controlsView.leftAnchor.constraint(equalTo: self.homeView.imagePromo.leftAnchor, constant: 90),
+        controlsView.rightAnchor.constraint(equalTo: self.homeView.imagePromo.rightAnchor, constant: -90),
+        controlsView.bottomAnchor.constraint(equalTo: self.homeView.imagePromo.bottomAnchor, constant: -60)
+      ])
+
+      UIView.animate(withDuration: 0.25) {
+        controlsView.alpha = 1.0
+      }
+
+      self.controlsView = controlsView
+
+      // Set the additional bottom safe area inset to the height of the custom UI so existing PiP windows avoid it.
+      additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: controlsViewHeight, right: 0)
     }
     func setTimeVideo() {
         guard let dur = self.playerViewController?.player?.currentItem!.asset.duration else { return }
@@ -1561,6 +1576,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.labelTimeEnd.alpha = 0
             self.homeView.labelTimeStart.alpha = 0
             self.homeView.imageEye.alpha = 0
+            self.homeView.buttonPicInPic.alpha = 0
         case .offline:
             self.homeView.overlay.alpha = 0
             self.homeView.imageLive.alpha = 0
@@ -1575,6 +1591,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.labelTimeEnd.alpha = 0
             self.homeView.labelTimeStart.alpha = 0
             self.homeView.imageEye.alpha = 0
+            self.homeView.buttonPicInPic.alpha = 0
         case .planned:
             self.homeView.overlay.alpha = 1
             self.homeView.imageLive.alpha = 1
@@ -1595,6 +1612,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.labelTimeEnd.alpha = 0
             self.homeView.labelTimeStart.alpha = 0
             self.homeView.imageEye.alpha = 0
+            self.homeView.buttonPicInPic.alpha = 0
         case .wait_for_approve:
             self.homeView.overlay.alpha = 1
             self.homeView.imageLive.alpha = 1
@@ -1620,6 +1638,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.labelTimeEnd.alpha = 1
             self.homeView.labelTimeStart.alpha = 1
             self.homeView.imageEye.alpha = 1
+            self.homeView.buttonPicInPic.alpha = 1
         case .offline:
             self.homeView.overlay.alpha = 0
             self.homeView.imageLive.alpha = 0
@@ -1633,6 +1652,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.playerSlider.alpha = 1
             self.homeView.labelTimeEnd.alpha = 1
             self.homeView.labelTimeStart.alpha = 1
+            self.homeView.buttonPicInPic.alpha = 1
             self.homeView.imageEye.alpha = 0
         case .planned:
             self.homeView.overlay.alpha = 1
@@ -1653,6 +1673,7 @@ extension PlayerViewVC : DissmisPlayer{
             self.homeView.playerSlider.alpha = 1
             self.homeView.labelTimeEnd.alpha = 1
             self.homeView.labelTimeStart.alpha = 1
+            self.homeView.buttonPicInPic.alpha = 1
             self.homeView.imageEye.alpha = 0
         case .wait_for_approve:
             self.homeView.overlay.alpha = 1
@@ -1663,3 +1684,68 @@ extension PlayerViewVC : DissmisPlayer{
     }
 }
 
+extension PlayerViewVC: CustomPlayerControlsViewDelegate {
+    func controlsViewDidRequestPlayerOut(_ controlsView: CustomPlayerControlsView) {
+//        var originalFrame = CGRect.zero
+//        self.playerLayer?.minimizeToFrame( self.homeView.imagePromo.frame)
+//        self.homeView.tableView.alpha = 1
+    }
+    
+  func controlsViewDidRequestStartPictureInPicture(
+    _ controlsView: CustomPlayerControlsView
+  ) {
+      pictureInPictureController?.startPictureInPicture()
+    
+      additionalSafeAreaInsets = UIEdgeInsets(top: 0, left: 0, bottom: 180, right: 0)
+   // hideControls()
+  }
+
+  func controlsViewDidRequestStopPictureInPicture(
+    _ controlsView: CustomPlayerControlsView
+  ) {
+    pictureInPictureController?.stopPictureInPicture()
+   // hideControls()
+  }
+
+  func controlsViewDidRequestControlsDismissal(
+    _ controlsView: CustomPlayerControlsView
+  ) {
+   // hideControls()
+  }
+
+  func controlsViewDidRequestPlayerDismissal(
+    _ controlsView: CustomPlayerControlsView
+  ) {
+//      self.view.backgroundColor = .blue
+//      self.playerLayer?.goFullscreen()
+//      self.homeView.tableView.alpha = 0
+    //  AppUtility.lockOrientation(.landscape, andRotateTo: .landscapeRight)
+   // player?.rate = 0
+  //  dismiss(animated: true)
+  }
+}
+//extension CGAffineTransform {
+//
+//    static let ninetyDegreeRotation = CGAffineTransform(rotationAngle: CGFloat(M_PI / 2))
+//}
+//
+//extension AVPlayerLayer {
+//
+//    var fullScreenAnimationDuration: TimeInterval {
+//        return 0.15
+//    }
+//
+//    func minimizeToFrame(_ frame: CGRect) {
+//        UIView.animate(withDuration: fullScreenAnimationDuration) {
+//            self.setAffineTransform(.identity)
+//            self.frame = frame
+//        }
+//    }
+//
+//    func goFullscreen() {
+//        UIView.animate(withDuration: fullScreenAnimationDuration) {
+//            self.setAffineTransform(.ninetyDegreeRotation)
+//            self.frame = UIScreen.main.bounds
+//        }
+//    }
+//}

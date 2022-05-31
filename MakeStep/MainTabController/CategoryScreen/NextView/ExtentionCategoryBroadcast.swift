@@ -135,6 +135,7 @@ extension CategoryBroadcast: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     let vc = PlayerViewVC()
         vc.delegate = self
+        vc.delegatePicInPic = self
         vc.broadcast = self.sortListCategory[indexPath.row]
         vc.id =  self.sortListCategory[indexPath.row].userId
         vc.modalPresentationStyle = .fullScreen
@@ -162,4 +163,34 @@ extension CategoryBroadcast: OpenCoachDelegate {
         vc.user = self.usersd[userId]
         navigationController?.pushViewController(vc, animated: true)
     }
+}
+extension CategoryBroadcast: CustomPlayerViewControllerDelegate {
+  func playerViewControllerShouldAutomaticallyDismissAtPictureInPictureStart(_ playerViewController: PlayerViewVC) -> Bool {
+    // Dismiss the controller when PiP starts so that the user is returned to the item selection screen.
+    return true
+  }
+
+  func playerViewController(
+    _ playerViewController: PlayerViewVC,
+    restoreUserInterfaceForPictureInPictureStopWithCompletionHandler completionHandler: @escaping (Bool) -> Void
+  ) {
+    playerViewController.picInPic = false
+    restore(playerViewController: playerViewController, completionHandler: completionHandler)
+  }
+}
+extension CategoryBroadcast {
+  func restore(playerViewController: UIViewController, completionHandler: @escaping (Bool) -> Void) {
+      if let presentedViewController = presentedViewController as? PlayerViewVC {
+        presentedViewController.playerViewController?.player?.rate = 0
+      presentedViewController.dismiss(animated: true) { [weak self] in
+        self?.present(playerViewController, animated: true) {
+          completionHandler(true)
+        }
+      }
+    } else {
+      present(playerViewController, animated: true) {
+        completionHandler(true)
+      }
+    }
+  }
 }
