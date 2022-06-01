@@ -289,9 +289,8 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         
         topTableConstraint = homeView.tableView.topAnchor.constraint(equalTo: homeView.buttonSubscribe.bottomAnchor, constant: 15)
         topTableConstraint.isActive = true
-       
-        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.actionCoach))
-        homeView.stackButton.addGestureRecognizer(tap)
+               
+        homeView.stackButtonN.addTarget(self, action:  #selector(actionCoach), for: .touchUpInside)
     }
     @objc func actionPicInPic() {
         pictureInPictureController?.startPictureInPicture()
@@ -428,6 +427,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     @objc func actionCoach() {
         self.dismiss(animated: true) {
             guard let id = self.broadcast?.userId else { return }
+            self.playerViewController?.player?.rate = 0
             self.delegate?.coachTapped(userId: id)
         }
     }

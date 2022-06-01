@@ -253,11 +253,9 @@ final class PlayerViewVCCode: UIView {
         label.textAlignment = .center
         return label
     }()
-    var stackButton: UIStackView = {
-        let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .equalSpacing
-        stack.anchor(height: 30)
+   
+    var stackButtonN: UIButton = {
+        let stack = UIButton()
         return stack
     }()
     var labelCategory: TagListView = {
@@ -311,8 +309,7 @@ final class PlayerViewVCCode: UIView {
     private func initUI() {
         
         addSubview(cardView)
-        stackButton = UIStackView(arrangedSubviews: [imageLogoProfile,labelStreamDescription])
-        stackButton.spacing = 10
+       
     }
     func createCardViewLayer() {
 
@@ -350,24 +347,34 @@ final class PlayerViewVCCode: UIView {
         labelEyeView.anchor(top: labelStreamInfo.bottomAnchor,right: buttonLike.leftAnchor, paddingTop: 5, paddingRight: 5, height: 24)
 
         cardView.addSubview(imageEyeТ)
-        imageEyeТ.anchor(top: labelStreamInfo.bottomAnchor, right: labelEyeView.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
+        imageEyeТ.anchor(top: labelStreamInfo.bottomAnchor, right: labelEyeView.leftAnchor, paddingTop: 5, paddingRight: 4, width: 24, height: 24)
 
         cardView.addSubview(buttonChat)
         buttonChat.anchor(right: imageEyeТ.leftAnchor,paddingRight: 5,width: 24, height: 24)
         buttonChat.centerY(inView: buttonLike)
 
-        cardView.addSubview(stackButton)
-        stackButton.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor, paddingTop: 5, paddingLeft: 16)
+     
+        cardView.addSubview(stackButtonN)
+        stackButtonN.anchor(top: labelStreamInfo.bottomAnchor, left: cardView.leftAnchor,right: cardView.rightAnchor, paddingTop: 5, paddingLeft: 16,paddingRight: 135,height: 30)
+       
+        
+        stackButtonN.addSubview(imageLogoProfile)
+        imageLogoProfile.anchor(left:stackButtonN.leftAnchor,paddingLeft: 2)
+        imageLogoProfile.centerY(inView: stackButtonN)
+        
+        stackButtonN.addSubview(labelStreamDescription)
+        labelStreamDescription.anchor(left: imageLogoProfile.rightAnchor,paddingLeft: 2)
+        labelStreamDescription.centerY(inView: stackButtonN)
         
         
         cardView.addSubview(buttonSubscribe)
-        buttonSubscribe.anchor(top: stackButton.bottomAnchor, left: cardView.leftAnchor,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
+        buttonSubscribe.anchor(top: stackButtonN.bottomAnchor, left: cardView.leftAnchor,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
         
         cardView.addSubview(buttonFollow)
-        buttonFollow.anchor(top: stackButton.bottomAnchor, left: buttonSubscribe.rightAnchor ,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
+        buttonFollow.anchor(top: stackButtonN.bottomAnchor, left: buttonSubscribe.rightAnchor ,paddingTop: 5, paddingLeft: 16, width: 90, height: 28)
         
         cardView.addSubview(buttonOpen)
-        buttonOpen.anchor(top: stackButton.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: -10, width: 60, height: 30)
+        buttonOpen.anchor(top: stackButtonN.bottomAnchor,right: cardView.rightAnchor, paddingTop: 5,paddingRight: -10, width: 60, height: 30)
         buttonOpen.centerY(inView: buttonFollow)
         
         cardView.addSubview(labelCategory)
