@@ -119,16 +119,22 @@ final class ChanellCoachCode: UIView {
     var buttonTwiter: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Vector1-3"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }()
     var buttonfaceBook: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Vector1-2"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }()
     var buttonInstagram: UIButton = {
         let button = UIButton()
         button.setImage(#imageLiteral(resourceName: "Vector1-4"), for: .normal)
+        button.contentVerticalAlignment = .fill
+        button.contentHorizontalAlignment = .fill
         return button
     }()
     var labelVideo : UILabel  = {
