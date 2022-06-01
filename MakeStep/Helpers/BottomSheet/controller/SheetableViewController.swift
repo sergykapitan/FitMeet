@@ -73,7 +73,26 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     )
     
     lazy var complaintFinalSheetVC = DownSheetViewController(customView: ComplaintSuccessView(), customViewHeight: 160)
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.navigationBar.backgroundColor = .white
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for:.default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.layoutIfNeeded()
+        if #available(iOS 15, *) {
+            let appearance = UINavigationBarAppearance()
+            appearance.configureWithOpaqueBackground()
+            appearance.backgroundColor = .white
+            appearance.shadowImage = UIImage()
+            appearance.shadowColor = .clear
+            UINavigationBar.appearance().standardAppearance = appearance
+            UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        }
+        self.navigationController?.navigationBar.isHidden = false
+        AppUtility.lockOrientation(.portrait)
+        
+    }
     
     func showDownSheet(_ controller: DownSheetViewController, payload: Int?) {
         controller.payload = payload

@@ -15,7 +15,6 @@ final class LiveVCCode: UIView {
         let view = UIView()
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor(hexString: "#F6F6F6")
         return view
         }()
    
@@ -37,7 +36,7 @@ final class LiveVCCode: UIView {
     func createCardViewLayer() {
         cardView.fillFull(for: self)
         cardView.addSubview(tableView)
-        tableView.anchor(top: cardView.topAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 5, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        tableView.anchor(top: cardView.topAnchor,left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 3, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
 
     }
     required init?(coder: NSCoder) {

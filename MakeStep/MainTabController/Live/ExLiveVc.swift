@@ -13,6 +13,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        if plannedBroadcast.isEmpty {
+            return 2
+        }
         return titleSection.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -41,6 +44,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
        
             let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             view.backgroundColor = .white
+        print("SCRenn === \(UIScreen.main.bounds.width)")
             let label = UILabel(frame: CGRect(x: 20, y: 0, width: tableView.frame.width, height: 20))
             label.text = titleSection[section]
             label.backgroundColor = UIColor.clear
@@ -77,15 +81,18 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         case 0:
             if liveBroadcast.count == 0 {
                 cell.hideAnimation()
-                cell.textLabel?.text = "No Live Streams"
+                cell.labelLiveStream.isHidden = false
+                
+              
                 cell.labelDescription.text = ""
                 cell.titleLabel.text = ""
                 cell.backgroundImage.isHidden = true
                 return cell
             }
               cell.hideAnimation()
+              cell.labelLiveStream.isHidden = true
               cell.backgroundImage.isHidden = false
-            cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
+              cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
               cell.labelDescription.text = liveBroadcast[indexPath.row].name
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
               
@@ -97,6 +104,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
               cell.buttonMore.isUserInteractionEnabled = true
             
         case 1:
+            cell.labelLiveStream.isHidden = true
             cell.backgroundImage.isHidden = false
             cell.textLabel?.text = nil
             if recentBroadcast.count != 0 {
@@ -114,6 +122,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.buttonMore.isUserInteractionEnabled = true
             }
         case 2:
+            cell.labelLiveStream.isHidden = true
             cell.backgroundImage.isHidden = false
             cell.textLabel?.text = nil
             if plannedBroadcast.count != 0 {

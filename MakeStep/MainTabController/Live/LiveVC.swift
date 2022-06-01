@@ -36,19 +36,11 @@ class LiveVC: SheetableViewController {
     var isLoadingList : Bool = false
     var userMap = [Int: User]()
     var titleSection = ["Live Now","Recent Live Streams","Upcoming Live Streams"]
-   
+    var widthScreen = UIScreen.main.bounds.width
     
   // MARK: - LifeCicle
     override func loadView() {
         view = liveView
-    }
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(true)
-     
-    }
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-      
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
@@ -57,11 +49,10 @@ class LiveVC: SheetableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         makeTableView()
-        actionButton ()
         bindingLive()
         bindingRecent()
         bindingPlanned()
-        makeNavItem(title: "Live", hide: true)
+        widthScreen <= 400 ? makeNavItem(title: " Live", hide: true) : makeNavItem(title: "Live", hide: true)
     }
    
     override func copyLink(id: Int) {
@@ -74,11 +65,6 @@ class LiveVC: SheetableViewController {
     deinit {
      print("deinit LiveVC")
     }
-   
-    func actionButton () {
-      
-    }
-  
     private func makeTableView() {
         liveView.tableView.dataSource = self
         liveView.tableView.delegate = self
@@ -133,6 +119,7 @@ class LiveVC: SheetableViewController {
                         self.bindingUserMap(ids: arrayUserId)
                     } else {
                         self.titleSection.removeLast()
+                        self.liveView.tableView.reloadData()
                     }
             })
     }

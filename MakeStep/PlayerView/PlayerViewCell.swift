@@ -146,6 +146,15 @@ final class PlayerViewCell: UITableViewCell {
         button.tintColor = .opaqueSeparator
         return button
     }()
+    var labelLiveStream: UILabel = {
+        let label = UILabel()
+        label.text = "No Live Streams"
+        label.textAlignment = .left
+        label.textColor = .lightGray
+        label.font = UIFont(name: "AvenirNext-Medium", size: 16)
+        label.isHidden = true
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -169,11 +178,18 @@ final class PlayerViewCell: UITableViewCell {
 
     func initialize() {
         clipsToBounds = true
+        print("SCRenn222 === \(UIScreen.main.bounds.width)")
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,
                                bottom: contentView.bottomAnchor,
-                               paddingTop: 5, paddingLeft: 18,paddingBottom: 5,width: contentView.bounds.width / 2,height: (contentView.bounds.width / 1.9) / 1.8)
+                               paddingTop: 5, paddingLeft: 20,paddingBottom: 5,width: contentView.bounds.width / 2,height: (contentView.bounds.width / 1.9) / 1.8)
+        contentView.addSubview(labelLiveStream)
+        labelLiveStream.anchor(top: contentView.topAnchor,
+                               left: contentView.leftAnchor,
+                               bottom: contentView.bottomAnchor,
+                               paddingTop: 0, paddingLeft: 20,paddingBottom: 0)
+        
         contentView.addSubview(buttonMore)
         buttonMore.anchor(right: contentView.rightAnchor ,
                           bottom: contentView.bottomAnchor,
