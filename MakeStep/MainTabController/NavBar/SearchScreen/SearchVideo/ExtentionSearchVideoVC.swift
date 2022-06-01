@@ -17,7 +17,7 @@ extension SearchVideoVC: UITableViewDataSource {
        
         cell.labelDescription.text = listBroadcast[indexPath.row].name
         cell.titleLabel.text = listBroadcast[indexPath.row].categories?.first?.title
-        cell.setImage(image: listBroadcast[indexPath.row].previewPath ?? Constants.defoultImage )
+        cell.setImage(image: listBroadcast[indexPath.row].resizedPreview?["preview_l"]?.png ?? Constants.defoultImage )
         cell.buttonMore.tag = indexPath.row
         cell.buttonMore.addTarget(self, action: #selector(actionMore), for: .touchUpInside)
         cell.buttonMore.isUserInteractionEnabled = true

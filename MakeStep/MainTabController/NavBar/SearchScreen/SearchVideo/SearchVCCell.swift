@@ -20,6 +20,8 @@ class SearchVCCell: UITableViewCell {
         }()
     var backgroundImage: UIImageView = {
         let image = UIImageView()
+        image.contentMode = .scaleAspectFill
+        image.clipsToBounds = true
         return image
         
     }()
