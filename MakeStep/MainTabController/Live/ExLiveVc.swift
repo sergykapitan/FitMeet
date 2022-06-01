@@ -89,6 +89,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
                 return cell
             }
               cell.hideAnimation()
+              self.navigationController?.navigationBar.isUserInteractionEnabled = true
               cell.labelLiveStream.isHidden = true
               cell.backgroundImage.isHidden = false
               cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
@@ -108,7 +109,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = nil
             if recentBroadcast.count != 0 {
             cell.hideAnimation()
-            
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
                 cell.setImage(image: recentBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
             cell.labelDescription.text = recentBroadcast[indexPath.row].name
             guard let id = recentBroadcast[indexPath.row].userId else { return cell}
@@ -126,7 +127,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             cell.textLabel?.text = nil
             if plannedBroadcast.count != 0 {
             cell.hideAnimation()
-           
+            self.navigationController?.navigationBar.isUserInteractionEnabled = true
                 cell.setImage(image: plannedBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
             cell.labelDescription.text = plannedBroadcast[indexPath.row].name
             guard let id = plannedBroadcast[indexPath.row].userId else { return cell}

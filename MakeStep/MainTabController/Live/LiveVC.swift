@@ -53,6 +53,7 @@ class LiveVC: SheetableViewController {
         bindingRecent()
         bindingPlanned()
         widthScreen <= 400 ? makeNavItem(title: " Live", hide: true) : makeNavItem(title: "Live", hide: true)
+        self.navigationController?.navigationBar.isUserInteractionEnabled = false
     }
    
     override func copyLink(id: Int) {
