@@ -44,7 +44,6 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
        
             let view = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
             view.backgroundColor = .white
-        print("SCRenn === \(UIScreen.main.bounds.width)")
             let label = UILabel(frame: CGRect(x: 20, y: 0, width: tableView.frame.width, height: 20))
             label.text = titleSection[section]
             label.backgroundColor = UIColor.clear

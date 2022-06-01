@@ -178,7 +178,6 @@ final class PlayerViewCell: UITableViewCell {
 
     func initialize() {
         clipsToBounds = true
-        print("SCRenn222 === \(UIScreen.main.bounds.width)")
         contentView.addSubview(backgroundImage)
         backgroundImage.anchor(top: contentView.topAnchor,
                                left: contentView.leftAnchor,

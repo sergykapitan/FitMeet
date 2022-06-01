@@ -172,7 +172,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         if picInPic {
         self.switchType()
          
-            print("Player == \(playerLayer?.player)")
+            
         self.bindingLike()
         self.homeView.labelStreamInfo.text = broadcast?.name
         if isPrivate {
@@ -202,7 +202,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         super.viewDidLoad()
         makeTableView()
         actionButton ()
-//        SocketIOManager.sharedInstance.getTokenChat()
+        SocketIOManager.sharedInstance.getTokenChat()
 
        
         homeView.imageLogoProfile.makeRounded()
@@ -713,7 +713,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-       // self.playerViewController?.player?.rate = 0
         AppUtility.lockOrientation(.portrait, andRotateTo: .portrait)
       
     }
@@ -750,7 +749,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 player = AVPlayer(url: videoURL!)
                 self.playerViewController = AVPlayerViewController()
         guard let player = player else { return  }
-       // self.playerViewController?.delegate = self
         guard let playerLayer = playerLayer else {
           fatalError("Missing AVPlayerLayer")
         }

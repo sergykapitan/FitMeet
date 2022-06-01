@@ -347,7 +347,7 @@ final class PlayerViewVCCode: UIView {
         buttonLike.anchor(top: labelStreamInfo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
         
         cardView.addSubview(labelEyeView)
-        labelEyeView.anchor(top: labelStreamInfo.bottomAnchor,right: buttonLike.leftAnchor, paddingTop: 5, paddingRight: 5, width: 24, height: 24)
+        labelEyeView.anchor(top: labelStreamInfo.bottomAnchor,right: buttonLike.leftAnchor, paddingTop: 5, paddingRight: 5, height: 24)
 
         cardView.addSubview(imageEyeТ)
         imageEyeТ.anchor(top: labelStreamInfo.bottomAnchor, right: labelEyeView.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
