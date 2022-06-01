@@ -116,10 +116,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-     //   let audioSession = AVAudioSession.sharedInstance()
-     // _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
-     // _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
-     //    _ = try? audioSession.setActive(true)
         self.actionButton()
         self.bindingChanell()
         self.bindingUser()
@@ -700,7 +696,7 @@ extension LiveStreamViewController {
             name = "TITLE OF THE STREAM"
         }
 
-        self.nextView(chanellId: chanelId, name: name, description: description, previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: false, categoryId: self.category ?? [], type: status )
+        self.nextView(chanellId: chanelId, name: name, description: descriptionStream ?? "", previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: false, categoryId: self.category ?? [], type: status )
     }
     func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int],type: String)  {
 
