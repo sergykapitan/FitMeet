@@ -252,7 +252,7 @@ final class LiveStreamVCCode: UIView {
         lineBottom.centerX(inView: capturePreviewView)
         lineBottom.anchor( left: textFieldNameStream.leftAnchor,
                                   right: textFieldNameStream.rightAnchor,
-                                  bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: -10, paddingBottom: 0, height: 1)
+                           bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: -10, paddingBottom: 0, height: 1)
         
         
         

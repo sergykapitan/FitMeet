@@ -51,7 +51,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     
     weak var delegatePlayer: DissmisPlayer?
-    
+    var leftTextFieldConstraint = NSLayoutConstraint()
     let streamView = LiveStreamVCCode()
     @Inject var fitMeetStream: FitMeetStream
     @Inject var fitMeetchannel: FitMeetChannels
@@ -148,7 +148,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
         
-      
+        leftTextFieldConstraint = streamView.textFieldNameStream.leadingAnchor.constraint(equalTo: streamView.capturePreviewView.leadingAnchor, constant: 10)
+        leftTextFieldConstraint.isActive = false
         
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -794,6 +795,8 @@ extension LiveStreamViewController {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             if streamView.textFieldNameStream.isFirstResponder {
                     self.textFieldBottomConstraint.constant = -180
+                self.streamView.textFieldNameStream.attributedPlaceholder =
+                NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.clear])
             }
         }
     }
@@ -801,6 +804,8 @@ extension LiveStreamViewController {
     override func keyboardWillHide(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
                 self.textFieldBottomConstraint.constant = -32
+            self.streamView.textFieldNameStream.attributedPlaceholder =
+            NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
  
         }
     }
@@ -813,4 +818,15 @@ extension LiveStreamViewController: UITextFieldDelegate {
         }
      return false
   }
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if self.streamView.textFieldNameStream.frame.width >= UIScreen.main.bounds.width {
+            leftTextFieldConstraint.isActive = true
+        } else {
+            let fullString = (textField.text ?? "") + string
+            if fullString.count <= 34 {
+                leftTextFieldConstraint.isActive = false
+            }
+        }
+        return true
+    }
 }
