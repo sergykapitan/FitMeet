@@ -97,8 +97,8 @@ final class LiveStreamVCCode: UIView {
         let textField = UITextField()
         textField.translatesAutoresizingMaskIntoConstraints = false
         textField.backgroundColor = .clear
-        textField.attributedPlaceholder =
-        NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+      //  textField.attributedPlaceholder =
+      //  NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
         textField.setLeftPaddingPoints(10)
         textField.font = UIFont.boldSystemFont(ofSize: 24)
         textField.textColor = .white
@@ -168,6 +168,12 @@ final class LiveStreamVCCode: UIView {
         label.font = UIFont.systemFont(ofSize: 10.2)
         return label
     }()
+    let circleIndicator: BPCircleActivityIndicator = {
+        let circle = BPCircleActivityIndicator()
+        circle.translatesAutoresizingMaskIntoConstraints = false
+        circle.alpha = 0
+        return circle
+    }()
    
 
     // MARK: - Init
@@ -201,6 +207,10 @@ final class LiveStreamVCCode: UIView {
                        right: capturePreviewView.rightAnchor,
                        bottom: capturePreviewView.bottomAnchor,
                        paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom:  0)
+        capturePreviewView.addSubview(circleIndicator)
+        circleIndicator.centerY(inView: capturePreviewView)
+        circleIndicator.centerX(inView: capturePreviewView)
+        
 
     capturePreviewView.addSubview(labelFPS)
     labelFPS.anchor(top: capturePreviewView.topAnchor,
@@ -246,13 +256,12 @@ final class LiveStreamVCCode: UIView {
         
         capturePreviewView.addSubview(textFieldNameStream)
         textFieldNameStream.centerX(inView: capturePreviewView)
-        
-        
+      
         capturePreviewView.addSubview(lineBottom)
         lineBottom.centerX(inView: capturePreviewView)
         lineBottom.anchor( left: textFieldNameStream.leftAnchor,
                                   right: textFieldNameStream.rightAnchor,
-                           bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: -10, paddingBottom: 0, height: 1)
+                           bottom: textFieldNameStream.bottomAnchor,paddingLeft: 0, paddingRight: 0, paddingBottom: 0, height: 1)
         
         
         

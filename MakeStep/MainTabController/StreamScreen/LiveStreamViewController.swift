@@ -117,7 +117,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     override func viewDidLoad() {
         super.viewDidLoad()
         self.actionButton()
-        self.bindingChanell()
+      //  self.bindingChanell()
         self.bindingUser()
         setupKeyboardNotifications()
         self.hideKeyboardWhenTappedAround()
@@ -148,8 +148,8 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
         
-        leftTextFieldConstraint = streamView.textFieldNameStream.leadingAnchor.constraint(equalTo: streamView.capturePreviewView.leadingAnchor, constant: 10)
-        leftTextFieldConstraint.isActive = false
+        print("text == \(streamView.textFieldNameStream.frame.width)")
+        print("text2 == \(streamView.lineBottom.frame.width)")
         
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
@@ -162,6 +162,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
+        self.bindingChanell()
            let audioSession = AVAudioSession.sharedInstance()
          _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
          _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
@@ -173,6 +174,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         self.navigationController?.navigationBar.backgroundColor = .clear
         tabBarController?.tabBar.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
+        
+        leftTextFieldConstraint = streamView.textFieldNameStream.leadingAnchor.constraint(equalTo: streamView.capturePreviewView.leadingAnchor, constant: 10)
+        leftTextFieldConstraint.isActive = false
         
         if myuri == "" {
         
@@ -199,6 +203,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     override func viewWillDisappear(_ animated: Bool) {
         logger.info("viewWillDisappear")
         super.viewWillDisappear(animated)
+        leftTextFieldConstraint.isActive = false
         self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         self.navigationController?.navigationBar.shadowImage = nil
         self.navigationController?.navigationBar.isTranslucent = false
@@ -665,12 +670,19 @@ extension LiveStreamViewController {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if !response.data.isEmpty  {
                     self.listChanell = response.data
-                 
+                    let nameStream = self.returnNameChannelAndDate()
+                    self.streamView.textFieldNameStream.attributedPlaceholder =
+                    NSAttributedString(string: nameStream, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
                 }
         })
     }
     @objc func actionStartStream() {
         guard let chanelId = listChanell.last?.id else { return }
+        streamView.circleIndicator.alpha = 1
+        streamView.circleIndicator
+            .rotateSpeed(0.6)
+            .interval(0.3)
+            .animate()
                 var isPlan: Bool?
                 var date: String?
                 var status: String?
@@ -694,7 +706,7 @@ extension LiveStreamViewController {
         let image =  self.imagePath ?? ""
         guard let date = date,let status = status,let isPlan = isPlan,var name = streamView.textFieldNameStream.text else {  return }
         if name.isEmpty {
-            name = "TITLE OF THE STREAM"
+            name = returnNameChannelAndDate()
         }
 
         self.nextView(chanellId: chanelId, name: name, description: descriptionStream ?? "", previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: false, categoryId: self.category ?? [], type: status )
@@ -723,7 +735,10 @@ extension LiveStreamViewController {
                     if self.streamView.labelStartNow.text == "Start now" {
                     self.fetchStream(id: id, name: name)
                     } else {
+                        
                         guard let user = self.user else { return }
+                        self.streamView.circleIndicator.stop()
+                        self.streamView.circleIndicator.alpha = 0
                         let channelVC = ChanellVC()
                         channelVC.user = user
                         self.navigationController?.pushViewController(channelVC, animated: true)
@@ -744,17 +759,8 @@ extension LiveStreamViewController {
                   print(error)
                    return error })
                  .sink(receiveCompletion: { _ in }, receiveValue: { response in
-                    guard let url = response.url else { return }
-                     if url != nil {
-                     DispatchQueue.main.async {
-                         AppUtility.lockOrientation(.all, andRotateTo: .portrait)
-                         Loaf("Start  \(response.name!)", state: Loaf.State.success, location: .bottom, sender:  self).show(.short) { disType in
-                             switch disType {
-                             case .tapped:  self.startStreams(id: id, url: url)
-                             case .timedOut: self.startStreams(id: id, url: url)
-                         }
-                     }
-                 }
+                     if let url = response.url {
+                         self.startStreams(id: id, url: url)
              } else {
                  Loaf("Not Saved \(response.message!)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
              }
@@ -775,7 +781,8 @@ extension LiveStreamViewController {
                     self.broadcastId = self.broadcast?.id
                     self.privateUrlKey = self.broadcast?.privateUrlKey
                 }
-      
+        streamView.circleIndicator.stop()
+        streamView.circleIndicator.alpha = 0
         [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
         [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
         
@@ -789,24 +796,37 @@ extension LiveStreamViewController {
         let myPublish = fullUrlArr[4]
         return (myuri,myPublish)
     }
+    private func returnNameChannelAndDate() -> String {
+        guard let name =  self.listChanell.last?.name else { return "not name chanell"}
+        let df:DateFormatter = DateFormatter.init()
+        df.dateFormat = "yyyy/MM/dd "
+        df.timeZone = TimeZone(secondsFromGMT: TimeZone.current.secondsFromGMT())
+        let date = Date()
+        let returnDate = df.string(from: date)
+        return name + " " + "stream" + " " + returnDate
+    }
 }
 extension LiveStreamViewController {
     override func keyboardWillShow(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             if streamView.textFieldNameStream.isFirstResponder {
-                    self.textFieldBottomConstraint.constant = -180
+                self.textFieldBottomConstraint.constant = -180
                 self.streamView.textFieldNameStream.attributedPlaceholder =
                 NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.clear])
+                leftTextFieldConstraint.isActive = false
             }
         }
     }
     
     override func keyboardWillHide(notification: NSNotification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-                self.textFieldBottomConstraint.constant = -32
-            self.streamView.textFieldNameStream.attributedPlaceholder =
-            NSAttributedString(string: "TITLE OF THE STREAM", attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
- 
+           self.textFieldBottomConstraint.constant = -32
+           guard let name = streamView.textFieldNameStream.text else {  return }
+            if name.isEmpty {
+                let nameStream = self.returnNameChannelAndDate()
+                         self.streamView.textFieldNameStream.attributedPlaceholder =
+                         NSAttributedString(string: nameStream, attributes: [NSAttributedString.Key.foregroundColor : UIColor.white])
+            }
         }
     }
 }
@@ -819,10 +839,12 @@ extension LiveStreamViewController: UITextFieldDelegate {
      return false
   }
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        if self.streamView.textFieldNameStream.frame.width >= UIScreen.main.bounds.width {
+        
+        let fullString = (textField.text ?? "") + string
+        if fullString.count >= 35 {
             leftTextFieldConstraint.isActive = true
         } else {
-            let fullString = (textField.text ?? "") + string
+           
             if fullString.count <= 34 {
                 leftTextFieldConstraint.isActive = false
             }

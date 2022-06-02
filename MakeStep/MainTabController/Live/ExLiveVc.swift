@@ -163,6 +163,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         var status:BroadcastStatus  = .offline
         switch indexPath.section {
         case 0:
+            if liveBroadcast.isEmpty { return }
             guard let statuslive = liveBroadcast[indexPath.row].status  else { return }
             status = statuslive
         case 1:
