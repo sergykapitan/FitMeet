@@ -157,6 +157,26 @@ final class ProfileVCCode: UIView {
         let line = OneLine()
         return line
     }()
+    var imageDelAkk: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "logout")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
+        return image
+        }()
+    var labelDelAkk: UILabel = {
+        let label = UILabel()
+        label.text = "Delete account"
+        label.textColor = UIColor(hexString: "#7C7C7C")
+        label.font = UIFont.systemFont(ofSize: 18)
+        return label
+    }()
+    var buttonDelAkk: UIButton = {
+        let button = UIButton()
+        return button
+    }()
+    var fiveAndLine: OneLine = {
+        let line = OneLine()
+        return line
+    }()
     
     var labelAbout: UILabel = {
         let label = UILabel()
@@ -356,8 +376,23 @@ final class ProfileVCCode: UIView {
         fourAndLine.anchor(top: buttonSignOut.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
         
         
+        
+        scroll.addSubview(buttonDelAkk)
+        buttonDelAkk.anchor(top: fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        
+        buttonDelAkk.addSubview(imageDelAkk)
+        imageDelAkk.anchor(top: buttonDelAkk.topAnchor, left: buttonDelAkk.leftAnchor,  bottom: buttonDelAkk.bottomAnchor, paddingTop: 5, paddingLeft: 5, paddingBottom: 5, width: 20, height: 20)
+        
+        buttonDelAkk.addSubview(labelDelAkk)
+        labelDelAkk.anchor(left: imageDelAkk.rightAnchor,paddingLeft: 5)
+        labelDelAkk.centerY(inView: buttonDelAkk)
+        
+        scroll.addSubview(fiveAndLine)
+        fiveAndLine.anchor(top: buttonDelAkk.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor,paddingTop: 20, paddingLeft: 16, paddingRight: 16)
+        
+
         scroll.addSubview(buttonAbout)
-        buttonAbout.anchor(top: fourAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
+        buttonAbout.anchor(top: fiveAndLine.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, paddingTop: 10, paddingLeft: 16, paddingRight: 16)
         buttonAbout.addSubview(labelAbout)
         labelAbout.anchor(left: buttonAbout.leftAnchor,paddingLeft: 5)
         labelAbout.centerY(inView: buttonAbout)

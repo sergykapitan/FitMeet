@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 import Combine
 
-class ProfileVC: UIViewController, UIScrollViewDelegate {
+class ProfileVC: SheetableViewController, UIScrollViewDelegate {
     
     let profileView = ProfileVCCode()
     private var take: AnyCancellable?
@@ -101,6 +101,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         
         profileView.buttonPartners.addTarget(self, action: #selector(actionHowIt), for: .touchUpInside)
         profileView.buttonAbout.addTarget(self, action: #selector(actionAbout), for: .touchUpInside)
+        profileView.buttonDelAkk.addTarget(self, action: #selector(deleteAccount), for: .touchUpInside)
         
     }
     @objc func actionSignUp() {
@@ -117,6 +118,10 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
         (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
 
     }
+    @objc func deleteAccount() {
+        showDownSheet(deleteAccountSheetVC,payload: nil)
+    }
+    
     @objc func actionMonetezation() {
         let vc = MonetezeitionVC()
         self.navigationController?.pushViewController(vc, animated: true)
@@ -204,24 +209,7 @@ class ProfileVC: UIViewController, UIScrollViewDelegate {
 
                    let customTitles = UIBarButtonItem.init(customView: stackView)
                    self.navigationItem.leftBarButtonItems = [customTitles]
-        
-        let startItem = UIBarButtonItem(image: #imageLiteral(resourceName: "notifications1"), style: .plain, target: self, action:  #selector(notificationHandAction))
-        startItem.tintColor = UIColor(hexString: "#7C7C7C")
-        let timeTable = UIBarButtonItem(image: #imageLiteral(resourceName: "Time"),  style: .plain,target: self, action: #selector(timeHandAction))
-        timeTable.tintColor = UIColor(hexString: "#7C7C7C")
-        
-        
-      //  self.navigationItem.rightBarButtonItems = [startItem,timeTable]
-    }
-    @objc func timeHandAction() {
-        print("timeHandAction")
-        let tvc = Timetable()
-        navigationController?.present(tvc, animated: true, completion: nil)
-        
-        
-    }
-    @objc func notificationHandAction() {
-        print("notificationHandAction")
+    
     }
 }
 
@@ -230,5 +218,10 @@ extension ProfileVC: ReloadView {
         if self.user == nil {
              self.setUserProfile()
          }
+    }
+}
+extension ProfileVC:Refreshable {
+    func refresh() {
+        print("refresh")
     }
 }

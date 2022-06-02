@@ -63,6 +63,17 @@ enum DeleteItemActionType: DownSheetActionType {
         }
     }
 }
+enum DeleteAccountType: DownSheetActionType {
+    
+    case delete, notDelete
+    
+    var description : String {
+        switch self {
+        case .delete: return "Yes, delete the account"
+        case .notDelete: return "No, don't delete the account"
+        }
+    }
+}
 
 enum BlockUserSendComplaint: DownSheetActionType {
     

@@ -381,7 +381,6 @@ extension PlayerViewVC: AVPictureInPictureControllerDelegate{
   }
 
   public func pictureInPictureControllerDidStopPictureInPicture( _ pictureInPictureController: AVPictureInPictureController ) {
-   // self.playerViewController?.player?.pause()
     activeCustomPlayerViewControllers.remove(self)
   }
 

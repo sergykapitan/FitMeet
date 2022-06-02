@@ -17,6 +17,7 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
     let visualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .dark))
     @Inject var fitMeetStreams: FitMeetStream
     var deleteBroad: AnyCancellable?
+    var deleteAkk: AnyCancellable?
     var editBroad: AnyCancellable?
     
     lazy var moreArtworkOtherUserSheetVC = DownSheetViewController(items:[
@@ -44,6 +45,12 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         (DeleteItemActionType.delete, .regular),
         (DeleteItemActionType.notDelete, .regular),
     ], topTitle: ("Do you really want to delete broadcast?", .black)
+    )
+    
+    lazy var deleteAccountSheetVC = DownSheetViewController(items:[
+        (DeleteAccountType.delete, .regular),
+        (DeleteAccountType.notDelete, .regular),
+    ], topTitle: ("Do you really want to delete your account?", .black)
     )
     
     lazy var linkCopiedSheetVC = DownSheetViewController(items:[
@@ -179,6 +186,14 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
                 break
             }
         }
+        if let type = type as? DeleteAccountType {
+            switch type {
+            case .delete:
+                deleteAccountSheet()
+            case .notDelete:
+                break
+            }
+        }
         
     }
     
@@ -219,7 +234,19 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
         })
     }
     func stopLoaf() {
-        
+      
+    }
+    func deleteAccountSheet() {
+        deleteAkk = fitMeetStreams.deleteAccont()
+            .mapError({ (error) -> Error in
+                Loaf("Error : \(error.localizedDescription)", state: Loaf.State.error, location: .bottom, sender:  self).show(.short)
+                return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response {
+                    self.needUpdateAfterSuccessfullyCreate()
+                    Loaf("Delete Account", state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
+            }
+        })
     }
     
     func blockUserById(with id: Int32) {
