@@ -179,13 +179,12 @@ class AddMonetezationVC: UIViewController ,UITextViewDelegate, UITextFieldDelega
                         }
                     }
                 }
-                } else {
+            } else {
                     DispatchQueue.main.async {
                         Loaf("\(response.message)", state: Loaf.State.error, location: .top, sender:  self).show(.short)
                     }
               }
         })
-        
     }
   
     func bindingProduct() {

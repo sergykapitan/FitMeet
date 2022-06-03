@@ -55,8 +55,8 @@ final class MonetezeitionVCode: UIView {
         addSubview(cardView)
         cardView.fillSuperview()
         
-      //  cardView.addSubview(buttonMytariffs)
-      //  buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 95,height: 30)
+//        cardView.addSubview(buttonMytariffs)
+//        buttonMytariffs.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 95,height: 30)
         
         cardView.addSubview(buttonIncomecalculator)
         buttonIncomecalculator.anchor(top: cardView.topAnchor, left: cardView.leftAnchor, paddingTop: 20, paddingLeft: 16,width: 153,height: 30)

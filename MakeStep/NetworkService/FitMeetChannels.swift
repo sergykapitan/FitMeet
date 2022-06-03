@@ -37,6 +37,7 @@ class FitMeetChannels {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelModel.self)
                  .value()
+                 .print("channelr")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }
@@ -66,6 +67,7 @@ class FitMeetChannels {
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: ChannelResponce.self)
                  .value()
+                 .print("monetChanell")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
            }

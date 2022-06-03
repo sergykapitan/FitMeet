@@ -26,18 +26,22 @@ class MonetezeitionVC: UIViewController {
         makeNavItem()
         actionButton()
         actionBtnCalculate()
+       // actionBtnTariff()
     }
     func actionButton(){
         self.monetView.buttonIncomecalculator.addTarget(self, action: #selector(actionBtnCalculate), for: .touchUpInside)
+       // self.monetView.buttonMytariffs.addTarget(self, action: #selector(actionBtnTariff), for: .touchUpInside)
     }
     @objc func actionBtnTariff() {
         self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#BBBCBC")
+      //  self.monetView.buttonMytariffs.backgroundColor = .blueColor
         removeAllChildViewController(ch)
         configureChildViewController(loadingVC, onView:monetView.selfView )
         
     }
     @objc func actionBtnCalculate() {
-        self.monetView.buttonIncomecalculator.backgroundColor = UIColor(hexString: "#3B58A4")
+      //  self.monetView.buttonMytariffs.backgroundColor = UIColor(hexString: "#BBBCBC")
+        self.monetView.buttonIncomecalculator.backgroundColor = .blueColor
         removeAllChildViewController(loadingVC)
         configureChildViewController(ch, onView:monetView.selfView )
     }
@@ -47,7 +51,6 @@ class MonetezeitionVC: UIViewController {
         UINavigationBar.appearance().titleTextAttributes = attributes
         
                     let backButton = UIButton()
-                  //  backButton.anchor( width: 40, height: 30)
                     backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
                     backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
                    
@@ -76,27 +79,3 @@ class MonetezeitionVC: UIViewController {
     }
 
 }
-//MARK: - UISearchBarDelegate
-//extension MonetezeitionVC: UISearchResultsUpdating {
-//
-//    func updateSearchResults(for searchController: UISearchController) {
-//        
-//            let searchBar = searchController.searchBar
-//             print("Search == \(searchBar)")
-//           
-//
-//    }
-//    func connectUser (broadcastId:String?,channellId: String?) {
-//        
-//        guard let broadID = broadcastId,let id = channellId else { return }
-//        SocketWatcher.sharedInstance.getTokenChat()
-//        SocketWatcher.sharedInstance.establishConnection(broadcastId: "\(broadID)", chanelId: "\(id)")
-//    }
-//}
-//extension MonetezeitionVC: SearchData {
-//    func searchData() {
-//        print("all")
-//    }
-//
-//
-//}

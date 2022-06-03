@@ -57,7 +57,7 @@ static let reuseID = "AllSaveWorkoutViewCell"
     }()
     var imageEdit:UIImageView = {
         let image = UIImageView()
-        image.image =  #imageLiteral(resourceName: "edit 1-1")
+        image.image =  #imageLiteral(resourceName: "edit")
         image.setImageColor(color: UIColor.black)
         return image
         }()
