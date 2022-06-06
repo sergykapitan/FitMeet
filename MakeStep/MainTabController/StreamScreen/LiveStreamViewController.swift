@@ -752,6 +752,7 @@ extension LiveStreamViewController {
                         self.streamView.circleIndicator.alpha = 0
                         let channelVC = ChanellVC()
                         channelVC.user = user
+                        self.imagePath = nil
                         self.navigationController?.pushViewController(channelVC, animated: true)
                     }
                 } else {
@@ -783,7 +784,7 @@ extension LiveStreamViewController {
         self.myuri = twoString.0
         self.myPublish = twoString.1
         self.url = url
- 
+        self.imagePath = nil
                 if self.streamView.labelAviable.text == "Available for all" {
                     self.isPrivate = false
                 } else  {
