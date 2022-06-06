@@ -244,7 +244,14 @@ class SheetableViewController: UIViewController, DownSheetViewControllerDelegate
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response {
                     self.needUpdateAfterSuccessfullyCreate()
-                    Loaf("Delete Account", state: Loaf.State.success, location: .bottom, sender:  self).show(.short)
+                    Loaf("Delete Account", state: Loaf.State.success, location: .bottom, sender:  self).show(.short){ disType in
+                        switch disType {
+                        case .tapped:
+                            self.stopLoaf()
+                        case .timedOut:
+                            self.stopLoaf()
+                        }
+                }
             }
         })
     }

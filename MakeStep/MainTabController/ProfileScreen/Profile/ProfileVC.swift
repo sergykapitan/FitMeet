@@ -121,7 +121,9 @@ class ProfileVC: SheetableViewController, UIScrollViewDelegate {
     @objc func deleteAccount() {
         showDownSheet(deleteAccountSheetVC,payload: nil)
     }
-    
+    override func stopLoaf() {
+        self.actionSignUp()
+    }
     @objc func actionMonetezation() {
         let vc = MonetezeitionVC()
         self.navigationController?.pushViewController(vc, animated: true)
