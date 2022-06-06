@@ -335,6 +335,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             let navVC = LiveStreamViewController()
             navVC.modalPresentationStyle = .fullScreen
             navVC.idBroad = id
+        navVC.broadcast = self.broadcast
             navVC.myuri = myuri
             navVC.myPublish = myPublish
             navVC.isPrivate = false
