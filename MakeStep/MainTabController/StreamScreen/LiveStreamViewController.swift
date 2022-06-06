@@ -262,6 +262,16 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     @objc func settingTapped() {
         let chatVC = NewStartStream()
         chatVC.delegate = self
+        if let category = category {
+            chatVC.IdCategory = category
+            chatVC.authView.textFieldCategory.placeholder = ""
+        }
+        if let imagePath = imagePath {
+            chatVC.imagePath = imagePath
+        }
+        if let descriptionStream = descriptionStream {
+            chatVC.authView.textFieldDescription.text = descriptionStream
+        }
         self.present(chatVC, interactiveDismissalType: .standard)
         }
     @objc func closeVideo() {
@@ -610,6 +620,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
 }
 
 extension LiveStreamViewController: SendDataToLive {
+    
     func sendDatatoLive(category: [Int], description: String?, imagePath: String?) {
         self.imagePath = imagePath
         self.category = category

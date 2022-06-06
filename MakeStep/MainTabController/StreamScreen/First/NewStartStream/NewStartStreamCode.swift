@@ -35,8 +35,8 @@ final class NewStartStreamCode: UIView {
         return label
     }()
     let imageButton: UIButton = {
-        let button = UIButton()
-        button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle"), for: .normal)
+        let button = UIButton(type: .custom)
+        //button.setBackgroundImage(#imageLiteral(resourceName: "Rectangle"), for: .normal)
         button.imageView?.clipsToBounds = true
         button.imageView?.contentMode = .scaleAspectFill
         return button

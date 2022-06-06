@@ -16,6 +16,7 @@ import EasyPeasy
 import Loaf
 import TagListView
 import iOSDropDown
+import Kingfisher
 
 protocol SendDataToLive: AnyObject {
     func sendDatatoLive(category:[Int],description: String?,imagePath:String?)
@@ -25,6 +26,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     
     var transitionManager: UIViewControllerTransitioningDelegate?
     weak var delegate: SendDataToLive?
+    var category: [Datum] = []
     
     func menuDidAnimate(up: Bool) {
         print("menuDidAnimate")
@@ -52,6 +54,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     private var takeChannel: AnyCancellable?
     private var takeImage: AnyCancellable?
     private var takeBroadcast: AnyCancellable?
+    private var takeBroadcastMap: AnyCancellable?
     private var taskStream: AnyCancellable?
     
     
@@ -69,6 +72,7 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     var broadcast:  BroadcastResponce?
     
     var imageUpload: UploadImage?
+    var imagePath: String?
     
     let date = Date()
     var url: String?
@@ -123,17 +127,33 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         bindingChanell()
+        bindingCategory()
+        if let imagePath = imagePath {
+            if let imgURL = URL(string: "https://dev.makestep.com" + imagePath) {
+                self.authView.imageButton.kf.setImage(with: imgURL, for: .normal,placeholder: UIImage(named: "Rectangle"),options: [.transition(.fade(0))], progressBlock: nil)
+             }
+        }else {
+                self.authView.imageButton.setBackgroundImage(#imageLiteral(resourceName: "Rectangle"), for: .normal)
+        }
+        guard !IdCategory.isEmpty else { return }
+        bindingMapCategory(categoryId: IdCategory)
     }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        delegate?.sendDatatoLive(category: self.IdCategory, description: self.authView.textFieldDescription.text, imagePath: self.imageUpload?.data?.first?.filename)
+        var returnImageString: String = ""
+        if self.imageUpload?.data?.first?.filename == nil {
+            returnImageString = imagePath ?? ""
+        } else {
+            returnImageString = self.imageUpload?.data?.first?.filename ?? ""
+        }
+        delegate?.sendDatatoLive(category: self.IdCategory, description: self.authView.textFieldDescription.text, imagePath: returnImageString)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
         bindingUser()
-        bindingCategory()
+       
 
         
         setupKeyboardNotifications()
@@ -202,13 +222,26 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
   
     func bindingCategory() {
         takeBroadcast = fitMeetStream.getCategoryPrivate()
-            .mapError({ (error) -> Error in return error })
+            .mapError({ (error) -> Error in
+                print(error.localizedDescription)
+                return error })
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listCategory = response.data!
                     let list = self.listCategory.compactMap{$0.title}
                     self.authView.textFieldCategory.optionArray = list
                 }
+        })
+    }
+    func bindingMapCategory(categoryId: [Int]) {
+        takeBroadcastMap = fitMeetStream.getCategoryIdS(ids: categoryId)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                self.category = response.data.compactMap{$0.value}
+                self.authView.tagView.addTags(self.category.compactMap{$0.title})
+                self.authView.tagView.layoutSubviews()
+                
+               
         })
     }
     func bindingChanell() {
@@ -258,6 +291,9 @@ class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewD
         authView.textFieldCategory.showList()
         }
     }
+    deinit {
+           print("deiniting")
+       }
 }
 extension NewStartStream: UITextFieldDelegate {
     
@@ -279,6 +315,7 @@ extension NewStartStream: UITextFieldDelegate {
 extension NewStartStream: ImagePickerDelegate {
     func didSelect(image: UIImage?) {
         self.authView.imageButton.setImage(image, for: .normal)
+        
         self.authView.spinner.alpha = 1
         self.authView.labelSaved.alpha = 0
         guard let imagee = image else { return }
