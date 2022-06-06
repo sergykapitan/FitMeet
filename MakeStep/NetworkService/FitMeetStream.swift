@@ -251,6 +251,17 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
         
            }
+    public func getBroadcastinRecent(status: BroadcastStatus) -> AnyPublisher<BroadcastList, DifferentError> {
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?sort=id&order=DESC&status=\(status.description)&take=10", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+                 .validate(statusCode: 200..<300)
+                 .validate(contentType: ["application/json"])
+                 .publishDecodable(type: BroadcastList.self)
+                 .value()
+                 .print("getBroadcastLive")
+                 .mapError { DifferentError.alamofire(wrapped: $0) }
+                 .eraseToAnyPublisher()
+        
+           }
     public func getAllBroadcast(name: String) -> AnyPublisher<BroadcastList, DifferentError> {
         return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=200&nameLike=\(name)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)

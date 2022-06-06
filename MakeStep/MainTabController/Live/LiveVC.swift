@@ -94,7 +94,7 @@ class LiveVC: SheetableViewController {
             })
     }
     func bindingRecent() {
-        takeBroadcast = fitMeetStream.getBroadcastinLive(status: .offline)
+        takeBroadcast = fitMeetStream.getBroadcastinRecent(status: .offline)
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {
