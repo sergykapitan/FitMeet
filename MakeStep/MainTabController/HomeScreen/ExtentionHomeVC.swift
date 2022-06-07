@@ -188,6 +188,7 @@ extension HomeVC: UITableViewDelegate {
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
+        if listBroadcast.isEmpty { return }
             vc.delegate = self
             vc.delegatePicInPic = self
             vc.broadcast = self.listBroadcast[indexPath.row]

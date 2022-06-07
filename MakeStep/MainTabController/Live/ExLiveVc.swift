@@ -167,6 +167,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             guard let statuslive = liveBroadcast[indexPath.row].status  else { return }
             status = statuslive
         case 1:
+            if recentBroadcast.isEmpty { return }
             guard let statuslive = recentBroadcast[indexPath.row].status  else { return }
             status = statuslive
         case 2:

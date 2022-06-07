@@ -162,6 +162,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.imageLogoProfile.makeRounded()
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnd), name:
         NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+        activeCustomPlayerViewControllers.remove(self)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

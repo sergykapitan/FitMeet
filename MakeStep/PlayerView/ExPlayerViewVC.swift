@@ -94,6 +94,7 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if brodcast.isEmpty { return }
         guard  let like = self.brodcast[indexPath.row].followersCount else { return }
         guard let status = brodcast[indexPath.row].status  else { return }
         self.videoEnd = false
