@@ -45,14 +45,14 @@ open class RTMPConnection: EventDispatcher {
         case callBadVersion       = "NetConnection.Call.BadVersion"
         case callFailed           = "NetConnection.Call.Failed"
         case callProhibited       = "NetConnection.Call.Prohibited"
-        case connectAppshutdown   = "NetConnection.Connect.AppShutdown"
-        case connectClosed        = "NetConnection.Connect.Closed"
-        case connectFailed        = "NetConnection.Connect.Failed"
+        case connectAppshutdown   = "Something went wrong. App will shutdown"
+        case connectClosed        = "Server Connection Failure"
+        case connectFailed        = "Connection Failure"
         case connectIdleTimeOut   = "NetConnection.Connect.IdleTimeOut"
         case connectInvalidApp    = "NetConnection.Connect.InvalidApp"
         case connectNetworkChange = "NetConnection.Connect.NetworkChange"
         case connectRejected      = "NetConnection.Connect.Rejected"
-        case connectSuccess       = "NetConnection.Connect.Success"
+        case connectSuccess       = "Creating Live Stream"
 
         public var level: String {
             switch self {

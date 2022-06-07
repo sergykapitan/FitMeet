@@ -148,8 +148,6 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.recButton.isHidden = true
         streamView.stopButton.isHidden = true
         
-        print("text == \(streamView.textFieldNameStream.frame.width)")
-        print("text2 == \(streamView.lineBottom.frame.width)")
         
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
