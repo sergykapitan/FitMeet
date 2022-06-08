@@ -61,7 +61,7 @@ extension ChannelCoach: UITableViewDataSource, UITableViewDelegate {
         cell.buttonMore.isUserInteractionEnabled = true
         
         guard let id = brodcast[indexPath.row].userId else { return cell}
-        cell.titleLabel.text = self.usersd[id]?.fullName
+            cell.titleLabel.text = self.channel?.name//self.usersd[id]?.fullName
   
         if indexPath.row == brodcast.count - 1 {
             if self.itemCount > brodcast.count {
