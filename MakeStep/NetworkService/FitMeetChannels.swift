@@ -140,6 +140,7 @@ class FitMeetChannels {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ChannelResponce.self)
             .value()
+            .print("Id")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import Combine
 
 protocol HomeHorizontalListItemCollectionViewCellDelegate: AnyObject {
     func itemTapped(index: Int)
@@ -46,6 +47,9 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
     
     weak var delegate: HomeHorizontalListItemCollectionViewCellDelegate?
     private var index: Int = 0
+    @Inject var fitMeetChannel: FitMeetChannels
+    private var takeChannel: AnyCancellable?
+    
     
     private var item: User? = nil {
         didSet{
@@ -57,12 +61,23 @@ class HomeHorizontalListItemCollectionViewCell: UICollectionViewCell {
         self.index = index
         self.item = item
     }
+    func getChannelForId(id:Int) {
+        takeChannel = fitMeetChannel.getChannelsId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let name = response.name {
+                    self.nameLabel.text = name
+                }
+          })
+    }
     
     private func setupData(item: User?) {
         guard let item = item else { return}
      
         if let item = item as? User {
-            nameLabel.text = item.fullName
+            if let id = item.channelIds?.last {
+                self.getChannelForId(id: id)
+            }
             setupImage(urlString: item.resizedAvatar?["avatar_120"]?.png ?? "")
         }
     }

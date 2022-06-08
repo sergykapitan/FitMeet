@@ -139,8 +139,10 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                    .sink(receiveCompletion: { _ in }, receiveValue: { response in
                        if response.data.count != 0 {
                            self.usersd = response.data
-                           self.refreshControl.endRefreshing()
-                           self.homeView.tableView.reloadData()
+                           let idsChannel = self.usersd.values.compactMap{ $0.channelIds?.last}
+                           self.getMapChannel(ids: idsChannel)
+                         //  self.refreshControl.endRefreshing()
+                        //   self.homeView.tableView.reloadData()
                        }
                   })
               }
@@ -154,14 +156,20 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                           self.channellsd = response.data
                           self.refreshControl.endRefreshing()
                           self.homeView.tableView.reloadData()
-//                          guard let listUsers = self.listUsers else { return }
-//                          let compUser = listUsers.compactMap { $0 }
-//                          if !self.channellsd.isEmpty {
-//                              self.listUsers = compUser.sorted(by: {self.channellsd[($0.channelIds?.last!)!]!.followersCount > self.channellsd[($1.channelIds?.last!)!]!.followersCount })
-//                          self.searchView.tableView.reloadData()
-//                          }
                      })
          }
+    func getChannelForId(id:Int) -> String {
+        var returnValue: String = ""
+        takeChannel = fitMeetChannel.getChannelsId(id: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if let name = response.name {
+                    returnValue = name
+                }
+          })
+        return returnValue
+    }
+    
     func bindingCategory() {
         takeCategory = fitMeetStream.getCategory()
                 .mapError({ (error) -> Error in return error })
