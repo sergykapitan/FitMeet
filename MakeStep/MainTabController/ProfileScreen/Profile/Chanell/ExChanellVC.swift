@@ -23,7 +23,7 @@ extension ChanellVC: UITableViewDataSource, UITableViewDelegate {
         cell.hideAnimation()
         cell.setImage(image: brodcast[indexPath.row].resizedPreview?["preview_l"]?.jpeg  ?? Constants.defoultImage )
         cell.labelDescription.text = brodcast[indexPath.row].name
-        cell.titleLabel.text = self.user?.fullName
+        cell.titleLabel.text = self.channel?.name//self.user?.fullName
         guard let id = brodcast[indexPath.row].userId else { return cell}
         guard let status =  brodcast[indexPath.row].status else { return  cell}
         switch status {

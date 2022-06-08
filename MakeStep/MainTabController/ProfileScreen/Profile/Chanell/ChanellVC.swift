@@ -119,6 +119,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
         makeNavItem()
         createTableView()
         layout()
+       
         
         profileView.viewTop.addGestureRecognizer(panRecognizer)
         let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(respondToSwipeGesture))
@@ -176,7 +177,9 @@ class ChanellVC: SheetableViewController,Refreshable  {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
         profileView.imageLogoProfile.makeRounded()
-        setUserProfile()
+      //  guard let id = user?.id else { return }
+      //  bindingChannel(userId: id)
+       // setUserProfile()
     }
     
     func bindingChannel(userId: Int?) {
@@ -186,6 +189,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
               .sink(receiveCompletion: { _ in }, receiveValue: { response in
                   if response != nil  {
                       self.channel = response.data.last
+                      self.setUserProfile()
                   }
           })
       }
@@ -229,7 +233,7 @@ class ChanellVC: SheetableViewController,Refreshable  {
     func setUserProfile() {
 
         profileView.setImage(image: user?.resizedAvatar?["avatar_120"]?.png ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-        guard let follow = user?.channelFollowCount,let fullName = user?.fullName,let subCount = channel?.subscribersCount   else { return }
+        guard let follow = user?.channelFollowCount,let fullName = channel?.name,let subCount = channel?.subscribersCount   else { return }
         profileView.labelFollow.text = "Followers:" + "\(follow)"
         self.profileView.welcomeLabel.text = fullName
         self.profileView.labelINTFollows.text = "\(follow)"

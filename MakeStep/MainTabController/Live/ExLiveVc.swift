@@ -97,7 +97,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
               
               cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-              cell.titleLabel.text = self.userMap[id]?.fullName
+              if let chanelId = liveBroadcast[indexPath.row].channelIds?.last {
+                cell.titleLabel.text = channellsd[chanelId]?.name
+            }
               
               cell.buttonMore.tag = self.liveBroadcast[indexPath.row].id!
               cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -115,7 +117,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             guard let id = recentBroadcast[indexPath.row].userId else { return cell}
             
             cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-            cell.titleLabel.text = self.userMap[id]?.fullName
+                if let chanelId = recentBroadcast[indexPath.row].channelIds?.last {
+                  cell.titleLabel.text = channellsd1[chanelId]?.name
+               }
             
             cell.buttonMore.tag = self.recentBroadcast[indexPath.row].id!
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)
@@ -133,7 +137,9 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
             guard let id = plannedBroadcast[indexPath.row].userId else { return cell}
             
             cell.setImageLogo(image: self.userMap[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-            cell.titleLabel.text = self.userMap[id]?.fullName
+                if let chanelId = plannedBroadcast[indexPath.row].channelIds?.last {
+                  cell.titleLabel.text = channellsd2[chanelId]?.name
+                }
             
             cell.buttonMore.tag = self.plannedBroadcast[indexPath.row].id!
             cell.buttonMore.addTarget(self, action: #selector(moreButtonTapped), for: .touchUpInside)

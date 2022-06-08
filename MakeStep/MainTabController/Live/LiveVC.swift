@@ -23,6 +23,9 @@ class LiveVC: SheetableViewController {
     
     @Inject var fitMeetApi: FitMeetApi
     private var takeUser: AnyCancellable?
+    private var channelMap: AnyCancellable?
+    private var channelMap1: AnyCancellable?
+    private var channelMap2: AnyCancellable?
     
     var listBroadcast: [BroadcastResponce] = []
     var liveBroadcast: [BroadcastResponce] = []
@@ -35,6 +38,9 @@ class LiveVC: SheetableViewController {
     private let refreshControl = UIRefreshControl()
     var isLoadingList : Bool = false
     var userMap = [Int: User]()
+    var channellsd = [Int: ChannelResponce]()
+    var channellsd1 = [Int: ChannelResponce]()
+    var channellsd2 = [Int: ChannelResponce]()
     var titleSection = ["Live Now","Recent Live Streams","Upcoming Live Streams"]
     var widthScreen = UIScreen.main.bounds.width
     
@@ -88,8 +94,12 @@ class LiveVC: SheetableViewController {
                         guard let responceUnrap = response.data else { return }
                         self.liveBroadcast = responceUnrap
 
-                        let arrayUserId =  self.liveBroadcast.map{$0.userId!}
-                        self.bindingUserMap(ids: arrayUserId)
+                       // let arrayUserId =  self.liveBroadcast.map{$0.userId!}
+                       // self.bindingUserMap(ids: arrayUserId)
+                        let arrayUserId =  self.liveBroadcast.compactMap{$0.channelIds?.last!}
+                       // self.bindingUserMap(ids: arrayUserId)
+                        self.getMapChannel(ids: arrayUserId)
+                      //  self.bindingRecent()
                     }
             })
     }
@@ -102,8 +112,10 @@ class LiveVC: SheetableViewController {
                         sleep(1)
                         self.recentBroadcast = responceUnrap.filter{$0.resizedPreview != nil}
 
-                        let arrayUserId =  self.recentBroadcast.map{$0.userId!}
-                        self.bindingUserMap(ids: arrayUserId)
+                        let arrayUserId =  self.recentBroadcast.compactMap{$0.channelIds?.last}
+                       // self.bindingUserMap(ids: arrayUserId)
+                        self.getMapChannel1(ids: arrayUserId)
+                      //  self.bindingPlanned()
                     }
             })
     }
@@ -116,8 +128,11 @@ class LiveVC: SheetableViewController {
                         sleep(1)
                         self.plannedBroadcast = responceUnrap
 
-                        let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
-                        self.bindingUserMap(ids: arrayUserId)
+                       // let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
+                        //self.bindingUserMap(ids: arrayUserId)
+                        let arrayUserId =  self.plannedBroadcast.compactMap{$0.channelIds?.last!}
+                       // self.bindingUserMap(ids: arrayUserId)
+                        self.getMapChannel2(ids: arrayUserId)
                     } else {
                         self.titleSection.removeLast()
                         self.liveView.tableView.reloadData()
@@ -131,11 +146,40 @@ class LiveVC: SheetableViewController {
                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
                       if response.data.count != 0 {
                           self.userMap = response.data
-                          self.refreshControl.endRefreshing()
-                          self.liveView.tableView.reloadData()
+                          let idsChannel = self.userMap.values.compactMap{ $0.channelIds?.last}
+                          self.getMapChannel(ids: idsChannel)
+                         // self.refreshControl.endRefreshing()
+                         // self.liveView.tableView.reloadData()
                       }
                  })
              }
+         }
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                            self.channellsd = response.data
+                            self.refreshControl.endRefreshing()
+                            self.liveView.tableView.reloadData()
+                     })
+         }
+    func getMapChannel1(ids: [Int])   {
+        channelMap1 = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                            self.channellsd1 = response.data
+                            self.refreshControl.endRefreshing()
+                            self.liveView.tableView.reloadData()
+                     })
+         }
+    func getMapChannel2(ids: [Int])   {
+        channelMap2 = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                            self.channellsd2 = response.data
+                            self.refreshControl.endRefreshing()
+                            self.liveView.tableView.reloadData()
+                     })
          }
     func connectUser (broadcastId:String?,channellId: String?) {
         guard let broadID = broadcastId,let id = channellId else { return }     
