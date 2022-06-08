@@ -32,6 +32,7 @@ class CategoryBroadcast: SheetableViewController  {
     private var takeUser: AnyCancellable?
     private var followBroad: AnyCancellable?
     private var watcherMap: AnyCancellable?
+    private var channelMap: AnyCancellable?
     
     
     
@@ -43,6 +44,7 @@ class CategoryBroadcast: SheetableViewController  {
     var index = 0
     var url:String?
     var usersd = [Int: User]()
+    var channellsd = [Int: ChannelResponce]()
 
     override  var shouldAutorotate: Bool {
         return false
@@ -175,10 +177,19 @@ class CategoryBroadcast: SheetableViewController  {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.usersd = response.data
-                    self.categoryView.tableView.reloadData()
+                    let idsChannel = self.usersd.values.compactMap{ $0.channelIds?.last}
+                    self.getMapChannel(ids: idsChannel)
                 }
           })
     }
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                          self.channellsd = response.data
+                          self.categoryView.tableView.reloadData()
+                     })
+         }
 
     private func makeTableView() {
         categoryView.tableView.dataSource = self

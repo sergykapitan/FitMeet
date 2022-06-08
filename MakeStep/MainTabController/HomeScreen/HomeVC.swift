@@ -141,8 +141,6 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                            self.usersd = response.data
                            let idsChannel = self.usersd.values.compactMap{ $0.channelIds?.last}
                            self.getMapChannel(ids: idsChannel)
-                         //  self.refreshControl.endRefreshing()
-                        //   self.homeView.tableView.reloadData()
                        }
                   })
               }

@@ -58,8 +58,6 @@ extension HomeVC: UITableViewDataSource {
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
             if let chanelId = listBroadcast[indexPath.row].channelIds?.last {
                 cell.titleLabel.text = channellsd[chanelId]?.name
-            } else {
-               // cell.titleLabel.text = self.usersd[id]?.fullName
             }
         
        
