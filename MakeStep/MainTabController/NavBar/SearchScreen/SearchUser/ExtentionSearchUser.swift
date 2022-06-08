@@ -17,10 +17,11 @@ extension SearchUserVC: UITableViewDataSource {
         guard let listUsers = listUsers else { return cell }
         cell.setImage(image: listUsers[indexPath.row].avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png" )
         cell.layoutIfNeeded()
-        cell.labelDescription.text = listUsers[indexPath.row].fullName
+      
         
         guard let userID = listUsers[indexPath.row].channelIds?.last else { return cell}
         guard let followers = self.channellsd[userID]?.followersCount else { return cell}
+        cell.labelDescription.text = channellsd[userID]?.name//listUsers[indexPath.row].fullName
         cell.titleLabel.text = "\(followers)" + "  Folowers"
         return cell
     }
