@@ -34,8 +34,10 @@ extension PlayerViewVC: UITableViewDataSource, UITableViewDelegate {
               let broadcastID = self.brodcast[indexPath.row].id
               else { return cell}
         
-        cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
-        cell.titleLabel.text = self.usersd[id]?.fullName
+       
+        if let chanelId = brodcast[indexPath.row].channelIds?.last {
+            cell.titleLabel.text = channellsd[chanelId]?.name
+        }
 
         
         guard let categorys = brodcast[indexPath.row].categories else { return cell }

@@ -106,6 +106,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     private var takeUser: AnyCancellable?
     private var watcherMap: AnyCancellable?
     private var take: AnyCancellable?
+    private var channelMap:AnyCancellable?
     private var taskStream: AnyCancellable?
     private var takeChannel: AnyCancellable?
     
@@ -146,6 +147,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     
     
     var usersd = [Int: User]()
+    var channellsd = [Int: ChannelResponce]()
     var url: String?
     var heightBar: CGFloat?
     var tracksInt = 1
@@ -467,6 +469,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response != nil  {
                     self.channel = response.data.last
+                    self.homeView.labelStreamDescription.text = self.channel?.name
                     guard let channel = self.channel else {
                         self.homeView.buttonSubscribe.backgroundColor = .lightGray
                         self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
@@ -644,11 +647,20 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if !response.data.isEmpty  {
                     self.usersd = response.data
-                    self.homeView.tableView.reloadData()
+                    let idsChannel = self.usersd.values.compactMap{ $0.channelIds?.last}
+                    self.getMapChannel(ids: idsChannel)
+                 
                 }
           })
     }
-    
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                          self.channellsd = response.data
+                          self.homeView.tableView.reloadData()
+                     })
+         }
     func followBroadcast(id: Int) {
         followBroad = fitMeetStream.followBroadcast(id: id)
             .mapError({ (error) -> Error in return error })
@@ -1071,7 +1083,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 if response.username != nil  {
                     
                     self.user = response
-                    self.homeView.labelStreamDescription.text = self.user?.fullName
+                    //self.homeView.labelStreamDescription.text = self.channel?.name// self.user?.fullName
                     guard let categorys = self.broadcast?.categories else { return }
                     let s = categorys.map{$0.title!}
                     let arr = s.map { String("\u{0023}" + $0)}
@@ -1096,7 +1108,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 if response.username != nil  {
                     self.user = response
                     self.homeView.setImage(image: self.user?.avatarPath ?? "http://getdrawings.com/free-icon/male-avatar-icon-52.png")
-                    self.homeView.labelStreamDescription.text = self.user?.fullName
+                    //self.homeView.labelStreamDescription.text = self.user?.fullName
 
                     guard let categorys = self.broadcast?.categories else { return }
                     let s = categorys.map{$0.title!}
