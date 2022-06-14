@@ -2775,7 +2775,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.42;
+				MARKETING_VERSION = 2.0.43;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2803,7 +2803,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.42;
+				MARKETING_VERSION = 2.0.43;
 				PRODUCT_BUNDLE_IDENTIFIER = com.novotorica.makestepQA;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -19,6 +19,7 @@ class DeleteTariffVC: UIViewController {
     weak var delagateReload: ReloadTable?
     var color: UIColor?
     var idSub: Int?
+    var id: Int?
     
     private var take: AnyCancellable?
     @Inject var fitMeetApi: FitMeetChannels
@@ -49,8 +50,8 @@ class DeleteTariffVC: UIViewController {
         deleteView.buttonNo.backgroundColor = .clear
         deleteView.buttonNo.setTitleColor(UIColor(hexString: "#3B58A4"), for: .normal)
         
-        guard let idSub = idSub else { return }
-        deleteTariff(id: 260, delSub: NewSub(newPlans: nil, editSubscriptionPrices: nil, disableSubscriptionPriceIds: [idSub]))
+        guard let idSub = idSub,let id = id else { return }
+        deleteTariff(id: id, delSub: NewSub(newPlans: nil, editSubscriptionPrices: nil, disableSubscriptionPriceIds: [idSub]))
        
     }
     func deleteTariff(id: Int,delSub: NewSub) {

@@ -79,6 +79,7 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         vibrate()
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = DeleteTariffVC()
+        detailViewController.id = self.channel?.id
         detailViewController.modalPresentationStyle = .custom
         if view.bounds.height <= 488 {
             actionChatTransitionManager.intHeight = 0.35
@@ -115,6 +116,7 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         vibrate()
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = DeleteTariffVC()
+        detailViewController.id = self.channel?.id
         detailViewController.modalPresentationStyle = .custom
         if view.bounds.height <= 488 {
             actionChatTransitionManager.intHeight = 0.35
