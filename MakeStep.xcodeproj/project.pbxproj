@@ -351,6 +351,10 @@
 		A5D642292844C27D00DC439A /* CustomPlayerControlsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D642272844C27D00DC439A /* CustomPlayerControlsView.swift */; };
 		A5D6422B2844C29A00DC439A /* CustomPlayerCircularButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D6422A2844C29A00DC439A /* CustomPlayerCircularButtonView.swift */; };
 		A5D6422C2844C29A00DC439A /* CustomPlayerCircularButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5D6422A2844C29A00DC439A /* CustomPlayerCircularButtonView.swift */; };
+		A5E4D5492852009000C582E9 /* ChangeNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4D5482852009000C582E9 /* ChangeNameVC.swift */; };
+		A5E4D54A2852009000C582E9 /* ChangeNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4D5482852009000C582E9 /* ChangeNameVC.swift */; };
+		A5E4D54C285200A800C582E9 /* ChangeChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4D54B285200A800C582E9 /* ChangeChannelCode.swift */; };
+		A5E4D54D285200A800C582E9 /* ChangeChannelCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4D54B285200A800C582E9 /* ChangeChannelCode.swift */; };
 		A5E4EED2283686DF008D1F01 /* ModalTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */; };
 		A5E4EED3283686DF008D1F01 /* ModalTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */; };
 		A5E4EED4283686DF008D1F01 /* StandardInteractionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */; };
@@ -683,6 +687,8 @@
 		A5D2E0A627147D1200986BAE /* EditChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditChannelCode.swift; sourceTree = "<group>"; };
 		A5D642272844C27D00DC439A /* CustomPlayerControlsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPlayerControlsView.swift; sourceTree = "<group>"; };
 		A5D6422A2844C29A00DC439A /* CustomPlayerCircularButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomPlayerCircularButtonView.swift; sourceTree = "<group>"; };
+		A5E4D5482852009000C582E9 /* ChangeNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeNameVC.swift; sourceTree = "<group>"; };
+		A5E4D54B285200A800C582E9 /* ChangeChannelCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangeChannelCode.swift; sourceTree = "<group>"; };
 		A5E4EECB283686DF008D1F01 /* ModalTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalTransitionManager.swift; sourceTree = "<group>"; };
 		A5E4EECC283686DF008D1F01 /* StandardInteractionController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardInteractionController.swift; sourceTree = "<group>"; };
 		A5E4EECD283686DF008D1F01 /* ModalPresentationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModalPresentationController.swift; sourceTree = "<group>"; };
@@ -1204,6 +1210,15 @@
 			path = "Edit Channel";
 			sourceTree = "<group>";
 		};
+		A5E4D5472852004000C582E9 /* ChangeChannelName */ = {
+			isa = PBXGroup;
+			children = (
+				A5E4D5482852009000C582E9 /* ChangeNameVC.swift */,
+				A5E4D54B285200A800C582E9 /* ChangeChannelCode.swift */,
+			);
+			path = ChangeChannelName;
+			sourceTree = "<group>";
+		};
 		A5E4EECA283686DF008D1F01 /* Transitions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1693,6 +1708,7 @@
 		B4D9D7392625BF8B007CFB71 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				A5E4D5472852004000C582E9 /* ChangeChannelName */,
 				B484E8DD2682826800D75BE8 /* StartScreen */,
 				B4D9D7522625FEF7007CFB71 /* AuthViewScreen */,
 				B4D9D7572625FF3B007CFB71 /* SignUpScreen */,
@@ -2425,6 +2441,7 @@
 				A51294CB273A6EB7000CBBD9 /* EcSendVC.swift in Sources */,
 				A51294CC273A6EB7000CBBD9 /* IAPProducts.swift in Sources */,
 				A58EC19827B1384400E920FB /* AddedVideoVC.swift in Sources */,
+				A5E4D54A2852009000C582E9 /* ChangeNameVC.swift in Sources */,
 				A51294CF273A6EB7000CBBD9 /* AuthResponce.swift in Sources */,
 				A51294D0273A6EB7000CBBD9 /* FitMeetApi.swift in Sources */,
 				A51294D1273A6EB7000CBBD9 /* ChannelResponce.swift in Sources */,
@@ -2433,6 +2450,7 @@
 				A51294D5273A6EB7000CBBD9 /* ExMytariff.swift in Sources */,
 				A58F0AC5280D66D8003A8833 /* NotInternetView.swift in Sources */,
 				A5C4173027CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
+				A5E4D54D285200A800C582E9 /* ChangeChannelCode.swift in Sources */,
 				A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */,
 				A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */,
 				A51294D8273A6EB7000CBBD9 /* SegmentControlSearch.swift in Sources */,
@@ -2702,6 +2720,7 @@
 				B4E88E5626D3E6B3003E6B16 /* EcSendVC.swift in Sources */,
 				A54ACC9A27AD7B75004BAEF1 /* SendStream.swift in Sources */,
 				A54F9B8927315C4C008E7E60 /* IAPProducts.swift in Sources */,
+				A5E4D5492852009000C582E9 /* ChangeNameVC.swift in Sources */,
 				B4D9D7762626D78C007CFB71 /* AuthResponce.swift in Sources */,
 				B4D9D7642626D2D5007CFB71 /* FitMeetApi.swift in Sources */,
 				B4A9F6A62632CC77000E00DE /* ChannelResponce.swift in Sources */,
@@ -2710,6 +2729,7 @@
 				A5457EA2272A9B7E006A8F2D /* ExMytariff.swift in Sources */,
 				A58F0AC4280D66D8003A8833 /* NotInternetView.swift in Sources */,
 				A5C4172F27CCFCDF00BC1224 /* HomeHorizontalListItemCollectionViewCell.swift in Sources */,
+				A5E4D54C285200A800C582E9 /* ChangeChannelCode.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
 				B43A6C7B26F4DFFF009E6DDE /* SegmentControlSearch.swift in Sources */,

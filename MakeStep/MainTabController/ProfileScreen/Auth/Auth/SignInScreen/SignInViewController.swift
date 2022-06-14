@@ -88,6 +88,20 @@ class SignInViewController: UIViewController {
         self.avtorizete()
   
     }
+    func firstLaunchApp() {
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        
+        print("launch = \(launchedBefore)")
+        if launchedBefore  {
+            self.openProfileViewController()
+        } else {
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+             let vc = ChangeNameVC()
+             vc.modalPresentationStyle = .fullScreen
+             self.present(vc, animated: true, completion: nil)
+
+        }
+    }
 }
 extension SignInViewController: UITextFieldDelegate {
     
@@ -133,7 +147,7 @@ extension SignInViewController: ASAuthorizationControllerDelegate {
                         UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                         UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
                         
-                        self.openProfileViewController()
+                        self.firstLaunchApp()
                
                   }
             })
