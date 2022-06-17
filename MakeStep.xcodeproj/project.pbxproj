@@ -330,6 +330,12 @@
 		A5950E5B273815CF002C1500 /* EditMonetVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5A273815CF002C1500 /* EditMonetVC.swift */; };
 		A5950E5D273815DC002C1500 /* EditMonetVCCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */; };
 		A5950E5F27384EE5002C1500 /* SliderFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5950E5E27384EE5002C1500 /* SliderFloat.swift */; };
+		A595A8E3285C8996000EB945 /* BottomViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E2285C8996000EB945 /* BottomViewCapture.swift */; };
+		A595A8E4285C8996000EB945 /* BottomViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E2285C8996000EB945 /* BottomViewCapture.swift */; };
+		A595A8E6285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */; };
+		A595A8E7285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */; };
+		A59AAA66285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
+		A59AAA67285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
 		A5A0642227C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
 		A5A7960027F7408000F3B45E /* RawPlaylist.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A795FF27F7408000F3B45E /* RawPlaylist.swift */; };
@@ -673,6 +679,9 @@
 		A5950E5A273815CF002C1500 /* EditMonetVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVC.swift; sourceTree = "<group>"; };
 		A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditMonetVCCode.swift; sourceTree = "<group>"; };
 		A5950E5E27384EE5002C1500 /* SliderFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderFloat.swift; sourceTree = "<group>"; };
+		A595A8E2285C8996000EB945 /* BottomViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewCapture.swift; sourceTree = "<group>"; };
+		A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionLiveStreamViewController.swift; sourceTree = "<group>"; };
+		A59AAA65285A192F00A03B34 /* TopViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewCapture.swift; sourceTree = "<group>"; };
 		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5A795FF27F7408000F3B45E /* RawPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlaylist.swift; sourceTree = "<group>"; };
 		A5A7960227FB132700F3B45E /* EasyPeasy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = EasyPeasy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1927,6 +1936,9 @@
 				B41DCB7A268F4D57007096AB /* Chat */,
 				B4858A71263A80A500EC276B /* LiveStreamViewController.swift */,
 				B4A9F641263217B8000E00DE /* LiveStreamVCCode.swift */,
+				A59AAA65285A192F00A03B34 /* TopViewCapture.swift */,
+				A595A8E2285C8996000EB945 /* BottomViewCapture.swift */,
+				A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */,
 			);
 			path = StreamScreen;
 			sourceTree = "<group>";
@@ -2188,6 +2200,7 @@
 				A59431EC27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5915C68283BDEE90075FF06 /* StateIndicator.swift in Sources */,
 				A5671E902757A2D500EE4191 /* TimetableVC.swift in Sources */,
+				A59AAA67285A192F00A03B34 /* TopViewCapture.swift in Sources */,
 				A5671E992757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				A5129407273A6EB7000CBBD9 /* SearchVCCell.swift in Sources */,
 				A5129408273A6EB7000CBBD9 /* Message.swift in Sources */,
@@ -2204,6 +2217,7 @@
 				A5D6422C2844C29A00DC439A /* CustomPlayerCircularButtonView.swift in Sources */,
 				A5129412273A6EB7000CBBD9 /* ResetPassword.swift in Sources */,
 				A5EF210128085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
+				A595A8E7285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */,
 				A5129413273A6EB7000CBBD9 /* EditProfile.swift in Sources */,
 				A5129415273A6EB7000CBBD9 /* ImageRouter.swift in Sources */,
 				A5BC3DCE28227E3900A0631E /* Validation.swift in Sources */,
@@ -2361,6 +2375,7 @@
 				A512948E273A6EB7000CBBD9 /* NewStartStream.swift in Sources */,
 				A5129490273A6EB7000CBBD9 /* CategoryBroadcastCell.swift in Sources */,
 				A5129491273A6EB7000CBBD9 /* BroadcastRequest.swift in Sources */,
+				A595A8E4285C8996000EB945 /* BottomViewCapture.swift in Sources */,
 				A5129494273A6EB7000CBBD9 /* Extesions+ UITextField.swift in Sources */,
 				A5129495273A6EB7000CBBD9 /* PresentedViewController.swift in Sources */,
 				A5129496273A6EB7000CBBD9 /* SendCoachCell.swift in Sources */,
@@ -2467,6 +2482,7 @@
 				A59431EB27E8CEF500374890 /* OverlayPlanned.swift in Sources */,
 				A5915C67283BDEE90075FF06 /* StateIndicator.swift in Sources */,
 				A5671E8F2757A2D500EE4191 /* TimetableVC.swift in Sources */,
+				A59AAA66285A192F00A03B34 /* TopViewCapture.swift in Sources */,
 				A5671E982757ACC100EE4191 /* ExTimetableVc.swift in Sources */,
 				B46CF7B8267378B900EA0741 /* SearchVCCell.swift in Sources */,
 				B4FCCF0E26BEC15800C25304 /* Message.swift in Sources */,
@@ -2483,6 +2499,7 @@
 				A5D6422B2844C29A00DC439A /* CustomPlayerCircularButtonView.swift in Sources */,
 				B471E65E26EA1CF4007B63BE /* ResetPassword.swift in Sources */,
 				A5EF210028085E000051AA13 /* ExtentionSearchCategory.swift in Sources */,
+				A595A8E6285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */,
 				B484E8E926837CAD00D75BE8 /* EditProfile.swift in Sources */,
 				B4FCCF1626BFE0A000C25304 /* ImageRouter.swift in Sources */,
 				A5BC3DCD28227E3900A0631E /* Validation.swift in Sources */,
@@ -2640,6 +2657,7 @@
 				B48D8298262DAD7B00F5A0D9 /* SearchVC.swift in Sources */,
 				B4C5A945267C880300010F88 /* NewStartStream.swift in Sources */,
 				A58EC19A27B1385500E920FB /* AddedVideoCode.swift in Sources */,
+				A595A8E3285C8996000EB945 /* BottomViewCapture.swift in Sources */,
 				B46CF7A32672356C00EA0741 /* CategoryBroadcastCell.swift in Sources */,
 				B49376962639625900D38EC3 /* BroadcastRequest.swift in Sources */,
 				B4D9D74D2625E725007CFB71 /* Extesions+ UITextField.swift in Sources */,

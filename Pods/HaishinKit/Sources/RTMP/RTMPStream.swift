@@ -31,7 +31,7 @@ open class RTMPStream: NetStream {
         case playUnpublishNotify       = "NetStream.Play.UnpublishNotify"
         case publishBadName            = "NetStream.Publish.BadName"
         case publishIdle               = "NetStream.Publish.Idle"
-        case publishStart              = "Live Stream Started"
+        case publishStart              = "NetStream.Publish.Start"
         case recordAlreadyExists       = "NetStream.Record.AlreadyExists"
         case recordFailed              = "NetStream.Record.Failed"
         case recordNoAccess            = "NetStream.Record.NoAccess"

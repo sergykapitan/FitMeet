@@ -49,7 +49,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     func changeBackgroundColor() {
     }
-    
+    var filtredBroadcast: [Datum] = []
     weak var delegatePlayer: DissmisPlayer?
     var leftTextFieldConstraint = NSLayoutConstraint()
     let streamView = LiveStreamVCCode()
@@ -79,6 +79,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     private var task: AnyCancellable?
     private var taskStream: AnyCancellable?
     private var takeUser: AnyCancellable?
+    private var takeBroadcast: AnyCancellable?
     
     private static let maxRetryCount: Int = 5
     var nameStream: String?
@@ -109,15 +110,23 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     
     lazy var slideInTransitioningDelegate = SlideInPresentationManager()
     let actionChatTransitionManager = ActionTransishionChatManadger()
-    
+    func getStatusBarHeight() -> CGFloat {
+        var statusBarHeight: CGFloat = 0
+            let window = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            statusBarHeight = window?.windowScene?.statusBarManager?.statusBarFrame.height ?? 0
+        return statusBarHeight
+    }
     override func loadView() {
         super.loadView()
         view = streamView
+       
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        streamView.collectionView.delegate = self
+        streamView.collectionView.dataSource = self
         self.actionButton()
-      //  self.bindingChanell()
+        self.bindingChanell()
         self.bindingUser()
         setupKeyboardNotifications()
         self.hideKeyboardWhenTappedAround()
@@ -152,37 +161,57 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         NotificationCenter.default.addObserver(self, selector: #selector(on(_:)), name: UIDevice.orientationDidChangeNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(didBecomeActive(_:)), name: UIApplication.didBecomeActiveNotification, object: nil)
+        
+        
+    
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-       
+        let r = getStatusBarHeight()
+        streamView.topView.anchor(top: streamView.capturePreviewView.topAnchor,
+                                                 left: streamView.capturePreviewView.leftAnchor,
+                                                 right: streamView.capturePreviewView.rightAnchor,
+                                                 paddingTop: -r, paddingLeft: 0, paddingRight: 0,  height: 135)
+        streamView.topView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
+        streamView.bottomView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
+      
+        
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     override func viewWillAppear(_ animated: Bool) {
         logger.info("viewWillAppear")
         super.viewWillAppear(animated)
+       
+        
         self.bindingChanell()
            let audioSession = AVAudioSession.sharedInstance()
          _ = try? audioSession.setCategory(.playback, options: .defaultToSpeaker)
          _ = try? audioSession.setCategory(.playAndRecord, mode: .default, options: [.defaultToSpeaker, .allowBluetooth])
          _ = try? audioSession.setActive(true)
 
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.backgroundColor = .clear
+//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+//        self.navigationController?.navigationBar.shadowImage = UIImage()
+//        self.navigationController?.navigationBar.isTranslucent = true
+//        self.navigationController?.navigationBar.backgroundColor = .clear
         tabBarController?.tabBar.isHidden = true
         self.navigationController?.navigationBar.isHidden = true
-        
+        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.navigationBar.barStyle = .black
         leftTextFieldConstraint = streamView.textFieldNameStream.leadingAnchor.constraint(equalTo: streamView.capturePreviewView.leadingAnchor, constant: 10)
         leftTextFieldConstraint.isActive = false
         
         if myuri == "" {
         
-        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
+       // [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
+            [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 0 }
         [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 1 }
         
         } else {
-            [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
+          //  [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
+            [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
             [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
             
         }
@@ -202,9 +231,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         logger.info("viewWillDisappear")
         super.viewWillDisappear(animated)
         leftTextFieldConstraint.isActive = false
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.isTranslucent = false
+//        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+//        self.navigationController?.navigationBar.shadowImage = nil
+//        self.navigationController?.navigationBar.isTranslucent = false
         tabBarController?.tabBar.isHidden = false
         rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
         rtmpStream.close()
@@ -235,6 +264,11 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
         streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
         
+        
+        streamView.topView.buttonStart.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+        streamView.topView.collectionUser.addTarget(self, action: #selector(colectionUser), for: .touchUpInside)
+        
+        
         streamView.close.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
         streamView.buttonSetting.addTarget(self, action: #selector(settingTapped), for: .touchUpInside)
         streamView.buttonStartNow.addTarget(self, action: #selector(timeTapped), for: .touchUpInside)
@@ -247,6 +281,9 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         
         textFieldBottomConstraint = streamView.textFieldNameStream.bottomAnchor.constraint(equalTo: streamView.buttonAvailable.topAnchor, constant: -32)
         textFieldBottomConstraint.isActive = true
+    }
+    @objc func colectionUser() {
+        self.binding()
     }
     @objc func aviableTapped() {
         self.presentAviable()
@@ -793,9 +830,10 @@ extension LiveStreamViewController {
                 }
         streamView.circleIndicator.stop()
         streamView.circleIndicator.alpha = 0
-        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
-        [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
         
+        [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
+        [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
+        startStream()
         
         
         
@@ -814,6 +852,17 @@ extension LiveStreamViewController {
         let date = Date()
         let returnDate = df.string(from: date)
         return name + " " + "stream" + " " + returnDate
+    }
+    func binding() {
+        takeBroadcast = fitMeetStream.getCategoryPrivate()
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response.data != nil  {
+                    self.filtredBroadcast = response.data!
+                    
+                    self.streamView.collectionView.reloadData()
+                }
+        })
     }
 }
 extension LiveStreamViewController {

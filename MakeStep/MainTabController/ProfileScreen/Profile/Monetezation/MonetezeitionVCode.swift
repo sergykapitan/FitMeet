@@ -65,5 +65,4 @@ final class MonetezeitionVCode: UIView {
         selfView.anchor(top: buttonIncomecalculator.bottomAnchor, left: cardView.leftAnchor, right: cardView.rightAnchor, bottom: cardView.bottomAnchor, paddingTop: 16, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
  
     }
-   
 }

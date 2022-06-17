@@ -290,6 +290,7 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: ProducctResponce.self)
             .value()
+            .print("AppPurchase")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

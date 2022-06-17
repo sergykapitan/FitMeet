@@ -144,8 +144,8 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
                     self.landscapeView.tableView.reloadData()
               
                 }
-        })
-    }
+            })
+        }
     
 }
 

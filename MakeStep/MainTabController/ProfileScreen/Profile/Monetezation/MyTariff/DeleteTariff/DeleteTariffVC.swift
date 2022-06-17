@@ -63,9 +63,8 @@ class DeleteTariffVC: UIViewController {
                         self.delagateReload?.reloadTable()
                     }
                 }
-           
-        })
-    }
+           })
+       }
   
 }
 
