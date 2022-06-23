@@ -53,14 +53,16 @@ extension HomeVC: UITableViewDataSource {
 
         guard
               let id = listBroadcast[indexPath.row].userId,
-              let broadcastID = self.listBroadcast[indexPath.row].id
+              let broadcastID = self.listBroadcast[indexPath.row].id,
+              let subscriber = listBroadcast[indexPath.row].onlyForSubscribers
         else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
             if let chanelId = listBroadcast[indexPath.row].channelIds?.last {
                 cell.titleLabel.text = channellsd[chanelId]?.name
             }
         
-       
+        cell.imageSubscribe.isHidden = !subscriber
+          
            
         
         self.ids.append(broadcastID)

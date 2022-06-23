@@ -39,6 +39,13 @@ final class HomeCell: UITableViewCell {
         image.isSkeletonable = true
         return image
     }()
+    var imageSubscribe: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "subscriber")
+      //  image.anchor(width: 34,height: 34)
+        image.isSkeletonable = true
+        return image
+    }()
     var logoUserOnline: UIView = {
         let image = UIView()
         image.layer.borderWidth = 1
@@ -155,7 +162,7 @@ final class HomeCell: UITableViewCell {
         [placeholderImage,logoUserImage,labelDescription,].forEach{
             $0.showAnimatedGradientSkeleton()
         }
-        [overlay,overlayPlan,overlayOffline,buttonMore].forEach{
+        [overlay,overlayPlan,overlayOffline,buttonMore,imageSubscribe].forEach{
             $0.alpha = 0
         }
     }
@@ -163,7 +170,7 @@ final class HomeCell: UITableViewCell {
         [placeholderImage,logoUserImage,labelDescription,overlay,overlayPlan,overlayOffline].forEach{
             $0.hideSkeleton()
         }
-        [overlay,overlayPlan,overlayOffline,buttonMore].forEach{
+        [overlay,overlayPlan,overlayOffline,buttonMore,imageSubscribe].forEach{
             $0.alpha = 1
         }
     }
@@ -196,6 +203,8 @@ final class HomeCell: UITableViewCell {
                           right: contentView.rightAnchor,
                          // bottom: contentView.bottomAnchor,
                           paddingTop: 0, paddingLeft: 0,paddingRight: 0)
+        contentView.addSubview(imageSubscribe)
+        imageSubscribe.anchor(right: backgroundImage.rightAnchor, bottom: backgroundImage.bottomAnchor,  paddingRight: 16, paddingBottom: 8)
         
         contentView.addSubview(buttonMore)
         buttonMore.anchor(top: bottomView.topAnchor, right: bottomView.rightAnchor ,paddingTop: 8,paddingRight: 0,width: 40,height: 24)

@@ -186,7 +186,7 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if !response.data.isEmpty {
                     let result = response.data.filter({ $0.resizedAvatar != nil })
-                    sleep(2)
+                   // sleep(2)
                     self.listUsers = result
                     self.currentPage = 1
                     self.bindingNotAuht(page: self.currentPage)
