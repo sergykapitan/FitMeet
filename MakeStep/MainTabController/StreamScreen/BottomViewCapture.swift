@@ -16,7 +16,6 @@ final class BottomViewCapture : UIView {
         view.backgroundColor = .clear
         return view
     }()
-  //red: 0.183, green: 0.183, blue: 0.183, alpha: 0
     let gradientLayer: CAGradientLayer = {
         let gradient = CAGradientLayer()
         gradient.colors = [ UIColor(red: 0.183, green: 0.183, blue: 0.183, alpha: 0).cgColor, UIColor(red: 0.008, green: 0.008, blue: 0.008, alpha: 1).cgColor]

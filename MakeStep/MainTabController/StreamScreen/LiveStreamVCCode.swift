@@ -185,12 +185,14 @@ final class LiveStreamVCCode: UIView {
     lazy var collectionView: UICollectionView = {
         let collectionViewFlowLayout = UICollectionViewFlowLayout()
         collectionViewFlowLayout.scrollDirection = .horizontal
+      
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionViewFlowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.register(UserPlayerCell.self, forCellWithReuseIdentifier: UserPlayerCell.reuseID)
         return collectionView
     }()
 
@@ -206,8 +208,8 @@ final class LiveStreamVCCode: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func initUI() {
-      //  stackButton = UIStackView(arrangedSubviews: [cameraModeButton,cameraButton,StartStreamButton,chatButton,microfoneButton])
-      //  stackButton.spacing = 10
+        stackButton = UIStackView(arrangedSubviews: [cameraModeButton,cameraButton,StartStreamButton,chatButton,microfoneButton])
+        stackButton.spacing = 10
         addSubview(capturePreviewView)
            
  
@@ -230,10 +232,10 @@ final class LiveStreamVCCode: UIView {
         circleIndicator.centerX(inView: capturePreviewView)
         
 
-//    capturePreviewView.addSubview(labelFPS)
-//    labelFPS.anchor(top: capturePreviewView.topAnchor,
-//                    left: capturePreviewView.leftAnchor,
-//                    paddingTop: 45,paddingLeft: 15,height: 40)
+    capturePreviewView.addSubview(labelFPS)
+    labelFPS.anchor(top: capturePreviewView.topAnchor,
+                    left: capturePreviewView.leftAnchor,
+                    paddingTop: 45,paddingLeft: 15,height: 40)
         
         capturePreviewView.addSubview(close)
         close.anchor(top: capturePreviewView.topAnchor,
@@ -283,33 +285,34 @@ final class LiveStreamVCCode: UIView {
         
         
         
-//    capturePreviewView.addSubview(timerLabel)
-//    timerLabel.centerY(inView: labelFPS)
-//    timerLabel.anchor(top: capturePreviewView.topAnchor,
-//                        paddingTop: 45)
-//    timerLabel.centerX(inView: capturePreviewView)
-//
-//    capturePreviewView.addSubview(usrButton)
-//    usrButton.anchor( right: capturePreviewView.rightAnchor,
-//                      paddingRight: 24, width: 24, height: 24)
-//    usrButton.centerY(inView: labelFPS)
-//
-//    capturePreviewView.addSubview(recButton)
-//    recButton.anchor(right: timerLabel.leftAnchor,
-//                     paddingRight: 5,  width: 12, height: 12)
-//    recButton.centerY(inView: timerLabel)
+    capturePreviewView.addSubview(timerLabel)
+    timerLabel.centerY(inView: labelFPS)
+    timerLabel.anchor(top: capturePreviewView.topAnchor,
+                        paddingTop: 45)
+    timerLabel.centerX(inView: capturePreviewView)
+
+    capturePreviewView.addSubview(usrButton)
+    usrButton.anchor( right: capturePreviewView.rightAnchor,
+                      paddingRight: 24, width: 24, height: 24)
+    usrButton.centerY(inView: labelFPS)
+
+    capturePreviewView.addSubview(recButton)
+    recButton.anchor(right: timerLabel.leftAnchor,
+                     paddingRight: 5,  width: 12, height: 12)
+    recButton.centerY(inView: timerLabel)
        
-        capturePreviewView.addSubview(topView)
-        capturePreviewView.addSubview(bottomView)
-        bottomView.anchor( left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingLeft: 0, paddingRight: 0, paddingBottom: 0,height: 135)
-        capturePreviewView.addSubview(collectionView)
-        collectionView.anchor(top: topView.bottomAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 140)
+//        capturePreviewView.addSubview(topView)
+//        capturePreviewView.addSubview(bottomView)
+//        bottomView.anchor( left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, bottom: capturePreviewView.bottomAnchor, paddingLeft: 0, paddingRight: 0, paddingBottom: 0,height: 135)
+//        capturePreviewView.addSubview(collectionView)
+//        collectionView.anchor(top: topView.bottomAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0,height: 200)
+        
       //  topView.anchor(top: capturePreviewView.topAnchor, left: capturePreviewView.leftAnchor, right: capturePreviewView.rightAnchor, paddingTop: -40, paddingLeft: 0, paddingRight: 0,  height: 135)
         
         
-  //  capturePreviewView.addSubview(stackButton)
-  //  stackButton.anchor( bottom: capturePreviewView.bottomAnchor, paddingBottom: 32)
-  //  stackButton.centerX(inView: capturePreviewView)
+    capturePreviewView.addSubview(stackButton)
+    stackButton.anchor( bottom: capturePreviewView.bottomAnchor, paddingBottom: 32)
+    stackButton.centerX(inView: capturePreviewView)
   
    
     }

@@ -23,7 +23,7 @@ struct BroadcastResponce:Codable,Equatable,Hashable {
     let status: BroadcastStatus?
     var hasChat, isPlanned: Bool?
     var scheduledStartDate, startDate, endDate: String?
-   // let onlyForSubscribers, onlyForSponsors: Bool?
+    let onlyForSubscribers, onlyForSponsors: Bool?
     let viewersCount: Int?
     var updatedAt: String?
     var gcoreId, gcoreClientId: Int?

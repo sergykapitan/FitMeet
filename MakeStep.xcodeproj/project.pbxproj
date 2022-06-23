@@ -334,6 +334,8 @@
 		A595A8E4285C8996000EB945 /* BottomViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E2285C8996000EB945 /* BottomViewCapture.swift */; };
 		A595A8E6285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */; };
 		A595A8E7285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */; };
+		A595A8E928607BF3000EB945 /* UserPlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E828607BF3000EB945 /* UserPlayerCell.swift */; };
+		A595A8EA28607BF3000EB945 /* UserPlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E828607BF3000EB945 /* UserPlayerCell.swift */; };
 		A59AAA66285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A59AAA67285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
@@ -681,6 +683,7 @@
 		A5950E5E27384EE5002C1500 /* SliderFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderFloat.swift; sourceTree = "<group>"; };
 		A595A8E2285C8996000EB945 /* BottomViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewCapture.swift; sourceTree = "<group>"; };
 		A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionLiveStreamViewController.swift; sourceTree = "<group>"; };
+		A595A8E828607BF3000EB945 /* UserPlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlayerCell.swift; sourceTree = "<group>"; };
 		A59AAA65285A192F00A03B34 /* TopViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewCapture.swift; sourceTree = "<group>"; };
 		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5A795FF27F7408000F3B45E /* RawPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlaylist.swift; sourceTree = "<group>"; };
@@ -1939,6 +1942,7 @@
 				A59AAA65285A192F00A03B34 /* TopViewCapture.swift */,
 				A595A8E2285C8996000EB945 /* BottomViewCapture.swift */,
 				A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */,
+				A595A8E828607BF3000EB945 /* UserPlayerCell.swift */,
 			);
 			path = StreamScreen;
 			sourceTree = "<group>";
@@ -2225,6 +2229,7 @@
 				A5129418273A6EB7000CBBD9 /* NewPasswordCode.swift in Sources */,
 				A5129419273A6EB7000CBBD9 /* ActionChatPresentationController.swift in Sources */,
 				A512941A273A6EB7000CBBD9 /* PlayerViewCell.swift in Sources */,
+				A595A8EA28607BF3000EB945 /* UserPlayerCell.swift in Sources */,
 				A512941B273A6EB7000CBBD9 /* WebViewController.swift in Sources */,
 				A5915C5C283BDEE90075FF06 /* UIApplication+Window.swift in Sources */,
 				A5E4EEE528368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,
@@ -2507,6 +2512,7 @@
 				B471E65C26EA0C49007B63BE /* NewPasswordCode.swift in Sources */,
 				B404923126D7970200A2F417 /* ActionChatPresentationController.swift in Sources */,
 				A5B635AA271836890097A127 /* PlayerViewCell.swift in Sources */,
+				A595A8E928607BF3000EB945 /* UserPlayerCell.swift in Sources */,
 				B4CD87EA2704539400D065ED /* WebViewController.swift in Sources */,
 				A5915C5B283BDEE90075FF06 /* UIApplication+Window.swift in Sources */,
 				A5E4EEE428368827008D1F01 /* OneWayPanGestureRecognizer.swift in Sources */,

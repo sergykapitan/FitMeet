@@ -249,7 +249,14 @@ class EditStreamVC: UIViewController, DropDownTextFieldDelegate, UIScrollViewDel
     }
     private func setBroadcast() {
         self.authView.textFieldName.text = self.broadcast?.name
-        self.authView.textFieldAviable.text = "Available for all"
+        if let onlySubscraiber = broadcast?.onlyForSubscribers {
+        if onlySubscraiber {
+            self.authView.textFieldAviable.text = "Subscribers only"
+        } else {
+            self.authView.textFieldAviable.text = "Available for all"
+        }
+        }
+    
         self.authView.textFieldDescription.text = self.broadcast?.description
         let categorys = broadcast?.categories
         let s = categorys!.map{$0.title!}

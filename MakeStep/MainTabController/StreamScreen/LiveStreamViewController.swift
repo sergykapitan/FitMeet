@@ -167,13 +167,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        let r = getStatusBarHeight()
-        streamView.topView.anchor(top: streamView.capturePreviewView.topAnchor,
-                                                 left: streamView.capturePreviewView.leftAnchor,
-                                                 right: streamView.capturePreviewView.rightAnchor,
-                                                 paddingTop: -r, paddingLeft: 0, paddingRight: 0,  height: 135)
-        streamView.topView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
-        streamView.bottomView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
+//        let r = getStatusBarHeight()
+//        streamView.topView.anchor(top: streamView.capturePreviewView.topAnchor,
+//                                                 left: streamView.capturePreviewView.leftAnchor,
+//                                                 right: streamView.capturePreviewView.rightAnchor,
+//                                                 paddingTop: -r, paddingLeft: 0, paddingRight: 0,  height: 135)
+//        streamView.topView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
+//        streamView.bottomView.gradientLayer.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 135)
       
         
     }
@@ -205,13 +205,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         
         if myuri == "" {
         
-       // [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
-            [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 0 }
+        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 0 }
+          //  [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 0 }
         [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 1 }
         
         } else {
-          //  [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
-            [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
+            [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
+          //  [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
             [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
             
         }
@@ -265,8 +265,12 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         streamView.privateStream.addTarget(self, action: #selector(shareLink), for: .touchUpInside)
         
         
-        streamView.topView.buttonStart.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
-        streamView.topView.collectionUser.addTarget(self, action: #selector(colectionUser), for: .touchUpInside)
+//        streamView.topView.buttonStart.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
+//        streamView.topView.collectionUser.addTarget(self, action: #selector(colectionUser), for: .touchUpInside)
+//        streamView.topView.usrButton.addTarget(self, action: #selector(openUserOnline), for: .touchUpInside)
+//        streamView.bottomView.microfoneBtn.addTarget(self, action: #selector(stopMicrofone), for: .touchUpInside)
+//        streamView.bottomView.buttonPause.addTarget(self, action:  #selector(startStream), for: .touchUpInside)
+//        streamView.bottomView.chatBtn.addTarget(self, action: #selector(openChat), for: .touchUpInside)
         
         
         streamView.close.addTarget(self, action: #selector(closeVideo), for: .touchUpInside)
@@ -418,39 +422,68 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "startCamera"), for: [])
             createTimer()
             self.streamView.stackButton.addArrangedSubview(streamView.stopButton)
-            
+
             streamView.stopButton.isHidden = false
-            
+
             streamView.recButton.isHidden = true
             streamView.microfoneButton.isHidden = true
             streamView.cameraModeButton.isHidden = true
             streamView.cameraButton.isHidden = true
-           
-            
 
-            
+
+
+
         } else {
             createTimer()
             UIApplication.shared.isIdleTimerDisabled = true
             rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
             rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
             rtmpConnection.connect(myuri)
-            
-            
+
+
             streamView.StartStreamButton.setImage(#imageLiteral(resourceName: "pause"), for: [])
             streamView.stopButton.isHidden = true
-            
+
             streamView.recButton.isHidden = false
             streamView.microfoneButton.isHidden = false
             streamView.cameraModeButton.isHidden = false
             streamView.cameraButton.isHidden = false
-           
-                       
-            
-            
+
+
+
+
         }
+//            if streamView.bottomView.buttonPause.isSelected {
+//                UIApplication.shared.isIdleTimerDisabled = false
+//                rtmpConnection.close()
+//                rtmpConnection.removeEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
+//                rtmpConnection.removeEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
+//
+//                createTimer()
+//
+//                streamView.bottomView.buttonPause.setImage(UIImage(named: "pauseStream2"), for: [])
+//
+//
+//
+//
+//
+//            } else {
+//                createTimer()
+//                UIApplication.shared.isIdleTimerDisabled = true
+//                rtmpConnection.addEventListener(.rtmpStatus, selector: #selector(rtmpStatusHandler), observer: self)
+//                rtmpConnection.addEventListener(.ioError, selector: #selector(rtmpErrorHandler), observer: self)
+//                rtmpConnection.connect(myuri)
+//
+//
+//                streamView.bottomView.buttonPause.setImage(UIImage(named: "pauseStream"), for: [])
+//
+//
+//
+//
+//            }
             
-        streamView.StartStreamButton.isSelected.toggle()
+            streamView.StartStreamButton.isSelected.toggle()
+          //  streamView.bottomView.buttonPause.isSelected.toggle()
         } else {
             alertNameStream()
         }
@@ -524,22 +557,30 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
         rtmpStream.orientation = orientation
     }
     @objc func stopMicrofone() {
+//        streamView.bottomView.microfoneBtn.isSelected.toggle()
+//        if streamView.bottomView.microfoneBtn.isSelected {
+//            streamView.bottomView.microfoneBtn.setImage(UIImage(named: "microfoneUserOff"), for: [])
+//            self.rtmpStream.audioSettings = [ .muted: true,.bitrate: 32 * 1000, ]
+//        } else {
+//            streamView.bottomView.microfoneBtn.setImage(UIImage(named: "microfoneUser"), for: [])
+//            self.rtmpStream.audioSettings = [ .muted: false, .bitrate: 32 * 1000, ]
+//        }
         streamView.microfoneButton.isSelected.toggle()
-        
+
         if streamView.microfoneButton.isSelected {
 
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "notmicrofone"), for: [])
                        self.rtmpStream.audioSettings = [
                            .muted: true,
                            .bitrate: 32 * 1000,
-                       
+
                        ]
         } else {
             streamView.microfoneButton.setImage(#imageLiteral(resourceName: "microfone"), for: [])
                         self.rtmpStream.audioSettings = [
                             .muted: false,
                             .bitrate: 32 * 1000,
-                        
+
                         ]
         }
     }
@@ -831,7 +872,8 @@ extension LiveStreamViewController {
         streamView.circleIndicator.stop()
         streamView.circleIndicator.alpha = 0
         
-        [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
+       // [streamView.topView,streamView.bottomView,streamView.collectionView].forEach{ $0.alpha = 1 }
+        [streamView.labelFPS,streamView.timerLabel,streamView.usrButton,streamView.stackButton].forEach{ $0.alpha = 1 }
         [streamView.buttonStart,streamView.buttonAvailable,streamView.labelAviable,streamView.buttonStartNow,streamView.labelStartNow,streamView.textFieldNameStream,streamView.lineBottom,streamView.buttonSetting,streamView.labelSetting,streamView.close].forEach{ $0.alpha = 0 }
         startStream()
         
