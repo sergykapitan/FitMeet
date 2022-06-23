@@ -742,17 +742,16 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                 self.homeView.imageLogo.isHidden = false
             if  self.broadcast?.previewPath == "/api/v0/resizer?extension=webp&size=preview_s&path=%2Fqa-files%2Ffiles_e4e21a87-8d2e-477f-8345-e71c06889df8.png" {
                 self.homeView.setImagePromo(image: Constants.defoultImage)
-                self.homeView.overlay.alpha = 1
-                self.homeView.labelLive.alpha = 1
-                if self.broadcast?.status == .finished || self.broadcast?.status == .offline {
-                self.homeView.labelLive.text = "Not url"
-                }
+                self.homeView.imageLogo.addBlur(style: .extraLight)
+                self.homeView.labelSubscribe.alpha = 1
+               
             } else {
                 self.homeView.setImagePromo(image: self.broadcast?.previewPath ?? Constants.defoultImage)
-                self.homeView.overlay.alpha = 1
-                self.homeView.labelLive.alpha = 1
-                if self.broadcast?.status == .finished || self.broadcast?.status == .offline {
-                self.homeView.labelLive.text = "Not url"
+                self.homeView.imageLogo.addBlur(style: .dark)
+                if self.broadcast?.status == .planned {
+                    self.homeView.labelSubscribe.alpha = 0
+                } else {
+                    self.homeView.labelSubscribe.alpha = 1
                 }
             }
                 
@@ -1544,8 +1543,8 @@ public extension UIView {
         let blurEffect = UIBlurEffect(style: style)
         let blurBackground = UIVisualEffectView(effect: blurEffect)
         
-        blurBackground.backgroundColor = .black
-        blurBackground.alpha = 0.2
+        blurBackground.backgroundColor = .clear
+        blurBackground.alpha = 0.9
         addSubview(blurBackground)
         blurBackground.translatesAutoresizingMaskIntoConstraints = false
         blurBackground.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true

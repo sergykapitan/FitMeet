@@ -297,6 +297,17 @@ final class PlayerViewVCCode: UIView {
         button.layer.cornerRadius = 12
         return button
     }()
+    var labelSubscribe: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .white
+        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.text = "This stream is only available to subscribers"
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.alpha = 0
+        return label
+    }()
     //MARK: - initial
     init() {
         super.init(frame: CGRect.zero)
@@ -325,6 +336,9 @@ final class PlayerViewVCCode: UIView {
         
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        cardView.addSubview(labelSubscribe)
+        labelSubscribe.centerX(inView: imageLogo)
+        labelSubscribe.centerY(inView: imageLogo)
         
         cardView.addSubview(buttonstartStream)
         buttonstartStream.centerX(inView: imagePromo)

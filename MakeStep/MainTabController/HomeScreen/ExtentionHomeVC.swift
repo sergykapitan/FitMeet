@@ -94,12 +94,16 @@ extension HomeVC: UITableViewDataSource {
         case .offline:
                 cell.overlayPlan.isHidden = true
                 cell.overlay.isHidden = true
-                cell.overlayOffline.isHidden = false
+                cell.overlayOffline.isHidden = subscriber
                 cell.logoUserOnline.isHidden = true
                 if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
                     cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
                 } else {
-                    cell.overlayOffline.labelLive.text = "00:00"
+                    if subscriber {
+                        cell.overlayOffline.labelLive.text = ""
+                    } else {
+                        cell.overlayOffline.labelLive.text = "00:00"
+                    }
                 }
                 self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         case .planned:
@@ -113,12 +117,17 @@ extension HomeVC: UITableViewDataSource {
         case .finished:
             cell.overlayPlan.isHidden = true
             cell.overlay.isHidden = true
-            cell.overlayOffline.isHidden = false
+            cell.overlayOffline.isHidden = subscriber
             cell.logoUserOnline.isHidden = true
             if let time = listBroadcast[indexPath.row].streams?.first?.vodLength {
                 cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
             } else {
-                cell.overlayOffline.labelLive.text = "00:00"
+                if subscriber {
+                   
+                    cell.overlayOffline.labelLive.text = ""
+                } else {
+                    cell.overlayOffline.labelLive.text = "00:00"
+                }
             }
             self.url = self.listBroadcast[indexPath.row].streams?.first?.vodUrl
         case .wait_for_approve:
