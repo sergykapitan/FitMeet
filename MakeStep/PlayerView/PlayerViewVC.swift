@@ -1544,7 +1544,7 @@ public extension UIView {
         let blurBackground = UIVisualEffectView(effect: blurEffect)
         
         blurBackground.backgroundColor = .clear
-        blurBackground.alpha = 0.9
+        blurBackground.alpha = 0.7
         addSubview(blurBackground)
         blurBackground.translatesAutoresizingMaskIntoConstraints = false
         blurBackground.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
