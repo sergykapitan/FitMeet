@@ -289,6 +289,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         homeView.playerSlider.addTarget(self, action: #selector(sliderValueChange(slider:)), for: .valueChanged)
         homeView.buttonOpen.addTarget(self, action: #selector(actionTable), for: .touchUpInside)
         homeView.buttonstartStream.addTarget(self, action: #selector(actionStartStream), for: .touchUpInside)
+        homeView.buttonBigTap.addTarget(self, action: #selector(actionLike), for: .touchUpInside)
         
         homeView.buttonPicInPic.addTarget(self, action: #selector(actionPicInPic), for: .touchUpInside)
         
@@ -519,15 +520,15 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             self.present(sign, animated: true, completion: nil)
             return
         }
-        homeView.buttonLike.isSelected.toggle()
-        if homeView.buttonLike.isSelected {
+        homeView.buttonBigTap.isSelected.toggle()
+        if homeView.buttonBigTap.isSelected {
             let selectionFeedbackGenerator = UISelectionFeedbackGenerator()
             selectionFeedbackGenerator.selectionChanged()
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "Like"), for: .normal)
             if let id = self.broadcast?.id {
                 followBroadcast(id: id)
-            }            
-        } else {
+            }
+        }else {
             homeView.buttonLike.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
             if let id = self.broadcast?.id {
                 unFollowBroadcast(id: id)

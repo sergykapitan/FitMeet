@@ -234,6 +234,11 @@ final class PlayerViewVCCode: UIView {
         button.setImage(#imageLiteral(resourceName: "LikeNot"), for: .normal)
         return button
     }()
+    var buttonBigTap: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = .clear
+        return button
+    }()
     var buttonOpen: UIButton = {
         let button = UIButton()
         let image = UIImage(named: "Back11")?.withTintColor(.gray, renderingMode: .alwaysOriginal)
@@ -356,6 +361,9 @@ final class PlayerViewVCCode: UIView {
 
         cardView.addSubview(buttonLike)
         buttonLike.anchor(top: labelStreamInfo.bottomAnchor,right: labelLike.leftAnchor, paddingTop: 5, paddingRight: 0, width: 24, height: 24)
+        
+        cardView.addSubview(buttonBigTap)
+        buttonBigTap.anchor(top: buttonLike.topAnchor, left: buttonLike.leftAnchor, right: labelLike.rightAnchor, bottom: buttonLike.bottomAnchor, paddingTop: -5, paddingLeft: -2, paddingRight: -15, paddingBottom: -5)
         
         cardView.addSubview(labelEyeView)
         labelEyeView.anchor(top: labelStreamInfo.bottomAnchor,right: buttonLike.leftAnchor, paddingTop: 5, paddingRight: 5, height: 24)
