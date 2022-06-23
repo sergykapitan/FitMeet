@@ -165,6 +165,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(videoDidEnd), name:
         NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
         activeCustomPlayerViewControllers.remove(self)
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -194,6 +195,13 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             }
         }
     }
+        guard let description = broadcast?.description else { return }
+       
+        if description.isEmpty {
+            self.homeView.buttonOpen.isHidden = true
+        } else {
+            self.homeView.buttonOpen.isHidden = false
+        }
 }
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
