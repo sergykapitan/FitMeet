@@ -22,7 +22,7 @@ target 'MakeStep' do
   pod 'MMPlayerView'
   pod 'iLabeledSeekSlider', '~> 1.0.2'
   pod 'SkeletonView'
-
+  pod 'FirebaseAnalytics'
 
 
   # Pods for FitMeet
@@ -49,5 +49,6 @@ target 'MakeStepQA' do
   pod 'MMPlayerView'
   pod 'iLabeledSeekSlider', '~> 1.0.2'
   pod 'SkeletonView'
+  pod 'FirebaseAnalytics'
  
 end

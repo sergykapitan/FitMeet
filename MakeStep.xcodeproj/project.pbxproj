@@ -336,6 +336,8 @@
 		A595A8E7285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */; };
 		A595A8E928607BF3000EB945 /* UserPlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E828607BF3000EB945 /* UserPlayerCell.swift */; };
 		A595A8EA28607BF3000EB945 /* UserPlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E828607BF3000EB945 /* UserPlayerCell.swift */; };
+		A595A8EF2864A1B2000EB945 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */; };
+		A595A8F02864A1B2000EB945 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */; };
 		A59AAA66285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A59AAA67285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
@@ -684,6 +686,7 @@
 		A595A8E2285C8996000EB945 /* BottomViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomViewCapture.swift; sourceTree = "<group>"; };
 		A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionLiveStreamViewController.swift; sourceTree = "<group>"; };
 		A595A8E828607BF3000EB945 /* UserPlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlayerCell.swift; sourceTree = "<group>"; };
+		A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A59AAA65285A192F00A03B34 /* TopViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewCapture.swift; sourceTree = "<group>"; };
 		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5A795FF27F7408000F3B45E /* RawPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlaylist.swift; sourceTree = "<group>"; };
@@ -1713,6 +1716,7 @@
 				B4D9D72726257D8E007CFB71 /* Assets.xcassets */,
 				B4D9D72926257D8F007CFB71 /* LaunchScreen.storyboard */,
 				B4D9D72C26257D8F007CFB71 /* Info.plist */,
+				A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */,
 			);
 			path = MakeStep;
 			sourceTree = "<group>";
@@ -2052,6 +2056,8 @@
 			dependencies = (
 			);
 			name = MakeStep;
+			packageProductDependencies = (
+			);
 			productName = FitMeet;
 			productReference = B4D9D71B26257D8C007CFB71 /* MakeStep.app */;
 			productType = "com.apple.product-type.application";
@@ -2079,6 +2085,8 @@
 				Base,
 			);
 			mainGroup = B4D9D71226257D8C007CFB71;
+			packageReferences = (
+			);
 			productRefGroup = B4D9D71C26257D8C007CFB71 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -2095,6 +2103,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A51294DF273A6EB7000CBBD9 /* LaunchScreen.storyboard in Resources */,
+				A595A8F02864A1B2000EB945 /* GoogleService-Info.plist in Resources */,
 				A51294E0273A6EB7000CBBD9 /* CoverA.xib in Resources */,
 				A51294E2273A6EB7000CBBD9 /* Assets.xcassets in Resources */,
 			);
@@ -2105,6 +2114,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4D9D72B26257D8F007CFB71 /* LaunchScreen.storyboard in Resources */,
+				A595A8EF2864A1B2000EB945 /* GoogleService-Info.plist in Resources */,
 				A5B635B027185C010097A127 /* CoverA.xib in Resources */,
 				B4D9D72826257D8E007CFB71 /* Assets.xcassets in Resources */,
 			);

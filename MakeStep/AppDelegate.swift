@@ -9,7 +9,8 @@ import UIKit
 import AVFoundation
 import Logboard
 import UserNotifications
-
+import FirebaseCore
+import FirebaseAnalytics
 let logger = Logboard.with("FitMeet.iOS")
 
 @main
@@ -77,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
             }
         }
         registerForPushNotifications()
+        FirebaseApp.configure()
+        Analytics.logEvent("First Open App", parameters: nil)
         return true
     }
     

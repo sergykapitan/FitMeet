@@ -12,6 +12,9 @@ import AVKit
 import UIKit
 import TagListView
 import SkeletonView
+import FirebaseAnalytics
+
+
 
 
 extension HomeVC: UITableViewDataSource {
@@ -202,6 +205,8 @@ extension HomeVC: UITableViewDelegate {
         return UITableView.automaticDimension
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        Analytics.logEvent("Open_Broadcast", parameters: nil)
+      
         let vc = PlayerViewVC()
         if listBroadcast.isEmpty { return }
             vc.delegate = self
