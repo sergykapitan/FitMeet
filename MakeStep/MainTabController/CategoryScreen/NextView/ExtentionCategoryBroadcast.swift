@@ -36,6 +36,7 @@ extension CategoryBroadcast: UITableViewDataSource {
               let subscriber = listBroadcast[indexPath.row].onlyForSubscribers
               else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
+        cell.imageSubscribe.isHidden = !subscriber
         if let chanelId = sortListCategory[indexPath.row].channelIds?.last {
             cell.titleLabel.text = channellsd[chanelId]?.name
         }

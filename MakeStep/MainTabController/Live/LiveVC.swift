@@ -110,12 +110,10 @@ class LiveVC: SheetableViewController {
                     if response.data != nil  {
                         guard let responceUnrap = response.data else { return }
                         sleep(1)
-                        self.recentBroadcast = responceUnrap.filter{$0.resizedPreview != nil}
+                        self.recentBroadcast = responceUnrap
 
                         let arrayUserId =  self.recentBroadcast.compactMap{$0.channelIds?.last}
-                       // self.bindingUserMap(ids: arrayUserId)
                         self.getMapChannel1(ids: arrayUserId)
-                      //  self.bindingPlanned()
                     }
             })
     }
