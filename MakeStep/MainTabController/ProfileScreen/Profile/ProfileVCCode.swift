@@ -52,7 +52,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageProfile:UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "edit")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
+        image.image = UIImage(named: "editUser")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     
@@ -159,7 +159,7 @@ final class ProfileVCCode: UIView {
     }()
     var imageDelAkk: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "logout")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
+        image.image = UIImage(named: "deleteUser")?.withTintColor(.blueColor, renderingMode: .alwaysOriginal)
         return image
         }()
     var labelDelAkk: UILabel = {
