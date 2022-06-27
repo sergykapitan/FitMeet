@@ -32,7 +32,8 @@ extension CategoryBroadcast: UITableViewDataSource {
       
         guard
               let id = sortListCategory[indexPath.row].userId,
-              let broadcastID = self.sortListCategory[indexPath.row].id
+              let broadcastID = self.sortListCategory[indexPath.row].id,
+              let subscriber = listBroadcast[indexPath.row].onlyForSubscribers
               else { return cell}
         cell.setImageLogo(image: self.usersd[id]?.resizedAvatar?["avatar_120"]?.png ?? "https://logodix.com/logo/1070633.png")
         if let chanelId = sortListCategory[indexPath.row].channelIds?.last {
@@ -67,7 +68,11 @@ extension CategoryBroadcast: UITableViewDataSource {
             if let time = sortListCategory[indexPath.row].streams?.first?.vodLength {
                 cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
             } else {
-                cell.overlayOffline.labelLive.text = "00:00"
+                if subscriber {
+                    cell.overlayOffline.labelLive.text = ""
+                } else {
+                    cell.overlayOffline.labelLive.text = "00:00"
+                }
             }
             self.url = self.sortListCategory[indexPath.row].streams?.first?.vodUrl
         case .planned:
@@ -87,7 +92,11 @@ extension CategoryBroadcast: UITableViewDataSource {
             if let time = sortListCategory[indexPath.row].streams?.first?.vodLength {
                 cell.overlayOffline.labelLive.text =  "\(time.secondsToTime())"
             } else {
-                cell.overlayOffline.labelLive.text = "00:00"
+                if subscriber {
+                    cell.overlayOffline.labelLive.text = ""
+                } else {
+                    cell.overlayOffline.labelLive.text = "00:00"
+                }
             }
             self.url = self.sortListCategory[indexPath.row].streams?.first?.vodUrl
         case .wait_for_approve:
