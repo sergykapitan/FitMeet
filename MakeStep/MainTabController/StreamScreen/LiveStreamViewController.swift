@@ -234,6 +234,7 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
 //        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
 //        self.navigationController?.navigationBar.shadowImage = nil
 //        self.navigationController?.navigationBar.isTranslucent = false
+        self.navigationController?.isNavigationBarHidden = false
         tabBarController?.tabBar.isHidden = false
         rtmpStream.removeObserver(self, forKeyPath: "currentFPS")
         rtmpStream.close()

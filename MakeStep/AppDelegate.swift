@@ -79,7 +79,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate,UITabBarControllerDelegate
         }
         registerForPushNotifications()
         FirebaseApp.configure()
-        Analytics.logEvent("First Open App", parameters: nil)
         return true
     }
     
