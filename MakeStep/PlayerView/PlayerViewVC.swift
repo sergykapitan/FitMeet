@@ -775,7 +775,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
           fatalError("Missing AVPlayerLayer")
         }
         let controlsViewHeight: CGFloat = 180.0
-       
+        self.homeView.labelSubscribe.alpha = 0
 
          view.backgroundColor = .black
         self.homeView.imagePromo.layer.addSublayer(playerLayer)

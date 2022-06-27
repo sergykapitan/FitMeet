@@ -341,6 +341,7 @@ final class PlayerViewVCCode: UIView {
         
         cardView.addSubview(imageLogo)
         imageLogo.anchor(top: imagePromo.topAnchor, left: imagePromo.leftAnchor, right: imagePromo.rightAnchor, bottom: imagePromo.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
         cardView.addSubview(labelSubscribe)
         labelSubscribe.centerX(inView: imageLogo)
         labelSubscribe.centerY(inView: imageLogo)
