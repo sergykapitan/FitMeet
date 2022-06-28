@@ -133,7 +133,8 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     public func getBroadcastN(page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&sort=status&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&sort=status&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED",
+                          method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -163,7 +164,7 @@ class FitMeetStream {
         
            }
     public func getBroadcastPrivateTime(status: String,userId: String) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=50&status=\(status)&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?take=50&isPublished=true&status=\(status)&sort=scheduledStartDate&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -208,12 +209,11 @@ class FitMeetStream {
            }
    //&type=\(type)
     public func getBroadcastPrivateVOD(userId: String,page: Int,type: String ) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&isPublished=true&userId=\(userId)", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
                  .value()
-                // .print("getBroadcast")
                  .mapError { DifferentError.alamofire(wrapped: $0) }
                  .eraseToAnyPublisher()
         

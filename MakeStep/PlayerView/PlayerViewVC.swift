@@ -574,7 +574,9 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
               .mapError({ (error) -> Error in return error })
               .sink(receiveCompletion: { _ in }, receiveValue: { [self] response in
                   if response.data != nil  {
-                      self.brodcast.append(contentsOf: response.data!)
+                      guard let broad = response.data else { return }
+                     // let filterBroadcast = broad.filter{ $0.status != .wait_for_approve}
+                      self.brodcast.append(contentsOf: broad)
                       self.bindingChanellVOD(userId: "\(id)", page: currentPage )
                  }
           })
@@ -1147,6 +1149,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     guard let brod = response.data else { return }
+                  //  let filterBroadcast = brod.filter{ $0.status != .wait_for_approve}
                     self.brodcast.append(contentsOf: brod)
                     self.brodcast = Array(Set(self.brodcast))
                     self.isLoadingList = false
