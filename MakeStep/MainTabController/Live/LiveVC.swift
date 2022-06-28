@@ -93,13 +93,8 @@ class LiveVC: SheetableViewController {
                     if response.data != nil  {
                         guard let responceUnrap = response.data else { return }
                         self.liveBroadcast = responceUnrap
-
-                       // let arrayUserId =  self.liveBroadcast.map{$0.userId!}
-                       // self.bindingUserMap(ids: arrayUserId)
                         let arrayUserId =  self.liveBroadcast.compactMap{$0.channelIds?.last!}
-                       // self.bindingUserMap(ids: arrayUserId)
                         self.getMapChannel(ids: arrayUserId)
-                      //  self.bindingRecent()
                     }
             })
     }
@@ -125,11 +120,7 @@ class LiveVC: SheetableViewController {
                         guard let responceUnrap = response.data else { return }
                         sleep(1)
                         self.plannedBroadcast = responceUnrap
-
-                       // let arrayUserId =  self.plannedBroadcast.map{$0.userId!}
-                        //self.bindingUserMap(ids: arrayUserId)
                         let arrayUserId =  self.plannedBroadcast.compactMap{$0.channelIds?.last!}
-                       // self.bindingUserMap(ids: arrayUserId)
                         self.getMapChannel2(ids: arrayUserId)
                     } else {
                         self.titleSection.removeLast()

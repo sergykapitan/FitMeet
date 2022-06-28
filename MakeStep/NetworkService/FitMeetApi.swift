@@ -249,7 +249,8 @@ class FitMeetApi {
         let parameters = [
             "ids": ids
         ]
-        return AF.request(Constants.apiEndpoint + "/channel/channels/private/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        // private
+        return AF.request(Constants.apiEndpoint + "/channel/channels/map", method: .get,parameters: parameters, encoding: URLEncoding.default, headers: nil,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
             .validate(contentType: ["application/json"])
             .publishDecodable(type: MapChannel.self)
@@ -257,10 +258,7 @@ class FitMeetApi {
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
-    
-    
-    
-///api/v0/watcher/watchers/token токен для ватчера
+ 
     public func getTokenWatcher() -> AnyPublisher<TokenWatcher,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/watcher/watchers/token", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .validate(statusCode: 200..<300)
@@ -271,7 +269,7 @@ class FitMeetApi {
             .eraseToAnyPublisher()
     }
     // MARK: - Apple
-    ///api/v0/appPurchase/appleProducts
+ 
     public func getAppProduct() -> AnyPublisher<AppleProduct,DifferentError> {
         return AF.request(Constants.apiEndpoint + "/appPurchase/appleProducts", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
             .response(completionHandler: { ggg in print("GGGGG====\(ggg)")   })
