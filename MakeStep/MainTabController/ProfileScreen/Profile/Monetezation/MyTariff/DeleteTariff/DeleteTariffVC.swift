@@ -13,7 +13,9 @@ protocol ReloadTable: class {
    func reloadTable()
 }
 
-class DeleteTariffVC: UIViewController {
+class DeleteTariffVC: UIViewController,CustomPresentable {
+    var transitionManager: UIViewControllerTransitioningDelegate?
+    
        
     let deleteView = DeleteTariffVCCode()
     weak var delagateReload: ReloadTable?
@@ -44,7 +46,7 @@ class DeleteTariffVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     @objc func deleteTarrif()  {
-        deleteView.buttonYes.backgroundColor = UIColor(hexString: "#3B58A4")
+        deleteView.buttonYes.backgroundColor = .blueColor
         deleteView.buttonYes.setTitleColor(UIColor.white, for: .normal)
         
         deleteView.buttonNo.backgroundColor = .clear

@@ -1,8 +1,8 @@
 //
-//  DeleteTariffVCCode.swift
+//  DisableTariffCode.swift
 //  MakeStep
 //
-//  Created by Sergey on 07.11.2021.
+//  Created by Sergey on 28.06.2022.
 //
 
 import Foundation
@@ -10,7 +10,7 @@ import UIKit
 
 
 
-final class DeleteTariffVCCode: UIView {
+final class DisableTariffCode: UIView {
     
     //MARK: - UI
     let cardView: UIView = {
@@ -28,21 +28,21 @@ final class DeleteTariffVCCode: UIView {
     }()
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Delete tariff"
+        label.text = "Disable tariff"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         label.textColor = .black
         return label
     }()
     let descriptionLabel: UILabel = {
         let label = UILabel()
-        label.text = "Are you sure you want to delete this tariff?"
+        label.text = "Are you sure you want to disable the tariff?"
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.init(hexString: "#868686")
         return label
     }()
     var buttonNo: UIButton = {
         var button = UIButton()
-        button.backgroundColor = .blueColor 
+        button.backgroundColor = .blueColor
         button.setTitle(" No ", for: .normal)
         button.titleLabel?.font = UIFont.systemFont(ofSize: 14)
         button.titleLabel?.textColor = .white

@@ -10,7 +10,12 @@ import UIKit
 import Combine
 import AudioToolbox
 
-class MyTariff: UIViewController,AddFrame, ReloadTable {
+class MyTariff: UIViewController,AddFrame, ReloadTable,Reload {
+    func reload() {
+        guard let userId = userId else { return }
+        bindingChannel(userId: Int(userId)!)
+    }
+    
     
     func reloadTable() {
         guard let userId = userId else { return }
@@ -76,26 +81,15 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
     }
     
     @objc func deleteCell(_ sender: UIButton) -> Void  {
-        vibrate()
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = DeleteTariffVC()
         detailViewController.id = self.channel?.id
-        detailViewController.modalPresentationStyle = .custom
-        if view.bounds.height <= 488 {
-            actionChatTransitionManager.intHeight = 0.35
-        } else {
-            actionChatTransitionManager.intHeight = 0.25
-        }
-        actionChatTransitionManager.intWidth = 1
-        detailViewController.transitioningDelegate = actionChatTransitionManager
-        detailViewController.color = .white
         detailViewController.idSub = id.subscriptionPriceId
         detailViewController.delagateReload = self
-        present(detailViewController, animated: true)
+        self.present(detailViewController, interactiveDismissalType: .standard)
 
     }
     @objc func actionEditMonnet(_ sender: UIButton) {
-        vibrate()
         guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
         let detailViewController = EditMonetVC()
         detailViewController.modalPresentationStyle = .custom
@@ -113,24 +107,15 @@ class MyTariff: UIViewController,AddFrame, ReloadTable {
         present(detailViewController, animated: true)
     }
     @objc func actionisableonnet(_ sender: UIButton) -> Void {
-        vibrate()
-        guard let id = self.channel?.subscriptionPlans?[sender.tag] else { return }
-        let detailViewController = DeleteTariffVC()
-        detailViewController.id = self.channel?.id
-        detailViewController.modalPresentationStyle = .custom
-        if view.bounds.height <= 488 {
-            actionChatTransitionManager.intHeight = 0.35
-        } else {
-            actionChatTransitionManager.intHeight = 0.25
-        }
-        actionChatTransitionManager.intWidth = 1
-        detailViewController.transitioningDelegate = actionChatTransitionManager
-        detailViewController.color = .white
-        detailViewController.deleteView.titleLabel.text = "Disable tariff"
-        detailViewController.deleteView.descriptionLabel.text = "Are you sure you want to disable the tariff?"
-        detailViewController.idSub = id.subscriptionPriceId
-        detailViewController.delagateReload = self
-        present(detailViewController, animated: true)
+        guard let plan = self.channel?.subscriptionPlans?[sender.tag] else { return }
+        let disableVC = DisableTariffVC()
+        disableVC.channelId = self.channel?.id
+        disableVC.id = self.channel?.id
+        disableVC.delagateReload = self
+        disableVC.idSub = plan.subscriptionPriceId
+        disableVC.plan = plan
+        self.present(disableVC, interactiveDismissalType: .standard)
+ 
     }
 
  

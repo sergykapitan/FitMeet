@@ -83,6 +83,13 @@ static let reuseID = "AllSaveWorkoutViewCell"
         button.layer.cornerRadius = 14
         return button
     }()
+//    var disableView :UIView = {
+//        let view = UIView()
+//        view.backgroundColor = .blue
+//        view.alpha = 0.6
+//       // view.isHidden = true
+//        return view
+//    }()
     
 
 override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -110,7 +117,9 @@ override func prepareForReuse() {
       self.priceLabel.text = nil
    }
     private func initUI() {
-
+//        contentView.addSubview(disableView)
+//        disableView.anchor(top: contentView.topAnchor, left: contentView.leftAnchor, right: contentView.rightAnchor, bottom: contentView.bottomAnchor, paddingTop: 0, paddingLeft: 0, paddingRight: 0, paddingBottom: 0)
+        
         contentView.addSubview(nameMonetezationLabel)
         nameMonetezationLabel.anchor(top:contentView.topAnchor,left: contentView.leftAnchor,
                                  paddingTop: 16,paddingLeft: 16, height: 20)

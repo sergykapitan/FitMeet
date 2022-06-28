@@ -25,7 +25,7 @@ struct ChannelResponce: Codable,Hashable,Identifiable{
     let description: String?
     let activeBroadcast: ActivBroadCast?
     let favoriteCategories: [Int]?
-    let subscriptionPlans: [SubPlan]?
+    var subscriptionPlans: [SubPlan]?
     let isSubscribe: Bool?
     let isFollow: Bool?
 }
@@ -37,6 +37,7 @@ struct SubPlan: Codable,Hashable {
     let name : String?
     let description: String?
     let applePrice: Int?
+    let available: Bool
 }
 struct ActivBroadCast: Codable,Hashable,Identifiable {
     let createdAt: String?
@@ -73,6 +74,7 @@ struct EditSubscriptionPrice: Codable {
     let periodType: String?
     let periodCount: Int?
     let description: String?
+    let available: Bool?
 }
 
 // MARK: - NewPlan

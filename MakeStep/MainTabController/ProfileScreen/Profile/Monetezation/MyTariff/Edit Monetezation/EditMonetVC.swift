@@ -149,7 +149,7 @@ class EditMonetVC: UIViewController ,UITextViewDelegate, UITextFieldDelegate {
         let components = periodType.components(separatedBy: " ")
         
         bindingChannel(id: channelId, sub: NewSub(newPlans: nil,
-                                                  editSubscriptionPrices: [EditSubscriptionPrice(id: id, name: name, price: 599, periodType: components[0], periodCount: Int(components[1]), description: description)], disableSubscriptionPriceIds: nil))
+                                                  editSubscriptionPrices: [EditSubscriptionPrice(id: id, name: name, price: 599, periodType: components[0], periodCount: Int(components[1]), description: description, available: true)], disableSubscriptionPriceIds: nil))
       
        
     }

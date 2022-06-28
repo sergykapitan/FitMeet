@@ -338,6 +338,10 @@
 		A595A8EA28607BF3000EB945 /* UserPlayerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8E828607BF3000EB945 /* UserPlayerCell.swift */; };
 		A595A8EF2864A1B2000EB945 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */; };
 		A595A8F02864A1B2000EB945 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */; };
+		A595A8F6286AFCB3000EB945 /* DisableTariffVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8F5286AFCB3000EB945 /* DisableTariffVC.swift */; };
+		A595A8F7286AFCB3000EB945 /* DisableTariffVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8F5286AFCB3000EB945 /* DisableTariffVC.swift */; };
+		A595A8F9286AFCC1000EB945 /* DisableTariffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8F8286AFCC1000EB945 /* DisableTariffCode.swift */; };
+		A595A8FA286AFCC1000EB945 /* DisableTariffCode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A595A8F8286AFCC1000EB945 /* DisableTariffCode.swift */; };
 		A59AAA66285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A59AAA67285A192F00A03B34 /* TopViewCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = A59AAA65285A192F00A03B34 /* TopViewCapture.swift */; };
 		A5A0642127C3A9CE0086EEBC /* ExPlayerViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */; };
@@ -687,6 +691,8 @@
 		A595A8E5285CC5B6000EB945 /* ExtentionLiveStreamViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtentionLiveStreamViewController.swift; sourceTree = "<group>"; };
 		A595A8E828607BF3000EB945 /* UserPlayerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPlayerCell.swift; sourceTree = "<group>"; };
 		A595A8EE2864A1B2000EB945 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		A595A8F5286AFCB3000EB945 /* DisableTariffVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableTariffVC.swift; sourceTree = "<group>"; };
+		A595A8F8286AFCC1000EB945 /* DisableTariffCode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisableTariffCode.swift; sourceTree = "<group>"; };
 		A59AAA65285A192F00A03B34 /* TopViewCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopViewCapture.swift; sourceTree = "<group>"; };
 		A5A0642027C3A9CE0086EEBC /* ExPlayerViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExPlayerViewVC.swift; sourceTree = "<group>"; };
 		A5A795FF27F7408000F3B45E /* RawPlaylist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RawPlaylist.swift; sourceTree = "<group>"; };
@@ -1066,6 +1072,7 @@
 				A57BBFE62728085900734A28 /* MytariffVCCode.swift */,
 				A5457EA1272A9B7E006A8F2D /* ExMytariff.swift */,
 				A5457EA8272C0F8A006A8F2D /* TarrifCell.swift */,
+				A595A8F4286AFC6B000EB945 /* DisableTarrif */,
 				A5950E542737D575002C1500 /* DeleteTariff */,
 				A5457EA3272AADEC006A8F2D /* Add Monetezation */,
 				A5950E59273815B1002C1500 /* Edit Monetezation */,
@@ -1195,6 +1202,15 @@
 				A5950E5C273815DC002C1500 /* EditMonetVCCode.swift */,
 			);
 			path = "Edit Monetezation";
+			sourceTree = "<group>";
+		};
+		A595A8F4286AFC6B000EB945 /* DisableTarrif */ = {
+			isa = PBXGroup;
+			children = (
+				A595A8F5286AFCB3000EB945 /* DisableTariffVC.swift */,
+				A595A8F8286AFCC1000EB945 /* DisableTariffCode.swift */,
+			);
+			path = DisableTarrif;
 			sourceTree = "<group>";
 		};
 		A5B635AD27185C010097A127 /* CoverView */ = {
@@ -2451,6 +2467,7 @@
 				A51294EC273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A51294F2273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
 				A58F0ABF280D6041003A8833 /* Reachability.swift in Sources */,
+				A595A8FA286AFCC1000EB945 /* DisableTariffCode.swift in Sources */,
 				A58EC19E27B1524E00E920FB /* ExSendStream.swift in Sources */,
 				A5915C2F283BC4B00075FF06 /* Spinner.swift in Sources */,
 				A51294C2273A6EB7000CBBD9 /* LoginPassword.swift in Sources */,
@@ -2483,6 +2500,7 @@
 				A5E4D54D285200A800C582E9 /* ChangeChannelCode.swift in Sources */,
 				A51294D6273A6EB7000CBBD9 /* HueButton.swift in Sources */,
 				A51294D7273A6EB7000CBBD9 /* LiveStreamVCCode.swift in Sources */,
+				A595A8F7286AFCB3000EB945 /* DisableTariffVC.swift in Sources */,
 				A51294D8273A6EB7000CBBD9 /* SegmentControlSearch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2734,6 +2752,7 @@
 				A591C3672715AB910015B0E6 /* ChangeChannel.swift in Sources */,
 				B48D82C3262DC5F500F5A0D9 /* VideoClip.swift in Sources */,
 				A58F0ABE280D6041003A8833 /* Reachability.swift in Sources */,
+				A595A8F9286AFCC1000EB945 /* DisableTariffCode.swift in Sources */,
 				A51294EB273D1C54000CBBD9 /* AppleProduct.swift in Sources */,
 				A5915C2E283BC4B00075FF06 /* Spinner.swift in Sources */,
 				A51294F1273E72A5000CBBD9 /* ProductResponce.swift in Sources */,
@@ -2766,6 +2785,7 @@
 				A5E4D54C285200A800C582E9 /* ChangeChannelCode.swift in Sources */,
 				B4AE7AE0263D4D740033F78F /* HueButton.swift in Sources */,
 				B4A9F642263217B8000E00DE /* LiveStreamVCCode.swift in Sources */,
+				A595A8F6286AFCB3000EB945 /* DisableTariffVC.swift in Sources */,
 				B43A6C7B26F4DFFF009E6DDE /* SegmentControlSearch.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

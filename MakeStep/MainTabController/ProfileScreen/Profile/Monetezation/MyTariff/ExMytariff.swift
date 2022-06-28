@@ -31,6 +31,14 @@ extension MyTariff : UITableViewDataSource, UITableViewDelegate {
         cell.priceLabel.text = "\(periodCount)" + " " + "\(periodType)" + "/"
         let f = Float(price) / 100
         cell.priceLabelright.text = "$ \(f)"
+     
+//            if arr.available {
+//                cell.disableView.isHidden = true
+//            } else {
+//                cell.disableView.isHidden = false
+//            }
+           
+     
         
         cell.buttonDelete.tag = indexPath.section
         cell.buttonDelete.addTarget(self, action: #selector(deleteCell), for: .touchUpInside)

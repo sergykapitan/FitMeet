@@ -25,6 +25,7 @@ protocol SendDataToLive: AnyObject {
 class NewStartStream: UIViewController, DropDownTextFieldDelegate, UIScrollViewDelegate, TagListViewDelegate,CustomPresentable, UITextViewDelegate {
     
     var transitionManager: UIViewControllerTransitioningDelegate?
+    
     weak var delegate: SendDataToLive?
     var category: [Datum] = []
     
