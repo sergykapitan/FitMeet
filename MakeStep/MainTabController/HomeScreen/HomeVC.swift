@@ -189,7 +189,8 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
                    // sleep(2)
                     self.listUsers = result
                     self.currentPage = 1
-                    self.bindingNotAuht(page: self.currentPage)
+                    self.token != nil ? self.bindingNotAuht(page: self.currentPage) : self.bindingNotAuht2(page: self.currentPage)
+                    
   
                 } else {
                     self.getUsers()
@@ -207,11 +208,32 @@ class HomeVC: SheetableViewController, UITabBarControllerDelegate{
       }
     func loadMoreItemsForList(){
             currentPage += 1
-            self.bindingNotAuht(page: self.currentPage)
+            token != nil ? bindingNotAuht(page: currentPage) : bindingNotAuht2(page: currentPage)
        }
     func bindingNotAuht(page: Int) {
         self.isLoadingList = false
         takeOff = fitMeetStream.getBroadcastN(page: page)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                    if response.data != nil  {
+
+
+                        guard let responceUnrap = response.data else { return }
+                        self.listBroadcast.append(contentsOf:responceUnrap)
+                      
+                       
+                        let arrayUserId =  self.listBroadcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+                    if response.meta != nil {
+                        guard let itemCount = response.meta?.itemCount else { return }
+                        self.itemCount = itemCount
+                }
+            })
+        }
+    func bindingNotAuht2(page: Int) {
+        self.isLoadingList = false
+        takeOff = fitMeetStream.getBroadcastN2(page: page)
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     if response.data != nil  {

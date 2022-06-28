@@ -94,7 +94,7 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     var user: User? {
         didSet {
             guard let id = self.user?.id else { return }
-            bindingNotAuht(id: id, page: currentPage)
+            token != nil ? bindingAuth(id: id, page: currentPage) : bindingNotAuht(id: id, page: currentPage)
         }
     }
     
@@ -251,7 +251,8 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
     func loadMoreItemsForList(){
         currentPage += 1
         guard let id = user?.id else { return }
-        bindingNotAuht(id: id, page: currentPage)
+        token != nil ? bindingAuth(id: id, page: currentPage) : bindingNotAuht(id: id, page: currentPage)
+        
        }
 
     func bindingChannel(userId: Int?) {
@@ -367,6 +368,28 @@ class ChannelCoach: SheetableViewController, VeritiPurchase, UIGestureRecognizer
                 .mapError({ (error) -> Error in return error })
                 .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     print("Res == \(response)")
+                    guard let responce = response.data else { return }
+                    if !responce.isEmpty  {
+                       
+                        guard let brod = response.data else { return }
+                        self.brodcast.append(contentsOf: brod)
+                       
+                        let arrayUserId = self.brodcast.map{$0.userId!}
+                        self.bindingUserMap(ids: arrayUserId)
+                    }
+                    if response.meta != nil {
+                        guard let itemCount = response.meta?.itemCount else { return }
+                        self.itemCount = itemCount
+                        self.homeView.labelINTVideo.text = "\(self.itemCount)"
+                }
+            })
+        }
+    func bindingAuth(id: Int?,page: Int) {
+        guard let id = id else {return }
+        self.isLoadingList = false
+        takeOff = fitMeetStream.getBroadcastForUserAuth(idUser: id, page: page)
+                .mapError({ (error) -> Error in return error })
+                .sink(receiveCompletion: { _ in }, receiveValue: { response in
                     guard let responce = response.data else { return }
                     if !responce.isEmpty  {
                        
