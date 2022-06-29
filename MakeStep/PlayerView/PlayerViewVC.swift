@@ -140,7 +140,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
     var playPauseButton: PlayPauseButton!
     var user: User? {
         didSet {
-            bindingChannel(userId: user?.id)
+            token != nil ? bindingChannel(userId: user?.id) :bindingChannelNotAuth(userId: user?.id)
            
         }
     }
@@ -512,6 +512,24 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
                         }
                     }
                 }
+        })
+    }
+    func bindingChannelNotAuth(userId: Int?) {
+        guard let id = userId else { return }
+        takeChanell = fitMeetChannel.listChannelsNotAuth(idUser: id)
+            .mapError({ (error) -> Error in return error })
+            .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                if response != nil  {
+                    self.channel = response.data.last
+                    self.homeView.labelStreamDescription.text = self.channel?.name
+                    guard let channel = self.channel else {
+                        self.homeView.buttonSubscribe.backgroundColor = .lightGray
+                        self.homeView.buttonSubscribe.setTitleColor(UIColor(hexString: "FFFFFF"), for: .normal)
+                        self.homeView.buttonSubscribe.setTitle("Subscribe", for: .normal)
+                        self.homeView.buttonSubscribe.layer.borderColor = UIColor(red: 0.898, green: 0.898, blue: 0.898, alpha: 1).cgColor
+                        return
+                    }
+              }
         })
     }
     @objc func actionLike() {
@@ -1149,7 +1167,6 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     guard let brod = response.data else { return }
-                  //  let filterBroadcast = brod.filter{ $0.status != .wait_for_approve}
                     self.brodcast.append(contentsOf: brod)
                     self.brodcast = Array(Set(self.brodcast))
                     self.isLoadingList = false
