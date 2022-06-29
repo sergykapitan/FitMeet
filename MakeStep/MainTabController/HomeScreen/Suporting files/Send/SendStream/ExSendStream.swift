@@ -49,20 +49,28 @@ extension SendStream: UITableViewDelegate {
         } completion: { tr in
         if indexPath.row == 0 {
             self.dismiss(animated: true) {
-                if let vc = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+                if let vc = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
                     vc.boolStream = false
                     NotificationCenter.default.post(Notification(name: .refreshAllTabs))
                     vc.selectedIndex = 2
+                } else if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+                    tab.boolStream = false
+                    NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+                    tab.selectedIndex = 2
                 }
             }
         }
         if indexPath.row == 1 {
             self.dismiss(animated: true) {
-                if let tabBC = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController{///UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
+            if let tabBC = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController{
                     tabBC.boolStream = true
                     NotificationCenter.default.post(Notification(name: .refreshAllTabs))
                     tabBC.selectedIndex = 2
-                }
+            }  else if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+                tab.boolStream = true
+                NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+                tab.selectedIndex = 2
+            }
              }
           }
        }
