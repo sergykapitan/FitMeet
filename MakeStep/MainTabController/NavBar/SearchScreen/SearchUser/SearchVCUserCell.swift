@@ -51,7 +51,7 @@ class SearchVCUserCell: UITableViewCell {
     }()
     var labelDescription: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 3
+        label.numberOfLines = 1
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
         return label
@@ -98,7 +98,8 @@ class SearchVCUserCell: UITableViewCell {
         cardView.addSubview(labelDescription)
         labelDescription.anchor(top: cardView.topAnchor,
                                 left: logoUserImage.rightAnchor,
-                                paddingTop: 8, paddingLeft: 20 )
+                                right: cardView.rightAnchor,
+                                paddingTop: 8, paddingLeft: 20,paddingRight: 5 )
         
         cardView.addSubview(titleLabel)
         titleLabel.anchor(top:labelDescription.bottomAnchor,

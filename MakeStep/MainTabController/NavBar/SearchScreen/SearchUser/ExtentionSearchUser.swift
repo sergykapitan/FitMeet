@@ -21,7 +21,7 @@ extension SearchUserVC: UITableViewDataSource {
         
         guard let userID = listUsers[indexPath.row].channelIds?.last else { return cell}
         guard let followers = self.channellsd[userID]?.followersCount else { return cell}
-        cell.labelDescription.text = channellsd[userID]?.name//listUsers[indexPath.row].fullName
+        cell.labelDescription.text = channellsd[userID]?.name
         cell.titleLabel.text = "\(followers)" + "  Folowers"
         return cell
     }

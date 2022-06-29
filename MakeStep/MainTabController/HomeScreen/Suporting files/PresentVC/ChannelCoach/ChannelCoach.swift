@@ -974,9 +974,12 @@ func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
                    self.topConstraint.isActive = true
                    self.leftConstant.isActive = false
                    self.botConstant.isActive = false
-                   self.leftWelcomeLabelConstant.isActive = false
+                
+                   self.leftWelcomeLabelConstant.isActive = true
                    self.topWelcomLabelConstant.constant = 80
-                   self.rightWelcomLabel.isActive = false
+                   self.rightWelcomLabel.isActive = true
+                self.homeView.welcomeLabel.textAlignment = .center
+                
                    self.centerWelcomeLabelConstant.isActive = true
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                  
@@ -998,9 +1001,12 @@ func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
                    self.centerConstant.isActive = false
                    self.leftConstant.isActive = true
                    self.botConstant.isActive = true
+                
                    self.rightWelcomLabel.isActive = true
                    self.topWelcomLabelConstant.isActive = true
                    self.leftWelcomeLabelConstant.isActive = true
+                self.homeView.welcomeLabel.textAlignment = .left
+                
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
@@ -1044,10 +1050,13 @@ func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
                    self.topConstraint.isActive = true
                    self.leftConstant.isActive = false
                    self.botConstant.isActive = false
-                   self.leftWelcomeLabelConstant.isActive = false
-                   self.rightWelcomLabel.isActive = false
+                
+                   self.leftWelcomeLabelConstant.isActive = true
+                   self.rightWelcomLabel.isActive = true
                    self.topWelcomLabelConstant.constant = 80
                    self.centerWelcomeLabelConstant.isActive = true
+                self.homeView.welcomeLabel.textAlignment = .center
+                
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 22)
                   
                 
@@ -1072,9 +1081,12 @@ func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
                    self.centerConstant.isActive = false
                    self.leftConstant.isActive = true
                    self.botConstant.isActive = true
+                
                    self.rightWelcomLabel.isActive = true
                    self.topWelcomLabelConstant.isActive = true
                    self.leftWelcomeLabelConstant.isActive = true
+                self.homeView.welcomeLabel.textAlignment = .left
+                
                    self.topWelcomLabelConstant.constant = 0
                    self.centerWelcomeLabelConstant.isActive = false
                    self.homeView.welcomeLabel.font = UIFont.boldSystemFont(ofSize: 16)
