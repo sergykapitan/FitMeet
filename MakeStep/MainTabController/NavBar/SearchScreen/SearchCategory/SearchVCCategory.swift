@@ -51,9 +51,9 @@ class SearchVCCategory: UITableViewCell {
     }()
     var labelDescription: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 3
         label.font = UIFont.boldSystemFont(ofSize: 16)
         label.textColor = UIColor(hexString: "#252525")
+        label.numberOfLines = 1
         return label
     }()
     var labelCategory : UILabel = {
@@ -86,7 +86,8 @@ class SearchVCCategory: UITableViewCell {
         cardView.addSubview(labelDescription)
         labelDescription.anchor(top: cardView.topAnchor,
                                 left: cardView.leftAnchor,
-                                paddingTop: 8, paddingLeft: 18 )
+                                right: cardView.rightAnchor,
+                                paddingTop: 8, paddingLeft: 18,paddingRight: 5 )
 
     }
     func setImage(image:String) {
