@@ -166,6 +166,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = PlayerViewVC()
         vc.delegatePicInPic = self
+        vc.delegate = self
         var status:BroadcastStatus  = .offline
         switch indexPath.section {
         case 0:
@@ -252,4 +253,12 @@ extension LiveVC {
       }
     }
   }
+}
+extension LiveVC: OpenCoachDelegate {
+    func coachTapped(userId: Int) {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.userMap[userId]
+        navigationController?.pushViewController(vc, animated: true)
+    }
 }

@@ -32,6 +32,8 @@ class LiveVC: SheetableViewController {
     var recentBroadcast: [BroadcastResponce] = []
     var plannedBroadcast: [BroadcastResponce] = []
     
+    var arrUser = [Int]()
+    
     
     var itemCount: Int = 0
 
@@ -94,6 +96,7 @@ class LiveVC: SheetableViewController {
                         guard let responceUnrap = response.data else { return }
                         self.liveBroadcast = responceUnrap
                         let arrayUserId =  self.liveBroadcast.compactMap{$0.channelIds?.last!}
+                        self.arrUser.append(contentsOf: self.liveBroadcast.compactMap{$0.userId})
                         self.getMapChannel(ids: arrayUserId)
                     }
             })
@@ -108,6 +111,7 @@ class LiveVC: SheetableViewController {
                         self.recentBroadcast = responceUnrap
 
                         let arrayUserId =  self.recentBroadcast.compactMap{$0.channelIds?.last}
+                        self.arrUser.append(contentsOf: self.recentBroadcast.compactMap{$0.userId})
                         self.getMapChannel1(ids: arrayUserId)
                     }
             })
@@ -121,6 +125,9 @@ class LiveVC: SheetableViewController {
                         sleep(1)
                         self.plannedBroadcast = responceUnrap
                         let arrayUserId =  self.plannedBroadcast.compactMap{$0.channelIds?.last!}
+                        self.arrUser.append(contentsOf: self.plannedBroadcast.compactMap{$0.userId})
+                        
+                        self.bindingUserMap(ids: self.arrUser)
                         self.getMapChannel2(ids: arrayUserId)
                     } else {
                         self.titleSection.removeLast()
@@ -134,11 +141,11 @@ class LiveVC: SheetableViewController {
                   .mapError({ (error) -> Error in return error })
                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
                       if response.data.count != 0 {
-                          self.userMap = response.data
-                          let idsChannel = self.userMap.values.compactMap{ $0.channelIds?.last}
-                          self.getMapChannel(ids: idsChannel)
-                         // self.refreshControl.endRefreshing()
-                         // self.liveView.tableView.reloadData()
+                          let res = response.data
+                          res.forEach {
+                              self.userMap[$0.key] = $0.value
+                              print("User == \(self.userMap.compactMap{$0.key})")
+                           }
                       }
                  })
              }
