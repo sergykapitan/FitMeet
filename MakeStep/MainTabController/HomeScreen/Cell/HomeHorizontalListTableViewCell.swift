@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 enum HomeHorizontalListType {
     case authors([User])
@@ -17,6 +18,9 @@ protocol HomeHorizontalListTableViewCellDelegate: AnyObject {
 
 class HomeHorizontalListTableViewCell: UITableViewCell {
     
+   
+    @Inject var fitMeetApi: FitMeetApi
+    private var channelMap: AnyCancellable?
     
     private lazy var collectionView:  UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,10 +42,23 @@ class HomeHorizontalListTableViewCell: UITableViewCell {
     private var type: [User]? = nil {
         didSet{
             guard let type = type else { return }
+            let ids =  type.compactMap{$0.channelIds?.last}
+            self.getMapChannel(ids: ids)
+        }
+    }
+    private var channellsd: [Int: ChannelResponce] = [Int: ChannelResponce]() {
+        didSet{
             collectionView.reloadData()
         }
     }
-    
+    func getMapChannel(ids: [Int])   {
+        channelMap = fitMeetApi.getChannelMap(ids: ids)
+              .mapError({ (error) -> Error in return error })
+              .sink(receiveCompletion: { _ in }, receiveValue: { response in
+               self.channellsd = response.data
+                         
+            })
+         }
     weak var delegate: HomeHorizontalListTableViewCellDelegate? = nil
     
     func setup(type: [User]) {
@@ -88,8 +105,9 @@ extension HomeHorizontalListTableViewCell: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "HomeHorizontalListItemCollectionViewCell", for: indexPath) as! HomeHorizontalListItemCollectionViewCell
         if let type = type {
             cell.hideAnimation()
-            cell.setup(indexPath.row, item: type[indexPath.row])
-            
+            if let channalId = type[indexPath.row].channelIds?.last {
+                cell.setup(indexPath.row, item: type[indexPath.row], name: channellsd[channalId]?.name ?? "@@")
+            }
         }
         
         cell.delegate = self

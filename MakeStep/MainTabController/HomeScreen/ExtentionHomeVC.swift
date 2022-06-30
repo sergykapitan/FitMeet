@@ -40,7 +40,7 @@ extension HomeVC: UITableViewDataSource {
         case 0:
          let cell = tableView.dequeueReusableCell(withIdentifier: "HomeHorizontalListTableViewCell", for: indexPath) as! HomeHorizontalListTableViewCell
             if let listUsers = listUsers {
-                cell.setup(type: listUsers)
+                cell.setup(type: listUsers)              
             }
          cell.delegate = self
          return cell
