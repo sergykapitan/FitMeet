@@ -82,7 +82,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
                 cell.hideAnimation()
                 cell.labelLiveStream.isHidden = false
                 
-              
+                cell.buttonMore.isHidden = true
                 cell.labelDescription.text = ""
                 cell.titleLabel.text = ""
                 cell.backgroundImage.isHidden = true
@@ -92,6 +92,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
               self.navigationController?.navigationBar.isUserInteractionEnabled = true
               cell.labelLiveStream.isHidden = true
               cell.backgroundImage.isHidden = false
+              cell.buttonMore.isHidden = false
               cell.setImage(image: liveBroadcast[indexPath.row].resizedPreview?["m_preview_l"]?.jpeg  ?? Constants.defoultImage)
               cell.labelDescription.text = liveBroadcast[indexPath.row].name
               guard let id = liveBroadcast[indexPath.row].userId else { return cell}
