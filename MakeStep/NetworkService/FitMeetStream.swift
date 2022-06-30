@@ -153,7 +153,7 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     public func getBroadcastForUser(idUser:Int,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&sort=status&userId=\(idUser)&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts?order=ASC&page=\(page)&take=10&sort=status&isPublished=true&userId=\(idUser)&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)
@@ -162,7 +162,7 @@ class FitMeetStream {
                  .eraseToAnyPublisher()
            }
     public func getBroadcastForUserAuth(idUser:Int,page: Int) -> AnyPublisher<BroadcastList, DifferentError> {
-        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&sort=status&userId=\(idUser)&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
+        return AF.request(Constants.apiEndpoint + "/stream/broadcasts/private?order=ASC&page=\(page)&take=10&isPublished=true&sort=status&userId=\(idUser)&statusSort=ONLINE&statusSort=FINISHED&statusSort=OFFLINE&statusSort=PLANNED&statusSort=WAIT_FOR_APPROVE&statusSort=BANNED", method: .get, encoding: JSONEncoding.default,interceptor: Interceptor(interceptors: [AuthInterceptor()]))
                  .validate(statusCode: 200..<300)
                  .validate(contentType: ["application/json"])
                  .publishDecodable(type: BroadcastList.self)

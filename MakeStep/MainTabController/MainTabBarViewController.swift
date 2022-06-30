@@ -18,7 +18,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
     var profile: UIViewController?
     var streamView : UIViewController?
     var boolStream: Bool  = true
-    
+    let actionChatTransitionManager = ActionTransishionChatManadger()
     
 
     override func viewDidLoad() {
@@ -121,6 +121,27 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
         
        
     }
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        let vcIndex = tabBarController.viewControllers!.firstIndex(of: viewController)!
+      let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
+           if  vcIndex == 2 {
+               if token != nil {
+               let chatVC = SendStream()
+               let curvaView = tabBarController.selectedViewController!
+               chatVC.transitioningDelegate = actionChatTransitionManager
+               chatVC.modalPresentationStyle = .custom
+               actionChatTransitionManager.intWidth = 1
+               actionChatTransitionManager.intHeight = 0.25
+               curvaView.present(chatVC, animated: true, completion: nil)
+
+               return false
+               } else {
+                   return true
+               }
+           } else {
+               return true
+           }
+       }
     
     private func generateViewController(rootViewController: UIViewController,image: UIImage,title: String) -> UIViewController {
   

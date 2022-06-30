@@ -109,6 +109,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         case 1:
             cell.labelLiveStream.isHidden = true
             cell.backgroundImage.isHidden = false
+            cell.buttonMore.isHidden = false
             cell.textLabel?.text = nil
             if recentBroadcast.count != 0 {
             cell.hideAnimation()
@@ -129,6 +130,7 @@ extension LiveVC: UITableViewDataSource, UITableViewDelegate {
         case 2:
             cell.labelLiveStream.isHidden = true
             cell.backgroundImage.isHidden = false
+            cell.buttonMore.isHidden = false
             cell.textLabel?.text = nil
             if plannedBroadcast.count != 0 {
             cell.hideAnimation()
