@@ -717,10 +717,18 @@ extension LiveStreamViewController: SendDataToLive {
                      alertController.addAction(action!)
                      }
                 
-       let action2 = self.action(for: "Private stream", title: "Private stream")
+                let action2 = self.action(for: "Private stream", title: "Private stream")
                     DispatchQueue.main.async {
                     alertController.addAction(action2!)
                     }
+        
+                let action3 = self.action(for: "Only for Subscriber", title: "Only for Subscriber")
+                    DispatchQueue.main.async {
+                    alertController.addAction(action3!)
+                    }
+        
+        
+        
                 DispatchQueue.main.async {
                 alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
                 }
@@ -739,6 +747,8 @@ extension LiveStreamViewController: SendDataToLive {
             case "Available for all" :
                 self.streamView.labelAviable.text = type
             case "Private stream" :
+                self.streamView.labelAviable.text = type
+            case "Only for Subscriber" :
                 self.streamView.labelAviable.text = type
             default:
                break
@@ -783,7 +793,7 @@ extension LiveStreamViewController {
       
         
                 var onlyForSponsors : Bool?
-                var onlyForSubscribers: Bool?
+                var onlyForSubscribers: Bool = false
         
                 if streamView.labelStartNow.text == "Start now" {
                     isPlan = false
@@ -796,6 +806,9 @@ extension LiveStreamViewController {
                      status = "STANDARD"
         }  else if streamView.labelAviable.text == "Private stream" {
                     status = "PRIVATE_LINK"
+        } else if streamView.labelAviable.text == "Only for Subscriber" {
+                    status = "STANDARD"
+                    onlyForSubscribers = true
         }
         let image =  self.imagePath ?? ""
         guard let date = date,let status = status,let isPlan = isPlan,var name = streamView.textFieldNameStream.text else {  return }
@@ -803,7 +816,7 @@ extension LiveStreamViewController {
             name = returnNameChannelAndDate()
         }
 
-        self.nextView(chanellId: chanelId, name: name, description: descriptionStream ?? "", previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: false, categoryId: self.category ?? [], type: status )
+        self.nextView(chanellId: chanelId, name: name, description: descriptionStream ?? "", previewPath: image, isPlaned: isPlan, date: date, onlyForSponsors: false, onlyForSubscribers: onlyForSubscribers, categoryId: self.category ?? [], type: status )
     }
     func nextView(chanellId: Int ,name: String , description: String,previewPath: String,isPlaned: Bool,date: String,onlyForSponsors: Bool,onlyForSubscribers:Bool,categoryId: [Int],type: String)  {
 
@@ -870,11 +883,13 @@ extension LiveStreamViewController {
         self.imagePath = nil
                 if self.streamView.labelAviable.text == "Available for all" {
                     self.isPrivate = false
-                } else  {
+                } else if self.streamView.labelAviable.text == "Private stream" {
                     self.isPrivate = true
                     streamView.stackButton.addArrangedSubview(streamView.privateStream)
                     self.broadcastId = self.broadcast?.id
                     self.privateUrlKey = self.broadcast?.privateUrlKey
+                } else if self.streamView.labelAviable.text == "Only for Subscriber" {
+                    self.isPrivate = false
                 }
         streamView.circleIndicator.stop()
         streamView.circleIndicator.alpha = 0
