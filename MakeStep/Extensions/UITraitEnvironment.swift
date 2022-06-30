@@ -12,13 +12,23 @@ extension UITraitEnvironment {
     //MARK: SafeArea
     
     private var window: UIWindow {
+        
+        if  UIApplication.shared.windows[0] != nil {
+            print("HHHHHHHHHH === ")
+            
+        } else if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first {
+            print("GGGGGGGGGG === ")
+        }
         return UIApplication.shared.windows[0]
        // return UIApplication.shared.windows.first
     }
-    
+ 
+        
     private var safeFrame: CGRect {
         let safeFrame = window.safeAreaLayoutGuide.layoutFrame
+        let ss = window.screen.bounds
         print("safeFrame == \(safeFrame)")
+        print("ss == \(ss)")
         return safeFrame
     }
     
@@ -28,7 +38,7 @@ extension UITraitEnvironment {
     }
     
     var safeAreaBottomPadding: CGFloat {
-        print("safearea === \(window.frame.maxY - safeFrame.maxY)")
+        print("------- === \(window.frame.maxY - safeFrame.maxY)")
         var  i =  window.frame.maxY - safeFrame.maxY
         if i == 0.0 {
             return 34

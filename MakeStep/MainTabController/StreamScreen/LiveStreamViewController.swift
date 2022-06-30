@@ -506,7 +506,13 @@ class LiveStreamViewController: UITabBarController ,ClassBVCDelegate,ClassUserDe
             break
         }
         DispatchQueue.main.async {
-            Loaf("RTMP Status: " + code, state: loafStyle, location: .top,  sender: self).show(.short)
+            if code == "NetConnection.Connect.Success" {
+                Loaf("  Creating Live Stream", state: loafStyle, location: .top,  sender: self).show(.short)
+            }
+            if code == "NetStream.Publish.Start" {
+                Loaf("  Live Stream Started", state: loafStyle, location: .top,  sender: self).show(.short)
+            }
+           
         }
 
         logger.info(code)
