@@ -114,11 +114,21 @@ class SignUpViewController: UIViewController {
     }
     
     private func openProfileViewController() {
-        let viewController = MainTabBarViewController()
-        viewController.selectedIndex = 4
-        let mySceneDelegate = (self.view.window?.windowScene)!
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
+        if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+            dismissTwoViews()
+           tab.boolStream = true
+           NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+           tab.selectedIndex = 4
+       }
+//        let viewController = MainTabBarViewController()
+//        viewController.selectedIndex = 4
+//        let mySceneDelegate = (self.view.window?.windowScene)!
+//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
+    func dismissTwoViews() {
+                   self.presentingViewController?
+                       .presentingViewController?.dismiss(animated: true, completion: nil)
+               }
  
     private func fetchUser(){
         guard let phone = userPhoneOreEmail, let name = signUpView.textFieldName.text, let usr = signUpView.textFieldUserName.text, let password = signUpView.textFieldPassword.text

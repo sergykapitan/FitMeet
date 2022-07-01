@@ -144,17 +144,18 @@ class SignInPasswordViewController: UIViewController {
     }
     private func openMainViewController() {
         if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+            dismissTwoViews()
            tab.boolStream = true
            NotificationCenter.default.post(Notification(name: .refreshAllTabs))
            tab.selectedIndex = 4
        }
-//        let viewController = MainTabBarViewController()
-//       // viewController.selectedIndex = 4
-//        let mySceneDelegate = (self.view.window?.windowScene)!
-//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
  
-    
+    func dismissTwoViews() {
+                   self.presentingViewController?
+                       .presentingViewController?.dismiss(animated: true, completion: nil)
+               }
+
     private func alertControl(message: String) {
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -177,3 +178,4 @@ extension SignInPasswordViewController: UITextFieldDelegate {
     }
   
 }
+
