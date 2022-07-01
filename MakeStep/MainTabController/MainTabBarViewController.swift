@@ -71,7 +71,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
                         self.generateViewController(rootViewController: LiveVC(), image:  #imageLiteral(resourceName: "Act1"), title: ""),
                         self.generateViewController(rootViewController: self.streamView ?? NotTokenView(), image:  #imageLiteral(resourceName: "StreamN"),title: ""),
                         self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
-                        self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
+                        self.generateViewController(rootViewController: ProfileVC(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
 
 
                       ]
@@ -82,7 +82,7 @@ class MainTabBarViewController: UITabBarController, UITabBarControllerDelegate {
                         self.generateViewController(rootViewController: LiveVC(), image:  #imageLiteral(resourceName: "Act1"), title: ""),
                         self.generateViewController(rootViewController: AddedVideoVC(), image:  #imageLiteral(resourceName: "StreamN"),title: ""),
                         self.generateViewController(rootViewController: CategoryVC(), image:  #imageLiteral(resourceName: "Group 25931"), title: ""),
-                        self.generateViewController(rootViewController: self.profile ?? StartScreen(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
+                        self.generateViewController(rootViewController: ProfileVC(), image:  #imageLiteral(resourceName: "user(2) 11") , title: "")
 
 
                       ]

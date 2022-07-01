@@ -48,6 +48,10 @@ extension SendStream: UITableViewDelegate {
             cell.imageCell.backgroundColor = .lightGray.alpha(0.2)
         } completion: { tr in
         if indexPath.row == 0 {
+//            self.dismiss(animated: true)
+//            let vc = AddedVideoVC()
+//            self.navigationController?.pushViewController(vc, animated: true)
+            
             self.dismiss(animated: true) {
                 if let vc = UIApplication.shared.windows[0].rootViewController as? MainTabBarViewController {
                     vc.boolStream = false

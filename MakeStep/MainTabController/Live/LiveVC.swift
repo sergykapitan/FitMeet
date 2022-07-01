@@ -58,8 +58,8 @@ class LiveVC: SheetableViewController {
         super.viewDidLoad()
         makeTableView()
         bindingLive()
-        bindingRecent()
-        bindingPlanned()
+     //   bindingRecent()
+       // bindingPlanned()
         widthScreen <= 400 ? makeNavItem(title: " Live", hide: true) : makeNavItem(title: "Live", hide: true)
         self.navigationController?.navigationBar.isUserInteractionEnabled = false
     }
@@ -98,6 +98,7 @@ class LiveVC: SheetableViewController {
                         let arrayUserId =  self.liveBroadcast.compactMap{$0.channelIds?.last!}
                         self.arrUser.append(contentsOf: self.liveBroadcast.compactMap{$0.userId})
                         self.getMapChannel(ids: arrayUserId)
+                        self.bindingRecent()
                     }
             })
     }
@@ -113,6 +114,7 @@ class LiveVC: SheetableViewController {
                         let arrayUserId =  self.recentBroadcast.compactMap{$0.channelIds?.last}
                         self.arrUser.append(contentsOf: self.recentBroadcast.compactMap{$0.userId})
                         self.getMapChannel1(ids: arrayUserId)
+                        self.bindingPlanned()
                     }
             })
     }

@@ -37,7 +37,7 @@ struct SubPlan: Codable,Hashable {
     let name : String?
     let description: String?
     let applePrice: Int?
-    let available: Bool
+    let available: Bool?
 }
 struct ActivBroadCast: Codable,Hashable,Identifiable {
     let createdAt: String?

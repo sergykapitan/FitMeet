@@ -226,7 +226,7 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: UploadMapUser.self)
             .value()
-           // .print("getUserMap")
+            .print("getUserMap")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }
@@ -255,6 +255,7 @@ class FitMeetApi {
             .validate(contentType: ["application/json"])
             .publishDecodable(type: MapChannel.self)
             .value()
+            .print("getChannel")
             .mapError{ DifferentError.alamofire(wrapped: $0)}
             .eraseToAnyPublisher()
     }

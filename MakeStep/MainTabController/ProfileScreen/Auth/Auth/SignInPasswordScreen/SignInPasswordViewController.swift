@@ -143,10 +143,15 @@ class SignInPasswordViewController: UIViewController {
         }
     }
     private func openMainViewController() {
-        let viewController = MainTabBarViewController()
-        viewController.selectedIndex = 4
-        let mySceneDelegate = (self.view.window?.windowScene)!
-        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
+        if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+           tab.boolStream = true
+           NotificationCenter.default.post(Notification(name: .refreshAllTabs))
+           tab.selectedIndex = 4
+       }
+//        let viewController = MainTabBarViewController()
+//       // viewController.selectedIndex = 4
+//        let mySceneDelegate = (self.view.window?.windowScene)!
+//        (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.openRootViewController(viewController: viewController, windowScene: mySceneDelegate)
     }
  
     
