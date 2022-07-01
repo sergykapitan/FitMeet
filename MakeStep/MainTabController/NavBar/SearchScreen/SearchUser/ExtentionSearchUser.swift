@@ -37,7 +37,7 @@ extension SearchUserVC: UITableViewDelegate {
         guard let listUsers = listUsers else { return  }
         let user = listUsers[indexPath.row]
         guard let ids = user.id else { return }
-        
+        tableView.isUserInteractionEnabled = false
         DispatchQueue(label: "getPhotos").sync {
             self.getBroadcast(userId: "\(ids)")
 
@@ -45,6 +45,7 @@ extension SearchUserVC: UITableViewDelegate {
                            let vc = ChannelCoach()
                            vc.modalPresentationStyle = .fullScreen
                            vc.user = user
+                tableView.isUserInteractionEnabled = true
                self.navigationController?.pushViewController(vc, animated: true)
 
            }

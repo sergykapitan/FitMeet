@@ -13,15 +13,19 @@ import Loaf
 class SearchVideoVC: SheetableViewController  {
 
     let searchView = SearchVideoCode()
+    var arrUser = [Int]()
     
     var listBroadcast: [BroadcastResponce] = []
     var filtredBroadcast: [BroadcastResponce] = []
+    var userMap = [Int: User]()
     
     let token = UserDefaults.standard.string(forKey: Constants.accessTokenKeyUserDefaults)
     let actionSheetTransitionManager = ActionSheetTransitionManager()
     
     @Inject var fitMeetStream: FitMeetStream
+    @Inject var fitMeetApi: FitMeetApi
     private var takeBroadcast: AnyCancellable?
+    private var takeUser: AnyCancellable?
  
 // MARK: - LifiCicle
   
@@ -56,6 +60,8 @@ class SearchVideoVC: SheetableViewController  {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    self.arrUser.append(contentsOf: self.listBroadcast.compactMap{$0.userId})
+                    self.bindingUserMap(ids: self.arrUser)
                     self.filtredBroadcast = self.listBroadcast
                     if self.listBroadcast.isEmpty {
                         self.searchView.tableView.isHidden = true
@@ -74,6 +80,8 @@ class SearchVideoVC: SheetableViewController  {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    self.arrUser.append(contentsOf: self.listBroadcast.compactMap{$0.userId})
+                    self.bindingUserMap(ids: self.arrUser)
                     self.filtredBroadcast = self.listBroadcast
                     if self.listBroadcast.isEmpty {
                         self.searchView.tableView.isHidden = true
@@ -93,6 +101,8 @@ class SearchVideoVC: SheetableViewController  {
             .sink(receiveCompletion: { _ in }, receiveValue: { response in
                 if response.data != nil  {
                     self.listBroadcast = response.data!
+                    self.arrUser.append(contentsOf: self.listBroadcast.compactMap{$0.userId})
+                    self.bindingUserMap(ids: self.arrUser)
                     self.filtredBroadcast = self.listBroadcast
                     if self.listBroadcast.isEmpty {
                         self.searchView.tableView.isHidden = true
@@ -105,6 +115,21 @@ class SearchVideoVC: SheetableViewController  {
                 }
           })
     }
+    func bindingUserMap(ids: [Int])  {
+               if ids.isEmpty { return } else {
+               takeUser = fitMeetApi.getUserIdMap(ids: ids)
+                   .mapError({ (error) -> Error in return error })
+                   .sink(receiveCompletion: { _ in }, receiveValue: { response in
+                       if response.data.count != 0 {
+                           let res = response.data
+                           res.forEach {
+                               self.userMap[$0.key] = $0.value
+                               print("User == \(self.userMap.compactMap{$0.key})")
+                            }
+                       }
+                  })
+              }
+          }
     
     override func closeView() {
         UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseIn) {

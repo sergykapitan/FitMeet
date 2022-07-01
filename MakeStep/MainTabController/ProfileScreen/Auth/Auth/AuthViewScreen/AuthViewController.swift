@@ -79,6 +79,7 @@ class AuthViewController: UIViewController{
     }
     private func openProfileViewController() {
         if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
+            self.dismiss(animated: true)
            tab.boolStream = true
            NotificationCenter.default.post(Notification(name: .refreshAllTabs))
            tab.selectedIndex = 4

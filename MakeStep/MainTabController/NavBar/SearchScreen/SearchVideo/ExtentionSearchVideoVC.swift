@@ -44,9 +44,18 @@ extension SearchVideoVC: UITableViewDelegate {
         let vc = PlayerViewVC()
             vc.broadcast = self.listBroadcast[indexPath.row]
             vc.id =  self.listBroadcast[indexPath.row].userId
+            vc.delegate = self
             vc.modalPresentationStyle = .fullScreen
             self.present(vc, animated: true, completion: nil)
 
      }
 }
 
+extension SearchVideoVC: OpenCoachDelegate {
+    func coachTapped(userId: Int) {
+        let vc = ChannelCoach()
+        vc.modalPresentationStyle = .fullScreen
+        vc.user = self.userMap[userId]
+        navigationController?.pushViewController(vc, animated: true)
+    }
+}
