@@ -1515,7 +1515,7 @@ class PlayerViewVC: SheetableViewController, TagListViewDelegate {
         let arrayResolution = band.filter(){$0.hasSuffix("m3u8")}
         return arrayResolution
     }
-    func getStreamResolutionsAll(from playlist: RawPlaylist) -> [StreamResolution] {
+    func getStreamResolutions(from playlist: RawPlaylist) -> [StreamResolution] {
         var resolutions = [StreamResolution]()
         playlist.content.enumerateLines { line, shouldStop in
             let infoline = line.replacingOccurrences(of: "#EXT-X-STREAM-INF", with: "")

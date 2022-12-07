@@ -33,24 +33,26 @@ class CommissionVC: UIViewController {
         let attributes = [NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 20)]
         UINavigationBar.appearance().titleTextAttributes = attributes
         
-                    let backButton = UIButton()
-                    backButton.setBackgroundImage(#imageLiteral(resourceName: "Back1"), for: .normal)
-                    backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
-                    backButton.anchor(width:30,height: 30)
-        
-                    let titleLabel = UILabel()
-                   titleLabel.text = "Monetization"
-                   titleLabel.textAlignment = .center
-                   titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
-                   titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
+        let backButton = UIButton()
+        backButton.setBackgroundImage(#imageLiteral(resourceName: "backButton"), for: .normal)
+        backButton.addTarget(self, action: #selector(rightBack), for: .touchUpInside)
+       
 
-                   let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
-                   stackView.distribution = .equalSpacing
-                   stackView.alignment = .leading
-                   stackView.axis = .horizontal
+        let titleLabel = UILabel()
+       titleLabel.text = " Monetization"
+       titleLabel.textAlignment = .center
+       titleLabel.font = .preferredFont(forTextStyle: UIFont.TextStyle.headline)
+       titleLabel.font = UIFont.boldSystemFont(ofSize: 22)
 
-                   let customTitles = UIBarButtonItem.init(customView: stackView)
-                   self.navigationItem.leftBarButtonItems = [customTitles]
+       let stackView = UIStackView(arrangedSubviews: [backButton,titleLabel])
+       stackView.distribution = .equalSpacing
+       stackView.alignment = .center
+       stackView.axis = .horizontal
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(rightBack))
+        stackView.addGestureRecognizer(tap)
+
+       let customTitles = UIBarButtonItem.init(customView: stackView)
+       self.navigationItem.leftBarButtonItems = [customTitles]
   
     }
     @objc func rightBack() {

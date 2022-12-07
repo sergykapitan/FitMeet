@@ -143,8 +143,9 @@ class SignInPasswordViewController: UIViewController {
         }
     }
     private func openMainViewController() {
+        dismissTwoViews()
+        NotificationCenter.default.post(Notification(name: .refreshAllTabs))
         if let tab = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController as? MainTabBarViewController {
-            dismissTwoViews()
            tab.boolStream = true
            NotificationCenter.default.post(Notification(name: .refreshAllTabs))
            tab.selectedIndex = 4

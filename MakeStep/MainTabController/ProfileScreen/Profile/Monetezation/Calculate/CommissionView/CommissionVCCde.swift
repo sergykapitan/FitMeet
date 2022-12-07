@@ -23,7 +23,7 @@ final class CommissionVCCde: UIView {
 
     var labelTotal: UILabel = {
         let label = UILabel()
-        label.text = "MakeStep platform provides features such as broadcasting tools, group broadcasting, real-time chat, private rooms, unlimited VOD storage, payment gateways, and a scheduler. You can start using these features without any fees.\n As soon as you get subscribers, MakeStep will take 30% of the processed payments from your clients. That means that our trainer-creators take 70% of the revenue made from subscriptions and one-time-class payments. All transaction costs (excluding payout fees) are covered by MakeStep."
+        label.text = "Makestep platform provides features such as broadcasting tool, group broadcasting, real-time chat, private room, unlimited VOD storage, payment gateways, and a schedule. You can start using these features without any fees.\n As soon as you get subscribers, Makestep will take 30% of the processed payments from your clients. That means that our trainer-creators take 70% of the revenue made from subscriptions and one-time-class payments. All transaction costs (excluding payout fees) are covered by Makestep.\n Additionally, Apple is entitled to a 30% commission off all prices payable by End-Users for all sales processed through Apple Payment. In other words, the fees for your subscriber will be 30% higher than those set by you in your MakeStep account if the subscriber uses Apple Pay on Apple device."
         label.font = UIFont.systemFont(ofSize: 15)
         label.textColor = UIColor(hexString: "#868686")
         label.numberOfLines = 0

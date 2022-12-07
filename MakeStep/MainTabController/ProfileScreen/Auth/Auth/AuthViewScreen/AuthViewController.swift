@@ -158,7 +158,7 @@ extension AuthViewController: ASAuthorizationControllerDelegate {
                         UserDefaults.standard.set(token, forKey: Constants.accessTokenKeyUserDefaults)
                         UserDefaults.standard.set(response.user?.id, forKey: Constants.userID)
                         UserDefaults.standard.set(response.user?.fullName, forKey: Constants.userFullName)
-                        self.firstLaunchApp()
+                        
                     
                   }
             })
